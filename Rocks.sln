@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22512.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks", "Rocks\Rocks.csproj", "{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{89CFC639-AF25-4B43-98F1-0655172F4125}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9AE9E82E-9A06-4C10-A623-19C3C8205FC6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89CFC639-AF25-4B43-98F1-0655172F4125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CFC639-AF25-4B43-98F1-0655172F4125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CFC639-AF25-4B43-98F1-0655172F4125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CFC639-AF25-4B43-98F1-0655172F4125}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
