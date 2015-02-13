@@ -7,6 +7,8 @@ using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Extensions;
+using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Rocks
 {
@@ -15,17 +17,15 @@ namespace Rocks
 		internal static T Make<T>(Dictionary<string, Delegate> handlers)
 			where T : class
 		{
-			var x = handlers.ToImmutableDictionary();
-
 			if (typeof(T).IsInterface)
 			{
-				return RockMaker.MakeInterfaceMock<T>();
+				return RockMaker.MakeInterfaceMock<T>(new ReadOnlyDictionary<string, Delegate>(handlers));
 			}
 
 			return default(T);
 		}
 
-		private static T MakeInterfaceMock<T>()
+		private static T MakeInterfaceMock<T>(ReadOnlyDictionary<string, Delegate> handlers)
 			where T : class
 		{
 			var tType = typeof(T);
@@ -60,7 +60,6 @@ namespace Rocks
 				references: new[]
 				{
 					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
-					MetadataReference.CreateFromAssembly(typeof(ImmutableArray).Assembly),
 					MetadataReference.CreateFromAssembly(tType.Assembly)
 				});
 
@@ -73,7 +72,11 @@ namespace Rocks
 			}
 
 			// And return.
-			return Activator.CreateInstance(assembly.GetType(rockMangledName)) as T;
+			var rockType = assembly.GetType(rockMangledName);
+			return Activator.CreateInstance(rockType, handlers) as T;
+    //     return Activator.CreateInstance(rockType, BindingFlags.NonPublic, 
+				//null, new[] { handlers }, 
+				//CultureInfo.CurrentCulture) as T;
       }
 
 		private static string GetArgumentNameList(MethodInfo method)

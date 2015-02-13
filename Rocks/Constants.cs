@@ -32,9 +32,9 @@ public {0}
 public sealed class {0}
 	: {1}
 {{
-	private System.Collections.Immutable.ImmutableDictionary<System.String, System.Delegate> handlers;
+	private System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Delegate> handlers;
 
-	internal {0}(System.Collections.Immutable.ImmutableDictionary<System.String, System.Delegate> handlers)
+	public {0}(System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Delegate> handlers)
 	{{
 		this.handlers = handlers;
 	}}

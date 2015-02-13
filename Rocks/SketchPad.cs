@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Collections.ObjectModel;
+
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Rocks")]
 
 namespace Rocks
 {
@@ -21,15 +24,15 @@ namespace Rocks
 	public sealed class Rock57849
 		: Thing
 	{
-		private IImmutableDictionary<string, Delegate> handlers;
+		private ReadOnlyDictionary<string, Delegate> handlers;
 
-		public Rock57849(IImmutableDictionary<string, Delegate> handlers, int a)
+		public Rock57849(ReadOnlyDictionary<string, Delegate> handlers, int a)
 			: base(a)
 		{
 			this.handlers = handlers;
 		}
 
-		public Rock57849(IImmutableDictionary<string, Delegate> handlers, string b, Guid c) 
+		public Rock57849(ReadOnlyDictionary<string, Delegate> handlers, string b, Guid c) 
 			: base(b, c)
 		{
 			this.handlers = handlers;

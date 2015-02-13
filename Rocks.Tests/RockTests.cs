@@ -9,11 +9,11 @@ namespace Rocks.Tests
 		[Test]
 		public void Run()
 		{
-			var rock = new Rock<ITest>();
-			rock.HandleAction<int>(
+			var rock = Rock.Create<ITest>();
+			rock.Handle<int>(
 				_ => _.Foo(default(int)),
 				a => { });
-			rock.HandleFunction<string, Guid, int>(
+			rock.Handle<string, Guid, int>(
 				_ => _.Bar(default(Guid), default(int)),
 				(a, b) => { return a.ToString() + " - " + b.ToString(); });
 
