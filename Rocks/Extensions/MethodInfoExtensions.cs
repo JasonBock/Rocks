@@ -31,7 +31,7 @@ namespace Rocks.Extensions
 			result.Append(string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
-				select parameter.ParameterType.FullName + " " + parameter.Name));
+				select parameter.ParameterType.Name + " " + parameter.Name));
 			result.Append(")");
 			return result.ToString();
       }

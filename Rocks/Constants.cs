@@ -28,8 +28,7 @@ public {0}
 
 			// 0 = mangled name
 			// 1 = interface name
-			public const string ClassTemplate = @"
-{0}
+			public const string ClassTemplate = @"{0}
 
 public sealed class {1}
 	: {2}

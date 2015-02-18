@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,17 +15,29 @@ namespace Rocks
 		public static Rock<T> Create<T>()
 			where T : class
 		{
+			return Rock.Create<T>(new RockOptions());
+		}
+
+		public static Rock<T> Create<T>(RockOptions options)
+			where T : class
+		{
 			var message = typeof(T).Validate();
 
 			if (!string.IsNullOrWhiteSpace(message))
 			{
-				throw new RockException(message);
+				throw new RockValidationException(message);
 			}
 
-			return new Rock<T>();
+			return new Rock<T>(options);
 		}
 
 		public static bool TryCreate<T>(out Rock<T> result)
+			where T : class
+		{
+			return Rock.TryCreate<T>(new RockOptions(), out result);
+		}
+
+		public static bool TryCreate<T>(RockOptions options, out Rock<T> result)
 			where T : class
 		{
 			result = default(Rock<T>);
@@ -36,18 +49,26 @@ namespace Rocks
 				return false;
 			}
 
-			result = new Rock<T>();
+			result = new Rock<T>(options);
 			return true;
-      }
+		}
 	}
 
 	public sealed class Rock<T>
 		where T : class
 	{
 		private Dictionary<string, Delegate> handlers = new Dictionary<string, Delegate>();
+		private RockOptions options;
 		private SortedSet<string> namespaces = new SortedSet<string>();
 
-		internal Rock() { }
+		internal Rock()
+			: this(new RockOptions())
+		{ }
+
+		internal Rock(RockOptions options)
+		{
+			this.options = options;
+		}
 
 		public void Handle(Expression<Action<T>> expression,
 			Action handler)
@@ -113,8 +134,8 @@ namespace Rocks
 		{
 			var tType = typeof(T);
 			var readOnlyHandlers = new ReadOnlyDictionary<string, Delegate>(this.handlers);
-         var rockType = Rock.cache.GetOrAdd(tType, 
-				_ => RockMaker.Make(_, readOnlyHandlers, this.namespaces));
+			var rockType = Rock.cache.GetOrAdd(tType,
+				_ => new RockMaker(_, readOnlyHandlers, this.namespaces, this.options).Mock);
 			return Activator.CreateInstance(rockType, readOnlyHandlers) as T;
 		}
 	}

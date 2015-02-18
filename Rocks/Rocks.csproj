@@ -89,7 +89,9 @@
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rock.cs" />
-    <Compile Include="RockException.cs" />
+    <Compile Include="RockCompilationException.cs" />
+    <Compile Include="RockOptions.cs" />
+    <Compile Include="RockValidationException.cs" />
     <Compile Include="RockMaker.cs" />
     <Compile Include="SketchPad.cs" />
   </ItemGroup>
