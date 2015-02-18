@@ -1,57 +1,64 @@
-﻿using System;
-using System.IO;
-using System.Collections.Immutable;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Extensions;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Rocks
 {
 	internal static class RockMaker
 	{
-		internal static T Make<T>(Dictionary<string, Delegate> handlers)
-			where T : class
+		internal static Type Make(Type baseType, 
+			ReadOnlyDictionary<string, Delegate> handlers,
+         SortedSet<string> namespaces)
 		{
-			if (typeof(T).IsInterface)
+			if (baseType.IsInterface)
 			{
-				return RockMaker.MakeInterfaceMock<T>(new ReadOnlyDictionary<string, Delegate>(handlers));
+				return RockMaker.MakeInterfaceMock(baseType, handlers, namespaces);
 			}
 
-			return default(T);
+			return null;
 		}
 
-		private static T MakeInterfaceMock<T>(ReadOnlyDictionary<string, Delegate> handlers)
-			where T : class
+		private static Type MakeInterfaceMock(Type baseType,
+			ReadOnlyDictionary<string, Delegate> handlers,
+			SortedSet<string> namespaces)
 		{
-			var tType = typeof(T);
 			var rockMangledName = string.Format("Rock{0}", Guid.NewGuid().ToString("N"));
 
 			var generatedMethods = new List<string>();
 
-			foreach (var tMethod in tType.GetMethods())
+			foreach (var tMethod in baseType.GetMethods())
 			{
 				if (tMethod.ReturnType != typeof(void))
 				{
 					generatedMethods.Add(string.Format(Constants.CodeTemplates.FunctionMethodTemplate,
-						tMethod.GetMethodDescription(), RockMaker.GetArgumentNameList(tMethod), tMethod.ReturnType.FullName));
+						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(), 
+						tMethod.ReturnType.FullName));
 				}
 				else
 				{
 					generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-						tMethod.GetMethodDescription(), RockMaker.GetArgumentNameList(tMethod)));
+						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList()));
 				}
 			}
 
+			namespaces.Add(baseType.Namespace);
+			namespaces.Add("System");
+			namespaces.Add("System.Collections.ObjectModel");
+
 			var classCode = string.Format(Constants.CodeTemplates.ClassTemplate,
-				rockMangledName, tType.FullName,
+				string.Join(Environment.NewLine, 
+					(from @namespace in namespaces
+					select "using " + @namespace + ";")),
+				rockMangledName, baseType.Name,
 				string.Join(Environment.NewLine, generatedMethods));
 
-			// Now, compile with assembly references from T, and ImmutableDictionary, and mscorlib
+			// Now, compile with assembly references from object and T.
 			var tree = SyntaxFactory.ParseSyntaxTree(classCode);
 			var compilation = CSharpCompilation.Create(
 				"RockQuarry.dll",
@@ -60,7 +67,7 @@ namespace Rocks
 				references: new[]
 				{
 					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
-					MetadataReference.CreateFromAssembly(tType.Assembly)
+					MetadataReference.CreateFromAssembly(baseType.Assembly)
 				});
 
 			// New up
@@ -72,16 +79,7 @@ namespace Rocks
 			}
 
 			// And return.
-			var rockType = assembly.GetType(rockMangledName);
-			return Activator.CreateInstance(rockType, handlers) as T;
-    //     return Activator.CreateInstance(rockType, BindingFlags.NonPublic, 
-				//null, new[] { handlers }, 
-				//CultureInfo.CurrentCulture) as T;
+			return assembly.GetType(rockMangledName);
       }
-
-		private static string GetArgumentNameList(MethodInfo method)
-		{
-			return string.Join(", ", method.GetParameters().Select(_ => _.Name));
-		}
 	}
 }

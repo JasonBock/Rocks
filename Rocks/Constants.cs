@@ -14,7 +14,7 @@
 			public const string ActionMethodTemplate = @"
 public {0}
 {{
-	System.Delegate handler = null;
+	Delegate handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
@@ -22,24 +22,26 @@ public {0}
 	}}
 	else
 	{{
-		throw new System.NotImplementedException();
+		throw new NotImplementedException();
 	}}
 }}";
 
 			// 0 = mangled name
 			// 1 = interface name
 			public const string ClassTemplate = @"
-public sealed class {0}
-	: {1}
-{{
-	private System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Delegate> handlers;
+{0}
 
-	public {0}(System.Collections.ObjectModel.ReadOnlyDictionary<System.String, System.Delegate> handlers)
+public sealed class {1}
+	: {2}
+{{
+	private ReadOnlyDictionary<string, Delegate> handlers;
+
+	public {1}(ReadOnlyDictionary<string, Delegate> handlers)
 	{{
 		this.handlers = handlers;
 	}}
 
-	{2}
+	{3}
 }}";
 			// 0 = method name
 			// 1 = comma-separate list of argument names
@@ -47,7 +49,7 @@ public sealed class {0}
 			public const string FunctionMethodTemplate = @"
 public {0}
 {{
-	System.Delegate handler = null;
+	Delegate handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
@@ -55,7 +57,7 @@ public {0}
 	}}
 	else
 	{{
-		throw new System.NotImplementedException();
+		throw new NotImplementedException();
 	}}
 }}";
 

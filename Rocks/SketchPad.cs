@@ -21,6 +21,33 @@ namespace Rocks
 		public virtual int Bar(Guid a) { return a.GetHashCode(); }
 	}
 
+	public sealed class HandlerInfo
+	{
+		private int callCount;
+		private uint expectedCount;
+
+		public HandlerInfo(Delegate handler)
+			: this(handler, 1)
+		{ }
+
+		public HandlerInfo(Delegate handler, uint expectedCount)
+		{
+			this.Handler = handler;
+			this.expectedCount = expectedCount;
+		}
+
+		public Delegate Handler { get; private set; }
+		public void IncrementCallCount()
+		{
+			System.Threading.Interlocked.Increment(ref this.callCount);
+		}
+
+		public int CallCount
+		{
+			get { return this.callCount; }
+		}
+	}
+
 	public sealed class Rock57849
 		: Thing
 	{
