@@ -83,18 +83,22 @@ namespace Rocks
 					throw new RockCompilationException(results.Diagnostics);
 				}
 
-				return Assembly.Load(assemblyStream.GetBuffer());
+				return Assembly.Load(assemblyStream.GetBuffer(), pdbStream.GetBuffer());
 			}
 		}
 
 		private CSharpCompilation CreateCompilation(string classCode)
 		{
-			var tree = SyntaxFactory.SyntaxTree(
-				SyntaxFactory.ParseSyntaxTree(classCode).GetCompilationUnitRoot().NormalizeWhitespace());
+			var fileName = this.options.ShouldCreateCodeFile ?
+				this.mangledName + ".cs" : string.Empty;
+
+         var tree = SyntaxFactory.SyntaxTree(
+				SyntaxFactory.ParseSyntaxTree(classCode, path: fileName)
+				.GetCompilationUnitRoot().NormalizeWhitespace());
 
 			if (this.options.ShouldCreateCodeFile)
 			{
-				File.WriteAllText(this.mangledName + ".cs", tree.GetText().ToString());
+				File.WriteAllText(fileName, tree.GetText().ToString());
 			}
 
 			var compilation = CSharpCompilation.Create(
