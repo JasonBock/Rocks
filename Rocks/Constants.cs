@@ -19,7 +19,11 @@ public {0}
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
-		handler.Method.DynamicInvoke({1});
+		if(handler.Method != null)
+		{{
+			handler.Method.DynamicInvoke({1});
+		}}
+	
 		handler.IncrementCallCount();
 	}}
 	else
@@ -59,7 +63,9 @@ public {0}
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
-		var result = ({2})handler.Method.DynamicInvoke({1});
+		var result = handler.Method != null ?
+			handler.Method.DynamicInvoke({1}) as {2} :
+			default({2});
 		handler.IncrementCallCount();
 		return result;
 	}}

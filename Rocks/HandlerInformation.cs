@@ -9,16 +9,24 @@ namespace Rocks
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
 		private int callCount;
-		private uint expectedCount;
+		private uint expectedCallCount;
+
+		public HandlerInformation()
+			: this(null, 1)
+		{ }
 
 		public HandlerInformation(Delegate method)
 			: this(method, 1)
 		{ }
 
-		public HandlerInformation(Delegate method, uint expectedCount)
+		public HandlerInformation(uint expectedCallCount)
+			: this(null, 1)
+		{ }
+
+		public HandlerInformation(Delegate method, uint expectedCallCount)
 		{
 			this.Method = method;
-			this.expectedCount = expectedCount;
+			this.expectedCallCount = expectedCallCount;
 		}
 
 		public void IncrementCallCount()
@@ -30,10 +38,10 @@ namespace Rocks
 		{
 			var verifications = new List<string>();
 
-			if(this.expectedCount != this.callCount)
+			if(this.expectedCallCount != this.callCount)
 			{
 				verifications.Add(string.Format(HandlerInformation.ErrorExpectedCallCount,
-					this.expectedCount, this.callCount));
+					this.expectedCallCount, this.callCount));
 			}
 
 			return verifications.AsReadOnly();
