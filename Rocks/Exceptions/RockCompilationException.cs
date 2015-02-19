@@ -2,12 +2,23 @@
 using System.Runtime.Serialization;
 using System.Collections.Generic;
 
-namespace Rocks
+namespace Rocks.Exceptions
 {
 	[Serializable]
 	public sealed class RockVerificationException 
 		: Exception
 	{
+		public RockVerificationException()
+		{
+			this.Failures = new List<string>().AsReadOnly();
+		}
+
+		public RockVerificationException(string message)
+			: base(message)
+		{
+			this.Failures = new List<string>().AsReadOnly();
+		}
+
 		public RockVerificationException(IReadOnlyList<string> failures)
 		{
 			this.Failures = failures;
@@ -19,7 +30,13 @@ namespace Rocks
 			this.Failures = failures;
 		}
 
-		public RockVerificationException(IReadOnlyList<string> failures, string message, Exception inner) 
+		public RockVerificationException(string message, Exception inner) 
+			: base(message, inner)
+		{
+			this.Failures = new List<string>().AsReadOnly();
+		}
+
+		public RockVerificationException(IReadOnlyList<string> failures, string message, Exception inner)
 			: base(message, inner)
 		{
 			this.Failures = failures;

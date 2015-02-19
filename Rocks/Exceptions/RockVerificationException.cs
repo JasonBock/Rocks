@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Runtime.Serialization;
 using Microsoft.CodeAnalysis;
 
-namespace Rocks
+namespace Rocks.Exceptions
 {
 	[Serializable]
 	public sealed class RockCompilationException 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System;
 using System.Collections.Generic;

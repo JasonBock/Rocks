@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Rocks.Exceptions;
+using Rocks.Extensions;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

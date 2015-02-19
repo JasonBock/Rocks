@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Rocks
+namespace Rocks.Exceptions
 {
 	[Serializable]
 	public sealed class RockValidationException 

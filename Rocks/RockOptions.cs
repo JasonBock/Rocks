@@ -8,6 +8,14 @@ namespace Rocks
 			: this(OptimizationLevel.Release, false)
 		{ }
 
+		public RockOptions(OptimizationLevel level)
+			: this(level, false)
+		{ }
+
+		public RockOptions(bool shouldCreateCodeFile)
+			: this(OptimizationLevel.Release, shouldCreateCodeFile)
+		{ }
+
 		public RockOptions(OptimizationLevel level, bool shouldCreateCodeFile)
 		{
 			this.Level = level;

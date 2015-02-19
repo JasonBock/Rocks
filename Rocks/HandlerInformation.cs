@@ -20,7 +20,7 @@ namespace Rocks
 		{ }
 
 		public HandlerInformation(uint expectedCallCount)
-			: this(null, 1)
+			: this(null, expectedCallCount)
 		{ }
 
 		public HandlerInformation(Delegate method, uint expectedCallCount)

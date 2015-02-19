@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
 using NUnit.Framework;
-using Microsoft.CodeAnalysis;
+using Rocks.Exceptions;
+using System;
 
 namespace Rocks.Tests
 {
