@@ -1,34 +1,33 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.Runtime.Serialization;
-using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
 
 namespace Rocks
 {
 	[Serializable]
-	public sealed class RockCompilationException 
+	public sealed class RockVerificationException 
 		: Exception
 	{
-		public RockCompilationException(ImmutableArray<Diagnostic> diagnostics)
+		public RockVerificationException(IReadOnlyList<string> failures)
 		{
-			this.Diagnostics = diagnostics;
+			this.Failures = failures;
 		}
 
-		public RockCompilationException(ImmutableArray<Diagnostic> diagnostics, string message) 
+		public RockVerificationException(IReadOnlyList<string> failures, string message) 
 			: base(message)
 		{
-			this.Diagnostics = diagnostics;
+			this.Failures = failures;
 		}
 
-		public RockCompilationException(ImmutableArray<Diagnostic> diagnostics, string message, Exception inner) 
+		public RockVerificationException(IReadOnlyList<string> failures, string message, Exception inner) 
 			: base(message, inner)
 		{
-			this.Diagnostics = diagnostics;
+			this.Failures = failures;
 		}
 
-		protected RockCompilationException(SerializationInfo info, StreamingContext context) 
+		protected RockVerificationException(SerializationInfo info, StreamingContext context) 
 			: base(info, context) { }
 
-		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
+		public IReadOnlyList<string> Failures { get; private set; }
 	}
 }

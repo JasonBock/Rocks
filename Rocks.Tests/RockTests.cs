@@ -25,6 +25,42 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void Verify()
+		{
+			var rock = Rock.Create<ITest>();
+			rock.Handle<int>(
+				_ => _.Foo(default(int)),
+				a => { });
+
+			var chunk = rock.Make();
+			chunk.Foo(44);
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void VerifyWhenMethodIsNotCalled()
+		{
+			var rock = Rock.Create<ITest>();
+			rock.Handle<int>(
+				_ => _.Foo(default(int)),
+				a => { });
+
+			var chunk = rock.Make();
+
+			Assert.Throws<RockVerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void RunWhenMethodIsCalledWithoutHandle()
+		{
+			var rock = Rock.Create<ITest>();
+			var chunk = rock.Make();
+
+			Assert.Throws<NotImplementedException>(() => chunk.Foo(44));
+		}
+
+		[Test]
 		public void RunWithDebug()
 		{
 			var rock = Rock.Create<ITestDebug>(

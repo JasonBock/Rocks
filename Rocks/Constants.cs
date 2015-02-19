@@ -5,6 +5,7 @@
 		public static class ErrorMessages
 		{
 			public const string CannotMockSealedType = "Cannot mock the sealed type {0}.";
+			public const string VerificationFailed = "Type: {0}, method: {1}, message: {2}.";
 		}
 
 		public static class CodeTemplates
@@ -14,11 +15,12 @@
 			public const string ActionMethodTemplate = @"
 public {0}
 {{
-	Delegate handler = null;
+	HandlerInformation handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
-		handler.DynamicInvoke({1});
+		handler.Method.DynamicInvoke({1});
+		handler.IncrementCallCount();
 	}}
 	else
 	{{
@@ -31,16 +33,21 @@ public {0}
 			public const string ClassTemplate = @"{0}
 
 public sealed class {1}
-	: {2}
+	: {2}, IRock
 {{
-	private ReadOnlyDictionary<string, Delegate> handlers;
+	private ReadOnlyDictionary<string, HandlerInformation> handlers;
 
-	public {1}(ReadOnlyDictionary<string, Delegate> handlers)
+	public {1}(ReadOnlyDictionary<string, HandlerInformation> handlers)
 	{{
 		this.handlers = handlers;
 	}}
 
 	{3}
+
+	ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
+	{{
+		get {{ return this.handlers; }}
+	}}
 }}";
 			// 0 = method name
 			// 1 = comma-separate list of argument names
@@ -48,11 +55,13 @@ public sealed class {1}
 			public const string FunctionMethodTemplate = @"
 public {0}
 {{
-	Delegate handler = null;
+	HandlerInformation handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
 	{{
-		return ({2})handler.DynamicInvoke({1});
+		var result = ({2})handler.Method.DynamicInvoke({1});
+		handler.IncrementCallCount();
+		return result;
 	}}
 	else
 	{{

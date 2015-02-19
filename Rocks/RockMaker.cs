@@ -15,14 +15,14 @@ namespace Rocks
 	{
 		private string mangledName = string.Format("Rock{0}", Guid.NewGuid().ToString("N"));
 		private Type baseType;
-		private ReadOnlyDictionary<string, Delegate> handlers;
+		private ReadOnlyDictionary<string, HandlerInformation> handlers;
 		private SortedSet<string> namespaces;
 		private RockOptions options;
 
 		internal Type Mock { get; private set; }
 
 		internal RockMaker(Type baseType,
-			ReadOnlyDictionary<string, Delegate> handlers,
+			ReadOnlyDictionary<string, HandlerInformation> handlers,
 			SortedSet<string> namespaces, RockOptions options)
 		{
 			this.baseType = baseType;
@@ -56,8 +56,10 @@ namespace Rocks
 			}
 
 			this.namespaces.Add(baseType.Namespace);
-			this.namespaces.Add("System");
-			this.namespaces.Add("System.Collections.ObjectModel");
+			this.namespaces.Add(typeof(IRock).Namespace);
+			this.namespaces.Add(typeof(HandlerInformation).Namespace);
+			this.namespaces.Add(typeof(string).Namespace);
+			this.namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
 
 			var classCode = string.Format(Constants.CodeTemplates.ClassTemplate,
 				string.Join(Environment.NewLine,
@@ -93,9 +95,10 @@ namespace Rocks
 			var fileName = this.options.ShouldCreateCodeFile ?
 				Path.Combine(Directory.GetCurrentDirectory(), this.mangledName + ".cs") : string.Empty;
 
-         var tree = SyntaxFactory.SyntaxTree(
-				SyntaxFactory.ParseSyntaxTree(classCode, path: fileName, encoding: new UTF8Encoding(false, true))
-				.GetCompilationUnitRoot().NormalizeWhitespace());
+			var tree = SyntaxFactory.SyntaxTree(
+				SyntaxFactory.ParseSyntaxTree(classCode)
+					.GetCompilationUnitRoot().NormalizeWhitespace(), 
+				path: fileName, encoding: new UTF8Encoding(false, true));
 
 			if (this.options.ShouldCreateCodeFile)
 			{
@@ -111,6 +114,7 @@ namespace Rocks
 				references: new[]
 				{
 					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
+					MetadataReference.CreateFromAssembly(typeof(IRock).Assembly),
 					MetadataReference.CreateFromAssembly(this.baseType.Assembly)
 				});
 

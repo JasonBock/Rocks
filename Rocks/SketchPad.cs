@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Rocks")]
 
-namespace Rocks
+namespace Rocks.SketchPad
 {
 	public interface IThing
 	{
@@ -21,35 +22,26 @@ namespace Rocks
 		public virtual int Bar(Guid a) { return a.GetHashCode(); }
 	}
 
-	public sealed class HandlerInfo
+	internal interface IRock
 	{
-		private int callCount;
-		private uint expectedCount;
+		ReadOnlyDictionary<string, HandlerInformation> Handlers { get; }
+	}
 
-		public HandlerInfo(Delegate handler)
-			: this(handler, 1)
-		{ }
+	public interface ISomething
+	{
+		ReadOnlyDictionary<string, HandlerInformation> Handlers { get; }
+	}
 
-		public HandlerInfo(Delegate handler, uint expectedCount)
+	public static class UseRock
+	{
+		public static void UseIt()
 		{
-			this.Handler = handler;
-			this.expectedCount = expectedCount;
-		}
-
-		public Delegate Handler { get; private set; }
-		public void IncrementCallCount()
-		{
-			System.Threading.Interlocked.Increment(ref this.callCount);
-		}
-
-		public int CallCount
-		{
-			get { return this.callCount; }
+			var r = new Rock57849(new ReadOnlyDictionary<string, Delegate>(new Dictionary<string, Delegate>()), 1);
 		}
 	}
 
 	public sealed class Rock57849
-		: Thing
+		: Thing, ISomething, IRock
 	{
 		private ReadOnlyDictionary<string, Delegate> handlers;
 
@@ -63,6 +55,22 @@ namespace Rocks
 			: base(b, c)
 		{
 			this.handlers = handlers;
+		}
+
+		public ReadOnlyDictionary<string, HandlerInformation> Handlers
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
+		{
+			get
+			{
+				throw new NotImplementedException();
+			}
 		}
 
 		public override int Bar(Guid a)
