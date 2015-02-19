@@ -107,6 +107,7 @@
     <Compile Include="Exceptions\ExceptionTests.cs" />
     <Compile Include="Exceptions\RockValidationExceptionTests.cs" />
     <Compile Include="HandleActionNoArgumentsTests.cs" />
+    <Compile Include="HandlerInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RockTests.cs" />
   </ItemGroup>
