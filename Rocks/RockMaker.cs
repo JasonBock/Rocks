@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Rocks
 {
@@ -90,10 +91,10 @@ namespace Rocks
 		private CSharpCompilation CreateCompilation(string classCode)
 		{
 			var fileName = this.options.ShouldCreateCodeFile ?
-				this.mangledName + ".cs" : string.Empty;
+				Path.Combine(Directory.GetCurrentDirectory(), this.mangledName + ".cs") : string.Empty;
 
          var tree = SyntaxFactory.SyntaxTree(
-				SyntaxFactory.ParseSyntaxTree(classCode, path: fileName)
+				SyntaxFactory.ParseSyntaxTree(classCode, path: fileName, encoding: new UTF8Encoding(false, true))
 				.GetCompilationUnitRoot().NormalizeWhitespace());
 
 			if (this.options.ShouldCreateCodeFile)
