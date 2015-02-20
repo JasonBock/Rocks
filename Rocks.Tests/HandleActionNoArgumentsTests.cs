@@ -36,7 +36,7 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithExpectedCallCount()
 		{
-			var rock = Rock.Create<IHandleActionNoArgumentsTests>(new RockOptions(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
+			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
 			rock.Handle(_ => _.Target(), 2);
 
 			var chunk = rock.Make();
@@ -47,7 +47,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWIthHandlerAndExpectedCallCount()
+		public void MakeWithHandlerAndExpectedCallCount()
 		{
 			var wasCalled = false;
 

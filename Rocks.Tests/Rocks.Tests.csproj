@@ -106,6 +106,10 @@
   <ItemGroup>
     <Compile Include="Exceptions\ExceptionTests.cs" />
     <Compile Include="Exceptions\RockValidationExceptionTests.cs" />
+    <Compile Include="HandleAction4ArgumentTests.cs" />
+    <Compile Include="HandleAction3ArgumentTests.cs" />
+    <Compile Include="HandleAction2ArgumentTests.cs" />
+    <Compile Include="HandleAction1ArgumentTests.cs" />
     <Compile Include="HandleActionNoArgumentsTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

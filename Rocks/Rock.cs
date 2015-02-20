@@ -78,16 +78,16 @@ namespace Rocks
 				new HandlerInformation();
 		}
 
-		public void Handle(Expression<Action<T>> expression, Action handler)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] = 
-				new HandlerInformation(handler);
-		}
-
 		public void Handle(Expression<Action<T>> expression, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(expectedCallCount);
+		}
+
+		public void Handle(Expression<Action<T>> expression, Action handler)
+		{
+			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation(handler);
 		}
 
 		public void Handle(Expression<Action<T>> expression, Action handler, uint expectedCallCount)
@@ -96,22 +96,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<T1>(Expression<Action<T>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<T1>(Expression<Action<T>> expression, Action<T1> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<T1>(Expression<Action<T>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<T1>(Expression<Action<T>> expression, Action<T1> handler, uint expectedCallCount)
@@ -120,22 +108,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<T1, T2>(Expression<Action<T>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<T1, T2>(Expression<Action<T>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler, uint expectedCallCount)
@@ -144,22 +120,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<T1, T2, T3>(Expression<Action<T>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<T1, T2, T3>(Expression<Action<T>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler, uint expectedCallCount)
@@ -168,22 +132,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<T1, T2, T3, T4>(Expression<Action<T>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<T1, T2, T3, T4>(Expression<Action<T>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler, uint expectedCallCount)
@@ -216,22 +168,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<TResult, T1>(Expression<Func<T, TResult>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<TResult, T1>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<TResult, T1>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<TResult, T1>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler, uint expectedCallCount)
@@ -240,22 +180,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<TResult, T1, T2>(Expression<Func<T, TResult>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<TResult, T1, T2>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<TResult, T1, T2>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<TResult, T1, T2>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler, uint expectedCallCount)
@@ -264,22 +192,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<TResult, T1, T2, T3>(Expression<Func<T, TResult>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<TResult, T1, T2, T3>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<TResult, T1, T2, T3>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<TResult, T1, T2, T3>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler, uint expectedCallCount)
@@ -288,22 +204,10 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
-		public void Handle<TResult, T1, T2, T3, T4>(Expression<Func<T, TResult>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
 		public void Handle<TResult, T1, T2, T3, T4>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler);
-		}
-
-		public void Handle<TResult, T1, T2, T3, T4>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void Handle<TResult, T1, T2, T3, T4>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler, uint expectedCallCount)
