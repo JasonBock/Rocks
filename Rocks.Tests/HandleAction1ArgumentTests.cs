@@ -9,10 +9,10 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction1ArgumentTests>();
-			rock.HandleAction(_ => _.Target(44));
+			rock.Handle(_ => _.Target(default(int)));
 
 			var chunk = rock.Make();
-			chunk.Target(44);
+			chunk.Target(1);
 
 			rock.Verify();
 		}
@@ -20,28 +20,28 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandler()
 		{
-			var wasCalled = false;
+			var argumentA = 0;
 
 			var rock = Rock.Create<IHandleAction1ArgumentTests>();
-			rock.HandleAction<int>(_ => _.Target(44),
-				a => wasCalled = true);
+			rock.HandleAction<int>(_ => _.Target(default(int)),
+				a => argumentA = a);
 
 			var chunk = rock.Make();
-			chunk.Target(44);
+			chunk.Target(1);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 
 		[Test]
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction1ArgumentTests>();
-			rock.HandleAction(_ => _.Target(44), 2);
+			rock.Handle(_ => _.Target(default(int)), 2);
 
 			var chunk = rock.Make();
-			chunk.Target(44);
-			chunk.Target(44);
+			chunk.Target(1);
+			chunk.Target(2);
 
 			rock.Verify();
 		}
@@ -49,18 +49,19 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandlerAndExpectedCallCount()
 		{
-			var wasCalled = false;
+			var argumentA = 0;
 
 			var rock = Rock.Create<IHandleAction1ArgumentTests>();
-			rock.HandleAction<int>(_ => _.Target(44),
-				a => wasCalled = true, 2);
+			rock.HandleAction<int>(_ => _.Target(default(int)),
+				a => argumentA = a, 2);
 
 			var chunk = rock.Make();
-			chunk.Target(44);
-			chunk.Target(44);
+			chunk.Target(1);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			chunk.Target(2);
+			Assert.AreEqual(2, argumentA, nameof(argumentA));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 	}
 

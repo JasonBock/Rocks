@@ -9,8 +9,8 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleFunc1ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(44));
-			rock.HandleFunc(_ => _.ValueTarget(44));
+			rock.Handle(_ => _.ReferenceTarget(44));
+			rock.Handle(_ => _.ValueTarget(44));
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(44);
@@ -42,8 +42,8 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFunc1ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(44), 2);
-			rock.HandleFunc(_ => _.ValueTarget(44), 2);
+			rock.Handle(_ => _.ReferenceTarget(44), 2);
+			rock.Handle(_ => _.ValueTarget(44), 2);
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(44);

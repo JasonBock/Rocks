@@ -72,13 +72,13 @@ namespace Rocks
 			this.options = options;
 		}
 
-		public void HandleAction(Expression<Action<T>> expression)
+		public void Handle(Expression<Action<T>> expression)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation();
 		}
 
-		public void HandleAction(Expression<Action<T>> expression, uint expectedCallCount)
+		public void Handle(Expression<Action<T>> expression, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(expectedCallCount);
@@ -142,18 +142,6 @@ namespace Rocks
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler, expectedCallCount);
-		}
-
-		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation();
-		}
-
-		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
-		{
-			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(expectedCallCount);
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)

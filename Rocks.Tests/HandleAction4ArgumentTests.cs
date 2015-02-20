@@ -9,10 +9,10 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.HandleAction(_ => _.Target(44, 44, 44, 44));
+			rock.Handle(_ => _.Target(default(int), default(int), default(int), default(int)));
 
 			var chunk = rock.Make();
-			chunk.Target(44, 44, 44, 44);
+			chunk.Target(1, 2, 3, 4);
 
 			rock.Verify();
 		}
@@ -20,28 +20,34 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandler()
 		{
-			var wasCalled = false;
+			var argumentA = 0;
+			var argumentB = 0;
+			var argumentC = 0;
+			var argumentD = 0;
 
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.HandleAction<int, int, int, int>(_ => _.Target(44, 44, 44, 44),
-				(a, b, c, d) => wasCalled = true);
+			rock.HandleAction<int, int, int, int>(_ => _.Target(default(int), default(int), default(int), default(int)),
+				(a, b, c, d) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; });
 
 			var chunk = rock.Make();
-			chunk.Target(44, 44, 44, 44);
+			chunk.Target(1, 2, 3, 4);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.AreEqual(2, argumentB, nameof(argumentB));
+			Assert.AreEqual(3, argumentC, nameof(argumentC));
+			Assert.AreEqual(4, argumentD, nameof(argumentD));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 
 		[Test]
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.HandleAction(_ => _.Target(44, 44, 44, 44), 2);
+			rock.Handle(_ => _.Target(default(int), default(int), default(int), default(int)), 2);
 
 			var chunk = rock.Make();
-			chunk.Target(44, 44, 44, 44);
-			chunk.Target(44, 44, 44, 44);
+			chunk.Target(1, 2, 3, 4);
+			chunk.Target(1, 2, 3, 4);
 
 			rock.Verify();
 		}
@@ -49,18 +55,28 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandlerAndExpectedCallCount()
 		{
-			var wasCalled = false;
+			var argumentA = 0;
+			var argumentB = 0;
+			var argumentC = 0;
+			var argumentD = 0;
 
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.HandleAction<int, int, int, int>(_ => _.Target(44, 44, 44, 44),
-				(a, b, c, d) => wasCalled = true, 2);
+			rock.HandleAction<int, int, int, int>(_ => _.Target(default(int), default(int), default(int), default(int)),
+				(a, b, c, d) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; }, 2);
 
 			var chunk = rock.Make();
-			chunk.Target(44, 44, 44, 44);
-			chunk.Target(44, 44, 44, 44);
+			chunk.Target(1, 2, 3, 4);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.AreEqual(2, argumentB, nameof(argumentB));
+			Assert.AreEqual(3, argumentC, nameof(argumentC));
+			Assert.AreEqual(4, argumentD, nameof(argumentD));
+			chunk.Target(10, 20, 30, 40);
+			Assert.AreEqual(10, argumentA, nameof(argumentA));
+			Assert.AreEqual(20, argumentB, nameof(argumentB));
+			Assert.AreEqual(30, argumentC, nameof(argumentC));
+			Assert.AreEqual(40, argumentD, nameof(argumentD));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 	}
 
