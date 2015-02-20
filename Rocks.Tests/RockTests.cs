@@ -12,10 +12,10 @@ namespace Rocks.Tests
 		public void Run()
 		{
 			var rock = Rock.Create<ITest>();
-			rock.Handle<int>(
+			rock.HandleAction<int>(
 				_ => _.Foo(default(int)),
 				a => { });
-			rock.Handle<string, Guid, int>(
+			rock.HandleFunc<Guid, int, string>(
 				_ => _.Bar(default(Guid), default(int)),
 				(a, b) => { return a.ToString() + " - " + b.ToString(); });
 
@@ -29,7 +29,7 @@ namespace Rocks.Tests
 		public void Verify()
 		{
 			var rock = Rock.Create<ITest>();
-			rock.Handle<int>(
+			rock.HandleAction<int>(
 				_ => _.Foo(default(int)),
 				a => { });
 
@@ -43,7 +43,7 @@ namespace Rocks.Tests
 		public void VerifyWhenMethodIsNotCalled()
 		{
 			var rock = Rock.Create<ITest>();
-			rock.Handle<int>(
+			rock.HandleAction<int>(
 				_ => _.Foo(default(int)),
 				a => { });
 
@@ -66,10 +66,10 @@ namespace Rocks.Tests
 		{
 			var rock = Rock.Create<ITestDebug>(
 				new RockOptions(OptimizationLevel.Debug, true));
-			rock.Handle<int>(
+			rock.HandleAction<int>(
 				_ => _.Foo(default(int)),
 				a => { });
-			rock.Handle<string, Guid, int>(
+			rock.HandleFunc<Guid, int, string>(
 				_ => _.Bar(default(Guid), default(int)),
 				(a, b) => { return a.ToString() + " - " + b.ToString(); });
 

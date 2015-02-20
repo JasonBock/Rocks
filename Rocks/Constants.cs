@@ -56,7 +56,7 @@ public sealed class {1}
 			// 0 = method name
 			// 1 = comma-separate list of argument names
 			// 2 = return type name
-			public const string FunctionMethodTemplate = @"
+			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = @"
 public {0}
 {{
 	HandlerInformation handler = null;
@@ -65,6 +65,27 @@ public {0}
 	{{
 		var result = handler.Method != null ?
 			handler.Method.DynamicInvoke({1}) as {2} :
+			default({2});
+		handler.IncrementCallCount();
+		return result;
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = return type name
+			public const string FunctionWithValueTypeReturnValueMethodTemplate = @"
+public {0}
+{{
+	HandlerInformation handler = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out handler))
+	{{
+		var result = handler.Method != null ?
+			({2})handler.Method.DynamicInvoke({1}) :
 			default({2});
 		handler.IncrementCallCount();
 		return result;

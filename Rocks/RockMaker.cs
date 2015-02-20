@@ -45,7 +45,9 @@ namespace Rocks
 			{
 				if (tMethod.ReturnType != typeof(void))
 				{
-					generatedMethods.Add(string.Format(Constants.CodeTemplates.FunctionMethodTemplate,
+					generatedMethods.Add(string.Format(tMethod.ReturnType.IsValueType ?
+                     Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
+							Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
 						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(),
 						tMethod.ReturnType.Name));
 				}
