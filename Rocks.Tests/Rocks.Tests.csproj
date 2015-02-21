@@ -110,12 +110,15 @@
     <Compile Include="HandleAction3ArgumentTests.cs" />
     <Compile Include="HandleAction2ArgumentTests.cs" />
     <Compile Include="HandleAction1ArgumentTests.cs" />
+    <Compile Include="HandleFunc4ArgumentTests.cs" />
+    <Compile Include="HandleFunc3ArgumentTests.cs" />
+    <Compile Include="HandleFunc2ArgumentTests.cs" />
     <Compile Include="HandleFunc1ArgumentTests.cs" />
     <Compile Include="HandleFuncNoArgumentsTests.cs" />
     <Compile Include="HandleActionNoArgumentsTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RockTests.cs" />
+    <Compile Include="VerificationTests.cs" />
     <Compile Include="SetupFixture.cs" />
   </ItemGroup>
   <ItemGroup>

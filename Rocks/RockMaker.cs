@@ -109,7 +109,7 @@ namespace Rocks
 			}
 
 			var compilation = CSharpCompilation.Create(
-				"RockQuarry.dll",
+				"RockQuarry",
 				options: new CSharpCompilationOptions(
 					OutputKind.DynamicallyLinkedLibrary,
 					optimizationLevel: this.options.Level),

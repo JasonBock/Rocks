@@ -2,7 +2,7 @@
 
 namespace Rocks
 {
-	public interface IRock
+	internal interface IRock
 	{
 		ReadOnlyDictionary<string, HandlerInformation> Handlers { get; }
 	}

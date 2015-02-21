@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -22,20 +23,20 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandler()
 		{
-			var wasCalled = false;
+			var stringReturnValue = "a";
+			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
 			rock.HandleFunc(_ => _.ReferenceTarget(),
-				() => { wasCalled = true; return null; });
+				() => { return stringReturnValue; });
 			rock.HandleFunc(_ => _.ValueTarget(),
-				() => { wasCalled = true; return 0; });
+				() => { return intReturnValue; });
 
 			var chunk = rock.Make();
-			chunk.ReferenceTarget();
-			chunk.ValueTarget();
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 
 		[Test]
@@ -57,22 +58,22 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithHandlerAndExpectedCallCount()
 		{
-			var wasCalled = false;
+			var stringReturnValue = "a";
+			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
 			rock.HandleFunc(_ => _.ReferenceTarget(),
-				() => { wasCalled = true; return null; }, 2);
+				() => { return stringReturnValue; }, 2);
 			rock.HandleFunc(_ => _.ValueTarget(),
-				() => { wasCalled = true; return 0; }, 2);
+				() => { return intReturnValue; }, 2);
 
 			var chunk = rock.Make();
-			chunk.ReferenceTarget();
-			chunk.ReferenceTarget();
-			chunk.ValueTarget();
-			chunk.ValueTarget();
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
 
 			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 	}
 

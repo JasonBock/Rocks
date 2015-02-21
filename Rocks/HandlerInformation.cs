@@ -10,30 +10,30 @@ namespace Rocks
 
 		private int callCount;
 
-		public HandlerInformation()
+		internal HandlerInformation()
 			: this(null, 1)
 		{ }
 
-		public HandlerInformation(Delegate method)
+		internal HandlerInformation(Delegate method)
 			: this(method, 1)
 		{ }
 
-		public HandlerInformation(uint ExpectedCallCount)
+		internal HandlerInformation(uint ExpectedCallCount)
 			: this(null, ExpectedCallCount)
 		{ }
 
-		public HandlerInformation(Delegate method, uint expectedCallCount)
+		internal HandlerInformation(Delegate method, uint expectedCallCount)
 		{
 			this.Method = method;
 			this.ExpectedCallCount = expectedCallCount;
 		}
 
-		public void IncrementCallCount()
+		internal void IncrementCallCount()
 		{
 			Interlocked.Increment(ref this.callCount);
 		}
 
-		public IReadOnlyList<string> Verify()
+		internal IReadOnlyList<string> Verify()
 		{
 			var verifications = new List<string>();
 
@@ -46,12 +46,12 @@ namespace Rocks
 			return verifications.AsReadOnly();
 		}
 
-		public int CallCount
+		internal int CallCount
 		{
 			get { return this.callCount; }
 		}
 
-		public uint ExpectedCallCount { get; private set; }
-		public Delegate Method { get; private set; }
+		internal uint ExpectedCallCount { get; private set; }
+		internal Delegate Method { get; private set; }
 	}
 }
