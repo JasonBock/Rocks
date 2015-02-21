@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Rocks
 {
-	public sealed class HandlerInformation
+	public class HandlerInformation
 	{
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
@@ -18,8 +18,8 @@ namespace Rocks
 			: this(method, 1)
 		{ }
 
-		internal HandlerInformation(uint ExpectedCallCount)
-			: this(null, ExpectedCallCount)
+		internal HandlerInformation(uint expectedCallCount)
+			: this(null, expectedCallCount)
 		{ }
 
 		internal HandlerInformation(Delegate method, uint expectedCallCount)

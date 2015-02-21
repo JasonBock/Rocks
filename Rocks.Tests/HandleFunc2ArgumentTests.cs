@@ -9,8 +9,8 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.Handle(_ => _.ReferenceTarget(default(int), default(int)));
-			rock.Handle(_ => _.ValueTarget(default(int), default(int)));
+			rock.HandleFunc(_ => _.ReferenceTarget(default(int), default(int)));
+			rock.HandleFunc(_ => _.ValueTarget(default(int), default(int)));
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2);
@@ -48,8 +48,8 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.Handle(_ => _.ReferenceTarget(default(int), default(int)), 2);
-			rock.Handle(_ => _.ValueTarget(default(int), default(int)), 2);
+			rock.HandleFunc(_ => _.ReferenceTarget(default(int), default(int)), 2);
+			rock.HandleFunc(_ => _.ValueTarget(default(int), default(int)), 2);
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2);

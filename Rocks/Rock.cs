@@ -72,13 +72,13 @@ namespace Rocks
 			this.options = options;
 		}
 
-		public void Handle(Expression<Action<T>> expression)
+		public void HandleAction(Expression<Action<T>> expression)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation();
 		}
 
-		public void Handle(Expression<Action<T>> expression, uint expectedCallCount)
+		public void HandleAction(Expression<Action<T>> expression, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(expectedCallCount);
@@ -144,64 +144,78 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
+		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
+		{
+			var handler = new HandlerInformation<TResult>();
+         this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] = handler;
+			return new ReturnValue<TResult>(handler);
+		}
+
+		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
+		{
+			var handler = new HandlerInformation<TResult>(expectedCallCount);
+			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] = handler;
+			return new ReturnValue<TResult>(handler);
+		}
+
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler);
+				new HandlerInformation<TResult>(handler);
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler, expectedCallCount);
+				new HandlerInformation<TResult>(handler, expectedCallCount);
 		}
 
 		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler);
+				new HandlerInformation<TResult>(handler);
 		}
 
 		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler, expectedCallCount);
+				new HandlerInformation<TResult>(handler, expectedCallCount);
 		}
 
 		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler);
+				new HandlerInformation<TResult>(handler);
 		}
 
 		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler, expectedCallCount);
+				new HandlerInformation<TResult>(handler, expectedCallCount);
 		}
 
 		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler);
+				new HandlerInformation<TResult>(handler);
 		}
 
 		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler, expectedCallCount);
+				new HandlerInformation<TResult>(handler, expectedCallCount);
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler);
+				new HandlerInformation<TResult>(handler);
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler, uint expectedCallCount)
 		{
 			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
-				new HandlerInformation(handler, expectedCallCount);
+				new HandlerInformation<TResult>(handler, expectedCallCount);
 		}
 
 		public T Make()

@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.Handle(_ => _.Target(default(int), default(int), default(int), default(int)));
+			rock.HandleAction(_ => _.Target(default(int), default(int), default(int), default(int)));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4);
@@ -43,7 +43,7 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction4ArgumentTests>();
-			rock.Handle(_ => _.Target(default(int), default(int), default(int), default(int)), 2);
+			rock.HandleAction(_ => _.Target(default(int), default(int), default(int), default(int)), 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4);

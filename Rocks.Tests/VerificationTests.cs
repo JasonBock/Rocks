@@ -1,7 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rocks.Exceptions;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
@@ -9,10 +10,24 @@ namespace Rocks.Tests
 	public sealed class VerificationTests
 	{
 		[Test]
+		public void TryThis()
+		{
+			var handlers = new Dictionary<string, HandlerInformation>();
+			handlers.Add("x", new HandlerInformation<int> { ReturnValue = 42 });
+
+			var roHandlers = new ReadOnlyDictionary<string, HandlerInformation>(handlers);
+
+			HandlerInformation rvHandler = null;
+			roHandlers.TryGetValue("x", out rvHandler);
+
+			Assert.AreEqual(42, (rvHandler as HandlerInformation<int>).ReturnValue);
+		}
+
+		[Test]
 		public void Verify()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.Handle(_ => _.Target());
+			rock.HandleAction(_ => _.Target());
 
 			var chunk = rock.Make();
 			chunk.Target();
@@ -24,7 +39,7 @@ namespace Rocks.Tests
 		public void VerifyWhenMethodIsNotCalled()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.Handle(_ => _.Target());
+			rock.HandleAction(_ => _.Target());
 
 			var chunk = rock.Make();
 
@@ -35,7 +50,7 @@ namespace Rocks.Tests
 		public void VerifyWhenExpectedCallCountIsInvalid()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.Handle(_ => _.Target());
+			rock.HandleAction(_ => _.Target());
 
 			var chunk = rock.Make();
 			chunk.Target();

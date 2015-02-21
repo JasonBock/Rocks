@@ -116,8 +116,10 @@
     <Compile Include="HandleFunc1ArgumentTests.cs" />
     <Compile Include="HandleFuncNoArgumentsTests.cs" />
     <Compile Include="HandleActionNoArgumentsTests.cs" />
+    <Compile Include="HandlerInformationOfTTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReturnValueTests.cs" />
     <Compile Include="VerificationTests.cs" />
     <Compile Include="SetupFixture.cs" />
   </ItemGroup>

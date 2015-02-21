@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace Rocks.Tests
 {
@@ -10,12 +9,29 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
-			rock.Handle(_ => _.ReferenceTarget());
-			rock.Handle(_ => _.ValueTarget());
+			rock.HandleFunc(_ => _.ReferenceTarget());
+			rock.HandleFunc(_ => _.ValueTarget());
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget();
 			chunk.ValueTarget();
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithReturnValue()
+		{
+			var stringReturnValue = "a";
+			var intReturnValue = 1;
+
+			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
+			rock.HandleFunc(_ => _.ReferenceTarget()).Returns(stringReturnValue);
+			rock.HandleFunc(_ => _.ValueTarget()).Returns(intReturnValue);
+
+			var chunk = rock.Make();
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}
@@ -43,14 +59,33 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
-			rock.Handle(_ => _.ReferenceTarget(), 2);
-			rock.Handle(_ => _.ValueTarget(), 2);
+			rock.HandleFunc(_ => _.ReferenceTarget(), 2);
+			rock.HandleFunc(_ => _.ValueTarget(), 2);
 
 			var chunk = rock.Make();
-			chunk.ReferenceTarget();
-			chunk.ReferenceTarget();
-			chunk.ValueTarget();
-			chunk.ValueTarget();
+			Assert.AreEqual(default(string), chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(default(string), chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(default(int), chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.AreEqual(default(int), chunk.ValueTarget(), nameof(chunk.ValueTarget));
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithExpectedCallCountAndReturnValue()
+		{
+			var stringReturnValue = "a";
+			var intReturnValue = 1;
+
+			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
+			rock.HandleFunc(_ => _.ReferenceTarget(), 2).Returns(stringReturnValue);
+			rock.HandleFunc(_ => _.ValueTarget(), 2).Returns(intReturnValue);
+
+			var chunk = rock.Make();
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}

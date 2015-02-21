@@ -65,7 +65,7 @@ public {0}
 	{{
 		var result = handler.Method != null ?
 			handler.Method.DynamicInvoke({1}) as {2} :
-			default({2});
+			(handler as HandlerInformation<{2}>).ReturnValue;
 		handler.IncrementCallCount();
 		return result;
 	}}
@@ -86,7 +86,7 @@ public {0}
 	{{
 		var result = handler.Method != null ?
 			({2})handler.Method.DynamicInvoke({1}) :
-			default({2});
+			(handler as HandlerInformation<{2}>).ReturnValue;
 		handler.IncrementCallCount();
 		return result;
 	}}
