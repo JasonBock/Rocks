@@ -13,9 +13,14 @@ namespace Rocks.Extensions
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
+			if(@this.IsGenericMethod)
+			{
+				@this = @this.GetGenericMethodDefinition();
+			}
+
 			namespaces.Add(@this.ReturnType.Namespace);
          var returnType = @this.ReturnType == typeof(void) ?
-				"void" : @this.ReturnType.Name;
+				"void" :  @this.ReturnType.Name;
 
 			var methodName = @this.Name;
 			var genericsArguments = @this.IsGenericMethod ?

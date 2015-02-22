@@ -21,6 +21,9 @@ namespace Rocks.Sketchpad
 			var methodThatUsesItsOwnGeneric = genericType.GetMethod(methodThatUsesItsOwnGenericName);
 			Console.Out.WriteLine(nameof(methodThatUsesItsOwnGeneric.IsGenericMethod) + ": " + methodThatUsesItsOwnGeneric.IsGenericMethod);
 			Console.Out.WriteLine(nameof(methodThatUsesItsOwnGeneric.IsGenericMethodDefinition) + ": " + methodThatUsesItsOwnGeneric.IsGenericMethodDefinition);
+			var methodThatUsesItsOwnGenericConstructed = methodThatUsesItsOwnGeneric.MakeGenericMethod(typeof(int));
+			Console.Out.WriteLine(nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethod) + ": " + methodThatUsesItsOwnGenericConstructed.IsGenericMethod);
+			Console.Out.WriteLine(nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition) + ": " + methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition);
 			Program.ShowGenericAttributes(methodThatUsesItsOwnGeneric);
 			Console.Out.WriteLine();
 
@@ -47,6 +50,9 @@ namespace Rocks.Sketchpad
 		{
 			foreach (var genericArgument in methodThatUsesItsOwnGeneric.GetGenericArguments())
 			{
+				Console.Out.WriteLine(nameof(genericArgument.IsInterface) + ": " + genericArgument.IsInterface);
+				Console.Out.WriteLine(nameof(genericArgument.IsClass) + ": " + genericArgument.IsClass);
+				Console.Out.WriteLine(nameof(genericArgument.IsValueType) + ": " + genericArgument.IsValueType);
 				Console.Out.WriteLine(Program.ListGenericParameterAttributes(genericArgument));
 				Console.Out.WriteLine(genericArgument.Name);
 				foreach (var constraint in genericArgument.GetGenericParameterConstraints())

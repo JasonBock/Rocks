@@ -10,7 +10,7 @@ namespace Rocks.Sketchpad
 		void MethodThatUsesT(T a, int b, T c);
 		void MethodThatUsesItsOwnGeneric<U>(T a, U b);
 		void MethodThatUsesItsOwnGenericWithNonTypeConstraints<U>(T a, U b)
-			where U : class, new();
+			where U : struct;
 		void MethodThatUsesItsOwnGenericWithTypeConstraints<U>(T a, U b)
 			where U : IBaseConstraint;
 	}
@@ -23,7 +23,7 @@ namespace Rocks.Sketchpad
 		}
 
 		public void MethodThatUsesItsOwnGenericWithNonTypeConstraints<U>(string a, U b) 
-			where U : class, new()
+			where U : struct
 		{
 			throw new NotImplementedException();
 		}
