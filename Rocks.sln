@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9AE9E8
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{89CFC639-AF25-4B43-98F1-0655172F4125}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89CFC639-AF25-4B43-98F1-0655172F4125}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89CFC639-AF25-4B43-98F1-0655172F4125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

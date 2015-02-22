@@ -98,7 +98,6 @@
     <Compile Include="RockOptions.cs" />
     <Compile Include="Exceptions\RockValidationException.cs" />
     <Compile Include="RockMaker.cs" />
-    <Compile Include="SketchPad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Rocks.Extensions
 {
@@ -14,26 +13,22 @@ namespace Rocks.Extensions
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
-			// TODO: this doesn't support generic methods yet.
-			var result = new StringBuilder();
+			namespaces.Add(@this.ReturnType.Namespace);
+         var returnType = @this.ReturnType == typeof(void) ?
+				"void" : @this.ReturnType.Name;
 
-			if(@this.ReturnType == typeof(void))
-			{
-				result.Append("void ");
-			}
-			else
-			{
-				result.Append(@this.ReturnType.Name + " ");
-				namespaces.Add(@this.ReturnType.Namespace);
-			}
+			var methodName = @this.Name;
+			var genericsArguments = @this.IsGenericMethod ?
+				string.Format("<{0}>",
+					string.Join(", ", from argument in @this.GetGenericArguments()
+											select argument.Name)) :
+				string.Empty;
 
-			result.Append(@this.Name + "(");
-			result.Append(string.Join(", ",
+			var parameters = string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
-				select parameter.ParameterType.Name + " " + parameter.Name));
-			result.Append(")");
-			return result.ToString();
+				select parameter.ParameterType.Name + " " + parameter.Name);
+			return $"{returnType} {methodName}{genericsArguments}({parameters})";
       }
 	}
 }
