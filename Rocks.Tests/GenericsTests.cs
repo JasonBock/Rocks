@@ -1,9 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
@@ -32,10 +27,13 @@ namespace Rocks.Tests
 
 	public class Base { }
 
+	public interface IBase { }
+
 	public interface IGenerics
 	{
 		U TargetWithNoConstraints<U>(int a, U b);
-		//U TargetWithNonTypeConstrains<U>(int a, U b) where U : class, new();
-		//U TargetWithTypeConstraints<U>(int a, U b) where U : Base;
+		U TargetWithNonTypeConstrains<U>(int a, U b) where U : class, new();
+		U TargetWithTypeConstraints<U>(int a, U b) where U : Base;
+		void TargetWithMultipleConstraints<U, V, W, X, Y>(U a, V b, W c, X d, Y e) where U : class, new() where V : Base where W : IBase where X : struct where Y : W;
 	}
 }

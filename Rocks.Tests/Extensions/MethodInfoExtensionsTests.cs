@@ -20,7 +20,8 @@ namespace Rocks.Tests.Extensions
 		{
 			var target = this.GetType().GetMethod(nameof(this.Target));
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("void Target(Int32 a, String c)", target.GetMethodDescription(namespaces));
+			var description = target.GetMethodDescription(namespaces);
+         Assert.AreEqual("void Target(Int32 a, String c)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
 		}
@@ -30,7 +31,8 @@ namespace Rocks.Tests.Extensions
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithReturnValue));
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("Int32 TargetWithReturnValue(Int32 a, String c)", target.GetMethodDescription(namespaces));
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Int32 TargetWithReturnValue(Int32 a, String c)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
 		}
@@ -40,7 +42,8 @@ namespace Rocks.Tests.Extensions
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("U TargetWithGenerics<U, V>(Int32 a, U b, String c, V d)", target.GetMethodDescription(namespaces));
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("U TargetWithGenerics<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
 			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
@@ -51,7 +54,21 @@ namespace Rocks.Tests.Extensions
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics)).MakeGenericMethod(typeof(Guid), typeof(double));
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("U TargetWithGenerics<U, V>(Int32 a, U b, String c, V d)", target.GetMethodDescription(namespaces));
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("U TargetWithGenerics<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
+			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
+		}
+
+		[Test]
+		public void GetMethodDescriptionWithConstraints()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithMultipleConstraints));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : Source, ISource where W : struct where X : V", 
+				description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
 			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
@@ -60,5 +77,9 @@ namespace Rocks.Tests.Extensions
 		public void Target(int a, string c) { }
 		public int TargetWithReturnValue(int a, string c) { return 0; }
 		public U TargetWithGenerics<U, V>(int a, U b, string c, V d) { return default(U); }
+		public void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : Source, ISource where W : struct where X : V { }
+
+		public interface ISource { }
+		public class Source { }
 	}
 }

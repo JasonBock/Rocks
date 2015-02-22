@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -23,17 +24,77 @@ namespace Rocks.Extensions
 				"void" :  @this.ReturnType.Name;
 
 			var methodName = @this.Name;
-			var genericsArguments = @this.IsGenericMethod ?
-				string.Format("<{0}>",
-					string.Join(", ", from argument in @this.GetGenericArguments()
-											select argument.Name)) :
-				string.Empty;
+			var generics = string.Empty;
+			var constraints = string.Empty;
 
+			if(@this.IsGenericMethodDefinition)
+			{
+				var genericArguments = new List<string>();
+				var genericConstraints = new List<string>();
+
+				foreach(var argument in @this.GetGenericArguments())
+				{
+					genericArguments.Add(argument.Name);
+					var constraint = MethodInfoExtensions.GetConstraints(argument, namespaces);
+
+					if(!string.IsNullOrWhiteSpace(constraint))
+					{
+						genericConstraints.Add(constraint);
+					}
+				}
+
+				generics = string.Format("<{0}>",
+					string.Join(", ", genericArguments));
+				constraints = genericConstraints.Count == 0 ? 
+					string.Empty : " " + string.Join(" ", genericConstraints);
+			}
+
+			// TODO: will need to add covariance and contravariance here, for interfaces only....maybe. I'm not sure I even care.
 			var parameters = string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
 				select parameter.ParameterType.Name + " " + parameter.Name);
-			return $"{returnType} {methodName}{genericsArguments}({parameters})";
+
+			return $"{returnType} {methodName}{generics}({parameters}){constraints}";
       }
+
+		private static string GetConstraints(Type argument, SortedSet<string> namespaces)
+		{
+			var constraints = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+			var constraintedTypes = argument.GetGenericParameterConstraints();
+
+			if(constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
+			{
+				return string.Empty;
+			}
+			else
+			{
+				var constraintValues = new List<string>();
+
+				if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
+				{
+					constraintValues.Add("struct");
+				}
+				else
+				{
+					foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
+					{
+						constraintValues.Add(constraintedType.Name);
+						namespaces.Add(constraintedType.Namespace);
+					}
+
+					if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
+					{
+						constraintValues.Add("class");
+					}
+					if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
+					{
+						constraintValues.Add("new()");
+					}
+				}
+
+				return $"where {argument.Name} : {string.Join(", ", constraintValues)}";
+			}
+		}
 	}
 }
