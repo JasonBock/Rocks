@@ -17,19 +17,19 @@ namespace Rocks.Tests.Exceptions
 		[Test]
 		public void CreateWithMessage()
 		{
-			base.CreateExceptionWithMessageTest(Guid.NewGuid().ToString("N"));
+			base.CreateExceptionWithMessageTest(System.Guid.NewGuid().ToString("N"));
       }
 
 		[Test]
 		public void CreateWithMessageAndInnerException()
 		{
-			base.CreateExceptionWithMessageAndInnerExceptionTest(Guid.NewGuid().ToString("N"));
+			base.CreateExceptionWithMessageAndInnerExceptionTest(System.Guid.NewGuid().ToString("N"));
 		}
 
 		[Test]
 		public void Roundtrip()
 		{
-			base.RoundtripExceptionTest(Guid.NewGuid().ToString("N"));
+			base.RoundtripExceptionTest(System.Guid.NewGuid().ToString("N"));
 		}
 	}
 }

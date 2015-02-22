@@ -144,6 +144,18 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount);
 		}
 
+		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler)
+		{
+			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation(handler);
+		}
+
+		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler, uint expectedCallCount)
+		{
+			this.handlers[((MethodCallExpression)expression.Body).Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation(handler, expectedCallCount);
+		}
+
 		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
 		{
 			var handler = new HandlerInformation<TResult>();
