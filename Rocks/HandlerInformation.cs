@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace Rocks
@@ -8,24 +9,26 @@ namespace Rocks
 	{
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
+		private ReadOnlyDictionary<string, ArgumentExpectation> expectations;
 		private int callCount;
 
-		internal HandlerInformation()
-			: this(null, 1)
+		internal HandlerInformation(ReadOnlyDictionary<string, ArgumentExpectation> expectations)
+			: this(null, 1, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate method)
-			: this(method, 1)
+		internal HandlerInformation(Delegate method, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
+			: this(method, 1, expectations)
 		{ }
 
-		internal HandlerInformation(uint expectedCallCount)
-			: this(null, expectedCallCount)
+		internal HandlerInformation(uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
+			: this(null, expectedCallCount, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate method, uint expectedCallCount)
+		internal HandlerInformation(Delegate method, uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 		{
 			this.Method = method;
 			this.ExpectedCallCount = expectedCallCount;
+			this.expectations = expectations;
 		}
 
 		internal void IncrementCallCount()
@@ -42,6 +45,8 @@ namespace Rocks
 				verifications.Add(string.Format(HandlerInformation.ErrorExpectedCallCount,
 					this.ExpectedCallCount, this.callCount));
 			}
+
+			// TODO: Add argument verifications.
 
 			return verifications.AsReadOnly();
 		}

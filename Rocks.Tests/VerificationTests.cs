@@ -12,8 +12,9 @@ namespace Rocks.Tests
 		[Test]
 		public void TryThis()
 		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var handlers = new Dictionary<string, HandlerInformation>();
-			handlers.Add("x", new HandlerInformation<int> { ReturnValue = 42 });
+			handlers.Add("x", new HandlerInformation<int>(expectations) { ReturnValue = 42 });
 
 			var roHandlers = new ReadOnlyDictionary<string, HandlerInformation>(handlers);
 
