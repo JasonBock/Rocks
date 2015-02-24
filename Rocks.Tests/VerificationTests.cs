@@ -44,7 +44,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<RockVerificationException>(() => rock.Verify());
+			Assert.Throws<VerificationException>(() => rock.Verify());
 		}
 
 		[Test]
@@ -57,7 +57,7 @@ namespace Rocks.Tests
 			chunk.Target();
 			chunk.Target();
 
-			Assert.Throws<RockVerificationException>(() => rock.Verify());
+			Assert.Throws<VerificationException>(() => rock.Verify());
 		}
 
 		[Test]

@@ -2,21 +2,21 @@
 
 namespace Rocks
 {
-	public sealed class RockOptions
+	public sealed class Options
 	{
-		public RockOptions()
+		public Options()
 			: this(OptimizationLevel.Release, false)
 		{ }
 
-		public RockOptions(OptimizationLevel level)
+		public Options(OptimizationLevel level)
 			: this(level, false)
 		{ }
 
-		public RockOptions(bool shouldCreateCodeFile)
+		public Options(bool shouldCreateCodeFile)
 			: this(OptimizationLevel.Release, shouldCreateCodeFile)
 		{ }
 
-		public RockOptions(OptimizationLevel level, bool shouldCreateCodeFile)
+		public Options(OptimizationLevel level, bool shouldCreateCodeFile)
 		{
 			this.Level = level;
 			this.ShouldCreateCodeFile = shouldCreateCodeFile;

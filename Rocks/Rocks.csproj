@@ -96,11 +96,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnValue.cs" />
     <Compile Include="Rock.cs" />
-    <Compile Include="Exceptions\RockVerificationException.cs" />
-    <Compile Include="Exceptions\RockCompilationException.cs" />
-    <Compile Include="RockOptions.cs" />
-    <Compile Include="Exceptions\RockValidationException.cs" />
-    <Compile Include="RockMaker.cs" />
+    <Compile Include="Exceptions\VerificationException.cs" />
+    <Compile Include="Exceptions\CompilationException.cs" />
+    <Compile Include="Options.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="Maker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

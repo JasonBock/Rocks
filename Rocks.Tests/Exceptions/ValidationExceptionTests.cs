@@ -5,8 +5,8 @@ using System;
 namespace Rocks.Tests.Exceptions
 {
 	[TestFixture]
-	public sealed class RockValidationExceptionTests
-		: ExceptionTests<RockValidationException, Exception>
+	public sealed class ValidationExceptionTests
+		: ExceptionTests<ValidationException, Exception>
 	{
 		[Test]
 		public void Create()

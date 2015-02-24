@@ -12,19 +12,19 @@ using System.Text;
 
 namespace Rocks
 {
-	internal sealed class RockMaker
+	internal sealed class Maker
 	{
 		private string mangledName = string.Format("Rock{0}", Guid.NewGuid().ToString("N"));
 		private Type baseType;
 		private ReadOnlyDictionary<string, HandlerInformation> handlers;
 		private SortedSet<string> namespaces;
-		private RockOptions options;
+		private Options options;
 
 		internal Type Mock { get; private set; }
 
-		internal RockMaker(Type baseType,
+		internal Maker(Type baseType,
 			ReadOnlyDictionary<string, HandlerInformation> handlers,
-			SortedSet<string> namespaces, RockOptions options)
+			SortedSet<string> namespaces, Options options)
 		{
 			this.baseType = baseType;
 			this.handlers = handlers;
@@ -87,7 +87,7 @@ namespace Rocks
 
 				if (!results.Success)
 				{
-					throw new RockCompilationException(results.Diagnostics);
+					throw new CompilationException(results.Diagnostics);
 				}
 
 				return Assembly.Load(assemblyStream.GetBuffer(), pdbStream.GetBuffer());

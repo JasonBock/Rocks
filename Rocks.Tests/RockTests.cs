@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWhenTypeIsSealed()
 		{
-			Assert.Throws<RockValidationException>(() => Rock.Create<string>());
+			Assert.Throws<ValidationException>(() => Rock.Create<string>());
 		}
 
 		[Test]

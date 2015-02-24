@@ -17,17 +17,17 @@ namespace Rocks
 		public static Rock<T> Create<T>()
 			where T : class
 		{
-			return Rock.Create<T>(new RockOptions());
+			return Rock.Create<T>(new Options());
 		}
 
-		public static Rock<T> Create<T>(RockOptions options)
+		public static Rock<T> Create<T>(Options options)
 			where T : class
 		{
 			var message = typeof(T).Validate();
 
 			if (!string.IsNullOrWhiteSpace(message))
 			{
-				throw new RockValidationException(message);
+				throw new ValidationException(message);
 			}
 
 			return new Rock<T>(options);
@@ -36,10 +36,10 @@ namespace Rocks
 		public static bool TryCreate<T>(out Rock<T> result)
 			where T : class
 		{
-			return Rock.TryCreate<T>(new RockOptions(), out result);
+			return Rock.TryCreate<T>(new Options(), out result);
 		}
 
-		public static bool TryCreate<T>(RockOptions options, out Rock<T> result)
+		public static bool TryCreate<T>(Options options, out Rock<T> result)
 			where T : class
 		{
 			result = default(Rock<T>);
@@ -129,14 +129,14 @@ namespace Rocks
 		private List<IRock> rocks = new List<IRock>();
 		private Dictionary<string, HandlerInformation> handlers =
 			new Dictionary<string, HandlerInformation>();
-		private RockOptions options;
+		private Options options;
 		private SortedSet<string> namespaces = new SortedSet<string>();
 
 		internal Rock()
-			: this(new RockOptions())
+			: this(new Options())
 		{ }
 
-		internal Rock(RockOptions options)
+		internal Rock(Options options)
 		{
 			this.options = options;
 		}
@@ -330,7 +330,7 @@ namespace Rocks
 			var tType = typeof(T);
 			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);
 			var rockType = Rock.cache.GetOrAdd(tType,
-				_ => new RockMaker(_, readOnlyHandlers, this.namespaces, this.options).Mock);
+				_ => new Maker(_, readOnlyHandlers, this.namespaces, this.options).Mock);
 			var rock = Activator.CreateInstance(rockType, readOnlyHandlers);
 			this.rocks.Add(rock as IRock);
 			return rock as T;
@@ -354,7 +354,7 @@ namespace Rocks
 
 			if (failures.Count > 0)
 			{
-				throw new RockVerificationException(failures);
+				throw new VerificationException(failures);
 			}
 		}
 	}
