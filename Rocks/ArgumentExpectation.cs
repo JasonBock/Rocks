@@ -3,5 +3,5 @@
 	public abstract class ArgumentExpectation
 	{
 		internal ArgumentExpectation() { }
-	}
+   }
 }

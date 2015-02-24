@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction2ArgumentTests>();
-			rock.HandleAction(_ => _.Target(default(int), default(int)));
+			rock.HandleAction(_ => _.Target(1, 2));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2);
@@ -24,7 +24,7 @@ namespace Rocks.Tests
 			var argumentB = 0;
 
 			var rock = Rock.Create<IHandleAction2ArgumentTests>();
-			rock.HandleAction<int, int>(_ => _.Target(default(int), default(int)),
+			rock.HandleAction<int, int>(_ => _.Target(1, 2),
 				(a, b) => { argumentA = a; argumentB = b; });
 
 			var chunk = rock.Make();
@@ -39,7 +39,7 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction2ArgumentTests>();
-			rock.HandleAction(_ => _.Target(default(int), default(int)), 2);
+			rock.HandleAction(_ => _.Target(1, 2), 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2);
@@ -55,16 +55,18 @@ namespace Rocks.Tests
 			var argumentB = 0;
 
 			var rock = Rock.Create<IHandleAction2ArgumentTests>();
-			rock.HandleAction<int, int>(_ => _.Target(default(int), default(int)),
+			rock.HandleAction<int, int>(_ => _.Target(1, 2),
 				(a, b) => { argumentA = a; argumentB = b; }, 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2);
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			chunk.Target(10, 20);
-			Assert.AreEqual(10, argumentA, nameof(argumentA));
-			Assert.AreEqual(20, argumentB, nameof(argumentB));
+			argumentA = 0;
+			argumentB = 0;
+			chunk.Target(1, 2);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.AreEqual(2, argumentB, nameof(argumentB));
 
 			rock.Verify();
 		}

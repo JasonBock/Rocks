@@ -18,9 +18,9 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetExpectationChecks()
 		{
-			var expectedExpectation = 
-@"handler.Expectations[""a""].Validate(a, ""a"");
-handler.Expectations[""c""].Validate(c, ""c"");";
+			var expectedExpectation =
+@"(handler.Expectations[""a""] as ArgumentExpectation<Int32>).Validate(a, ""a"");
+(handler.Expectations[""c""] as ArgumentExpectation<String>).Validate(c, ""c"");";
          var target = this.GetType().GetMethod(nameof(this.Target));
 			var expectations = target.GetExpectationChecks();
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));

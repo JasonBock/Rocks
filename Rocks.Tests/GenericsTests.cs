@@ -10,15 +10,16 @@ namespace Rocks.Tests
 		[Test]
 		public void HandleWithNoConstraints()
 		{
+			var expectationB = new Base();
 			var argumentA = 0;
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>();
 			rock.HandleFunc<int, Base, Base>(
-				_ => _.TargetWithNoConstraints(default(int), default(Base)),
+				_ => _.TargetWithNoConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithNoConstraints<Base>(1, new Base());
+			var result = chunk.TargetWithNoConstraints<Base>(1, expectationB);
 
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.IsNotNull(argumentB, nameof(argumentB));
@@ -29,15 +30,16 @@ namespace Rocks.Tests
 		[Test]
 		public void TargetWithNonTypeConstrains()
 		{
+			var expectationB = new Base();
 			var argumentA = 0;
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>();
 			rock.HandleFunc<int, Base, Base>(
-				_ => _.TargetWithNonTypeConstrains(default(int), default(Base)),
+				_ => _.TargetWithNonTypeConstrains(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithNonTypeConstrains<Base>(1, new Base());
+			var result = chunk.TargetWithNonTypeConstrains<Base>(1, expectationB);
 
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.IsNotNull(argumentB, nameof(argumentB));
@@ -48,15 +50,16 @@ namespace Rocks.Tests
 		[Test]
 		public void TargetWithTypeConstraints()
 		{
+			var expectationB = new Base();
 			var argumentA = 0;
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>();
 			rock.HandleFunc<int, Base, Base>(
-				_ => _.TargetWithTypeConstraints(default(int), default(Base)),
+				_ => _.TargetWithTypeConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithTypeConstraints<Base>(1, new Base());
+			var result = chunk.TargetWithTypeConstraints<Base>(1, expectationB);
 
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.IsNotNull(argumentB, nameof(argumentB));
@@ -67,6 +70,12 @@ namespace Rocks.Tests
 		[Test]
 		public void TargetWithMultipleConstraints()
 		{
+			var expectationA = new StringBuilder();
+			var expectationB = new Base();
+			var expectationC = new InheritingFromBase();
+			var expectationD = Guid.NewGuid();
+			var expectationE = new InheritingFromBase();
+
 			var argumentA = default(StringBuilder);
 			var argumentB = default(Base);
 			var argumentC = default(InheritingFromBase);
@@ -75,11 +84,11 @@ namespace Rocks.Tests
 
 			var rock = Rock.Create<IGenerics>();
 			rock.HandleAction<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
-				_ => _.TargetWithMultipleConstraints(default(StringBuilder), default(Base), default(InheritingFromBase), default(Guid), default(InheritingFromBase)),
+				_ => _.TargetWithMultipleConstraints(expectationA, expectationB, expectationC, expectationD, expectationE),
 				(a, b, c, d, e) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; });
 			var chunk = rock.Make();
 			chunk.TargetWithMultipleConstraints<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
-				new StringBuilder(), new Base(), new InheritingFromBase(), Guid.NewGuid(), new InheritingFromBase());
+				expectationA, expectationB, expectationC, expectationD, expectationE);
 
 			Assert.IsNotNull(argumentA, nameof(argumentB));
 			Assert.IsNotNull(argumentB, nameof(argumentB));

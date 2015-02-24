@@ -16,7 +16,7 @@ namespace Rocks.Extensions
 		{
 			return string.Join(Environment.NewLine,
 				@this.GetParameters().Select(_ =>
-					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name)));
+					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.Name)));
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)

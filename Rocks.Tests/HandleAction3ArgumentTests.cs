@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction3ArgumentTests>();
-			rock.HandleAction(_ => _.Target(default(int), default(int), default(int)));
+			rock.HandleAction(_ => _.Target(1, 2, 3));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3);
@@ -25,7 +25,7 @@ namespace Rocks.Tests
 			var argumentC = 0;
 
 			var rock = Rock.Create<IHandleAction3ArgumentTests>();
-			rock.HandleAction<int, int, int>(_ => _.Target(default(int), default(int), default(int)),
+			rock.HandleAction<int, int, int>(_ => _.Target(1, 2, 3),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; });
 
 			var chunk = rock.Make();
@@ -41,11 +41,11 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction3ArgumentTests>();
-			rock.HandleAction(_ => _.Target(default(int), default(int), default(int)), 2);
+			rock.HandleAction(_ => _.Target(1, 2, 3), 2);
 
 			var chunk = rock.Make();
-			chunk.Target(44, 44, 44);
-			chunk.Target(44, 44, 44);
+			chunk.Target(1, 2, 3);
+			chunk.Target(1, 2, 3);
 
 			rock.Verify();
 		}
@@ -58,7 +58,7 @@ namespace Rocks.Tests
 			var argumentC = 0;
 
 			var rock = Rock.Create<IHandleAction3ArgumentTests>();
-			rock.HandleAction<int, int, int>(_ => _.Target(default(int), default(int), default(int)),
+			rock.HandleAction<int, int, int>(_ => _.Target(1, 2, 3),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; }, 2);
 
 			var chunk = rock.Make();
@@ -66,10 +66,13 @@ namespace Rocks.Tests
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.AreEqual(2, argumentB, nameof(argumentB));
 			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			chunk.Target(10, 20, 30);
-			Assert.AreEqual(10, argumentA, nameof(argumentA));
-			Assert.AreEqual(20, argumentB, nameof(argumentB));
-			Assert.AreEqual(30, argumentC, nameof(argumentC));
+			argumentA = 0;
+			argumentB = 0;
+			argumentC = 0;
+			chunk.Target(1, 2, 3);
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.AreEqual(2, argumentB, nameof(argumentB));
+			Assert.AreEqual(3, argumentC, nameof(argumentC));
 
 			rock.Verify();
 		}

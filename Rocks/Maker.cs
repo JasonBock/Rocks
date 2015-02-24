@@ -50,12 +50,12 @@ namespace Rocks
                      Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
 							Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
 						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(),
-						tMethod.ReturnType.Name));
+						tMethod.ReturnType.Name, tMethod.GetExpectationChecks()));
 				}
 				else
 				{
 					generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList()));
+						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(), tMethod.GetExpectationChecks()));
 				}
 			}
 

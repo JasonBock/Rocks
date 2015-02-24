@@ -9,8 +9,8 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleFunc3ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(default(int), default(int), default(int)));
-			rock.HandleFunc(_ => _.ValueTarget(default(int), default(int), default(int)));
+			rock.HandleFunc(_ => _.ReferenceTarget(1, 2, 3));
+			rock.HandleFunc(_ => _.ValueTarget(10, 20, 30));
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2, 3);
@@ -29,9 +29,9 @@ namespace Rocks.Tests
 			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFunc3ArgumentTests>();
-			rock.HandleFunc<int, int, int, string>(_ => _.ReferenceTarget(default(int), default(int), default(int)),
+			rock.HandleFunc<int, int, int, string>(_ => _.ReferenceTarget(1, 2, 3),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; return stringReturnValue; });
-			rock.HandleFunc<int, int, int, int>(_ => _.ValueTarget(default(int), default(int), default(int)),
+			rock.HandleFunc<int, int, int, int>(_ => _.ValueTarget(10, 20, 30),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; return intReturnValue; });
 			
 			var chunk = rock.Make();
@@ -51,8 +51,8 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFunc3ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(default(int), default(int), default(int)), 2);
-			rock.HandleFunc(_ => _.ValueTarget(default(int), default(int), default(int)), 2);
+			rock.HandleFunc(_ => _.ReferenceTarget(1, 2, 3), 2);
+			rock.HandleFunc(_ => _.ValueTarget(10, 20, 30), 2);
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2, 3);
@@ -73,9 +73,9 @@ namespace Rocks.Tests
 			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFunc3ArgumentTests>();
-			rock.HandleFunc<int, int, int, string>(_ => _.ReferenceTarget(default(int), default(int), default(int)),
+			rock.HandleFunc<int, int, int, string>(_ => _.ReferenceTarget(1, 2, 3),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; return stringReturnValue; }, 2);
-			rock.HandleFunc<int, int, int, int>(_ => _.ValueTarget(default(int), default(int), default(int)),
+			rock.HandleFunc<int, int, int, int>(_ => _.ValueTarget(10, 20, 30),
 				(a, b, c) => { argumentA = a; argumentB = b; argumentC = c; return intReturnValue; }, 2);
 
 			var chunk = rock.Make();
@@ -83,18 +83,27 @@ namespace Rocks.Tests
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.AreEqual(2, argumentB, nameof(argumentB));
 			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(100, 200, 300), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(100, argumentA, nameof(argumentA));
-			Assert.AreEqual(200, argumentB, nameof(argumentB));
-			Assert.AreEqual(300, argumentC, nameof(argumentC));
+			argumentA = 0;
+			argumentB = 0;
+			argumentC = 0;
+			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(1, 2, 3), nameof(chunk.ReferenceTarget));
+			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.AreEqual(2, argumentB, nameof(argumentB));
+			Assert.AreEqual(3, argumentC, nameof(argumentC));
+			argumentA = 0;
+			argumentB = 0;
+			argumentC = 0;
 			Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30), nameof(chunk.ValueTarget));
 			Assert.AreEqual(10, argumentA, nameof(argumentA));
 			Assert.AreEqual(20, argumentB, nameof(argumentB));
 			Assert.AreEqual(30, argumentC, nameof(argumentC));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(1000, 2000, 3000), nameof(chunk.ValueTarget));
-			Assert.AreEqual(1000, argumentA, nameof(argumentA));
-			Assert.AreEqual(2000, argumentB, nameof(argumentB));
-			Assert.AreEqual(3000, argumentC, nameof(argumentC));
+			argumentA = 0;
+			argumentB = 0;
+			argumentC = 0;
+			Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30), nameof(chunk.ValueTarget));
+			Assert.AreEqual(10, argumentA, nameof(argumentA));
+			Assert.AreEqual(20, argumentB, nameof(argumentB));
+			Assert.AreEqual(30, argumentC, nameof(argumentC));
 
 			rock.Verify();
 		}
