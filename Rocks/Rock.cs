@@ -57,6 +57,8 @@ namespace Rocks
 
 		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetArgumentExpectations(MethodCallExpression method)
 		{
+			// TODO: Pull this out into its own class, or extension method,
+			// and get tests around this.
 			var expectations = new Dictionary<string, ArgumentExpectation>();
 
 			var argumentIndex = 0;
@@ -76,7 +78,8 @@ namespace Rocks
 								.Invoke(new[] { value }) as ArgumentExpectation);
                   break;
 					case ExpressionType.Call:
-						var argumentMethod = (argument as MethodCallExpression).Method;
+						var argumentMethodCall = (argument as MethodCallExpression);
+						var argumentMethod = argumentMethodCall.Method;
 						var isMethod = typeof(Arg).GetMethod(nameof(Arg.Is));
 						var isAnyMethod = typeof(Arg).GetMethod(nameof(Arg.IsAny));
 
@@ -89,14 +92,17 @@ namespace Rocks
 						}
 						else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 						{
-							// TODO. This is saying, "pass in the arugment value, and is it true? i.e. does it pass validation?"
-							// Need a Func<T, bool> argument to ArgumentExpectation<> with a "is" flag
-							// and handle accordingly (and write tests!)
+							var evaluation = argumentMethodCall.Arguments[0];
+							var genericMethodType = typeof(Func<,>).MakeGenericType(methodArgument.ParameterType, typeof(bool));
+							expectations.Add(methodArgument.Name,
+								typeof(ArgumentExpectation<>).MakeGenericType(methodArgument.ParameterType)
+									.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, new[] { genericMethodType }, null)
+									.Invoke(new[] { evaluation }) as ArgumentExpectation);
 						}
 						else
 						{
 							expectations.Add(methodArgument.Name,
-								typeof(ArgumentExpectation<>).MakeGenericType(typeof(Expression))
+								typeof(ArgumentExpectation<>).MakeGenericType(methodArgument.ParameterType)
 									.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, new[] { typeof(Expression) }, null)
 									.Invoke(new[] { argument }) as ArgumentExpectation);
 						}

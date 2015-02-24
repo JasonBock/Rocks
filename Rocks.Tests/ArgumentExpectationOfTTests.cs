@@ -15,6 +15,26 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void CreateWithNullEvaluation()
+		{
+			Assert.Throws<ArgumentNullException>(() => new ArgumentExpectation<int>(null as Func<int, bool>));
+		}
+
+		[Test]
+		public void CreateWithInvalidEvaluation()
+		{
+			var expectation = new ArgumentExpectation<int>(_ => _ % 2 == 0);
+			Assert.IsFalse(expectation.IsValid(1), nameof(expectation.IsValid));
+		}
+
+		[Test]
+		public void CreateWithValidEvaluation()
+		{
+			var expectation = new ArgumentExpectation<int>(_ => _ % 2 == 0);
+			Assert.IsTrue(expectation.IsValid(2), nameof(expectation.IsValid));
+		}
+
+		[Test]
 		public void CreateWithNullValueAndComparedToNull()
 		{
 			var expectation = new ArgumentExpectation<string>(null as string);

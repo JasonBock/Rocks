@@ -7,7 +7,10 @@ namespace Rocks
 		: ArgumentExpectation
 	{
 		private bool isAny;
+		private bool isEvaluation;
+		private bool isExpression;
 		private bool isValue;
+		private Func<T, bool> evaluation;
 		private Delegate expression;
 		private T value = default(T);
 
@@ -22,6 +25,17 @@ namespace Rocks
 			this.value = value;
 		}
 
+		internal ArgumentExpectation(Func<T, bool> evaluation)
+		{
+			if (evaluation == null)
+			{
+				throw new ArgumentNullException(nameof(evaluation));
+			}
+
+			this.isEvaluation = true;
+			this.evaluation = evaluation;
+      }
+
 		internal ArgumentExpectation(Expression expression)
 		{
 			if (expression == null)
@@ -29,6 +43,7 @@ namespace Rocks
 				throw new ArgumentNullException(nameof(expression));
 			}
 
+			this.isExpression = true;
 			this.expression = Expression.Lambda(expression).Compile();
 		}
 
@@ -53,9 +68,17 @@ namespace Rocks
 					return false;
 				}
 			}
-			else
+			else if(this.isExpression)
 			{
 				return ((T)this.expression.DynamicInvoke()).Equals(value);
+			}
+			else if (this.isEvaluation)
+			{
+				return this.evaluation(value);
+			}
+			else
+			{
+				throw new NotImplementedException();
 			}
 		}
 	}
