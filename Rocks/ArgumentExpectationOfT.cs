@@ -6,23 +6,15 @@ namespace Rocks
 	internal sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{
-		private bool isAny;
-		private bool isEvaluation;
-		private bool isExpression;
-		private bool isValue;
-		private Func<T, bool> evaluation;
-		private Delegate expression;
-		private T value = default(T);
-
 		internal ArgumentExpectation()
 		{
-			this.isAny = true;
+			this.IsAny = true;
 		}
 
 		internal ArgumentExpectation(T value)
 		{
-			this.isValue = true;
-			this.value = value;
+			this.IsValue = true;
+			this.Value = value;
 		}
 
 		internal ArgumentExpectation(Func<T, bool> evaluation)
@@ -32,8 +24,8 @@ namespace Rocks
 				throw new ArgumentNullException(nameof(evaluation));
 			}
 
-			this.isEvaluation = true;
-			this.evaluation = evaluation;
+			this.IsEvaluation = true;
+			this.Evaluation = evaluation;
       }
 
 		internal ArgumentExpectation(Expression expression)
@@ -43,43 +35,51 @@ namespace Rocks
 				throw new ArgumentNullException(nameof(expression));
 			}
 
-			this.isExpression = true;
-			this.expression = Expression.Lambda(expression).Compile();
+			this.IsExpression = true;
+			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
 
 		internal bool IsValid(T value)
 		{
-			if(this.isAny)
+			if(this.IsAny)
 			{
 				return true;
 			}
-			else if(this.isValue)
+			else if(this.IsValue)
 			{
-				if(this.value == null && value == null)
+				if(this.Value == null && value == null)
 				{
 					return true;
 				}
-				else if(this.value != null && value != null)
+				else if(this.Value != null && value != null)
 				{
-					return this.value.Equals(value);
+					return this.Value.Equals(value);
 				}
 				else
 				{
 					return false;
 				}
 			}
-			else if(this.isExpression)
+			else if(this.IsExpression)
 			{
-				return ((T)this.expression.DynamicInvoke()).Equals(value);
+				return ((T)this.Expression.DynamicInvoke()).Equals(value);
 			}
-			else if (this.isEvaluation)
+			else if (this.IsEvaluation)
 			{
-				return this.evaluation(value);
+				return this.Evaluation(value);
 			}
 			else
 			{
 				throw new NotImplementedException();
 			}
 		}
+
+		internal Func<T, bool> Evaluation { get; private set; }
+		internal Delegate Expression { get; private set; }
+		internal bool IsAny { get; private set; }
+		internal bool IsEvaluation { get; private set; }
+		internal bool IsExpression { get; private set; }
+		internal bool IsValue { get; private set; }
+		internal T Value { get; private set; }
 	}
 }

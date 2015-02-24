@@ -108,6 +108,7 @@
     <Compile Include="ArgumentExpectationOfTTests.cs" />
     <Compile Include="Exceptions\ExceptionTests.cs" />
     <Compile Include="Exceptions\ValidationExceptionTests.cs" />
+    <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
     <Compile Include="GenericsTests.cs" />
     <Compile Include="HandleAction5ArgumentTests.cs" />
