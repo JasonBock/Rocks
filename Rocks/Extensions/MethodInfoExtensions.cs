@@ -12,6 +12,13 @@ namespace Rocks.Extensions
 			return string.Join(", ", @this.GetParameters().Select(_ => _.Name));
 		}
 
+		internal static string GetExpectationChecks(this MethodInfo @this)
+		{
+			return string.Join(Environment.NewLine,
+				@this.GetParameters().Select(_ =>
+					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name)));
+		}
+
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
 			if(@this.IsGenericMethod)
@@ -43,8 +50,7 @@ namespace Rocks.Extensions
 					}
 				}
 
-				generics = string.Format("<{0}>",
-					string.Join(", ", genericArguments));
+				generics = $"<{string.Join(", ", genericArguments)}>";
 				constraints = genericConstraints.Count == 0 ? 
 					string.Empty : " " + string.Join(" ", genericConstraints);
 			}

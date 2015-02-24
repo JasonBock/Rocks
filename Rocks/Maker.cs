@@ -14,7 +14,7 @@ namespace Rocks
 {
 	internal sealed class Maker
 	{
-		private string mangledName = string.Format("Rock{0}", Guid.NewGuid().ToString("N"));
+		private string mangledName = $"Rock{Guid.NewGuid().ToString("N")}";
 		private Type baseType;
 		private ReadOnlyDictionary<string, HandlerInformation> handlers;
 		private SortedSet<string> namespaces;
@@ -60,6 +60,7 @@ namespace Rocks
 			}
 
 			this.namespaces.Add(baseType.Namespace);
+			this.namespaces.Add(typeof(ExpectationException).Namespace);
 			this.namespaces.Add(typeof(IRock).Namespace);
 			this.namespaces.Add(typeof(HandlerInformation).Namespace);
 			this.namespaces.Add(typeof(string).Namespace);
@@ -68,7 +69,7 @@ namespace Rocks
 			var classCode = string.Format(Constants.CodeTemplates.ClassTemplate,
 				string.Join(Environment.NewLine,
 					(from @namespace in this.namespaces
-					 select "using " + @namespace + ";")),
+					 select $"using {@namespace};")),
 				this.mangledName, this.baseType.Name,
 				string.Join(Environment.NewLine, generatedMethods));
 
@@ -97,7 +98,7 @@ namespace Rocks
 		private CSharpCompilation CreateCompilation(string classCode)
 		{
 			var fileName = this.options.ShouldCreateCodeFile ?
-				Path.Combine(Directory.GetCurrentDirectory(), this.mangledName + ".cs") : string.Empty;
+				Path.Combine(Directory.GetCurrentDirectory(), $"{this.mangledName}.cs") : string.Empty;
 
 			var tree = SyntaxFactory.SyntaxTree(
 				SyntaxFactory.ParseSyntaxTree(classCode)

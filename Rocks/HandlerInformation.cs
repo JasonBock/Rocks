@@ -9,7 +9,6 @@ namespace Rocks
 	{
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
-		private ReadOnlyDictionary<string, ArgumentExpectation> expectations;
 		private int callCount;
 
 		internal HandlerInformation(ReadOnlyDictionary<string, ArgumentExpectation> expectations)
@@ -28,7 +27,7 @@ namespace Rocks
 		{
 			this.Method = method;
 			this.ExpectedCallCount = expectedCallCount;
-			this.expectations = expectations;
+			this.Expectations = expectations;
 		}
 
 		internal void IncrementCallCount()
@@ -56,6 +55,7 @@ namespace Rocks
 			get { return this.callCount; }
 		}
 
+		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; private set; }
 		internal uint ExpectedCallCount { get; private set; }
 		internal Delegate Method { get; private set; }
 	}

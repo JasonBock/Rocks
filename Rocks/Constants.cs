@@ -10,8 +10,12 @@
 
 		public static class CodeTemplates
 		{
+			// 0 = parameter name
+			public const string ExpectationTemplate = "handler.Expectations[\"{0}\"].Validate({0}, \"{0}\");";
+
 			// 0 = method name
 			// 1 = comma-separate list of argument names
+			// 2 = instances of the ExpectationTemplate
 			public const string ActionMethodTemplate = @"
 public {0}
 {{
@@ -56,6 +60,7 @@ public sealed class {1}
 			// 0 = method name
 			// 1 = comma-separate list of argument names
 			// 2 = return type name
+			// 3 = instances of the ExpectationTemplate
 			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = @"
 public {0}
 {{

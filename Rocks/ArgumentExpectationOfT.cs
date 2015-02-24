@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Rocks.Exceptions;
+using System;
 using System.Linq.Expressions;
 
 namespace Rocks
 {
-	internal sealed class ArgumentExpectation<T>
+	public sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{
 		internal ArgumentExpectation()
@@ -38,39 +39,46 @@ namespace Rocks
 			this.IsExpression = true;
 			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
-
-		internal bool IsValid(T value)
+		
+		internal void Validate(T value, string parameter)
 		{
-			if(this.IsAny)
+			if (!this.IsAny)
 			{
-				return true;
-			}
-			else if(this.IsValue)
-			{
-				if(this.Value == null && value == null)
+				if (this.IsValue)
 				{
-					return true;
+					if (this.Value == null && value == null)
+					{
+					}
+					else if (this.Value != null && value != null)
+					{
+						if(!this.Value.Equals(value))
+						{
+							throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+                  }
+					}
+					else
+					{
+						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+					}
 				}
-				else if(this.Value != null && value != null)
+				else if (this.IsExpression)
 				{
-					return this.Value.Equals(value);
+					if(!((T)this.Expression.DynamicInvoke()).Equals(value))
+					{
+						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+					}
+				}
+				else if (this.IsEvaluation)
+				{
+					if(!this.Evaluation(value))
+					{
+						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+					}
 				}
 				else
 				{
-					return false;
+					throw new NotImplementedException();
 				}
-			}
-			else if(this.IsExpression)
-			{
-				return ((T)this.Expression.DynamicInvoke()).Equals(value);
-			}
-			else if (this.IsEvaluation)
-			{
-				return this.Evaluation(value);
-			}
-			else
-			{
-				throw new NotImplementedException();
 			}
 		}
 

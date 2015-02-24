@@ -1,7 +1,7 @@
 ﻿namespace Rocks
 {
-	internal abstract class ArgumentExpectation
+	public abstract class ArgumentExpectation
 	{
-		protected ArgumentExpectation() { }
+		internal ArgumentExpectation() { }
 	}
 }
