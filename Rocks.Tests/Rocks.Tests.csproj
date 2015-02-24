@@ -104,6 +104,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgTests.cs" />
     <Compile Include="ArgumentExpectationOfTTests.cs" />
     <Compile Include="Exceptions\ExceptionTests.cs" />
     <Compile Include="Exceptions\RockValidationExceptionTests.cs" />

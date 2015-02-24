@@ -77,13 +77,21 @@ namespace Rocks
                   break;
 					case ExpressionType.Call:
 						var argumentMethod = (argument as MethodCallExpression).Method;
+						var isMethod = typeof(Arg).GetMethod(nameof(Arg.Is));
 						var isAnyMethod = typeof(Arg).GetMethod(nameof(Arg.IsAny));
+
 						if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 						{
 							expectations.Add(methodArgument.Name,
 								typeof(ArgumentExpectation<>).MakeGenericType(methodArgument.ParameterType)
 									.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, Type.EmptyTypes, null)
 									.Invoke(null) as ArgumentExpectation);
+						}
+						else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
+						{
+							// TODO. This is saying, "pass in the arugment value, and is it true? i.e. does it pass validation?"
+							// Need a Func<T, bool> argument to ArgumentExpectation<> with a "is" flag
+							// and handle accordingly (and write tests!)
 						}
 						else
 						{
@@ -92,6 +100,7 @@ namespace Rocks
 									.GetConstructor(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance, null, new[] { typeof(Expression) }, null)
 									.Invoke(new[] { argument }) as ArgumentExpectation);
 						}
+
 						break;
 					default:
 						expectations.Add(methodArgument.Name,
