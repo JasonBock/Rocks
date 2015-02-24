@@ -84,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
     <Compile Include="Constants.cs" />

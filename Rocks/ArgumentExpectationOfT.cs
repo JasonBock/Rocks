@@ -6,6 +6,7 @@ namespace Rocks
 	internal sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{
+		private bool isAny;
 		private bool isValue;
 		private Delegate expression;
 		private T value = default(T);
@@ -17,11 +18,6 @@ namespace Rocks
 
 		internal ArgumentExpectation(T value)
 		{
-			if (value == null)
-			{
-				throw new ArgumentNullException(nameof(value));
-			}
-
 			this.isValue = true;
 			this.value = value;
 		}
@@ -38,9 +34,29 @@ namespace Rocks
 
 		internal bool IsValid(T value)
 		{
-			return this.isAny ? true :
-				this.isValue ? this.value.Equals(value) :
-				((T)this.expression.DynamicInvoke()).Equals(value);
+			if(this.isAny)
+			{
+				return true;
+			}
+			else if(this.isValue)
+			{
+				if(this.value == null && value == null)
+				{
+					return true;
+				}
+				else if(this.value != null && value != null)
+				{
+					return this.value.Equals(value);
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				return ((T)this.expression.DynamicInvoke()).Equals(value);
+			}
 		}
 	}
 }

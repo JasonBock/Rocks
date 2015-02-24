@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace Rocks.Tests
 {
 	[TestFixture]
-	public sealed class ArgumentExpectationTests
+	public sealed class ArgumentExpectationOfTTests
 	{
 		[Test]
 		public void Create()
@@ -15,9 +15,17 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithNullValue()
+		public void CreateWithNullValueAndComparedToNull()
 		{
-			Assert.Throws<ArgumentNullException>(() => new ArgumentExpectation<string>(null as string));
+			var expectation = new ArgumentExpectation<string>(null as string);
+			Assert.IsTrue(expectation.IsValid(null), nameof(expectation.IsValid));
+		}
+
+		[Test]
+		public void CreateWithNullValueAndComparedToNotNull()
+		{
+			var expectation = new ArgumentExpectation<string>(null as string);
+			Assert.IsFalse(expectation.IsValid("a"), nameof(expectation.IsValid));
 		}
 
 		[Test]
@@ -25,6 +33,13 @@ namespace Rocks.Tests
 		{
 			var expectation = new ArgumentExpectation<string>("a");
 			Assert.IsFalse(expectation.IsValid("b"), nameof(expectation.IsValid));
+		}
+
+		[Test]
+		public void CreateWithInvalidNullValue()
+		{
+			var expectation = new ArgumentExpectation<string>("a");
+			Assert.IsFalse(expectation.IsValid(null), nameof(expectation.IsValid));
 		}
 
 		[Test]
@@ -43,7 +58,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithInvalidValueFromExpression()
 		{
-			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationTests.GetValue)));
+			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
 			var expectation = new ArgumentExpectation<string>(expression);
 			Assert.IsFalse(expectation.IsValid("b"), nameof(expectation.IsValid));
 		}
@@ -51,7 +66,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithValidValueFromExpression()
 		{
-			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationTests.GetValue)));
+			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
 			var expectation = new ArgumentExpectation<string>(expression);
 			Assert.IsTrue(expectation.IsValid("a"), nameof(expectation.IsValid));
 		}
