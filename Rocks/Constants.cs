@@ -10,6 +10,18 @@
 
 		public static class CodeTemplates
 		{
+			// 0 = type
+			// 1 = name
+			// 2 = get and/or set
+			public const string PropertyTemplate = "public {0} {1} {{ {2} }}";
+			// 0 = type
+			// 1 = indexer type
+			// 2 = indexer name
+			// 3 = get and/or set
+			public const string PropertyIndexerTemplate = "public {0} this[{1} {2}] {{ {3} }}";
+			// 0 = event type
+			// 1 = event name
+			public const string EventTemplate = "public event {0} {1};";
 			// 0 = parameter name
 			public const string ExpectationTemplate = "(handler.Expectations[\"{0}\"] as ArgumentExpectation<{1}>).Validate({0}, \"{0}\");";
 

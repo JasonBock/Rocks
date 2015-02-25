@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
+    <Compile Include="Members.cs" />
     <Compile Include="OutAndRef.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
