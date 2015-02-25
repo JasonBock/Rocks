@@ -29,8 +29,8 @@
 			// 1 = comma-separate list of argument names
 			// 2 = instances of the ExpectationTemplate
 			// 3 = delegate cast
-			public const string ActionMethodTemplate = @"
-public {0}
+			public const string ActionMethodTemplate = 
+@"public {0}
 {{
 	HandlerInformation handler = null;
 
@@ -50,9 +50,14 @@ public {0}
 	}}
 }}";
 
-			// 0 = mangled name
-			// 1 = interface name
-			public const string ClassTemplate = @"{0}
+			// 0 = using statements
+			// 1 = mangled name
+			// 2 = base type
+			// 3 = implemented methods
+			// 4 = implemented properties
+			// 5 = implemented events
+			public const string ClassTemplate = 
+@"{0}
 
 public sealed class {1}
 	: {2}, IRock
@@ -66,6 +71,10 @@ public sealed class {1}
 
 	{3}
 
+	{4}
+
+	{5}
+
 	ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
 	{{
 		get {{ return this.handlers; }}
@@ -76,8 +85,8 @@ public sealed class {1}
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
-			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = @"
-public {0}
+			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = 
+@"public {0}
 {{
 	HandlerInformation handler = null;
 
@@ -100,8 +109,8 @@ public {0}
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
-			public const string FunctionWithValueTypeReturnValueMethodTemplate = @"
-public {0}
+			public const string FunctionWithValueTypeReturnValueMethodTemplate = 
+@"public {0}
 {{
 	HandlerInformation handler = null;
 

@@ -41,7 +41,7 @@ namespace Rocks
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var tMethod in this.baseType.GetMethods())
+			foreach (var tMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
 			{
 				if (tMethod.ReturnType != typeof(void))
 				{
@@ -60,7 +60,10 @@ namespace Rocks
 				}
 			}
 
-			this.namespaces.Add(baseType.Namespace);
+			var properties = this.baseType.GetImplementedProperties(namespaces);
+			var events = this.baseType.GetImplementedEvents(namespaces);
+
+         this.namespaces.Add(baseType.Namespace);
 			this.namespaces.Add(typeof(ExpectationException).Namespace);
 			this.namespaces.Add(typeof(IRock).Namespace);
 			this.namespaces.Add(typeof(HandlerInformation).Namespace);
@@ -72,7 +75,8 @@ namespace Rocks
 					(from @namespace in this.namespaces
 					 select $"using {@namespace};")),
 				this.mangledName, this.baseType.Name,
-				string.Join(Environment.NewLine, generatedMethods));
+				string.Join(Environment.NewLine, generatedMethods), 
+				properties, events);
 
 			var compilation = this.CreateCompilation(classCode);
 			var assembly = this.CreateAssembly(compilation);
