@@ -45,8 +45,6 @@ namespace Rocks
 					this.ExpectedCallCount, this.callCount));
 			}
 
-			// TODO: Add argument verifications.
-
 			return verifications.AsReadOnly();
 		}
 

@@ -12,6 +12,24 @@ namespace Rocks.Extensions
 			return string.Join(", ", @this.GetParameters().Select(_ => _.Name));
 		}
 
+		internal static string GetDelegateCast(this MethodInfo @this)
+		{
+			var parameters = @this.GetParameters();
+			var methodKind = @this.ReturnType != typeof(void) ? "Func" : "Action";
+
+         if (parameters.Length == 0)
+			{
+				return @this.ReturnType != typeof(void) ?
+					$"{methodKind}<{@this.ReturnType.Name}>" : $"{methodKind}";
+         }
+			else
+			{
+				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => _.ParameterType.Name));
+				return @this.ReturnType != typeof(void) ?
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.Name}>" : $"{methodKind}<{genericArgumentTypes}>";
+         }
+		}
+
 		internal static string GetExpectationChecks(this MethodInfo @this)
 		{
 			return string.Join(Environment.NewLine,
