@@ -15,8 +15,8 @@ namespace Rocks.Tests
 		[Test]
 		public void TryCreateWhenTypeIsSealed()
 		{
-			Rock<string> result = null;
-			Assert.IsFalse(Rock.TryCreate<string>(out result));
+			var result = Rock.TryCreate<string>();
+         Assert.IsFalse(result.IsSuccessful);
 		}
 	}
 }

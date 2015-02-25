@@ -31,26 +31,27 @@ namespace Rocks
 			return new Rock<T>(options);
 		}
 
-		public static bool TryCreate<T>(out Rock<T> result)
+		public static CreateResult<T> TryCreate<T>()
 			where T : class
 		{
-			return Rock.TryCreate<T>(new Options(), out result);
+			return Rock.TryCreate<T>(new Options());
 		}
 
-		public static bool TryCreate<T>(Options options, out Rock<T> result)
+		public static CreateResult<T> TryCreate<T>(Options options)
 			where T : class
 		{
-			result = default(Rock<T>);
+			var result = default(Rock<T>);
+			var isSuccessful = false;
 
 			var message = typeof(T).Validate();
 
-			if (!string.IsNullOrWhiteSpace(message))
+			if (string.IsNullOrWhiteSpace(message))
 			{
-				return false;
+				result = new Rock<T>(options);
+				isSuccessful = true;
 			}
 
-			result = new Rock<T>(options);
-			return true;
+			return new CreateResult<T>(isSuccessful, result);
 		}
 	}
 

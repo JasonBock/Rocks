@@ -16,6 +16,7 @@
 			// 0 = method name
 			// 1 = comma-separate list of argument names
 			// 2 = instances of the ExpectationTemplate
+			// 3 = delegate cast
 			public const string ActionMethodTemplate = @"
 public {0}
 {{
@@ -26,7 +27,7 @@ public {0}
 		{2}
 		if(handler.Method != null)
 		{{
-			handler.Method.DynamicInvoke({1});
+			(handler.Method as {3})({1});
 		}}
 	
 		handler.IncrementCallCount();
@@ -62,6 +63,7 @@ public sealed class {1}
 			// 1 = comma-separate list of argument names
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
+			// 4 = delegate cast
 			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = @"
 public {0}
 {{
@@ -71,7 +73,7 @@ public {0}
 	{{
 		{3}
 		var result = handler.Method != null ?
-			handler.Method.DynamicInvoke({1}) as {2} :
+			(handler.Method as {4})({1}) as {2} :
 			(handler as HandlerInformation<{2}>).ReturnValue;
 		handler.IncrementCallCount();
 		return result;
@@ -85,6 +87,7 @@ public {0}
 			// 1 = comma-separate list of argument names
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
+			// 4 = delegate cast
 			public const string FunctionWithValueTypeReturnValueMethodTemplate = @"
 public {0}
 {{
@@ -94,7 +97,7 @@ public {0}
 	{{
 		{3}
 		var result = handler.Method != null ?
-			({2})handler.Method.DynamicInvoke({1}) :
+			({2})(handler.Method as {4})({1}) :
 			(handler as HandlerInformation<{2}>).ReturnValue;
 		handler.IncrementCallCount();
 		return result;

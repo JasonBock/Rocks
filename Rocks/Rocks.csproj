@@ -88,6 +88,7 @@
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="CreateResult.cs" />
     <Compile Include="Exceptions\ExpectationException.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />

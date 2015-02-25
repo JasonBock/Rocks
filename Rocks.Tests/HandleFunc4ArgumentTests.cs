@@ -8,7 +8,7 @@ namespace Rocks.Tests
 		[Test]
 		public void Make()
 		{
-			var rock = Rock.Create<IHandleFunc4ArgumentTests>();
+			var rock = Rock.Create<IHandleFunc4ArgumentTests>(new Options(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
 			rock.HandleFunc(_ => _.ReferenceTarget(1, 2, 3, 4));
 			rock.HandleFunc(_ => _.ValueTarget(10, 20, 30, 40));
 
