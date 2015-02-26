@@ -111,6 +111,7 @@
     <Compile Include="ExpectationsTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
+    <Compile Include="Extensions\ParameterInfoExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="FullInterfaceTests.cs" />
     <Compile Include="GenericsTests.cs" />

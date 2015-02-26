@@ -7,9 +7,19 @@ namespace Rocks.Extensions
 {
 	internal static class MethodInfoExtensions
 	{
+		internal static bool ContainsRefAndOrOutParameters(this MethodInfo @this)
+		{
+			return (from parameter in @this.GetParameters()
+					  where parameter.IsOut || parameter.ParameterType.IsByRef
+					  select parameter).Any();
+		}
+
 		internal static string GetArgumentNameList(this MethodInfo @this)
 		{
-			return string.Join(", ", @this.GetParameters().Select(_ => _.Name));
+			return string.Join(", ",
+				(from parameter in @this.GetParameters()
+				 let modifier = parameter.GetModifier()
+				 select $"{modifier}{parameter.Name}"));
 		}
 
 		internal static string GetDelegateCast(this MethodInfo @this)
@@ -77,7 +87,7 @@ namespace Rocks.Extensions
 			var parameters = string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
-				let modifier = parameter.IsOut ? "out " : parameter.ParameterType.IsByRef ? "ref " : string.Empty
+				let modifier = parameter.GetModifier()
 				let parameterType = !string.IsNullOrWhiteSpace(modifier) ? parameter.ParameterType.GetElementType().Name :
 					parameter.ParameterType.Name
 				select $"{modifier}{parameterType} {parameter.Name}");

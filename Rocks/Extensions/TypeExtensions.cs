@@ -21,9 +21,8 @@ namespace Rocks.Extensions
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
 			return (from method in @this.GetMethods()
-					  from parameter in method.GetParameters()
-					  where parameter.IsOut || parameter.ParameterType.IsByRef
-					  select parameter).Any();
+					  where method.ContainsRefAndOrOutParameters()
+					  select method).Any();
 		}
 
 		internal static string GetImplementedProperties(this Type @this, SortedSet<string> namespaces)

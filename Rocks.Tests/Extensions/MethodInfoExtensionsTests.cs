@@ -9,6 +9,27 @@ namespace Rocks.Tests.Extensions
 	public sealed class MethodInfoExtensionsTests
 	{
 		[Test]
+		public void ContainsRefArguments()
+		{
+			Assert.IsTrue(typeof(IHaveMethodWithRefArgument)
+				.GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
+		public void ContainsOutArguments()
+		{
+			Assert.IsTrue(typeof(IHaveMethodWithOutArgument)
+				.GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
+		public void ContainsByValArguments()
+		{
+			Assert.IsFalse(typeof(IHaveMethodWithByValArgument)
+				.GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
 		public void GetArgumentNameList()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));

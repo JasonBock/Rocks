@@ -1,7 +1,6 @@
 ﻿using Rocks.Exceptions;
 using Rocks.Extensions;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
@@ -10,7 +9,8 @@ namespace Rocks
 {
 	public static class Rock
 	{
-		internal static ConcurrentDictionary<Type, Type> cache = new ConcurrentDictionary<Type, Type>();
+		internal static Dictionary<Type, Type> cache = new Dictionary<Type, Type>();
+		internal static object cacheLock = new object();
 
 		public static Rock<T> Create<T>()
 			where T : class
@@ -103,6 +103,7 @@ namespace Rocks
 
 		public void HandleAction(Expression<Action<T>> expression, Delegate handler)
 		{
+			this.namespaces.Add(handler.GetType().Namespace);
 			var method = ((MethodCallExpression)expression.Body);
 			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler, method.GetArgumentExpectations());
@@ -110,6 +111,7 @@ namespace Rocks
 
 		public void HandleAction(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount)
 		{
+			this.namespaces.Add(handler.GetType().Namespace);
 			var method = ((MethodCallExpression)expression.Body);
 			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
@@ -203,6 +205,7 @@ namespace Rocks
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Delegate handler)
 		{
+			this.namespaces.Add(handler.GetType().Namespace);
 			var method = ((MethodCallExpression)expression.Body);
 			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
@@ -210,6 +213,7 @@ namespace Rocks
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Delegate handler, uint expectedCallCount)
 		{
+			this.namespaces.Add(handler.GetType().Namespace);
 			var method = ((MethodCallExpression)expression.Body);
 			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
 				new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
@@ -289,8 +293,25 @@ namespace Rocks
 		{
 			var tType = typeof(T);
 			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);
-			var rockType = Rock.cache.GetOrAdd(tType,
-				_ => new Maker(_, readOnlyHandlers, this.namespaces, this.options).Mock);
+			var rockType = typeof(T);
+
+			lock(Rock.cacheLock)
+			{
+				if(Rock.cache.ContainsKey(tType))
+				{
+					rockType = Rock.cache[tType];
+				}
+				else
+				{
+					rockType = new Maker(tType, readOnlyHandlers, this.namespaces, this.options).Mock;
+
+					if (!tType.ContainsRefAndOrOutParameters())
+					{
+						Rock.cache.Add(tType, rockType);
+               }
+				}
+			}
+
 			var rock = Activator.CreateInstance(rockType, readOnlyHandlers);
 			this.rocks.Add(rock as IRock);
 			return rock as T;

@@ -43,20 +43,24 @@ namespace Rocks
 
 			foreach (var tMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
 			{
-				if (tMethod.ReturnType != typeof(void))
+				var methodDescription = tMethod.GetMethodDescription(namespaces);
+            var delegateCast = !tMethod.ContainsRefAndOrOutParameters() ? 
+					tMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().Name;
+				var argumentNameList = tMethod.GetArgumentNameList();
+				var expectationChecks = tMethod.GetExpectationChecks();
+
+            if (tMethod.ReturnType != typeof(void))
 				{
 					generatedMethods.Add(string.Format(tMethod.ReturnType.IsValueType || 
 						(tMethod.ReturnType.IsGenericParameter && (tMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
                      Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
 							Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(),
-						tMethod.ReturnType.Name, tMethod.GetExpectationChecks(), tMethod.GetDelegateCast()));
+						methodDescription, argumentNameList, tMethod.ReturnType.Name, expectationChecks, delegateCast));
 				}
 				else
 				{
 					generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-						tMethod.GetMethodDescription(namespaces), tMethod.GetArgumentNameList(), 
-						tMethod.GetExpectationChecks(), tMethod.GetDelegateCast()));
+						methodDescription, argumentNameList, expectationChecks, delegateCast));
 				}
 			}
 
