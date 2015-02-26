@@ -14,6 +14,14 @@ namespace Rocks.Extensions
 					  select parameter).Any();
 		}
 
+		internal static string GetOutInitializers(this MethodInfo @this)
+		{
+			return string.Join(Environment.NewLine,
+				from parameter in @this.GetParameters()
+				where parameter.IsOut
+				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().Name});");
+      }
+
 		internal static string GetArgumentNameList(this MethodInfo @this)
 		{
 			return string.Join(", ",

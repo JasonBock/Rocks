@@ -18,7 +18,9 @@ namespace Rocks.Extensions
 			foreach (var argument in @this.Arguments)
 			{
 				var methodArgument = methodArguments[argumentIndex];
-				var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(methodArgument.ParameterType);
+
+				var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(
+					!methodArgument.ParameterType.IsByRef ? methodArgument.ParameterType : methodArgument.ParameterType.GetElementType());
 				var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
 
             switch (argument.NodeType)

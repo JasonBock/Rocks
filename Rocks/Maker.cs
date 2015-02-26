@@ -44,23 +44,33 @@ namespace Rocks
 			foreach (var tMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
 			{
 				var methodDescription = tMethod.GetMethodDescription(namespaces);
-            var delegateCast = !tMethod.ContainsRefAndOrOutParameters() ? 
-					tMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().Name;
-				var argumentNameList = tMethod.GetArgumentNameList();
-				var expectationChecks = tMethod.GetExpectationChecks();
+				var containsRefAndOrOutParameters = tMethod.ContainsRefAndOrOutParameters();
 
-            if (tMethod.ReturnType != typeof(void))
+            if (!containsRefAndOrOutParameters || this.handlers.ContainsKey(methodDescription))
 				{
-					generatedMethods.Add(string.Format(tMethod.ReturnType.IsValueType || 
-						(tMethod.ReturnType.IsGenericParameter && (tMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-                     Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
-							Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-						methodDescription, argumentNameList, tMethod.ReturnType.Name, expectationChecks, delegateCast));
+					var delegateCast = !containsRefAndOrOutParameters ?
+						tMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().Name;
+					var argumentNameList = tMethod.GetArgumentNameList();
+					var expectationChecks = !containsRefAndOrOutParameters ? tMethod.GetExpectationChecks() : string.Empty;
+					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : tMethod.GetOutInitializers();
+
+               if (tMethod.ReturnType != typeof(void))
+					{
+						generatedMethods.Add(string.Format(tMethod.ReturnType.IsValueType ||
+							(tMethod.ReturnType.IsGenericParameter && (tMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+								Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
+								Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
+							methodDescription, argumentNameList, tMethod.ReturnType.Name, expectationChecks, delegateCast, outInitializers));
+					}
+					else
+					{
+						generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
+							methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers));
+					}
 				}
 				else
 				{
-					generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-						methodDescription, argumentNameList, expectationChecks, delegateCast));
+					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodDescription));
 				}
 			}
 

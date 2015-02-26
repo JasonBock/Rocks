@@ -9,6 +9,13 @@ namespace Rocks.Tests.Extensions
 	public sealed class MethodInfoExtensionsTests
 	{
 		[Test]
+		public void ContainsOutInitializers()
+		{
+			Assert.AreEqual("a = default(Int32);", this.GetType()
+				.GetMethod(nameof(this.TargetWithOutArgument)).GetOutInitializers());
+		}
+
+		[Test]
 		public void ContainsRefArguments()
 		{
 			Assert.IsTrue(typeof(IHaveMethodWithRefArgument)

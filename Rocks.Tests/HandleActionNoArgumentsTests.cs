@@ -5,8 +5,6 @@ namespace Rocks.Tests
 	[TestFixture]
 	public sealed class HandleActionNoArgumentsTests
 	{
-		public delegate void Target();
-
 		[Test]
 		public void Make()
 		{
@@ -17,39 +15,6 @@ namespace Rocks.Tests
 			chunk.Target();
 
 			rock.Verify();
-		}
-
-		[Test, Ignore]
-		public void MakeWithDelegate()
-		{
-			var wasCalled = false;
-			var @delegate = new Target(() => wasCalled = true);
-
-			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
-			rock.HandleAction(_ => _.Target(), @delegate);
-
-			var chunk = rock.Make();
-			chunk.Target();
-
-			rock.Verify();
-			Assert.IsTrue(wasCalled);
-		}
-
-		[Test, Ignore]
-		public void MakeWithDelegateAndExpectedCallCount()
-		{
-			var wasCalled = false;
-			var @delegate = new Target(() => wasCalled = true);
-
-			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
-			rock.HandleAction(_ => _.Target(), @delegate, 2);
-
-			var chunk = rock.Make();
-			chunk.Target();
-			chunk.Target();
-
-			rock.Verify();
-			Assert.IsTrue(wasCalled);
 		}
 
 		[Test]

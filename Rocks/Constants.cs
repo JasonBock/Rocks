@@ -26,12 +26,21 @@
 			public const string ExpectationTemplate = "(handler.Expectations[\"{0}\"] as ArgumentExpectation<{1}>).Validate({0}, \"{0}\");";
 
 			// 0 = method name
+			public const string RefOutNotImplementedMethodTemplate =
+@"public {0}
+{{
+	throw new NotImplementedException();
+}}";
+
+			// 0 = method name
 			// 1 = comma-separate list of argument names
 			// 2 = instances of the ExpectationTemplate
 			// 3 = delegate cast
-			public const string ActionMethodTemplate = 
+			// 4 = out initializers
+			public const string ActionMethodTemplate =
 @"public {0}
 {{
+	{4}
 	HandlerInformation handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
@@ -85,9 +94,11 @@ public sealed class {1}
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
-			public const string FunctionWithReferenceTypeReturnValueMethodTemplate = 
+			// 5 = out initializers
+			public const string FunctionWithReferenceTypeReturnValueMethodTemplate =
 @"public {0}
 {{
+	{5}
 	HandlerInformation handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
@@ -109,9 +120,11 @@ public sealed class {1}
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
-			public const string FunctionWithValueTypeReturnValueMethodTemplate = 
+			// 5 = out initializers
+			public const string FunctionWithValueTypeReturnValueMethodTemplate =
 @"public {0}
 {{
+	{5}
 	HandlerInformation handler = null;
 
 	if (this.handlers.TryGetValue(""{0}"", out handler))
