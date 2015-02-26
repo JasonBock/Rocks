@@ -9,6 +9,24 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsTests
 	{
 		[Test]
+		public void ContainsRefArguments()
+		{
+			Assert.IsTrue(typeof(IHaveMethodWithRefArgument).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
+		public void ContainsOutArguments()
+		{
+			Assert.IsTrue(typeof(IHaveMethodWithOutArgument).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
+		public void ContainsByValArguments()
+		{
+			Assert.IsFalse(typeof(IHaveMethodWithByValArgument).ContainsRefAndOrOutParameters());
+		}
+
+		[Test]
 		public void GetImplementedProperties()
 		{
 			var expectedProperties =
@@ -44,6 +62,21 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 	}
 
 	public class MyGenericEventArgs : EventArgs { }
+
+	public interface IHaveMethodWithOutArgument
+	{
+		void Target(out int a);
+	}
+
+	public interface IHaveMethodWithRefArgument
+	{
+		void Target(out int a);
+	}
+
+	public interface IHaveMethodWithByValArgument
+	{
+		void Target(int a);
+	}
 
 	public interface ITypeExtensions
 	{

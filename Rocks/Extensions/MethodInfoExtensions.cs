@@ -70,14 +70,17 @@ namespace Rocks.Extensions
 
 				generics = $"<{string.Join(", ", genericArguments)}>";
 				constraints = genericConstraints.Count == 0 ? 
-					string.Empty : " " + string.Join(" ", genericConstraints);
+					string.Empty : $" {string.Join(" ", genericConstraints)}";
 			}
 
 			// TODO: will need to add covariance and contravariance here, for interfaces only....maybe. I'm not sure I even care.
 			var parameters = string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
-				select parameter.ParameterType.Name + " " + parameter.Name);
+				let modifier = parameter.IsOut ? "out " : parameter.ParameterType.IsByRef ? "ref " : string.Empty
+				let parameterType = !string.IsNullOrWhiteSpace(modifier) ? parameter.ParameterType.GetElementType().Name :
+					parameter.ParameterType.Name
+				select $"{modifier}{parameterType} {parameter.Name}");
 
 			return $"{returnType} {methodName}{generics}({parameters}){constraints}";
       }

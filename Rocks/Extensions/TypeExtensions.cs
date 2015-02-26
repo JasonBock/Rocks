@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Rocks.Extensions
 {
@@ -15,6 +16,14 @@ namespace Rocks.Extensions
 			// TODO: Does this type have any virtual members that could be overridden?
 
 			return string.Empty;
+		}
+
+		internal static bool ContainsRefAndOrOutParameters(this Type @this)
+		{
+			return (from method in @this.GetMethods()
+					  from parameter in method.GetParameters()
+					  where parameter.IsOut || parameter.ParameterType.IsByRef
+					  select parameter).Any();
 		}
 
 		internal static string GetImplementedProperties(this Type @this, SortedSet<string> namespaces)

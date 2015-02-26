@@ -3,38 +3,27 @@ using System.Diagnostics;
 
 namespace Rocks.Sketchpad
 {
-	public class DelegateDefinitions
+	public interface IRefsAndOuts
 	{
-		public delegate void TargetDelegate(int x);
+		void Method(int x);
+		void RefMethod(ref int x);
+		void OutMethod(out int x);
 	}
 
 	public static class OutAndRef
 	{
 		public static void Test()
 		{
-			var @delegate = new DelegateDefinitions.TargetDelegate(a => a++);
-			Console.Out.WriteLine(@delegate.GetType().Name);
-
-			var action = new Action<int, string, Guid>((a, b, c) => { });
-			Delegate delegateAction = action;
-
-			var dynamicTime = Stopwatch.StartNew();
-
-			for(var i = 0; i < 400000; i++)
+			foreach(var method in typeof(IRefsAndOuts).GetMethods())
 			{
-				delegateAction.DynamicInvoke(44, "some data here", Guid.NewGuid());
+				Console.Out.WriteLine(method.Name);
+				
+				foreach(var parameter in method.GetParameters())
+				{
+					Console.Out.WriteLine(parameter.IsOut);
+					Console.Out.WriteLine(parameter.ParameterType.IsByRef);
+				}
 			}
-
-			Console.Out.WriteLine(dynamicTime.Elapsed);
-
-			var actionTime = Stopwatch.StartNew();
-
-			for (var i = 0; i < 400000; i++)
-			{
-				(delegateAction as Action<int, string, Guid>)(44, "some data here", Guid.NewGuid());
-			}
-
-			Console.Out.WriteLine(actionTime.Elapsed);
 		}
 	}
 }

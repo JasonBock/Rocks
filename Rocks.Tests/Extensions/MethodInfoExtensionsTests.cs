@@ -80,6 +80,28 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetMethodDescriptionWithOutArgument()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithOutArgument));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("void TargetWithOutArgument(out Int32 a)", description, nameof(description));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+		}
+
+		[Test]
+		public void GetMethodDescriptionWithRefArgument()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithRefArgument));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("void TargetWithRefArgument(ref Int32 a)", description, nameof(description));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+		}
+
+		[Test]
 		public void GetMethodDescriptionWithReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
@@ -128,6 +150,8 @@ namespace Rocks.Tests.Extensions
 		}
 
 		public void TargetWithNoArguments() { }
+		public void TargetWithOutArgument(out int a) { a = 0; }
+		public void TargetWithRefArgument(ref int a) { }
 		public int TargetWithNoArgumentsAndReturnValue() { return 0; }
 		public void TargetWithArguments(int a, string c) { }
 		public int TargetWithArgumentsAndReturnValue(int a, string c) { return 0; }

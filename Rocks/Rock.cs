@@ -101,6 +101,20 @@ namespace Rocks
 				new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
 		}
 
+		public void HandleAction(Expression<Action<T>> expression, Delegate handler)
+		{
+			var method = ((MethodCallExpression)expression.Body);
+			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation(handler, method.GetArgumentExpectations());
+		}
+
+		public void HandleAction(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount)
+		{
+			var method = ((MethodCallExpression)expression.Body);
+			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
+		}
+
 		public void HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler)
 		{
 			var method = ((MethodCallExpression)expression.Body);
@@ -185,6 +199,20 @@ namespace Rocks
 			var handler = new HandlerInformation<TResult>(expectedCallCount, method.GetArgumentExpectations());
 			this.handlers[method.Method.GetMethodDescription(this.namespaces)] = handler;
 			return new ReturnValue<TResult>(handler);
+		}
+
+		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Delegate handler)
+		{
+			var method = ((MethodCallExpression)expression.Body);
+			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
+		}
+
+		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Delegate handler, uint expectedCallCount)
+		{
+			var method = ((MethodCallExpression)expression.Body);
+			this.handlers[method.Method.GetMethodDescription(this.namespaces)] =
+				new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
