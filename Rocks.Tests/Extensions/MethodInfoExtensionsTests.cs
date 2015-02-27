@@ -44,6 +44,13 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetArgumentNameListWithParams()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithParamsArgument));
+			Assert.AreEqual("a", target.GetArgumentNameList());
+		}
+
+		[Test]
 		public void GetDelegateCastWithNoArguments()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArguments));
@@ -119,6 +126,17 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetMethodDescriptionWithParamsArgument()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithParamsArgument));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("void TargetWithParamsArgument(params Int32[] a)", description, nameof(description));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+		}
+
+		[Test]
 		public void GetMethodDescriptionWithRefArgument()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithRefArgument));
@@ -165,6 +183,18 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetMethodDescriptionWithArrayArgumentss()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithArrayArguments));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("void TargetWithArrayArguments(Int32[] a, String[] b, ref Guid[] c, out Double[] d)",
+				description, nameof(description));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+		}
+
+		[Test]
 		public void GetMethodDescriptionWithConstraints()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithMultipleConstraints));
@@ -180,8 +210,10 @@ namespace Rocks.Tests.Extensions
 		public void TargetWithNoArguments() { }
 		public void TargetWithOutArgument(out int a) { a = 0; }
 		public void TargetWithRefArgument(ref int a) { }
+		public void TargetWithParamsArgument(params int[] a) { }
 		public int TargetWithNoArgumentsAndReturnValue() { return 0; }
 		public void TargetWithArguments(int a, string c) { }
+		public void TargetWithArrayArguments(int[] a, string[] b, ref Guid[] c, out double[] d) { d = null; }
 		public int TargetWithArgumentsAndReturnValue(int a, string c) { return 0; }
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
 		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) { return default(U); }

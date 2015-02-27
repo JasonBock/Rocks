@@ -26,7 +26,7 @@ namespace Rocks.Extensions
 		{
 			return string.Join(", ",
 				(from parameter in @this.GetParameters()
-				 let modifier = parameter.GetModifier()
+				 let modifier = parameter.GetModifier(true)
 				 select $"{modifier}{parameter.Name}"));
 		}
 
@@ -91,13 +91,14 @@ namespace Rocks.Extensions
 					string.Empty : $" {string.Join(" ", genericConstraints)}";
 			}
 
-			// TODO: will need to add covariance and contravariance here, for interfaces only....maybe. I'm not sure I even care.
 			var parameters = string.Join(", ",
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
 				let modifier = parameter.GetModifier()
-				let parameterType = !string.IsNullOrWhiteSpace(modifier) ? parameter.ParameterType.GetElementType().GetSafeName() :
-					parameter.ParameterType.GetSafeName()
+				let arrayText = parameter.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "[]" : string.Empty
+            let parameterType = !string.IsNullOrWhiteSpace(modifier) ?
+					$"{parameter.ParameterType.GetElementType().GetSafeName()}{arrayText}" :
+					$"{parameter.ParameterType.GetSafeName()}{arrayText}"
 				select $"{modifier}{parameterType} {parameter.Name}");
 
 			return $"{returnType} {methodName}{generics}({parameters}){constraints}";

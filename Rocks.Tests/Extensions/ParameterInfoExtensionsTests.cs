@@ -27,8 +27,23 @@ namespace Rocks.Tests.Extensions
 				this.GetType().GetMethod(nameof(this.TargetWithRefArgument)).GetParameters()[0].GetModifier());
 		}
 
+		[Test]
+		public void GetModifierForParams()
+		{
+			Assert.AreEqual("params ",
+				this.GetType().GetMethod(nameof(this.TargetWithParamsArgument)).GetParameters()[0].GetModifier());
+		}
+
+		[Test]
+		public void GetModifierForParamsIgnored()
+		{
+			Assert.AreEqual(string.Empty,
+				this.GetType().GetMethod(nameof(this.TargetWithParamsArgument)).GetParameters()[0].GetModifier(true));
+		}
+
 		public void TargetWithByValArguments(int a) { }
 		public void TargetWithOutArgument(out int a) { a = 0; }
 		public void TargetWithRefArgument(ref int a) { }
+		public void TargetWithParamsArgument(params string[] a) { }
 	}
 }

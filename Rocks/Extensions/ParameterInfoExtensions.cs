@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Rocks.Extensions
 {
@@ -6,7 +7,15 @@ namespace Rocks.Extensions
 	{
 		internal static string GetModifier(this ParameterInfo @this)
 		{
-			return @this.IsOut ? "out " : @this.ParameterType.IsByRef ? "ref " : string.Empty;
+			return @this.GetModifier(false);
       }
+
+		internal static string GetModifier(this ParameterInfo @this, bool ignoreParams)
+		{
+			return @this.IsOut ? "out " :
+				@this.ParameterType.IsByRef ? "ref " :
+				ignoreParams ? string.Empty :
+				@this.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "params " : string.Empty;
+		}
 	}
 }

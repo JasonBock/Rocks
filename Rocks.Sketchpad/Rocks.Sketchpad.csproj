@@ -46,12 +46,23 @@
     <Compile Include="Handlers.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="NestedClasses.cs" />
-    <Compile Include="OutAndRef.cs" />
+    <Compile Include="OutAndRefAndParams.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempRock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rocks.Tests\Rocks.Tests.csproj">
+      <Project>{89cfc639-af25-4b43-98f1-0655172f4125}</Project>
+      <Name>Rocks.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rocks\Rocks.csproj">
+      <Project>{b6e15a91-620a-4e5f-9e66-8ca4f1cb05d9}</Project>
+      <Name>Rocks</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
