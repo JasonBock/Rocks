@@ -10,7 +10,7 @@ namespace Rocks.Extensions
 		{
 			if(@this.IsSealed)
 			{
-				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.Name);
+				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.GetSafeName());
 			}
 
 			// TODO: Does this type have any virtual members that could be overridden?
@@ -23,6 +23,13 @@ namespace Rocks.Extensions
 			return (from method in @this.GetMethods()
 					  where method.ContainsRefAndOrOutParameters()
 					  select method).Any();
+		}
+
+		internal static string GetSafeName(this Type @this)
+		{
+			return !string.IsNullOrWhiteSpace(@this.FullName) ?
+				@this.FullName.Split('.').Last().Replace("+", ".") :
+				@this.Name;
 		}
 
 		internal static string GetImplementedProperties(this Type @this, SortedSet<string> namespaces)
@@ -53,14 +60,14 @@ namespace Rocks.Extensions
 
 					// Indexer
 					properties.Add(string.Format(Constants.CodeTemplates.PropertyIndexerTemplate,
-						property.PropertyType.Name, indexerParameter.ParameterType.Name, indexerParameter.Name,
+						property.PropertyType.Name, indexerParameter.ParameterType.GetSafeName(), indexerParameter.Name,
 						string.Join(" ", accessors)));
 				}
 				else
 				{
 					// Normal
 					properties.Add(string.Format(Constants.CodeTemplates.PropertyTemplate,
-						property.PropertyType.Name, property.Name, 
+						property.PropertyType.GetSafeName(), property.Name, 
 						string.Join(" ", accessors)));
 				}
 			}
@@ -81,13 +88,13 @@ namespace Rocks.Extensions
 				{
 					var eventGenericType = eventHandlerType.GetGenericArguments()[0];
                events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
-						$"EventHandler<{eventGenericType.Name}>", @event.Name));
+						$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 					namespaces.Add(eventGenericType.Namespace);
 				}
 				else
 				{
 					events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
-						eventHandlerType.Name, @event.Name));
+						eventHandlerType.GetSafeName(), @event.Name));
 				}
 			}
 

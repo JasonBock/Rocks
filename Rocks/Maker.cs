@@ -41,26 +41,26 @@ namespace Rocks
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var tMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
+			foreach (var baseMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
 			{
-				var methodDescription = tMethod.GetMethodDescription(namespaces);
-				var containsRefAndOrOutParameters = tMethod.ContainsRefAndOrOutParameters();
+				var methodDescription = baseMethod.GetMethodDescription(namespaces);
+				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 
             if (!containsRefAndOrOutParameters || this.handlers.ContainsKey(methodDescription))
 				{
 					var delegateCast = !containsRefAndOrOutParameters ?
-						tMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().Name;
-					var argumentNameList = tMethod.GetArgumentNameList();
-					var expectationChecks = !containsRefAndOrOutParameters ? tMethod.GetExpectationChecks() : string.Empty;
-					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : tMethod.GetOutInitializers();
+						baseMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().GetSafeName();
+					var argumentNameList = baseMethod.GetArgumentNameList();
+					var expectationChecks = !containsRefAndOrOutParameters ? baseMethod.GetExpectationChecks() : string.Empty;
+					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-               if (tMethod.ReturnType != typeof(void))
+               if (baseMethod.ReturnType != typeof(void))
 					{
-						generatedMethods.Add(string.Format(tMethod.ReturnType.IsValueType ||
-							(tMethod.ReturnType.IsGenericParameter && (tMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+						generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
+							(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 								Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
 								Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-							methodDescription, argumentNameList, tMethod.ReturnType.Name, expectationChecks, delegateCast, outInitializers));
+							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers));
 					}
 					else
 					{
@@ -88,7 +88,7 @@ namespace Rocks
 				string.Join(Environment.NewLine,
 					(from @namespace in this.namespaces
 					 select $"using {@namespace};")),
-				this.mangledName, this.baseType.Name,
+				this.mangledName, this.baseType.GetSafeName(),
 				string.Join(Environment.NewLine, generatedMethods), 
 				properties, events);
 

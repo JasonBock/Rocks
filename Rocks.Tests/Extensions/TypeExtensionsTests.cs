@@ -9,6 +9,13 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsTests
 	{
 		[Test]
+		public void GetSafeName()
+		{
+			Assert.AreEqual("TypeExtensionsTests.SubnestedClass.IAmSubnested",
+				typeof(SubnestedClass.IAmSubnested).GetSafeName());
+		}
+
+		[Test]
 		public void ContainsRefArguments()
 		{
 			Assert.IsTrue(typeof(IHaveMethodWithRefArgument).ContainsRefAndOrOutParameters());
@@ -58,6 +65,11 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
 			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
+		}
+
+		public class SubnestedClass
+		{
+			public interface IAmSubnested { }
 		}
 	}
 

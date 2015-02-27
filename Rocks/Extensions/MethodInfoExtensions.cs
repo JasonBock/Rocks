@@ -19,7 +19,7 @@ namespace Rocks.Extensions
 			return string.Join(Environment.NewLine,
 				from parameter in @this.GetParameters()
 				where parameter.IsOut
-				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().Name});");
+				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().GetSafeName()});");
       }
 
 		internal static string GetArgumentNameList(this MethodInfo @this)
@@ -38,13 +38,13 @@ namespace Rocks.Extensions
          if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{@this.ReturnType.Name}>" : $"{methodKind}";
+					$"{methodKind}<{@this.ReturnType.GetSafeName()}>" : $"{methodKind}";
          }
 			else
 			{
-				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => _.ParameterType.Name));
+				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => _.ParameterType.GetSafeName()));
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.Name}>" : $"{methodKind}<{genericArgumentTypes}>";
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetSafeName()}>" : $"{methodKind}<{genericArgumentTypes}>";
          }
 		}
 
@@ -52,7 +52,7 @@ namespace Rocks.Extensions
 		{
 			return string.Join(Environment.NewLine,
 				@this.GetParameters().Select(_ =>
-					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.Name)));
+					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.GetSafeName())));
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
@@ -64,7 +64,7 @@ namespace Rocks.Extensions
 
 			namespaces.Add(@this.ReturnType.Namespace);
          var returnType = @this.ReturnType == typeof(void) ?
-				"void" :  @this.ReturnType.Name;
+				"void" :  @this.ReturnType.GetSafeName();
 
 			var methodName = @this.Name;
 			var generics = string.Empty;
@@ -96,8 +96,8 @@ namespace Rocks.Extensions
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
 				let modifier = parameter.GetModifier()
-				let parameterType = !string.IsNullOrWhiteSpace(modifier) ? parameter.ParameterType.GetElementType().Name :
-					parameter.ParameterType.Name
+				let parameterType = !string.IsNullOrWhiteSpace(modifier) ? parameter.ParameterType.GetElementType().GetSafeName() :
+					parameter.ParameterType.GetSafeName()
 				select $"{modifier}{parameterType} {parameter.Name}");
 
 			return $"{returnType} {methodName}{generics}({parameters}){constraints}";
@@ -124,7 +124,7 @@ namespace Rocks.Extensions
 				{
 					foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
 					{
-						constraintValues.Add(constraintedType.Name);
+						constraintValues.Add(constraintedType.GetSafeName());
 						namespaces.Add(constraintedType.Namespace);
 					}
 
@@ -138,7 +138,7 @@ namespace Rocks.Extensions
 					}
 				}
 
-				return $"where {argument.Name} : {string.Join(", ", constraintValues)}";
+				return $"where {argument.GetSafeName()} : {string.Join(", ", constraintValues)}";
 			}
 		}
 	}

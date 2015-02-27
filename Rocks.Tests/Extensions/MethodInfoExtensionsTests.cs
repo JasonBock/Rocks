@@ -170,7 +170,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithMultipleConstraints));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : Source, ISource where W : struct where X : V", 
+			Assert.AreEqual("void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : MethodInfoExtensionsTests.Source, MethodInfoExtensionsTests.ISource where W : struct where X : V", 
 				description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
