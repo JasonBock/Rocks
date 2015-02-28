@@ -51,10 +51,9 @@ namespace Rocks
 			return generatedConstructors;
 		}
 
-		private Type MakeType()
+		private List<string> GetGeneratedMethods()
 		{
 			var generatedMethods = new List<string>();
-			var generatedConstructors = this.GetGeneratedConstructors();
 
 			foreach (var baseMethod in this.baseType.GetMethods(Constants.Reflection.PublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual))
@@ -62,7 +61,7 @@ namespace Rocks
 				var methodDescription = baseMethod.GetMethodDescription(namespaces);
 				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 
-            if (!containsRefAndOrOutParameters || this.handlers.ContainsKey(methodDescription))
+				if (!containsRefAndOrOutParameters || this.handlers.ContainsKey(methodDescription))
 				{
 					var delegateCast = !containsRefAndOrOutParameters ?
 						baseMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().GetSafeName();
@@ -70,7 +69,7 @@ namespace Rocks
 					var expectationChecks = !containsRefAndOrOutParameters ? baseMethod.GetExpectationChecks() : string.Empty;
 					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-               if (baseMethod.ReturnType != typeof(void))
+					if (baseMethod.ReturnType != typeof(void))
 					{
 						generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
 							(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
@@ -90,8 +89,15 @@ namespace Rocks
 				}
 			}
 
-			var properties = this.baseType.GetImplementedProperties(namespaces);
-			var events = this.baseType.GetImplementedEvents(namespaces);
+			return generatedMethods;
+		}
+
+		private Type MakeType()
+		{
+			var generatedMethods = this.GetGeneratedMethods();
+			var generatedConstructors = this.GetGeneratedConstructors();
+			var properties = this.baseType.GetImplementedProperties(this.namespaces);
+			var events = this.baseType.GetImplementedEvents(this.namespaces);
 
          this.namespaces.Add(baseType.Namespace);
 			this.namespaces.Add(typeof(ExpectationException).Namespace);
@@ -145,8 +151,7 @@ namespace Rocks
 				File.WriteAllText(fileName, tree.GetText().ToString());
 			}
 
-			var compilation = CSharpCompilation.Create(
-				"RockQuarry",
+			var compilation = CSharpCompilation.Create("RockQuarry",
 				options: new CSharpCompilationOptions(
 					OutputKind.DynamicallyLinkedLibrary,
 					optimizationLevel: this.options.Level),
