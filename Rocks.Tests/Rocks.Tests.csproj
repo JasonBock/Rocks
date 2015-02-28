@@ -108,6 +108,8 @@
     <Compile Include="ArgumentExpectationOfTTests.cs" />
     <Compile Include="CreateResultsTests.cs" />
     <Compile Include="Exceptions\ExceptionTests.cs" />
+    <Compile Include="Exceptions\ExpectationExceptionTests.cs" />
+    <Compile Include="Exceptions\VerificationExceptionTests.cs" />
     <Compile Include="Exceptions\ValidationExceptionTests.cs" />
     <Compile Include="ExpectationsTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
