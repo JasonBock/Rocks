@@ -35,5 +35,8 @@ namespace Rocks.Tests
 		}
 	}
 
-	public interface IRockTests { }
+	public interface IRockTests
+	{
+		void Member();
+	}
 }

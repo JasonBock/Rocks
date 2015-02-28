@@ -1,10 +1,18 @@
-﻿namespace Rocks
+﻿using System.Reflection;
+
+namespace Rocks
 {
 	public static class Constants
 	{
+		public static class Reflection
+		{
+			public const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
+      }
+
 		public static class ErrorMessages
 		{
 			public const string CannotMockSealedType = "Cannot mock the sealed type {0}.";
+			public const string NoVirtualMembers = "No public virtual members found on type {0}.";
 			public const string VerificationFailed = "Type: {0}, method: {1}, message: {2}.";
 		}
 

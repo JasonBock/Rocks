@@ -41,7 +41,8 @@ namespace Rocks
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var baseMethod in this.baseType.GetMethods().Where(_ => !_.IsSpecialName))
+			foreach (var baseMethod in this.baseType.GetMethods(Constants.Reflection.PublicInstance)
+				.Where(_ => !_.IsSpecialName))
 			{
 				var methodDescription = baseMethod.GetMethodDescription(namespaces);
 				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();

@@ -14,13 +14,17 @@ namespace Rocks.Extensions
 			}
 
 			// TODO: Does this type have any virtual members that could be overridden?
+			if(!@this.GetMembers(Constants.Reflection.PublicInstance).Any())
+			{
+				return string.Format(Constants.ErrorMessages.NoVirtualMembers, @this.GetSafeName());
+			}
 
 			return string.Empty;
 		}
 
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
-			return (from method in @this.GetMethods()
+			return (from method in @this.GetMethods(Constants.Reflection.PublicInstance)
 					  where method.ContainsRefAndOrOutParameters()
 					  select method).Any();
 		}

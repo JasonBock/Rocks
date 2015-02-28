@@ -15,5 +15,8 @@ namespace Rocks.Tests
 		}
 	}
 
-	public interface ICreateResultsTests { }
+	public interface ICreateResultsTests
+	{
+		void Member();
+	}
 }
