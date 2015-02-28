@@ -121,6 +121,13 @@
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="FullInterfaceTests.cs" />
     <Compile Include="GenericsTests.cs" />
+    <Compile Include="HandleAction16ArgumentTests.cs" />
+    <Compile Include="HandleAction15ArgumentTests.cs" />
+    <Compile Include="HandleAction14ArgumentTests.cs" />
+    <Compile Include="HandleAction13ArgumentTests.cs" />
+    <Compile Include="HandleAction12ArgumentTests.cs" />
+    <Compile Include="HandleAction11ArgumentTests.cs" />
+    <Compile Include="HandleAction10ArgumentTests.cs" />
     <Compile Include="HandleAction9ArgumentTests.cs" />
     <Compile Include="HandleAction8ArgumentTests.cs" />
     <Compile Include="HandleAction7ArgumentTests.cs" />
