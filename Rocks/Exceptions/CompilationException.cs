@@ -9,6 +9,10 @@ namespace Rocks.Exceptions
 	public sealed class CompilationException
 		: Exception
 	{
+		public CompilationException() { }
+		public CompilationException(string message) : base(message) { }
+		public CompilationException(string message, Exception inner) : base(message, inner) { }
+
 		public CompilationException(ImmutableArray<Diagnostic> diagnostics)
 		{
 			this.Diagnostics = diagnostics;

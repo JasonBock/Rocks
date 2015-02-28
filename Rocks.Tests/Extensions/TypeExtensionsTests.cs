@@ -40,8 +40,8 @@ namespace Rocks.Tests.Extensions
 @"public Int32 Property { get; set; }
 public Int32 ReadOnly { get; }
 public Int32 WriteOnly { set; }
-public String this[Int32 index] { get; set; }
-public String this[String key] { get; set; }";
+public String this[Int32 index] { set; }
+public String this[String key] { get; }";
 
 			var type = typeof(ITypeExtensions);
 			var namespaces = new SortedSet<string>();
@@ -95,8 +95,8 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 		int Property { get; set; }
 		int ReadOnly { get; }
 		int WriteOnly { set; }
-		string this[int index] { get; set; }
-		string this[string key] { get; set; }
+		string this[int index] { set; }
+		string this[string key] { get; }
 		event EventHandler Event;
 		event EventHandler<MyGenericEventArgs> GenericEvent;
 	}
