@@ -105,6 +105,27 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void CreateWithInvalidArrayValueDueToDifferentArrayLengths()
+		{
+			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
+			Assert.Throws<ExpectationException>(() => expectation.Validate(new[] { "a", "a" }, "a"), nameof(expectation.Validate));
+		}
+
+		[Test]
+		public void CreateWithInvalidArrayValueDueToDifferentValues()
+		{
+			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
+			Assert.Throws<ExpectationException>(() => expectation.Validate(new[] { "b" }, "a"), nameof(expectation.Validate));
+		}
+
+		[Test]
+		public void CreateWithValidArrayValue()
+		{
+			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
+			expectation.Validate(new[] { "a" }, "a");
+		}
+
+		[Test]
 		public void CreateWithExpression()
 		{
 			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));

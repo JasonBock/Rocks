@@ -5,7 +5,7 @@
 	{
 		internal CreateResult(bool isSuccessful, Rock<T> result)
 		{
-			this.IsSuccessful = IsSuccessful;
+			this.IsSuccessful = isSuccessful;
 			this.Result = result;
 		}
 
