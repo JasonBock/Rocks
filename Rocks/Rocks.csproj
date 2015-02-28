@@ -90,6 +90,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="CreateResult.cs" />
     <Compile Include="Exceptions\ExpectationException.cs" />
+    <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />

@@ -22,14 +22,6 @@ namespace Rocks.Extensions
 				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().GetSafeName()});");
       }
 
-		internal static string GetArgumentNameList(this MethodInfo @this)
-		{
-			return string.Join(", ",
-				(from parameter in @this.GetParameters()
-				 let modifier = parameter.GetModifier(true)
-				 select $"{modifier}{parameter.Name}"));
-		}
-
 		internal static string GetDelegateCast(this MethodInfo @this)
 		{
 			var parameters = @this.GetParameters();
@@ -93,15 +85,7 @@ namespace Rocks.Extensions
 					string.Empty : $" {string.Join(" ", genericConstraints)}";
 			}
 
-			var parameters = string.Join(", ",
-				from parameter in @this.GetParameters()
-				let _ = namespaces.Add(parameter.ParameterType.Namespace)
-				let modifier = parameter.GetModifier()
-				let arrayText = parameter.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "[]" : string.Empty
-            let parameterType = !string.IsNullOrWhiteSpace(modifier) ?
-					$"{parameter.ParameterType.GetElementType().GetSafeName()}{arrayText}" :
-					$"{parameter.ParameterType.GetSafeName()}{arrayText}"
-				select $"{modifier}{parameterType} {parameter.Name}");
+			var parameters = @this.GetParameters(namespaces);
 
 			return $"{isOverride}{returnType} {methodName}{generics}({parameters}){constraints}";
       }

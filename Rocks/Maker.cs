@@ -33,9 +33,28 @@ namespace Rocks
 			this.Mock = this.MakeType();
 		}
 
+		private List<string> GetGeneratedConstructors()
+		{
+			var generatedConstructors = new List<string>();
+
+			foreach(var constructor in this.baseType.GetConstructors(Constants.Reflection.PublicInstance))
+			{
+				var parameters = constructor.GetParameters();
+
+				if(parameters.Length > 0)
+				{
+					generatedConstructors.Add(string.Format(Constants.CodeTemplates.ConstructorTemplate,
+						this.mangledName, constructor.GetArgumentNameList(), constructor.GetParameters(this.namespaces)));
+				}
+			}
+
+			return generatedConstructors;
+		}
+
 		private Type MakeType()
 		{
 			var generatedMethods = new List<string>();
+			var generatedConstructors = this.GetGeneratedConstructors();
 
 			foreach (var baseMethod in this.baseType.GetMethods(Constants.Reflection.PublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual))
@@ -87,7 +106,7 @@ namespace Rocks
 					 select $"using {@namespace};")),
 				this.mangledName, this.baseType.GetSafeName(),
 				string.Join(Environment.NewLine, generatedMethods), 
-				properties, events);
+				properties, events, string.Join(Environment.NewLine, generatedConstructors));
 
 			var compilation = this.CreateCompilation(classCode);
 			var assembly = this.CreateAssembly(compilation);

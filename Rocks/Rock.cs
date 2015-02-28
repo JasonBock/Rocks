@@ -287,7 +287,7 @@ namespace Rocks
 			var arguments = new List<object> { readOnlyHandlers };
 			arguments.AddRange(constructorArguments);
 
-			var rock = Activator.CreateInstance(rockType, arguments);
+			var rock = Activator.CreateInstance(rockType, arguments.ToArray(), null);
 			this.rocks.Add(rock as IRock);
 			return rock as T;
 		}

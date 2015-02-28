@@ -40,6 +40,16 @@ namespace Rocks
 	throw new NotImplementedException();
 }}";
 
+			// 0 = type
+			// 1 = comma-separate list of argument names
+			// 2 = comma-separate list of argument names with types
+			public const string ConstructorTemplate =
+@"public {0}(ReadOnlyDictionary<string, HandlerInformation> handlers, {2})
+	: base({1})
+{{
+	this.handlers = handlers;
+}}";
+
 			// 0 = method name
 			// 1 = comma-separate list of argument names
 			// 2 = instances of the ExpectationTemplate
@@ -73,7 +83,8 @@ namespace Rocks
 			// 3 = implemented methods
 			// 4 = implemented properties
 			// 5 = implemented events
-			public const string ClassTemplate = 
+			// 6 = generated constructors
+			public const string ClassTemplate =
 @"{0}
 
 public sealed class {1}
@@ -85,6 +96,8 @@ public sealed class {1}
 	{{
 		this.handlers = handlers;
 	}}
+
+	{6}
 
 	{3}
 
