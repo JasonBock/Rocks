@@ -271,13 +271,35 @@ namespace Rocks
 
 		public T Make()
 		{
-			var tType = typeof(T);
 			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);
+			var rockType = this.GetMockType(readOnlyHandlers);
+
+			var rock = Activator.CreateInstance(rockType, readOnlyHandlers);
+			this.rocks.Add(rock as IRock);
+			return rock as T;
+		}
+
+		public T Make(object[] constructorArguments)
+		{
+			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);
+			var rockType = this.GetMockType(readOnlyHandlers);
+
+			var arguments = new List<object> { readOnlyHandlers };
+			arguments.AddRange(constructorArguments);
+
+			var rock = Activator.CreateInstance(rockType, arguments);
+			this.rocks.Add(rock as IRock);
+			return rock as T;
+		}
+
+		private Type GetMockType(ReadOnlyDictionary<string, HandlerInformation> readOnlyHandlers)
+		{
+			var tType = typeof(T);
 			var rockType = typeof(T);
 
-			lock(Rock.cacheLock)
+			lock (Rock.cacheLock)
 			{
-				if(Rock.cache.ContainsKey(tType))
+				if (Rock.cache.ContainsKey(tType))
 				{
 					rockType = Rock.cache[tType];
 				}
@@ -288,13 +310,11 @@ namespace Rocks
 					if (!tType.ContainsRefAndOrOutParameters())
 					{
 						Rock.cache.Add(tType, rockType);
-               }
+					}
 				}
 			}
 
-			var rock = Activator.CreateInstance(rockType, readOnlyHandlers);
-			this.rocks.Add(rock as IRock);
-			return rock as T;
+			return rockType;
 		}
 
 		public void Verify()

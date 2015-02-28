@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="Members.cs" />

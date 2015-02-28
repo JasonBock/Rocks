@@ -30,19 +30,15 @@ namespace Rocks
 			this.handlers = handlers;
 			this.namespaces = new SortedSet<string>(namespaces);
 			this.options = options;
-
-			if (baseType.IsInterface)
-			{
-				this.Mock = this.MakeInterfaceMock();
-			}
+			this.Mock = this.MakeType();
 		}
 
-		private Type MakeInterfaceMock()
+		private Type MakeType()
 		{
 			var generatedMethods = new List<string>();
 
 			foreach (var baseMethod in this.baseType.GetMethods(Constants.Reflection.PublicInstance)
-				.Where(_ => !_.IsSpecialName))
+				.Where(_ => !_.IsSpecialName && _.IsVirtual))
 			{
 				var methodDescription = baseMethod.GetMethodDescription(namespaces);
 				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();

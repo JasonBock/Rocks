@@ -63,7 +63,9 @@ namespace Rocks.Extensions
 			}
 
 			namespaces.Add(@this.ReturnType.Namespace);
-         var returnType = @this.ReturnType == typeof(void) ?
+
+			var isOverride = @this.DeclaringType.IsClass ? "override " : string.Empty;
+			var returnType = @this.ReturnType == typeof(void) ?
 				"void" :  @this.ReturnType.GetSafeName();
 
 			var methodName = @this.Name;
@@ -101,7 +103,7 @@ namespace Rocks.Extensions
 					$"{parameter.ParameterType.GetSafeName()}{arrayText}"
 				select $"{modifier}{parameterType} {parameter.Name}");
 
-			return $"{returnType} {methodName}{generics}({parameters}){constraints}";
+			return $"{isOverride}{returnType} {methodName}{generics}({parameters}){constraints}";
       }
 
 		private static string GetConstraints(Type argument, SortedSet<string> namespaces)
