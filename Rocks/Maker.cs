@@ -160,7 +160,8 @@ namespace Rocks
 				{
 					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
 					MetadataReference.CreateFromAssembly(typeof(IRock).Assembly),
-					MetadataReference.CreateFromAssembly(this.baseType.Assembly)
+					MetadataReference.CreateFromAssembly(typeof(Action<,,,,,,,,>).Assembly),
+               MetadataReference.CreateFromAssembly(this.baseType.Assembly)
 				});
 
 			return compilation;
