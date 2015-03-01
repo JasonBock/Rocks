@@ -71,8 +71,8 @@ namespace Rocks.Extensions
 
 				foreach(var argument in @this.GetGenericArguments())
 				{
-					genericArguments.Add(argument.Name);
-					var constraint = MethodInfoExtensions.GetConstraints(argument, namespaces);
+					genericArguments.Add(argument.GetSafeName());
+					var constraint = argument.GetConstraints(namespaces);
 
 					if(!string.IsNullOrWhiteSpace(constraint))
 					{
@@ -89,44 +89,5 @@ namespace Rocks.Extensions
 
 			return $"{isOverride}{returnType} {methodName}{generics}({parameters}){constraints}";
       }
-
-		private static string GetConstraints(Type argument, SortedSet<string> namespaces)
-		{
-			var constraints = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
-			var constraintedTypes = argument.GetGenericParameterConstraints();
-
-			if(constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
-			{
-				return string.Empty;
-			}
-			else
-			{
-				var constraintValues = new List<string>();
-
-				if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
-				{
-					constraintValues.Add("struct");
-				}
-				else
-				{
-					foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
-					{
-						constraintValues.Add(constraintedType.GetSafeName());
-						namespaces.Add(constraintedType.Namespace);
-					}
-
-					if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
-					{
-						constraintValues.Add("class");
-					}
-					if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
-					{
-						constraintValues.Add("new()");
-					}
-				}
-
-				return $"where {argument.GetSafeName()} : {string.Join(", ", constraintValues)}";
-			}
-		}
 	}
 }

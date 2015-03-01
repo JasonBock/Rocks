@@ -7,6 +7,35 @@ namespace Rocks.Extensions
 {
 	internal static class MethodBaseExtensions
 	{
+		internal static GenericArgumentsResult GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
+		{
+			var arguments = string.Empty;
+			var constraints = string.Empty;
+
+			if (@this.IsGenericMethodDefinition)
+			{
+				var genericArguments = new List<string>();
+				var genericConstraints = new List<string>();
+
+				foreach (var argument in @this.GetGenericArguments())
+				{
+					genericArguments.Add(argument.GetSafeName());
+					var constraint = argument.GetConstraints(namespaces);
+
+					if (!string.IsNullOrWhiteSpace(constraint))
+					{
+						genericConstraints.Add(constraint);
+					}
+				}
+
+				arguments = $"<{string.Join(", ", genericArguments)}>";
+				constraints = genericConstraints.Count == 0 ?
+					string.Empty : $" {string.Join(" ", genericConstraints)}";
+			}
+
+			return new GenericArgumentsResult(arguments, constraints);
+		}
+
 		internal static string GetArgumentNameList(this MethodBase @this)
 		{
 			return string.Join(", ",

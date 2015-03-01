@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Rocks.Extensions
 {
@@ -13,7 +14,6 @@ namespace Rocks.Extensions
 				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.GetSafeName());
 			}
 
-			// TODO: Does this type have any virtual members that could be overridden?
 			if(!@this.GetMembers(Constants.Reflection.PublicInstance).Any())
 			{
 				return string.Format(Constants.ErrorMessages.NoVirtualMembers, @this.GetSafeName());
@@ -31,9 +31,24 @@ namespace Rocks.Extensions
 
 		internal static string GetSafeName(this Type @this)
 		{
-			return !string.IsNullOrWhiteSpace(@this.FullName) ?
-				@this.FullName.Split('.').Last().Replace("+", ".") :
-				@this.Name;
+			return @this.GetSafeName(null, null);
+		}
+
+		internal static string GetSafeName(this Type @this, MethodBase context, SortedSet<string> namespaces)
+		{
+			// The context should come from the method the delegate is providing a hook to
+			if(typeof(MulticastDelegate).IsAssignableFrom(@this.BaseType) && @this.IsGenericType)
+			{
+				var arguments = context != null ? context.GetGenericArguments(namespaces).Arguments :
+					$"<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
+				return $"{@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".")}{arguments}";
+         }
+			else
+			{
+				return !string.IsNullOrWhiteSpace(@this.FullName) ?
+					@this.FullName.Split('.').Last().Replace("+", ".") :
+					@this.Name;
+			}
 		}
 
 		internal static string GetImplementedProperties(this Type @this, SortedSet<string> namespaces)
@@ -103,6 +118,45 @@ namespace Rocks.Extensions
 			}
 
 			return string.Join(Environment.NewLine, events);
+		}
+
+		internal static string GetConstraints(this Type @this, SortedSet<string> namespaces)
+		{
+			var constraints = @this.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+			var constraintedTypes = @this.GetGenericParameterConstraints();
+
+			if (constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
+			{
+				return string.Empty;
+			}
+			else
+			{
+				var constraintValues = new List<string>();
+
+				if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
+				{
+					constraintValues.Add("struct");
+				}
+				else
+				{
+					foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
+					{
+						constraintValues.Add(constraintedType.GetSafeName());
+						namespaces.Add(constraintedType.Namespace);
+					}
+
+					if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
+					{
+						constraintValues.Add("class");
+					}
+					if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
+					{
+						constraintValues.Add("new()");
+					}
+				}
+
+				return $"where {@this.GetSafeName()} : {string.Join(", ", constraintValues)}";
+			}
 		}
 	}
 }

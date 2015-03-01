@@ -64,7 +64,8 @@ namespace Rocks
 				if (!containsRefAndOrOutParameters || this.handlers.ContainsKey(methodDescription))
 				{
 					var delegateCast = !containsRefAndOrOutParameters ?
-						baseMethod.GetDelegateCast() : this.handlers[methodDescription].Method.GetType().GetSafeName();
+						baseMethod.GetDelegateCast() : 
+						this.handlers[methodDescription].Method.GetType().GetSafeName(baseMethod, namespaces);
 					var argumentNameList = baseMethod.GetArgumentNameList();
 					var expectationChecks = !containsRefAndOrOutParameters ? baseMethod.GetExpectationChecks() : string.Empty;
 					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();

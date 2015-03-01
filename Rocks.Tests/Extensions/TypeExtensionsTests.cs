@@ -16,6 +16,34 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetSafeNameForDelegateWithNoGenerics()
+		{
+			Assert.AreEqual("RefTargetWithoutGeneric",
+				typeof(Rocks.Tests.Extensions.RefTargetWithoutGeneric).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithGenerics()
+		{
+			Assert.AreEqual("RefTargetWithGeneric<Guid>",
+				typeof(Rocks.Tests.Extensions.RefTargetWithGeneric<Guid>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForNestedDelegateWithNoGenerics()
+		{
+			Assert.AreEqual("TypeExtensionsTests.RefTargetWithoutGeneric",
+				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithoutGeneric).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForNestedDelegateWithGenerics()
+		{
+			Assert.AreEqual("TypeExtensionsTests.RefTargetWithGeneric<Guid>",
+				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName());
+		}
+
+		[Test]
 		public void ContainsRefArguments()
 		{
 			Assert.IsTrue(typeof(IHaveMethodWithRefArgument).ContainsRefAndOrOutParameters());
@@ -71,7 +99,13 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 		{
 			public interface IAmSubnested { }
 		}
+
+		public delegate void RefTargetWithoutGeneric(ref Guid a);
+		public delegate void RefTargetWithGeneric<T>(ref T a);
 	}
+
+	public delegate void RefTargetWithoutGeneric(ref Guid a);
+	public delegate void RefTargetWithGeneric<T>(ref T a);
 
 	public class MyGenericEventArgs : EventArgs { }
 

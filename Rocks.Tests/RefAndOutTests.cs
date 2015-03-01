@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -13,6 +14,11 @@ namespace Rocks.Tests
 		private void MyActionRefTarget(ref int a)
 		{
 			a = 2;
+		}
+
+		private void MyActionRefGuidTarget(ref Guid a)
+		{
+			a = Guid.NewGuid();
 		}
 
 		private int MyFuncRefTarget(ref int a)
@@ -38,6 +44,21 @@ namespace Rocks.Tests
 			chunk.RefTarget(ref a);
 
 			Assert.AreEqual(2, a, nameof(a));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeRefActionWithGenericDelegate()
+		{
+			var a = Guid.Empty;
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.HandleDelegate(_ => _.RefTargetWithGeneric<Guid>(ref a), 
+				new RefTargetWithGeneric<Guid>(this.MyActionRefGuidTarget));
+
+			var chunk = rock.Make();
+			chunk.RefTargetWithGeneric(ref a);
+
+			Assert.AreNotEqual(Guid.Empty, a, nameof(a));
 			rock.Verify();
 		}
 
@@ -149,11 +170,13 @@ namespace Rocks.Tests
 		void OutTarget(out int a);
 		int OutTargetWithReturn(out int a);
 		void RefTarget(ref int a);
+		void RefTargetWithGeneric<T>(ref T a);
 		int RefTargetWithReturn(ref int a);
 	}
 
 	public delegate void OutTarget(out int a);
 	public delegate int OutTargetWithReturn(out int a);
 	public delegate void RefTarget(ref int a);
+	public delegate void RefTargetWithGeneric<T>(ref T a);
 	public delegate int RefTargetWithReturn(ref int a);
 }
