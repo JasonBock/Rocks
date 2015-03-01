@@ -137,6 +137,11 @@
     <Compile Include="HandleAction3ArgumentTests.cs" />
     <Compile Include="HandleAction2ArgumentTests.cs" />
     <Compile Include="HandleAction1ArgumentTests.cs" />
+    <Compile Include="HandleFunc16ArgumentTests.cs" />
+    <Compile Include="HandleFunc15ArgumentTests.cs" />
+    <Compile Include="HandleFunc14ArgumentTests.cs" />
+    <Compile Include="HandleFunc13ArgumentTests.cs" />
+    <Compile Include="HandleFunc12ArgumentTests.cs" />
     <Compile Include="HandleFunc11ArgumentTests.cs" />
     <Compile Include="HandleFunc10ArgumentTests.cs" />
     <Compile Include="HandleFunc9ArgumentTests.cs" />
