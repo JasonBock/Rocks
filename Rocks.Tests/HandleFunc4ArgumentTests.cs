@@ -8,7 +8,7 @@ namespace Rocks.Tests
 		[Test]
 		public void Make()
 		{
-			var rock = Rock.Create<IHandleFunc4ArgumentTests>(new Options(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
+			var rock = Rock.Create<IHandleFunc4ArgumentTests>();
 			rock.HandleFunc(_ => _.ReferenceTarget(1, 2, 3, 4));
 			rock.HandleFunc(_ => _.ValueTarget(10, 20, 30, 40));
 
@@ -41,6 +41,10 @@ namespace Rocks.Tests
 			Assert.AreEqual(2, argumentB, nameof(argumentB));
 			Assert.AreEqual(3, argumentC, nameof(argumentC));
 			Assert.AreEqual(4, argumentD, nameof(argumentD));
+			argumentA = 0;
+			argumentB = 0;
+			argumentC = 0;
+			argumentD = 0;
 			Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30, 40), nameof(chunk.ValueTarget));
 			Assert.AreEqual(10, argumentA, nameof(argumentA));
 			Assert.AreEqual(20, argumentB, nameof(argumentB));
