@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
+using System.Collections.Generic;
 
 namespace Rocks.Tests.Extensions
 {
@@ -20,8 +21,33 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("a", target.GetArgumentNameList());
 		}
 
-		public void TargetWithArguments(int a, string c) { }
+		[Test]
+		public void GetGenericArguments()
+		{
+			var namespaces = new SortedSet<string>();
+			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
+			var arguments = target.GetGenericArguments(namespaces);
 
+         Assert.AreEqual("<T, U>", arguments.Arguments, nameof(arguments.Arguments));
+			Assert.AreEqual("where T : new() where U : T", arguments.Constraints, nameof(arguments.Constraints));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
+		}
+
+		[Test]
+		public void GetGenericArgumentsForMethodWithNoGenerics()
+		{
+			var namespaces = new SortedSet<string>();
+			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
+			var arguments = target.GetGenericArguments(namespaces);
+
+			Assert.AreEqual(string.Empty, arguments.Arguments, nameof(arguments.Arguments));
+			Assert.AreEqual(string.Empty, arguments.Constraints, nameof(arguments.Constraints));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+		}
+
+		public void TargetWithArguments(int a, string c) { }
+		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }
 		public void TargetWithParamsArgument(params int[] a) { }
 	}
 }

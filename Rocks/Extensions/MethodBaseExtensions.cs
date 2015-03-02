@@ -29,8 +29,10 @@ namespace Rocks.Extensions
 				}
 
 				arguments = $"<{string.Join(", ", genericArguments)}>";
+				// TODO: This should not add a space in front. The Maker class
+				// should adjust the constraints to have a space in front.
 				constraints = genericConstraints.Count == 0 ?
-					string.Empty : $" {string.Join(" ", genericConstraints)}";
+					string.Empty : $"{string.Join(" ", genericConstraints)}";
 			}
 
 			return new GenericArgumentsResult(arguments, constraints);

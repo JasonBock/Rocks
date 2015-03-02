@@ -9,6 +9,22 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsTests
 	{
 		[Test]
+		public void GetConstraintsForTypeWithNoConstraints()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual(string.Empty, typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments()[0].GetConstraints(namespaces));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+		}
+
+		[Test]
+		public void GetConstraintsForMethodWithConstraints()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("where T : class", typeof(IHaveGenericsWithConstraints<>).GetGenericArguments()[0].GetConstraints(namespaces));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+		}
+
+		[Test]
 		public void GetSafeName()
 		{
 			Assert.AreEqual("TypeExtensionsTests.SubnestedClass.IAmSubnested",
@@ -16,31 +32,82 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithNoGenerics()
+		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments()
 		{
 			Assert.AreEqual("RefTargetWithoutGeneric",
 				typeof(Rocks.Tests.Extensions.RefTargetWithoutGeneric).GetSafeName());
 		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithGenerics()
+		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments()
 		{
-			Assert.AreEqual("RefTargetWithGeneric<Guid>",
-				typeof(Rocks.Tests.Extensions.RefTargetWithGeneric<Guid>).GetSafeName());
+			Assert.AreEqual("RefTargetWithGeneric<T>",
+				typeof(Rocks.Tests.Extensions.RefTargetWithGeneric<>).GetSafeName());
 		}
 
 		[Test]
-		public void GetSafeNameForNestedDelegateWithNoGenerics()
+		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments()
 		{
 			Assert.AreEqual("TypeExtensionsTests.RefTargetWithoutGeneric",
 				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithoutGeneric).GetSafeName());
 		}
 
 		[Test]
-		public void GetSafeNameForNestedDelegateWithGenerics()
+		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments()
 		{
 			Assert.AreEqual("TypeExtensionsTests.RefTargetWithGeneric<Guid>",
 				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithNoGenerics()
+		{
+			Assert.AreEqual("MapForNonGeneric",
+				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithSpecifiedGenerics()
+		{
+			Assert.AreEqual("MapForGeneric<Guid>",
+				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithoutSpecifiedGenerics()
+		{
+			Assert.AreEqual("MapForGeneric<T>",
+				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithNoGenericsAndContext()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("MapForNonGeneric",
+				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName(
+					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForNonGeneric)), namespaces));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithSpecifiedGenericsAndContext()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("MapForGeneric<T>",
+				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(
+					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+		}
+
+		[Test]
+		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndContext()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("MapForGeneric<T>",
+				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(
+					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
+			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
 		}
 
 		[Test]
@@ -95,6 +162,10 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
 		}
 
+		public interface IHaveGenericsWithNoConstraints<T> { }
+
+		public interface IHaveGenericsWithConstraints<T> where T : class { }
+
 		public class SubnestedClass
 		{
 			public interface IAmSubnested { }
@@ -103,6 +174,15 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 		public delegate void RefTargetWithoutGeneric(ref Guid a);
 		public delegate void RefTargetWithGeneric<T>(ref T a);
 	}
+
+	public interface IMapToDelegates
+	{
+		void MapForNonGeneric(int a);
+		void MapForGeneric<T>(T a);
+	}
+
+	public delegate void MapForNonGeneric(int a);
+	public delegate void MapForGeneric<T>(T a);
 
 	public delegate void RefTargetWithoutGeneric(ref Guid a);
 	public delegate void RefTargetWithGeneric<T>(ref T a);
