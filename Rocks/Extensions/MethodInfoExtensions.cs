@@ -66,23 +66,9 @@ namespace Rocks.Extensions
 
 			if(@this.IsGenericMethodDefinition)
 			{
-				var genericArguments = new List<string>();
-				var genericConstraints = new List<string>();
-
-				foreach(var argument in @this.GetGenericArguments())
-				{
-					genericArguments.Add(argument.GetSafeName());
-					var constraint = argument.GetConstraints(namespaces);
-
-					if(!string.IsNullOrWhiteSpace(constraint))
-					{
-						genericConstraints.Add(constraint);
-					}
-				}
-
-				generics = $"<{string.Join(", ", genericArguments)}>";
-				constraints = genericConstraints.Count == 0 ? 
-					string.Empty : $" {string.Join(" ", genericConstraints)}";
+				var result = @this.GetGenericArguments(namespaces);
+				generics = result.Arguments;
+				constraints = result.Constraints.Length == 0 ? string.Empty : $" {result.Constraints}";
 			}
 
 			var parameters = @this.GetParameters(namespaces);
