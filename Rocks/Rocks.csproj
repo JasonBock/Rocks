@@ -87,6 +87,8 @@
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
+    <Compile Include="Builder.cs" />
+    <Compile Include="Compiler.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CreateResult.cs" />
     <Compile Include="Exceptions\ExpectationException.cs" />
