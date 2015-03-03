@@ -106,7 +106,8 @@ namespace Rocks
 					 select $"using {@namespace};")),
 				this.TypeName, this.BaseType.GetSafeName(),
 				string.Join(Environment.NewLine, methods),
-				properties, events, string.Join(Environment.NewLine, constructors));
+				properties, events, string.Join(Environment.NewLine, constructors),
+				this.BaseType.Namespace);
 
 			SyntaxTree tree = null;
 

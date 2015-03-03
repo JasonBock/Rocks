@@ -84,30 +84,34 @@ namespace Rocks
 			// 4 = implemented properties
 			// 5 = implemented events
 			// 6 = generated constructors
+			// 7 = base type's namespace
 			public const string ClassTemplate =
 @"{0}
 
-public sealed class {1}
-	: {2}, IRock
+namespace {7}
 {{
-	private ReadOnlyDictionary<string, HandlerInformation> handlers;
-
-	public {1}(ReadOnlyDictionary<string, HandlerInformation> handlers)
+	public sealed class {1}
+		: {2}, IRock
 	{{
-		this.handlers = handlers;
-	}}
+		private ReadOnlyDictionary<string, HandlerInformation> handlers;
 
-	{6}
+		public {1}(ReadOnlyDictionary<string, HandlerInformation> handlers)
+		{{
+			this.handlers = handlers;
+		}}
 
-	{3}
+		{6}
 
-	{4}
+		{3}
 
-	{5}
+		{4}
 
-	ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
-	{{
-		get {{ return this.handlers; }}
+		{5}
+
+		ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
+		{{
+			get {{ return this.handlers; }}
+		}}
 	}}
 }}";
 			// 0 = method name

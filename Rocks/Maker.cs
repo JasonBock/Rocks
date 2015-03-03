@@ -15,7 +15,7 @@ namespace Rocks
 		{
 			var builder = new Builder(baseType, handlers, namespaces, options);
 			var compiler = new Compiler(baseType, new List<SyntaxTree> { builder.Tree }, options);
-			this.Mock = compiler.Assembly.GetType(builder.TypeName);
+			this.Mock = compiler.Assembly.GetType($"{baseType.Namespace}.{builder.TypeName}");
 		}
 	}
 }
