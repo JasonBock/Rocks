@@ -106,6 +106,8 @@
   <ItemGroup>
     <Compile Include="ArgTests.cs" />
     <Compile Include="ArgumentExpectationOfTTests.cs" />
+    <Compile Include="CompilerTests.cs" />
+    <Compile Include="BuilderTests.cs" />
     <Compile Include="ClassTests.cs" />
     <Compile Include="CreateResultsTests.cs" />
     <Compile Include="Exceptions\ExceptionTests.cs" />
