@@ -33,6 +33,20 @@ namespace Rocks.Tests
          Assert.IsFalse(result.IsSuccessful);
 			Assert.IsNull(result.Result, nameof(result.Result));
 		}
+
+		[Test]
+		public void Make()
+		{
+			var rock = Rock.Create<IRockTests>();
+			rock.HandleAction(_ => _.Member());
+
+			var chunk = rock.Make();
+			var chunkType = chunk.GetType();
+         Assert.AreEqual(typeof(IRockTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
+
+			var chunkAsRock = chunk as IRock;
+         Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));
+		}
 	}
 
 	public interface IRockTests
