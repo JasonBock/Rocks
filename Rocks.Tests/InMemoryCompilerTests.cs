@@ -6,7 +6,7 @@ using System.Linq;
 namespace Rocks.Tests
 {
 	[TestFixture]
-	public sealed class CompilerTests
+	public sealed class InMemoryCompilerTests
 	{
 		[Test]
 		public void Compile()
@@ -16,7 +16,8 @@ namespace Rocks.Tests
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new Builder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			builder.Build();
 
 			var trees = new[] { builder.Tree };
 			var compiler = new Compiler(baseType, trees, options);

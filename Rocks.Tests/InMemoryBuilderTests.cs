@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace Rocks.Tests
 {
 	[TestFixture]
-	public sealed class BuilderTests
+	public sealed class InMemoryBuilderTests
 	{
 		[Test]
 		public void Build()
@@ -15,7 +15,8 @@ namespace Rocks.Tests
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new Builder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			builder.Build();
 
 			Assert.AreSame(baseType, builder.BaseType, nameof(builder.BaseType));
 			Assert.AreSame(handlers, builder.Handlers, nameof(builder.Handlers));
@@ -26,7 +27,7 @@ namespace Rocks.Tests
 			Assert.IsTrue(namespaces.Contains("Rocks.Tests"), nameof(namespaces));
 			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces));
 			Assert.IsTrue(namespaces.Contains("System.Collections.ObjectModel"), nameof(namespaces));
-			Assert.AreSame(options, builder.Options, nameof(builder.Options));
+			Assert.AreEqual(options.ShouldCreateCodeFile, builder.ShouldCreateCodeFile, nameof(builder.ShouldCreateCodeFile));
 			Assert.IsNotNull(builder.Tree, nameof(builder.Tree));
 			Assert.IsTrue(!string.IsNullOrWhiteSpace(builder.TypeName), nameof(builder.TypeName));
 		}

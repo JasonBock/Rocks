@@ -12,17 +12,20 @@ using System.Text;
 
 namespace Rocks
 {
-	internal sealed class Builder
+	internal abstract class Builder
 	{
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<string, HandlerInformation> handlers,
-			SortedSet<string> namespaces, Options options)
+			SortedSet<string> namespaces, bool shouldCreateCodeFile)
 		{
-			this.TypeName = $"Rock{Guid.NewGuid().ToString("N")}";
          this.BaseType = baseType;
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
-			this.Options = options;
+			this.ShouldCreateCodeFile = shouldCreateCodeFile;
+		}
+
+		internal virtual void Build()
+		{
 			this.Tree = this.MakeTree();
 		}
 
@@ -89,7 +92,7 @@ namespace Rocks
 			return generatedMethods;
 		}
 
-		private SyntaxTree MakeTree()
+		private string MakeCode()
 		{
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
@@ -103,7 +106,7 @@ namespace Rocks
 			this.Namespaces.Add(typeof(string).Namespace);
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
 
-			var @class = string.Format(Constants.CodeTemplates.ClassTemplate,
+			return string.Format(Constants.CodeTemplates.ClassTemplate,
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
@@ -111,12 +114,16 @@ namespace Rocks
 				string.Join(Environment.NewLine, methods),
 				properties, events, string.Join(Environment.NewLine, constructors),
 				this.BaseType.Namespace);
+		}
 
+		private SyntaxTree MakeTree()
+		{
+			var @class = this.MakeCode();
 			SyntaxTree tree = null;
 
-			if(this.Options.ShouldCreateCodeFile)
+			if (this.ShouldCreateCodeFile)
 			{
-				var fileName = Path.Combine(Directory.GetCurrentDirectory(), $"{this.TypeName}.cs");
+				var fileName = Path.Combine(this.GetDirectoryForFile(), $"{this.TypeName}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)
 						.GetCompilationUnitRoot().NormalizeWhitespace(),
@@ -131,11 +138,13 @@ namespace Rocks
 			return tree;
 		}
 
-		internal SyntaxTree Tree { get; private set; }
-		internal Options Options { get; private set; }
+		protected abstract string GetDirectoryForFile();
+
+		internal bool ShouldCreateCodeFile { get; private set; }
+      internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; private set; }
 		internal ReadOnlyDictionary<string, HandlerInformation> Handlers { get; private set; }
 		internal SortedSet<string> Namespaces { get; private set; }
-		internal string TypeName { get; private set; }
+		internal string TypeName { get; set; }
 	}
 }

@@ -13,7 +13,8 @@ namespace Rocks
 			ReadOnlyDictionary<string, HandlerInformation> handlers,
 			SortedSet<string> namespaces, Options options)
 		{
-			var builder = new Builder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			builder.Build();
 			var compiler = new Compiler(baseType, new List<SyntaxTree> { builder.Tree }, options);
 			this.Mock = compiler.Assembly.GetType($"{baseType.Namespace}.{builder.TypeName}");
 		}
