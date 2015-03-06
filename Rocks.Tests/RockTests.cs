@@ -47,10 +47,31 @@ namespace Rocks.Tests
 			var chunkAsRock = chunk as IRock;
          Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));
 		}
+
+		[Test]
+		public void Remake()
+		{
+			var rock = Rock.Create<IRockTests>();
+			rock.HandleAction(_ => _.Member());
+
+			var chunk = rock.Make();
+			chunk.Member();
+
+			rock.Verify();
+
+			var secondRock = Rock.Create<IRockTests>();
+			secondRock.HandleAction(_ => _.SecondMember());
+
+			var secondChunk = secondRock.Make();
+			secondChunk.SecondMember();
+
+			secondRock.Verify();
+		}
 	}
 
 	public interface IRockTests
 	{
 		void Member();
+		void SecondMember();
 	}
 }

@@ -30,7 +30,7 @@ namespace Rocks
 			this.Expectations = expectations;
 		}
 
-		internal void IncrementCallCount()
+		public void IncrementCallCount()
 		{
 			Interlocked.Increment(ref this.callCount);
 		}
@@ -55,6 +55,6 @@ namespace Rocks
 
 		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; private set; }
 		internal uint ExpectedCallCount { get; private set; }
-		internal Delegate Method { get; private set; }
+		public Delegate Method { get; private set; }
 	}
 }

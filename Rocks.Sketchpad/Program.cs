@@ -6,7 +6,7 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			Delegates.Test<string>();
+			Properties.Test();
 		}
 	}
 }

@@ -54,6 +54,9 @@ namespace Rocks
 				var methodDescription = baseMethod.GetMethodDescription(this.Namespaces);
 				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 
+				// Either the base method contains no refs/outs, or the user specified a delegate
+				// to use to handle that method (remember, types with methods with refs/outs are gen'd
+				// each time, and that's the only reason the handlers are passed in.
 				if (!containsRefAndOrOutParameters || this.Handlers.ContainsKey(methodDescription))
 				{
 					var delegateCast = !containsRefAndOrOutParameters ?

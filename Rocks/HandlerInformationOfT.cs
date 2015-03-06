@@ -30,6 +30,6 @@ namespace Rocks
 			this.ReturnValue = default(T);
 		}
 
-		internal T ReturnValue{ get; set; }
+		public T ReturnValue{ get; internal set; }
 	}
 }

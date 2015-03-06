@@ -41,7 +41,7 @@ namespace Rocks
 			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
 		
-		internal void Validate(T value, string parameter)
+		public void Validate(T value, string parameter)
 		{
 			if (!this.IsAny)
 			{
