@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace Rocks
+namespace Rocks.Construction
 {
-	internal sealed class AssemblyBuilder
+	internal sealed class InMemoryBuilder
 		: Builder
 	{
-		internal AssemblyBuilder(Type baseType,
+		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<string, HandlerInformation> handlers,
 			SortedSet<string> namespaces, bool shouldCreateCodeFile)
 			: base(baseType, handlers, namespaces, shouldCreateCodeFile)
 		{
-			this.TypeName = $"Rock{baseType.Name}";
+			this.TypeName = $"Rock{Guid.NewGuid().ToString("N")}";
 		}
 
 		protected override string GetDirectoryForFile()
 		{
-			return Path.Combine(Directory.GetCurrentDirectory(), this.BaseType.Namespace.Replace(".", "\\"));
-		}
+			return Directory.GetCurrentDirectory();
+      }
 	}
 }

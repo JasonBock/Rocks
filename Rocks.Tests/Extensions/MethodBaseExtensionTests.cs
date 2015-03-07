@@ -31,7 +31,7 @@ namespace Rocks.Tests.Extensions
          Assert.AreEqual("<T, U>", arguments.Arguments, nameof(arguments.Arguments));
 			Assert.AreEqual("where T : new() where U : T", arguments.Constraints, nameof(arguments.Constraints));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
+			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
 		}
 
 		[Test]

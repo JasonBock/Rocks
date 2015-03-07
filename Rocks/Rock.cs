@@ -1,4 +1,5 @@
-﻿using Rocks.Exceptions;
+﻿using Rocks.Construction;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
@@ -627,7 +628,7 @@ namespace Rocks
 				}
 				else
 				{
-					rockType = new Maker(tType, readOnlyHandlers, this.namespaces, this.options).Mock;
+					rockType = new InMemoryMaker(tType, readOnlyHandlers, this.namespaces, this.options).Mock;
 
 					if (!tType.ContainsRefAndOrOutParameters())
 					{

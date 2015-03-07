@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rocks
+namespace Rocks.Construction
 {
 	class AssemblyCompiler
 	{

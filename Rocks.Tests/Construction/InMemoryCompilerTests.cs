@@ -1,9 +1,11 @@
 ﻿using NUnit.Framework;
+using Rocks.Construction;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 
-namespace Rocks.Tests
+namespace Rocks.Tests.Construction
 {
 	[TestFixture]
 	public sealed class InMemoryCompilerTests
@@ -20,10 +22,11 @@ namespace Rocks.Tests
 			builder.Build();
 
 			var trees = new[] { builder.Tree };
-			var compiler = new Compiler(baseType, trees, options);
+			var compiler = new InMemoryCompiler(trees, options.Level, 
+				new List<Assembly> { baseType.Assembly }.AsReadOnly());
+			compiler.Compile();
 
-			Assert.AreSame(baseType, compiler.BaseType, nameof(compiler.BaseType));
-			Assert.AreSame(options, compiler.Options, nameof(compiler.Options));
+			Assert.AreEqual(options.Level, compiler.Level, nameof(compiler.Level));
 			Assert.AreSame(trees, compiler.Trees, nameof(compiler.Trees));
 			Assert.IsNotNull(compiler.Assembly, nameof(compiler.Assembly));
 			Assert.IsNotNull(

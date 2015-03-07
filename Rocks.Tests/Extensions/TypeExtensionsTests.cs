@@ -143,7 +143,7 @@ public String this[String key] { get; }";
 			var properties = type.GetImplementedProperties(namespaces);
 			Assert.AreEqual(expectedProperties, properties, nameof(properties));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
+			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
 
 		[Test]
@@ -158,8 +158,8 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 			var events = type.GetImplementedEvents(namespaces);
 			Assert.AreEqual(expectedEvents, events, nameof(events));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains("System"), nameof(namespaces.Contains));
-			Assert.IsTrue(namespaces.Contains("Rocks.Tests.Extensions"), nameof(namespaces.Contains));
+			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
+			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
 		}
 
 		public interface IHaveGenericsWithNoConstraints<T> { }

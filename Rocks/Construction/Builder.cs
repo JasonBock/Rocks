@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Rocks
+namespace Rocks.Construction
 {
 	internal abstract class Builder
 	{
