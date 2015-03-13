@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Rocks.Tests.Exceptions
 {
@@ -19,7 +20,7 @@ namespace Rocks.Tests.Exceptions
 		[Test]
 		public void CreateWithDiagnostic()
 		{
-			var diagnostics = new List<Diagnostic>().AsImmutable();
+			var diagnostics = ImmutableArray.Create<Diagnostic>();
          var exception = new CompilationException(diagnostics);
 			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));
 		}
@@ -34,7 +35,7 @@ namespace Rocks.Tests.Exceptions
 		public void CreateWithDiagnosticAndMessage()
 		{
 			var message = Guid.NewGuid().ToString("N");
-         var diagnostics = new List<Diagnostic>().AsImmutable();
+         var diagnostics = ImmutableArray.Create<Diagnostic>();
 			var exception = new CompilationException(diagnostics, message);
 			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
 			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));
@@ -51,7 +52,7 @@ namespace Rocks.Tests.Exceptions
 		{
 			var inner = new Exception();
 			var message = Guid.NewGuid().ToString("N");
-			var diagnostics = new List<Diagnostic>().AsImmutable();
+			var diagnostics = ImmutableArray.Create<Diagnostic>();
 			var exception = new CompilationException(diagnostics, message, inner);
 			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
 			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));

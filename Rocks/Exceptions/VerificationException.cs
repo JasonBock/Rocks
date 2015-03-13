@@ -42,7 +42,7 @@ namespace Rocks.Exceptions
 			this.Failures = failures;
 		}
 
-		protected VerificationException(SerializationInfo info, StreamingContext context)
+		private VerificationException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
 

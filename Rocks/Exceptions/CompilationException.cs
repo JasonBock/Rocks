@@ -30,7 +30,7 @@ namespace Rocks.Exceptions
 			this.Diagnostics = diagnostics;
 		}
 
-		protected CompilationException(SerializationInfo info, StreamingContext context)
+		private CompilationException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
 
