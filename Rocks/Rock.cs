@@ -592,6 +592,44 @@ namespace Rocks
 				new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
 		}
 
+		// Must check the property that it exists, it's virtual, and it has the required get and/or set as needed.
+		// Get and/or set
+		public void HandleProperty(string name)
+		{
+			var property = typeof(T).FindProperty(name);
+		}
+
+		// Get and/or set
+		public void HandleProperty(Expression<Func<object[]>> indexers) { }
+		// Get and/or set
+		public void HandleProperty(string name, uint expectedCallCount) { }
+		// Get and/or set
+		public void HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount) { }
+		// Get
+		public void HandleProperty<TResult>(string name, Func<TResult> getter) { }
+		// Get
+		public void HandleProperty<TResult>(Expression<Func<object[]>> indexers, Func<TResult> getter) { }
+		// Get
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, uint expectedCallCount) { }
+		// Get
+		public void HandleProperty<TResult>(Expression<Func<object[]>> indexers, Func<TResult> getter, uint expectedCallCount) { }
+		// Set
+		public void HandleProperty(string name, Action setter) { }
+		// Set
+		public void HandleProperty(string name, Expression<Func<object[]>> indexers, Action setter) { }
+		// Set
+		public void HandleProperty(string name, Action setter, uint expectedCallCount) { }
+		// Set
+		public void HandleProperty(string name, Expression<Func<object[]>> indexers, Action setter, uint expectedCallCount) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Expression<Func<object[]>> indexers, Func<TResult> getter, Action setter) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter, uint expectedCallCount) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Expression<Func<object[]>> indexers, Func<TResult> getter, Action setter, uint expectedCallCount) { }
+
 		public T Make()
 		{
 			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);

@@ -47,14 +47,14 @@ namespace Rocks
 			{
 				if (this.IsValue)
 				{
-					if(!this.AreEqual(this.Value, value, typeof(T)))
+					if(!ObjectEquality.AreEqual(this.Value, value))
 					{
 						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
                }
 				}
 				else if (this.IsExpression)
 				{
-					if(!this.AreEqual(((T)this.Expression.DynamicInvoke()), value, typeof(T)))
+					if(!ObjectEquality.AreEqual(((T)this.Expression.DynamicInvoke()), value))
 					{
 						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
 					}
@@ -70,45 +70,6 @@ namespace Rocks
 				{
 					throw new NotImplementedException();
 				}
-			}
-		}
-
-		private bool AreEqual(object value1, object value2, Type valueType)
-		{
-			if (value1 == null && value2 == null)
-			{
-				return true;
-			}
-			else if(value1 != null && value2 != null)
-         {
-				if (!valueType.IsArray)
-				{
-					return value1.Equals(value2);
-				}
-				else
-				{
-					var array1 = value1 as Array;
-					var array2 = value2 as Array;
-
-					if (array1.Length != array2.Length)
-					{
-						return false;
-					}
-
-					for (int i = 0; i < array1.Length; i++)
-					{
-						if (!this.AreEqual(array1.GetValue(i), array2.GetValue(i), array1.GetValue(i).GetType()))
-						{
-							return false;
-						}
-					}
-
-					return true;
-				}
-			}
-			else
-			{
-				return false;
 			}
 		}
 

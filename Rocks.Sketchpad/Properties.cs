@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace Rocks.Sketchpad
 {
@@ -13,8 +15,7 @@ namespace Rocks.Sketchpad
 			{
 				Console.Out.WriteLine($"Property: {property.Name}, {nameof(property.CanRead)}: {property.CanRead} - {nameof(property.CanWrite)}: {property.CanWrite}");
 
-				if ((property.CanRead && property.GetGetMethod().GetParameters().Length > 0) ||
-					(property.CanWrite && property.GetSetMethod().GetParameters().Length > 1))
+				if (property.GetIndexParameters().Length > 0)
 				{
 					Console.Out.WriteLine($"Property {property.Name} is an indexer.");
 				}
@@ -22,66 +23,108 @@ namespace Rocks.Sketchpad
 				Console.Out.WriteLine();
 			}
 
-			Expression<Func<IProperties, int>> p = _ => _.ReadAndWrite;
-
-			//Properties.HandleGet(_ => _.WriteOnly);
-			//Properties.HandleSet(_ => _.ReadAndWrite);
+			Properties.TestIndexers(() => new object[] { 44, Properties.GetValue(), Arg.IsAny<string>(),
+				Arg.Is<Guid>(_ => true), "44", Guid.NewGuid(), Arg.Is<string>(_ => false) });
 		}
 
-		internal static void HandleGet<TResult>(Expression<Func<IProperties, TResult>> expression)
+		private static string GetValue()
 		{
+			return "44";
 		}
 
-		internal static void HandleSet(Expression<Action<IProperties>> expression)
+		private static void HandleCall(MethodCallExpression expression, List<Type> indexerTypes)
 		{
+			var argumentMethod = expression.Method;
+
+			if (argumentMethod.DeclaringType == typeof(Arg))
+			{
+				indexerTypes.Add(argumentMethod.GetGenericArguments()[0]);
+			}
+			else
+			{
+				indexerTypes.Add(argumentMethod.ReturnType);
+			}
+		}
+
+		private static void HandleConstant(ConstantExpression expression, List<Type> indexerTypes)
+		{
+			indexerTypes.Add(expression.Value.GetType());
+		}
+
+		private static void TestIndexers(Expression<Func<object[]>> indexers)
+		{
+			var expressions = (indexers.Body as NewArrayExpression);
+			var indexerTypes = new List<Type>();
+
+			foreach (var expression in expressions.Expressions)
+			{
+				switch(expression.NodeType)
+				{
+					case ExpressionType.Constant:
+						Properties.HandleConstant(expression as ConstantExpression, indexerTypes);
+						break;
+					case ExpressionType.Call:
+						Properties.HandleCall(expression as MethodCallExpression, indexerTypes);
+						break;
+					case ExpressionType.Convert:
+						var operand = (expression as UnaryExpression).Operand;
+
+						if(operand.NodeType == ExpressionType.Constant)
+						{
+							Properties.HandleConstant(operand as ConstantExpression, indexerTypes);
+						}
+						else if (operand.NodeType == ExpressionType.Call)
+						{
+							Properties.HandleCall(operand as MethodCallExpression, indexerTypes);
+						}
+						else
+						{
+							throw new Exception();
+						}
+
+						break;
+					default:
+						throw new Exception();
+				}
+			}
 		}
 	}
 
 	public class RockProperties<T>
 	{
-		public void HandleGetProperty<TResult>(Expression<Func<T, TResult>> expression) { }
-
-		public void HandleGetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter) { }
-
-		public void HandleGetProperty<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount) { }
-
-		public void HandleGetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter, uint expectedCallCount) { }
-
-		public void HandleSetProperty(Expression<Action<T>> expression) { }
-
-		public void HandleSetProperty(Expression<Action<T>> expression, Action setter) { }
-
-		public void HandleSetProperty(Expression<Action<T>> expression, uint expectedCallCount) { }
-
-		public void HandleSetProperty(Expression<Action<T>> expression, Action setter, uint expectedCallCount) { }
-
-		public void HandleGetSetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter, Action setter) { }
-
-		public void HandleGetSetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter, uint expectedGetterCallCount, Action setter) { }
-
-		public void HandleGetSetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter, Action setter, uint expectedSetterCallCount) { }
-
-		public void HandleGetSetProperty<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> getter, uint expectedGetterCallCount, Action setter, uint expectedSetterCallCount) { }
-
-
-
-
-
-		public void HandleProperty<TIndex, TResult>(Expression<Action<T>> expression, Func<TIndex, TResult> getter) { }
-
-		public void HandleProperty<TIndex, TResult>(Expression<Action<T>> expression, Func<TIndex, TResult> getter, uint expectedCallCount) { }
-
-		public void HandleProperty<TIndex>(Expression<Action<T>> expression, Action<TIndex> setter) { }
-
-		public void HandleProperty<TIndex>(Expression<Action<T>> expression, Action<TIndex> setter, uint expectedCallCount) { }
-
-		public void HandleProperty<TResult>(Expression<Action<T>> expression, Func<TResult> getter, Action setter) { }
-
-		public void HandleProperty<TResult>(Expression<Action<T>> expression, Func<TResult> getter, uint getterExpectedCallCount, Action setter, uint setterExpectedCallCount) { }
-
-		public void HandleProperty<TResult, TIndex>(Expression<Action<T>> expression, Func<TIndex, TResult> getter, Action<TIndex> setter) { }
-
-		public void HandleProperty<TResult, TIndex>(Expression<Action<T>> expression, Func<TIndex, TResult> getter, uint getterExpectedCallCount, Action<TIndex> setter, uint setterExpectedCallCount) { }
+		// Must check the property that it exists, it's virtual, and it has the required get and/or set as needed.
+		// Get and/or set
+		public void HandleProperty(string name) { }
+		// Get and/or set
+		public void HandleProperty(string name, object[] indexers) { }
+		// Get and/or set
+		public void HandleProperty(string name, uint expectedCallCount) { }
+		// Get and/or set
+		public void HandleProperty(string name, object[] indexers, uint expectedCallCount) { }
+		// Get
+		public void HandleProperty<TResult>(string name, Func<TResult> getter) { }
+		// Get
+		public void HandleProperty<TResult>(string name, object[] indexers, Func<TResult> getter) { }
+		// Get
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, uint expectedCallCount) { }
+		// Get
+		public void HandleProperty<TResult>(string name, object[] indexers, Func<TResult> getter, uint expectedCallCount) { }
+		// Set
+		public void HandleProperty(string name, Action setter) { }
+		// Set
+		public void HandleProperty(string name, object[] indexers, Action setter) { }
+		// Set
+		public void HandleProperty(string name, Action setter, uint expectedCallCount) { }
+		// Set
+		public void HandleProperty(string name, object[] indexers, Action setter, uint expectedCallCount) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, object[] indexers, Func<TResult> getter, Action setter) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter, uint expectedCallCount) { }
+		// Get AND set
+		public void HandleProperty<TResult>(string name, object[] indexers, Func<TResult> getter, Action setter, uint expectedCallCount) { }
 	}
 
 	public interface IProperties

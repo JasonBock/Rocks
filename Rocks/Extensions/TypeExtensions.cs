@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,14 +8,77 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static PropertyInfo FindProperty(this Type @this, string name)
+		{
+			var property = @this.GetProperty(name);
+
+			if (property == null)
+			{
+				throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
+			}
+
+			return property;
+		}
+
+		internal static PropertyInfo FindProperty(this Type @this, string name, PropertyAccessors accessors)
+		{
+			var property = @this.FindProperty(name);
+			TypeExtensions.CheckPropertyAccessors(property, accessors);
+			return property;
+		}
+
+		private static void CheckPropertyAccessors(PropertyInfo property, PropertyAccessors accessors)
+		{
+			if (accessors == PropertyAccessors.Get || accessors == PropertyAccessors.GetAndSet)
+			{
+				if (!property.CanRead)
+				{
+					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be read from.");
+				}
+			}
+
+			if (accessors == PropertyAccessors.Set || accessors == PropertyAccessors.GetAndSet)
+			{
+				if (!property.CanWrite)
+				{
+					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be written to.");
+				}
+			}
+		}
+
+		internal static PropertyInfo FindProperty(this Type @this, object[] indexers)
+		{
+			var indexerTypes = indexers.Select(i => typeof(Arg).IsAssignableFrom(i.GetType()) ?
+				i.GetType().GetGenericArguments()[0] : i.GetType()).ToArray();
+			var property = (from p in @this.GetProperties()
+								 where p.GetIndexParameters().Any()
+								 let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
+								 where ObjectEquality.AreEqual(pTypes, indexerTypes)
+								 select p).SingleOrDefault();
+
+			if (property == null)
+			{
+				throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexerTypes.Select(_ => _.Name))}] was not found.");
+			}
+
+			return property;
+		}
+
+		internal static PropertyInfo FindProperty(this Type @this, object[] indexers, PropertyAccessors accessors)
+		{
+			var property = @this.FindProperty(indexers);
+			TypeExtensions.CheckPropertyAccessors(property, accessors);
+			return property;
+		}
+
 		internal static string Validate(this Type @this)
 		{
-			if(@this.IsSealed)
+			if (@this.IsSealed)
 			{
 				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.GetSafeName());
 			}
 
-			if(!@this.GetMembers(Constants.Reflection.PublicInstance).Any())
+			if (!@this.GetMembers(Constants.Reflection.PublicInstance).Any())
 			{
 				return string.Format(Constants.ErrorMessages.NoVirtualMembers, @this.GetSafeName());
 			}
@@ -37,12 +101,12 @@ namespace Rocks.Extensions
 		internal static string GetSafeName(this Type @this, MethodBase context, SortedSet<string> namespaces)
 		{
 			// The context should come from the method the delegate is providing a hook to
-			if(typeof(MulticastDelegate).IsAssignableFrom(@this.BaseType) && @this.IsGenericType)
+			if (typeof(MulticastDelegate).IsAssignableFrom(@this.BaseType) && @this.IsGenericType)
 			{
 				var arguments = context != null ? context.GetGenericArguments(namespaces).Arguments :
 					$"<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
 				return $"{@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".")}{arguments}";
-         }
+			}
 			else
 			{
 				return !string.IsNullOrWhiteSpace(@this.FullName) ?
@@ -55,11 +119,11 @@ namespace Rocks.Extensions
 		{
 			var properties = new List<string>();
 
-			foreach(var property in @this.GetProperties())
+			foreach (var property in @this.GetProperties())
 			{
 				var accessors = new List<string>();
 
-				if(property.CanRead)
+				if (property.CanRead)
 				{
 					accessors.Add("get;");
 				}
@@ -86,7 +150,7 @@ namespace Rocks.Extensions
 				{
 					// Normal
 					properties.Add(string.Format(Constants.CodeTemplates.PropertyTemplate,
-						property.PropertyType.GetSafeName(), property.Name, 
+						property.PropertyType.GetSafeName(), property.Name,
 						string.Join(" ", accessors)));
 				}
 			}
@@ -98,7 +162,7 @@ namespace Rocks.Extensions
 		{
 			var events = new List<string>();
 
-			foreach(var @event in @this.GetEvents())
+			foreach (var @event in @this.GetEvents())
 			{
 				var eventHandlerType = @event.EventHandlerType;
 				namespaces.Add(eventHandlerType.Namespace);
@@ -106,7 +170,7 @@ namespace Rocks.Extensions
 				if (eventHandlerType.IsGenericType)
 				{
 					var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-               events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
+					events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
 						$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 					namespaces.Add(eventGenericType.Namespace);
 				}
