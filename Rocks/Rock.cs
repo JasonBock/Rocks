@@ -597,38 +597,94 @@ namespace Rocks
 		public void HandleProperty(string name)
 		{
 			var property = typeof(T).FindProperty(name);
+
+			if(property.CanRead)
+			{
+				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation();
+			}
+
+			if (property.CanWrite)
+			{
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation();
+			}
+		}
+
+		// Get and/or set
+		public void HandleProperty(string name, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(name);
+
+			if (property.CanRead)
+			{
+				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(expectedCallCount);
+			}
+
+			if (property.CanWrite)
+			{
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(expectedCallCount);
+			}
+		}
+
+		// Get
+		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter);
+		}
+
+		// Get
+		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter, expectedCallCount);
+		}
+
+		// Set
+		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter);
+		}
+
+		// Set
+		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter, expectedCallCount);
+		}
+
+		// Get AND set
+		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter);
+		}
+
+		// Get AND set
+		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter, expectedCallCount);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter, expectedCallCount);
 		}
 
 		// Get and/or set
 		public void HandleProperty(Expression<Func<object[]>> indexers) { }
 		// Get and/or set
-		public void HandleProperty(string name, uint expectedCallCount) { }
-		// Get and/or set
 		public void HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount) { }
 		// Get
-		public void HandleProperty<TResult>(string name, Func<TResult> getter) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Func<TPropertyValue> getter) { }
 		// Get
-		public void HandleProperty<TResult>(Expression<Func<object[]>> indexers, Func<TResult> getter) { }
-		// Get
-		public void HandleProperty<TResult>(string name, Func<TResult> getter, uint expectedCallCount) { }
-		// Get
-		public void HandleProperty<TResult>(Expression<Func<object[]>> indexers, Func<TResult> getter, uint expectedCallCount) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, uint expectedCallCount) { }
 		// Set
-		public void HandleProperty(string name, Action setter) { }
+		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Action<TPropertyValue> setter) { }
 		// Set
-		public void HandleProperty(string name, Expression<Func<object[]>> indexers, Action setter) { }
-		// Set
-		public void HandleProperty(string name, Action setter, uint expectedCallCount) { }
-		// Set
-		public void HandleProperty(string name, Expression<Func<object[]>> indexers, Action setter, uint expectedCallCount) { }
+		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Action<TPropertyValue> setter, uint expectedCallCount) { }
 		// Get AND set
-		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter) { }
+		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter) { }
 		// Get AND set
-		public void HandleProperty<TResult>(string name, Expression<Func<object[]>> indexers, Func<TResult> getter, Action setter) { }
-		// Get AND set
-		public void HandleProperty<TResult>(string name, Func<TResult> getter, Action setter, uint expectedCallCount) { }
-		// Get AND set
-		public void HandleProperty<TResult>(string name, Expression<Func<object[]>> indexers, Func<TResult> getter, Action setter, uint expectedCallCount) { }
+		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount) { }
 
 		public T Make()
 		{

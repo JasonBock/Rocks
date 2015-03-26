@@ -11,43 +11,90 @@ namespace Rocks.Tests
 		[Test]
 		public void Create()
 		{
-			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-			var information = new HandlerInformation(expectations);
+			var information = new HandlerInformation();
 			Assert.IsNull(information.Method, nameof(information.Method));
 			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
 
 		[Test]
 		public void CreateWithMethod()
 		{
-			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
-         var information = new HandlerInformation(method, expectations);
+         var information = new HandlerInformation(method);
 			Assert.AreSame(method, information.Method, nameof(information.Method));
 			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+		}
+
+		[Test]
+		public void CreateWithMethodAndExpectataions()
+		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
+				new Dictionary<string, ArgumentExpectation>
+				{
+					{ "a", new ArgumentExpectation<int>() }
+				});
+			var method = new Action(() => { });
+			var information = new HandlerInformation(method, expectations);
+			Assert.AreSame(method, information.Method, nameof(information.Method));
+			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
 
 		[Test]
 		public void CreateWithExpectedCallCount()
 		{
-			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+			var information = new HandlerInformation(2);
+			Assert.IsNull(information.Method, nameof(information.Method));
+			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+		}
+
+		[Test]
+		public void CreateWithExpectedCallCountAndExpectations()
+		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
+				new Dictionary<string, ArgumentExpectation>
+				{
+					{ "a", new ArgumentExpectation<int>() }
+				});
 			var information = new HandlerInformation(2, expectations);
 			Assert.IsNull(information.Method, nameof(information.Method));
 			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
 
 		[Test]
 		public void CreateWithMethodAndExpectedCallCount()
 		{
-			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+			var method = new Action(() => { });
+			var information = new HandlerInformation(method, 2);
+			Assert.AreSame(method, information.Method, nameof(information.Method));
+			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+		}
+
+		[Test]
+		public void CreateWithMethodAndExpectedCallCountAndExpectations()
+		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
+				new Dictionary<string, ArgumentExpectation>
+				{
+					{ "a", new ArgumentExpectation<int>() }
+				});
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, 2, expectations);
 			Assert.AreSame(method, information.Method, nameof(information.Method));
 			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
+			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
 
 		[Test]

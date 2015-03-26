@@ -11,6 +11,22 @@ namespace Rocks
 
 		private int callCount;
 
+		internal HandlerInformation()
+			: this(null, 1, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))
+		{ }
+
+		internal HandlerInformation(uint expectedCallCount)
+			: this(null, expectedCallCount, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))
+		{ }
+
+		internal HandlerInformation(Delegate method)
+			: this(method, 1, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))
+		{ }
+
+		internal HandlerInformation(Delegate method, uint expectedCallCount)
+			: this(method, expectedCallCount, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))
+		{ }
+
 		internal HandlerInformation(ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 			: this(null, 1, expectations)
 		{ }

@@ -261,25 +261,6 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetImplementedProperties()
-		{
-			var expectedProperties =
-@"public Int32 Property { get; set; }
-public Int32 ReadOnly { get; }
-public Int32 WriteOnly { set; }
-public String this[Guid data] { get; set; }
-public String this[String key] { get; }
-public String this[Int32 index] { set; }";
-
-			var type = typeof(ITypeExtensions);
-			var namespaces = new SortedSet<string>();
-			var properties = type.GetImplementedProperties(namespaces);
-			Assert.AreEqual(expectedProperties, properties, nameof(properties));
-			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
-		}
-
-		[Test]
 		public void GetImplementedEvents()
 		{
 			var expectedEvents =

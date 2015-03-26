@@ -115,49 +115,6 @@ namespace Rocks.Extensions
 			}
 		}
 
-		internal static string GetImplementedProperties(this Type @this, SortedSet<string> namespaces)
-		{
-			var properties = new List<string>();
-
-			foreach (var property in @this.GetProperties())
-			{
-				var accessors = new List<string>();
-
-				if (property.CanRead)
-				{
-					accessors.Add("get;");
-				}
-
-				if (property.CanWrite)
-				{
-					accessors.Add("set;");
-				}
-
-				namespaces.Add(property.PropertyType.Namespace);
-
-				if (property.Name == "Item")
-				{
-					var indexerParameter = property.CanRead ? property.GetMethod.GetParameters()[0] :
-						property.SetMethod.GetParameters()[0];
-					namespaces.Add(indexerParameter.ParameterType.Namespace);
-
-					// Indexer
-					properties.Add(string.Format(Constants.CodeTemplates.PropertyIndexerTemplate,
-						property.PropertyType.Name, indexerParameter.ParameterType.GetSafeName(), indexerParameter.Name,
-						string.Join(" ", accessors)));
-				}
-				else
-				{
-					// Normal
-					properties.Add(string.Format(Constants.CodeTemplates.PropertyTemplate,
-						property.PropertyType.GetSafeName(), property.Name,
-						string.Join(" ", accessors)));
-				}
-			}
-
-			return string.Join(Environment.NewLine, properties);
-		}
-
 		internal static string GetImplementedEvents(this Type @this, SortedSet<string> namespaces)
 		{
 			var events = new List<string>();

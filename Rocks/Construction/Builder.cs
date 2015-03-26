@@ -92,11 +92,71 @@ namespace Rocks.Construction
 			return generatedMethods;
 		}
 
+		private List<string> GetGeneratedProperties()
+		{
+			var generatedProperties = new List<string>();
+
+			foreach (var baseProperty in this.BaseType.GetProperties(Constants.Reflection.PublicInstance)
+				.Where(_ => (_.CanRead ? _.GetMethod : _.SetMethod).IsVirtual))
+			{
+				var propertyImplementations = new List<string>();
+
+				if(baseProperty.CanRead)
+				{
+					var getMethod = baseProperty.GetMethod;
+					var getMethodDescription = getMethod.GetMethodDescription(this.Namespaces);
+					var getArgumentNameList = getMethod.GetArgumentNameList();
+					var getExpectationChecks = getMethod.GetExpectationChecks();
+               var getDelegateCast = getMethod.GetDelegateCast();
+					propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
+						Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueTemplate : 
+						Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueTemplate,
+						getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast));
+				}
+
+				if (baseProperty.CanWrite)
+				{
+					var setMethod = baseProperty.SetMethod;
+					var setMethodDescription = setMethod.GetMethodDescription(this.Namespaces);
+					var setArgumentNameList = setMethod.GetArgumentNameList();
+					var setExpectationChecks = setMethod.GetExpectationChecks();
+					var setDelegateCast = setMethod.GetDelegateCast();
+					propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetTemplate,
+						setMethodDescription, setArgumentNameList, setExpectationChecks, setDelegateCast));
+				}
+
+				// Generate the property template, based on indexes or not.
+				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
+				var indexers = baseProperty.GetIndexParameters();
+
+				if (indexers.Length > 0)
+				{
+					var parameters = string.Join(", ",
+						from indexer in indexers
+						let _ = this.Namespaces.Add(indexer.ParameterType.Namespace)
+						select $"{indexer.ParameterType.Name} {indexer.Name}");
+
+					// Indexer
+					generatedProperties.Add(string.Format(Constants.CodeTemplates.PropertyIndexerTemplate,
+						baseProperty.PropertyType.Name, parameters, string.Join(Environment.NewLine, propertyImplementations)));
+				}
+				else
+				{
+					// Normal
+					generatedProperties.Add(string.Format(Constants.CodeTemplates.PropertyTemplate,
+						baseProperty.PropertyType.GetSafeName(), baseProperty.Name,
+						string.Join(Environment.NewLine, propertyImplementations)));
+				}
+			}
+
+			return generatedProperties;
+		}
+
 		private string MakeCode()
 		{
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
-			var properties = this.BaseType.GetImplementedProperties(this.Namespaces);
+			var properties = this.GetGeneratedProperties(); 
 			var events = this.BaseType.GetImplementedEvents(this.Namespaces);
 
 			this.Namespaces.Add(this.BaseType.Namespace);
@@ -112,7 +172,8 @@ namespace Rocks.Construction
 					 select $"using {@namespace};")),
 				this.TypeName, this.BaseType.GetSafeName(),
 				string.Join(Environment.NewLine, methods),
-				properties, events, string.Join(Environment.NewLine, constructors),
+				string.Join(Environment.NewLine, properties), events, 
+				string.Join(Environment.NewLine, constructors),
 				this.BaseType.Namespace);
 		}
 

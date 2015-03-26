@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 
 namespace Rocks.Sketchpad
 {
@@ -15,9 +17,16 @@ namespace Rocks.Sketchpad
 			{
 				Console.Out.WriteLine($"Property: {property.Name}, {nameof(property.CanRead)}: {property.CanRead} - {nameof(property.CanWrite)}: {property.CanWrite}");
 
+				if (property.CanWrite)
+				{
+					Console.Out.WriteLine(property.SetMethod.GetArgumentNameList());
+				}
+
 				if (property.GetIndexParameters().Length > 0)
 				{
 					Console.Out.WriteLine($"Property {property.Name} is an indexer.");
+
+					// The value "argument" on the setter comes last in the argument list
 				}
 
 				Console.Out.WriteLine();
@@ -25,6 +34,13 @@ namespace Rocks.Sketchpad
 
 			Properties.TestIndexers(() => new object[] { 44, Properties.GetValue(), Arg.IsAny<string>(),
 				Arg.Is<Guid>(_ => true), "44", Guid.NewGuid(), Arg.Is<string>(_ => false) });
+		}
+
+		internal static string GetArgumentNameList(this MethodBase @this)
+		{
+			return string.Join(", ",
+				(from parameter in @this.GetParameters()
+				 select $"{parameter.Name}"));
 		}
 
 		private static string GetValue()
