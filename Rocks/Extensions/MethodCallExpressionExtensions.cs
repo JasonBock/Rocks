@@ -21,15 +21,14 @@ namespace Rocks.Extensions
 
 				var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(
 					!methodArgument.ParameterType.IsByRef ? methodArgument.ParameterType : methodArgument.ParameterType.GetElementType());
-				var flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
 
             switch (argument.NodeType)
 				{
 					case ExpressionType.Constant:
 						var value = (argument as ConstantExpression).Value;
 						expectations.Add(methodArgument.Name,
-							argumentExpectationType.GetConstructor(flags, null, new[] { methodArgument.ParameterType }, null)
-								.Invoke(new[] { value }) as ArgumentExpectation);
+							argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, 
+								null, new[] { methodArgument.ParameterType }, null).Invoke(new[] { value }) as ArgumentExpectation);
 						break;
 					case ExpressionType.Call:
 						var argumentMethodCall = (argument as MethodCallExpression);
@@ -40,29 +39,29 @@ namespace Rocks.Extensions
 						if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 						{
 							expectations.Add(methodArgument.Name,
-								argumentExpectationType.GetConstructor(flags, null, Type.EmptyTypes, null)
-									.Invoke(null) as ArgumentExpectation);
+								argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, 
+									null, Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation);
 						}
 						else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 						{
 							var evaluation = argumentMethodCall.Arguments[0];
 							var genericMethodType = typeof(Func<,>).MakeGenericType(methodArgument.ParameterType, typeof(bool));
 							expectations.Add(methodArgument.Name,
-								argumentExpectationType.GetConstructor(flags, null, new[] { genericMethodType }, null)
-									.Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation);
+								argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, 
+									null, new[] { genericMethodType }, null).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation);
 						}
 						else
 						{
 							expectations.Add(methodArgument.Name,
-								argumentExpectationType.GetConstructor(flags, null, new[] { typeof(Expression) }, null)
-									.Invoke(new[] { argument }) as ArgumentExpectation);
+								argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, 
+									null, new[] { typeof(Expression) }, null).Invoke(new[] { argument }) as ArgumentExpectation);
 						}
 
 						break;
 					default:
 						expectations.Add(methodArgument.Name,
-							argumentExpectationType.GetConstructor(flags, null, new[] { typeof(Expression) }, null)
-								.Invoke(new[] { argument }) as ArgumentExpectation);
+							argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, 
+								null, new[] { typeof(Expression) }, null).Invoke(new[] { argument }) as ArgumentExpectation);
 						break;
 				}
 

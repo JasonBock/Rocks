@@ -592,81 +592,78 @@ namespace Rocks
 				new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
 		}
 
-		// Must check the property that it exists, it's virtual, and it has the required get and/or set as needed.
-		// Get and/or set
 		public void HandleProperty(string name)
 		{
 			var property = typeof(T).FindProperty(name);
 
 			if(property.CanRead)
 			{
-				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation();
+				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler();
 			}
 
 			if (property.CanWrite)
 			{
-				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation();
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+					property.CreateDefaultSetterExpectation());
 			}
 		}
 
-		// Get and/or set
 		public void HandleProperty(string name, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name);
 
 			if (property.CanRead)
 			{
-				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(expectedCallCount);
+				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(expectedCallCount);
 			}
 
 			if (property.CanWrite)
 			{
-				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(expectedCallCount);
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+					expectedCallCount, property.CreateDefaultSetterExpectation());
 			}
 		}
 
-		// Get
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
-			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter);
 		}
 
-		// Get
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
-			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter, expectedCallCount);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter, expectedCallCount);
 		}
 
-		// Set
 		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+				setter, property.CreateDefaultSetterExpectation());
 		}
 
-		// Set
 		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter, expectedCallCount);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+				setter, expectedCallCount, property.CreateDefaultSetterExpectation());
 		}
 
-		// Get AND set
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
-			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+				setter, property.CreateDefaultSetterExpectation());
 		}
 
-		// Get AND set
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
-			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(getter, expectedCallCount);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(setter, expectedCallCount);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter, expectedCallCount);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+				setter, expectedCallCount, property.CreateDefaultSetterExpectation());
 		}
 
 		// Get and/or set

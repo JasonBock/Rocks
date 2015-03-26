@@ -4,10 +4,16 @@ namespace Rocks
 {
 	public static class Constants
 	{
+		public static class Values
+		{
+			public const string PropertySetterArgumentName = "value";
+		}
+
 		public static class Reflection
 		{
 			public const BindingFlags PublicInstance = BindingFlags.Public | BindingFlags.Instance;
-      }
+			public const BindingFlags PublicNonPublicInstance = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+		}
 
 		public static class ErrorMessages
 		{
