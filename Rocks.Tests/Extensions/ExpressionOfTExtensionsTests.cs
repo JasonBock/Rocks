@@ -16,24 +16,23 @@ namespace Rocks.Tests.Extensions
 
 			var results = indexers.ParseForPropertyIndexers();
 
-			Assert.AreEqual(7, results.Item1.Count, nameof(results.Item1.Count));
-			Assert.AreEqual(7, results.Item2.Count, nameof(results.Item2.Count));
+			Assert.AreEqual(7, results.Count, nameof(results.Count));
 
-			Assert.AreEqual(typeof(int), results.Item1[0], "results.Item1[0]");
-			Assert.AreEqual(typeof(string), results.Item1[1], "results.Item1[1]");
-			Assert.AreEqual(typeof(string), results.Item1[2], "results.Item1[2]");
-			Assert.AreEqual(typeof(Guid), results.Item1[3], "results.Item1[3]");
-			Assert.AreEqual(typeof(string), results.Item1[4], "results.Item1[4]");
-			Assert.AreEqual(typeof(Guid), results.Item1[5], "results.Item1[5]");
-			Assert.AreEqual(typeof(string), results.Item1[6], "results.Item1[6]");
+			Assert.AreEqual(typeof(int), results[0].Type, "results[0].Type");
+			Assert.AreEqual(typeof(string), results[1].Type, "results[1].Type");
+			Assert.AreEqual(typeof(string), results[2].Type, "results[2].Type");
+			Assert.AreEqual(typeof(Guid), results[3].Type, "results[3].Type");
+			Assert.AreEqual(typeof(string), results[4].Type, "results[4].Type");
+			Assert.AreEqual(typeof(Guid), results[5].Type, "results[5].Type");
+			Assert.AreEqual(typeof(string), results[6].Type, "results[6].Type");
 
-			Assert.IsTrue(typeof(ConstantExpression).IsAssignableFrom(results.Item2[0].GetType()), "results.Item2[0]");
-			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results.Item2[1].GetType()), "results.Item2[1]");
-			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results.Item2[2].GetType()), "results.Item2[2]");
-			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results.Item2[3].GetType()), "results.Item2[3]");
-			Assert.IsTrue(typeof(ConstantExpression).IsAssignableFrom(results.Item2[4].GetType()), "results.Item2[4]");
-			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results.Item2[5].GetType()), "results.Item2[5]");
-			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results.Item2[6].GetType()), "results.Item2[6]");
+			Assert.IsTrue(typeof(ConstantExpression).IsAssignableFrom(results[0].GetType()), "results[0].GetType()");
+			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results[1].GetType()), "results[1].GetType()");
+			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results[2].GetType()), "results[2].GetType()");
+			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results[3].GetType()), "results[3].GetType()");
+			Assert.IsTrue(typeof(ConstantExpression).IsAssignableFrom(results[4].GetType()), "results[4].GetType()");
+			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results[5].GetType()), "results[5].GetType()");
+			Assert.IsTrue(typeof(MethodCallExpression).IsAssignableFrom(results[6].GetType()), "results[6].GetType()");
 		}
 
 		[Test]
@@ -43,7 +42,13 @@ namespace Rocks.Tests.Extensions
 
 			var expectation = setter.GetExpectationForSetter();
 
-
+			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
+			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
+			Assert.IsFalse(expectation.IsExpression, nameof(expectation.IsExpression));
+			Assert.IsTrue(expectation.IsValue, nameof(expectation.IsValue));
+			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
+			Assert.IsNull(expectation.Expression, nameof(expectation.Expression));
+			Assert.AreEqual("44", expectation.Value, nameof(expectation.Value));
 		}
 
 		private static string GetValue()

@@ -5,17 +5,17 @@ namespace Rocks.Extensions
 {
 	internal static class ExpressionExtensions
 	{
-		internal static ArgumentExpectation Create(this Expression @this, Type argumentType)
+		internal static ArgumentExpectation Create(this Expression @this)
 		{
 			// TODO: maybe pull the type value from the expression?
-			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(argumentType);
+			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.Type);
 
 			switch (@this.NodeType)
 			{
 				case ExpressionType.Constant:
 					var value = (@this as ConstantExpression).Value;
 					return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
-						null, new[] { argumentType }, null).Invoke(new[] { value }) as ArgumentExpectation;
+						null, new[] { @this.Type }, null).Invoke(new[] { value }) as ArgumentExpectation;
 				case ExpressionType.Call:
 					var argumentMethodCall = (@this as MethodCallExpression);
 					var argumentMethod = argumentMethodCall.Method;
@@ -30,7 +30,7 @@ namespace Rocks.Extensions
 					else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 					{
 						var evaluation = argumentMethodCall.Arguments[0];
-						var genericMethodType = typeof(Func<,>).MakeGenericType(argumentType, typeof(bool));
+						var genericMethodType = typeof(Func<,>).MakeGenericType(@this.Type, typeof(bool));
 						return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
 							null, new[] { genericMethodType }, null).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
 					}

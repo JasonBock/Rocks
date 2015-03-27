@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 		public void CreateForCall()
 		{
 			var expectation = Expression.Call(this.GetType().GetMethod(nameof(ExpressionExtensionsTests.Create)))
-				.Create(typeof(int)) as ArgumentExpectation<int>;
+				.Create() as ArgumentExpectation<int>;
 
 			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
 			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
@@ -27,15 +27,14 @@ namespace Rocks.Tests.Extensions
 		public void CreateForCallToArgIs()
 		{
 			Expression<Func<int>> argument = () => Arg.Is<int>(_ => false);
-
-			var expectation = argument.Create(typeof(int)) as ArgumentExpectation<int>;
+			var expectation = argument.Body.Create() as ArgumentExpectation<int>;
 
 			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsTrue(expectation.IsExpression, nameof(expectation.IsExpression));
+			Assert.IsTrue(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
+			Assert.IsFalse(expectation.IsExpression, nameof(expectation.IsExpression));
 			Assert.IsFalse(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNotNull(expectation.Expression, nameof(expectation.Expression));
+			Assert.IsNotNull(expectation.Evaluation, nameof(expectation.Evaluation));
+			Assert.IsNull(expectation.Expression, nameof(expectation.Expression));
 			Assert.AreEqual(default(int), expectation.Value, nameof(expectation.Value));
 		}
 
@@ -43,7 +42,7 @@ namespace Rocks.Tests.Extensions
 		public void CreateForCallToArgIsAny()
 		{
 			Expression<Func<int>> argument = () => Arg.IsAny<int>();
-			var expectation = argument.Body.Create(typeof(int)) as ArgumentExpectation<int>;
+			var expectation = argument.Body.Create() as ArgumentExpectation<int>;
 
 			Assert.IsTrue(expectation.IsAny, nameof(expectation.IsAny));
 			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
@@ -57,7 +56,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void CreateForConstant()
 		{
-			var expectation = Expression.Constant(44).Create(typeof(int)) as ArgumentExpectation<int>;
+			var expectation = Expression.Constant(44).Create() as ArgumentExpectation<int>;
 
 			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
 			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
@@ -74,7 +73,7 @@ namespace Rocks.Tests.Extensions
 			var expectation = Expression.Add(
 				Expression.Call(this.GetType().GetMethod(nameof(ExpressionExtensionsTests.Create))),
 				Expression.Constant(1))
-				.Create(typeof(int)) as ArgumentExpectation<int>;
+				.Create() as ArgumentExpectation<int>;
 
 			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
 			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
