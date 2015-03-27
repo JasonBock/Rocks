@@ -95,12 +95,12 @@ namespace Rocks.Sketchpad
 						}
 						else
 						{
-							throw new Exception();
+							throw new NotSupportedException();
 						}
 
 						break;
 					default:
-						throw new Exception();
+						throw new NotSupportedException();
 				}
 			}
 		}

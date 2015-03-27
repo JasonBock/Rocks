@@ -608,6 +608,23 @@ namespace Rocks
 			}
 		}
 
+		// TODO, probably need to rename method so I don't get ambiguous calls :(
+		//public void HandleProperty<TPropertyValue>(string name, Expression<Func<TPropertyValue>> setterExpectation)
+		//{
+		//	var property = typeof(T).FindProperty(name);
+
+		//	if (property.CanRead)
+		//	{
+		//		this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler();
+		//	}
+
+		//	if (property.CanWrite)
+		//	{
+		//		this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+		//			property.CreateDefaultSetterExpectation());
+		//	}
+		//}
+
 		public void HandleProperty(string name, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name);
@@ -675,13 +692,13 @@ namespace Rocks
 		// Get
 		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, uint expectedCallCount) { }
 		// Set
-		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Action<TPropertyValue> setter) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Action<TPropertyValue> setter) { }
 		// Set
-		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Action<TPropertyValue> setter, uint expectedCallCount) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Action<TPropertyValue> setter, uint expectedCallCount) { }
 		// Get AND set
-		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter) { }
 		// Get AND set
-		public void HandleProperty<TPropertyValue>(string name, Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount) { }
+		public void HandleProperty<TPropertyValue>(Expression<Func<object[]>> indexers, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount) { }
 
 		public T Make()
 		{

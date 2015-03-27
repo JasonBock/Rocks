@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Rocks.Extensions
@@ -10,6 +11,11 @@ namespace Rocks.Extensions
 		private static ReadOnlyDictionary<string, ArgumentExpectation> CreateEmptyExpectations()
 		{
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+		}
+
+		internal static ReadOnlyCollection<ArgumentExpectation> GetIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> expressions)
+		{
+			throw new NotImplementedException();
 		}
 
 		internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectation(this PropertyInfo @this)
