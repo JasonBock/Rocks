@@ -7,28 +7,9 @@ namespace Rocks.Extensions
 {
 	internal static class ExpressionOfTExtensions
 	{
-		private static void HandleCall(MethodCallExpression expression, List<Type> indexerTypes)
+		internal static ArgumentExpectation<TProperty> GetExpectationForSetter<TProperty>(this Expression<Func<TProperty>> @this)
 		{
-			var argumentMethod = expression.Method;
-
-			if (argumentMethod.DeclaringType == typeof(Arg))
-			{
-				indexerTypes.Add(argumentMethod.GetGenericArguments()[0]);
-			}
-			else
-			{
-				indexerTypes.Add(argumentMethod.ReturnType);
-			}
-		}
-
-		private static void HandleConstant(ConstantExpression expression, List<Type> indexerTypes)
-		{
-			indexerTypes.Add(expression.Value.GetType());
-		}
-
-		internal static ArgumentExpectation<TPropertyValue> GetExpectationForSetter<TPropertyValue>(this Expression<Func<TPropertyValue>> @this)
-		{
-			return @this.Body.Create() as ArgumentExpectation<TPropertyValue>;
+			return @this.Body.Create() as ArgumentExpectation<TProperty>;
 		}
 
 		internal static ReadOnlyCollection<Expression> ParseForPropertyIndexers(this Expression<Func<object[]>> @this)
@@ -60,12 +41,6 @@ namespace Rocks.Extensions
 			}
 
 			return indexerExpressions.AsReadOnly();
-		}
-
-		internal static ReadOnlyCollection<ArgumentExpectation> ParseForPropertyIndexersAndSetter<TPropertyValue>(
-			this Expression<Func<object[]>> @this, Expression<Func<TPropertyValue>> setter)
-		{
-			return null;
 		}
 	}
 }

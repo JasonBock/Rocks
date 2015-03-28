@@ -4,6 +4,7 @@ using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Rocks
@@ -603,8 +604,7 @@ namespace Rocks
 
 			if (property.CanWrite)
 			{
-				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-					property.CreateDefaultSetterExpectation());
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler();
 			}
 		}
 
@@ -636,8 +636,7 @@ namespace Rocks
 
 			if (property.CanWrite)
 			{
-				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-					expectedCallCount, property.CreateDefaultSetterExpectation());
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(expectedCallCount);
 			}
 		}
 
@@ -656,35 +655,49 @@ namespace Rocks
 		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-				setter, property.CreateDefaultSetterExpectation());
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(setter);
 		}
 
 		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-				setter, expectedCallCount, property.CreateDefaultSetterExpectation());
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(setter, expectedCallCount);
 		}
 
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-				setter, property.CreateDefaultSetterExpectation());
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(setter);
 		}
 
 		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(getter, expectedCallCount);
-			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-				setter, expectedCallCount, property.CreateDefaultSetterExpectation());
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(setter, expectedCallCount);
 		}
 
 		// Get and/or set
-		public void HandleProperty(Expression<Func<object[]>> indexers) { }
+		public void HandleProperty(Expression<Func<object[]>> indexers)
+		{
+			var indexerExpressions = indexers.ParseForPropertyIndexers();
+         var property = typeof(T).FindProperty(indexerExpressions.Select(_ => _.Type).ToArray());
+
+			if (property.CanRead)
+			{
+				// TODO: Get a list of getter expectat
+				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(indexerExpressions);
+			}
+
+			if (property.CanWrite)
+			{
+				// TODO: Get a list of getter expectatation and append with setter expectation
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+					property.CreateDefaultSetterExpectationDictionary());
+			}
+		}
+
 		// Get and/or set
 		public void HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount) { }
 		// Get

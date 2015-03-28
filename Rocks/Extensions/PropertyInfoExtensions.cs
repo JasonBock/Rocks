@@ -13,19 +13,36 @@ namespace Rocks.Extensions
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 		}
 
-		internal static ReadOnlyCollection<ArgumentExpectation> GetIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> expressions)
+		internal static ReadOnlyCollection<ArgumentExpectation> GetGetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
 			throw new NotImplementedException();
 		}
 
-		internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectation(this PropertyInfo @this)
+		internal static ReadOnlyCollection<ArgumentExpectation> GetSetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		{
+			throw new NotImplementedException();
+		}
+
+		internal static ReadOnlyCollection<ArgumentExpectation> GetSetterIndexerExpectations<TProperty>(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers,
+			Expression<Func<TProperty>> setterExpectation)
+		{
+			throw new NotImplementedException();
+		}
+
+		private static Tuple<string, ArgumentExpectation> CreateDefaultSetterExpectation(this PropertyInfo @this)
 		{
 			var expectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.PropertyType);
 			var expectation = expectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
 				Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
+			return new Tuple<string, ArgumentExpectation>(Constants.Values.PropertySetterArgumentName, expectation);
+		}
+
+		internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectationDictionary(this PropertyInfo @this)
+		{
+			var expectation = @this.CreateDefaultSetterExpectation();
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>
 				{
-					{ Constants.Values.PropertySetterArgumentName, expectation }
+					{ expectation.Item1, expectation.Item2 }
 				});
 		}
 
@@ -37,12 +54,30 @@ namespace Rocks.Extensions
 				.Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 		}
 
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this)
+		{
+			return new HandlerInformation(@this.CreateDefaultSetterExpectationDictionary());
+		}
+
+		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		{
+			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
+			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
+				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
+				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+		}
+
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
 			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+		}
+
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, uint expectedCallCount)
+		{
+			return new HandlerInformation(expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler)
@@ -53,12 +88,22 @@ namespace Rocks.Extensions
 				.Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 		}
 
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler)
+		{
+			return new HandlerInformation(handler, @this.CreateDefaultSetterExpectationDictionary());
+		}
+
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
 			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+		}
+
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount)
+		{
+			return new HandlerInformation(handler, expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
 		}
 	}
 }
