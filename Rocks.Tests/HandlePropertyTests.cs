@@ -422,6 +422,23 @@ namespace Rocks.Tests
 
 			Assert.Throws<VerificationException>(() => rock.Verify());
 		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerProperty()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c });
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+
+			rock.Verify();
+		}
 	}
 
 	public interface IProperties
@@ -429,5 +446,6 @@ namespace Rocks.Tests
 		string GetterOnly { get; }
 		string SetterOnly { set; }
 		string GetterAndSetter { get;  set; }
+		string this[int a, Guid b, string c] { get; set; }
 	}
 }

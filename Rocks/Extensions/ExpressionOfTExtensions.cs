@@ -21,22 +21,12 @@ namespace Rocks.Extensions
 			{
 				switch (expression.NodeType)
 				{
-					case ExpressionType.Constant:
-					case ExpressionType.Call:
-						indexerExpressions.Add(expression);
-						break;
 					case ExpressionType.Convert:
-						var operand = (expression as UnaryExpression).Operand;
-
-						if (operand.NodeType != ExpressionType.Constant && operand.NodeType != ExpressionType.Call)
-						{
-							throw new NotSupportedException();
-						}
-
-						indexerExpressions.Add(operand);
+						indexerExpressions.Add((expression as UnaryExpression).Operand);
 						break;
 					default:
-						throw new NotSupportedException();
+						indexerExpressions.Add(expression);
+						break;
 				}
 			}
 

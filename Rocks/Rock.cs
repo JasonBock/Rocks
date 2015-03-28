@@ -678,7 +678,6 @@ namespace Rocks
 			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(setter, expectedCallCount);
 		}
 
-		// Get and/or set
 		public void HandleProperty(Expression<Func<object[]>> indexers)
 		{
 			var indexerExpressions = indexers.ParseForPropertyIndexers();
@@ -686,15 +685,12 @@ namespace Rocks
 
 			if (property.CanRead)
 			{
-				// TODO: Get a list of getter expectat
 				this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(indexerExpressions);
 			}
 
 			if (property.CanWrite)
 			{
-				// TODO: Get a list of getter expectatation and append with setter expectation
-				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
-					property.CreateDefaultSetterExpectationDictionary());
+				this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(indexerExpressions);
 			}
 		}
 

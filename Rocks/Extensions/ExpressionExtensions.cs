@@ -7,7 +7,6 @@ namespace Rocks.Extensions
 	{
 		internal static ArgumentExpectation Create(this Expression @this)
 		{
-			// TODO: maybe pull the type value from the expression?
 			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.Type);
 
 			switch (@this.NodeType)

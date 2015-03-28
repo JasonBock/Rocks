@@ -13,20 +13,39 @@ namespace Rocks.Extensions
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 		}
 
-		internal static ReadOnlyCollection<ArgumentExpectation> GetGetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		private static Dictionary<string, ArgumentExpectation> GetIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
-			throw new NotImplementedException();
+			var expectations = new Dictionary<string, ArgumentExpectation>();
+			var propertyIndexers = @this.GetIndexParameters();
+
+			for (var i = 0; i < indexers.Count; i++)
+			{
+				expectations.Add(propertyIndexers[i].Name, indexers[i].Create());
+			}
+
+			return expectations;
 		}
 
-		internal static ReadOnlyCollection<ArgumentExpectation> GetSetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetGetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
-			throw new NotImplementedException();
+			return new ReadOnlyDictionary<string, ArgumentExpectation>(@this.GetIndexerExpectations(indexers));
 		}
 
-		internal static ReadOnlyCollection<ArgumentExpectation> GetSetterIndexerExpectations<TProperty>(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers,
+		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetSetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		{
+			var expectations = @this.GetIndexerExpectations(indexers);
+			var setterExpectations = @this.CreateDefaultSetterExpectation();
+			expectations.Add(setterExpectations.Item1, setterExpectations.Item2);
+			return new ReadOnlyDictionary<string, ArgumentExpectation>(expectations);
+		}
+
+		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetSetterIndexerExpectations<TProperty>(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers,
 			Expression<Func<TProperty>> setterExpectation)
 		{
-			throw new NotImplementedException();
+			var expectations = @this.GetIndexerExpectations(indexers);
+			var setterExpectations = @this.CreateDefaultSetterExpectation();
+			expectations.Add(Constants.Values.PropertySetterArgumentName, setterExpectation.GetExpectationForSetter());
+			return new ReadOnlyDictionary<string, ArgumentExpectation>(expectations);
 		}
 
 		private static Tuple<string, ArgumentExpectation> CreateDefaultSetterExpectation(this PropertyInfo @this)
@@ -65,6 +84,14 @@ namespace Rocks.Extensions
 			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+		}
+
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
+		{
+			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
+			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
+				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
+				.Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, uint expectedCallCount)
