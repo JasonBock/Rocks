@@ -439,6 +439,103 @@ namespace Rocks.Tests
 
 			rock.Verify();
 		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c });
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c });
+
+			var chunk = rock.Make();
+			var propertyValue = chunk[a, b, c];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWith1GetIndexerProperty()
+		{
+			var returnValue = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<int, string>(() => 44, _ => returnValue);
+
+			var chunk = rock.Make();
+			var propertyValue = chunk[44];
+
+			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWith1GetIndexerPropertyAndGetNotUsed()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString());
+
+			var chunk = rock.Make();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWith1GetIndexerPropertyAndExpectedCallCount()
+		{
+			var returnValue = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<int, string>(() => 44, _ => returnValue, 2);
+
+			var chunk = rock.Make();
+			var propertyValue = chunk[44];
+			propertyValue = chunk[44];
+
+			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWith1GetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString(), 2);
+
+			var chunk = rock.Make();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWith1GetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString(), 2);
+
+			var chunk = rock.Make();
+			var propertyValue = chunk[44];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
 	}
 
 	public interface IProperties
@@ -447,5 +544,6 @@ namespace Rocks.Tests
 		string SetterOnly { set; }
 		string GetterAndSetter { get;  set; }
 		string this[int a, Guid b, string c] { get; set; }
+		string this[int a] { get; }
 	}
 }
