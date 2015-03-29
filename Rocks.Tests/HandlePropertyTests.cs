@@ -478,7 +478,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<int, string>(() => 44, _ => returnValue);
+			rock.HandleProperty(() => 44, _ => returnValue);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
@@ -491,7 +491,7 @@ namespace Rocks.Tests
 		public void MakeWith1GetIndexerPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString());
+			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString());
 
 			var chunk = rock.Make();
 
@@ -504,7 +504,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<int, string>(() => 44, _ => returnValue, 2);
+			rock.HandleProperty(() => 44, _ => returnValue, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
@@ -518,7 +518,7 @@ namespace Rocks.Tests
 		public void MakeWith1GetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString(), 2);
+			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString(), 2);
 
 			var chunk = rock.Make();
 
@@ -529,10 +529,80 @@ namespace Rocks.Tests
 		public void MakeWith1GetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<int, string>(() => 44, _ => Guid.NewGuid().ToString(), 2);
+			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString(), 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWith1SetIndexerProperty()
+		{
+			var indexer1 = Guid.NewGuid();
+			string propertyValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => propertyValue = value);
+
+			var chunk = rock.Make();
+			chunk[indexer1] = indexer1.ToString();
+
+			Assert.AreEqual(indexer1.ToString(), propertyValue, nameof(propertyValue));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWith1SetIndexerPropertyAndSetNotUsed()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<Guid, string>(() => Guid.NewGuid(), (i1, value) => { });
+
+			var chunk = rock.Make();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWith1SetIndexerPropertyAndExpectedCallCount()
+		{
+			var indexer1 = Guid.NewGuid();
+			string propertyValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => propertyValue = value, 2);
+
+			var chunk = rock.Make();
+			chunk[indexer1] = indexer1.ToString();
+			chunk[indexer1] = indexer1.ToString();
+
+			Assert.AreEqual(indexer1.ToString(), propertyValue, nameof(propertyValue));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWith1SetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<Guid, string>(() => Guid.NewGuid(), (i1, value) => { }, 2);
+
+			var chunk = rock.Make();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithSGetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
+		{
+			var indexer1 = Guid.NewGuid();
+			string propertyValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => propertyValue = value, 2);
+
+			var chunk = rock.Make();
+			chunk[indexer1] = indexer1.ToString();
 
 			Assert.Throws<VerificationException>(() => rock.Verify());
 		}
@@ -545,5 +615,6 @@ namespace Rocks.Tests
 		string GetterAndSetter { get;  set; }
 		string this[int a, Guid b, string c] { get; set; }
 		string this[int a] { get; }
+		string this[Guid a] { set; }
 	}
 }

@@ -131,12 +131,28 @@ namespace Rocks.Extensions
 				.Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 		}
 
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler)
+		{
+			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
+			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
+				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
+				.Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+		}
+
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
 			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+		}
+
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler, uint expectedCallCount)
+		{
+			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
+			return handlerType.GetConstructor(Constants.Reflection.PublicNonPublicInstance, null,
+				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
+				.Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler)
