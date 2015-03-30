@@ -802,6 +802,98 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
 		}
 
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
+		}
+
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
+		}
+
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
+		}
+
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
+		}
+
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
+		}
+
+		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
+		}
+
+		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
+		{
+			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
+			this.handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
+			this.handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = property.GetSetterHandler(
+				new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
+		}
+
 		public T Make()
 		{
 			var readOnlyHandlers = new ReadOnlyDictionary<string, HandlerInformation>(this.handlers);
