@@ -694,7 +694,6 @@ namespace Rocks
 			}
 		}
 
-		// Get and/or set
 		public void HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount)
 		{
 			var indexerExpressions = indexers.ParseForPropertyIndexers();
@@ -711,7 +710,6 @@ namespace Rocks
 			}
 		}
 
-		// Get
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
@@ -719,7 +717,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
 		}
 
-		// Get
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
@@ -727,7 +724,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
 		}
 
-		// Set
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
@@ -735,7 +731,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
 		}
 
-		// Set
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
@@ -743,7 +738,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
 		}
 
-		// Get AND set
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
@@ -753,7 +747,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
 		}
 
-		// Get AND set
 		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
@@ -763,7 +756,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
 		}
 
-		// Get
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
@@ -771,7 +763,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
 		}
 
-		// Get
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
@@ -779,7 +770,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
 		}
 
-		// Set
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
@@ -787,7 +777,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
 		}
 
-		// Set
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
@@ -795,7 +784,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
 		}
 
-		// Get AND set
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
@@ -805,7 +793,6 @@ namespace Rocks
 				new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
 		}
 
-		// Get AND set
 		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);

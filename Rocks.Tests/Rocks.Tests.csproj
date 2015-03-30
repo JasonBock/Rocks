@@ -202,6 +202,8 @@
     <Compile Include="HandleFunc1ArgumentTests.cs" />
     <Compile Include="HandleFuncNoArgumentsTests.cs" />
     <Compile Include="HandleActionNoArgumentsTests.cs" />
+    <Compile Include="HandleProperty2IndexerTests.cs" />
+    <Compile Include="HandleProperty1IndexerTests.cs" />
     <Compile Include="HandlePropertyTests.cs" />
     <Compile Include="HandlerInformationOfTTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
