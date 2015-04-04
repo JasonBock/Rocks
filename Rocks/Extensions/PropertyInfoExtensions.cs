@@ -20,7 +20,8 @@ namespace Rocks.Extensions
 
 			for (var i = 0; i < indexers.Count; i++)
 			{
-				expectations.Add(propertyIndexers[i].Name, indexers[i].Create());
+				var propertyIndexer = propertyIndexers[i];
+            expectations.Add(propertyIndexer.Name, indexers[i].Create(propertyIndexer.ParameterType));
 			}
 
 			return expectations;

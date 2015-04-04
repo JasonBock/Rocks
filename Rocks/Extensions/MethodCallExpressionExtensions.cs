@@ -19,7 +19,7 @@ namespace Rocks.Extensions
 
 				var argumentExpectationType = !methodArgument.ParameterType.IsByRef ? 
 					methodArgument.ParameterType : methodArgument.ParameterType.GetElementType();
-				expectations.Add(methodArgument.Name, argument.Create());
+				expectations.Add(methodArgument.Name, argument.Create(argumentExpectationType));
 				argumentIndex++;
 			}
 

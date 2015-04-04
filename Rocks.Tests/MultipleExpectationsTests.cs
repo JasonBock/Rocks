@@ -1,14 +1,15 @@
 ﻿using NUnit.Framework;
+using Rocks.Exceptions;
 
 namespace Rocks.Tests
 {
 	[TestFixture]
 	public sealed class MultipleExpectationsTests
 	{
-		[Test, Ignore("Need to fix casting")]
+		[Test]
 		public void HandleMultiple()
 		{
-			var rock = Rock.Create<IMultiple>(new Options(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
+			var rock = Rock.Create<IMultiple>();
 			rock.HandleAction(_ => _.Target("a", 44));
 			rock.HandleAction(_ => _.Target("b", "44"));
 			rock.HandleAction(_ => _.Target("a", "44"));
@@ -19,6 +20,55 @@ namespace Rocks.Tests
 			chunk.Target("a", 44);
 
 			rock.Verify();
+		}
+
+		[Test]
+		public void HandleMultipleWithDifferentExpectedCallCounts()
+		{
+			var rock = Rock.Create<IMultiple>();
+			rock.HandleAction(_ => _.Target("a", 44), 2);
+			rock.HandleAction(_ => _.Target("b", "44"), 3);
+			rock.HandleAction(_ => _.Target("a", "44"), 4);
+
+			var chunk = rock.Make();
+			chunk.Target("a", 44);
+			chunk.Target("a", 44);
+			chunk.Target("b", "44");
+			chunk.Target("b", "44");
+			chunk.Target("b", "44");
+			chunk.Target("a", "44");
+			chunk.Target("a", "44");
+			chunk.Target("a", "44");
+			chunk.Target("a", "44");
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void HandleMultipleAndOneIsMissed()
+		{
+			var rock = Rock.Create<IMultiple>();
+			rock.HandleAction(_ => _.Target("a", 44));
+			rock.HandleAction(_ => _.Target("b", "44"));
+			rock.HandleAction(_ => _.Target("a", "44"));
+
+			var chunk = rock.Make();
+			chunk.Target("a", "44");
+			chunk.Target("a", 44);
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void HandleMultipleAndCallIsIncorrect()
+		{
+			var rock = Rock.Create<IMultiple>();
+			rock.HandleAction(_ => _.Target("a", 44));
+			rock.HandleAction(_ => _.Target("b", "44"));
+			rock.HandleAction(_ => _.Target("a", "44"));
+
+			var chunk = rock.Make();
+			Assert.Throws<ExpectationException>(() => chunk.Target("c", "44"));
 		}
 	}
 

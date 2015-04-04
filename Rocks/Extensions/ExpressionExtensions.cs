@@ -7,7 +7,12 @@ namespace Rocks.Extensions
 	{
 		internal static ArgumentExpectation Create(this Expression @this)
 		{
-			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.Type);
+			return @this.Create(@this.Type);
+		}
+
+      internal static ArgumentExpectation Create(this Expression @this, Type expectationType)
+		{
+			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(expectationType);
 
 			switch (@this.NodeType)
 			{
