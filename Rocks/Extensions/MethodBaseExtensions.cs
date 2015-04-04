@@ -46,6 +46,18 @@ namespace Rocks.Extensions
 				 select $"{modifier}{parameter.Name}"));
 		}
 
+		internal static string GetExpectationExceptionMessage(this MethodBase @this)
+		{
+			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).Arguments}({@this.GetLiteralArgumentNameList()})";
+      }
+
+		internal static string GetLiteralArgumentNameList(this MethodBase @this)
+		{
+			return string.Join(", ",
+				(from parameter in @this.GetParameters()
+				 select $"{{{parameter.Name}}}"));
+		}
+
 		internal static string GetParameters(this MethodBase @this, SortedSet<string> namespaces)
 		{
 			return string.Join(", ",

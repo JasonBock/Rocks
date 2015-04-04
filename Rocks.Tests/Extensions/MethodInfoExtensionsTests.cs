@@ -82,8 +82,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecks()
 		{
 			var expectedExpectation =
-@"(handler.Expectations[""a""] as ArgumentExpectation<Int32>).Validate(a, ""a"");
-(handler.Expectations[""c""] as ArgumentExpectation<String>).Validate(c, ""c"");";
+@"(methodHandler.Expectations[""a""] as ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as ArgumentExpectation<String>).IsValid(c, ""c"")";
          var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var expectations = target.GetExpectationChecks();
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));

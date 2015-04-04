@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1409.1722, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +51,7 @@
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="Members.cs" />
+    <Compile Include="MoqTests.cs" />
     <Compile Include="NestedClasses.cs" />
     <Compile Include="OutAndRefAndParams.cs" />
     <Compile Include="Program.cs" />
@@ -56,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Tests\Rocks.Tests.csproj">

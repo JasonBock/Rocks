@@ -161,6 +161,7 @@
     <Compile Include="Extensions\ExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\ExpressionOfTExtensionsTests.cs" />
     <Compile Include="Extensions\GenericArgumentsResultTests.cs" />
+    <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensionsTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="HandlePropertyTests.cs" />
     <Compile Include="HandlerInformationOfTTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
+    <Compile Include="MultipleExpectationsTests.cs" />
     <Compile Include="NestedTypesTests.cs" />
     <Compile Include="OptionsTests.cs" />
     <Compile Include="ParamsAndOptionalArgumentTests.cs" />

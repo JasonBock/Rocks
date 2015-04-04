@@ -290,10 +290,9 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => { });
 
 			var chunk = rock.Make();
 
@@ -398,7 +397,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
-			var rock = Rock.Create<IProperties>();
+			var rock = Rock.Create<IProperties>(new Options(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
 			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
@@ -468,6 +467,95 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[a, b, c];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.Throws<VerificationException>(() => rock.Verify());
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
 
 			Assert.Throws<VerificationException>(() => rock.Verify());
 		}

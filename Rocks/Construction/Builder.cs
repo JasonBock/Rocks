@@ -15,7 +15,7 @@ namespace Rocks.Construction
 	internal abstract class Builder
 	{
 		internal Builder(Type baseType,
-			ReadOnlyDictionary<string, HandlerInformation> handlers,
+			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, bool shouldCreateCodeFile)
 		{
          this.BaseType = baseType;
@@ -64,23 +64,44 @@ namespace Rocks.Construction
 				{
 					var delegateCast = !containsRefAndOrOutParameters ?
 						baseMethod.GetDelegateCast() :
-						this.Handlers[methodDescription].Method.GetType().GetSafeName(baseMethod, this.Namespaces);
+						this.Handlers[methodDescription][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces);
 					var argumentNameList = baseMethod.GetArgumentNameList();
-					var expectationChecks = !containsRefAndOrOutParameters ? baseMethod.GetExpectationChecks() : string.Empty;
 					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-					if (baseMethod.ReturnType != typeof(void))
+					if(!containsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
 					{
-						generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
-							(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-								Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
-								Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers));
+						var expectationChecks = baseMethod.GetExpectationChecks();
+						var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
+
+						if (baseMethod.ReturnType != typeof(void))
+						{
+							generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
+								(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+									Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
+									Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
+								methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage));
+						}
+						else
+						{
+							generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
+								methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage));
+						}
 					}
 					else
 					{
-						generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-							methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers));
+						if (baseMethod.ReturnType != typeof(void))
+						{
+							generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
+								(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+									Constants.CodeTemplates.FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate :
+									Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate,
+								methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers));
+						}
+						else
+						{
+							generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodWithNoArgumentsTemplate,
+								methodDescription, argumentNameList, delegateCast, outInitializers));
+						}
 					}
 				}
 				else
@@ -106,12 +127,24 @@ namespace Rocks.Construction
 					var getMethod = baseProperty.GetMethod;
 					var getMethodDescription = getMethod.GetMethodDescription(this.Namespaces);
 					var getArgumentNameList = getMethod.GetArgumentNameList();
-					var getExpectationChecks = getMethod.GetExpectationChecks();
-               var getDelegateCast = getMethod.GetDelegateCast();
-					propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
-						Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueTemplate : 
-						Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueTemplate,
-						getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast));
+					var getDelegateCast = getMethod.GetDelegateCast();
+
+					if (getMethod.GetParameters().Length > 0)
+					{
+						var getExpectationChecks = getMethod.GetExpectationChecks();
+						var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
+						propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
+							Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueTemplate :
+							Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueTemplate,
+							getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
+					}
+					else
+					{
+						propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
+							Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueAndNoIndexersTemplate :
+							Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate,
+							getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast));
+					}
 				}
 
 				if (baseProperty.CanWrite)
@@ -119,10 +152,20 @@ namespace Rocks.Construction
 					var setMethod = baseProperty.SetMethod;
 					var setMethodDescription = setMethod.GetMethodDescription(this.Namespaces);
 					var setArgumentNameList = setMethod.GetArgumentNameList();
-					var setExpectationChecks = setMethod.GetExpectationChecks();
 					var setDelegateCast = setMethod.GetDelegateCast();
-					propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetTemplate,
-						setMethodDescription, setArgumentNameList, setExpectationChecks, setDelegateCast));
+
+					if (setMethod.GetParameters().Length > 0)
+					{
+						var setExpectationChecks = setMethod.GetExpectationChecks();
+						var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
+						propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetTemplate,
+							setMethodDescription, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage));
+					}
+					else
+					{
+						propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetAndNoIndexersTemplate,
+							setMethodDescription, setArgumentNameList, setDelegateCast));
+					}
 				}
 
 				// Generate the property template, based on indexes or not.
@@ -204,7 +247,7 @@ namespace Rocks.Construction
 		internal bool ShouldCreateCodeFile { get; private set; }
       internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; private set; }
-		internal ReadOnlyDictionary<string, HandlerInformation> Handlers { get; private set; }
+		internal ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; private set; }
 		internal SortedSet<string> Namespaces { get; private set; }
 		internal string TypeName { get; set; }
 	}

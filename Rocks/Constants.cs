@@ -38,18 +38,49 @@ namespace Rocks
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
+			// 5 = method with argument values
 			public const string PropertyGetWithReferenceTypeReturnValueTemplate =
 @"get
 {{
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{3}
-		var result = handler.Method != null ?
-			(handler.Method as {4})({1}) as {2} :
-			(handler as HandlerInformation<{2}>).ReturnValue;
-		handler.IncrementCallCount();
+		foreach(var methodHandler in methodHandlers)
+		{{
+			if({3})
+			{{
+				var result = methodHandler.Method != null ?
+					(methodHandler.Method as {4})({1}) as {2} :
+					(methodHandler as HandlerInformation<{2}>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}}
+		}}
+
+		throw new ExpectationException($""No handlers were found for {5}"");
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = return type name
+			// 3 = delegate cast
+			public const string PropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate =
+@"get
+{{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(methodHandler.Method as {3})({1}) as {2} :
+			(methodHandler as HandlerInformation<{2}>).ReturnValue;
+		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
@@ -62,18 +93,49 @@ namespace Rocks
 			// 2 = return type name
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
+			// 5 = method with argument values
 			public const string PropertyGetWithValueTypeReturnValueTemplate =
 @"get
 {{
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{3}
-		var result = handler.Method != null ?
-			({2})(handler.Method as {4})({1}) :
-			(handler as HandlerInformation<{2}>).ReturnValue;
-		handler.IncrementCallCount();
+		foreach(var methodHandler in methodHandlers)
+		{{
+			if({3})
+			{{
+				var result = methodHandler.Method != null ?
+					({2})(methodHandler.Method as {4})({1}) :
+					(methodHandler as HandlerInformation<{2}>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}}
+		}}
+
+		throw new ExpectationException($""No handlers were found for {5}"");
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = return type name
+			// 3 = delegate cast
+			public const string PropertyGetWithValueTypeReturnValueAndNoIndexersTemplate =
+@"get
+{{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			({2})(methodHandler.Method as {3})({1}) :
+			(methodHandler as HandlerInformation<{2}>).ReturnValue;
+		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
@@ -85,20 +147,60 @@ namespace Rocks
 			// 1 = comma-separate list of argument names
 			// 2 = instances of the ExpectationTemplate
 			// 3 = delegate cast
+			// 4 = method with argument values
 			public const string PropertySetTemplate =
 @"set
 {{
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{2}
-		if(handler.Method != null)
+		var foundMatch = false;
+
+		foreach(var methodHandler in methodHandlers)
 		{{
-			(handler.Method as {3})({1});
+			if({2})
+			{{
+				foundMatch = true;
+
+				if(methodHandler.Method != null)
+				{{
+					(methodHandler.Method as {3})({1});
+				}}
+	
+				methodHandler.IncrementCallCount();
+				break;
+			}}
+		}}
+
+		if(!foundMatch)
+		{{
+			throw new ExpectationException($""No handlers were found for {4}"");
+		}}
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = delegate cast
+			public const string PropertySetAndNoIndexersTemplate =
+@"set
+{{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+
+		if(methodHandler.Method != null)
+		{{
+			(methodHandler.Method as {2})({1});
 		}}
 	
-		handler.IncrementCallCount();
+		methodHandler.IncrementCallCount();
 	}}
 	else
 	{{
@@ -109,7 +211,7 @@ namespace Rocks
 			// 1 = event name
 			public const string EventTemplate = "public event {0} {1};";
 			// 0 = parameter name
-			public const string ExpectationTemplate = "(handler.Expectations[\"{0}\"] as ArgumentExpectation<{1}>).Validate({0}, \"{0}\");";
+			public const string ExpectationTemplate = "(methodHandler.Expectations[\"{0}\"] as ArgumentExpectation<{1}>).IsValid({0}, \"{0}\")";
 
 			// 0 = method name
 			public const string RefOutNotImplementedMethodTemplate =
@@ -122,7 +224,7 @@ namespace Rocks
 			// 1 = comma-separate list of argument names
 			// 2 = comma-separate list of argument names with types
 			public const string ConstructorTemplate =
-@"public {0}(ReadOnlyDictionary<string, HandlerInformation> handlers, {2})
+@"public {0}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers, {2})
 	: base({1})
 {{
 	this.handlers = handlers;
@@ -133,21 +235,62 @@ namespace Rocks
 			// 2 = instances of the ExpectationTemplate
 			// 3 = delegate cast
 			// 4 = out initializers
+			// 5 = method with argument values
 			public const string ActionMethodTemplate =
 @"public {0}
 {{
 	{4}
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{2}
-		if(handler.Method != null)
+		var foundMatch = false;
+				
+		foreach(var methodHandler in methodHandlers)
 		{{
-			(handler.Method as {3})({1});
+			if({2})
+			{{
+				foundMatch = true;
+
+				if(methodHandler.Method != null)
+				{{
+					(methodHandler.Method as {3})({1});
+				}}
+	
+				methodHandler.IncrementCallCount();
+				break;
+			}}
+		}}
+
+		if(!foundMatch)
+		{{
+			throw new ExpectationException($""No handlers were found for {5}"");
+		}}
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = delegate cast
+			// 3 = out initializers
+			public const string ActionMethodWithNoArgumentsTemplate =
+@"public {0}
+{{
+	{3}
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+		if(methodHandler.Method != null)
+		{{
+			(methodHandler.Method as {2})({1});
 		}}
 	
-		handler.IncrementCallCount();
+		methodHandler.IncrementCallCount();
 	}}
 	else
 	{{
@@ -171,9 +314,9 @@ namespace {7}
 	public sealed class {1}
 		: {2}, IRock
 	{{
-		private ReadOnlyDictionary<string, HandlerInformation> handlers;
+		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
 
-		public {1}(ReadOnlyDictionary<string, HandlerInformation> handlers)
+		public {1}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
 		{{
 			this.handlers = handlers;
 		}}
@@ -186,7 +329,7 @@ namespace {7}
 
 		{5}
 
-		ReadOnlyDictionary<string, HandlerInformation> IRock.Handlers
+		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IRock.Handlers
 		{{
 			get {{ return this.handlers; }}
 		}}
@@ -198,19 +341,52 @@ namespace {7}
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
 			// 5 = out initializers
+			// 6 = method with argument values
 			public const string FunctionWithReferenceTypeReturnValueMethodTemplate =
 @"public {0}
 {{
 	{5}
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{3}
-		var result = handler.Method != null ?
-			(handler.Method as {4})({1}) as {2} :
-			(handler as HandlerInformation<{2}>).ReturnValue;
-		handler.IncrementCallCount();
+		foreach(var methodHandler in methodHandlers)
+		{{
+			if({3})
+			{{
+				var result = methodHandler.Method != null ?
+					(methodHandler.Method as {4})({1}) as {2} :
+					(methodHandler as HandlerInformation<{2}>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}}
+		}}
+
+		throw new ExpectationException($""No handlers were found for {6}"");
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = return type name
+			// 3 = delegate cast
+			// 4 = out initializers
+			public const string FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate =
+@"public {0}
+{{
+	{4}
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(methodHandler.Method as {3})({1}) as {2} :
+			(methodHandler as HandlerInformation<{2}>).ReturnValue;
+		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
@@ -224,19 +400,52 @@ namespace {7}
 			// 3 = instances of the ExpectationTemplate
 			// 4 = delegate cast
 			// 5 = out initializers
+			// 6 = method with argument values
 			public const string FunctionWithValueTypeReturnValueMethodTemplate =
 @"public {0}
 {{
 	{5}
-	HandlerInformation handler = null;
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{0}"", out handler))
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
 	{{
-		{3}
-		var result = handler.Method != null ?
-			({2})(handler.Method as {4})({1}) :
-			(handler as HandlerInformation<{2}>).ReturnValue;
-		handler.IncrementCallCount();
+		foreach(var methodHandler in methodHandlers)
+		{{
+			if({3})
+			{{
+				var result = methodHandler.Method != null ?
+					({2})(methodHandler.Method as {4})({1}) :
+					(methodHandler as HandlerInformation<{2}>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}}
+		}}
+
+		throw new ExpectationException($""No handlers were found for {6}"");
+	}}
+	else
+	{{
+		throw new NotImplementedException();
+	}}
+}}";
+			// 0 = method name
+			// 1 = comma-separate list of argument names
+			// 2 = return type name
+			// 3 = delegate cast
+			// 4 = out initializers
+			public const string FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate =
+@"public {0}
+{{
+	{4}
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""{0}"", out methodHandlers))
+	{{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			({2})(methodHandler.Method as {3})({1}) :
+			(methodHandler as HandlerInformation<{2}>).ReturnValue;
+		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
@@ -244,7 +453,6 @@ namespace {7}
 		throw new NotImplementedException();
 	}}
 }}";
-
 		}
 	}
 }

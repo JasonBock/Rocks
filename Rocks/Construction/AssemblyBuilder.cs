@@ -9,7 +9,7 @@ namespace Rocks.Construction
 		: Builder
 	{
 		internal AssemblyBuilder(Type baseType,
-			ReadOnlyDictionary<string, HandlerInformation> handlers,
+			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, bool shouldCreateCodeFile)
 			: base(baseType, handlers, namespaces, shouldCreateCodeFile)
 		{

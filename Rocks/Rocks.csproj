@@ -131,6 +131,7 @@
     <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\GenericArgumentsResult.cs" />
     <Compile Include="Extensions\ExpressionOfTExtensions.cs" />
+    <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensions.cs" />
     <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />

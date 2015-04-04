@@ -4,6 +4,6 @@ namespace Rocks
 {
 	public interface IRock
 	{
-		ReadOnlyDictionary<string, HandlerInformation> Handlers { get; }
+		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 	}
 }

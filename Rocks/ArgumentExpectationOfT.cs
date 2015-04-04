@@ -1,6 +1,5 @@
 ﻿using Rocks.Exceptions;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Rocks
@@ -41,37 +40,37 @@ namespace Rocks
 			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
 		
-		public void Validate(T value, string parameter)
+		public bool IsValid(T value, string parameter)
 		{
+			var isValid = true;
+
 			if (!this.IsAny)
 			{
 				if (this.IsValue)
 				{
 					if(!ObjectEquality.AreEqual(this.Value, value))
 					{
-						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+						isValid = false;
                }
 				}
 				else if (this.IsExpression)
 				{
 					if(!ObjectEquality.AreEqual(((T)this.Expression.DynamicInvoke()), value))
 					{
-						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+						isValid = false;
 					}
 				}
-				else if (this.IsEvaluation)
+				else // Must be this.IsEvaluation
 				{
 					if(!this.Evaluation(value))
 					{
-						throw new ExpectationException($"Expectation on parameter {parameter} failed.");
+						isValid = false;
 					}
 				}
-				else
-				{
-					throw new NotImplementedException();
-				}
 			}
-		}
+
+			return isValid;
+      }
 
 		internal Func<T, bool> Evaluation { get; private set; }
 		internal Delegate Expression { get; private set; }

@@ -14,7 +14,8 @@ namespace Rocks.Tests.Construction
 		public void Compile()
 		{
 			var baseType = typeof(IBuilderTest);
-			var handlers = new ReadOnlyDictionary<string, HandlerInformation>(new Dictionary<string, HandlerInformation>());
+			var handlers = new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
+				new Dictionary<string, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 

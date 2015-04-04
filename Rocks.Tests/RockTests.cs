@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.CodeAnalysis;
+using NUnit.Framework;
 using Rocks.Exceptions;
 
 namespace Rocks.Tests
@@ -49,6 +50,23 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithFile()
+		{
+			var rock = Rock.Create<IFileTests>(new Options(OptimizationLevel.Debug, true));
+			rock.HandleAction(_ => _.Member("a", 44));
+
+			var chunk = rock.Make();
+			var chunkType = chunk.GetType();
+			Assert.AreEqual(typeof(IFileTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
+
+			var chunkAsRock = chunk as IRock;
+			Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));
+
+			chunk.Member("a", 44);
+			rock.Verify();
+		}
+
+		[Test]
 		public void Remake()
 		{
 			var rock = Rock.Create<IRockTests>();
@@ -73,5 +91,10 @@ namespace Rocks.Tests
 	{
 		void Member();
 		void SecondMember();
+	}
+
+	public interface IFileTests
+	{
+		void Member(string a, int b);
 	}
 }

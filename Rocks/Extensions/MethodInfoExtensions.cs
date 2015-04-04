@@ -42,7 +42,7 @@ namespace Rocks.Extensions
 
 		internal static string GetExpectationChecks(this MethodInfo @this)
 		{
-			return string.Join(Environment.NewLine,
+			return string.Join(" && ",
 				@this.GetParameters().Select(_ =>
 					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.GetSafeName())));
 		}
