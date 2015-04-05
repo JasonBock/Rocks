@@ -120,6 +120,7 @@
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
+    <Compile Include="CodeFileOptions.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />
     <Compile Include="Construction\Builder.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="Extensions\GenericArgumentsResult.cs" />
     <Compile Include="Extensions\ExpressionOfTExtensions.cs" />
     <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensions.cs" />
+    <Compile Include="Extensions\IRockExtensions.cs" />
     <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
@@ -153,6 +155,8 @@
     <Compile Include="Options.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Construction\InMemoryMaker.cs" />
+    <Compile Include="AssemblyBinder.cs" />
+    <Compile Include="SerializationOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -10,8 +10,8 @@ namespace Rocks.Construction
 	{
 		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, bool shouldCreateCodeFile)
-			: base(baseType, handlers, namespaces, shouldCreateCodeFile)
+			SortedSet<string> namespaces, Options options)
+			: base(baseType, handlers, namespaces, options)
 		{
 			this.TypeName = $"Rock{Guid.NewGuid().ToString("N")}";
 		}

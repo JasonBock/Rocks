@@ -1,9 +1,9 @@
-﻿using Rocks.Exceptions;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 namespace Rocks
 {
+	[Serializable]
 	public sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{

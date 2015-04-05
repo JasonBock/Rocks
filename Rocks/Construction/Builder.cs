@@ -16,12 +16,12 @@ namespace Rocks.Construction
 	{
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, bool shouldCreateCodeFile)
+			SortedSet<string> namespaces, Options options)
 		{
          this.BaseType = baseType;
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
-			this.ShouldCreateCodeFile = shouldCreateCodeFile;
+			this.Options = options;
 		}
 
 		internal virtual void Build()
@@ -217,7 +217,8 @@ namespace Rocks.Construction
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties), events, 
 				string.Join(Environment.NewLine, constructors),
-				this.BaseType.Namespace);
+				this.BaseType.Namespace, this.Options.Serialization == SerializationOptions.Supported ? 
+					"[Serializable]" : string.Empty);
 		}
 
 		private SyntaxTree MakeTree()
@@ -225,7 +226,7 @@ namespace Rocks.Construction
 			var @class = this.MakeCode();
 			SyntaxTree tree = null;
 
-			if (this.ShouldCreateCodeFile)
+			if (this.Options.CodeFile == CodeFileOptions.Create)
 			{
 				var fileName = Path.Combine(this.GetDirectoryForFile(), $"{this.TypeName}.cs");
 				tree = SyntaxFactory.SyntaxTree(
@@ -244,7 +245,7 @@ namespace Rocks.Construction
 
 		protected abstract string GetDirectoryForFile();
 
-		internal bool ShouldCreateCodeFile { get; private set; }
+		internal Options Options { get; private set; }
       internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; private set; }
 		internal ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; private set; }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Exceptions;
+using System.IO;
 
 namespace Rocks.Tests
 {
@@ -52,12 +53,13 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithFile()
 		{
-			var rock = Rock.Create<IFileTests>(new Options(OptimizationLevel.Debug, true));
+			var rock = Rock.Create<IFileTests>(new Options(OptimizationLevel.Debug, CodeFileOptions.Create));
 			rock.HandleAction(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
 			Assert.AreEqual(typeof(IFileTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
+			Assert.IsTrue(File.Exists($"{chunkType.Name}.cs"), nameof(File.Exists));
 
 			var chunkAsRock = chunk as IRock;
 			Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));

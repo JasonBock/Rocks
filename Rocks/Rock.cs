@@ -1088,17 +1088,7 @@ namespace Rocks
 
 			foreach (var rock in this.rocks)
 			{
-				foreach (var pair in rock.Handlers)
-				{
-					foreach(var handler in pair.Value)
-					{
-						foreach (var failure in handler.Verify())
-						{
-							failures.Add(string.Format(Constants.ErrorMessages.VerificationFailed,
-								rock.GetType().FullName, pair.Key, failure));
-						}
-					}
-				}
+				failures.AddRange(rock.GetVerificationFailures());
 			}
 
 			if (failures.Count > 0)

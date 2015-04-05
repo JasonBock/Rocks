@@ -5,6 +5,7 @@ using System.Threading;
 
 namespace Rocks
 {
+	[Serializable]
 	public class HandlerInformation
 	{
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";

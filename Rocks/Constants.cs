@@ -306,11 +306,13 @@ namespace Rocks
 			// 5 = implemented events
 			// 6 = generated constructors
 			// 7 = base type's namespace
+			// 8 = class attributes
 			public const string ClassTemplate =
 @"{0}
 
 namespace {7}
 {{
+	{8}
 	public sealed class {1}
 		: {2}, IRock
 	{{

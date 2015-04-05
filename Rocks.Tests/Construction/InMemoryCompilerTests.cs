@@ -19,7 +19,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
 			builder.Build();
 
 			var trees = new[] { builder.Tree };

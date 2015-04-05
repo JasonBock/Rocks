@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Rocks
 {
+	[Serializable]
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
 	{

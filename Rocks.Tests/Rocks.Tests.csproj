@@ -218,6 +218,7 @@
     <Compile Include="RefAndOutTests.cs" />
     <Compile Include="ReturnValueTests.cs" />
     <Compile Include="RockTests.cs" />
+    <Compile Include="SerializationTests.cs" />
     <Compile Include="VerificationTests.cs" />
     <Compile Include="SetupFixture.cs" />
   </ItemGroup>

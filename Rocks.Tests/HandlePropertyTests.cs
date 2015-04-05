@@ -397,7 +397,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
-			var rock = Rock.Create<IProperties>(new Options(Microsoft.CodeAnalysis.OptimizationLevel.Debug, true));
+			var rock = Rock.Create<IProperties>();
 			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();

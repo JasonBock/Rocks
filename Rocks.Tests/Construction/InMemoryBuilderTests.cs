@@ -18,7 +18,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
 			builder.Build();
 
 			Assert.AreSame(baseType, builder.BaseType, nameof(builder.BaseType));
@@ -30,7 +30,7 @@ namespace Rocks.Tests.Construction
 			Assert.IsTrue(namespaces.Contains(typeof(IBuilderTest).Namespace), nameof(namespaces));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces));
 			Assert.IsTrue(namespaces.Contains(typeof(ReadOnlyDictionary<,>).Namespace), nameof(namespaces));
-			Assert.AreEqual(options.ShouldCreateCodeFile, builder.ShouldCreateCodeFile, nameof(builder.ShouldCreateCodeFile));
+			Assert.AreSame(options, builder.Options, nameof(builder.Options));
 			Assert.IsNotNull(builder.Tree, nameof(builder.Tree));
 			Assert.IsTrue(!string.IsNullOrWhiteSpace(builder.TypeName), nameof(builder.TypeName));
 		}

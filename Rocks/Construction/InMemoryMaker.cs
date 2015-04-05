@@ -14,7 +14,7 @@ namespace Rocks.Construction
 			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 		{
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options.ShouldCreateCodeFile);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
 			builder.Build();
 
 			var compiler = new InMemoryCompiler(new List<SyntaxTree> { builder.Tree }, options.Level,
