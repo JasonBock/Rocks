@@ -217,8 +217,11 @@ namespace Rocks.Construction
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties), events, 
 				string.Join(Environment.NewLine, constructors),
-				this.BaseType.Namespace, this.Options.Serialization == SerializationOptions.Supported ? 
-					"[Serializable]" : string.Empty);
+				this.BaseType.Namespace, 
+				this.Options.Serialization == SerializationOptions.Supported ? 
+					"[Serializable]" : string.Empty,
+				this.Options.Serialization == SerializationOptions.Supported ?
+					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.TypeName) : string.Empty);
 		}
 
 		private SyntaxTree MakeTree()

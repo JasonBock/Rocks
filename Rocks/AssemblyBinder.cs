@@ -11,7 +11,7 @@ namespace Rocks
 	{
 		internal AssemblyBinder()
 		{
-			this.Assemblies = new List<Assembly>();
+			this.Assemblies = new HashSet<Assembly>();
 		}
 
 		public override Type BindToType(string assemblyName, string typeName)
@@ -22,6 +22,6 @@ namespace Rocks
 					  select type).FirstOrDefault();
 		}
 
-		internal List<Assembly> Assemblies { get; set; }
+		internal HashSet<Assembly> Assemblies { get; set; }
 	}
 }

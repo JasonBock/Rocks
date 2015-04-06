@@ -11,8 +11,16 @@ namespace Rocks
 {
 	public static class Rock
 	{
-		internal static Dictionary<Type, Type> cache = new Dictionary<Type, Type>();
-		internal static object cacheLock = new object();
+		internal static AssemblyBinder Binder { get; private set; }
+		internal static Dictionary<Type, Type> Cache { get; private set; }
+		internal static object CacheLock { get; private set; }
+
+		static Rock()
+		{
+			Rock.Binder = new AssemblyBinder();
+			Rock.Cache = new Dictionary<Type, Type>();
+			Rock.CacheLock = new object();
+		}
 
 		public static Rock<T> Create<T>()
 			where T : class
@@ -1062,11 +1070,11 @@ namespace Rocks
 			var tType = typeof(T);
 			var rockType = typeof(T);
 
-			lock (Rock.cacheLock)
+			lock (Rock.CacheLock)
 			{
-				if (Rock.cache.ContainsKey(tType))
+				if (Rock.Cache.ContainsKey(tType))
 				{
-					rockType = Rock.cache[tType];
+					rockType = Rock.Cache[tType];
 				}
 				else
 				{
@@ -1074,7 +1082,12 @@ namespace Rocks
 
 					if (!tType.ContainsRefAndOrOutParameters())
 					{
-						Rock.cache.Add(tType, rockType);
+						Rock.Cache.Add(tType, rockType);
+					}
+
+					if(this.options.Serialization == SerializationOptions.Supported)
+					{
+						Rock.Binder.Assemblies.Add(rockType.Assembly);
 					}
 				}
 			}

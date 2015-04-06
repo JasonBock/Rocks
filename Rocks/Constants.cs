@@ -230,13 +230,22 @@ namespace Rocks
 	this.handlers = handlers;
 }}";
 
-			// 0 = method name
-			// 1 = comma-separate list of argument names
-			// 2 = instances of the ExpectationTemplate
-			// 3 = delegate cast
-			// 4 = out initializers
-			// 5 = method with argument values
-			public const string ActionMethodTemplate =
+			// 0 = mock type name
+			public const string ConstructorNoArgumentsTemplate =
+@"public {0}() 
+{{ 
+	this.handlers = new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
+		new System.Collections.Generic.Dictionary<string, ReadOnlyCollection<HandlerInformation>>());
+}}";
+
+
+	// 0 = method name
+	// 1 = comma-separate list of argument names
+	// 2 = instances of the ExpectationTemplate
+	// 3 = delegate cast
+	// 4 = out initializers
+	// 5 = method with argument values
+	public const string ActionMethodTemplate =
 @"public {0}
 {{
 	{4}
@@ -299,7 +308,7 @@ namespace Rocks
 }}";
 
 			// 0 = using statements
-			// 1 = mangled name
+			// 1 = mock type name
 			// 2 = base type
 			// 3 = implemented methods
 			// 4 = implemented properties
@@ -307,6 +316,7 @@ namespace Rocks
 			// 6 = generated constructors
 			// 7 = base type's namespace
 			// 8 = class attributes
+			// 9 = no-argument constructor
 			public const string ClassTemplate =
 @"{0}
 
@@ -317,6 +327,8 @@ namespace {7}
 		: {2}, IRock
 	{{
 		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
+
+		{9}
 
 		public {1}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
 		{{
