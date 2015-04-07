@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
-using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static Rocks.Extensions.MethodBaseExtensions;
+using static Rocks.Extensions.MethodInfoExtensions;
+using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction
 {
@@ -248,11 +250,11 @@ namespace Rocks.Construction
 
 		protected abstract string GetDirectoryForFile();
 
-		internal Options Options { get; private set; }
+		internal Options Options { get; }
       internal SyntaxTree Tree { get; private set; }
-		internal Type BaseType { get; private set; }
-		internal ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; private set; }
-		internal SortedSet<string> Namespaces { get; private set; }
+		internal Type BaseType { get; }
+		internal ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
+		internal SortedSet<string> Namespaces { get; }
 		internal string TypeName { get; set; }
 	}
 }

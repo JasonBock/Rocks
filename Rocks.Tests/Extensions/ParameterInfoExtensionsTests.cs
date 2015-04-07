@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Extensions;
+using static Rocks.Extensions.ParameterInfoExtensions;
 
 namespace Rocks.Tests.Extensions
 {

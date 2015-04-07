@@ -1,4 +1,4 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks
 {
 	internal enum PropertyAccessors
 	{

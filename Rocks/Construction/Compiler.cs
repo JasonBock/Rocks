@@ -63,9 +63,9 @@ namespace Rocks.Construction
 		protected virtual void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream) { }
 
 		internal Assembly Assembly { get; set; }
-		internal IEnumerable<SyntaxTree> Trees { get; private set; }
-		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; private set; }
-		internal OptimizationLevel Level { get; private set; }
-		internal string AssemblyName { get; private set; }
+		internal IEnumerable<SyntaxTree> Trees { get; }
+		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; }
+		internal OptimizationLevel Level { get; }
+		internal string AssemblyName { get; }
 	}
 }

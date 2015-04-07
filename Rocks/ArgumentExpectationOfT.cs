@@ -48,36 +48,27 @@ namespace Rocks
 			{
 				if (this.IsValue)
 				{
-					if(!ObjectEquality.AreEqual(this.Value, value))
-					{
-						isValid = false;
-               }
+					isValid = ObjectEquality.AreEqual(this.Value, value);
 				}
 				else if (this.IsExpression)
 				{
-					if(!ObjectEquality.AreEqual(((T)this.Expression.DynamicInvoke()), value))
-					{
-						isValid = false;
-					}
+					isValid = ObjectEquality.AreEqual(((T)this.Expression.DynamicInvoke()), value);
 				}
 				else // Must be this.IsEvaluation
 				{
-					if(!this.Evaluation(value))
-					{
-						isValid = false;
-					}
+					isValid = this.Evaluation(value);
 				}
 			}
 
 			return isValid;
       }
 
-		internal Func<T, bool> Evaluation { get; private set; }
-		internal Delegate Expression { get; private set; }
-		internal bool IsAny { get; private set; }
-		internal bool IsEvaluation { get; private set; }
-		internal bool IsExpression { get; private set; }
-		internal bool IsValue { get; private set; }
-		internal T Value { get; private set; }
+		internal Func<T, bool> Evaluation { get; }
+		internal Delegate Expression { get; }
+		internal bool IsAny { get; }
+		internal bool IsEvaluation { get; }
+		internal bool IsExpression { get; }
+		internal bool IsValue { get; }
+		internal T Value { get; }
 	}
 }

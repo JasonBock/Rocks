@@ -70,8 +70,8 @@ namespace Rocks
 			get { return this.callCount; }
 		}
 
-		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; private set; }
-		internal uint ExpectedCallCount { get; private set; }
-		public Delegate Method { get; private set; }
+		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; }
+		internal uint ExpectedCallCount { get; }
+		public Delegate Method { get; }
 	}
 }

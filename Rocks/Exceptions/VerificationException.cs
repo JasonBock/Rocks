@@ -46,6 +46,6 @@ namespace Rocks.Exceptions
 			: base(info, context)
 		{ }
 
-		public IReadOnlyList<string> Failures { get; private set; }
+		public IReadOnlyList<string> Failures { get; }
 	}
 }

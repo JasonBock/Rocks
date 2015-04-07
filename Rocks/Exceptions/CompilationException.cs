@@ -34,6 +34,6 @@ namespace Rocks.Exceptions
 			: base(info, context)
 		{ }
 
-		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
+		public ImmutableArray<Diagnostic> Diagnostics { get; }
 	}
 }

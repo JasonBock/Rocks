@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
-using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
+using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {

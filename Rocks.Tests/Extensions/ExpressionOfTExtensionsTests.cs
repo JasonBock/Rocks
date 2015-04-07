@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Extensions;
+using static Rocks.Extensions.ExpressionOfTExtensions;
 using System;
 using System.Linq.Expressions;
 

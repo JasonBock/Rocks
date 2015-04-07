@@ -8,7 +8,7 @@
 			this.Constraints = constraints;
 		}
 
-		internal string Arguments { get; private set; }
-		internal string Constraints { get; private set; }
+		internal string Arguments { get; }
+		internal string Constraints { get; }
 	}
 }

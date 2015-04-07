@@ -1,20 +1,22 @@
 ﻿using Rocks.Construction;
 using Rocks.Exceptions;
-using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using static Rocks.Extensions.ExpressionOfTExtensions;
+using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
+using static Rocks.Extensions.IRockExtensions;
+using static Rocks.Extensions.MethodCallExpressionExtensions;
+using static Rocks.Extensions.MethodInfoExtensions;
+using static Rocks.Extensions.PropertyInfoExtensions;
+using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks
 {
 	public static class Rock
 	{
-		internal static AssemblyBinder Binder { get; private set; }
-		internal static Dictionary<Type, Type> Cache { get; private set; }
-		internal static object CacheLock { get; private set; }
-
 		static Rock()
 		{
 			Rock.Binder = new AssemblyBinder();
@@ -63,6 +65,11 @@ namespace Rocks
 
 			return new CreateResult<T>(isSuccessful, result);
 		}
+
+
+		internal static AssemblyBinder Binder { get; }
+		internal static Dictionary<Type, Type> Cache { get; }
+		internal static object CacheLock { get; }
 	}
 
 	public sealed class Rock<T>

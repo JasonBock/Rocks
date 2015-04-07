@@ -9,7 +9,7 @@
 			this.Result = result;
 		}
 
-		public bool IsSuccessful { get; private set; }
-		public Rock<T> Result { get; private set; }
+		public bool IsSuccessful { get; }
+		public Rock<T> Result { get; }
 	}
 }

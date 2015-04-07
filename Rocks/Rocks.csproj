@@ -138,7 +138,7 @@
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
-    <Compile Include="Extensions\PropertyAccessors.cs" />
+    <Compile Include="PropertyAccessors.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="HandlerInformationOfT.cs" />

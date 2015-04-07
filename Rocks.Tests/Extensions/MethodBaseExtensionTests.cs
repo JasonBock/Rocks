@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Extensions;
+using static Rocks.Extensions.MethodBaseExtensions;
 using System.Collections.Generic;
 
 namespace Rocks.Tests.Extensions

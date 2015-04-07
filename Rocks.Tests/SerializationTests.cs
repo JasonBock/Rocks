@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Rocks.Extensions;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using static Rocks.Extensions.IRockExtensions;
 
 namespace Rocks.Tests
 {

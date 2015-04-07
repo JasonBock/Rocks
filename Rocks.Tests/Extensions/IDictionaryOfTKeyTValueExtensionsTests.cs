@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
-using Rocks.Extensions;
+using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
 
 namespace Rocks.Tests.Extensions
 {
