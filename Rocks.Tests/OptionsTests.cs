@@ -13,6 +13,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Release, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(4, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -22,6 +23,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Release, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(5, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -31,6 +33,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Release, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(7, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -40,6 +43,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Debug, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(0, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -49,6 +53,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Debug, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(1, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -58,6 +63,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Debug, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(2, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -67,6 +73,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Debug, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(3, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 
 		[Test]
@@ -76,6 +83,7 @@ namespace Rocks.Tests
 			Assert.AreEqual(OptimizationLevel.Release, options.Level, nameof(options.Level));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
+			Assert.AreEqual(6, options.GetHashCode(), nameof(options.GetHashCode));
 		}
 	}
 }

@@ -120,6 +120,7 @@
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
+    <Compile Include="CacheKey.cs" />
     <Compile Include="CodeFileOptions.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />

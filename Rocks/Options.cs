@@ -39,6 +39,13 @@ namespace Rocks
 			this.Serialization = serialization;
 		}
 
+		public override int GetHashCode()
+		{
+			return this.CodeFile.GetHashCode() ^ 
+				((int)this.Serialization << 1).GetHashCode() ^ 
+				((int)this.Level << 2).GetHashCode();
+		}
+
 		public CodeFileOptions CodeFile { get; }
 		public OptimizationLevel Level { get; }
 		public SerializationOptions Serialization { get; }

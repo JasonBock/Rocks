@@ -17,13 +17,6 @@ namespace Rocks
 {
 	public static class Rock
 	{
-		static Rock()
-		{
-			Rock.Binder = new AssemblyBinder();
-			Rock.Cache = new Dictionary<Type, Type>();
-			Rock.CacheLock = new object();
-		}
-
 		public static Rock<T> Create<T>()
 			where T : class
 		{
@@ -67,10 +60,10 @@ namespace Rocks
 		}
 
 
-		internal static AssemblyBinder Binder { get; }
-		internal static Dictionary<Type, Type> Cache { get; }
-		internal static object CacheLock { get; }
-	}
+		internal static AssemblyBinder Binder { get; } = new AssemblyBinder();
+      internal static Dictionary<CacheKey, Type> Cache { get; } = new Dictionary<CacheKey, Type>();
+      internal static object CacheLock { get; } = new object();
+   }
 
 	public sealed class Rock<T>
 		where T : class
@@ -1075,13 +1068,14 @@ namespace Rocks
 		private Type GetMockType(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> readOnlyHandlers)
 		{
 			var tType = typeof(T);
-			var rockType = typeof(T);
+			var rockType = default(Type);
+			var key = new CacheKey(tType, this.options);
 
 			lock (Rock.CacheLock)
 			{
-				if (Rock.Cache.ContainsKey(tType))
+				if (Rock.Cache.ContainsKey(key))
 				{
-					rockType = Rock.Cache[tType];
+					rockType = Rock.Cache[key];
 				}
 				else
 				{
@@ -1089,7 +1083,7 @@ namespace Rocks
 
 					if (!tType.ContainsRefAndOrOutParameters())
 					{
-						Rock.Cache.Add(tType, rockType);
+						Rock.Cache.Add(key, rockType);
 					}
 
 					if(this.options.Serialization == SerializationOptions.Supported)

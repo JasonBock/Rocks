@@ -87,6 +87,40 @@ namespace Rocks.Tests
 
 			secondRock.Verify();
 		}
+
+		[Test]
+		public void RemakeWithSameOptions()
+		{
+			var rock = Rock.Create<ISameRemake>(new Options(SerializationOptions.Supported));
+			var chunk = rock.Make();
+
+			var secondRock = Rock.Create<ISameRemake>(new Options(SerializationOptions.Supported));
+			var secondChunk = secondRock.Make();
+
+			Assert.AreEqual(chunk.GetType(), secondChunk.GetType());
+		}
+
+		[Test]
+		public void RemakeWithDifferentOptions()
+		{
+			var rock = Rock.Create<IDifferentRemake>(new Options(SerializationOptions.NotSupported));
+			var chunk = rock.Make();
+
+			var secondRock = Rock.Create<IDifferentRemake>(new Options(SerializationOptions.Supported));
+			var secondChunk = secondRock.Make();
+
+			Assert.AreNotEqual(chunk.GetType(), secondChunk.GetType());
+		}
+	}
+
+	public interface ISameRemake
+	{
+		void Target();
+	}
+
+	public interface IDifferentRemake
+	{
+		void Target();
 	}
 
 	public interface IRockTests
