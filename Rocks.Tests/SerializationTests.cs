@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using Rocks.Exceptions;
+using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -33,7 +35,7 @@ namespace Rocks.Tests
 			(newChunk as IRock).Verify();
       }
 
-		[Test, Ignore("Dictionary doesn't serialize with XmlSerializer by default.")]
+		[Test]
 		public void RoundtripWithXml()
 		{
 			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
@@ -51,8 +53,8 @@ namespace Rocks.Tests
 				newChunk = serializer.Deserialize(stream) as IAmSerializable;
 			}
 
-			newChunk.Target("44");
-			(newChunk as IRock).Verify();
+			// Shows that the dictionary of handlers doesn't get serialized.
+			Assert.Throws<NotImplementedException>(() => newChunk.Target("44"));
 		}
 
 		[Test]
