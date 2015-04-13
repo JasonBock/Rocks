@@ -29,9 +29,9 @@ namespace Rocks.Tests.Construction
 
 			Assert.AreEqual(options.Level, compiler.Level, nameof(compiler.Level));
 			Assert.AreSame(trees, compiler.Trees, nameof(compiler.Trees));
-			Assert.IsNotNull(compiler.Assembly, nameof(compiler.Assembly));
+			Assert.IsNotNull(compiler.Result, nameof(compiler.Result));
 			Assert.IsNotNull(
-				(from type in compiler.Assembly.GetTypes()
+				(from type in compiler.Result.GetTypes()
 				where baseType.IsAssignableFrom(type)
 				select type).Single());
 		}

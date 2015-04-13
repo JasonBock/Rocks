@@ -1,6 +1,7 @@
 ﻿using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 
@@ -71,7 +72,7 @@ namespace Rocks.Extensions
 
 		internal static string Validate(this Type @this)
 		{
-			if (@this.IsSealed)
+			if (@this.IsSealed && @this.GetConstructor(new[] { typeof(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>) }) == null)
 			{
 				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.GetSafeName());
 			}
@@ -107,9 +108,16 @@ namespace Rocks.Extensions
 			}
 			else
 			{
-				return !string.IsNullOrWhiteSpace(@this.FullName) ?
-					@this.FullName.Split('.').Last().Replace("+", ".") :
-					@this.Name;
+				var name = (!string.IsNullOrWhiteSpace(@this.FullName) ?
+					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+					@this.Name);
+
+				if(@this.IsGenericTypeDefinition)
+				{
+					name = $"{name}<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
+				}
+
+				return name;
 			}
 		}
 

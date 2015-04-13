@@ -34,15 +34,16 @@ namespace Rocks.Construction
 		private List<string> GetGeneratedConstructors()
 		{
 			var generatedConstructors = new List<string>();
+			var constructorName = this.GetConstructorName();
 
-			foreach (var constructor in this.BaseType.GetConstructors(Constants.Reflection.PublicInstance))
+         foreach (var constructor in this.BaseType.GetConstructors(Constants.Reflection.PublicInstance))
 			{
 				var parameters = constructor.GetParameters();
 
 				if (parameters.Length > 0)
 				{
 					generatedConstructors.Add(string.Format(Constants.CodeTemplates.ConstructorTemplate,
-						this.TypeName, constructor.GetArgumentNameList(), constructor.GetParameters(this.Namespaces)));
+						constructorName, constructor.GetArgumentNameList(), constructor.GetParameters(this.Namespaces)));
 				}
 			}
 
@@ -197,6 +198,8 @@ namespace Rocks.Construction
 			return generatedProperties;
 		}
 
+		private string GetConstructorName() => this.TypeName.Split('<').First();
+
 		private string MakeCode()
 		{
 			var methods = this.GetGeneratedMethods();
@@ -206,7 +209,7 @@ namespace Rocks.Construction
 
 			this.Namespaces.Add(this.BaseType.Namespace);
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
-			this.Namespaces.Add(typeof(IRock).Namespace);
+			this.Namespaces.Add(typeof(IMock).Namespace);
 			this.Namespaces.Add(typeof(HandlerInformation).Namespace);
 			this.Namespaces.Add(typeof(string).Namespace);
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
@@ -223,7 +226,8 @@ namespace Rocks.Construction
 				this.Options.Serialization == SerializationOptions.Supported ? 
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
-					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.TypeName) : string.Empty);
+					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.GetConstructorName()) : string.Empty, 
+				this.GetConstructorName());
 		}
 
 		private SyntaxTree MakeTree()
@@ -233,7 +237,9 @@ namespace Rocks.Construction
 
 			if (this.Options.CodeFile == CodeFileOptions.Create)
 			{
-				var fileName = Path.Combine(this.GetDirectoryForFile(), $"{this.TypeName}.cs");
+				Directory.CreateDirectory(this.GetDirectoryForFile());
+				var fileName = Path.Combine(this.GetDirectoryForFile(), 
+					$"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty)}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)
 						.GetCompilationUnitRoot().NormalizeWhitespace(),

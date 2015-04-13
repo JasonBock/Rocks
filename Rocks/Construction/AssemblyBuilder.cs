@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction
 {
@@ -13,7 +14,7 @@ namespace Rocks.Construction
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options)
 		{
-			this.TypeName = $"Rock{baseType.Name}";
+			this.TypeName = $"Rock{baseType.GetSafeName()}";
 		}
 
 		protected override string GetDirectoryForFile()

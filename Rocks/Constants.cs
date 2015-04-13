@@ -317,6 +317,7 @@ namespace Rocks
 			// 7 = base type's namespace
 			// 8 = class attributes
 			// 9 = no-argument constructor
+			// 10 = constructor name
 			public const string ClassTemplate =
 @"{0}
 
@@ -324,13 +325,13 @@ namespace {7}
 {{
 	{8}
 	public sealed class {1}
-		: {2}, IRock
+		: {2}, IMock
 	{{
 		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
 
 		{9}
 
-		public {1}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
+		public {10}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
 		{{
 			this.handlers = handlers;
 		}}
@@ -343,7 +344,7 @@ namespace {7}
 
 		{5}
 
-		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IRock.Handlers
+		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
 		{{
 			get {{ return this.handlers; }}
 		}}

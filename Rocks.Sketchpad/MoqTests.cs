@@ -19,8 +19,15 @@ namespace Rocks.Sketchpad
 		}
 	}
 
+	public class Nothing { }
+
 	public interface IMoq
 	{
 		void Foo(string a, object b);
+	}
+
+	public interface ITarget<T>
+	{
+		void Foo(T a);
 	}
 }

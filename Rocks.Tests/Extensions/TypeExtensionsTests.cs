@@ -158,6 +158,30 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetSafeNameWithOpenGenerics()
+		{
+			Assert.AreEqual("IHaveGenerics<T>", typeof(IHaveGenerics<>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameWithClosedGenerics()
+		{
+			Assert.AreEqual("IHaveGenerics", typeof(IHaveGenerics<string>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameWithNestedOpenGenerics()
+		{
+			Assert.AreEqual("NestedGenerics.IHaveGenerics<T>", typeof(NestedGenerics.IHaveGenerics<>).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameWithNestedClosedGenerics()
+		{
+			Assert.AreEqual("NestedGenerics.IHaveGenerics", typeof(NestedGenerics.IHaveGenerics<string>).GetSafeName());
+		}
+
+		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments()
 		{
 			Assert.AreEqual("RefTargetWithoutGeneric",
@@ -282,6 +306,13 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 		public delegate void RefTargetWithoutGeneric(ref Guid a);
 		public delegate void RefTargetWithGeneric<T>(ref T a);
 	}
+
+	public class NestedGenerics
+	{
+		public interface IHaveGenerics<T> { }
+	}
+
+	public interface IHaveGenerics<T> { }
 
 	public interface IMapToDelegates
 	{

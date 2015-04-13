@@ -21,7 +21,7 @@ namespace Rocks.Construction
 				new List<Assembly> { baseType.Assembly }.AsReadOnly());
 			compiler.Compile();
 
-			this.Mock = compiler.Assembly.GetType($"{baseType.Namespace}.{builder.TypeName}");
+			this.Mock = compiler.Result.GetType($"{baseType.Namespace}.{builder.TypeName}");
 		}
 	}
 }

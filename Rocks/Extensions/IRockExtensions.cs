@@ -6,7 +6,7 @@ namespace Rocks.Extensions
 {
 	public static class IRockExtensions
 	{
-		internal static ReadOnlyCollection<string> GetVerificationFailures(this IRock @this)
+		internal static ReadOnlyCollection<string> GetVerificationFailures(this IMock @this)
 		{
 			var failures = new List<string>();
 
@@ -25,7 +25,7 @@ namespace Rocks.Extensions
 			return failures.AsReadOnly();
 		}
 
-		public static void Verify(this IRock @this)
+		public static void Verify(this IMock @this)
 		{
 			var failures = @this.GetVerificationFailures();
 

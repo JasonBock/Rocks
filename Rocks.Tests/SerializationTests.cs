@@ -32,7 +32,7 @@ namespace Rocks.Tests
 			}
 
 			newChunk.Target("44");
-			(newChunk as IRock).Verify();
+			(newChunk as IMock).Verify();
       }
 
 		[Test]
@@ -77,7 +77,7 @@ namespace Rocks.Tests
 			}
 
 			newChunk.Target("44");
-			(newChunk as IRock).Verify();
+			(newChunk as IMock).Verify();
 		}
 
 		[Test]

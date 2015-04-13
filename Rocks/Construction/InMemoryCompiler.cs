@@ -3,11 +3,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
+using System;
 
 namespace Rocks.Construction
 {
 	internal sealed class InMemoryCompiler
-		: Compiler
+		: Compiler<MemoryStream>
 	{
 		private static string DefaultAssemblyName = "RockQuarry";
 
@@ -31,7 +32,7 @@ namespace Rocks.Construction
 
 		protected override void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream)
 		{
-			this.Assembly = Assembly.Load(assemblyStream.GetBuffer(), pdbStream.GetBuffer());
+			this.Result = Assembly.Load(assemblyStream.GetBuffer(), pdbStream.GetBuffer());
 		}
 	}
 }

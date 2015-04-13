@@ -10,7 +10,8 @@ using System.Reflection;
 
 namespace Rocks.Construction
 {
-	internal abstract class Compiler
+	internal abstract class Compiler<T>
+		where T : Stream
 	{
 		protected Compiler(IEnumerable<SyntaxTree> trees, OptimizationLevel level, string assemblyName,
 			ReadOnlyCollection<Assembly> referencedAssemblies)
@@ -30,7 +31,7 @@ namespace Rocks.Construction
 				syntaxTrees: this.Trees,
 				references: this.GetReferences());
 
-			using (MemoryStream assemblyStream = this.GetAssemblyStream(),
+			using (T assemblyStream = this.GetAssemblyStream(),
 				pdbStream = this.GetPdbStream())
 			{
 				var results = compilation.Emit(assemblyStream,
@@ -52,20 +53,20 @@ namespace Rocks.Construction
 			references.AddRange(new[]
 				{
 					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
-					MetadataReference.CreateFromAssembly(typeof(IRock).Assembly),
+					MetadataReference.CreateFromAssembly(typeof(IMock).Assembly),
 					MetadataReference.CreateFromAssembly(typeof(Action<,,,,,,,,>).Assembly),
 				});
 			return references.ToArray();
 		}
 
-		protected abstract MemoryStream GetAssemblyStream();
-		protected abstract MemoryStream GetPdbStream();
-		protected virtual void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream) { }
+		protected abstract T GetAssemblyStream();
+		protected abstract T GetPdbStream();
+		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }
 
-		internal Assembly Assembly { get; set; }
+		internal string AssemblyName { get; }
+		internal OptimizationLevel Level { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }
 		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; }
-		internal OptimizationLevel Level { get; }
-		internal string AssemblyName { get; }
+		internal Assembly Result { get; set; }
 	}
 }

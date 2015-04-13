@@ -120,6 +120,7 @@
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
+    <Compile Include="AssemblyRock.cs" />
     <Compile Include="CacheKey.cs" />
     <Compile Include="CodeFileOptions.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
@@ -139,6 +140,10 @@
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
+    <Compile Include="InMemoryRock.cs" />
+    <Compile Include="RockAssembly.cs" />
+    <Compile Include="RockCore.cs" />
+    <Compile Include="IRock.cs" />
     <Compile Include="PropertyAccessors.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
@@ -146,7 +151,7 @@
     <Compile Include="HandlerInformation.cs" />
     <Compile Include="Construction\InMemoryBuilder.cs" />
     <Compile Include="Construction\InMemoryCompiler.cs" />
-    <Compile Include="IRock.cs" />
+    <Compile Include="IMock.cs" />
     <Compile Include="ObjectEquality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnValue.cs" />

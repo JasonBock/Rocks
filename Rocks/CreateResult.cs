@@ -3,13 +3,13 @@
 	public sealed class CreateResult<T>
 		where T : class
 	{
-		internal CreateResult(bool isSuccessful, Rock<T> result)
+		internal CreateResult(bool isSuccessful, IRock<T> result)
 		{
 			this.IsSuccessful = isSuccessful;
 			this.Result = result;
 		}
 
 		public bool IsSuccessful { get; }
-		public Rock<T> Result { get; }
+		public IRock<T> Result { get; }
 	}
 }
