@@ -44,6 +44,8 @@ namespace Rocks.Construction
 
 				this.ProcessStreams(assemblyStream, pdbStream);
 			}
+
+			this.Complete();
 		}
 
 		private MetadataReference[] GetReferences()
@@ -62,6 +64,7 @@ namespace Rocks.Construction
 		protected abstract T GetAssemblyStream();
 		protected abstract T GetPdbStream();
 		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }
+		protected virtual void Complete() { }
 
 		internal string AssemblyName { get; }
 		internal OptimizationLevel Level { get; }

@@ -226,6 +226,10 @@
     <Compile Include="SetupFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj">
+      <Project>{7053f013-0ec4-43fa-8248-f5f368b32ae2}</Project>
+      <Name>Rocks.RockAssemblyTestContainer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rocks\Rocks.csproj">
       <Project>{b6e15a91-620a-4e5f-9e66-8ca4f1cb05d9}</Project>
       <Name>Rocks</Name>

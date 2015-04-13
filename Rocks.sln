@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22512.0
+VisualStudioVersion = 14.0.22609.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks", "Rocks\Rocks.csproj", "{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9AE9E8
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{7053F013-0EC4-43FA-8248-F5F368B32AE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
