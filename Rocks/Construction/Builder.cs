@@ -57,63 +57,87 @@ namespace Rocks.Construction
 			foreach (var baseMethod in this.BaseType.GetMethods(Constants.Reflection.PublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual))
 			{
-				var methodDescription = baseMethod.GetMethodDescription(this.Namespaces);
-				var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
+				var methodDescription = this.GetMethodDescription(baseMethod);
 
 				// Either the base method contains no refs/outs, or the user specified a delegate
 				// to use to handle that method (remember, types with methods with refs/outs are gen'd
 				// each time, and that's the only reason the handlers are passed in.
-				if (!containsRefAndOrOutParameters || this.Handlers.ContainsKey(methodDescription))
+				if (!methodDescription.ContainsRefAndOrOutParameters || !string.IsNullOrWhiteSpace(methodDescription.DelegateCast))
 				{
-					var delegateCast = !containsRefAndOrOutParameters ?
-						baseMethod.GetDelegateCast() :
-						this.Handlers[methodDescription][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces);
 					var argumentNameList = baseMethod.GetArgumentNameList();
-					var outInitializers = !containsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
+					var outInitializers = !methodDescription.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-					if(!containsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
+					if(!methodDescription.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
 					{
-						var expectationChecks = baseMethod.GetExpectationChecks();
-						var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
-
-						if (baseMethod.ReturnType != typeof(void))
-						{
-							generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
-								(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-									Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
-									Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-								methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage));
-						}
-						else
-						{
-							generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-								methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage));
-						}
+						generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
+							baseMethod, methodDescription.Description, methodDescription.DelegateCast, argumentNameList, outInitializers));
 					}
 					else
 					{
-						if (baseMethod.ReturnType != typeof(void))
+						generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
+							baseMethod, methodDescription.Description, methodDescription.DelegateCast, argumentNameList, outInitializers));
+
+						if(methodDescription.ContainsRefAndOrOutParameters)
 						{
-							generatedMethods.Add(string.Format(baseMethod.ReturnType.IsValueType ||
-								(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-									Constants.CodeTemplates.FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate :
-									Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate,
-								methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers));
-						}
-						else
-						{
-							generatedMethods.Add(string.Format(Constants.CodeTemplates.ActionMethodWithNoArgumentsTemplate,
-								methodDescription, argumentNameList, delegateCast, outInitializers));
+							this.HandleRefOutMethod(baseMethod, methodDescription.Description, methodDescription.DelegateCast);
 						}
 					}
 				}
 				else
 				{
-					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodDescription));
+					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodDescription.Description));
 				}
 			}
 
 			return generatedMethods;
+		}
+
+		protected class MethodDescription
+		{
+			public bool ContainsRefAndOrOutParameters { get; set; }
+			public string DelegateCast { get; set; }
+			public string Description { get; set; }
+      }
+
+		protected abstract MethodDescription GetMethodDescription(MethodInfo baseMethod);
+
+		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers)
+		{
+			var expectationChecks = baseMethod.GetExpectationChecks();
+			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
+
+			if (baseMethod.ReturnType != typeof(void))
+			{
+				return string.Format(baseMethod.ReturnType.IsValueType ||
+					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+						Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
+						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
+					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage);
+			}
+			else
+			{
+				return string.Format(Constants.CodeTemplates.ActionMethodTemplate,
+					methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage);
+			}
+		}
+
+		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, string methodDescription, string delegateCast) { }
+
+		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers)
+		{
+			if (baseMethod.ReturnType != typeof(void))
+			{
+				return string.Format(baseMethod.ReturnType.IsValueType ||
+					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+						Constants.CodeTemplates.FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate :
+						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate,
+					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers);
+			}
+			else
+			{
+				return string.Format(Constants.CodeTemplates.ActionMethodWithNoArgumentsTemplate,
+					methodDescription, argumentNameList, delegateCast, outInitializers);
+			}
 		}
 
 		private List<string> GetGeneratedProperties()
@@ -227,7 +251,7 @@ namespace Rocks.Construction
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
 					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.GetConstructorName()) : string.Empty, 
-				this.GetConstructorName());
+				this.GetConstructorName(), this.GetAdditionNamespaceCode());
 		}
 
 		private SyntaxTree MakeTree()
@@ -255,6 +279,7 @@ namespace Rocks.Construction
 		}
 
 		protected abstract string GetDirectoryForFile();
+		protected virtual string GetAdditionNamespaceCode() => string.Empty;
 
 		internal Options Options { get; }
       internal SyntaxTree Tree { get; private set; }

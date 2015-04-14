@@ -318,6 +318,7 @@ namespace Rocks
 			// 8 = class attributes
 			// 9 = no-argument constructor
 			// 10 = constructor name
+			// 11 = additional code within the namespace
 			public const string ClassTemplate =
 @"{0}
 
@@ -349,6 +350,8 @@ namespace {7}
 			get {{ return this.handlers; }}
 		}}
 	}}
+
+	{11}
 }}";
 			// 0 = method name
 			// 1 = comma-separate list of argument names

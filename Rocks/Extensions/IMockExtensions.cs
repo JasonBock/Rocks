@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Extensions
 {
-	public static class IRockExtensions
+	public static class IMockExtensions
 	{
 		internal static ReadOnlyCollection<string> GetVerificationFailures(this IMock @this)
 		{

@@ -50,6 +50,7 @@
     <Compile Include="Delegates.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
+    <Compile Include="InAndOut.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="MoqTests.cs" />
     <Compile Include="NestedClasses.cs" />

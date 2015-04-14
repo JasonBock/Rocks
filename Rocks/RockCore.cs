@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using static Rocks.Extensions.ExpressionOfTExtensions;
 using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
-using static Rocks.Extensions.IRockExtensions;
+using static Rocks.Extensions.IMockExtensions;
 using static Rocks.Extensions.MethodCallExpressionExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.PropertyInfoExtensions;

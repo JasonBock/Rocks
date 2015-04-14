@@ -23,7 +23,7 @@ namespace Rocks
 				throw new ValidationException(message);
 			}
 
-			return new InMemoryRock<T>(options);
+			return Rock.NewRock<T>(options);
 		}
 
 		private static IRock<T> NewRock<T>(Options options)
@@ -44,14 +44,14 @@ namespace Rocks
 		public static CreateResult<T> TryCreate<T>(Options options)
 			where T : class
 		{
-			var result = default(RockCore<T>);
+			var result = default(IRock<T>);
 			var isSuccessful = false;
 
 			var message = typeof(T).Validate();
 
 			if (string.IsNullOrWhiteSpace(message))
 			{
-				result = new InMemoryRock<T>(options);
+				result = Rock.NewRock<T>(options);
 				isSuccessful = true;
 			}
 

@@ -5,7 +5,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
-using static Rocks.Extensions.IRockExtensions;
+using static Rocks.Extensions.IMockExtensions;
 
 namespace Rocks.Tests
 {
