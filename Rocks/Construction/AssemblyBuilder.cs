@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
@@ -39,7 +40,7 @@ namespace Rocks.Construction
          }
 			else
 			{
-				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{baseMethod.MethodHandle.Value.ToInt32()}Delegate";
+				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate";
 				delegateCast = delegateName;
 				this.generatedDelegates.Add(string.Format(Constants.CodeTemplates.AssemblyDelegateTemplate,
 					baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
@@ -53,6 +54,14 @@ namespace Rocks.Construction
 				DelegateCast = delegateCast,
 				Description = description
 			};
+		}
+
+		private string GetMethodIdentifier(MethodInfo baseMethod)
+		{
+			var methodCount = this.BaseType.GetMethods(Constants.Reflection.PublicInstance)
+				.Where(_ => _.Name == baseMethod.Name && !_.IsSpecialName && _.IsVirtual).Count();
+
+			return methodCount > 1 ? baseMethod.MethodHandle.Value.ToString() : string.Empty;
 		}
 
 		protected override string GetAdditionNamespaceCode()
