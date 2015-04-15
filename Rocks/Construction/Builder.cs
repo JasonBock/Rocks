@@ -34,7 +34,7 @@ namespace Rocks.Construction
 		private List<string> GetGeneratedConstructors()
 		{
 			var generatedConstructors = new List<string>();
-			var constructorName = this.GetConstructorName();
+			var constructorName = this.GetTypeNameWithNoGenerics();
 
          foreach (var constructor in this.BaseType.GetConstructors(Constants.Reflection.PublicInstance))
 			{
@@ -79,7 +79,7 @@ namespace Rocks.Construction
 
 						if(methodDescription.ContainsRefAndOrOutParameters)
 						{
-							this.HandleRefOutMethod(baseMethod, methodDescription.Description, methodDescription.DelegateCast);
+							this.HandleRefOutMethod(baseMethod, methodDescription);
 						}
 					}
 				}
@@ -121,7 +121,7 @@ namespace Rocks.Construction
 			}
 		}
 
-		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, string methodDescription, string delegateCast) { }
+		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodDescription methodDescription) { }
 
 		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers)
 		{
@@ -222,7 +222,7 @@ namespace Rocks.Construction
 			return generatedProperties;
 		}
 
-		private string GetConstructorName() => this.TypeName.Split('<').First();
+		protected string GetTypeNameWithNoGenerics() => this.TypeName.Split('<').First();
 
 		private string MakeCode()
 		{
@@ -250,8 +250,8 @@ namespace Rocks.Construction
 				this.Options.Serialization == SerializationOptions.Supported ? 
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
-					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.GetConstructorName()) : string.Empty, 
-				this.GetConstructorName(), this.GetAdditionNamespaceCode());
+					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.GetTypeNameWithNoGenerics()) : string.Empty, 
+				this.GetTypeNameWithNoGenerics(), this.GetAdditionNamespaceCode());
 		}
 
 		private SyntaxTree MakeTree()

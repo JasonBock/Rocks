@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.TypeExtensions;
 
@@ -11,7 +12,6 @@ namespace Rocks.Construction
 	internal sealed class AssemblyBuilder
 		: Builder
 	{
-		//public delegate string MyDelegate(string a);
 		private readonly List<string> generatedDelegates = new List<string>();
 
 		internal AssemblyBuilder(Type baseType,
@@ -31,12 +31,21 @@ namespace Rocks.Construction
 		{
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
-			// TODO: Need to change what the name of the delegate is here
-			// and stuff it into generatedDelegates;
-			var delegateCast = !containsRefAndOrOutParameters ?
-				baseMethod.GetDelegateCast() :
-				(this.Handlers.ContainsKey(description) ?
-					this.Handlers[description][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces) : string.Empty);
+			string delegateCast = null;
+
+			if(!containsRefAndOrOutParameters)
+			{
+				delegateCast = baseMethod.GetDelegateCast();
+         }
+			else
+			{
+				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{baseMethod.MethodHandle.Value.ToInt32()}Delegate";
+				delegateCast = delegateName;
+				this.generatedDelegates.Add(string.Format(Constants.CodeTemplates.AssemblyDelegateTemplate,
+					baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
+					delegateName,
+					baseMethod.GetParameters(this.Namespaces)));
+			}
 
 			return new MethodDescription
 			{
@@ -51,9 +60,9 @@ namespace Rocks.Construction
 			return string.Join(Environment.NewLine, this.generatedDelegates);
 		}
 
-		protected override void HandleRefOutMethod(MethodInfo baseMethod, string methodDescription, string delegateCast)
+		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodDescription methodDescription)
 		{
-			base.HandleRefOutMethod(baseMethod, methodDescription, delegateCast);
+			base.HandleRefOutMethod(baseMethod, methodDescription);
 		}
 	}
 }

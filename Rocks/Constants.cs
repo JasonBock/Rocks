@@ -24,6 +24,10 @@ namespace Rocks
 
 		public static class CodeTemplates
 		{
+			// 0 = return type
+			// 1 = delegate name
+			// 2 = arguments
+			public const string AssemblyDelegateTemplate = "public delegate {0} {1}({2});";
 			// 0 = type
 			// 1 = name
 			// 2 = get and/or set
