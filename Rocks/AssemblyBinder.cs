@@ -17,6 +17,7 @@ namespace Rocks
 		public override Type BindToType(string assemblyName, string typeName)
 		{
 			return (from assembly in this.Assemblies
+					  where assembly.FullName == assemblyName
 					  let type = assembly.GetType(typeName)
 					  where type != null
 					  select type).FirstOrDefault();

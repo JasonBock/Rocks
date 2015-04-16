@@ -49,8 +49,10 @@ namespace Rocks.Tests
 				method4DelegateType, this,
 				this.GetType().GetMethod(nameof(RockAssemblyTests.Method4))));
 
+			var method5DelegateType = this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}_{nameof(Class1.Method5)}Delegate`1").MakeGenericType(b.GetType());
 			rock.HandleDelegate(_ => _.Method5("a", ref b), Delegate.CreateDelegate(
 				method5DelegateType, this,
+				this.GetType().GetMethod(nameof(RockAssemblyTests.Method5)).MakeGenericMethod(b.GetType())));
 
 			var handlers = rock.GetType().GetMethod("CreateReadOnlyHandlerDictionary", BindingFlags.Instance | BindingFlags.NonPublic)
 				.Invoke(rock, null) as ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>;
