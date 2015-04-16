@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Sketchpad", "Rocks.Sk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{7053F013-0EC4-43FA-8248-F5F368B32AE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task", "Rocks.Task\Rocks.Task.csproj", "{66D83481-D2BC-42E8-9624-C5E07AE41EFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task.Tests", "Rocks.Task.Tests\Rocks.Task.Tests.csproj", "{1954133D-967B-4C80-9E8E-92F07568FD7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7053F013-0EC4-43FA-8248-F5F368B32AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1954133D-967B-4C80-9E8E-92F07568FD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1954133D-967B-4C80-9E8E-92F07568FD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1954133D-967B-4C80-9E8E-92F07568FD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1954133D-967B-4C80-9E8E-92F07568FD7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
