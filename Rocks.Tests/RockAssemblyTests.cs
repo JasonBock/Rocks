@@ -49,15 +49,20 @@ namespace Rocks.Tests
 				method4DelegateType, this,
 				this.GetType().GetMethod(nameof(RockAssemblyTests.Method4))));
 
+			rock.HandleDelegate(_ => _.Method5("a", ref b), Delegate.CreateDelegate(
+				method5DelegateType, this,
+
 			var handlers = rock.GetType().GetMethod("CreateReadOnlyHandlerDictionary", BindingFlags.Instance | BindingFlags.NonPublic)
 				.Invoke(rock, null) as ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>;
          var mock = Activator.CreateInstance(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"), handlers) as Class1;
 
 			mock.Method1();
 			mock.Method4("a", ref b);
+			mock.Method5("a", ref b);
 
 			Assert.AreEqual(0, (mock as IMock).GetVerificationFailures().Count);
 			Assert.IsTrue(this.wasMethod4DelegateCalled);
+			Assert.IsTrue(this.wasMethod5DelegateCalled);
 		}
 
 		public Guid Method4(string a, ref int b)
@@ -66,6 +71,13 @@ namespace Rocks.Tests
 			return default(Guid);
 		}
 
+		public Guid Method5<U>(string a, ref U b)
+		{
+			this.wasMethod5DelegateCalled = true;
+			return default(Guid);
+		}
+
 		private bool wasMethod4DelegateCalled;
+		private bool wasMethod5DelegateCalled;
 	}
 }

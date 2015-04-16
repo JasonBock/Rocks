@@ -40,7 +40,7 @@ namespace Rocks.Construction
          }
 			else
 			{
-				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate";
+				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 				delegateCast = delegateName;
 				this.generatedDelegates.Add(string.Format(Constants.CodeTemplates.AssemblyDelegateTemplate,
 					baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
