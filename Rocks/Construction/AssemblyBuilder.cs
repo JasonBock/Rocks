@@ -28,9 +28,10 @@ namespace Rocks.Construction
 			return Path.Combine(Directory.GetCurrentDirectory(), this.BaseType.Namespace.Replace(".", "\\"));
 		}
 
-		protected override MethodDescription GetMethodDescription(MethodInfo baseMethod)
+		protected override MethodInformation GetMethodInformation(MethodInfo baseMethod)
 		{
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
+			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true);
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 			string delegateCast = null;
 
@@ -48,11 +49,12 @@ namespace Rocks.Construction
 					baseMethod.GetParameters(this.Namespaces)));
 			}
 
-			return new MethodDescription
+			return new MethodInformation
 			{
 				ContainsRefAndOrOutParameters = containsRefAndOrOutParameters,
 				DelegateCast = delegateCast,
-				Description = description
+				Description = description,
+				DescriptionWithOverride = descriptionWithOverride
 			};
 		}
 
@@ -69,7 +71,7 @@ namespace Rocks.Construction
 			return string.Join(Environment.NewLine, this.generatedDelegates);
 		}
 
-		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodDescription methodDescription)
+		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription)
 		{
 			base.HandleRefOutMethod(baseMethod, methodDescription);
 		}

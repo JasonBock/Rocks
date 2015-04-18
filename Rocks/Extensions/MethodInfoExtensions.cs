@@ -46,8 +46,12 @@ namespace Rocks.Extensions
 				@this.GetParameters().Select(_ =>
 					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.GetSafeName())));
 		}
-
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
+		{
+			return @this.GetMethodDescription(namespaces, false);
+		}
+
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
 		{
 			if(@this.IsGenericMethod)
 			{
@@ -56,7 +60,7 @@ namespace Rocks.Extensions
 
 			namespaces.Add(@this.ReturnType.Namespace);
 
-			var isOverride = @this.DeclaringType.IsClass ? "override " : string.Empty;
+			var isOverride = includeOverride ? ( @this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
 				"void" :  @this.ReturnType.GetSafeName();
 

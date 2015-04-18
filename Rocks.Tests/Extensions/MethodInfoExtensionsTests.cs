@@ -94,7 +94,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-         Assert.AreEqual("override void TargetWithArguments(Int32 a, String c)", description, nameof(description));
+         Assert.AreEqual("void TargetWithArguments(Int32 a, String c)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
@@ -116,7 +116,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithOutArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override void TargetWithOutArgument(out Int32 a)", description, nameof(description));
+			Assert.AreEqual("void TargetWithOutArgument(out Int32 a)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
@@ -127,7 +127,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithParamsArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override void TargetWithParamsArgument(params Int32[] a)", description, nameof(description));
+			Assert.AreEqual("void TargetWithParamsArgument(params Int32[] a)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
@@ -138,7 +138,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithRefArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override void TargetWithRefArgument(ref Int32 a)", description, nameof(description));
+			Assert.AreEqual("void TargetWithRefArgument(ref Int32 a)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
@@ -149,7 +149,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override Int32 TargetWithArgumentsAndReturnValue(Int32 a, String c)", description, nameof(description));
+			Assert.AreEqual("Int32 TargetWithArgumentsAndReturnValue(Int32 a, String c)", description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 		}
@@ -160,7 +160,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override U TargetWithGenericsAndReturnValue<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
+			Assert.AreEqual("U TargetWithGenericsAndReturnValue<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
@@ -172,7 +172,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue)).MakeGenericMethod(typeof(Guid), typeof(double));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override U TargetWithGenericsAndReturnValue<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
+			Assert.AreEqual("U TargetWithGenericsAndReturnValue<U, V>(Int32 a, U b, String c, V d)", description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
 			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
@@ -184,7 +184,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArrayArguments));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override void TargetWithArrayArguments(Int32[] a, String[] b, ref Guid[] c, out Double[] d)",
+			Assert.AreEqual("void TargetWithArrayArguments(Int32[] a, String[] b, ref Guid[] c, out Double[] d)",
 				description, nameof(description));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
@@ -196,7 +196,7 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithMultipleConstraints));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.AreEqual("override void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : MethodInfoExtensionsTests.Source, MethodInfoExtensionsTests.ISource where W : struct where X : V", 
+			Assert.AreEqual("void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : MethodInfoExtensionsTests.Source, MethodInfoExtensionsTests.ISource where W : struct where X : V", 
 				description, nameof(description));
 			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));

@@ -217,7 +217,7 @@ namespace Rocks
 			// 0 = parameter name
 			public const string ExpectationTemplate = "(methodHandler.Expectations[\"{0}\"] as ArgumentExpectation<{1}>).IsValid({0}, \"{0}\")";
 
-			// 0 = method name
+			// 0 = method name with override (if needed)
 			public const string RefOutNotImplementedMethodTemplate =
 @"public {0}
 {{
@@ -249,8 +249,9 @@ namespace Rocks
 	// 3 = delegate cast
 	// 4 = out initializers
 	// 5 = method with argument values
+	// 6 = method name with override (if needed)
 	public const string ActionMethodTemplate =
-@"public {0}
+@"public {6}
 {{
 	{4}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -289,8 +290,9 @@ namespace Rocks
 			// 1 = comma-separate list of argument names
 			// 2 = delegate cast
 			// 3 = out initializers
+			// 4 = method name with override (if needed)
 			public const string ActionMethodWithNoArgumentsTemplate =
-@"public {0}
+@"public {4}
 {{
 	{3}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -364,8 +366,9 @@ namespace {7}
 			// 4 = delegate cast
 			// 5 = out initializers
 			// 6 = method with argument values
+			// 7 = method name with override (if needed)
 			public const string FunctionWithReferenceTypeReturnValueMethodTemplate =
-@"public {0}
+@"public {7}
 {{
 	{5}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -396,8 +399,9 @@ namespace {7}
 			// 2 = return type name
 			// 3 = delegate cast
 			// 4 = out initializers
+			// 5 = method name with override (if needed)
 			public const string FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate =
-@"public {0}
+@"public {5}
 {{
 	{4}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -423,8 +427,9 @@ namespace {7}
 			// 4 = delegate cast
 			// 5 = out initializers
 			// 6 = method with argument values
+			// 7 = method name with override (if needed)
 			public const string FunctionWithValueTypeReturnValueMethodTemplate =
-@"public {0}
+@"public {7}
 {{
 	{5}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -455,8 +460,9 @@ namespace {7}
 			// 2 = return type name
 			// 3 = delegate cast
 			// 4 = out initializers
+			// 5 = method name with override (if needed)
 			public const string FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate =
-@"public {0}
+@"public {5}
 {{
 	{4}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;

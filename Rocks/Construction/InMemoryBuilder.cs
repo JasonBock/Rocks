@@ -19,20 +19,22 @@ namespace Rocks.Construction
 			this.TypeName = $"Rock{Guid.NewGuid().ToString("N")}";
 		}
 
-		protected override MethodDescription GetMethodDescription(MethodInfo baseMethod)
+		protected override MethodInformation GetMethodInformation(MethodInfo baseMethod)
 		{
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
+			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true);
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 			var delegateCast = !containsRefAndOrOutParameters ?
 				baseMethod.GetDelegateCast() :
 				(this.Handlers.ContainsKey(description) ?
 					this.Handlers[description][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces) : string.Empty);
-
-			return new MethodDescription
+			
+			return new MethodInformation
 			{
 				ContainsRefAndOrOutParameters = containsRefAndOrOutParameters,
 				DelegateCast = delegateCast,
-				Description = description
+				Description = description,
+				DescriptionWithOverride = descriptionWithOverride
 			};
 		}
 

@@ -1,12 +1,12 @@
 ﻿using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
+using MBU = Microsoft.Build.Utilities;
 using System.Diagnostics;
 using System.Reflection;
 
 namespace Rocks.Task
 {
 	public sealed class RocksTask
-		: AppDomainIsolatedTask
+		: MBU.Task
 	{
 		public override bool Execute()
 		{

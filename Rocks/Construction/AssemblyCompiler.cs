@@ -10,20 +10,23 @@ namespace Rocks.Construction
 		: Compiler<FileStream>
 	{
 		private string assemblyFileName;
+		private string assemblyPath;
 
 		internal AssemblyCompiler(IEnumerable<SyntaxTree> trees, OptimizationLevel level, 
-			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies)
+			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies, string assemblyPath)
 			: base(trees, level, assemblyName, referencedAssemblies)
-		{ }
+		{
+			this.assemblyPath = assemblyPath;
+		}
 
 		protected override FileStream GetAssemblyStream()
 		{
-			return new FileStream($"{this.AssemblyName}.dll", FileMode.Create);
+			return new FileStream($"{Path.Combine(this.assemblyPath, this.AssemblyName)}.dll", FileMode.Create);
 		}
 
 		protected override FileStream GetPdbStream()
 		{
-			return new FileStream($"{this.AssemblyName}.pdb", FileMode.Create);
+			return new FileStream($"{Path.Combine(this.assemblyPath, this.AssemblyName)}.pdb", FileMode.Create);
 		}
 
 		protected override void ProcessStreams(FileStream assemblyStream, FileStream pdbStream)

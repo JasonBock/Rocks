@@ -3,6 +3,7 @@ using Rocks.Construction;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace Rocks
 
 		private Assembly Generate()
 		{
+			var assemblyPath = Path.GetDirectoryName(this.assembly.Location);
 			var assemblyName = $"{this.assembly.GetName().Name}.Rocks";
 			var trees = new ConcurrentBag<SyntaxTree>();
 
@@ -46,7 +48,7 @@ namespace Rocks
 			referencedAssemblies.Add(this.assembly);
 
          var compiler = new AssemblyCompiler(trees, this.options.Level, assemblyName, 
-				referencedAssemblies.AsReadOnly());
+				referencedAssemblies.AsReadOnly(), assemblyPath);
 			compiler.Compile();
 			return compiler.Result;
       }

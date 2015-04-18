@@ -57,51 +57,52 @@ namespace Rocks.Construction
 			foreach (var baseMethod in this.BaseType.GetMethods(Constants.Reflection.PublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual))
 			{
-				var methodDescription = this.GetMethodDescription(baseMethod);
+				var methodInformation = this.GetMethodInformation(baseMethod);
 
 				// Either the base method contains no refs/outs, or the user specified a delegate
 				// to use to handle that method (remember, types with methods with refs/outs are gen'd
 				// each time, and that's the only reason the handlers are passed in.
-				if (!methodDescription.ContainsRefAndOrOutParameters || !string.IsNullOrWhiteSpace(methodDescription.DelegateCast))
+				if (!methodInformation.ContainsRefAndOrOutParameters || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 				{
 					var argumentNameList = baseMethod.GetArgumentNameList();
-					var outInitializers = !methodDescription.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
+					var outInitializers = !methodInformation.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-					if(!methodDescription.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
+					if(!methodInformation.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
 					{
 						generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
-							baseMethod, methodDescription.Description, methodDescription.DelegateCast, argumentNameList, outInitializers));
+							baseMethod, methodInformation.Description, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
 					}
 					else
 					{
 						generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
-							baseMethod, methodDescription.Description, methodDescription.DelegateCast, argumentNameList, outInitializers));
+							baseMethod, methodInformation.Description, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
 
-						if(methodDescription.ContainsRefAndOrOutParameters)
+						if(methodInformation.ContainsRefAndOrOutParameters)
 						{
-							this.HandleRefOutMethod(baseMethod, methodDescription);
+							this.HandleRefOutMethod(baseMethod, methodInformation);
 						}
 					}
 				}
 				else
 				{
-					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodDescription.Description));
+					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodInformation.DescriptionWithOverride));
 				}
 			}
 
 			return generatedMethods;
 		}
 
-		protected class MethodDescription
+		protected class MethodInformation
 		{
 			public bool ContainsRefAndOrOutParameters { get; set; }
 			public string DelegateCast { get; set; }
 			public string Description { get; set; }
-      }
+			public string DescriptionWithOverride { get; set; }
+		}
 
-		protected abstract MethodDescription GetMethodDescription(MethodInfo baseMethod);
+		protected abstract MethodInformation GetMethodInformation(MethodInfo baseMethod);
 
-		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers)
+		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride)
 		{
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
@@ -112,18 +113,18 @@ namespace Rocks.Construction
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
 						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage);
+					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
 			}
 			else
 			{
 				return string.Format(Constants.CodeTemplates.ActionMethodTemplate,
-					methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage);
+					methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
 			}
 		}
 
-		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodDescription methodDescription) { }
+		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
 
-		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers)
+		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string methodDescription, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride)
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
@@ -131,12 +132,12 @@ namespace Rocks.Construction
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						Constants.CodeTemplates.FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate :
 						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate,
-					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers);
+					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers, methodDescriptionWithOverride);
 			}
 			else
 			{
 				return string.Format(Constants.CodeTemplates.ActionMethodWithNoArgumentsTemplate,
-					methodDescription, argumentNameList, delegateCast, outInitializers);
+					methodDescription, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride);
 			}
 		}
 
