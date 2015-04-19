@@ -20,7 +20,7 @@ namespace Rocks.Construction
 			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 		{
-         this.BaseType = baseType;
+			this.BaseType = baseType;
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
 			this.Options = options;
@@ -36,13 +36,13 @@ namespace Rocks.Construction
 			var generatedConstructors = new List<string>();
 			var constructorName = this.GetTypeNameWithNoGenerics();
 
-         foreach (var constructor in this.BaseType.GetConstructors(Constants.Reflection.PublicInstance))
+			foreach (var constructor in this.BaseType.GetConstructors(ReflectionValues.PublicInstance))
 			{
 				var parameters = constructor.GetParameters();
 
 				if (parameters.Length > 0)
 				{
-					generatedConstructors.Add(string.Format(Constants.CodeTemplates.ConstructorTemplate,
+					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
 						constructorName, constructor.GetArgumentNameList(), constructor.GetParameters(this.Namespaces)));
 				}
 			}
@@ -54,7 +54,7 @@ namespace Rocks.Construction
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var baseMethod in this.BaseType.GetMethods(Constants.Reflection.PublicInstance)
+			foreach (var baseMethod in this.BaseType.GetMethods(ReflectionValues.PublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual))
 			{
 				var methodInformation = this.GetMethodInformation(baseMethod);
@@ -67,7 +67,7 @@ namespace Rocks.Construction
 					var argumentNameList = baseMethod.GetArgumentNameList();
 					var outInitializers = !methodInformation.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
-					if(!methodInformation.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
+					if (!methodInformation.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
 					{
 						generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
 							baseMethod, methodInformation.Description, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
@@ -77,7 +77,7 @@ namespace Rocks.Construction
 						generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
 							baseMethod, methodInformation.Description, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
 
-						if(methodInformation.ContainsRefAndOrOutParameters)
+						if (methodInformation.ContainsRefAndOrOutParameters)
 						{
 							this.HandleRefOutMethod(baseMethod, methodInformation);
 						}
@@ -85,7 +85,7 @@ namespace Rocks.Construction
 				}
 				else
 				{
-					generatedMethods.Add(string.Format(Constants.CodeTemplates.RefOutNotImplementedMethodTemplate, methodInformation.DescriptionWithOverride));
+					generatedMethods.Add(CodeTemplates.GetRefOutNotImplementedMethodTemplate(methodInformation.DescriptionWithOverride));
 				}
 			}
 
@@ -109,15 +109,18 @@ namespace Rocks.Construction
 
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return string.Format(baseMethod.ReturnType.IsValueType ||
+				return baseMethod.ReturnType.IsValueType ||
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-						Constants.CodeTemplates.FunctionWithValueTypeReturnValueMethodTemplate :
-						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueMethodTemplate,
-					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
+						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
+							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks,
+							delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride) :
+						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
+							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks, 
+							delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
 			}
 			else
 			{
-				return string.Format(Constants.CodeTemplates.ActionMethodTemplate,
+				return CodeTemplates.GetActionMethodTemplate(
 					methodDescription, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
 			}
 		}
@@ -128,15 +131,18 @@ namespace Rocks.Construction
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return string.Format(baseMethod.ReturnType.IsValueType ||
+				return baseMethod.ReturnType.IsValueType ||
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
-						Constants.CodeTemplates.FunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate :
-						Constants.CodeTemplates.FunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate,
-					methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), delegateCast, outInitializers, methodDescriptionWithOverride);
+						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
+							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(),
+							delegateCast, outInitializers, methodDescriptionWithOverride) :
+						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
+							methodDescription, argumentNameList, baseMethod.ReturnType.GetSafeName(), 
+							delegateCast, outInitializers, methodDescriptionWithOverride);
 			}
 			else
 			{
-				return string.Format(Constants.CodeTemplates.ActionMethodWithNoArgumentsTemplate,
+				return CodeTemplates.GetActionMethodWithNoArgumentsTemplate(
 					methodDescription, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride);
 			}
 		}
@@ -145,12 +151,12 @@ namespace Rocks.Construction
 		{
 			var generatedProperties = new List<string>();
 
-			foreach (var baseProperty in this.BaseType.GetProperties(Constants.Reflection.PublicInstance)
+			foreach (var baseProperty in this.BaseType.GetProperties(ReflectionValues.PublicInstance)
 				.Where(_ => (_.CanRead ? _.GetMethod : _.SetMethod).IsVirtual))
 			{
 				var propertyImplementations = new List<string>();
 
-				if(baseProperty.CanRead)
+				if (baseProperty.CanRead)
 				{
 					var getMethod = baseProperty.GetMethod;
 					var getMethodDescription = getMethod.GetMethodDescription(this.Namespaces);
@@ -161,17 +167,19 @@ namespace Rocks.Construction
 					{
 						var getExpectationChecks = getMethod.GetExpectationChecks();
 						var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
-						propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
-							Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueTemplate :
-							Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueTemplate,
-							getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
+						propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
+							CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
+								getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage) :
+							CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(
+								getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
 					}
 					else
 					{
-						propertyImplementations.Add(string.Format(getMethod.ReturnType.IsValueType ?
-							Constants.CodeTemplates.PropertyGetWithValueTypeReturnValueAndNoIndexersTemplate :
-							Constants.CodeTemplates.PropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate,
-							getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast));
+						propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
+							CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(
+								getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast) :
+							CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(
+								getMethodDescription, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast));
 					}
 				}
 
@@ -186,12 +194,12 @@ namespace Rocks.Construction
 					{
 						var setExpectationChecks = setMethod.GetExpectationChecks();
 						var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
-						propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetTemplate,
+						propertyImplementations.Add(CodeTemplates.GetPropertySetTemplate(
 							setMethodDescription, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage));
 					}
 					else
 					{
-						propertyImplementations.Add(string.Format(Constants.CodeTemplates.PropertySetAndNoIndexersTemplate,
+						propertyImplementations.Add(CodeTemplates.GetPropertySetAndNoIndexersTemplate(
 							setMethodDescription, setArgumentNameList, setDelegateCast));
 					}
 				}
@@ -208,13 +216,13 @@ namespace Rocks.Construction
 						select $"{indexer.ParameterType.Name} {indexer.Name}");
 
 					// Indexer
-					generatedProperties.Add(string.Format(Constants.CodeTemplates.PropertyIndexerTemplate,
+					generatedProperties.Add(CodeTemplates.GetPropertyIndexerTemplate(
 						baseProperty.PropertyType.Name, parameters, string.Join(Environment.NewLine, propertyImplementations)));
 				}
 				else
 				{
 					// Normal
-					generatedProperties.Add(string.Format(Constants.CodeTemplates.PropertyTemplate,
+					generatedProperties.Add(CodeTemplates.GetPropertyTemplate(
 						baseProperty.PropertyType.GetSafeName(), baseProperty.Name,
 						string.Join(Environment.NewLine, propertyImplementations)));
 				}
@@ -229,7 +237,7 @@ namespace Rocks.Construction
 		{
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
-			var properties = this.GetGeneratedProperties(); 
+			var properties = this.GetGeneratedProperties();
 			var events = this.BaseType.GetImplementedEvents(this.Namespaces);
 
 			this.Namespaces.Add(this.BaseType.Namespace);
@@ -239,19 +247,19 @@ namespace Rocks.Construction
 			this.Namespaces.Add(typeof(string).Namespace);
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
 
-			return string.Format(Constants.CodeTemplates.ClassTemplate,
+			return CodeTemplates.GetClassTemplate(
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
 				this.TypeName, this.BaseType.GetSafeName(),
 				string.Join(Environment.NewLine, methods),
-				string.Join(Environment.NewLine, properties), events, 
+				string.Join(Environment.NewLine, properties), events,
 				string.Join(Environment.NewLine, constructors),
-				this.BaseType.Namespace, 
-				this.Options.Serialization == SerializationOptions.Supported ? 
+				this.BaseType.Namespace,
+				this.Options.Serialization == SerializationOptions.Supported ?
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
-					string.Format(Constants.CodeTemplates.ConstructorNoArgumentsTemplate, this.GetTypeNameWithNoGenerics()) : string.Empty, 
+					CodeTemplates.GetConstructorNoArgumentsTemplate(this.GetTypeNameWithNoGenerics()) : string.Empty,
 				this.GetTypeNameWithNoGenerics(), this.GetAdditionNamespaceCode());
 		}
 
@@ -263,7 +271,7 @@ namespace Rocks.Construction
 			if (this.Options.CodeFile == CodeFileOptions.Create)
 			{
 				Directory.CreateDirectory(this.GetDirectoryForFile());
-				var fileName = Path.Combine(this.GetDirectoryForFile(), 
+				var fileName = Path.Combine(this.GetDirectoryForFile(),
 					$"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty)}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)
@@ -283,7 +291,7 @@ namespace Rocks.Construction
 		protected virtual string GetAdditionNamespaceCode() => string.Empty;
 
 		internal Options Options { get; }
-      internal SyntaxTree Tree { get; private set; }
+		internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; }
 		internal ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 		internal SortedSet<string> Namespaces { get; }

@@ -74,12 +74,12 @@ namespace Rocks.Extensions
 		{
 			if (@this.IsSealed && @this.GetConstructor(new[] { typeof(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>) }) == null)
 			{
-				return string.Format(Constants.ErrorMessages.CannotMockSealedType, @this.GetSafeName());
+				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
-			if (!@this.GetMembers(Constants.Reflection.PublicInstance).Any())
+			if (!@this.GetMembers(ReflectionValues.PublicInstance).Any())
 			{
-				return string.Format(Constants.ErrorMessages.NoVirtualMembers, @this.GetSafeName());
+				return ErrorMessages.GetNoVirtualMembers(@this.GetSafeName());
 			}
 
 			return string.Empty;
@@ -87,7 +87,7 @@ namespace Rocks.Extensions
 
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
-			return (from method in @this.GetMethods(Constants.Reflection.PublicInstance)
+			return (from method in @this.GetMethods(ReflectionValues.PublicInstance)
 					  where method.ContainsRefAndOrOutParameters()
 					  select method).Any();
 		}
@@ -133,13 +133,13 @@ namespace Rocks.Extensions
 				if (eventHandlerType.IsGenericType)
 				{
 					var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-					events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
+					events.Add(CodeTemplates.GetEventTemplate(
 						$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 					namespaces.Add(eventGenericType.Namespace);
 				}
 				else
 				{
-					events.Add(string.Format(Constants.CodeTemplates.EventTemplate,
+					events.Add(CodeTemplates.GetEventTemplate(
 						eventHandlerType.GetSafeName(), @event.Name));
 				}
 			}

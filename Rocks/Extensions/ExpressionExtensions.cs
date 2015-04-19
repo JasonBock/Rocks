@@ -18,7 +18,7 @@ namespace Rocks.Extensions
 			{
 				case ExpressionType.Constant:
 					var value = (@this as ConstantExpression).Value;
-					return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
+					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 						null, new[] { @this.Type }, null).Invoke(new[] { value }) as ArgumentExpectation;
 				case ExpressionType.Call:
 					var argumentMethodCall = (@this as MethodCallExpression);
@@ -28,23 +28,23 @@ namespace Rocks.Extensions
 
 					if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 					{
-						return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
+						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
 					}
 					else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 					{
 						var evaluation = argumentMethodCall.Arguments[0];
 						var genericMethodType = typeof(Func<,>).MakeGenericType(@this.Type, typeof(bool));
-						return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
+						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, new[] { genericMethodType }, null).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
 					}
 					else
 					{
-						return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
+						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
 					}
 				default:
-					return argumentExpectationType.GetConstructor(Constants.Reflection.PublicNonPublicInstance,
+					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 						null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
 			}
 		}

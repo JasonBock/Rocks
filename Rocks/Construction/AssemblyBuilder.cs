@@ -43,7 +43,7 @@ namespace Rocks.Construction
 			{
 				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 				delegateCast = delegateName;
-				this.generatedDelegates.Add(string.Format(Constants.CodeTemplates.AssemblyDelegateTemplate,
+				this.generatedDelegates.Add(CodeTemplates.GetAssemblyDelegateTemplate(
 					baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
 					delegateName,
 					baseMethod.GetParameters(this.Namespaces)));
@@ -60,7 +60,7 @@ namespace Rocks.Construction
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)
 		{
-			var methodCount = this.BaseType.GetMethods(Constants.Reflection.PublicInstance)
+			var methodCount = this.BaseType.GetMethods(ReflectionValues.PublicInstance)
 				.Where(_ => _.Name == baseMethod.Name && !_.IsSpecialName && _.IsVirtual).Count();
 
 			return methodCount > 1 ? baseMethod.MethodHandle.Value.ToString() : string.Empty;

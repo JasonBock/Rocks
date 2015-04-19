@@ -123,12 +123,13 @@
     <Compile Include="AssemblyRock.cs" />
     <Compile Include="CacheKey.cs" />
     <Compile Include="CodeFileOptions.cs" />
+    <Compile Include="CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />
     <Compile Include="Construction\Builder.cs" />
     <Compile Include="Construction\Compiler.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="CreateResult.cs" />
+    <Compile Include="ErrorMessages.cs" />
     <Compile Include="Exceptions\PropertyNotFoundException.cs" />
     <Compile Include="Exceptions\ExpectationException.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="InMemoryRock.cs" />
+    <Compile Include="ReflectionValues.cs" />
     <Compile Include="RockAssembly.cs" />
     <Compile Include="RockCore.cs" />
     <Compile Include="IRock.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="Construction\InMemoryMaker.cs" />
     <Compile Include="AssemblyBinder.cs" />
     <Compile Include="SerializationOptions.cs" />
+    <Compile Include="Values.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

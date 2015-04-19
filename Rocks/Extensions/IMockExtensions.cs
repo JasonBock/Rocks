@@ -16,8 +16,7 @@ namespace Rocks.Extensions
 				{
 					foreach (var failure in handler.Verify())
 					{
-						failures.Add(string.Format(Constants.ErrorMessages.VerificationFailed,
-							@this.GetType().FullName, pair.Key, failure));
+						failures.Add(ErrorMessages.GetVerificationFailed(@this.GetType().FullName, pair.Key, failure));
 					}
 				}
 			}

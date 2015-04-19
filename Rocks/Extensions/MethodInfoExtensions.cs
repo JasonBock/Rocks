@@ -44,8 +44,9 @@ namespace Rocks.Extensions
 		{
 			return string.Join(" && ",
 				@this.GetParameters().Select(_ =>
-					string.Format(Constants.CodeTemplates.ExpectationTemplate, _.Name, _.ParameterType.GetSafeName())));
+					CodeTemplates.GetExpectationTemplate(_.Name, _.ParameterType.GetSafeName())));
 		}
+
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
 			return @this.GetMethodDescription(namespaces, false);
