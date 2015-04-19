@@ -345,7 +345,7 @@ $@"public {methodNameWithOverride}
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodNameWithOverride}"", out methodHandlers))
+	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{

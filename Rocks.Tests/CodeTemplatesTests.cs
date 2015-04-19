@@ -77,5 +77,390 @@ namespace Rocks.Tests
 	}
 }", CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate("a", "b", "c", "d"));
 		}
+
+		[Test]
+		public void GetPropertyGetWithValueTypeReturnValueTemplate()
+		{
+			Assert.AreEqual(
+@"get
+{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(d)
+			{
+				var result = methodHandler.Method != null ?
+					(c)(methodHandler.Method as e)(b) :
+					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}
+		}
+
+		throw new ExpectationException($""No handlers were found for f"");
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate("a", "b", "c", "d", "e", "f"));
+		}
+
+		[Test]
+		public void GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate()
+		{
+			Assert.AreEqual(
+@"get
+{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(c)(methodHandler.Method as d)(b) :
+			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.IncrementCallCount();
+		return result;
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate("a", "b", "c", "d"));
+		}
+
+		[Test]
+		public void GetPropertySetTemplate()
+		{
+			Assert.AreEqual(
+@"set
+{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var foundMatch = false;
+
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(c)
+			{
+				foundMatch = true;
+
+				if(methodHandler.Method != null)
+				{
+					(methodHandler.Method as d)(b);
+				}
+	
+				methodHandler.IncrementCallCount();
+				break;
+			}
+		}
+
+		if(!foundMatch)
+		{
+			throw new ExpectationException($""No handlers were found for e"");
+		}
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetPropertySetTemplate("a", "b", "c", "d", "e"));
+		}
+
+		[Test]
+		public void GetPropertySetAndNoIndexersTemplate()
+		{
+			Assert.AreEqual(
+@"set
+{
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+
+		if(methodHandler.Method != null)
+		{
+			(methodHandler.Method as c)(b);
+		}
+	
+		methodHandler.IncrementCallCount();
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetPropertySetAndNoIndexersTemplate("a", "b", "c"));
+		}
+
+		[Test]
+		public void GetEventTemplate()
+		{
+			Assert.AreEqual("public event a b;", CodeTemplates.GetEventTemplate("a", "b"));
+		}
+
+		[Test]
+		public void GetExpectationTemplate()
+		{
+			Assert.AreEqual("(methodHandler.Expectations[\"a\"] as ArgumentExpectation<b>).IsValid(a, \"a\")", CodeTemplates.GetExpectationTemplate("a", "b"));
+		}
+
+		[Test]
+		public void GetRefOutNotImplementedMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public a
+{
+	throw new NotImplementedException();
+}", CodeTemplates.GetRefOutNotImplementedMethodTemplate("a"));
+		}
+
+		[Test]
+		public void GetConstructorTemplate()
+		{
+			Assert.AreEqual(
+@"public a(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers, c)
+	: base(b)
+{
+	this.handlers = handlers;
+}", CodeTemplates.GetConstructorTemplate("a", "b", "c"));
+		}
+
+		[Test]
+		public void GetConstructorNoArgumentsTemplate()
+		{
+			Assert.AreEqual(
+@"public a() 
+{ 
+	this.handlers = new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
+		new System.Collections.Generic.Dictionary<string, ReadOnlyCollection<HandlerInformation>>());
+}", CodeTemplates.GetConstructorNoArgumentsTemplate("a"));
+		}
+
+		[Test]
+		public void GetActionMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public g
+{
+	e
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var foundMatch = false;
+				
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(c)
+			{
+				foundMatch = true;
+
+				if(methodHandler.Method != null)
+				{
+					(methodHandler.Method as d)(b);
+				}
+	
+				methodHandler.IncrementCallCount();
+				break;
+			}
+		}
+
+		if(!foundMatch)
+		{
+			throw new ExpectationException($""No handlers were found for f"");
+		}
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetActionMethodTemplate("a", "b", "c", "d", "e", "f", "g"));
+		}
+
+		[Test]
+		public void GetActionMethodWithNoArgumentsTemplate()
+		{
+			Assert.AreEqual(
+@"public e
+{
+	d
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		if(methodHandler.Method != null)
+		{
+			(methodHandler.Method as c)(b);
+		}
+	
+		methodHandler.IncrementCallCount();
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetActionMethodWithNoArgumentsTemplate("a", "b", "c", "d", "e"));
+		}
+
+		[Test]
+		public void GetClassTemplate()
+		{
+			Assert.AreEqual(
+@"a
+
+namespace h
+{
+	i
+	public sealed class b
+		: c, IMock
+	{
+		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
+
+		j
+
+		public k(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
+		{
+			this.handlers = handlers;
+		}
+
+		g
+
+		d
+
+		e
+
+		f
+
+		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		{
+			get { return this.handlers; }
+		}
+	}
+
+	l
+}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"));
+		}
+
+		[Test]
+		public void GetFunctionWithReferenceTypeReturnValueMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public h
+{
+	f
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(d)
+			{
+				var result = methodHandler.Method != null ?
+					(methodHandler.Method as e)(b) as c :
+					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}
+		}
+
+		throw new ExpectationException($""No handlers were found for g"");
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate("a", "b", "c", "d", "e", "f", "g", "h"));
+		}
+
+		[Test]
+		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public f
+{
+	e
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(methodHandler.Method as d)(b) as c :
+			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.IncrementCallCount();
+		return result;
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate("a", "b", "c", "d", "e", "f"));
+		}
+
+		[Test]
+		public void GetFunctionWithValueTypeReturnValueMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public h
+{
+	f
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(d)
+			{
+				var result = methodHandler.Method != null ?
+					(c)(methodHandler.Method as e)(b) :
+					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.IncrementCallCount();
+				return result;
+			}
+		}
+
+		throw new ExpectationException($""No handlers were found for g"");
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate("a", "b", "c", "d", "e", "f", "g", "h"));
+		}
+
+		[Test]
+		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate()
+		{
+			Assert.AreEqual(
+@"public f
+{
+	e
+	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+
+	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(c)(methodHandler.Method as d)(b) :
+			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.IncrementCallCount();
+		return result;
+	}
+	else
+	{
+		throw new NotImplementedException();
+	}
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate("a", "b", "c", "d", "e", "f"));
+		}
 	}
 }
