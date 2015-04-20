@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace Rocks
 {
 	public interface IMock
 	{
 		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
+		void Raise(string eventName, EventArgs args);
 	}
 }

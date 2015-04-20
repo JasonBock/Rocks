@@ -1,4 +1,5 @@
 ﻿using Rocks.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -25,6 +26,16 @@ namespace Rocks.Extensions
 			}
 
 			return failures.AsReadOnly();
+		}
+
+		public static void Raise(this object @this, string eventName, EventArgs args)
+		{
+			var mock = @this as IMock;
+
+			if(mock != null)
+			{
+				mock.Raise(eventName, args);
+			}
 		}
 
 		public static void Verify(this IMock @this)

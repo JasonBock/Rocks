@@ -167,6 +167,7 @@
     <Compile Include="Extensions\ExpressionOfTExtensionsTests.cs" />
     <Compile Include="Extensions\GenericArgumentsResultTests.cs" />
     <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensionsTests.cs" />
+    <Compile Include="Extensions\IMockExtensionsTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />

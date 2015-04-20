@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Classes.cs" />
     <Compile Include="Delegates.cs" />
+    <Compile Include="Events.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="InAndOut.cs" />

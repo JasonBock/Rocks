@@ -244,6 +244,7 @@ namespace Rocks.Construction
 			this.Namespaces.Add(typeof(HandlerInformation).Namespace);
 			this.Namespaces.Add(typeof(string).Namespace);
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
+			this.Namespaces.Add(typeof(BindingFlags).Namespace);
 
 			return CodeTemplates.GetClassTemplate(
 				string.Join(Environment.NewLine,

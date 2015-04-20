@@ -20,7 +20,7 @@ namespace Rocks.Tests
 		[Test]
 		public void GetVerificationFailed()
 		{
-			Assert.AreEqual("Type: a, method: b, message: c.", ErrorMessages.GetVerificationFailed("a", "b", "c"));
+			Assert.AreEqual("Type: a, method: b, message: c", ErrorMessages.GetVerificationFailed("a", "b", "c"));
 		}
 	}
 }

@@ -282,6 +282,22 @@ namespace {baseTypeNamespace}
 		{{
 			get {{ return this.handlers; }}
 		}}
+
+		void IMock.Raise(string eventName, EventArgs args)
+		{{
+			var thisType = this.GetType();
+
+			var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, 
+				BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+
+			if (eventDelegate != null)
+			{{
+				foreach (var handler in eventDelegate.GetInvocationList())
+				{{
+					handler.Method.Invoke(handler.Target, new object[] {{ this, args }});
+				}}
+			}}
+		}}	
 	}}
 
 	{additionalCode}

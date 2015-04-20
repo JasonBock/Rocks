@@ -5,29 +5,38 @@ namespace Rocks.Sketchpad
 {
 	public static class MoqTests
 	{
-		public static void MultipleSetups()
+		public static void Test()
 		{
-			var value = Guid.NewGuid();
-			var foo = new Mock<IMoq>(MockBehavior.Strict);
-			foo.Setup(_ => _.Foo("a", 4));
-			foo.Setup(_ => _.Foo("b", value));
+			var mock = new Mock<IHaveEvent>();
 
-			var fooMock = foo.Object;
-			fooMock.Foo("a", 4);
-			fooMock.Foo("b", value);
-			foo.VerifyAll();
+			var mock1 = mock.Object;
+			var mock2 = mock.Object;
+
+         var uses1 = new UsesEvent(mock1);
+			var uses2 = new UsesEvent(mock2);
+			mock.Raise(_ => _.Use += null, new EventArgs());
+
+			Console.Out.WriteLine($"uses1.Data != null is {uses1.Data != null}");
+			Console.Out.WriteLine($"uses2.Data != null is {uses2.Data != null}");
+			Console.Out.WriteLine($"object.ReferenceEquals(mock1, mock2) is {object.ReferenceEquals(mock1, mock2)}");
 		}
 	}
 
-	public class Nothing { }
-
-	public interface IMoq
+	public interface IHaveEvent
 	{
-		void Foo(string a, object b);
+		event EventHandler Use;
 	}
 
-	public interface ITarget<T>
+	public class UsesEvent
 	{
-		void Foo(T a);
+		private IHaveEvent haveEvent;
+
+		public UsesEvent(IHaveEvent haveEvent)
+		{
+			this.haveEvent = haveEvent;
+			this.haveEvent.Use += (s, e) => this.Data = e;
+		}
+
+		public EventArgs Data { get; set; }
 	}
 }

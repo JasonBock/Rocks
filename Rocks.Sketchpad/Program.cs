@@ -6,7 +6,7 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			MethodHandles.Test();
+			Events.Test();
 		}
 	}
 }
