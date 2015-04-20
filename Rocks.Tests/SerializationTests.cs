@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Rocks.Exceptions;
 using System;
 using System.IO;
 using System.Runtime.Serialization;

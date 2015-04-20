@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
+using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.TypeExtensions;
 
@@ -12,7 +13,7 @@ namespace Rocks.Construction
 		: Builder
 	{
 		internal InMemoryBuilder(Type baseType,
-			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
+			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options)
 		{
@@ -24,10 +25,12 @@ namespace Rocks.Construction
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
 			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true);
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
+
+			var key = baseMethod.MetadataToken;
 			var delegateCast = !containsRefAndOrOutParameters ?
 				baseMethod.GetDelegateCast() :
-				(this.Handlers.ContainsKey(description) ?
-					this.Handlers[description][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces) : string.Empty);
+				(this.Handlers.ContainsKey(key) ?
+					this.Handlers[key][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces) : string.Empty);
 			
 			return new MethodInformation
 			{

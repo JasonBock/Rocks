@@ -9,6 +9,28 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static MethodInfo FindMethod(this Type @this, int methodHandle)
+		{
+			var foundMethod = (from method in @this.GetMethods()
+									 where method.MetadataToken == methodHandle
+									 select method).FirstOrDefault();
+
+			if(foundMethod == null)
+			{
+				var types = new List<Type>(@this.GetInterfaces());
+				types.Add(@this.BaseType);
+
+				return (from type in types
+						  let baseMethod = type.FindMethod(methodHandle)
+						  where baseMethod != null
+						  select baseMethod).FirstOrDefault();
+			}
+			else
+			{
+				return foundMethod;
+			}
+		}
+
 		internal static PropertyInfo FindProperty(this Type @this, string name)
 		{
 			var property = @this.GetProperty(name);
@@ -72,7 +94,7 @@ namespace Rocks.Extensions
 
 		internal static string Validate(this Type @this)
 		{
-			if (@this.IsSealed && @this.GetConstructor(new[] { typeof(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>) }) == null)
+			if (@this.IsSealed && @this.GetConstructor(new[] { typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>) }) == null)
 			{
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
@@ -112,7 +134,7 @@ namespace Rocks.Extensions
 					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
 					@this.Name);
 
-				if(@this.IsGenericTypeDefinition)
+				if (@this.IsGenericTypeDefinition)
 				{
 					name = $"{name}<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
 				}

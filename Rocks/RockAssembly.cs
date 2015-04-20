@@ -35,10 +35,9 @@ namespace Rocks
 
          Parallel.ForEach(assembly.GetExportedTypes().Where(_ => string.IsNullOrWhiteSpace(_.Validate())), _ =>
 				{
-					// TODO: For now, don't support ref/out methods, this will have to change.
 					var builder = new AssemblyBuilder(_, 
-						new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
-							new Dictionary<string, ReadOnlyCollection<HandlerInformation>>()), 
+						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+							new Dictionary<int, ReadOnlyCollection<HandlerInformation>>()), 
 						new SortedSet<string>(), this.options);
 					builder.Build();
 					trees.Add(builder.Tree);

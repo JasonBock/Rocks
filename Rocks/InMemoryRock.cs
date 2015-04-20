@@ -41,7 +41,7 @@ namespace Rocks
 			return rock as T;
 		}
 
-		private Type GetMockType(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> readOnlyHandlers)
+		private Type GetMockType(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> readOnlyHandlers)
 		{
 			var tType = typeof(T);
 			var rockType = default(Type);

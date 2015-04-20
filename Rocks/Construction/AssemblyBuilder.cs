@@ -16,7 +16,7 @@ namespace Rocks.Construction
 		private readonly List<string> generatedDelegates = new List<string>();
 
 		internal AssemblyBuilder(Type baseType,
-			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
+			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options)
 		{

@@ -55,7 +55,7 @@ namespace Rocks.Tests
 				this.GetType().GetMethod(nameof(RockAssemblyTests.Method5)).MakeGenericMethod(b.GetType())));
 
 			var handlers = rock.GetType().GetMethod("CreateReadOnlyHandlerDictionary", BindingFlags.Instance | BindingFlags.NonPublic)
-				.Invoke(rock, null) as ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>;
+				.Invoke(rock, null) as ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>;
          var mock = Activator.CreateInstance(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"), handlers) as Class1;
 
 			mock.Method1();

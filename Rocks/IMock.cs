@@ -4,6 +4,6 @@ namespace Rocks
 {
 	public interface IMock
 	{
-		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 	}
 }

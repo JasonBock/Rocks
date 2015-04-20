@@ -31,7 +31,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -51,7 +51,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate("a", "b", "c", "d", "e", "f"));
+}", CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(1, "b", "c", "d", "e", "f"));
 		}
 
 		[Test]
@@ -62,7 +62,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -75,7 +75,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate("a", "b", "c", "d"));
+}", CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(1, "b", "c", "d"));
 		}
 
 		[Test]
@@ -86,7 +86,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -106,7 +106,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate("a", "b", "c", "d", "e", "f"));
+}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(1, "b", "c", "d", "e", "f"));
 		}
 
 		[Test]
@@ -117,7 +117,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -130,7 +130,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate("a", "b", "c", "d"));
+}", CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(1, "b", "c", "d"));
 		}
 
 		[Test]
@@ -141,7 +141,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var foundMatch = false;
 
@@ -170,7 +170,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertySetTemplate("a", "b", "c", "d", "e"));
+}", CodeTemplates.GetPropertySetTemplate(1, "b", "c", "d", "e"));
 		}
 
 		[Test]
@@ -181,7 +181,7 @@ namespace Rocks.Tests
 {
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 
@@ -196,7 +196,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetPropertySetAndNoIndexersTemplate("a", "b", "c"));
+}", CodeTemplates.GetPropertySetAndNoIndexersTemplate(1, "b", "c"));
 		}
 
 		[Test]
@@ -225,7 +225,7 @@ namespace Rocks.Tests
 		public void GetConstructorTemplate()
 		{
 			Assert.AreEqual(
-@"public a(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers, c)
+@"public a(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers, c)
 	: base(b)
 {
 	this.handlers = handlers;
@@ -238,8 +238,8 @@ namespace Rocks.Tests
 			Assert.AreEqual(
 @"public a() 
 { 
-	this.handlers = new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
-		new System.Collections.Generic.Dictionary<string, ReadOnlyCollection<HandlerInformation>>());
+	this.handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+		new System.Collections.Generic.Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 }", CodeTemplates.GetConstructorNoArgumentsTemplate("a"));
 		}
 
@@ -252,7 +252,7 @@ namespace Rocks.Tests
 	e
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var foundMatch = false;
 				
@@ -281,7 +281,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetActionMethodTemplate("a", "b", "c", "d", "e", "f", "g"));
+}", CodeTemplates.GetActionMethodTemplate(1, "b", "c", "d", "e", "f", "g"));
 		}
 
 		[Test]
@@ -293,7 +293,7 @@ namespace Rocks.Tests
 	d
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -307,7 +307,7 @@ namespace Rocks.Tests
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetActionMethodWithNoArgumentsTemplate("a", "b", "c", "d", "e"));
+}", CodeTemplates.GetActionMethodWithNoArgumentsTemplate(1, "b", "c", "d", "e"));
 		}
 
 		[Test]
@@ -322,11 +322,11 @@ namespace h
 	public sealed class b
 		: c, IMock
 	{
-		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
+		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
 		j
 
-		public k(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
+		public k(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
 		{
 			this.handlers = handlers;
 		}
@@ -339,7 +339,7 @@ namespace h
 
 		f
 
-		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
 		{
 			get { return this.handlers; }
 		}
@@ -358,7 +358,7 @@ namespace h
 	f
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -378,7 +378,7 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate("a", "b", "c", "d", "e", "f", "g", "h"));
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h"));
 		}
 
 		[Test]
@@ -390,7 +390,7 @@ namespace h
 	e
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -403,7 +403,7 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate("a", "b", "c", "d", "e", "f"));
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f"));
 		}
 
 		[Test]
@@ -415,7 +415,7 @@ namespace h
 	f
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -435,7 +435,7 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate("a", "b", "c", "d", "e", "f", "g", "h"));
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h"));
 		}
 
 		[Test]
@@ -447,7 +447,7 @@ namespace h
 	e
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""a"", out methodHandlers))
+	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -460,7 +460,7 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate("a", "b", "c", "d", "e", "f"));
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f"));
 		}
 	}
 }

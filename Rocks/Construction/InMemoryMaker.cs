@@ -11,7 +11,7 @@ namespace Rocks.Construction
 		internal Type Mock { get; private set; }
 
 		internal InMemoryMaker(Type baseType,
-			ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers,
+			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 		{
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);

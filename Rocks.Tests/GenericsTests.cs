@@ -54,7 +54,7 @@ namespace Rocks.Tests
 			var argumentA = 0;
 			var argumentB = default(Base);
 
-			var rock = Rock.Create<IGenerics>();
+			var rock = Rock.Create<IGenerics>(new Options(CodeFileOptions.Create));
 			rock.HandleFunc<int, Base, Base>(
 				_ => _.TargetWithTypeConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });

@@ -16,7 +16,10 @@ namespace Rocks.Extensions
 				{
 					foreach (var failure in handler.Verify())
 					{
-						failures.Add(ErrorMessages.GetVerificationFailed(@this.GetType().FullName, pair.Key, failure));
+						var method = @this.GetType().FindMethod(pair.Key);
+						var description = method.GetMethodDescription(new SortedSet<string>());
+
+                  failures.Add(ErrorMessages.GetVerificationFailed(@this.GetType().FullName, description, failure));
 					}
 				}
 			}

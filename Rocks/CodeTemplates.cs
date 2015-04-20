@@ -11,13 +11,13 @@
 		public static string GetPropertyIndexerTemplate(string returnType, string indexerArguments, string getSet) => 
 			$"public {returnType} this[{indexerArguments}] {{ {getSet} }}";
 
-		public static string GetPropertyGetWithReferenceTypeReturnValueTemplate(string methodName, string argumentNames, string returnTypeName, 
+		public static string GetPropertyGetWithReferenceTypeReturnValueTemplate(int methodHandle, string argumentNames, string returnTypeName, 
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
 $@"get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -39,12 +39,12 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(string methodName, string argumentNames, string returnType, string delegateCast) =>
+		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, string delegateCast) =>
 $@"get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -59,13 +59,13 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertyGetWithValueTypeReturnValueTemplate(string methodName, string argumentNames, string returnTypeName,
+		public static string GetPropertyGetWithValueTypeReturnValueTemplate(int methodHandle, string argumentNames, string returnTypeName,
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
 $@"get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -87,12 +87,12 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(string methodName, string argumentNames, string returnType, string delegateCast) =>
+		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, string delegateCast) =>
 $@"get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -107,12 +107,12 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertySetTemplate(string methodName, string argumentNames, string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
+		public static string GetPropertySetTemplate(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
 $@"set
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var foundMatch = false;
 
@@ -143,12 +143,12 @@ $@"set
 	}}
 }}";
 
-		public static string GetPropertySetAndNoIndexersTemplate(string methodName, string argumentNames, string delegateCast) =>
+		public static string GetPropertySetAndNoIndexersTemplate(int methodHandle, string argumentNames, string delegateCast) =>
 $@"set
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 
@@ -177,7 +177,7 @@ $@"public {methodNameWithOverride}
 }}";
 
 		public static string GetConstructorTemplate(string typeName, string argumentNames, string argumentNamesWithTypes) =>
-$@"public {typeName}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers, {argumentNamesWithTypes})
+$@"public {typeName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers, {argumentNamesWithTypes})
 	: base({argumentNames})
 {{
 	this.handlers = handlers;
@@ -186,18 +186,18 @@ $@"public {typeName}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInform
 		public static string GetConstructorNoArgumentsTemplate(string mockTypeName) =>
 $@"public {mockTypeName}() 
 {{ 
-	this.handlers = new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
-		new System.Collections.Generic.Dictionary<string, ReadOnlyCollection<HandlerInformation>>());
+	this.handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+		new System.Collections.Generic.Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 }}";
 
-		public static string GetActionMethodTemplate(string methodName, string argumentNames, string expectationTemplateInstances, string delegateCast,
+		public static string GetActionMethodTemplate(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var foundMatch = false;
 				
@@ -228,13 +228,13 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetActionMethodWithNoArgumentsTemplate(string methodName, string argumentNames, string delegateCast, string outInitializers, string methodNameWithOverride) =>
+		public static string GetActionMethodWithNoArgumentsTemplate(int methodHandle, string argumentNames, string delegateCast, string outInitializers, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -261,11 +261,11 @@ namespace {baseTypeNamespace}
 	public sealed class {mockTypeName}
 		: {baseType}, IMock
 	{{
-		private ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers;
+		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
 		{noArgumentConstructor}
 
-		public {constructorName}(ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> handlers)
+		public {constructorName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
 		{{
 			this.handlers = handlers;
 		}}
@@ -278,7 +278,7 @@ namespace {baseTypeNamespace}
 
 		{implementedEvents}
 
-		ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
 		{{
 			get {{ return this.handlers; }}
 		}}
@@ -287,14 +287,14 @@ namespace {baseTypeNamespace}
 	{additionalCode}
 }}";
 
-		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(string methodName, string argumentNames, string returnTypeName, string expectationTemplateInstances,
+		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
 			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -316,14 +316,14 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(string methodName, string argumentNames, string returnTypeName, 
+		public static string GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, 
 			string delegateCast, string outInitializers, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -338,14 +338,14 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithValueTypeReturnValueMethodTemplate(string methodName, string argumentNames, string returnTypeName, string expectationTemplateInstances,
+		public static string GetFunctionWithValueTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
 			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -367,14 +367,14 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(string methodName, string argumentNames, string returnTypeName,
+		public static string GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName,
 			string delegateCast, string outInitializers, string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(""{methodName}"", out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?

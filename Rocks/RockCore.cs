@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using static Rocks.Extensions.ExpressionOfTExtensions;
 using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
 using static Rocks.Extensions.IMockExtensions;
+using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodCallExpressionExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.PropertyInfoExtensions;
@@ -20,605 +21,827 @@ namespace Rocks
 	{
 		protected RockCore() { }
 
-		protected ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>> CreateReadOnlyHandlerDictionary()
+		protected ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> CreateReadOnlyHandlerDictionary()
 		{
-			return new ReadOnlyDictionary<string, ReadOnlyCollection<HandlerInformation>>(
+			return new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				this.Handlers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.AsReadOnly()));
 		}
 
 		public void HandleDelegate(Expression<Action<T>> expression, Delegate handler)
 		{
 			this.Namespaces.Add(handler.GetType().Namespace);
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleDelegate(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount)
 		{
 			this.Namespaces.Add(handler.GetType().Namespace);
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction(Expression<Action<T>> expression)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction(Expression<Action<T>> expression, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction(Expression<Action<T>> expression, Action handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction(Expression<Action<T>> expression, Action handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			return new ReturnValue<TResult>(info);
 		}
 
 		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			return new ReturnValue<TResult>(info);
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
 		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler, uint expectedCallCount)
 		{
-			var method = ((MethodCallExpression)expression.Body);
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, method.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.Method.GetMethodDescription(this.Namespaces),
+			var methodCall = ((MethodCallExpression)expression.Body);
+			var method = methodCall.Method;
+			method.AddNamespaces(this.Namespaces);
+
+			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
+			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -629,14 +852,14 @@ namespace Rocks
 			if (property.CanRead)
 			{
 				var info = property.GetGetterHandler();
-				this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 
 			if (property.CanWrite)
 			{
 				var info = property.GetSetterHandler();
-				this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 		}
@@ -648,12 +871,12 @@ namespace Rocks
 
 		//	if (property.CanRead)
 		//	{
-		//		this.Handlers[property.GetMethod.GetMethodDescription(this.namespaces)] = property.GetGetterHandler();
+		//		this.Handlers[property.GetMethod.MetadataToken] = property.GetGetterHandler();
 		//	}
 
 		//	if (property.CanWrite)
 		//	{
-		//		this.Handlers[property.SetMethod.GetMethodDescription(this.namespaces)] = new HandlerInformation(
+		//		this.Handlers[property.SetMethod.MetadataToken] = new HandlerInformation(
 		//			property.CreateDefaultSetterExpectation());
 		//	}
 		//}
@@ -665,14 +888,14 @@ namespace Rocks
 			if (property.CanRead)
 			{
 				var info = property.GetGetterHandler(expectedCallCount);
-				this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 
 			if (property.CanWrite)
 			{
 				var info = property.GetSetterHandler(expectedCallCount);
-				this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 		}
@@ -681,7 +904,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(getter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -689,7 +912,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(getter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -697,7 +920,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(setter);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -705,7 +928,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -714,9 +937,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(getter);
 			var setInfo = property.GetSetterHandler(setter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -725,9 +948,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -739,14 +962,14 @@ namespace Rocks
 			if (property.CanRead)
 			{
 				var info = property.GetGetterHandler(indexerExpressions);
-				this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 
 			if (property.CanWrite)
 			{
 				var info = property.GetSetterHandler(indexerExpressions);
-				this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 		}
@@ -759,14 +982,14 @@ namespace Rocks
 			if (property.CanRead)
 			{
 				var info = property.GetGetterHandler(indexerExpressions);
-				this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 
 			if (property.CanWrite)
 			{
 				var info = property.GetSetterHandler(indexerExpressions);
-				this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 					() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			}
 		}
@@ -775,7 +998,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -783,7 +1006,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -791,7 +1014,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -799,7 +1022,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -808,9 +1031,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -819,9 +1042,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -829,7 +1052,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -837,7 +1060,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -845,7 +1068,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -853,7 +1076,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -862,9 +1085,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -873,9 +1096,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -883,7 +1106,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -891,7 +1114,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -899,7 +1122,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -907,7 +1130,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -916,9 +1139,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -927,9 +1150,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -937,7 +1160,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -945,7 +1168,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -953,7 +1176,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -961,7 +1184,7 @@ namespace Rocks
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
@@ -970,9 +1193,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -981,9 +1204,9 @@ namespace Rocks
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
-			this.Handlers.AddOrUpdate(property.GetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
-			this.Handlers.AddOrUpdate(property.SetMethod.GetMethodDescription(this.Namespaces),
+			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
 		}
 
@@ -1006,7 +1229,7 @@ namespace Rocks
 			}
 		}
 
-		protected Dictionary<string, List<HandlerInformation>> Handlers { get; } = new Dictionary<string, List<HandlerInformation>>();
+		protected Dictionary<int, List<HandlerInformation>> Handlers { get; } = new Dictionary<int, List<HandlerInformation>>();
 		protected SortedSet<string> Namespaces { get; } = new SortedSet<string>();
 		protected List<IMock> Rocks { get; } = new List<IMock>();
 	}

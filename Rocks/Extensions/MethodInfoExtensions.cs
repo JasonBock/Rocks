@@ -52,6 +52,17 @@ namespace Rocks.Extensions
 			return @this.GetMethodDescription(namespaces, false);
 		}
 
+		internal static void AddNamespaces(this MethodInfo @this, SortedSet<string> namespaces)
+		{
+			namespaces.Add(@this.ReturnType.Namespace);
+			@this.GetParameters(namespaces);
+
+			if (@this.IsGenericMethodDefinition)
+			{
+				@this.GetGenericArguments(namespaces);
+			}
+		}
+
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
 		{
 			if(@this.IsGenericMethod)
