@@ -18,7 +18,11 @@ namespace Rocks.Extensions
 			if(foundMethod == null)
 			{
 				var types = new List<Type>(@this.GetInterfaces());
-				types.Add(@this.BaseType);
+
+				if(@this.BaseType != null)
+				{
+					types.Add(@this.BaseType);
+				}
 
 				return (from type in types
 						  let baseMethod = type.FindMethod(methodHandle)

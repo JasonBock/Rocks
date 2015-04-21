@@ -10,6 +10,32 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsTests
 	{
 		[Test]
+		public void FindMethodWithMethodOnGivenType()
+		{
+			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
+
+			var foundMethod = typeof(IMetadata).FindMethod(method.MetadataToken);
+
+			Assert.AreEqual(method, foundMethod);
+		}
+
+		[Test]
+		public void FindMethodWhenTokenDoesNotExist()
+		{
+			Assert.IsNull(typeof(IMetadata).FindMethod(0));
+		}
+
+		[Test]
+		public void FindMethodWithMethodOnBaseType()
+		{
+			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
+
+			var foundMethod = typeof(Metadata).FindMethod(method.MetadataToken);
+
+			Assert.AreEqual(method, foundMethod);
+		}
+
+		[Test]
 		public void FindPropertyWhenPropertyDoesNotExist()
 		{
 			Assert.Throws<PropertyNotFoundException>(() => typeof(ITypeExtensions).FindProperty("x", PropertyAccessors.Get));
@@ -353,5 +379,16 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 		string this[int index] { set; }
 		event EventHandler Event;
 		event EventHandler<MyGenericEventArgs> GenericEvent;
+	}
+
+	public interface IMetadata
+	{
+		void Target();
+	}
+
+	public class Metadata
+		: IMetadata
+	{
+		public void Target() { }
 	}
 }
