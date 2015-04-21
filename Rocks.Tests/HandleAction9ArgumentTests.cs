@@ -19,6 +19,22 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeAndRaiseEvent()
+		{
+			var rock = Rock.Create<IHandleAction9ArgumentTests>();
+			var adornment = rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9));
+			adornment.Raises(nameof(IHandleAction9ArgumentTests.TargetEvent), EventArgs.Empty);
+
+			var wasEventRaised = false;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => wasEventRaised = true;
+			chunk.Target(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+			Assert.IsTrue(wasEventRaised);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithHandler()
 		{
 			var argumentA = 0;

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -16,6 +17,25 @@ namespace Rocks.Tests
 			chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 			chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110);
 
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeAndRaiseEvent()
+		{
+			var rock = Rock.Create<IHandleFunc11ArgumentTests>();
+			var referenceAdornment = rock.HandleFunc(_ => _.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11));
+			referenceAdornment.Raises(nameof(IHandleFunc11ArgumentTests.TargetEvent), EventArgs.Empty);
+			var valueAdornment = rock.HandleFunc(_ => _.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110));
+			valueAdornment.Raises(nameof(IHandleFunc11ArgumentTests.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+			chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110);
+
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -210,6 +230,7 @@ namespace Rocks.Tests
 
 	public interface IHandleFunc11ArgumentTests
 	{
+		event EventHandler TargetEvent;
 		string ReferenceTarget(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j, int k);
 		int ValueTarget(int a, int b, int c, int d, int e, int f, int g, int h, int i, int j, int k);
 	}

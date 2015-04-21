@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -16,6 +17,25 @@ namespace Rocks.Tests
 			chunk.ReferenceTarget(1);
 			chunk.ValueTarget(10);
 
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeAndRaiseEvent()
+		{
+			var rock = Rock.Create<IHandleFunc1ArgumentTests>();
+			var referenceAdornment = rock.HandleFunc(_ => _.ReferenceTarget(1));
+			referenceAdornment.Raises(nameof(IHandleFunc1ArgumentTests.TargetEvent), EventArgs.Empty);
+			var valueAdornment = rock.HandleFunc(_ => _.ValueTarget(10));
+			valueAdornment.Raises(nameof(IHandleFunc1ArgumentTests.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.ReferenceTarget(1);
+			chunk.ValueTarget(10);
+
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -89,6 +109,7 @@ namespace Rocks.Tests
 
 	public interface IHandleFunc1ArgumentTests
 	{
+		event EventHandler TargetEvent;
 		string ReferenceTarget(int a);
 		int ValueTarget(int a);
 	}
