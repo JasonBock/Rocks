@@ -26,7 +26,7 @@ namespace Rocks
 				this.Handlers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.AsReadOnly()));
 		}
 
-		public void HandleDelegate(Expression<Action<T>> expression, Delegate handler)
+		public MethodAdornments HandleDelegate(Expression<Action<T>> expression, Delegate handler)
 		{
 			this.Namespaces.Add(handler.GetType().Namespace);
 			var methodCall = ((MethodCallExpression)expression.Body);
@@ -36,9 +36,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleDelegate(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount)
+		public MethodAdornments HandleDelegate(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount)
 		{
 			this.Namespaces.Add(handler.GetType().Namespace);
 			var methodCall = ((MethodCallExpression)expression.Body);
@@ -48,9 +49,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction(Expression<Action<T>> expression)
+		public MethodAdornments HandleAction(Expression<Action<T>> expression)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -59,9 +61,10 @@ namespace Rocks
 			var info = new HandlerInformation(methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction(Expression<Action<T>> expression, uint expectedCallCount)
+		public MethodAdornments HandleAction(Expression<Action<T>> expression, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -70,9 +73,10 @@ namespace Rocks
 			var info = new HandlerInformation(expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction(Expression<Action<T>> expression, Action handler)
+		public MethodAdornments HandleAction(Expression<Action<T>> expression, Action handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -81,9 +85,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction(Expression<Action<T>> expression, Action handler, uint expectedCallCount)
+		public MethodAdornments HandleAction(Expression<Action<T>> expression, Action handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -92,9 +97,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler)
+		public MethodAdornments HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -103,9 +109,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1>(Expression<Action<T>> expression, Action<T1> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -114,9 +121,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler)
+		public MethodAdornments HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -125,9 +133,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -136,9 +145,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler)
+		public MethodAdornments HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -147,9 +157,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3>(Expression<Action<T>> expression, Action<T1, T2, T3> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -158,9 +169,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -169,9 +181,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4>(Expression<Action<T>> expression, Action<T1, T2, T3, T4> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -180,9 +193,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -191,9 +205,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -202,9 +217,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -213,9 +229,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -224,9 +241,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -235,9 +253,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -246,9 +265,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -257,9 +277,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -268,9 +289,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -279,9 +301,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -290,9 +313,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -301,9 +325,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -312,9 +337,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -323,9 +349,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -334,9 +361,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -345,9 +373,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -356,9 +385,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -367,9 +397,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -378,9 +409,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -389,9 +421,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -400,9 +433,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -411,9 +445,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -422,9 +457,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -433,9 +469,10 @@ namespace Rocks
 			var info = new HandlerInformation(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler, uint expectedCallCount)
+		public MethodAdornments HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -444,6 +481,7 @@ namespace Rocks
 			var info = new HandlerInformation(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
 		public MethodAdornments<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
@@ -470,7 +508,7 @@ namespace Rocks
 			return new MethodAdornments<TResult>(info);
 		}
 
-		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
+		public MethodAdornments HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -479,9 +517,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -490,9 +529,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
+		public MethodAdornments HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -501,9 +541,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -512,9 +553,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -523,9 +565,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -534,9 +577,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -545,9 +589,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -556,9 +601,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -567,9 +613,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -578,9 +625,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -589,9 +637,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -600,9 +649,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -611,9 +661,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -622,9 +673,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -633,9 +685,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -644,9 +697,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -655,9 +709,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -666,9 +721,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -677,9 +733,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -688,9 +745,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -699,9 +757,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -710,9 +769,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -721,9 +781,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -732,9 +793,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -743,9 +805,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -754,9 +817,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -765,9 +829,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -776,9 +841,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -787,9 +853,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -798,9 +865,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -809,9 +877,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -820,9 +889,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -831,9 +901,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler, uint expectedCallCount)
+		public MethodAdornments HandleFunc<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult>(Expression<Func<T, TResult>> expression, Func<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, TResult> handler, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -842,29 +913,36 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty(string name)
+		public PropertyMethodAdornments HandleProperty(string name)
 		{
 			var property = typeof(T).FindProperty(name);
+			var getterInfo = default(HandlerInformation);
+			var setterInfo = default(HandlerInformation);
 
 			if (property.CanRead)
 			{
-				var info = property.GetGetterHandler();
+				getterInfo = property.GetGetterHandler();
 				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { getterInfo }, _ => _.Add(getterInfo));
 			}
 
 			if (property.CanWrite)
 			{
-				var info = property.GetSetterHandler();
+				setterInfo = property.GetSetterHandler();
 				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { setterInfo }, _ => _.Add(setterInfo));
 			}
+
+			return new PropertyMethodAdornments(
+				getterInfo != null ? new MethodAdornments(getterInfo) : null, 
+				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 
 		// TODO, probably need to rename method so I don't get ambiguous calls :(
-		//public void HandleProperty<TPropertyValue>(string name, Expression<Func<TPropertyValue>> setterExpectation)
+		//public MethodAdornments HandleProperty<TPropertyValue>(string name, Expression<Func<TPropertyValue>> setterExpectation)
 		//{
 		//	var property = typeof(T).FindProperty(name);
 
@@ -880,58 +958,68 @@ namespace Rocks
 		//	}
 		//}
 
-		public void HandleProperty(string name, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty(string name, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name);
+			var getterInfo = default(HandlerInformation);
+			var setterInfo = default(HandlerInformation);
 
 			if (property.CanRead)
 			{
-				var info = property.GetGetterHandler(expectedCallCount);
+				getterInfo = property.GetGetterHandler(expectedCallCount);
 				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { getterInfo }, _ => _.Add(getterInfo));
 			}
 
 			if (property.CanWrite)
 			{
-				var info = property.GetSetterHandler(expectedCallCount);
+				setterInfo = property.GetSetterHandler(expectedCallCount);
 				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { setterInfo }, _ => _.Add(setterInfo));
 			}
+
+			return new PropertyMethodAdornments(
+				getterInfo != null ? new MethodAdornments(getterInfo) : null,
+				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter)
+		public MethodAdornments HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter)
+		public MethodAdornments HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<TPropertyValue>(string name, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter)
+		public PropertyMethodAdornments HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(getter);
@@ -940,9 +1028,10 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty<TPropertyValue>(string name, Func<TPropertyValue> getter, Action<TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(getter, expectedCallCount);
@@ -951,81 +1040,98 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty(Expression<Func<object[]>> indexers)
+		public PropertyMethodAdornments HandleProperty(Expression<Func<object[]>> indexers)
 		{
 			var indexerExpressions = indexers.ParseForPropertyIndexers();
 			var property = typeof(T).FindProperty(indexerExpressions.Select(_ => _.Type).ToArray());
+			var getterInfo = default(HandlerInformation);
+			var setterInfo = default(HandlerInformation);
 
 			if (property.CanRead)
 			{
-				var info = property.GetGetterHandler(indexerExpressions);
+				getterInfo = property.GetGetterHandler(indexerExpressions);
 				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { getterInfo }, _ => _.Add(getterInfo));
 			}
 
 			if (property.CanWrite)
 			{
-				var info = property.GetSetterHandler(indexerExpressions);
+				setterInfo = property.GetSetterHandler(indexerExpressions);
 				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { setterInfo }, _ => _.Add(setterInfo));
 			}
+
+			return new PropertyMethodAdornments(
+				getterInfo != null ? new MethodAdornments(getterInfo) : null,
+				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 
-		public void HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty(Expression<Func<object[]>> indexers, uint expectedCallCount)
 		{
 			var indexerExpressions = indexers.ParseForPropertyIndexers();
 			var property = typeof(T).FindProperty(indexerExpressions.Select(_ => _.Type).ToArray());
+			var getterInfo = default(HandlerInformation);
+			var setterInfo = default(HandlerInformation);
 
 			if (property.CanRead)
 			{
-				var info = property.GetGetterHandler(indexerExpressions);
+				getterInfo = property.GetGetterHandler(indexerExpressions);
 				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { getterInfo }, _ => _.Add(getterInfo));
 			}
 
 			if (property.CanWrite)
 			{
-				var info = property.GetSetterHandler(indexerExpressions);
+				setterInfo = property.GetSetterHandler(indexerExpressions);
 				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
-					() => new List<HandlerInformation> { info }, _ => _.Add(info));
+					() => new List<HandlerInformation> { setterInfo }, _ => _.Add(setterInfo));
 			}
+
+			return new PropertyMethodAdornments(
+				getterInfo != null ? new MethodAdornments(getterInfo) : null,
+				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter)
+		public MethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter)
+		public MethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter)
+		public PropertyMethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
@@ -1034,9 +1140,10 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
@@ -1045,41 +1152,46 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter)
+		public MethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter)
+		public MethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter)
+		public PropertyMethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
@@ -1088,9 +1200,10 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
@@ -1099,41 +1212,46 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter)
+		public MethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter)
+		public MethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter)
+		public PropertyMethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
@@ -1142,9 +1260,10 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
@@ -1153,41 +1272,46 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter)
+		public MethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter)
+		public MethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
+		public MethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
+			return new MethodAdornments(info);
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter)
+		public PropertyMethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
@@ -1196,9 +1320,10 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
-		public void HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
+		public PropertyMethodAdornments HandleProperty<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
@@ -1207,6 +1332,7 @@ namespace Rocks
 				() => new List<HandlerInformation> { getInfo }, _ => _.Add(getInfo));
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { setInfo }, _ => _.Add(setInfo));
+			return new PropertyMethodAdornments(new MethodAdornments(getInfo), new MethodAdornments(setInfo));
 		}
 
 		public abstract T Make();

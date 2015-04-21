@@ -143,6 +143,7 @@
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="InMemoryRock.cs" />
     <Compile Include="MethodAdornments.cs" />
+    <Compile Include="PropertyMethodAdornments.cs" />
     <Compile Include="RaiseEventInformation.cs" />
     <Compile Include="ReflectionValues.cs" />
     <Compile Include="RockAssembly.cs" />
