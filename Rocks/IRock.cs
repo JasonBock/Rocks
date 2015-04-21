@@ -44,8 +44,8 @@ namespace Rocks
 		void HandleAction<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>(Expression<Action<T>> expression, Action<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> handler, uint expectedCallCount);
 		void HandleDelegate(Expression<Action<T>> expression, Delegate handler);
 		void HandleDelegate(Expression<Action<T>> expression, Delegate handler, uint expectedCallCount);
-		ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression);
-		ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount);
+		MethodAdornments<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression);
+		MethodAdornments<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount);
 		void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler);
 		void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount);
 		void HandleFunc<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler);

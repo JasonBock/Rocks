@@ -7,7 +7,6 @@ using System.Linq.Expressions;
 using static Rocks.Extensions.ExpressionOfTExtensions;
 using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
 using static Rocks.Extensions.IMockExtensions;
-using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodCallExpressionExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.PropertyInfoExtensions;
@@ -447,7 +446,7 @@ namespace Rocks
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 		}
 
-		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
+		public MethodAdornments<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -456,10 +455,10 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new ReturnValue<TResult>(info);
+			return new MethodAdornments<TResult>(info);
 		}
 
-		public ReturnValue<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
+		public MethodAdornments<TResult> HandleFunc<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
@@ -468,7 +467,7 @@ namespace Rocks
 			var info = new HandlerInformation<TResult>(expectedCallCount, methodCall.GetArgumentExpectations());
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new ReturnValue<TResult>(info);
+			return new MethodAdornments<TResult>(info);
 		}
 
 		public void HandleFunc<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)

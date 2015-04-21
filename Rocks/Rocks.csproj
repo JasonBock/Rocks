@@ -142,6 +142,8 @@
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="InMemoryRock.cs" />
+    <Compile Include="MethodAdornments.cs" />
+    <Compile Include="RaiseEventInformation.cs" />
     <Compile Include="ReflectionValues.cs" />
     <Compile Include="RockAssembly.cs" />
     <Compile Include="RockCore.cs" />
@@ -156,7 +158,7 @@
     <Compile Include="IMock.cs" />
     <Compile Include="ObjectEquality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReturnValue.cs" />
+    <Compile Include="MethodAdornmentsOfTResult.cs" />
     <Compile Include="Rock.cs" />
     <Compile Include="Exceptions\VerificationException.cs" />
     <Compile Include="Exceptions\CompilationException.cs" />

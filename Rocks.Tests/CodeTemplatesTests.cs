@@ -40,6 +40,7 @@ namespace Rocks.Tests
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as e)(b) as c :
 					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
@@ -68,6 +69,7 @@ namespace Rocks.Tests
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as d)(b) as c :
 			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
@@ -95,6 +97,7 @@ namespace Rocks.Tests
 				var result = methodHandler.Method != null ?
 					(c)(methodHandler.Method as e)(b) :
 					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
@@ -123,6 +126,7 @@ namespace Rocks.Tests
 		var result = methodHandler.Method != null ?
 			(c)(methodHandler.Method as d)(b) :
 			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
@@ -156,6 +160,7 @@ namespace Rocks.Tests
 					(methodHandler.Method as d)(b);
 				}
 	
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				break;
 			}
@@ -190,6 +195,7 @@ namespace Rocks.Tests
 			(methodHandler.Method as c)(b);
 		}
 	
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 	}
 	else
@@ -267,6 +273,7 @@ namespace Rocks.Tests
 					(methodHandler.Method as d)(b);
 				}
 	
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				break;
 			}
@@ -301,6 +308,7 @@ namespace Rocks.Tests
 			(methodHandler.Method as c)(b);
 		}
 	
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 	}
 	else
@@ -383,6 +391,7 @@ namespace h
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as e)(b) as c :
 					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
@@ -412,6 +421,7 @@ namespace h
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as d)(b) as c :
 			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
@@ -440,6 +450,7 @@ namespace h
 				var result = methodHandler.Method != null ?
 					(c)(methodHandler.Method as e)(b) :
 					(methodHandler as HandlerInformation<c>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
@@ -469,6 +480,7 @@ namespace h
 		var result = methodHandler.Method != null ?
 			(c)(methodHandler.Method as d)(b) :
 			(methodHandler as HandlerInformation<c>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}

@@ -26,6 +26,7 @@ $@"get
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -50,6 +51,7 @@ $@"get
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnType} :
 			(methodHandler as HandlerInformation<{returnType}>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -74,6 +76,7 @@ $@"get
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -98,6 +101,7 @@ $@"get
 		var result = methodHandler.Method != null ?
 			({returnType})(methodHandler.Method as {delegateCast})({argumentNames}) :
 			(methodHandler as HandlerInformation<{returnType}>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -127,6 +131,7 @@ $@"set
 					(methodHandler.Method as {delegateCast})({argumentNames});
 				}}
 	
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				break;
 			}}
@@ -157,6 +162,7 @@ $@"set
 			(methodHandler.Method as {delegateCast})({argumentNames});
 		}}
 	
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 	}}
 	else
@@ -212,6 +218,7 @@ $@"public {methodNameWithOverride}
 					(methodHandler.Method as {delegateCast})({argumentNames});
 				}}
 	
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				break;
 			}}
@@ -242,6 +249,7 @@ $@"public {methodNameWithOverride}
 			(methodHandler.Method as {delegateCast})({argumentNames});
 		}}
 	
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 	}}
 	else
@@ -319,6 +327,7 @@ $@"public {methodNameWithOverride}
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -345,6 +354,7 @@ $@"public {methodNameWithOverride}
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 			(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -370,6 +380,7 @@ $@"public {methodNameWithOverride}
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -396,6 +407,7 @@ $@"public {methodNameWithOverride}
 		var result = methodHandler.Method != null ?
 			({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 			(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}

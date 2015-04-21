@@ -11,6 +11,7 @@ namespace Rocks
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
 		private int callCount;
+		private List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
 
 		internal HandlerInformation()
 			: this(null, 1, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))
@@ -47,12 +48,25 @@ namespace Rocks
 			this.Expectations = expectations;
 		}
 
+		internal void AddRaiseEvent(RaiseEventInformation raiseEvent)
+		{
+			this.raiseEvents.Add(raiseEvent);
+		}
+
 		public void IncrementCallCount()
 		{
 			Interlocked.Increment(ref this.callCount);
 		}
 
-		internal IReadOnlyList<string> Verify()
+		public void RaiseEvents(IMock target)
+		{
+			foreach(var raiseEvent in this.raiseEvents)
+			{
+				target.Raise(raiseEvent.Name, raiseEvent.Args);
+			}
+		}
+
+      internal IReadOnlyList<string> Verify()
 		{
 			var verifications = new List<string>();
 
