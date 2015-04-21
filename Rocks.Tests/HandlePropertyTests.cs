@@ -21,6 +21,61 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetPropertyAndEventRaisedOnSetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetterAndSetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGetAndSetPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
@@ -60,6 +115,67 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+			value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnSetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+			value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetterAndSetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			chunk.GetterAndSetter = Guid.NewGuid().ToString();
+			var value = chunk.GetterAndSetter;
+			value = chunk.GetterAndSetter;
+
+			Assert.AreEqual(4, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperties>();
@@ -89,6 +205,25 @@ namespace Rocks.Tests
 
 		[Test]
 		public void MakeWithGetHandler()
+		{
+			var returnValue = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue);
+			adornments.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			var value = chunk.GetterOnly;
+
+			Assert.AreEqual(returnValue, value);
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetHandlerAndEventRaised()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -128,6 +263,26 @@ namespace Rocks.Tests
 			value = chunk.GetterOnly;
 
 			Assert.AreEqual(returnValue, value);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetHandlerAndEventRaisedAndExpectedCallCount()
+		{
+			var returnValue = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2);
+			adornments.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			var value = chunk.GetterOnly;
+			value = chunk.GetterOnly;
+
+			Assert.AreEqual(returnValue, value);
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -175,6 +330,26 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithSetHandlerAndEventRaised()
+		{
+			var data = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value)
+				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.SetterOnly = data;
+
+			Assert.AreEqual(data, setValue);
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithSetHandlerAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
@@ -202,6 +377,27 @@ namespace Rocks.Tests
 			chunk.SetterOnly = data;
 
 			Assert.AreEqual(data, setValue);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithSetHandlerAndEventRaisedAndExpectedCallCount()
+		{
+			var data = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2)
+				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.SetterOnly = data;
+			chunk.SetterOnly = data;
+
+			Assert.AreEqual(data, setValue);
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -250,6 +446,76 @@ namespace Rocks.Tests
 
 			Assert.AreEqual(setValue, data, "Setter");
 			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetter()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnSetter()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetter()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -317,6 +583,82 @@ namespace Rocks.Tests
 
 			Assert.AreEqual(setValue, data, "Setter");
 			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterExpectedCallCount()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+			propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnSetterExpectedCallCount()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+			propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetterExpectedCallCount()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.GetterAndSetter = data;
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+			propertyValue = chunk.GetterAndSetter;
+
+			Assert.AreEqual(setValue, data, "Setter");
+			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.AreEqual(4, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -440,6 +782,70 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetter()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetter()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetter()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
 		{
 			var a = 44;
@@ -487,7 +893,77 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndExpectedCallCount()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetterAndExpectedCallCount()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(2, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetterAndExpectedCallCount()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.AreEqual(4, eventRaisedCount);
+			rock.Verify();
 		}
 
 		[Test]
@@ -563,6 +1039,7 @@ namespace Rocks.Tests
 
 	public interface IProperties
 	{
+		event EventHandler TargetEvent;
 		string GetterOnly { get; }
 		string SetterOnly { set; }
 		string GetterAndSetter { get;  set; }

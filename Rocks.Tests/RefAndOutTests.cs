@@ -48,6 +48,24 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeRefActionWithDelegateAndEventRaised()
+		{
+			var a = 1;
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget))
+				.Raises(nameof(IHaveRefAndOut.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.RefTarget(ref a);
+
+			Assert.AreEqual(2, a, nameof(a));
+			Assert.AreEqual(1, eventRaisedCount);
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeRefActionWithGenericDelegate()
 		{
 			var a = Guid.Empty;
@@ -74,6 +92,25 @@ namespace Rocks.Tests
 			chunk.RefTarget(ref a);
 
 			Assert.AreEqual(2, a, nameof(a));
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeRefActionWithDelegateAndEventRaisedAndExpectedCallCount()
+		{
+			var a = 1;
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget), 2)
+				.Raises(nameof(IHaveRefAndOut.TargetEvent), EventArgs.Empty);
+
+			var eventRaisedCount = 0;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => eventRaisedCount++;
+			chunk.RefTarget(ref a);
+			chunk.RefTarget(ref a);
+
+			Assert.AreEqual(2, a, nameof(a));
+			Assert.AreEqual(2, eventRaisedCount);
 			rock.Verify();
 		}
 
@@ -167,6 +204,7 @@ namespace Rocks.Tests
 
 	public interface IHaveRefAndOut
 	{
+		event EventHandler TargetEvent;
 		void OutTarget(out int a);
 		int OutTargetWithReturn(out int a);
 		void RefTarget(ref int a);

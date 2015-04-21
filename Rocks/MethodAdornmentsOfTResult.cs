@@ -7,9 +7,10 @@
 			: base(handler)
 		{ }
 
-		public void Returns(TResult returnValue)
+		public MethodAdornments<TResult> Returns(TResult returnValue)
 		{
 			(this.handler as HandlerInformation<TResult>).ReturnValue = returnValue;
+			return this;
 		}
 	}
 }

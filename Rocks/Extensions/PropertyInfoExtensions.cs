@@ -107,7 +107,7 @@ namespace Rocks.Extensions
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
 			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
-				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
+				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 		}
 

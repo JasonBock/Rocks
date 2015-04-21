@@ -1078,14 +1078,14 @@ namespace Rocks
 
 			if (property.CanRead)
 			{
-				getterInfo = property.GetGetterHandler(indexerExpressions);
+				getterInfo = property.GetGetterHandler(indexerExpressions, expectedCallCount);
 				this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 					() => new List<HandlerInformation> { getterInfo }, _ => _.Add(getterInfo));
 			}
 
 			if (property.CanWrite)
 			{
-				setterInfo = property.GetSetterHandler(indexerExpressions);
+				setterInfo = property.GetSetterHandler(indexerExpressions, expectedCallCount);
 				this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 					() => new List<HandlerInformation> { setterInfo }, _ => _.Add(setterInfo));
 			}

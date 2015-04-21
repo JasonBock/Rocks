@@ -11,9 +11,10 @@ namespace Rocks
 			this.handler = handler;
 		}
 
-		public void Raises(string eventName, EventArgs args)
+		public MethodAdornments Raises(string eventName, EventArgs args)
 		{
 			this.handler.AddRaiseEvent(new RaiseEventInformation(eventName, args));
+			return this;
 		}
 	}
 }
