@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -116,6 +117,7 @@ namespace Rocks.Tests
 
 	public interface IHandleAction9ArgumentTests
 	{
-		void Target(int a, int b, int c, int d, int e, int f, int g, int h, int i);
+		event EventHandler TargetEvent;
+      void Target(int a, int b, int c, int d, int e, int f, int g, int h, int i);
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.Tests
 {
@@ -14,6 +15,22 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3);
 
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeAndRaiseEvent()
+		{
+			var rock = Rock.Create<IHandleAction3ArgumentTests>();
+			var adornment = rock.HandleAction(_ => _.Target(1, 2, 3));
+			adornment.Raises(nameof(IHandleAction3ArgumentTests.TargetEvent), EventArgs.Empty);
+
+			var wasEventRaised = false;
+			var chunk = rock.Make();
+			chunk.TargetEvent += (s, e) => wasEventRaised = true;
+			chunk.Target(1, 2, 3);
+
+			Assert.IsTrue(wasEventRaised);
 			rock.Verify();
 		}
 
@@ -80,6 +97,7 @@ namespace Rocks.Tests
 
 	public interface IHandleAction3ArgumentTests
 	{
+		event EventHandler TargetEvent;
 		void Target(int a, int b, int c);
 	}
 }
