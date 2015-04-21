@@ -60,17 +60,17 @@ namespace Rocks
 
 		public void RaiseEvents(IMock target)
 		{
-			foreach(var raiseEvent in this.raiseEvents)
+			foreach (var raiseEvent in this.raiseEvents)
 			{
 				target.Raise(raiseEvent.Name, raiseEvent.Args);
 			}
 		}
 
-      internal IReadOnlyList<string> Verify()
+		internal IReadOnlyList<string> Verify()
 		{
 			var verifications = new List<string>();
 
-			if(this.ExpectedCallCount != this.callCount)
+			if (this.ExpectedCallCount != this.callCount)
 			{
 				verifications.Add(string.Format(HandlerInformation.ErrorExpectedCallCount,
 					this.ExpectedCallCount, this.callCount));
@@ -87,5 +87,6 @@ namespace Rocks
 		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; }
 		internal uint ExpectedCallCount { get; }
 		public Delegate Method { get; }
+		internal ReadOnlyCollection<RaiseEventInformation> GetRaiseEvents() => this.raiseEvents.AsReadOnly();
 	}
 }

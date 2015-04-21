@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace Rocks.Tests
 {
 	[TestFixture]
-	public sealed class ReturnValueTests
+	public sealed class MethodAdornmentsOfTResultsTests
 	{
 		[Test]
 		public void Create()

@@ -22,8 +22,8 @@ namespace Rocks.Tests
 		public void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleAction1ArgumentTests>();
-			var adornment = rock.HandleAction(_ => _.Target(1));
-			adornment.Raises(nameof(IHandleAction1ArgumentTests.TargetEvent), EventArgs.Empty);
+			rock.HandleAction(_ => _.Target(1))
+				.Raises(nameof(IHandleAction1ArgumentTests.TargetEvent), EventArgs.Empty);
 
 			var wasEventRaised = false;
 			var chunk = rock.Make();

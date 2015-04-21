@@ -24,8 +24,8 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -42,8 +42,8 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -60,9 +60,9 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter));
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -118,8 +118,8 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -138,8 +138,8 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -158,9 +158,9 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -209,8 +209,8 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue);
-			adornments.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue)
+				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -272,8 +272,8 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2);
-			adornments.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2)
+				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -457,8 +457,8 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -480,8 +480,8 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -503,9 +503,9 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -594,8 +594,8 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -619,8 +619,8 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -644,9 +644,9 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -789,8 +789,8 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c })
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -810,8 +810,8 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c })
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -831,9 +831,9 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c });
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c })
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -904,8 +904,8 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -927,8 +927,8 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
@@ -950,9 +950,9 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			var adornments = rock.HandleProperty(() => new object[] { a, b, c }, 2);
-			adornments.Getter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
-			adornments.Setter.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
+			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
+				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Make();
