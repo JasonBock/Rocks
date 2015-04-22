@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 		public void GetVerificationFailuresWhenFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 
@@ -27,7 +27,7 @@ namespace Rocks.Tests.Extensions
 		public void GetVerificationFailuresWhenNoFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 			chunk.TargetMethod();
@@ -40,7 +40,7 @@ namespace Rocks.Tests.Extensions
 		public void Raise()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 			var uses = new UsesIMockExtensions(chunk, true);
@@ -53,7 +53,7 @@ namespace Rocks.Tests.Extensions
 		public void RaiseWhenNoHandlersExist()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 			var uses = new UsesIMockExtensions(chunk, false);
@@ -66,7 +66,7 @@ namespace Rocks.Tests.Extensions
 		public void VerifyWhenFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 
@@ -77,7 +77,7 @@ namespace Rocks.Tests.Extensions
 		public void VerifyWhenNoFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 			chunk.TargetMethod();

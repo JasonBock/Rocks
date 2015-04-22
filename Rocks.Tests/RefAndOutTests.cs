@@ -38,7 +38,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget));
+			rock.Handle(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget));
 
 			var chunk = rock.Make();
 			chunk.RefTarget(ref a);
@@ -52,7 +52,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget))
+			rock.Handle(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget))
 				.Raises(nameof(IHaveRefAndOut.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -70,7 +70,7 @@ namespace Rocks.Tests
 		{
 			var a = Guid.Empty;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTargetWithGeneric<Guid>(ref a), 
+			rock.Handle(_ => _.RefTargetWithGeneric<Guid>(ref a), 
 				new RefTargetWithGeneric<Guid>(this.MyActionRefGuidTarget));
 
 			var chunk = rock.Make();
@@ -85,7 +85,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget), 2);
+			rock.Handle(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget), 2);
 
 			var chunk = rock.Make();
 			chunk.RefTarget(ref a);
@@ -100,7 +100,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget), 2)
+			rock.Handle(_ => _.RefTarget(ref a), new RefTarget(this.MyActionRefTarget), 2)
 				.Raises(nameof(IHaveRefAndOut.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -119,7 +119,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.OutTarget(out a), new OutTarget(this.MyActionOutTarget));
+			rock.Handle(_ => _.OutTarget(out a), new OutTarget(this.MyActionOutTarget));
 
 			var chunk = rock.Make();
 			chunk.OutTarget(out a);
@@ -133,7 +133,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.OutTarget(out a), new OutTarget(this.MyActionOutTarget), 2);
+			rock.Handle(_ => _.OutTarget(out a), new OutTarget(this.MyActionOutTarget), 2);
 
 			var chunk = rock.Make();
 			chunk.OutTarget(out a);
@@ -148,7 +148,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTargetWithReturn(ref a), new RefTargetWithReturn(this.MyFuncRefTarget));
+			rock.Handle(_ => _.RefTargetWithReturn(ref a), new RefTargetWithReturn(this.MyFuncRefTarget));
 
 			var chunk = rock.Make();
 			chunk.RefTargetWithReturn(ref a);
@@ -162,7 +162,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.RefTargetWithReturn(ref a), new RefTargetWithReturn(this.MyFuncRefTarget), 2);
+			rock.Handle(_ => _.RefTargetWithReturn(ref a), new RefTargetWithReturn(this.MyFuncRefTarget), 2);
 
 			var chunk = rock.Make();
 			chunk.RefTargetWithReturn(ref a);
@@ -177,7 +177,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.OutTargetWithReturn(out a), new OutTargetWithReturn(this.MyFuncOutTarget));
+			rock.Handle(_ => _.OutTargetWithReturn(out a), new OutTargetWithReturn(this.MyFuncOutTarget));
 
 			var chunk = rock.Make();
 			chunk.OutTargetWithReturn(out a);
@@ -191,7 +191,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.HandleDelegate(_ => _.OutTargetWithReturn(out a), new OutTargetWithReturn(this.MyFuncOutTarget), 2);
+			rock.Handle(_ => _.OutTargetWithReturn(out a), new OutTargetWithReturn(this.MyFuncOutTarget), 2);
 
 			var chunk = rock.Make();
 			chunk.OutTargetWithReturn(out a);

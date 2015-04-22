@@ -10,9 +10,9 @@ namespace Rocks.Tests
 		public void HandleMultiple()
 		{
 			var rock = Rock.Create<IMultiple>();
-			rock.HandleAction(_ => _.Target("a", 44));
-			rock.HandleAction(_ => _.Target("b", "44"));
-			rock.HandleAction(_ => _.Target("a", "44"));
+			rock.Handle(_ => _.Target("a", 44));
+			rock.Handle(_ => _.Target("b", "44"));
+			rock.Handle(_ => _.Target("a", "44"));
 
 			var chunk = rock.Make();
 			chunk.Target("a", "44");
@@ -26,9 +26,9 @@ namespace Rocks.Tests
 		public void HandleMultipleWithDifferentExpectedCallCounts()
 		{
 			var rock = Rock.Create<IMultiple>();
-			rock.HandleAction(_ => _.Target("a", 44), 2);
-			rock.HandleAction(_ => _.Target("b", "44"), 3);
-			rock.HandleAction(_ => _.Target("a", "44"), 4);
+			rock.Handle(_ => _.Target("a", 44), 2);
+			rock.Handle(_ => _.Target("b", "44"), 3);
+			rock.Handle(_ => _.Target("a", "44"), 4);
 
 			var chunk = rock.Make();
 			chunk.Target("a", 44);
@@ -48,9 +48,9 @@ namespace Rocks.Tests
 		public void HandleMultipleAndOneIsMissed()
 		{
 			var rock = Rock.Create<IMultiple>();
-			rock.HandleAction(_ => _.Target("a", 44));
-			rock.HandleAction(_ => _.Target("b", "44"));
-			rock.HandleAction(_ => _.Target("a", "44"));
+			rock.Handle(_ => _.Target("a", 44));
+			rock.Handle(_ => _.Target("b", "44"));
+			rock.Handle(_ => _.Target("a", "44"));
 
 			var chunk = rock.Make();
 			chunk.Target("a", "44");
@@ -63,9 +63,9 @@ namespace Rocks.Tests
 		public void HandleMultipleAndCallIsIncorrect()
 		{
 			var rock = Rock.Create<IMultiple>();
-			rock.HandleAction(_ => _.Target("a", 44));
-			rock.HandleAction(_ => _.Target("b", "44"));
-			rock.HandleAction(_ => _.Target("a", "44"));
+			rock.Handle(_ => _.Target("a", 44));
+			rock.Handle(_ => _.Target("b", "44"));
+			rock.Handle(_ => _.Target("a", "44"));
 
 			var chunk = rock.Make();
 			Assert.Throws<ExpectationException>(() => chunk.Target("c", "44"));

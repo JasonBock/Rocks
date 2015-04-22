@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction10ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleAction10ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
 				.Raises(nameof(IHandleAction10ArgumentTests.TargetEvent), EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -49,7 +49,7 @@ namespace Rocks.Tests
 			var argumentJ = 0;
 
 			var rock = Rock.Create<IHandleAction10ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+			rock.Handle<int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
 				(a, b, c, d, e, f, g, h, i, j) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; });
 
 			var chunk = rock.Make();
@@ -72,7 +72,7 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction10ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 2);
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
@@ -96,7 +96,7 @@ namespace Rocks.Tests
 			var argumentJ = 0;
 
 			var rock = Rock.Create<IHandleAction10ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+			rock.Handle<int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
 				(a, b, c, d, e, f, g, h, i, j) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; }, 2);
 
 			var chunk = rock.Make();

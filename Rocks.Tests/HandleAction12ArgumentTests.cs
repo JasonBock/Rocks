@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction12ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleAction12ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12))
 				.Raises(nameof(IHandleAction12ArgumentTests.TargetEvent), EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -51,7 +51,7 @@ namespace Rocks.Tests
 			var argumentL = 0;
 
 			var rock = Rock.Create<IHandleAction12ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			rock.Handle<int, int, int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 				(a, b, c, d, e, f, g, h, i, j, k, l) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; argumentK = k; argumentL = l; });
 
 			var chunk = rock.Make();
@@ -76,7 +76,7 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction12ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 2);
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
@@ -102,7 +102,7 @@ namespace Rocks.Tests
 			var argumentL = 0;
 
 			var rock = Rock.Create<IHandleAction12ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+			rock.Handle<int, int, int, int, int, int, int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
 				(a, b, c, d, e, f, g, h, i, j, k, l) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; argumentK = k; argumentL = l; }, 2);
 
 			var chunk = rock.Make();

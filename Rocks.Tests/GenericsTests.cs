@@ -15,7 +15,7 @@ namespace Rocks.Tests
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>();
-			rock.HandleFunc<int, Base, Base>(
+			rock.Handle<int, Base, Base>(
 				_ => _.TargetWithNoConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
@@ -35,7 +35,7 @@ namespace Rocks.Tests
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>();
-			rock.HandleFunc<int, Base, Base>(
+			rock.Handle<int, Base, Base>(
 				_ => _.TargetWithNonTypeConstrains(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
@@ -55,7 +55,7 @@ namespace Rocks.Tests
 			var argumentB = default(Base);
 
 			var rock = Rock.Create<IGenerics>(new Options(CodeFileOptions.Create));
-			rock.HandleFunc<int, Base, Base>(
+			rock.Handle<int, Base, Base>(
 				_ => _.TargetWithTypeConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
@@ -83,7 +83,7 @@ namespace Rocks.Tests
 			var argumentE = default(InheritingFromBase);
 
 			var rock = Rock.Create<IGenerics>();
-			rock.HandleAction<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
+			rock.Handle<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
 				_ => _.TargetWithMultipleConstraints(expectationA, expectationB, expectationC, expectationD, expectationE),
 				(a, b, c, d, e) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; });
 			var chunk = rock.Make();

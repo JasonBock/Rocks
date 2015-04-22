@@ -40,7 +40,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IRockTests>();
-			rock.HandleAction(_ => _.Member());
+			rock.Handle(_ => _.Member());
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
@@ -54,7 +54,7 @@ namespace Rocks.Tests
 		public void MakeWithFile()
 		{
 			var rock = Rock.Create<IFileTests>(new Options(OptimizationLevel.Debug, CodeFileOptions.Create));
-			rock.HandleAction(_ => _.Member("a", 44));
+			rock.Handle(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
@@ -72,7 +72,7 @@ namespace Rocks.Tests
 		public void Remake()
 		{
 			var rock = Rock.Create<IRockTests>();
-			rock.HandleAction(_ => _.Member());
+			rock.Handle(_ => _.Member());
 
 			var chunk = rock.Make();
 			chunk.Member();
@@ -80,7 +80,7 @@ namespace Rocks.Tests
 			rock.Verify();
 
 			var secondRock = Rock.Create<IRockTests>();
-			secondRock.HandleAction(_ => _.SecondMember());
+			secondRock.Handle(_ => _.SecondMember());
 
 			var secondChunk = secondRock.Make();
 			secondChunk.SecondMember();

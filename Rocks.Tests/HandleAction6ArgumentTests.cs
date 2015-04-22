@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleAction6ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6));
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6));
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6);
@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleAction6ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6))
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6))
 				.Raises(nameof(IHandleAction6ArgumentTests.TargetEvent), EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -45,7 +45,7 @@ namespace Rocks.Tests
 			var argumentF = 0;
 
 			var rock = Rock.Create<IHandleAction6ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6),
+			rock.Handle<int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6),
 				(a, b, c, d, e, f) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; });
 
 			var chunk = rock.Make();
@@ -64,7 +64,7 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleAction6ArgumentTests>();
-			rock.HandleAction(_ => _.Target(1, 2, 3, 4, 5, 6), 2);
+			rock.Handle(_ => _.Target(1, 2, 3, 4, 5, 6), 2);
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4, 5, 6);
@@ -84,7 +84,7 @@ namespace Rocks.Tests
 			var argumentF = 0;
 
 			var rock = Rock.Create<IHandleAction6ArgumentTests>();
-			rock.HandleAction<int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6),
+			rock.Handle<int, int, int, int, int, int>(_ => _.Target(1, 2, 3, 4, 5, 6),
 				(a, b, c, d, e, f) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; }, 2);
 
 			var chunk = rock.Make();

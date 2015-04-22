@@ -11,7 +11,7 @@ namespace Rocks.Task.Tests
 		public void Create()
 		{
 			var engineMock = Rock.Create<IBuildEngine>();
-			engineMock.HandleAction(_ => _.LogMessageEvent(Arg.IsAny<BuildMessageEventArgs>()), 2);
+			engineMock.Handle(_ => _.LogMessageEvent(Arg.IsAny<BuildMessageEventArgs>()), 2);
 
 			var task = new RocksTask { AssemblyLocation = typeof(Class1).Assembly.Location };
 			task.BuildEngine = engineMock.Make();

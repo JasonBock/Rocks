@@ -15,7 +15,7 @@ namespace Rocks.Tests
 		public void RoundtripWithBinary()
 		{
 			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
-			rock.HandleAction(_ => _.Target("44"));
+			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
 			IAmSerializable newChunk = null;
@@ -38,7 +38,7 @@ namespace Rocks.Tests
 		public void RoundtripWithXml()
 		{
 			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
-			rock.HandleAction(_ => _.Target("44"));
+			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
 			IAmSerializable newChunk = null;
@@ -60,7 +60,7 @@ namespace Rocks.Tests
 		public void RoundtripWithNetDataContract()
 		{
 			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
-			rock.HandleAction(_ => _.Target("44"));
+			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
 			IAmSerializable newChunk = null;
@@ -83,7 +83,7 @@ namespace Rocks.Tests
 		public void RoundtripWhenMockIsNotSerializable()
 		{
 			var rock = Rock.Create<IAmNotSerializable>();
-			rock.HandleAction(_ => _.Target("44"));
+			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
 

@@ -11,7 +11,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetProperty()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			rock.Handle(nameof(IProperties.GetterAndSetter));
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
@@ -24,7 +24,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+			rock.Handle(nameof(IProperties.GetterAndSetter))
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -42,7 +42,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+			rock.Handle(nameof(IProperties.GetterAndSetter))
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -60,7 +60,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter))
+			rock.Handle(nameof(IProperties.GetterAndSetter))
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -79,7 +79,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			rock.Handle(nameof(IProperties.GetterAndSetter));
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
@@ -91,7 +91,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter));
+			rock.Handle(nameof(IProperties.GetterAndSetter));
 
 			var chunk = rock.Make();
 			var value = chunk.GetterAndSetter;
@@ -103,7 +103,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCount()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
@@ -118,7 +118,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -138,7 +138,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -158,7 +158,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2)
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -179,7 +179,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
@@ -193,7 +193,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterAndSetter), 2);
+			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
@@ -209,7 +209,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue)
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue)
 				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -228,7 +228,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue);
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue);
 
 			var chunk = rock.Make();
 			var value = chunk.GetterOnly;
@@ -243,7 +243,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue);
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue);
 
 			var chunk = rock.Make();
 
@@ -256,7 +256,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2);
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue, 2);
 
 			var chunk = rock.Make();
 			var value = chunk.GetterOnly;
@@ -272,7 +272,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2)
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue, 2)
 				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -292,7 +292,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2);
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue, 2);
 
 			var chunk = rock.Make();
 
@@ -305,7 +305,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(nameof(IProperties.GetterOnly), () => returnValue, 2);
+			rock.Handle(nameof(IProperties.GetterOnly), () => returnValue, 2);
 
 			var chunk = rock.Make();
 			var value = chunk.GetterOnly;
@@ -320,7 +320,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value);
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value);
 
 			var chunk = rock.Make();
 			chunk.SetterOnly = data;
@@ -336,7 +336,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value)
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value)
 				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -356,7 +356,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value);
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value);
 
 			var chunk = rock.Make();
 
@@ -370,7 +370,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.SetterOnly = data;
@@ -387,7 +387,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2)
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2)
 				.Raises(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -408,7 +408,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
 
 			var chunk = rock.Make();
 
@@ -422,7 +422,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.SetterOnly = data;
@@ -438,7 +438,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -457,7 +457,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -480,7 +480,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -503,7 +503,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -527,7 +527,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -543,7 +543,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk.GetterAndSetter;
@@ -558,7 +558,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => { });
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => { });
 
 			var chunk = rock.Make();
 
@@ -573,7 +573,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -594,7 +594,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -619,7 +619,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -644,7 +644,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -670,7 +670,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -687,7 +687,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -705,7 +705,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk.GetterAndSetter;
@@ -722,7 +722,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -740,7 +740,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 
@@ -755,7 +755,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
@@ -772,7 +772,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c });
+			rock.Handle(() => new object[] { a, b, c });
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
@@ -789,7 +789,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c })
+			rock.Handle(() => new object[] { a, b, c })
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -810,7 +810,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c })
+			rock.Handle(() => new object[] { a, b, c })
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -831,7 +831,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c })
+			rock.Handle(() => new object[] { a, b, c })
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -853,7 +853,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c });
+			rock.Handle(() => new object[] { a, b, c });
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
@@ -869,7 +869,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c });
+			rock.Handle(() => new object[] { a, b, c });
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[a, b, c];
@@ -885,7 +885,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
@@ -904,7 +904,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+			rock.Handle(() => new object[] { a, b, c }, 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -927,7 +927,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+			rock.Handle(() => new object[] { a, b, c }, 2)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -950,7 +950,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2)
+			rock.Handle(() => new object[] { a, b, c }, 2)
 				.RaisesOnGetter(nameof(IProperties.TargetEvent), EventArgs.Empty)
 				.RaisesOnSetter(nameof(IProperties.TargetEvent), EventArgs.Empty);
 
@@ -974,7 +974,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
@@ -991,7 +991,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
@@ -1009,7 +1009,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[a, b, c];
@@ -1026,7 +1026,7 @@ namespace Rocks.Tests
 			var c = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperties>();
-			rock.HandleProperty(() => new object[] { a, b, c }, 2);
+			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();

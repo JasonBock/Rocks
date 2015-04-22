@@ -13,7 +13,7 @@ namespace Rocks.Tests
 			var argumentB = default(string[]);
 
 			var rock = Rock.Create<IParamsAndOptionalArgumentTests>();
-			rock.HandleAction<int, string[]>(_ => _.HasParams(44, "a", "b"),
+			rock.Handle<int, string[]>(_ => _.HasParams(44, "a", "b"),
 				(a, b) => { argumentA = a; argumentB = b; });
 
 			var chunk = rock.Make();
@@ -36,7 +36,7 @@ namespace Rocks.Tests
 			var argumentD = default(double);
 
 			var rock = Rock.Create<IParamsAndOptionalArgumentTests>();
-			rock.HandleAction<int, Guid, string, double>(_ => _.HasOptionals(44, Guid.Empty, "c", 44),
+			rock.Handle<int, Guid, string, double>(_ => _.HasOptionals(44, Guid.Empty, "c", 44),
 				(a, b, c, d) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; });
 
 			var chunk = rock.Make();
@@ -59,7 +59,7 @@ namespace Rocks.Tests
 			var argumentD = default(double);
 
 			var rock = Rock.Create<IParamsAndOptionalArgumentTests>();
-			rock.HandleAction<int, Guid, string, double>(_ => _.HasOptionals(44, Guid.Empty, "d", 55),
+			rock.Handle<int, Guid, string, double>(_ => _.HasOptionals(44, Guid.Empty, "d", 55),
 				(a, b, c, d) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; });
 
 			var chunk = rock.Make();

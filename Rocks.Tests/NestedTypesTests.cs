@@ -15,7 +15,7 @@ namespace Rocks.Tests
 		{
 			var a = 1;
 			var rock = Rock.Create<NestedClass.IAmNested>();
-			rock.HandleDelegate(_ => _.Target(ref a), 
+			rock.Handle(_ => _.Target(ref a), 
 				new NestedClass.NestedDelegate(this.Nested));
 
 			var chunk = rock.Make();

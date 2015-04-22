@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void HandleWithConstant()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(1));
+			rock.Handle(_ => _.Target(1));
 
 			var chunk = rock.Make();
 			chunk.Target(1);
@@ -20,7 +20,7 @@ namespace Rocks.Tests
 		public void HandleWithConstantAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(1));
+			rock.Handle(_ => _.Target(1));
 
 			var chunk = rock.Make();
 			Assert.Throws<ExpectationException>(() => chunk.Target(2));
@@ -30,7 +30,7 @@ namespace Rocks.Tests
 		public void HandleWithIs()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
+			rock.Handle(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
 
 			var chunk = rock.Make();
 			chunk.Target(2);
@@ -40,7 +40,7 @@ namespace Rocks.Tests
 		public void HandleWithIsAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
+			rock.Handle(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
 
 			var chunk = rock.Make();
 			Assert.Throws<ExpectationException>(() => chunk.Target(1));
@@ -50,7 +50,7 @@ namespace Rocks.Tests
 		public void HandleWithIsAny()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(Arg.IsAny<int>()));
+			rock.Handle(_ => _.Target(Arg.IsAny<int>()));
 
 			var chunk = rock.Make();
 			chunk.Target(1);
@@ -60,7 +60,7 @@ namespace Rocks.Tests
 		public void HandleWithCall()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(ExpectationsTests.Create()));
+			rock.Handle(_ => _.Target(ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
 			chunk.Target(44);
@@ -70,7 +70,7 @@ namespace Rocks.Tests
 		public void HandleWithCallAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(ExpectationsTests.Create()));
+			rock.Handle(_ => _.Target(ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
 			Assert.Throws<ExpectationException>(() => chunk.Target(1));
@@ -80,7 +80,7 @@ namespace Rocks.Tests
 		public void HandleWithExpression()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(44 + ExpectationsTests.Create()));
+			rock.Handle(_ => _.Target(44 + ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
 			chunk.Target(88);
@@ -90,7 +90,7 @@ namespace Rocks.Tests
 		public void HandleWithExpressionAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
-			rock.HandleAction(_ => _.Target(44 + ExpectationsTests.Create()));
+			rock.Handle(_ => _.Target(44 + ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
 			Assert.Throws<ExpectationException>(() => chunk.Target(1));

@@ -10,8 +10,8 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(1, 2));
-			rock.HandleFunc(_ => _.ValueTarget(10, 20));
+			rock.Handle(_ => _.ReferenceTarget(1, 2));
+			rock.Handle(_ => _.ValueTarget(10, 20));
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2);
@@ -24,9 +24,9 @@ namespace Rocks.Tests
 		public void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			var referenceAdornment = rock.HandleFunc(_ => _.ReferenceTarget(1, 2));
+			var referenceAdornment = rock.Handle(_ => _.ReferenceTarget(1, 2));
 			referenceAdornment.Raises(nameof(IHandleFunc2ArgumentTests.TargetEvent), EventArgs.Empty);
-			var valueAdornment = rock.HandleFunc(_ => _.ValueTarget(10, 20));
+			var valueAdornment = rock.Handle(_ => _.ValueTarget(10, 20));
 			valueAdornment.Raises(nameof(IHandleFunc2ArgumentTests.TargetEvent), EventArgs.Empty);
 
 			var eventRaisedCount = 0;
@@ -48,9 +48,9 @@ namespace Rocks.Tests
 			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.HandleFunc<int, int, string>(_ => _.ReferenceTarget(1, 2),
+			rock.Handle<int, int, string>(_ => _.ReferenceTarget(1, 2),
 				(a, b) => { argumentA = a; argumentB = b; return stringReturnValue; });
-			rock.HandleFunc<int, int, int>(_ => _.ValueTarget(10, 20),
+			rock.Handle<int, int, int>(_ => _.ValueTarget(10, 20),
 				(a, b) => { argumentA = a; argumentB = b; return intReturnValue; });
 
 			var chunk = rock.Make();
@@ -68,8 +68,8 @@ namespace Rocks.Tests
 		public void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.HandleFunc(_ => _.ReferenceTarget(1, 2), 2);
-			rock.HandleFunc(_ => _.ValueTarget(10, 20), 2);
+			rock.Handle(_ => _.ReferenceTarget(1, 2), 2);
+			rock.Handle(_ => _.ValueTarget(10, 20), 2);
 
 			var chunk = rock.Make();
 			chunk.ReferenceTarget(1, 2);
@@ -89,9 +89,9 @@ namespace Rocks.Tests
 			var intReturnValue = 1;
 
 			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
-			rock.HandleFunc<int, int, string>(_ => _.ReferenceTarget(1, 2),
+			rock.Handle<int, int, string>(_ => _.ReferenceTarget(1, 2),
 				(a, b) => { argumentA = a; argumentB = b; return stringReturnValue; }, 2);
-			rock.HandleFunc<int, int, int>(_ => _.ValueTarget(10, 20),
+			rock.Handle<int, int, int>(_ => _.ValueTarget(10, 20),
 				(a, b) => { argumentA = a; argumentB = b; return intReturnValue; }, 2);
 
 			var chunk = rock.Make();

@@ -13,7 +13,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => 44, _ => returnValue);
+			rock.Handle(() => 44, _ => returnValue);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
@@ -26,7 +26,7 @@ namespace Rocks.Tests
 		public void MakeWithGetIndexerPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString());
+			rock.Handle(() => 44, _ => Guid.NewGuid().ToString());
 
 			var chunk = rock.Make();
 
@@ -39,7 +39,7 @@ namespace Rocks.Tests
 			var returnValue = Guid.NewGuid().ToString();
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => 44, _ => returnValue, 2);
+			rock.Handle(() => 44, _ => returnValue, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
@@ -53,7 +53,7 @@ namespace Rocks.Tests
 		public void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString(), 2);
+			rock.Handle(() => 44, _ => Guid.NewGuid().ToString(), 2);
 
 			var chunk = rock.Make();
 
@@ -64,7 +64,7 @@ namespace Rocks.Tests
 		public void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => 44, _ => Guid.NewGuid().ToString(), 2);
+			rock.Handle(() => 44, _ => Guid.NewGuid().ToString(), 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
@@ -80,7 +80,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => setValue = value);
+			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1SetValue;
@@ -93,7 +93,7 @@ namespace Rocks.Tests
 		public void MakeWithSetIndexerPropertyAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty<Guid, string>(() => Guid.NewGuid(), (i1, value) => { });
+			rock.Handle<Guid, string>(() => Guid.NewGuid(), (i1, value) => { });
 
 			var chunk = rock.Make();
 
@@ -108,7 +108,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => setValue = value, 2);
+			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1SetValue;
@@ -122,7 +122,7 @@ namespace Rocks.Tests
 		public void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty<Guid, string>(() => Guid.NewGuid(), (i1, value) => { }, 2);
+			rock.Handle<Guid, string>(() => Guid.NewGuid(), (i1, value) => { }, 2);
 
 			var chunk = rock.Make();
 
@@ -136,7 +136,7 @@ namespace Rocks.Tests
 			string propertyValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty<Guid, string>(() => indexer1, (i1, value) => propertyValue = value, 2);
+			rock.Handle<Guid, string>(() => indexer1, (i1, value) => propertyValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1.ToString();
@@ -153,7 +153,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
@@ -173,7 +173,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1SetValue;
@@ -190,7 +190,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
@@ -207,7 +207,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
@@ -229,7 +229,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1SetValue;
@@ -247,7 +247,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
@@ -266,7 +266,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
@@ -284,7 +284,7 @@ namespace Rocks.Tests
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
-			rock.HandleProperty(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
+			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];

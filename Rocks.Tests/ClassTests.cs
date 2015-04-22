@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<ClassTestsTarget>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();
 			chunk.TargetMethod();
@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void MakeWithCustomConstructor()
 		{
 			var rock = Rock.Create<ClassTestsTarget>();
-			rock.HandleAction(_ => _.TargetMethod());
+			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make(new object[] { 2 });
 			chunk.TargetMethod();

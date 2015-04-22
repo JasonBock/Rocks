@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<IFullInterfaceTests>();
-			rock.HandleAction(_ => _.Target());
+			rock.Handle(_ => _.Target());
 
 			var chunk = rock.Make();
 			chunk.Target();

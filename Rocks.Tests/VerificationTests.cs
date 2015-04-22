@@ -28,7 +28,7 @@ namespace Rocks.Tests
 		public void Verify()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.HandleAction(_ => _.Target());
+			rock.Handle(_ => _.Target());
 
 			var chunk = rock.Make();
 			chunk.Target();
@@ -40,7 +40,7 @@ namespace Rocks.Tests
 		public void VerifyWhenMethodIsNotCalled()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.HandleAction(_ => _.Target());
+			rock.Handle(_ => _.Target());
 
 			var chunk = rock.Make();
 
@@ -51,7 +51,7 @@ namespace Rocks.Tests
 		public void VerifyWhenExpectedCallCountIsNotSpecifiedAndMethodIsCalledMultipleTimes()
 		{
 			var rock = Rock.Create<IVerification>();
-			rock.HandleAction(_ => _.Target());
+			rock.Handle(_ => _.Target());
 
 			var chunk = rock.Make();
 			chunk.Target();
