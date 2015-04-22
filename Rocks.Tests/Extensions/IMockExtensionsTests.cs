@@ -19,7 +19,7 @@ namespace Rocks.Tests.Extensions
 			var failures = (chunk as IMock).GetVerificationFailures();
 			Assert.AreEqual(1, failures.Count);
 			var failure = failures[0];
-			Assert.IsTrue(failure.EndsWith("method: void TargetMethod(), message: The expected call count is incorrect. Expected: 1, received: 0."));
+			Assert.IsTrue(failure.EndsWith("method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount));
 			Assert.IsTrue(failure.StartsWith("Type: Rocks.Tests.Extensions.Rock"));
 		}
 

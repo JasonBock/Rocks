@@ -13,7 +13,7 @@ namespace Rocks.Tests
 		{
 			var information = new HandlerInformation();
 			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
 			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
@@ -24,13 +24,13 @@ namespace Rocks.Tests
 			var method = new Action(() => { });
          var information = new HandlerInformation(method);
 			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
 			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
 
 		[Test]
-		public void CreateWithMethodAndExpectataions()
+		public void CreateWithMethodAndExpectations()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
@@ -40,7 +40,7 @@ namespace Rocks.Tests
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, expectations);
 			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
+			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
 			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
 			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
 		}
@@ -108,7 +108,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void Verify()
+		public void VerifyWhenExpectedCallCountIsNotSpecified()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(expectations);
@@ -119,10 +119,21 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsIncorrect()
+		public void VerifyWhenExpectedCallCountIsNotSpecifiedAndIncrementCallCountIsNotCalled()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(expectations);
+			var result = information.Verify();
+
+			Assert.AreEqual(1, result.Count, nameof(result.Count));
+		}
+
+		[Test]
+		public void VerifyWhenExpectedCallCountIsIncorrect()
+		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+			var information = new HandlerInformation(2, expectations);
+			information.IncrementCallCount();
 			var result = information.Verify();
 
          Assert.AreEqual(1, result.Count, nameof(result.Count));

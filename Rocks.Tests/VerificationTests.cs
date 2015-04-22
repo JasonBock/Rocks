@@ -48,7 +48,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsInvalid()
+		public void VerifyWhenExpectedCallCountIsNotSpecifiedAndMethodIsCalledMultipleTimes()
 		{
 			var rock = Rock.Create<IVerification>();
 			rock.HandleAction(_ => _.Target());
@@ -57,7 +57,7 @@ namespace Rocks.Tests
 			chunk.Target();
 			chunk.Target();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.DoesNotThrow(() => rock.Verify());
 		}
 
 		[Test]
