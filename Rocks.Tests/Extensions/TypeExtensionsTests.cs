@@ -305,22 +305,6 @@ namespace Rocks.Tests.Extensions
 			Assert.IsFalse(typeof(IHaveMethodWithByValArgument).ContainsRefAndOrOutParameters());
 		}
 
-		[Test]
-		public void GetImplementedEvents()
-		{
-			var expectedEvents =
-@"public event EventHandler Event;
-public event EventHandler<MyGenericEventArgs> GenericEvent;";
-
-			var type = typeof(ITypeExtensions);
-			var namespaces = new SortedSet<string>();
-			var events = type.GetImplementedEvents(namespaces);
-			Assert.AreEqual(expectedEvents, events, nameof(events));
-			Assert.AreEqual(2, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(typeof(object).Namespace), nameof(namespaces.Contains));
-			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
-		}
-
 		public interface IHaveGenericsWithNoConstraints<T> { }
 
 		public interface IHaveGenericsWithConstraints<T> where T : class { }

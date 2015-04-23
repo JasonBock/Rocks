@@ -2,6 +2,9 @@
 {
 	public static class CodeTemplates
 	{
+		public const string Internal = "internal";
+ 		public const string Protected = "protected";
+
 		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments) => 
 			$"public delegate {returnType} {delegateName}({arguments});";
 		
@@ -171,10 +174,36 @@ $@"set
 	}}
 }}";
 
-		public static string GetEventTemplate(string eventType, string eventName) => $"public event {eventType} {eventName};";
+		public static string GetNonPublicEventTemplate(string visibility, string eventType, string eventName) => $"{visibility} override event {eventType} {eventName};";
+
+		public static string GetEventTemplate(string @override, string eventType, string eventName) => $"public {@override} event {eventType} {eventName};";
 
 		public static string GetExpectationTemplate(string parameterName, string parameterTypeName) => 
 			$"(methodHandler.Expectations[\"{parameterName}\"] as ArgumentExpectation<{parameterTypeName}>).IsValid({parameterName}, \"{parameterName}\")";
+
+		public static string GetNonPublicActionImplementationTemplate(string visibility, string methodName, string outInitializers) =>
+$@"{visibility} override {methodName}
+{{
+	{outInitializers}	
+}}";
+
+		public static string GetNonPublicFunctionImplementationTemplate(string visibility, string methodName, string outInitializers, string returnTypeName) =>
+$@"{visibility} override {methodName}
+{{
+	{outInitializers}	
+	
+	return default({returnTypeName});
+}}";
+
+		public static string GetNonPublicPropertyTemplate(string visibility, string returnType, string name, string getSet) =>
+			$"{visibility} override {returnType} {name} {{ {getSet} }}";
+
+		public static string GetNonPublicPropertyIndexerTemplate(string visibility, string returnType, string indexerArguments, string getSet) =>
+			$"{visibility} override {returnType} this[{indexerArguments}] {{ {getSet} }}";
+
+		public static string GetNonPublicPropertyGetTemplate() => "get;";
+
+		public static string GetNonPublicPropertySetTemplate() => "set;";
 
 		public static string GetRefOutNotImplementedMethodTemplate(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}

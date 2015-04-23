@@ -6,10 +6,10 @@ namespace Rocks.Tests
 	[TestFixture]
 	public sealed class NonPublicTests
 	{
-		[Test, Ignore("a")]
+		[Test]
 		public void GenerateWhenPublicAndNonPublicMembersExist()
 		{
-			var rock = Rock.Create<NonPublicAndPublicMembers>();
+			var rock = Rock.Create<NonPublicAndPublicMembers>(new Options(CodeFileOptions.Create));
 			var chunk = rock.Make();
 		}
 	}
@@ -36,4 +36,6 @@ namespace Rocks.Tests
 		protected abstract event EventHandler ProtectedEvent;
 		internal abstract event EventHandler InternalEvent;
 	}
+
+	//public sealed class x : NonPublicAndPublicMembers
 }

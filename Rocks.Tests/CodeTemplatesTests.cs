@@ -6,6 +6,28 @@ namespace Rocks.Tests
 	public sealed class CodeTemplatesTests
 	{
 		[Test]
+		public void GetNonPublicActionImplementationTemplate()
+		{
+			Assert.AreEqual(
+@"a override b
+{
+	c	
+}", CodeTemplates.GetNonPublicActionImplementationTemplate("a", "b", "c"));
+		}
+
+		[Test]
+		public void GetNonPublicFunctionImplementationTemplate()
+		{
+			Assert.AreEqual(
+@"a override b
+{
+	c	
+	
+	return default(d);
+}", CodeTemplates.GetNonPublicFunctionImplementationTemplate("a", "b", "c", "d"));
+		}
+
+		[Test]
 		public void GetAssemblyDelegateTemplate()
 		{
 			Assert.AreEqual("public delegate a b(c);", CodeTemplates.GetAssemblyDelegateTemplate("a", "b", "c"));
@@ -208,7 +230,7 @@ namespace Rocks.Tests
 		[Test]
 		public void GetEventTemplate()
 		{
-			Assert.AreEqual("public event a b;", CodeTemplates.GetEventTemplate("a", "b"));
+			Assert.AreEqual("public a event b c;", CodeTemplates.GetEventTemplate("a", "b", "c"));
 		}
 
 		[Test]

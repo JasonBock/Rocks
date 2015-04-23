@@ -41,7 +41,6 @@ namespace Rocks
 		private Assembly Generate()
 		{
 			var assemblyPath = Path.GetDirectoryName(this.assembly.Location);
-			var assemblyName = $"{this.assembly.GetName().Name}.Rocks";
 			var trees = new ConcurrentBag<SyntaxTree>();
 
          Parallel.ForEach(assembly.GetExportedTypes().Where(_ => string.IsNullOrWhiteSpace(_.Validate())), _ =>
@@ -57,7 +56,7 @@ namespace Rocks
 			var referencedAssemblies = this.assembly.GetReferencedAssemblies().Select(_ => Assembly.Load(_)).ToList();
 			referencedAssemblies.Add(this.assembly);
 
-         var compiler = new AssemblyCompiler(trees, this.options.Level, assemblyName, 
+         var compiler = new AssemblyCompiler(trees, this.options.Level, new AssemblyNameGenerator(this.assembly).AssemblyName, 
 				referencedAssemblies.AsReadOnly(), currentDirectory);
 			compiler.Compile();
 			return compiler.Result;

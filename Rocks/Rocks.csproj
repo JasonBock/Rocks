@@ -74,6 +74,9 @@
     <Compile Include="CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />
+    <Compile Include="Construction\AssemblyNameGenerator.cs" />
+    <Compile Include="Construction\InMemoryNameGenerator.cs" />
+    <Compile Include="Construction\NameGenerator.cs" />
     <Compile Include="Construction\Builder.cs" />
     <Compile Include="Construction\Compiler.cs" />
     <Compile Include="CreateResult.cs" />

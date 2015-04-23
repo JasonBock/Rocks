@@ -1,9 +1,12 @@
-﻿using Rocks.Exceptions;
+﻿using Rocks.Construction;
+using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using static Rocks.Extensions.PropertyInfoExtensions;
 
 namespace Rocks.Extensions
 {
@@ -103,6 +106,18 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
+			if(@this.IsAbstract && 
+				(@this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
+				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
+				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
+			{
+				if(!@this.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
+					.Where(_ => _.AssemblyName == (@this.IsSealed ? new AssemblyNameGenerator(@this).AssemblyName : new InMemoryNameGenerator().AssemblyName)).Any())
+				{
+					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
+            }
+			}
+
 			return string.Empty;
 		}
 
@@ -143,32 +158,6 @@ namespace Rocks.Extensions
 
 				return name;
 			}
-		}
-
-		internal static string GetImplementedEvents(this Type @this, SortedSet<string> namespaces)
-		{
-			var events = new List<string>();
-
-			foreach (var @event in @this.GetEvents())
-			{
-				var eventHandlerType = @event.EventHandlerType;
-				namespaces.Add(eventHandlerType.Namespace);
-
-				if (eventHandlerType.IsGenericType)
-				{
-					var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-					events.Add(CodeTemplates.GetEventTemplate(
-						$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
-					namespaces.Add(eventGenericType.Namespace);
-				}
-				else
-				{
-					events.Add(CodeTemplates.GetEventTemplate(
-						eventHandlerType.GetSafeName(), @event.Name));
-				}
-			}
-
-			return string.Join(Environment.NewLine, events);
 		}
 
 		internal static string GetConstraints(this Type @this, SortedSet<string> namespaces)

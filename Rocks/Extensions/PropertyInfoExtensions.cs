@@ -8,6 +8,11 @@ namespace Rocks.Extensions
 {
 	internal static class PropertyInfoExtensions
 	{
+		internal static MethodInfo GetDefaultMethod(this PropertyInfo @this)
+		{
+			return @this.CanRead ? @this.GetMethod : @this.SetMethod;
+      }
+
 		private static ReadOnlyDictionary<string, ArgumentExpectation> CreateEmptyExpectations()
 		{
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
