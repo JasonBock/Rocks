@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Construction;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ namespace Rocks
 	public sealed class RockAssembly
 	{
 		private readonly Assembly assembly;
+		private readonly string currentDirectory;
 		private readonly Options options;
 
 		public RockAssembly(Assembly assembly)
@@ -21,9 +23,18 @@ namespace Rocks
 		{ }
 
 		public RockAssembly(Assembly assembly, Options options)
+			: this(assembly, options, Environment.CurrentDirectory)
+		{ }
+
+		public RockAssembly(Assembly assembly, string currentDirectory)
+			: this(assembly, new Options(), currentDirectory)
+		{ }
+
+		public RockAssembly(Assembly assembly, Options options, string currentDirectory)
 		{
 			this.assembly = assembly;
 			this.options = options;
+			this.currentDirectory = currentDirectory;
 			this.Result = this.Generate();
 		}
 
@@ -47,7 +58,7 @@ namespace Rocks
 			referencedAssemblies.Add(this.assembly);
 
          var compiler = new AssemblyCompiler(trees, this.options.Level, assemblyName, 
-				referencedAssemblies.AsReadOnly(), assemblyPath);
+				referencedAssemblies.AsReadOnly(), currentDirectory);
 			compiler.Compile();
 			return compiler.Result;
       }

@@ -12,12 +12,6 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void GetNoVirtualMembers()
-		{
-			Assert.AreEqual("No public virtual members found on type a.", ErrorMessages.GetNoVirtualMembers("a"));
-		}
-
-		[Test]
 		public void GetVerificationFailed()
 		{
 			Assert.AreEqual("Type: a, method: b, message: c", ErrorMessages.GetVerificationFailed("a", "b", "c"));

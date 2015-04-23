@@ -3,6 +3,7 @@ using Rocks.RockAssemblyTestContainer;
 using Rocks.RockAssemblyTestContainer.Contracts;
 using Rocks.RockAssemblyTestContainer.Extensions.TestAssembly.Extensions;
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using static Rocks.Extensions.IMockExtensions;
@@ -65,6 +66,22 @@ namespace Rocks.Tests
 			Assert.AreEqual(0, (mock as IMock).GetVerificationFailures().Count);
 			Assert.IsTrue(this.wasMethod4DelegateCalled);
 			Assert.IsTrue(this.wasMethod5DelegateCalled);
+		}
+
+		[Test, Ignore("a")]
+		public void GenerateForMscorlib()
+		{
+			var methods = typeof(Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid).GetMethods(ReflectionValues.PublicInstance);
+			var filteredMethods = methods.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal).ToList();
+
+			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+			new RockAssembly(typeof(object).Assembly,
+				new Options(CodeFileOptions.Create));
+
+			stopwatch.Stop();
+
+			Assert.Pass($"Total time to generate mocks for mscorlib: {stopwatch.Elapsed}");
 		}
 
 		public Guid Method4(string a, ref int b)

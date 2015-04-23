@@ -103,11 +103,6 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
-			if (!@this.GetMembers(ReflectionValues.PublicInstance).Any())
-			{
-				return ErrorMessages.GetNoVirtualMembers(@this.GetSafeName());
-			}
-
 			return string.Empty;
 		}
 
@@ -130,13 +125,16 @@ namespace Rocks.Extensions
 			{
 				var arguments = context != null ? context.GetGenericArguments(namespaces).Arguments :
 					$"<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
-				return $"{@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".")}{arguments}";
+				var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
+					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+					@this.Name.Split('`')[0];
+				return $"{name}{arguments}";
 			}
 			else
 			{
-				var name = (!string.IsNullOrWhiteSpace(@this.FullName) ?
+				var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
 					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-					@this.Name);
+					@this.Name.Split('`')[0];
 
 				if (@this.IsGenericTypeDefinition)
 				{

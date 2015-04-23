@@ -55,7 +55,7 @@ namespace Rocks.Construction
 			var generatedMethods = new List<string>();
 
 			foreach (var baseMethod in this.BaseType.GetMethods(ReflectionValues.PublicInstance)
-				.Where(_ => !_.IsSpecialName && _.IsVirtual))
+				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal))
 			{
 				var methodInformation = this.GetMethodInformation(baseMethod);
 
@@ -152,7 +152,7 @@ namespace Rocks.Construction
 			var generatedProperties = new List<string>();
 
 			foreach (var baseProperty in this.BaseType.GetProperties(ReflectionValues.PublicInstance)
-				.Where(_ => (_.CanRead ? _.GetMethod : _.SetMethod).IsVirtual))
+				.Where(_ => (_.CanRead ? _.GetMethod : _.SetMethod).IsVirtual && !(_.CanRead ? _.GetMethod : _.SetMethod).IsFinal))
 			{
 				var propertyImplementations = new List<string>();
 

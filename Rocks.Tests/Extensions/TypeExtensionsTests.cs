@@ -2,6 +2,7 @@
 using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -331,6 +332,11 @@ public event EventHandler<MyGenericEventArgs> GenericEvent;";
 
 		public delegate void RefTargetWithoutGeneric(ref Guid a);
 		public delegate void RefTargetWithGeneric<T>(ref T a);
+	}
+
+	public class HasNoPublicMembers
+	{
+		protected virtual void Target() { }
 	}
 
 	public class NestedGenerics
