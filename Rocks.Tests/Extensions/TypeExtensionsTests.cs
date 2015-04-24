@@ -218,7 +218,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments()
 		{
-			Assert.AreEqual("RefTargetWithGeneric<T>",
+			Assert.AreEqual("RefTargetWithGeneric",
 				typeof(Rocks.Tests.Extensions.RefTargetWithGeneric<>).GetSafeName());
 		}
 
@@ -232,7 +232,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments()
 		{
-			Assert.AreEqual("TypeExtensionsTests.RefTargetWithGeneric<Guid>",
+			Assert.AreEqual("TypeExtensionsTests.RefTargetWithGeneric",
 				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName());
 		}
 
@@ -246,14 +246,14 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeNameForDelegateWithSpecifiedGenerics()
 		{
-			Assert.AreEqual("MapForGeneric<Guid>",
+			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName());
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenerics()
 		{
-			Assert.AreEqual("MapForGeneric<T>",
+			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName());
 		}
 
@@ -271,7 +271,7 @@ namespace Rocks.Tests.Extensions
 		public void GetSafeNameForDelegateWithSpecifiedGenericsAndContext()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("MapForGeneric<T>",
+			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(
 					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
 			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
@@ -281,7 +281,7 @@ namespace Rocks.Tests.Extensions
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndContext()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("MapForGeneric<T>",
+			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(
 					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
 			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));

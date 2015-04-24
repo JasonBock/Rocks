@@ -135,24 +135,30 @@ namespace Rocks.Extensions
 
 		internal static string GetSafeName(this Type @this, MethodBase context, SortedSet<string> namespaces)
 		{
-			// The context should come from the method the delegate is providing a hook to
-			if (typeof(MulticastDelegate).IsAssignableFrom(@this.BaseType) && @this.IsGenericType)
-			{
-				var arguments = context != null ? context.GetGenericArguments(namespaces).Arguments :
-					$"<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
-				var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
-					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-					@this.Name.Split('`')[0];
-				return $"{name}{arguments}";
-			}
-			else
-			{
-				var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
-					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-					@this.Name.Split('`')[0];
+			var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
+				@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+				@this.Name.Split('`')[0];
 
-				return name;
-			}
+			return name;
+
+			// The context should come from the method the delegate is providing a hook to
+			//if (typeof(MulticastDelegate).IsAssignableFrom(@this.BaseType) && @this.IsGenericType)
+			//{
+			//	var arguments = context != null ? context.GetGenericArguments(namespaces).Arguments :
+			//		$"<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
+			//	var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
+			//		@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+			//		@this.Name.Split('`')[0];
+			//	return $"{name}{arguments}";
+			//}
+			//else
+			//{
+			//	var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
+			//		@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+			//		@this.Name.Split('`')[0];
+
+			//	return name;
+			//}
 		}
 
 		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)

@@ -29,10 +29,36 @@ namespace Rocks.Construction
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 
 			var key = baseMethod.MetadataToken;
-			var delegateCast = !containsRefAndOrOutParameters ?
-				baseMethod.GetDelegateCast() :
-				(this.Handlers.ContainsKey(key) ?
-					this.Handlers[key][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces) : string.Empty);
+			string delegateCast = null;
+
+			if(!containsRefAndOrOutParameters)
+			{
+				delegateCast = baseMethod.GetDelegateCast();
+         }
+			else
+			{
+				if(this.Handlers.ContainsKey(key))
+				{
+					var delegateType = this.Handlers[key][0].Method.GetType();
+
+					if(baseMethod.IsGenericMethodDefinition)
+					{
+						delegateType = delegateType.GetGenericTypeDefinition();
+					}
+
+					delegateCast = $"{delegateType.GetSafeName(baseMethod, this.Namespaces)}{delegateType.GetGenericArguments(this.Namespaces).Arguments}";
+            }
+				else
+				{
+					delegateCast = string.Empty;
+				}
+			}
+
+			//var delegateCast = !containsRefAndOrOutParameters ?
+			//	baseMethod.GetDelegateCast() :
+			//	(this.Handlers.ContainsKey(key) ?
+			//		$"{this.Handlers[key][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces)}{this.Handlers[key][0].Method.GetType().GetGenericArguments(this.Namespaces).Arguments}" : 
+			//		string.Empty);
 			
 			return new MethodInformation
 			{
