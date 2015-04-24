@@ -7,16 +7,17 @@ namespace Rocks.Extensions
 {
 	internal static class MethodInfoExtensions
 	{
-		internal static bool IsUnsafe(this MethodInfo @this)
+		internal static bool IsUnsafeToMock(this MethodInfo @this)
 		{
-			return @this.IsUnsafe(true);
+			return @this.IsUnsafeToMock(true);
 		}
 
-		internal static bool IsUnsafe(this MethodInfo @this, bool checkForSpecialName)
+		internal static bool IsUnsafeToMock(this MethodInfo @this, bool checkForSpecialName)
 		{
 			var specialNameFlag = checkForSpecialName ? @this.IsSpecialName : false;
 
-			return !specialNameFlag && ((@this.IsPublic && @this.IsVirtual && !@this.IsFinal) || (@this.IsAssembly && @this.IsAbstract)) &&
+			return !specialNameFlag && ((@this.IsPublic && @this.IsVirtual && !@this.IsFinal) || 
+				((@this.IsAssembly || @this.IsFamily) && @this.IsAbstract)) &&
 				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
 		}
 

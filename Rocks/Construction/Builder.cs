@@ -22,7 +22,7 @@ namespace Rocks.Construction
 			SortedSet<string> namespaces, Options options)
 		{
 			this.BaseType = baseType;
-			this.IsUnsafe = this.BaseType.IsUnsafe();
+			this.IsUnsafe = this.BaseType.IsUnsafeToMock();
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
 			this.Options = options;

@@ -99,12 +99,12 @@ namespace Rocks.Extensions
 			return property;
 		}
 
-		internal static bool IsUnsafe(this Type @this)
+		internal static bool IsUnsafeToMock(this Type @this)
 		{
 			return @this.IsPointer ||
-				@this.GetMethods(ReflectionValues.PublicNonPublicInstance).Where(m => m.IsUnsafe()).Any() ||
-				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafe(false)).Any() ||
-				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafe(false)).Any(); 
+				@this.GetMethods(ReflectionValues.PublicNonPublicInstance).Where(m => m.IsUnsafeToMock()).Any() ||
+				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafeToMock(false)).Any() ||
+				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any(); 
 		}
 
 		internal static string Validate(this Type @this)
