@@ -2,7 +2,6 @@
 using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -10,6 +9,42 @@ namespace Rocks.Tests.Extensions
 	[TestFixture]
 	public sealed class TypeExtensionsTests
 	{
+		[Test]
+		public void IsUnsafeWithSafeInterfaceWithSafeMembers()
+		{
+			Assert.IsFalse(typeof(ISafeMembers).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue()
+		{
+			Assert.IsTrue(typeof(IUnsafeMethodWithUnsafeReturnValue).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments()
+		{
+			Assert.IsTrue(typeof(IUnsafeMethodWithUnsafeArguments).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeInterfaceWithUnsafePropertyType()
+		{
+			Assert.IsTrue(typeof(IUnsafePropertyWithUnsafePropertyType).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeInterfaceWithUnsafeIndexer()
+		{
+			Assert.IsTrue(typeof(IUnsafePropertyWithUnsafeIndexer).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithSafeInterfaceWithUnsafeEventArgs()
+		{
+			Assert.IsFalse(typeof(ISafeEventWithUnsafeEventArgs).IsUnsafe());
+		}
+
 		[Test]
 		public void FindMethodWithMethodOnGivenType()
 		{
@@ -380,5 +415,44 @@ namespace Rocks.Tests.Extensions
 		: IMetadata
 	{
 		public void Target() { }
+	}
+
+	public interface ISafeMembers
+	{
+		void Target();
+		int TargetReturn();
+		int TargetProperty { get; set; }
+		int this[int a] { get; set; }
+		event EventHandler MyEvent;
+	}
+
+	public unsafe class UnsafeByteEventArgs : EventArgs
+	{
+		public byte* Value { get; set; }
+	}
+
+	public unsafe interface IUnsafeMethodWithUnsafeReturnValue
+	{
+		byte* Target();
+	}
+
+	public unsafe interface IUnsafeMethodWithUnsafeArguments
+	{
+		void Target(byte* a);
+	}
+
+	public unsafe interface IUnsafePropertyWithUnsafePropertyType
+	{
+		byte* Target { get; set; }
+	}
+
+	public unsafe interface IUnsafePropertyWithUnsafeIndexer
+	{
+		int this[byte* a] { get; set; }
+	}
+
+	public interface ISafeEventWithUnsafeEventArgs
+	{
+		event EventHandler<UnsafeByteEventArgs> Target;
 	}
 }

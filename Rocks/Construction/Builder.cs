@@ -22,6 +22,7 @@ namespace Rocks.Construction
 			SortedSet<string> namespaces, Options options)
 		{
 			this.BaseType = baseType;
+			this.IsUnsafe = this.BaseType.IsUnsafe();
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
 			this.Options = options;
@@ -400,6 +401,7 @@ namespace Rocks.Construction
 		internal Options Options { get; }
 		internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; }
+		internal bool IsUnsafe { get; private set; }
 		internal ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 		internal SortedSet<string> Namespaces { get; }
 		internal string TypeName { get; set; }

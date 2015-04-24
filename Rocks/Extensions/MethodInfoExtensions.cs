@@ -7,6 +7,19 @@ namespace Rocks.Extensions
 {
 	internal static class MethodInfoExtensions
 	{
+		internal static bool IsUnsafe(this MethodInfo @this)
+		{
+			return @this.IsUnsafe(true);
+		}
+
+		internal static bool IsUnsafe(this MethodInfo @this, bool checkForSpecialName)
+		{
+			var specialNameFlag = checkForSpecialName ? @this.IsSpecialName : false;
+
+			return !specialNameFlag && ((@this.IsPublic && @this.IsVirtual && !@this.IsFinal) || (@this.IsAssembly && @this.IsAbstract)) &&
+				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
+		}
+
 		internal static bool ContainsRefAndOrOutParameters(this MethodInfo @this)
 		{
 			return (from parameter in @this.GetParameters()
@@ -20,24 +33,24 @@ namespace Rocks.Extensions
 				from parameter in @this.GetParameters()
 				where parameter.IsOut
 				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().GetSafeName()});");
-      }
+		}
 
 		internal static string GetDelegateCast(this MethodInfo @this)
 		{
 			var parameters = @this.GetParameters();
 			var methodKind = @this.ReturnType != typeof(void) ? "Func" : "Action";
 
-         if (parameters.Length == 0)
+			if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
 					$"{methodKind}<{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}";
-         }
+			}
 			else
 			{
 				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}"));
-            return @this.ReturnType != typeof(void) ?
+				return @this.ReturnType != typeof(void) ?
 					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}<{genericArgumentTypes}>";
-         }
+			}
 		}
 
 		internal static string GetExpectationChecks(this MethodInfo @this)
@@ -45,7 +58,7 @@ namespace Rocks.Extensions
 			return string.Join(" && ",
 				@this.GetParameters().Select(_ =>
 					CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
-      }
+		}
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
@@ -65,22 +78,22 @@ namespace Rocks.Extensions
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
 		{
-			if(@this.IsGenericMethod)
+			if (@this.IsGenericMethod)
 			{
 				@this = @this.GetGenericMethodDefinition();
 			}
 
 			namespaces.Add(@this.ReturnType.Namespace);
 
-			var isOverride = includeOverride ? ( @this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
+			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
-				"void" :  $"{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(namespaces).Arguments}";
+				"void" : $"{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(namespaces).Arguments}";
 
 			var methodName = @this.Name;
 			var generics = string.Empty;
 			var constraints = string.Empty;
 
-			if(@this.IsGenericMethodDefinition)
+			if (@this.IsGenericMethodDefinition)
 			{
 				var result = @this.GetGenericArguments(namespaces);
 				generics = result.Arguments;
@@ -90,6 +103,6 @@ namespace Rocks.Extensions
 			var parameters = @this.GetParameters(namespaces);
 
 			return $"{isOverride}{returnType} {methodName}{generics}({parameters}){constraints}";
-      }
+		}
 	}
 }
