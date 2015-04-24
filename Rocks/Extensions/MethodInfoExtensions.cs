@@ -74,7 +74,7 @@ namespace Rocks.Extensions
 
 			var isOverride = includeOverride ? ( @this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
-				"void" :  @this.ReturnType.GetSafeName();
+				"void" :  $"{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(namespaces).Arguments}";
 
 			var methodName = @this.Name;
 			var generics = string.Empty;

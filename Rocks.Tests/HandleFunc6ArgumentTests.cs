@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public void Make()
 		{
-			var rock = Rock.Create<IHandleFunc6ArgumentTests>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<IHandleFunc6ArgumentTests>();
 			rock.Handle(_ => _.ReferenceTarget(1, 2, 3, 4, 5, 6));
 			rock.Handle(_ => _.ValueTarget(10, 20, 30, 40, 50, 60));
 

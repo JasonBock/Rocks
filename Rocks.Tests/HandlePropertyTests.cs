@@ -1040,7 +1040,7 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithGenericReturnValue()
 		{
-			var rock = Rock.Create<IProperties<Guid>>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<IProperties<Guid>>();
 			rock.Handle(nameof(IProperties<Guid>.Target));
 
 			var chunk = rock.Make();

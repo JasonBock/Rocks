@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public void GenerateWhenPublicAndNonPublicMembersExist()
 		{
-			var rock = Rock.Create<NonPublicAndPublicMembers>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<NonPublicAndPublicMembers>();
 			var chunk = rock.Make();
 		}
 	}

@@ -96,7 +96,7 @@ namespace Rocks.Construction
 
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						CodeTemplates.GetNonPublicFunctionImplementationTemplate(visibility, methodInformation.Description,
-							outInitializers, baseMethod.ReturnType.GetSafeName()) :
+							outInitializers, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}") :
 						CodeTemplates.GetNonPublicActionImplementationTemplate(visibility, methodInformation.Description,
 							outInitializers));
 				}
@@ -125,11 +125,11 @@ namespace Rocks.Construction
 				return baseMethod.ReturnType.IsValueType ||
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks,
-							delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride) :
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, baseMethod.ReturnType.GetSafeName(), expectationChecks,
-							delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
 			}
 			else
 			{
@@ -147,10 +147,10 @@ namespace Rocks.Construction
 				return baseMethod.ReturnType.IsValueType ||
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, baseMethod.ReturnType.GetSafeName(),
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							delegateCast, outInitializers, methodDescriptionWithOverride) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, baseMethod.ReturnType.GetSafeName(),
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							delegateCast, outInitializers, methodDescriptionWithOverride);
 			}
 			else

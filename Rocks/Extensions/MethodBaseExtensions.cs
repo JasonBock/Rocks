@@ -66,8 +66,8 @@ namespace Rocks.Extensions
 				let modifier = parameter.GetModifier()
 				let arrayText = parameter.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "[]" : string.Empty
 				let parameterType = !string.IsNullOrWhiteSpace(modifier) ?
-					$"{parameter.ParameterType.GetElementType().GetSafeName()}{arrayText}" :
-					$"{parameter.ParameterType.GetSafeName()}{arrayText}"
+					$"{parameter.ParameterType.GetElementType().GetSafeName()}{parameter.ParameterType.GetElementType().GetGenericArguments(namespaces).Arguments}{arrayText}" :
+               $"{parameter.ParameterType.GetSafeName()}{parameter.ParameterType.GetGenericArguments(namespaces).Arguments}{arrayText}"
 				select $"{modifier}{parameterType} {parameter.Name}");
 		}
 	}

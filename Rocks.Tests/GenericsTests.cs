@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Rocks.Tests
@@ -23,6 +24,18 @@ namespace Rocks.Tests
 
 			Assert.AreEqual(1, argumentA, nameof(argumentA));
 			Assert.IsNotNull(argumentB, nameof(argumentB));
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void TargetWithArgumentsAndReturnTypeUsingGeneric()
+		{
+			var rock = Rock.Create<IGenerics<int>>(new Options(CodeFileOptions.Create));
+			rock.Handle(_ => _.Target(Arg.IsAny<IEnumerable<int>>()));
+
+			var chunk = rock.Make();
+			chunk.Target(new List<int>());
 
 			rock.Verify();
 		}
@@ -54,7 +67,7 @@ namespace Rocks.Tests
 			var argumentA = 0;
 			var argumentB = default(Base);
 
-			var rock = Rock.Create<IGenerics>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<IGenerics>();
 			rock.Handle<int, Base, Base>(
 				_ => _.TargetWithTypeConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
@@ -112,5 +125,10 @@ namespace Rocks.Tests
 		U TargetWithNonTypeConstrains<U>(int a, U b) where U : class, new();
 		U TargetWithTypeConstraints<U>(int a, U b) where U : Base;
 		void TargetWithMultipleConstraints<U, V, W, X, Y>(U a, V b, W c, X d, Y e) where U : class, new() where V : Base where W : IBase where X : struct where Y : W;
+	}
+
+	public interface IGenerics<T>
+	{
+		IEnumerable<T> Target(IEnumerable<T> a);
 	}
 }
