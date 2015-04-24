@@ -42,6 +42,7 @@ namespace Rocks
 		{
 			var assemblyPath = Path.GetDirectoryName(this.assembly.Location);
 			var trees = new ConcurrentBag<SyntaxTree>();
+			var allowUnsafe = false;
 
          Parallel.ForEach(assembly.GetExportedTypes()
 				.Where(_ => string.IsNullOrWhiteSpace(_.Validate()) && !typeof(Array).IsAssignableFrom(_) &&
@@ -53,13 +54,14 @@ namespace Rocks
 						new SortedSet<string>(), this.options);
 					builder.Build();
 					trees.Add(builder.Tree);
+					allowUnsafe |= builder.IsUnsafe;
             });
 
 			var referencedAssemblies = this.assembly.GetReferencedAssemblies().Select(_ => Assembly.Load(_)).ToList();
 			referencedAssemblies.Add(this.assembly);
 
          var compiler = new AssemblyCompiler(trees, this.options.Level, new AssemblyNameGenerator(this.assembly).AssemblyName, 
-				referencedAssemblies.AsReadOnly(), currentDirectory);
+				referencedAssemblies.AsReadOnly(), currentDirectory, allowUnsafe);
 			compiler.Compile();
 			return compiler.Result;
       }
