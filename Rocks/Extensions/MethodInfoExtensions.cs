@@ -30,13 +30,13 @@ namespace Rocks.Extensions
          if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{@this.ReturnType.GetSafeName()}>" : $"{methodKind}";
+					$"{methodKind}<{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}";
          }
 			else
 			{
-				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => _.ParameterType.GetSafeName()));
-				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetSafeName()}>" : $"{methodKind}<{genericArgumentTypes}>";
+				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}"));
+            return @this.ReturnType != typeof(void) ?
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}<{genericArgumentTypes}>";
          }
 		}
 
@@ -44,8 +44,8 @@ namespace Rocks.Extensions
 		{
 			return string.Join(" && ",
 				@this.GetParameters().Select(_ =>
-					CodeTemplates.GetExpectationTemplate(_.Name, _.ParameterType.GetSafeName())));
-		}
+					CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
+      }
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{

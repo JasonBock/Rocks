@@ -187,7 +187,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeNameWithOpenGenerics()
 		{
-			Assert.AreEqual("IHaveGenerics<T>", typeof(IHaveGenerics<>).GetSafeName());
+			Assert.AreEqual("IHaveGenerics", typeof(IHaveGenerics<>).GetSafeName());
 		}
 
 		[Test]
@@ -199,7 +199,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeNameWithNestedOpenGenerics()
 		{
-			Assert.AreEqual("NestedGenerics.IHaveGenerics<T>", typeof(NestedGenerics.IHaveGenerics<>).GetSafeName());
+			Assert.AreEqual("NestedGenerics.IHaveGenerics", typeof(NestedGenerics.IHaveGenerics<>).GetSafeName());
 		}
 
 		[Test]

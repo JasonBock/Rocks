@@ -3,7 +3,6 @@ using Rocks.RockAssemblyTestContainer;
 using Rocks.RockAssemblyTestContainer.Contracts;
 using Rocks.RockAssemblyTestContainer.Extensions.TestAssembly.Extensions;
 using System;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using static Rocks.Extensions.IMockExtensions;
@@ -71,9 +70,6 @@ namespace Rocks.Tests
 		[Test, Ignore("a")]
 		public void GenerateForMscorlib()
 		{
-			var methods = typeof(Microsoft.Win32.SafeHandles.SafeHandleMinusOneIsInvalid).GetMethods(ReflectionValues.PublicInstance);
-			var filteredMethods = methods.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal).ToList();
-
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
 			new RockAssembly(typeof(object).Assembly,

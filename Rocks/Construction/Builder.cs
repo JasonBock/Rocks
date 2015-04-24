@@ -238,17 +238,21 @@ namespace Rocks.Construction
 							var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
 							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage) :
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
 						}
 						else
 						{
 							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(
-									getMethod.MetadataToken, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast) :
+									getMethod.MetadataToken, getArgumentNameList,
+									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(
-									getMethod.MetadataToken, getArgumentNameList, getMethod.ReturnType.GetSafeName(), getDelegateCast));
+									getMethod.MetadataToken, getArgumentNameList,
+									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast));
 						}
 					}
 
@@ -281,15 +285,15 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetPropertyIndexerTemplate(
-							@override + baseProperty.PropertyType.GetSafeName(), parameters, 
+							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters, 
 							string.Join(Environment.NewLine, propertyImplementations)));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetPropertyTemplate(
-							@override + baseProperty.PropertyType.GetSafeName(), baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
+                     string.Join(Environment.NewLine, propertyImplementations)));
 					}
 				}
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
@@ -316,15 +320,15 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyIndexerTemplate(visibility,
-							baseProperty.PropertyType.GetSafeName(), parameters, 
-							string.Join(Environment.NewLine, propertyImplementations)));
+							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters, 
+                     string.Join(Environment.NewLine, propertyImplementations)));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyTemplate(visibility,
-							baseProperty.PropertyType.GetSafeName(), baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
+                     string.Join(Environment.NewLine, propertyImplementations)));
 					}
 				}
 			}
@@ -353,7 +357,7 @@ namespace Rocks.Construction
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
-				this.TypeName, this.BaseType.GetSafeName(),
+				this.TypeName, $"{this.BaseType.GetSafeName()}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}",
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties),
 				string.Join(Environment.NewLine, events),
@@ -375,7 +379,7 @@ namespace Rocks.Construction
 			{
 				Directory.CreateDirectory(this.GetDirectoryForFile());
 				var fileName = Path.Combine(this.GetDirectoryForFile(),
-					$"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty)}.cs");
+					$"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)
 						.GetCompilationUnitRoot().NormalizeWhitespace(),

@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 using System;
+using System.Collections.Generic;
 
 namespace Rocks.Tests
 {
@@ -1035,6 +1036,15 @@ namespace Rocks.Tests
 
 			Assert.Throws<VerificationException>(() => rock.Verify());
 		}
+
+		[Test]
+		public void MakeWithGenericReturnValue()
+		{
+			var rock = Rock.Create<IProperties<Guid>>(new Options(CodeFileOptions.Create));
+			rock.Handle(nameof(IProperties<Guid>.Target));
+
+			var chunk = rock.Make();
+		}
 	}
 
 	public interface IProperties
@@ -1044,5 +1054,10 @@ namespace Rocks.Tests
 		string SetterOnly { set; }
 		string GetterAndSetter { get;  set; }
 		string this[int a, Guid b, string c] { get; set; }
+	}
+
+	public interface IProperties<T>
+	{
+		IEnumerable<T> Target { get; set; }
 	}
 }

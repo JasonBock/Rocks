@@ -17,7 +17,9 @@ namespace Rocks.Construction
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options)
 		{
-			this.TypeName = $"Rock{Guid.NewGuid().ToString("N")}";
+			var name = this.BaseType.IsGenericTypeDefinition ?
+				$"{Guid.NewGuid().ToString("N")}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
+			this.TypeName = $"Rock{name}";
 		}
 
 		protected override MethodInformation GetMethodInformation(MethodInfo baseMethod)

@@ -20,7 +20,9 @@ namespace Rocks.Construction
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options)
 		{
-			this.TypeName = $"Rock{baseType.GetSafeName()}";
+			var name = this.BaseType.IsGenericTypeDefinition ?
+				$"{baseType.GetSafeName()}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : baseType.GetSafeName();
+			this.TypeName = $"Rock{name}";
 		}
 
 		protected override string GetDirectoryForFile()

@@ -151,51 +151,84 @@ namespace Rocks.Extensions
 					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
 					@this.Name.Split('`')[0];
 
-				if (@this.IsGenericTypeDefinition)
-				{
-					name = $"{name}<{string.Join(", ", @this.GetGenericArguments().Select(_ => _.GetSafeName()))}>";
-				}
-
 				return name;
 			}
 		}
 
+		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)
+		{
+			var arguments = string.Empty;
+			var constraints = string.Empty;
+
+			if (@this.IsGenericType)
+			{
+				var genericArguments = new List<string>();
+				var genericConstraints = new List<string>();
+
+				foreach (var argument in @this.GetGenericArguments())
+				{
+					genericArguments.Add(argument.GetSafeName());
+					var constraint = argument.GetConstraints(namespaces);
+
+					if (!string.IsNullOrWhiteSpace(constraint))
+					{
+						genericConstraints.Add(constraint);
+					}
+				}
+
+				arguments = $"<{string.Join(", ", genericArguments)}>";
+				// TODO: This should not add a space in front. The Maker class
+				// should adjust the constraints to have a space in front.
+				constraints = genericConstraints.Count == 0 ?
+					string.Empty : $"{string.Join(" ", genericConstraints)}";
+			}
+
+			return new GenericArgumentsResult(arguments, constraints);
+		}
+
 		internal static string GetConstraints(this Type @this, SortedSet<string> namespaces)
 		{
-			var constraints = @this.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
-			var constraintedTypes = @this.GetGenericParameterConstraints();
-
-			if (constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
+			if(@this.IsGenericParameter)
 			{
-				return string.Empty;
-			}
-			else
-			{
-				var constraintValues = new List<string>();
+				var constraints = @this.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+				var constraintedTypes = @this.GetGenericParameterConstraints();
 
-				if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
+				if (constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
 				{
-					constraintValues.Add("struct");
+					return string.Empty;
 				}
 				else
 				{
-					foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
+					var constraintValues = new List<string>();
+
+					if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
 					{
-						constraintValues.Add(constraintedType.GetSafeName());
-						namespaces.Add(constraintedType.Namespace);
+						constraintValues.Add("struct");
+					}
+					else
+					{
+						foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
+						{
+							constraintValues.Add(constraintedType.GetSafeName());
+							namespaces.Add(constraintedType.Namespace);
+						}
+
+						if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
+						{
+							constraintValues.Add("class");
+						}
+						if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
+						{
+							constraintValues.Add("new()");
+						}
 					}
 
-					if ((constraints & GenericParameterAttributes.ReferenceTypeConstraint) != 0)
-					{
-						constraintValues.Add("class");
-					}
-					if ((constraints & GenericParameterAttributes.DefaultConstructorConstraint) != 0)
-					{
-						constraintValues.Add("new()");
-					}
+					return $"where {@this.GetSafeName()} : {string.Join(", ", constraintValues)}";
 				}
-
-				return $"where {@this.GetSafeName()} : {string.Join(", ", constraintValues)}";
+			}
+			else
+			{
+				return string.Empty;
 			}
 		}
 	}

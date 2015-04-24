@@ -43,7 +43,9 @@ namespace Rocks
 			var assemblyPath = Path.GetDirectoryName(this.assembly.Location);
 			var trees = new ConcurrentBag<SyntaxTree>();
 
-         Parallel.ForEach(assembly.GetExportedTypes().Where(_ => string.IsNullOrWhiteSpace(_.Validate())), _ =>
+         Parallel.ForEach(assembly.GetExportedTypes()
+				.Where(_ => string.IsNullOrWhiteSpace(_.Validate()) && !typeof(Array).IsAssignableFrom(_) &&
+					!typeof(Enum).IsAssignableFrom(_)), _ =>
 				{
 					var builder = new AssemblyBuilder(_, 
 						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
