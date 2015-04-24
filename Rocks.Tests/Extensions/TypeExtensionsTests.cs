@@ -46,6 +46,42 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void IsUnsafeWithSafeClassWithSafeMembers()
+		{
+			Assert.IsFalse(typeof(SafeMembers).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue()
+		{
+			Assert.IsTrue(typeof(UnsafeMethodWithUnsafeReturnValue).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeClassWithUnsafeMethodWithUnsafeArguments()
+		{
+			Assert.IsTrue(typeof(UnsafeMethodWithUnsafeArguments).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeClassWithUnsafePropertyType()
+		{
+			Assert.IsTrue(typeof(UnsafePropertyWithUnsafePropertyType).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithUnsafeClassWithUnsafeIndexer()
+		{
+			Assert.IsTrue(typeof(UnsafePropertyWithUnsafeIndexer).IsUnsafe());
+		}
+
+		[Test]
+		public void IsUnsafeWithSafeClassWithUnsafeEventArgs()
+		{
+			Assert.IsFalse(typeof(SafeEventWithUnsafeEventArgs).IsUnsafe());
+		}
+
+		[Test]
 		public void FindMethodWithMethodOnGivenType()
 		{
 			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
@@ -455,4 +491,42 @@ namespace Rocks.Tests.Extensions
 	{
 		event EventHandler<UnsafeByteEventArgs> Target;
 	}
-}
+
+	public class SafeMembers
+	{
+		public virtual void Target() { }
+		public virtual int TargetReturn() { return 0; }
+		public virtual int TargetProperty { get; set; }
+		public virtual int this[int a] { get { return 0; } set { } }
+#pragma warning disable 67
+		public virtual event EventHandler MyEvent;
+#pragma warning restore 67
+	}
+
+	public unsafe class UnsafeMethodWithUnsafeReturnValue
+	{
+		public virtual byte* Target() { return default(byte*); }
+	}
+
+	public unsafe class UnsafeMethodWithUnsafeArguments
+	{
+		public virtual void Target(byte* a) { }
+	}
+
+	public unsafe class UnsafePropertyWithUnsafePropertyType
+	{
+		public virtual byte* Target { get; set; }
+	}
+
+	public unsafe class UnsafePropertyWithUnsafeIndexer
+	{
+		public virtual int this[byte* a] { get { return 0; } set { } }
+	}
+
+	public class SafeEventWithUnsafeEventArgs
+	{
+#pragma warning disable 67
+		public virtual event EventHandler<UnsafeByteEventArgs> Target;
+#pragma warning restore 67
+	}
+} 
