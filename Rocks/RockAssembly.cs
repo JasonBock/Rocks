@@ -46,7 +46,8 @@ namespace Rocks
 
          Parallel.ForEach(assembly.GetExportedTypes()
 				.Where(_ => string.IsNullOrWhiteSpace(_.Validate()) && !typeof(Array).IsAssignableFrom(_) &&
-					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_)), _ =>
+					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) && 
+					!typeof(Delegate).IsAssignableFrom(_)), _ =>
 				{
 					var builder = new AssemblyBuilder(_, 
 						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
