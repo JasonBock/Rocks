@@ -1,6 +1,8 @@
-﻿using NUnit.Framework;
+﻿#pragma warning disable CS0618
+using NUnit.Framework;
 using Rocks.Construction;
 using Rocks.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -36,8 +38,113 @@ namespace Rocks.Tests.Construction
 			Assert.AreSame(options, builder.Options, nameof(builder.Options));
 			Assert.IsNotNull(builder.Tree, nameof(builder.Tree));
 			Assert.IsTrue(!string.IsNullOrWhiteSpace(builder.TypeName), nameof(builder.TypeName));
+
+			var tree = builder.Tree.ToString();
+
+			Assert.IsFalse(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsFalse(tree.EndsWith("#pragma warning restore CS0618"));
+		}
+
+		[Test]
+		public void BuildWhenTypeIsObsolete()
+		{
+			var baseType = typeof(IAmObsolete);
+			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+			var namespaces = new SortedSet<string> { baseType.Namespace };
+			var options = new Options();
+
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			builder.Build();
+
+			var tree = builder.Tree.ToString();
+
+			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+		}
+
+		[Test]
+		public void BuildWhenMethodIsObsolete()
+		{
+			var baseType = typeof(IHaveAnObsoleteMethod);
+			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+			var namespaces = new SortedSet<string> { baseType.Namespace };
+			var options = new Options();
+
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			builder.Build();
+
+			var tree = builder.Tree.ToString();
+
+			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+		}
+
+		[Test]
+		public void BuildWhenPropertyIsObsolete()
+		{
+			var baseType = typeof(IHaveAnObsoleteProperty);
+			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+			var namespaces = new SortedSet<string> { baseType.Namespace };
+			var options = new Options();
+
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			builder.Build();
+
+			var tree = builder.Tree.ToString();
+
+			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+		}
+
+		[Test]
+		public void BuildWhenEventIsObsolete()
+		{
+			var baseType = typeof(IHaveAnObsoleteEvent);
+			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+			var namespaces = new SortedSet<string> { baseType.Namespace };
+			var options = new Options();
+
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			builder.Build();
+
+			var tree = builder.Tree.ToString();
+
+			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 	}
 
 	public interface IBuilderTest { }
+
+	[Obsolete("", false)]
+	public interface IAmObsolete { }
+
+	public interface IHaveAnObsoleteMethod
+	{
+		[Obsolete]
+		void TargetMethod();
+		int TargetProperty { get; set; }
+		event EventHandler TargetEvent;
+	}
+
+	public interface IHaveAnObsoleteProperty
+	{
+		void TargetMethod();
+		[Obsolete]
+		int TargetProperty { get; set; }
+		event EventHandler TargetEvent;
+	}
+
+	public interface IHaveAnObsoleteEvent
+	{
+		void TargetMethod();
+		int TargetProperty { get; set; }
+		[Obsolete]
+		event EventHandler TargetEvent;
+	}
 }
+#pragma warning restore CS0618

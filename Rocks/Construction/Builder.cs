@@ -90,6 +90,8 @@ namespace Rocks.Construction
 					{
 						generatedMethods.Add(CodeTemplates.GetRefOutNotImplementedMethodTemplate(methodInformation.DescriptionWithOverride));
 					}
+
+					this.RequiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 				else if (!baseMethod.IsPrivate && baseMethod.IsAbstract)
 				{
@@ -100,6 +102,8 @@ namespace Rocks.Construction
 							outInitializers, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}") :
 						CodeTemplates.GetNonPublicActionImplementationTemplate(visibility, methodInformation.Description,
 							outInitializers));
+
+					this.RequiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 			}
 
@@ -187,6 +191,8 @@ namespace Rocks.Construction
 						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override, 
                      eventHandlerType.GetSafeName(), @event.Name));
 					}
+
+					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 				else if (!eventMethod.IsPrivate && eventMethod.IsAbstract)
 				{
@@ -204,6 +210,8 @@ namespace Rocks.Construction
 						generatedEvents.Add(CodeTemplates.GetNonPublicEventTemplate(visibility,
 							eventHandlerType.GetSafeName(), @event.Name));
 					}
+
+					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 			}
 
@@ -219,7 +227,7 @@ namespace Rocks.Construction
 			{
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
-				var propertyMethod = (baseProperty.CanRead ? baseProperty.GetMethod : baseProperty.SetMethod);
+				var propertyMethod = baseProperty.GetDefaultMethod();
 				var methodInformation = this.GetMethodInformation(propertyMethod);
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
@@ -296,6 +304,8 @@ namespace Rocks.Construction
 							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
                      string.Join(Environment.NewLine, propertyImplementations)));
 					}
+
+					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
 				{
@@ -331,6 +341,8 @@ namespace Rocks.Construction
 							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
                      string.Join(Environment.NewLine, propertyImplementations)));
 					}
+
+					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 			}
 
@@ -339,8 +351,11 @@ namespace Rocks.Construction
 
 		protected string GetTypeNameWithNoGenerics() => this.TypeName.Split('<').First();
 
-		private string MakeCode()
+		protected string GetTypeNameWithGenericsAndNoTextFormatting() => $"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
+
+      private string MakeCode()
 		{
+			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null;
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties();
@@ -354,11 +369,13 @@ namespace Rocks.Construction
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
 			this.Namespaces.Add(typeof(BindingFlags).Namespace);
 
-			return CodeTemplates.GetClassTemplate(
+			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
+
+         var @class = CodeTemplates.GetClassTemplate(
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
-				this.TypeName, $"{this.BaseType.GetSafeName()}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}",
+				this.TypeName, $"{this.BaseType.GetSafeName()}{baseTypeGenericArguments.Arguments}",
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties),
 				string.Join(Environment.NewLine, events),
@@ -368,7 +385,18 @@ namespace Rocks.Construction
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
 					CodeTemplates.GetConstructorNoArgumentsTemplate(this.GetTypeNameWithNoGenerics()) : string.Empty,
-				this.GetTypeNameWithNoGenerics(), this.GetAdditionNamespaceCode());
+				this.GetTypeNameWithNoGenerics(), this.GetAdditionNamespaceCode(),
+				this.IsUnsafe, baseTypeGenericArguments.Constraints);
+
+			if (this.RequiresObsoleteSuppression)
+			{
+				@class =
+$@"#pragma warning disable CS0618
+{@class}
+#pragma warning restore CS0618";
+			}
+
+			return @class;
 		}
 
 		private SyntaxTree MakeTree()
@@ -380,7 +408,7 @@ namespace Rocks.Construction
 			{
 				Directory.CreateDirectory(this.GetDirectoryForFile());
 				var fileName = Path.Combine(this.GetDirectoryForFile(),
-					$"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}.cs");
+					$"{this.GetTypeNameWithGenericsAndNoTextFormatting()}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)
 						.GetCompilationUnitRoot().NormalizeWhitespace(),
@@ -405,5 +433,6 @@ namespace Rocks.Construction
 		internal ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 		internal SortedSet<string> Namespaces { get; }
 		internal string TypeName { get; set; }
+		private bool RequiresObsoleteSuppression { get; set; }
 	}
 }

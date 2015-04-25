@@ -60,8 +60,37 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
 		}
 
+		[Test]
+		public void GetParameters()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("Int32 a, String c", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithArguments)).GetParameters(namespaces));
+		}
+
+		[Test]
+		public void GetParametersWithGenerics()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("T a, String b, U c", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithGenerics)).GetParameters(namespaces));
+		}
+
+		[Test]
+		public void GetParametersWithParams()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("params Int32[] a", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithParamsArgument)).GetParameters(namespaces));
+		}
+
+		[Test]
+		public void GetParametersWithUnsafeArgumentTypes()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("Byte* a", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithUnsafeArguments)).GetParameters(namespaces));
+      }
+
 		public void TargetWithArguments(int a, string c) { }
 		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }
 		public void TargetWithParamsArgument(params int[] a) { }
+		public unsafe void TargetWithUnsafeArguments(byte* a) { }
 	}
 }

@@ -5,8 +5,8 @@
 		public const string Internal = "internal";
  		public const string Protected = "protected";
 
-		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments) => 
-			$"public delegate {returnType} {delegateName}({arguments});";
+		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments, bool isUnsafe) => 
+			$"public {CodeTemplates.GetIsUnsafe(isUnsafe)} delegate {returnType} {delegateName}({arguments});";
 		
 		public static string GetPropertyTemplate(string returnType, string name, string getSet) => 
 			$"public {returnType} {name} {{ {getSet} }}";
@@ -287,16 +287,18 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetClassTemplate(string usingStatements, string mockTypeName, string baseType, string implementedMethods,
-			string implementedProperties, string implementedEvents, string generatedConstructors, string baseTypeNamespace, 
-			string classAttributes, string noArgumentConstructor, string constructorName, string additionalCode) =>
+		private static string GetIsUnsafe(bool isUnsafe) => isUnsafe ? "unsafe" : string.Empty;
+
+		public static string GetClassTemplate(string usingStatements, string mockTypeName, string baseType, 
+			string implementedMethods, string implementedProperties, string implementedEvents, string generatedConstructors, string baseTypeNamespace, 
+			string classAttributes, string noArgumentConstructor, string constructorName, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
 $@"{usingStatements}
 
 namespace {baseTypeNamespace}
 {{
 	{classAttributes}
-	public sealed class {mockTypeName}
-		: {baseType}, IMock
+	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
+		: {baseType}, IMock {baseTypeConstraints}
 	{{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 

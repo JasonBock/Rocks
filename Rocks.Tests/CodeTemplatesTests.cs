@@ -28,9 +28,15 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void GetAssemblyDelegateTemplate()
+		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsFalse()
 		{
-			Assert.AreEqual("public delegate a b(c);", CodeTemplates.GetAssemblyDelegateTemplate("a", "b", "c"));
+			Assert.AreEqual("public  delegate a b(c);", CodeTemplates.GetAssemblyDelegateTemplate("a", "b", "c", false));
+		}
+
+		[Test]
+		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsTrue()
+		{
+			Assert.AreEqual("public unsafe delegate a b(c);", CodeTemplates.GetAssemblyDelegateTemplate("a", "b", "c", true));
 		}
 
 		[Test]
@@ -341,7 +347,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void GetClassTemplate()
+		public void GetClassTemplateWhenIsUnsafeIsTrue()
 		{
 			Assert.AreEqual(
 @"a
@@ -349,8 +355,8 @@ namespace Rocks.Tests
 namespace h
 {
 	i
-	public sealed class b
-		: c, IMock
+	public unsafe sealed class b
+		: c, IMock m
 	{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
@@ -392,7 +398,62 @@ namespace h
 	}
 
 	l
-}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l"));
+}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", true, "m"));
+		}
+
+		[Test]
+		public void GetClassTemplateWhenIsUnsafeIsFalse()
+		{
+			Assert.AreEqual(
+@"a
+
+namespace h
+{
+	i
+	public  sealed class b
+		: c, IMock m
+	{
+		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
+
+		j
+
+		public k(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
+		{
+			this.handlers = handlers;
+		}
+
+		g
+
+		d
+
+		e
+
+		f
+
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		{
+			get { return this.handlers; }
+		}
+
+		void IMock.Raise(string eventName, EventArgs args)
+		{
+			var thisType = this.GetType();
+
+			var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, 
+				BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+
+			if (eventDelegate != null)
+			{
+				foreach (var handler in eventDelegate.GetInvocationList())
+				{
+					handler.Method.Invoke(handler.Target, new object[] { this, args });
+				}
+			}
+		}	
+	}
+
+	l
+}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", false, "m"));
 		}
 
 		[Test]

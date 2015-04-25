@@ -43,12 +43,7 @@ namespace Rocks.Construction
          }
 			else
 			{
-				var delegateName = $"{this.GetTypeNameWithNoGenerics()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
-				delegateCast = delegateName;
-				this.generatedDelegates.Add(CodeTemplates.GetAssemblyDelegateTemplate(
-					baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
-					delegateName,
-					baseMethod.GetParameters(this.Namespaces)));
+				delegateCast = $"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 			}
 
 			return new MethodInformation
@@ -75,7 +70,10 @@ namespace Rocks.Construction
 
 		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription)
 		{
-			base.HandleRefOutMethod(baseMethod, methodDescription);
+			this.generatedDelegates.Add(CodeTemplates.GetAssemblyDelegateTemplate(
+				baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
+				methodDescription.DelegateCast,
+				baseMethod.GetParameters(this.Namespaces), baseMethod.IsUnsafeToMock()));
 		}
 	}
 }

@@ -53,12 +53,6 @@ namespace Rocks.Construction
 					delegateCast = string.Empty;
 				}
 			}
-
-			//var delegateCast = !containsRefAndOrOutParameters ?
-			//	baseMethod.GetDelegateCast() :
-			//	(this.Handlers.ContainsKey(key) ?
-			//		$"{this.Handlers[key][0].Method.GetType().GetSafeName(baseMethod, this.Namespaces)}{this.Handlers[key][0].Method.GetType().GetGenericArguments(this.Namespaces).Arguments}" : 
-			//		string.Empty);
 			
 			return new MethodInformation
 			{

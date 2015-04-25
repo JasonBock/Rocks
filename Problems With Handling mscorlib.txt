@@ -1,0 +1,35 @@
+Handling internal abstract members. Needed to create a scheme for InternalsVisibleTo and "well-known" assembly names.
+
+Lots of mistakes in generating the right type with generic values.
+
+Handling unsafe members with pointer types. Had to create IsUnsafeToMock() extension methods.
+
+Need to create the right "name" for the left-hand side of the delegate name to include generic values (similar to creating the file name - "RocksObjectSecurityT")
+
+For any overridden member, if the base type or method is marked with [ObsoleteAttribute], set a "RequiresObsoleteSuppression" flag. When making the class, surround the class with "#pragma warning disable/restore CS0618"
+
+Looks like I gen'd a delete for an internal virtual method where the method doesn't actually exist (correctly).
+
+For some reason, not handling the constraint could be "where T : struct"
+
+
+TODO:
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Rock_AppDomain.cs(149,24): warning CS0114: 'Rock_AppDomain.Equals(object)' hides inherited member 'object.Equals(object)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
+
+Object members like "ToString" and "GetHashCode" are not getting "override"
+
+
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\RockMulticastDelegate.cs(18,30): error CS0115: 'RockMulticastDelegate.GetObjectData(SerializationInfo, StreamingContext)': no suitable method found to override
+
+Not sure what's going on here. The base method is "public override". Should be able to override this....right?
+
+
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Collections\Generic\RockIListT.cs(10,40): error CS0535: 'RockIList<T>' does not implement interface member 'ICollection<T>.IsReadOnly'
+
+Problem where I'm not looking at all of the methods across the base type AND its base types. This may only matter for interfaces.
+
+
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\IO\RockUnmanagedMemoryStream.cs(37,116): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
+
+
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\IO\RockFileStream.cs(1064,32): warning CS0672: Member 'RockFileStream.Handle' overrides obsolete member 'FileStream.Handle'. Add the Obsolete attribute to 'RockFileStream.Handle'.
