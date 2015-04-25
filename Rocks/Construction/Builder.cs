@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using static Rocks.Extensions.ConstructorInfoExtensions;
 using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.PropertyInfoExtensions;
@@ -46,6 +47,7 @@ namespace Rocks.Construction
 				{
 					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
 						constructorName, constructor.GetArgumentNameList(), constructor.GetParameters(this.Namespaces)));
+					this.IsUnsafe |= constructor.IsUnsafeToMock();
 				}
 			}
 
@@ -392,7 +394,9 @@ namespace Rocks.Construction
 			{
 				@class =
 $@"#pragma warning disable CS0618
+#pragma warning disable CS0672
 {@class}
+#pragma warning restore CS0672
 #pragma warning restore CS0618";
 			}
 

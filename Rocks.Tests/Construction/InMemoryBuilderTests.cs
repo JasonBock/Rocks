@@ -42,6 +42,8 @@ namespace Rocks.Tests.Construction
 			var tree = builder.Tree.ToString();
 
 			Assert.IsFalse(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsFalse(tree.Contains("#pragma warning disable CS0672"));
+			Assert.IsFalse(tree.Contains("#pragma warning restore CS0672"));
 			Assert.IsFalse(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 
@@ -60,6 +62,8 @@ namespace Rocks.Tests.Construction
 			var tree = builder.Tree.ToString();
 
 			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
+			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
 			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 
@@ -78,6 +82,8 @@ namespace Rocks.Tests.Construction
 			var tree = builder.Tree.ToString();
 
 			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
+			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
 			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 
@@ -96,6 +102,8 @@ namespace Rocks.Tests.Construction
 			var tree = builder.Tree.ToString();
 
 			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
+			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
 			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 
@@ -114,6 +122,8 @@ namespace Rocks.Tests.Construction
 			var tree = builder.Tree.ToString();
 
 			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
+			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
+			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
 			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
 		}
 	}

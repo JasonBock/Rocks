@@ -105,6 +105,7 @@
     <Compile Include="Exceptions\VerificationExceptionTests.cs" />
     <Compile Include="Exceptions\ValidationExceptionTests.cs" />
     <Compile Include="ExpectationsTests.cs" />
+    <Compile Include="Extensions\ConstructorInfoExtensionsTests.cs" />
     <Compile Include="Extensions\ExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\ExpressionOfTExtensionsTests.cs" />
     <Compile Include="Extensions\GenericArgumentsResultTests.cs" />
