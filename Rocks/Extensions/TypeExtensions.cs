@@ -45,8 +45,8 @@ namespace Rocks.Extensions
 
 		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this)
 		{
-			var events = new HashSet<EventInfo>(
-				@this.GetEvents(ReflectionValues.PublicNonPublicInstance));
+			var events = new HashSet<EventInfo>(@this.GetEvents(ReflectionValues.PublicNonPublicInstance)
+				.Where(_ => _.AddMethod.IsVirtual && !_.AddMethod.IsFinal));
 
 			if (@this.IsInterface)
 			{
