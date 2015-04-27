@@ -6,12 +6,59 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using static Rocks.Extensions.PropertyInfoExtensions;
 
 namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static ReadOnlyCollection<MethodInfo> GetMockableMethods(this Type @this)
+		{
+			var methods = new HashSet<MethodInfo>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
+				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal));
+
+			if(@this.IsInterface)
+			{
+				foreach(var @interface in @this.GetInterfaces())
+				{
+					methods.UnionWith(@interface.GetMockableMethods());
+				}
+			}
+
+			return methods.ToList().AsReadOnly();
+		}
+
+		internal static ReadOnlyCollection<PropertyInfo> GetMockableProperties(this Type @this)
+		{
+			var properties = new HashSet<PropertyInfo>(@this.GetProperties(ReflectionValues.PublicNonPublicInstance)
+				.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal));
+
+			if (@this.IsInterface)
+			{
+				foreach (var @interface in @this.GetInterfaces())
+				{
+					properties.UnionWith(@interface.GetMockableProperties());
+				}
+			}
+
+			return properties.ToList().AsReadOnly();
+		}
+
+		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this)
+		{
+			var events = new HashSet<EventInfo>(
+				@this.GetEvents(ReflectionValues.PublicNonPublicInstance));
+
+			if (@this.IsInterface)
+			{
+				foreach (var @interface in @this.GetInterfaces())
+				{
+					events.UnionWith(@interface.GetMockableEvents());
+				}
+			}
+
+			return events.ToList().AsReadOnly();
+		}
+
 		internal static MethodInfo FindMethod(this Type @this, int methodHandle)
 		{
 			var foundMethod = (from method in @this.GetMethods()

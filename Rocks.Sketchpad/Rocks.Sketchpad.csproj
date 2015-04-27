@@ -91,6 +91,7 @@
     <Compile Include="Generics.cs" />
     <Compile Include="Handlers.cs" />
     <Compile Include="InAndOut.cs" />
+    <Compile Include="Inheritance.cs" />
     <Compile Include="Members.cs" />
     <Compile Include="MethodHandles.cs" />
     <Compile Include="MoqTests.cs" />

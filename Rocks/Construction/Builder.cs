@@ -58,8 +58,7 @@ namespace Rocks.Construction
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var baseMethod in this.BaseType.GetMethods(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal))
+			foreach (var baseMethod in this.BaseType.GetMockableMethods())
 			{
 				var methodInformation = this.GetMethodInformation(baseMethod);
 				var argumentNameList = baseMethod.GetArgumentNameList();
@@ -171,7 +170,7 @@ namespace Rocks.Construction
 		{
 			var generatedEvents = new List<string>();
 
-			foreach (var @event in this.BaseType.GetEvents(ReflectionValues.PublicNonPublicInstance))
+			foreach (var @event in this.BaseType.GetMockableEvents())
 			{
 				var eventHandlerType = @event.EventHandlerType;
 				this.Namespaces.Add(eventHandlerType.Namespace);
@@ -224,8 +223,7 @@ namespace Rocks.Construction
 		{
 			var generatedProperties = new List<string>();
 
-			foreach (var baseProperty in this.BaseType.GetProperties(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal))
+			foreach (var baseProperty in this.BaseType.GetMockableProperties())
 			{
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();

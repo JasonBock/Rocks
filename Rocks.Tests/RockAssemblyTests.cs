@@ -67,7 +67,7 @@ namespace Rocks.Tests
 			Assert.IsTrue(this.wasMethod5DelegateCalled);
 		}
 
-		[Test, Ignore("a")]
+		[Test]
 		public void GenerateForMscorlib()
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
