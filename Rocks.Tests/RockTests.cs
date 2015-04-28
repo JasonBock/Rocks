@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using Rocks.Exceptions;
 using System.IO;
+using System.Runtime.InteropServices;
+using System;
 
 namespace Rocks.Tests
 {

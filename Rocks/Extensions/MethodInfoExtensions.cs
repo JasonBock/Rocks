@@ -61,6 +61,11 @@ namespace Rocks.Extensions
 					CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
 		}
 
+		internal static string GetMethodDescription(this MethodInfo @this)
+		{
+			return @this.GetMethodDescription(new SortedSet<string>(), false);
+		}
+
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
 			return @this.GetMethodDescription(namespaces, false);

@@ -3,6 +3,7 @@ using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -360,6 +361,24 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetSafeNameForPointerType()
+		{
+			Assert.AreEqual("Byte*", typeof(byte*).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForArrayType()
+		{
+			Assert.AreEqual("Byte[]", typeof(byte[]).GetSafeName());
+		}
+
+		[Test]
+		public void GetSafeNameForArrayOfPointersType()
+		{
+			Assert.AreEqual("Byte*[]", typeof(byte*[]).GetSafeName());
+		}
+
+		[Test]
 		public void ContainsRefArguments()
 		{
 			Assert.IsTrue(typeof(IHaveMethodWithRefArgument).ContainsRefAndOrOutParameters());
@@ -424,6 +443,14 @@ namespace Rocks.Tests.Extensions
 			var events = typeof(MockableEventsSub).GetMockableEvents();
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any());
+		}
+
+		[Test]
+		public void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()
+		{
+			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods();
+			Assert.AreEqual(1, methods.Count);
+			Assert.IsTrue(methods.Where(_ => _.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any());
 		}
 
 		public interface IHaveGenericsWithNoConstraints<T> { }
@@ -616,4 +643,15 @@ namespace Rocks.Tests.Extensions
 		public event EventHandler SubInterfaceEvent;
 	}
 #pragma warning restore 67
+
+	public interface IHaveSameMethodAsSubInterface
+	{
+		void GetNames(int memid, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out]string[] rgBstrNames, int cMaxNames, out int pcNames);
+	}
+
+	public interface IHaveSameMethodAsBaseInterface
+		: IHaveSameMethodAsSubInterface
+	{
+		new void GetNames(int memid, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out]string[] rgBstrNames, int cMaxNames, out int pcNames);
+	}
 }

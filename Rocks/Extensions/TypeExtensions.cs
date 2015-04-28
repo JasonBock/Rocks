@@ -16,11 +16,22 @@ namespace Rocks.Extensions
 			var methods = new HashSet<MethodInfo>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal));
 
-			if(@this.IsInterface)
+			if (@this.IsInterface)
 			{
-				foreach(var @interface in @this.GetInterfaces())
+				var namespaces = new SortedSet<string>();
+
+				foreach (var @interface in @this.GetInterfaces())
 				{
-					methods.UnionWith(@interface.GetMockableMethods());
+					var interfaceMethods = @interface.GetMockableMethods();
+					var methodDescriptions = methods.Select(_ => _.GetMethodDescription());
+
+					foreach (var interfaceMethod in interfaceMethods)
+					{
+						if (!methodDescriptions.Where(_ => _.Equals(interfaceMethod.GetMethodDescription())).Any())
+						{
+							methods.Add(interfaceMethod);
+						}
+					}
 				}
 			}
 
@@ -65,11 +76,11 @@ namespace Rocks.Extensions
 									 where method.MetadataToken == methodHandle
 									 select method).FirstOrDefault();
 
-			if(foundMethod == null)
+			if (foundMethod == null)
 			{
 				var types = new List<Type>(@this.GetInterfaces());
 
-				if(@this.BaseType != null)
+				if (@this.BaseType != null)
 				{
 					types.Add(@this.BaseType);
 				}
@@ -151,7 +162,7 @@ namespace Rocks.Extensions
 			return @this.IsPointer ||
 				@this.GetMethods(ReflectionValues.PublicNonPublicInstance).Where(m => m.IsUnsafeToMock()).Any() ||
 				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafeToMock(false)).Any() ||
-				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any(); 
+				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
 		}
 
 		internal static string Validate(this Type @this)
@@ -161,16 +172,16 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
-			if(@this.IsAbstract && 
+			if (@this.IsAbstract &&
 				(@this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
 				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
 				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{
-				if(!@this.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
+				if (!@this.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
 					.Where(_ => _.AssemblyName == (@this.IsSealed ? new AssemblyNameGenerator(@this).AssemblyName : new InMemoryNameGenerator().AssemblyName)).Any())
 				{
 					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
-            }
+				}
 			}
 
 			return string.Empty;
@@ -230,7 +241,7 @@ namespace Rocks.Extensions
 
 		internal static string GetConstraints(this Type @this, SortedSet<string> namespaces)
 		{
-			if(@this.IsGenericParameter)
+			if (@this.IsGenericParameter)
 			{
 				var constraints = @this.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
 				var constraintedTypes = @this.GetGenericParameterConstraints();
