@@ -92,6 +92,8 @@
     <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
+    <Compile Include="Extensions\MethodMatch.cs" />
+    <Compile Include="Extensions\MockableResultOfT.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="InMemoryRock.cs" />
     <Compile Include="IRock - Actions.cs" />

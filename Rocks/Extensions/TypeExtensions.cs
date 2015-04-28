@@ -11,10 +11,11 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
-		internal static ReadOnlyCollection<MethodInfo> GetMockableMethods(this Type @this)
+		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this)
 		{
-			var methods = new HashSet<MethodInfo>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal));
+			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
+				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal)
+				.Select(_ => new MockableResult<MethodInfo>(_, false)));
 
 			if (@this.IsInterface)
 			{
@@ -22,14 +23,16 @@ namespace Rocks.Extensions
 
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					var interfaceMethods = @interface.GetMockableMethods();
-					var methodDescriptions = methods.Select(_ => _.GetMethodDescription());
+					var interfaceMethods = @interface.GetMethods();
 
 					foreach (var interfaceMethod in interfaceMethods)
 					{
-						if (!methodDescriptions.Where(_ => _.Equals(interfaceMethod.GetMethodDescription())).Any())
+						var matchMethodGroups = methods.GroupBy(_ => interfaceMethod.Match(_.Value)).ToDictionary(_ => _.Key);
+
+						if(!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 						{
-							methods.Add(interfaceMethod);
+							methods.Add(new MockableResult<MethodInfo>(
+								interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly)));
 						}
 					}
 				}

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
+using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -58,28 +59,33 @@ namespace Rocks.Construction
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var baseMethod in this.BaseType.GetMockableMethods())
+			foreach (var method in this.BaseType.GetMockableMethods())
 			{
-				var methodInformation = this.GetMethodInformation(baseMethod);
+				var methodInformation = this.GetMethodInformation(method);
+				var baseMethod = method.Value;
 				var argumentNameList = baseMethod.GetArgumentNameList();
 				var outInitializers = !methodInformation.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
 
 				if (baseMethod.IsPublic)
 				{
+					var visibility = method.RequiresExplicitInterfaceImplementation ? string.Empty : CodeTemplates.Public;
+
 					// Either the base method contains no refs/outs, or the user specified a delegate
 					// to use to handle that method (remember, types with methods with refs/outs are gen'd
-					// each time, and that's the only reason the handlers are passed in.
+					// each time, and that's the only reason the handlers are passed in).
 					if (!methodInformation.ContainsRefAndOrOutParameters || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 					{
 						if (!methodInformation.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
 						{
 							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
+								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
+								visibility));
 						}
 						else
 						{
 							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride));
+								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
+								visibility));
 
 							if (methodInformation.ContainsRefAndOrOutParameters)
 							{
@@ -119,9 +125,10 @@ namespace Rocks.Construction
 			public string DescriptionWithOverride { get; set; }
 		}
 
-		protected abstract MethodInformation GetMethodInformation(MethodInfo baseMethod);
+		protected abstract MethodInformation GetMethodInformation(MockableResult<MethodInfo> baseMethod);
 
-		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride)
+		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
+			string visibility)
 		{
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
@@ -132,21 +139,25 @@ namespace Rocks.Construction
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
-							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride) :
+							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
+							visibility) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
-							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
+							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
+							visibility);
 			}
 			else
 			{
 				return CodeTemplates.GetActionMethodTemplate(
-					baseMethod.MetadataToken, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride);
+					baseMethod.MetadataToken, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
+					visibility);
 			}
 		}
 
 		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
 
-		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride)
+		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
+			string visibility)
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
@@ -154,15 +165,16 @@ namespace Rocks.Construction
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
-							delegateCast, outInitializers, methodDescriptionWithOverride) :
+							delegateCast, outInitializers, methodDescriptionWithOverride, visibility) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
-							delegateCast, outInitializers, methodDescriptionWithOverride);
+							delegateCast, outInitializers, methodDescriptionWithOverride, visibility);
 			}
 			else
 			{
 				return CodeTemplates.GetActionMethodWithNoArgumentsTemplate(
-					baseMethod.MetadataToken, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride);
+					baseMethod.MetadataToken, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride, 
+					visibility);
 			}
 		}
 
@@ -175,7 +187,7 @@ namespace Rocks.Construction
 				var eventHandlerType = @event.EventHandlerType;
 				this.Namespaces.Add(eventHandlerType.Namespace);
 				var eventMethod = @event.AddMethod;
-				var methodInformation = this.GetMethodInformation(eventMethod);
+				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(eventMethod, false));
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
 				if (eventMethod.IsPublic)
@@ -228,7 +240,7 @@ namespace Rocks.Construction
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
 				var propertyMethod = baseProperty.GetDefaultMethod();
-				var methodInformation = this.GetMethodInformation(propertyMethod);
+				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(propertyMethod, false));
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
 				if (propertyMethod.IsPublic)
@@ -238,6 +250,8 @@ namespace Rocks.Construction
 					if (baseProperty.CanRead)
 					{
 						var getMethod = baseProperty.GetMethod;
+						var getVisibility = getMethod.IsPublic ? string.Empty :
+							getMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
 						var getArgumentNameList = getMethod.GetArgumentNameList();
 						var getDelegateCast = getMethod.GetDelegateCast();
 
@@ -248,26 +262,28 @@ namespace Rocks.Construction
 							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
 									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
-									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage) :
+									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(
 									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
-									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage));
+									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
 						}
 						else
 						{
 							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(
 									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast) :
+									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast, getVisibility) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(
 									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast));
+									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast, getVisibility));
 						}
 					}
 
 					if (baseProperty.CanWrite)
 					{
 						var setMethod = baseProperty.SetMethod;
+						var setVisibility = setMethod.IsPublic ? string.Empty :
+							setMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
 						var setArgumentNameList = setMethod.GetArgumentNameList();
 						var setDelegateCast = setMethod.GetDelegateCast();
 
@@ -276,12 +292,12 @@ namespace Rocks.Construction
 							var setExpectationChecks = setMethod.GetExpectationChecks();
 							var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
 							propertyImplementations.Add(CodeTemplates.GetPropertySetTemplate(
-								setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage));
+								setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage, setVisibility));
 						}
 						else
 						{
 							propertyImplementations.Add(CodeTemplates.GetPropertySetAndNoIndexersTemplate(
-								setMethod.MetadataToken, setArgumentNameList, setDelegateCast));
+								setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility));
 						}
 					}
 
@@ -314,12 +330,14 @@ namespace Rocks.Construction
 
 					if (baseProperty.CanRead)
 					{
-						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertyGetTemplate());
+						var getVisibility = baseProperty.GetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertyGetTemplate(getVisibility));
 					}
 
 					if(baseProperty.CanWrite)
 					{
-						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertySetTemplate());
+						var setVisibility = baseProperty.SetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertySetTemplate(setVisibility));
 					}
 
 					if (indexers.Length > 0)

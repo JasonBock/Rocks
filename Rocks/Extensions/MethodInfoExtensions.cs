@@ -7,6 +7,35 @@ namespace Rocks.Extensions
 {
 	internal static class MethodInfoExtensions
 	{
+		internal static MethodMatch Match(this MethodInfo @this, MethodInfo other)
+		{
+			if(@this.Name != other.Name)
+			{
+				return MethodMatch.None;
+			}
+			else
+			{
+				var thisParameters = @this.GetParameters().ToList();
+				var otherParameters = other.GetParameters().ToList();
+
+				if(thisParameters.Count != otherParameters.Count)
+				{
+					return MethodMatch.None;
+				}
+
+				for (var i = 0; i < thisParameters.Count; i++)
+				{
+					if ((thisParameters[i].ParameterType != otherParameters[i].ParameterType) ||
+						(thisParameters[i].GetModifier() != otherParameters[i].GetModifier()))
+               {
+						return MethodMatch.None;
+					}
+				}
+
+				return @this.ReturnType != other.ReturnType ? MethodMatch.DifferByReturnTypeOnly : MethodMatch.Exact;
+			}
+		}
+
 		internal static bool IsUnsafeToMock(this MethodInfo @this)
 		{
 			return @this.IsUnsafeToMock(true);
@@ -66,11 +95,6 @@ namespace Rocks.Extensions
 			return @this.GetMethodDescription(new SortedSet<string>(), false);
 		}
 
-		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
-		{
-			return @this.GetMethodDescription(namespaces, false);
-		}
-
 		internal static void AddNamespaces(this MethodInfo @this, SortedSet<string> namespaces)
 		{
 			namespaces.Add(@this.ReturnType.Namespace);
@@ -82,7 +106,17 @@ namespace Rocks.Extensions
 			}
 		}
 
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
+		{
+			return @this.GetMethodDescription(namespaces, false, false);
+		}
+
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
+		{
+			return @this.GetMethodDescription(namespaces, includeOverride, false);
+		}
+
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride, bool requiresExplicitInterfaceImplementation)
 		{
 			if (@this.IsGenericMethod)
 			{
@@ -107,8 +141,10 @@ namespace Rocks.Extensions
 			}
 
 			var parameters = @this.GetParameters(namespaces);
+			var explicitInterfaceName = requiresExplicitInterfaceImplementation ?
+				$"{@this.DeclaringType.GetSafeName()}{@this.DeclaringType.GetGenericArguments(namespaces).Arguments}." : string.Empty;
 
-			return $"{isOverride}{returnType} {methodName}{generics}({parameters}){constraints}";
+			return $"{isOverride}{returnType} {explicitInterfaceName}{methodName}{generics}({parameters}){constraints}";
 		}
 	}
 }

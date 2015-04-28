@@ -469,7 +469,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods();
 			Assert.AreEqual(1, methods.Count);
-			Assert.IsTrue(methods.Where(_ => _.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any());
+			Assert.IsTrue(methods.Where(_ => _.Value.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any());
 		}
 
 		public interface IHaveGenericsWithNoConstraints<T> { }

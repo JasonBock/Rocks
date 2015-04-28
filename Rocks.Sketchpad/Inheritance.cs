@@ -9,14 +9,25 @@ namespace Rocks.Sketchpad
 		{
 			var subclass = typeof(InheritanceBase);
 
-			foreach(var method in subclass.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+			//foreach (var method in subclass.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy))
+			//{
+			//	Console.Out.WriteLine(method.Name);
+			//}
+
+			foreach(var @interface in typeof(IC).GetInterfaces())
 			{
-				Console.Out.WriteLine(method.Name);
+				Console.Out.WriteLine(@interface.Name);
 			}
 		}
 	}
 
-	public interface IInheritanceBase
+	public interface IA { }
+
+	public interface IB : IA { }
+
+	public interface IC : IB { }
+
+   public interface IInheritanceBase
 	{
 		void BaseTarget();
 	}

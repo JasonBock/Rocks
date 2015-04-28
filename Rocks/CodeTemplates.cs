@@ -3,6 +3,7 @@
 	public static class CodeTemplates
 	{
 		public const string Internal = "internal";
+		public const string Public = "public";
  		public const string Protected = "protected";
 
 		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments, bool isUnsafe) => 
@@ -15,8 +16,8 @@
 			$"public {returnType} this[{indexerArguments}] {{ {getSet} }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValueTemplate(int methodHandle, string argumentNames, string returnTypeName, 
-			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
-$@"get
+			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
+$@"{visibility} get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -43,8 +44,9 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, string delegateCast) =>
-$@"get
+		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, 
+			string delegateCast, string visibility) =>
+$@"{visibility} get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -65,8 +67,8 @@ $@"get
 }}";
 
 		public static string GetPropertyGetWithValueTypeReturnValueTemplate(int methodHandle, string argumentNames, string returnTypeName,
-			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
-$@"get
+			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
+$@"{visibility} get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -93,8 +95,9 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, string delegateCast) =>
-$@"get
+		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(int methodHandle, string argumentNames, string returnType, 
+			string delegateCast, string visibility) =>
+$@"{visibility} get
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -114,8 +117,9 @@ $@"get
 	}}
 }}";
 
-		public static string GetPropertySetTemplate(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues) =>
-$@"set
+		public static string GetPropertySetTemplate(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast, 
+			string methodWithArgumentValues, string visibility) =>
+$@"{visibility} set
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -151,8 +155,9 @@ $@"set
 	}}
 }}";
 
-		public static string GetPropertySetAndNoIndexersTemplate(int methodHandle, string argumentNames, string delegateCast) =>
-$@"set
+		public static string GetPropertySetAndNoIndexersTemplate(int methodHandle, string argumentNames, 
+			string delegateCast, string visibility) =>
+$@"{visibility} set
 {{
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
 
@@ -201,9 +206,9 @@ $@"{visibility} override {methodName}
 		public static string GetNonPublicPropertyIndexerTemplate(string visibility, string returnType, string indexerArguments, string getSet) =>
 			$"{visibility} override {returnType} this[{indexerArguments}] {{ {getSet} }}";
 
-		public static string GetNonPublicPropertyGetTemplate() => "get;";
+		public static string GetNonPublicPropertyGetTemplate(string visibility) => $"{visibility} get;";
 
-		public static string GetNonPublicPropertySetTemplate() => "set;";
+		public static string GetNonPublicPropertySetTemplate(string visibility) => $"{visibility} set;";
 
 		public static string GetRefOutNotImplementedMethodTemplate(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
@@ -226,8 +231,8 @@ $@"public {mockTypeName}()
 }}";
 
 		public static string GetActionMethodTemplate(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
-			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -264,8 +269,9 @@ $@"public {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetActionMethodWithNoArgumentsTemplate(int methodHandle, string argumentNames, string delegateCast, string outInitializers, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+		public static string GetActionMethodWithNoArgumentsTemplate(int methodHandle, string argumentNames, string delegateCast, string outInitializers, 
+			string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -343,8 +349,8 @@ namespace {baseTypeNamespace}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -373,8 +379,8 @@ $@"public {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, 
-			string delegateCast, string outInitializers, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -396,8 +402,8 @@ $@"public {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -426,8 +432,8 @@ $@"public {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName,
-			string delegateCast, string outInitializers, string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;

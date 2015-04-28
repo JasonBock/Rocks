@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -30,10 +31,11 @@ namespace Rocks.Construction
 			return Path.Combine(Directory.GetCurrentDirectory(), this.BaseType.Namespace.Replace(".", "\\"));
 		}
 
-		protected override MethodInformation GetMethodInformation(MethodInfo baseMethod)
+		protected override MethodInformation GetMethodInformation(MockableResult<MethodInfo> method)
 		{
+			var baseMethod = method.Value;
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
-			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true);
+			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
 			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParameters();
 			string delegateCast = null;
 
