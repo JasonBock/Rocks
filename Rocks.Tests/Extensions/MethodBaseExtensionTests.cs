@@ -2,6 +2,7 @@
 using static Rocks.Extensions.MethodBaseExtensions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System;
 
 namespace Rocks.Tests.Extensions
 {
@@ -124,6 +125,14 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("Char[] buffer, Int32 index, Int32 count", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithInOut)).GetParameters(namespaces));
 		}
 
+		[Test]
+		public void GetParametersWithOutAttributeArray()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("String[] a", this.GetType().GetMethod(nameof(MethodBaseExtensionTests.TargetWithOutArrayAttribute)).GetParameters(namespaces));
+		}
+
+		public void TargetWithOutArrayAttribute([Out] string[] a) { }
 		public int TargetWithInOut([In, Out] char[] buffer, int index, int count) { return 0; }
 		public void TargetWithArguments(int a, string c) { }
 		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }

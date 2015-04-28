@@ -97,6 +97,7 @@
     <Compile Include="MoqTests.cs" />
     <Compile Include="NestedClasses.cs" />
     <Compile Include="OutAndRefAndParams.cs" />
+    <Compile Include="OutParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

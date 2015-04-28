@@ -52,7 +52,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetModifierForOutAttribute()
 		{
-			Assert.AreEqual("out ",
+			Assert.AreEqual(string.Empty,
 				this.GetType().GetMethod(nameof(this.TargetWithOutAttributeOnArgument)).GetParameters()[0].GetModifier());
 		}
 

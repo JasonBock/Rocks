@@ -12,7 +12,7 @@ namespace Rocks.Extensions
 
 		internal static string GetModifier(this ParameterInfo @this, bool ignoreParams)
 		{
-			return (@this.IsOut && !@this.IsIn) ? "out " :
+			return (@this.IsOut && !@this.IsIn && @this.ParameterType.IsByRef) ? "out " :
 				@this.ParameterType.IsByRef ? "ref " :
 				ignoreParams ? string.Empty :
 				@this.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "params " : string.Empty;

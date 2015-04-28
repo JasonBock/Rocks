@@ -64,10 +64,9 @@ namespace Rocks.Extensions
 				from parameter in @this.GetParameters()
 				let _ = namespaces.Add(parameter.ParameterType.Namespace)
 				let modifier = parameter.GetModifier()
-				let arrayText = parameter.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "[]" : string.Empty
-				let parameterType = !string.IsNullOrWhiteSpace(modifier) ?
-					$"{parameter.ParameterType.GetElementType().GetSafeName()}{parameter.ParameterType.GetElementType().GetGenericArguments(namespaces).Arguments}{arrayText}" :
-               $"{parameter.ParameterType.GetSafeName()}{parameter.ParameterType.GetGenericArguments(namespaces).Arguments}{arrayText}"
+				let parameterType = parameter.ParameterType.IsByRef ?
+					$"{parameter.ParameterType.GetElementType().GetSafeName()}{parameter.ParameterType.GetElementType().GetGenericArguments(namespaces).Arguments}" :
+					$"{parameter.ParameterType.GetSafeName()}{parameter.ParameterType.GetGenericArguments(namespaces).Arguments}"
 				select $"{modifier}{parameterType} {parameter.Name}");
 		}
 	}
