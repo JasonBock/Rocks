@@ -49,6 +49,22 @@ namespace Rocks.Extensions
 				{
 					properties.UnionWith(@interface.GetMockableProperties());
 				}
+
+				var namespaces = new SortedSet<string>();
+
+				foreach (var @interface in @this.GetInterfaces())
+				{
+					var interfaceProperties = @interface.GetMockableProperties();
+					var propertyDescriptions = properties.Select(_ => _.GetDefaultMethod().GetMethodDescription());
+
+					foreach (var interfaceProperty in interfaceProperties)
+					{
+						if (!propertyDescriptions.Where(_ => _.Equals(interfaceProperty.GetDefaultMethod().GetMethodDescription())).Any())
+						{
+							properties.Add(interfaceProperty);
+						}
+					}
+				}
 			}
 
 			return properties.ToList().AsReadOnly();

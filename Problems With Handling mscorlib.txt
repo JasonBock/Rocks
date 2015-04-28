@@ -12,24 +12,44 @@ Looks like I gen'd a delete for an internal virtual method where the method does
 
 For some reason, not handling the constraint could be "where T : struct"
 
+Constructors needed an unsafe check as well.
+
+Down to 572....
+
+Obsolete needed another warning/restore on CS0672
+
+Down to 562...
+
+Ignore the Delegate type
+
+Down to 555...
+
+Problem where I'm not looking at all of the methods across the base type AND its base types. This may only matter for interfaces. Making GetMockableXYZ() extension methods (need tests) to get those lists.
+
+Down to 462...
+
+Have to handle events correctly, in terms of if they're virtual or not.
+
+Down to 460...
+
+Wasn't handling arguments with [In, Out] on them correctly.
+
+Down to 459...
+
+Wasn't handling the case where a sub-interface would "new" a method definition, like ITypeInfo and ITypeInfo2's GetNames(). I only needed 1 implementation in that case.
+
+Down to 408...
+
 
 TODO:
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Rock_AppDomain.cs(149,24): warning CS0114: 'Rock_AppDomain.Equals(object)' hides inherited member 'object.Equals(object)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\ComTypes\RockITypeInfo2.cs(10,42): error CS0535: 'RockITypeInfo2' does not implement interface member 'ITypeInfo2.GetNames(int, string[], int, out int)'
 
-Object members like "ToString" and "GetHashCode" are not getting "override"
-
-
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\RockMulticastDelegate.cs(18,30): error CS0115: 'RockMulticastDelegate.GetObjectData(SerializationInfo, StreamingContext)': no suitable method found to override
-
-Not sure what's going on here. The base method is "public override". Should be able to override this....right?
+2 problems
+* I think I need to mock 2 methods...when all I really need to do is implement 1 method. ITypeInfo2 and ITypeInfo are a mess :)
+* I still don't get the "string[]" array thing right with parameters that seem to have [Out] but not [In]
 
 
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Collections\Generic\RockIListT.cs(10,40): error CS0535: 'RockIList<T>' does not implement interface member 'ICollection<T>.IsReadOnly'
-
-Problem where I'm not looking at all of the methods across the base type AND its base types. This may only matter for interfaces.
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\Rock_EventInfo.cs(127,23): warning CS0114: 'Rock_EventInfo.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
 
 
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\IO\RockUnmanagedMemoryStream.cs(37,116): error CS0214: Pointers and fixed size buffers may only be used in an unsafe context
-
-
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\IO\RockFileStream.cs(1064,32): warning CS0672: Member 'RockFileStream.Handle' overrides obsolete member 'FileStream.Handle'. Add the Obsolete attribute to 'RockFileStream.Handle'.
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\ComTypes\RockITypeInfo2.cs(1481,26): error CS0101: The namespace 'System.Runtime.InteropServices.ComTypes' already contains a definition for 'RockITypeInfo2_GetTypeAttrDelegate'
