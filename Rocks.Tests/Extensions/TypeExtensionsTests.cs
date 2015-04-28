@@ -2,6 +2,7 @@
 using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using static Rocks.Extensions.TypeExtensions;
@@ -11,6 +12,24 @@ namespace Rocks.Tests.Extensions
 	[TestFixture]
 	public sealed class TypeExtensionsTests
 	{
+		[Test]
+		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor()
+		{
+			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate());
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor()
+		{
+			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate());
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsSealedAndHasObjectConstructor()
+		{
+			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate());
+		}
+
 		[Test]
 		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers()
 		{
@@ -653,5 +672,17 @@ namespace Rocks.Tests.Extensions
 		: IHaveSameMethodAsSubInterface
 	{
 		new void GetNames(int memid, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2), Out]string[] rgBstrNames, int cMaxNames, out int pcNames);
+	}
+
+	public sealed class DoNotHaveHandlerConstructor { }
+
+	public sealed class HaveHandlerConstructor
+	{
+		public HaveHandlerConstructor(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers) { }
+	}
+
+	public sealed class HaveObjectConstructor
+	{
+		public HaveObjectConstructor(object handlers) { }
 	}
 }

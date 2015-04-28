@@ -183,7 +183,9 @@ namespace Rocks.Extensions
 
 		internal static string Validate(this Type @this)
 		{
-			if (@this.IsSealed && @this.GetConstructor(new[] { typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>) }) == null)
+			if (@this.IsSealed && !@this.GetConstructors()
+				.Where(_ => _.GetParameters().Length == 1 && 
+					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>).IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
 			{
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
