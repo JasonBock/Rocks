@@ -31,7 +31,7 @@ namespace Rocks.Tests
 		[Test]
 		public void TargetWithArgumentsAndReturnTypeUsingGeneric()
 		{
-			var rock = Rock.Create<IGenerics<int>>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<IGenerics<int>>();
 			rock.Handle(_ => _.Target(Arg.IsAny<IEnumerable<int>>()));
 
 			var chunk = rock.Make();

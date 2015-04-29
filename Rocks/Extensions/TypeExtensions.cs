@@ -23,7 +23,10 @@ namespace Rocks.Extensions
 
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					var interfaceMethods = @interface.GetMethods();
+					//var interfaceMethods = @interface.GetMethods(ReflectionValues.PublicNonPublicInstance)
+					//	.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal);
+					var interfaceMethods = @interface.GetMethods()
+						.Where(_ => !_.IsSpecialName);
 
 					foreach (var interfaceMethod in interfaceMethods)
 					{

@@ -331,12 +331,24 @@ namespace Rocks.Construction
 					if (baseProperty.CanRead)
 					{
 						var getVisibility = baseProperty.GetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+
+						if(getVisibility == visibility)
+						{
+							getVisibility = string.Empty;
+						}
+
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertyGetTemplate(getVisibility));
 					}
 
 					if(baseProperty.CanWrite)
 					{
 						var setVisibility = baseProperty.SetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+
+						if (setVisibility == visibility)
+						{
+							setVisibility = string.Empty;
+						}
+
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertySetTemplate(setVisibility));
 					}
 

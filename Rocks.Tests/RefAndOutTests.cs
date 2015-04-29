@@ -69,7 +69,7 @@ namespace Rocks.Tests
 		public void MakeRefActionWithGenericDelegate()
 		{
 			var a = Guid.Empty;
-			var rock = Rock.Create<IHaveRefAndOut>(new Options(CodeFileOptions.Create));
+			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Handle(_ => _.RefTargetWithGeneric<Guid>(ref a), 
 				new RefTargetWithGeneric<Guid>(this.MyActionRefGuidTarget));
 
