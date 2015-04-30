@@ -116,7 +116,9 @@
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
     <Compile Include="Extensions\ParameterInfoExtensionsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsAddNamespacesTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsCanBeSeenByMockAssemblyTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsValidateTests.cs" />
     <Compile Include="FullInterfaceTests.cs" />
     <Compile Include="GenericsTests.cs" />
     <Compile Include="HandleAction16ArgumentTests.cs" />
@@ -181,6 +183,10 @@
     <ProjectReference Include="..\Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj">
       <Project>{7053f013-0ec4-43fa-8248-f5f368b32ae2}</Project>
       <Name>Rocks.RockAssemblyTestContainer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rocks.Tests.Types\Rocks.Tests.Types.csproj">
+      <Project>{a704991b-9fcf-4957-b605-961177a52388}</Project>
+      <Name>Rocks.Tests.Types</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rocks\Rocks.csproj">
       <Project>{b6e15a91-620a-4e5f-9e66-8ca4f1cb05d9}</Project>

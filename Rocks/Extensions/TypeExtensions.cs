@@ -229,7 +229,7 @@ namespace Rocks.Extensions
 				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
 				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{
-				if (!@this.CanBeSeenByMockAssembly(generator))
+				if (!@this.Assembly.CanBeSeenByMockAssembly(false, false, false, generator))
 				{
 					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
 				}
