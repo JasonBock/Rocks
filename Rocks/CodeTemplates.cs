@@ -341,10 +341,10 @@ namespace {baseTypeNamespace}
 					handler.Method.Invoke(handler.Target, new object[] {{ this, args }});
 				}}
 			}}
-		}}	
-	}}
+		}}
 
-	{additionalCode}
+		{additionalCode}
+	}}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,

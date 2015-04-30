@@ -389,10 +389,10 @@ namespace h
 					handler.Method.Invoke(handler.Target, new object[] { this, args });
 				}
 			}
-		}	
-	}
+		}
 
-	l
+		l
+	}
 }", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"));
 		}
 
@@ -439,10 +439,10 @@ namespace h
 					handler.Method.Invoke(handler.Target, new object[] { this, args });
 				}
 			}
-		}	
-	}
+		}
 
-	l
+		l
+	}
 }", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"));
 		}
 

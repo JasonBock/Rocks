@@ -44,12 +44,12 @@ namespace Rocks.Tests
 			var rock = Rock.Create<Class1>();
 			rock.Handle(_ => _.Method1());
 
-			var method4DelegateType = this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}_{nameof(Class1.Method4)}Delegate");
+			var method4DelegateType = this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}+Rock{nameof(Class1)}_{nameof(Class1.Method4)}Delegate");
          rock.Handle(_ => _.Method4("a", ref b), Delegate.CreateDelegate(
 				method4DelegateType, this,
 				this.GetType().GetMethod(nameof(RockAssemblyTests.Method4))));
 
-			var method5DelegateType = this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}_{nameof(Class1.Method5)}Delegate`1").MakeGenericType(b.GetType());
+			var method5DelegateType = this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}+Rock{nameof(Class1)}_{nameof(Class1.Method5)}Delegate`1").MakeGenericType(b.GetType());
 			rock.Handle(_ => _.Method5("a", ref b), Delegate.CreateDelegate(
 				method5DelegateType, this,
 				this.GetType().GetMethod(nameof(RockAssemblyTests.Method5)).MakeGenericMethod(b.GetType())));

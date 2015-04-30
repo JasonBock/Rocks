@@ -74,16 +74,30 @@ Changed GetMockableMethods() to ignore private or internal methods whose declari
 
 Down to 406... :S
 
-
-TODO:
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\RockAggregateException.cs(50,125): error CS0246: The type or namespace name 'ExceptionDispatchInfo' could not be found (are you missing a using directive or an assembly reference?)
-
 When I add namespaces for a type, I need to look at all of its defined generic values and add their namespaces as well.
 
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Security\AccessControl\RockQualifiedAce.cs(79,33): error CS0115: 'RockQualifiedAce.MaxOpaqueLengthInternal': no suitable method found to override
-
-Need to do the same "is visible to mockable" crap I'm doing in methods. Though with properties, this is harder. I need to return a MockableResult, but I also need to specify which part of the property (get and/or set) is actually mockable
-
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Globalization\RockEastAsianLunisolarCalendar.cs(10,25): error CS0534: 'RockEastAsianLunisolarCalendar' does not implement inherited abstract member 'EastAsianLunisolarCalendar.MinCalendarYear.get'
+Down to 404...
 
 I shouldn't be able to mock this type at all. This property is "internal abstract", which means Validate() should say, hey, I can't mock you.
+
+Down to 384...
+
+Update GetGenericArguments to recurse on "genericArguments.Add(argument.GetSafeName());" to add generic arguments on the type
+
+Down to 359...
+
+If a member is "internal protected", that's OK. So I need to check for members that aren't public, aren't private, and ONLY internal. This would affect GetMockableXYZ and Validate().
+But when I did this, then the "visibility" was still "internal" only, so I need to fix that, (but it won't be available for mocking)
+
+Down to 357...
+
+This is where GetMockableProperties() needs to return something that tells me what I can mock, the getter, the setter, or both (PropertyAccessors)
+
+Down to 356...
+
+Moved all the gen'd delegates inside of the class definition
+
+Down to 346...
+
+TODO:
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Security\AccessControl\RockFileSystemSecurity.cs(15,135): error CS1729: 'FileSystemSecurity' does not contain a constructor that takes 1 arguments
