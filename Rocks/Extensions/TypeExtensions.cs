@@ -6,15 +6,17 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using static Rocks.Extensions.AssemblyExtensions;
 
 namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
-		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this)
+		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal)
+				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal && 
+					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, generator))
 				.Select(_ => new MockableResult<MethodInfo>(_, false)));
 
 			if (@this.IsInterface)
@@ -23,19 +25,20 @@ namespace Rocks.Extensions
 
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					//var interfaceMethods = @interface.GetMethods(ReflectionValues.PublicNonPublicInstance)
-					//	.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal);
 					var interfaceMethods = @interface.GetMethods()
 						.Where(_ => !_.IsSpecialName);
 
 					foreach (var interfaceMethod in interfaceMethods)
 					{
-						var matchMethodGroups = methods.GroupBy(_ => interfaceMethod.Match(_.Value)).ToDictionary(_ => _.Key);
-
-						if(!matchMethodGroups.ContainsKey(MethodMatch.Exact))
+						if(interfaceMethod.CanBeSeenByMockAssembly(generator))
 						{
-							methods.Add(new MockableResult<MethodInfo>(
-								interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly)));
+							var matchMethodGroups = methods.GroupBy(_ => interfaceMethod.Match(_.Value)).ToDictionary(_ => _.Key);
+
+							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
+							{
+								methods.Add(new MockableResult<MethodInfo>(
+									interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly)));
+							}
 						}
 					}
 				}
@@ -44,30 +47,34 @@ namespace Rocks.Extensions
 			return methods.ToList().AsReadOnly();
 		}
 
-		internal static ReadOnlyCollection<PropertyInfo> GetMockableProperties(this Type @this)
+		internal static ReadOnlyCollection<PropertyInfo> GetMockableProperties(this Type @this, NameGenerator generator)
 		{
 			var properties = new HashSet<PropertyInfo>(@this.GetProperties(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal));
+				.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal && 
+					_.GetDefaultMethod().CanBeSeenByMockAssembly(generator)));
 
 			if (@this.IsInterface)
 			{
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					properties.UnionWith(@interface.GetMockableProperties());
+					properties.UnionWith(@interface.GetMockableProperties(generator));
 				}
 
 				var namespaces = new SortedSet<string>();
 
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					var interfaceProperties = @interface.GetMockableProperties();
+					var interfaceProperties = @interface.GetMockableProperties(generator);
 					var propertyDescriptions = properties.Select(_ => _.GetDefaultMethod().GetMethodDescription());
 
 					foreach (var interfaceProperty in interfaceProperties)
 					{
-						if (!propertyDescriptions.Where(_ => _.Equals(interfaceProperty.GetDefaultMethod().GetMethodDescription())).Any())
+						if(interfaceProperty.GetDefaultMethod().CanBeSeenByMockAssembly(generator))
 						{
-							properties.Add(interfaceProperty);
+							if (!propertyDescriptions.Where(_ => _.Equals(interfaceProperty.GetDefaultMethod().GetMethodDescription())).Any())
+							{
+								properties.Add(interfaceProperty);
+							}
 						}
 					}
 				}
@@ -76,16 +83,16 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
-		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this)
+		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator)
 		{
 			var events = new HashSet<EventInfo>(@this.GetEvents(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.AddMethod.IsVirtual && !_.AddMethod.IsFinal));
+				.Where(_ => _.AddMethod.IsVirtual && !_.AddMethod.IsFinal && _.AddMethod.CanBeSeenByMockAssembly(generator)));
 
 			if (@this.IsInterface)
 			{
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					events.UnionWith(@interface.GetMockableEvents());
+					events.UnionWith(@interface.GetMockableEvents(generator));
 				}
 			}
 
@@ -187,7 +194,7 @@ namespace Rocks.Extensions
 				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
 		}
 
-		internal static string Validate(this Type @this, SerializationOptions options)
+		internal static string Validate(this Type @this, SerializationOptions options, NameGenerator generator)
 		{
 			if (@this.IsSealed && !@this.GetConstructors()
 				.Where(_ => _.GetParameters().Length == 1 && 
@@ -207,8 +214,7 @@ namespace Rocks.Extensions
 				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
 				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{
-				if (!@this.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
-					.Where(_ => _.AssemblyName == (@this.IsSealed ? new AssemblyNameGenerator(@this).AssemblyName : new InMemoryNameGenerator().AssemblyName)).Any())
+				if (!@this.CanBeSeenByMockAssembly(generator))
 				{
 					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
 				}
@@ -216,6 +222,25 @@ namespace Rocks.Extensions
 
 			return string.Empty;
 		}
+
+		internal static Type GetRootElementType(this Type @this)
+		{
+			var root = @this;
+
+			while(root.HasElementType)
+			{
+				root = root.GetElementType();
+			}
+
+			return root;
+		}
+
+		internal static bool CanBeSeenByMockAssembly(this Type @this, NameGenerator generator)
+		{
+			var root = @this.GetRootElementType();
+         return root.IsPublic || (root.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
+				.Where(_ => _.AssemblyName == generator.AssemblyName).Any());
+      }
 
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{

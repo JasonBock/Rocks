@@ -21,13 +21,14 @@ namespace Rocks.Construction
 	{
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options)
+			SortedSet<string> namespaces, Options options, NameGenerator generator)
 		{
 			this.BaseType = baseType;
 			this.IsUnsafe = this.BaseType.IsUnsafeToMock();
 			this.Handlers = handlers;
 			this.Namespaces = namespaces;
 			this.Options = options;
+			this.NameGenerator = generator;
 		}
 
 		internal virtual void Build()
@@ -50,16 +51,19 @@ namespace Rocks.Construction
 				foreach (var constructor in this.BaseType.GetConstructors(ReflectionValues.PublicNonPublicInstance)
 					.Where(_ => !_.IsPrivate))
 				{
-					var parameters = constructor.GetParameters(this.Namespaces);
-
-					if (!string.IsNullOrWhiteSpace(parameters))
+					if (constructor.CanBeSeenByMockAssembly(this.NameGenerator))
 					{
-						parameters = $", {parameters}";
-					}
+						var parameters = constructor.GetParameters(this.Namespaces);
 
-					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
-						constructorName, constructor.GetArgumentNameList(), parameters));
-					this.IsUnsafe |= constructor.IsUnsafeToMock();
+						if (!string.IsNullOrWhiteSpace(parameters))
+						{
+							parameters = $", {parameters}";
+						}
+
+						generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
+							constructorName, constructor.GetArgumentNameList(), parameters));
+						this.IsUnsafe |= constructor.IsUnsafeToMock();
+					}
 				}
 			}
 
@@ -70,7 +74,7 @@ namespace Rocks.Construction
 		{
 			var generatedMethods = new List<string>();
 
-			foreach (var method in this.BaseType.GetMockableMethods())
+			foreach (var method in this.BaseType.GetMockableMethods(this.NameGenerator))
 			{
 				var methodInformation = this.GetMethodInformation(method);
 				var baseMethod = method.Value;
@@ -193,7 +197,7 @@ namespace Rocks.Construction
 		{
 			var generatedEvents = new List<string>();
 
-			foreach (var @event in this.BaseType.GetMockableEvents())
+			foreach (var @event in this.BaseType.GetMockableEvents(this.NameGenerator))
 			{
 				var eventHandlerType = @event.EventHandlerType;
 				this.Namespaces.Add(eventHandlerType.Namespace);
@@ -246,7 +250,7 @@ namespace Rocks.Construction
 		{
 			var generatedProperties = new List<string>();
 
-			foreach (var baseProperty in this.BaseType.GetMockableProperties())
+			foreach (var baseProperty in this.BaseType.GetMockableProperties(this.NameGenerator))
 			{
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
@@ -477,5 +481,6 @@ $@"#pragma warning disable CS0618
 		internal SortedSet<string> Namespaces { get; }
 		internal string TypeName { get; set; }
 		private bool RequiresObsoleteSuppression { get; set; }
+		protected NameGenerator NameGenerator { get; private set; }
 	}
 }

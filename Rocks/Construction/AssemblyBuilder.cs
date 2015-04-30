@@ -19,7 +19,7 @@ namespace Rocks.Construction
 		internal AssemblyBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
-			: base(baseType, handlers, namespaces, options)
+			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType))
 		{
 			var name = this.BaseType.IsGenericTypeDefinition ?
 				$"{baseType.GetSafeName()}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : baseType.GetSafeName();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Construction;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,32 @@ namespace Rocks.Extensions
 {
 	internal static class MethodInfoExtensions
 	{
+		internal static bool CanBeSeenByMockAssembly(this MethodInfo @this, NameGenerator generator)
+		{
+			if(!@this.IsPublic && (@this.IsPrivate || (!@this.IsFamily && !@this.DeclaringType.CanBeSeenByMockAssembly(generator))))
+			{
+				return false;
+			}
+
+			foreach(var parameter in @this.GetParameters())
+			{
+				if(!parameter.ParameterType.CanBeSeenByMockAssembly(generator))
+				{
+					return false;
+				}
+			}
+
+			if(@this.ReturnType != typeof(void))
+			{
+				if(!@this.ReturnType.CanBeSeenByMockAssembly(generator))
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
 		internal static MethodMatch Match(this MethodInfo @this, MethodInfo other)
 		{
 			if(@this.Name != other.Name)

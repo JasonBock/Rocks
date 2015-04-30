@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Construction;
 using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -15,37 +16,43 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate(SerializationOptions.NotSupported));
+			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor()
 		{
-			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate(SerializationOptions.NotSupported));
+			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasObjectConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate(SerializationOptions.NotSupported));
+			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(SerializationOptions.Supported));
+			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
+				SerializationOptions.Supported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported()
 		{
-			Assert.AreEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(SerializationOptions.NotSupported));
+			Assert.AreEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported()
 		{
-			Assert.AreEqual(string.Empty, typeof(IHaveNoPublicConstructor).Validate(SerializationOptions.Supported));
+			Assert.AreEqual(string.Empty, typeof(IHaveNoPublicConstructor).Validate(
+				SerializationOptions.Supported, new InMemoryNameGenerator()));
 		}
 
 		[Test]
@@ -436,7 +443,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromBaseInterface()
 		{
-			var events = typeof(IMockableEventsBase).GetMockableEvents();
+			var events = typeof(IMockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any());
 		}
@@ -444,7 +451,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromSubInterface()
 		{
-			var events = typeof(IMockableEventsSub).GetMockableEvents();
+			var events = typeof(IMockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(2, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any());
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsSub.SubInterfaceEvent)).Any());
@@ -453,7 +460,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromAbstractClass()
 		{
-			var events = typeof(MockableEventsAbstract).GetMockableEvents();
+			var events = typeof(MockableEventsAbstract).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == "AbstractClassEvent").Any());
 		}
@@ -461,7 +468,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromSubClassFromAbstract()
 		{
-			var events = typeof(MockableEventsSubFromAbstract).GetMockableEvents();
+			var events = typeof(MockableEventsSubFromAbstract).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == "AbstractClassEvent").Any());
 		}
@@ -469,7 +476,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromBaseClass()
 		{
-			var events = typeof(MockableEventsBase).GetMockableEvents();
+			var events = typeof(MockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any());
 		}
@@ -477,7 +484,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableEventsFromSubClass()
 		{
-			var events = typeof(MockableEventsSub).GetMockableEvents();
+			var events = typeof(MockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.AreEqual(1, events.Count);
 			Assert.IsTrue(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any());
 		}
@@ -485,7 +492,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()
 		{
-			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods();
+			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods(new InMemoryNameGenerator());
 			Assert.AreEqual(1, methods.Count);
 			Assert.IsTrue(methods.Where(_ => _.Value.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any());
 		}

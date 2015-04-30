@@ -25,7 +25,7 @@ Ignore the Delegate type
 Down to 555...
 
 Problem where I'm not looking at all of the methods across the base type AND its base types. This may only matter for interfaces. Making GetMockableXYZ() extension methods (need tests) to get those lists.
-
+	
 Down to 462...
 
 Have to handle events correctly, in terms of if they're virtual or not.
@@ -40,16 +40,50 @@ Wasn't handling the case where a sub-interface would "new" a method definition, 
 
 Down to 408...
 
+Up to 431...WTF??
+
+If a parameter is "out", it will ALWAYS have .IsOut as true and have OutAttribute. If it JUST has [Out], the same results apply, BUT IsByRef on parameter type is false. So...what I need to do is only generate "out" IF (.IsOut && .ParameterType.IsByRef). Handle generating attributes for method items with a later fix as that's not needed right not strictly for signatures.
+
+Down to 408...
+
+The Validate() logic for looking at sealed types that don't have the "handler" argument was incorrect.
+
+Down to 392...
+
+The base interface has the same method, GetEnumerable() that only differs by return type. So you can implement it, but one of the methods (and therefore the entire interface?) must be implemented explicitly. So, all of the GetMockableXYZ() needs to return a MockableResult<T> where T : MemberInfo. Also has MustBeImplementedExplicitly, which should be honored by the generating code. This needs be done in GetMethodInformation as the type name needs to come in front of the method name if necessary.
+
+Fixed, but back up to 467...wtf??
+
+Cannot assume property visibility is the same for getters and setters! :)
+
+Fixed...still at 467.
+
+I screwed up GetMockableMethods, should only get public methods on interfaces where it's not a special name.
+
+Down to 382...
+
+If a class does not have a constructor that matches the number of arguments I'm looking for....I can't make that constructor. So in this specific case, I can't assume I can use a no-arg constructor. So take out the "no-arg" ctor from the class generator, and include no-arg ctors in GetGeneratedConstructors. Well, a no-arg ctor is special, I need to use that to generate two, one for a serialization ctor that literally takes no arguments, and one that just takes handlers. Side note, I should add in with Validate() that if the user wants serialization supported the given type must have a public no-arg ctor (wait, how do interfaces work with this? If the given base type is an interface, then automatically generate the "no-arg with handlers", and only generate a "no-arg" if serialization is desired. Otherwise, handle the class as stated before).
+
+Up to 400...argh!
+
+Put a check in for every type in a method, property or event that it must be "visible" to the mock assembly.
+
+Up to 409...f**k me!!
+
+Changed GetMockableMethods() to ignore private or internal methods whose declaring type can't be seen.
+
+Down to 406... :S
+
 
 TODO:
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\ComTypes\RockITypeInfo2.cs(10,42): error CS0535: 'RockITypeInfo2' does not implement interface member 'ITypeInfo2.GetNames(int, string[], int, out int)'
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\RockAggregateException.cs(50,125): error CS0246: The type or namespace name 'ExceptionDispatchInfo' could not be found (are you missing a using directive or an assembly reference?)
 
-2 problems
-* I think I need to mock 2 methods...when all I really need to do is implement 1 method. ITypeInfo2 and ITypeInfo are a mess :)
-* I still don't get the "string[]" array thing right with parameters that seem to have [Out] but not [In]
+When I add namespaces for a type, I need to look at all of its defined generic values and add their namespaces as well.
 
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Security\AccessControl\RockQualifiedAce.cs(79,33): error CS0115: 'RockQualifiedAce.MaxOpaqueLengthInternal': no suitable method found to override
 
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\Rock_EventInfo.cs(127,23): warning CS0114: 'Rock_EventInfo.ToString()' hides inherited member 'object.ToString()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword.
+Need to do the same "is visible to mockable" crap I'm doing in methods. Though with properties, this is harder. I need to return a MockableResult, but I also need to specify which part of the property (get and/or set) is actually mockable
 
+C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Globalization\RockEastAsianLunisolarCalendar.cs(10,25): error CS0534: 'RockEastAsianLunisolarCalendar' does not implement inherited abstract member 'EastAsianLunisolarCalendar.MinCalendarYear.get'
 
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Runtime\InteropServices\ComTypes\RockITypeInfo2.cs(1481,26): error CS0101: The namespace 'System.Runtime.InteropServices.ComTypes' already contains a definition for 'RockITypeInfo2_GetTypeAttrDelegate'
+I shouldn't be able to mock this type at all. This property is "internal abstract", which means Validate() should say, hey, I can't mock you.

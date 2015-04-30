@@ -1,4 +1,5 @@
-﻿using Rocks.Exceptions;
+﻿using Rocks.Construction;
+using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
 using static Rocks.Extensions.TypeExtensions;
@@ -16,7 +17,10 @@ namespace Rocks
 		public static IRock<T> Create<T>(Options options)
 			where T : class
 		{
-			var message = typeof(T).Validate(options.Serialization);
+			var tType = typeof(T);
+         var message = tType.Validate(options.Serialization, 
+				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator : 
+					new InMemoryNameGenerator() as NameGenerator);
 
 			if (!string.IsNullOrWhiteSpace(message))
 			{
@@ -46,8 +50,11 @@ namespace Rocks
 		{
 			var result = default(IRock<T>);
 			var isSuccessful = false;
+			var tType = typeof(T);
 
-			var message = typeof(T).Validate(options.Serialization);
+			var message = tType.Validate(options.Serialization,
+				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator :
+					new InMemoryNameGenerator() as NameGenerator);
 
 			if (string.IsNullOrWhiteSpace(message))
 			{

@@ -16,7 +16,7 @@ namespace Rocks.Construction
 		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
-			: base(baseType, handlers, namespaces, options)
+			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator())
 		{
 			var name = this.BaseType.IsGenericTypeDefinition ?
 				$"{Guid.NewGuid().ToString("N")}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
