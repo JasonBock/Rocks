@@ -99,5 +99,9 @@ Moved all the gen'd delegates inside of the class definition
 
 Down to 346...
 
+Validate() needs to catch when type has internal constructors
+
+Down to 330...
+
+
 TODO:
-C:\CodeProjects\Rocks\Rocks.Tests\bin\Debug\System\Security\AccessControl\RockFileSystemSecurity.cs(15,135): error CS1729: 'FileSystemSecurity' does not contain a constructor that takes 1 arguments

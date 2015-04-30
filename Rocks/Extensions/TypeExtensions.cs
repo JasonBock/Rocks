@@ -64,10 +64,6 @@ namespace Rocks.Extensions
 
 		internal static ReadOnlyCollection<PropertyMockableResult> GetMockableProperties(this Type @this, NameGenerator generator)
 		{
-			//var properties = new HashSet<PropertyInfo>(@this.GetProperties(ReflectionValues.PublicNonPublicInstance)
-			//	.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal &&
-			//            _.GetDefaultMethod().CanBeSeenByMockAssembly(generator)));
-
 			var properties = new HashSet<PropertyMockableResult>(
 				from property in @this.GetProperties(ReflectionValues.PublicNonPublicInstance)
 				let canGet = property.CanRead && property.GetMethod.IsVirtual && !property.GetMethod.IsFinal &&
@@ -232,7 +228,8 @@ namespace Rocks.Extensions
 			}
 
 			if (@this.IsAbstract &&
-				(@this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
+				(@this.GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Any() ||
+            @this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
 				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
 				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{

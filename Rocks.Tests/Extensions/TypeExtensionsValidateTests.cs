@@ -10,6 +10,13 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsValidateTests
 	{
 		[Test]
+		public void ValidateWhenTypeIsAbstractAndHasInternalConstructor()
+		{
+			Assert.AreNotEqual(string.Empty, typeof(HaveInternalConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+		}
+
+		[Test]
 		public void ValidateWhenTypeIsAbstractAndHasInternalAbstractProperty()
 		{
 			Assert.AreNotEqual(string.Empty, typeof(HaveInternalAbstractProperty).Validate(
