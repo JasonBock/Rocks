@@ -94,6 +94,7 @@
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
     <Compile Include="Extensions\MethodMatch.cs" />
+    <Compile Include="Extensions\PropertyMockableResult.cs" />
     <Compile Include="Extensions\MockableResultOfT.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
     <Compile Include="InMemoryRock.cs" />

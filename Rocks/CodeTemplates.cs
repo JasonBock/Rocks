@@ -5,6 +5,10 @@
 		public const string Internal = "internal";
 		public const string Public = "public";
  		public const string Protected = "protected";
+		public const string ProtectedAndInternal = "internal protected";
+
+		public static string GetVisibility(bool isMemberFamily, bool isMemberFamilyOrAssembly) =>
+			isMemberFamily || isMemberFamilyOrAssembly ? CodeTemplates.Protected : CodeTemplates.Internal;
 
 		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments, bool isUnsafe) => 
 			$"public {CodeTemplates.GetIsUnsafe(isUnsafe)} delegate {returnType} {delegateName}({arguments});";

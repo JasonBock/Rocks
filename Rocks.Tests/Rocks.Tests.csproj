@@ -126,6 +126,7 @@
     <Compile Include="Extensions\TypeExtensionsFindPropertyTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetGenericArgumentsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetMockableEventsTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsGetMockableMethodsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetSafeNameTests.cs" />
     <Compile Include="Extensions\TypeExtensionsIsUnsafeToMockTests.cs" />
     <Compile Include="Extensions\TypeExtensionsTests.cs" />

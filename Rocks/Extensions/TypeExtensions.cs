@@ -16,9 +16,9 @@ namespace Rocks.Extensions
 		{
 			namespaces.Add(@this.Namespace);
 
-			if(@this.IsGenericType)
+			if (@this.IsGenericType)
 			{
-				foreach(var genericType in @this.GetGenericArguments())
+				foreach (var genericType in @this.GetGenericArguments())
 				{
 					genericType.AddNamespaces(namespaces);
 				}
@@ -30,8 +30,8 @@ namespace Rocks.Extensions
 		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal && 
-					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, generator))
+				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal &&
+					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, _.IsFamilyOrAssembly, generator))
 				.Select(_ => new MockableResult<MethodInfo>(_, false)));
 
 			if (@this.IsInterface)
@@ -45,7 +45,7 @@ namespace Rocks.Extensions
 
 					foreach (var interfaceMethod in interfaceMethods)
 					{
-						if(interfaceMethod.CanBeSeenByMockAssembly(generator))
+						if (interfaceMethod.CanBeSeenByMockAssembly(generator))
 						{
 							var matchMethodGroups = methods.GroupBy(_ => interfaceMethod.Match(_.Value)).ToDictionary(_ => _.Key);
 
@@ -62,33 +62,40 @@ namespace Rocks.Extensions
 			return methods.ToList().AsReadOnly();
 		}
 
-		internal static ReadOnlyCollection<PropertyInfo> GetMockableProperties(this Type @this, NameGenerator generator)
+		internal static ReadOnlyCollection<PropertyMockableResult> GetMockableProperties(this Type @this, NameGenerator generator)
 		{
-			var properties = new HashSet<PropertyInfo>(@this.GetProperties(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal && 
-					_.GetDefaultMethod().CanBeSeenByMockAssembly(generator)));
+			//var properties = new HashSet<PropertyInfo>(@this.GetProperties(ReflectionValues.PublicNonPublicInstance)
+			//	.Where(_ => _.GetDefaultMethod().IsVirtual && !_.GetDefaultMethod().IsFinal &&
+			//            _.GetDefaultMethod().CanBeSeenByMockAssembly(generator)));
+
+			var properties = new HashSet<PropertyMockableResult>(
+				from property in @this.GetProperties(ReflectionValues.PublicNonPublicInstance)
+				let canGet = property.CanRead && property.GetMethod.IsVirtual && !property.GetMethod.IsFinal &&
+					property.GetMethod.DeclaringType.Assembly.CanBeSeenByMockAssembly(
+					property.GetMethod.IsPublic, property.GetMethod.IsPrivate, property.GetMethod.IsFamily, property.GetMethod.IsFamilyOrAssembly, generator)
+				let canSet = property.CanWrite && property.SetMethod.IsVirtual && !property.SetMethod.IsFinal &&
+					property.SetMethod.DeclaringType.Assembly.CanBeSeenByMockAssembly(
+					property.SetMethod.IsPublic, property.SetMethod.IsPrivate, property.SetMethod.IsFamily, property.SetMethod.IsFamilyOrAssembly, generator)
+				where canGet || canSet
+				select new PropertyMockableResult(property, false,
+					(canGet && canSet ? PropertyAccessors.GetAndSet : (canGet ? PropertyAccessors.Get : PropertyAccessors.Set))));
 
 			if (@this.IsInterface)
 			{
-				foreach (var @interface in @this.GetInterfaces())
-				{
-					properties.UnionWith(@interface.GetMockableProperties(generator));
-				}
-
 				var namespaces = new SortedSet<string>();
 
 				foreach (var @interface in @this.GetInterfaces())
 				{
-					var interfaceProperties = @interface.GetMockableProperties(generator);
-					var propertyDescriptions = properties.Select(_ => _.GetDefaultMethod().GetMethodDescription());
-
-					foreach (var interfaceProperty in interfaceProperties)
+					foreach (var interfaceProperty in @interface.GetMockableProperties(generator))
 					{
-						if(interfaceProperty.GetDefaultMethod().CanBeSeenByMockAssembly(generator))
+						if (interfaceProperty.Value.GetDefaultMethod().CanBeSeenByMockAssembly(generator))
 						{
-							if (!propertyDescriptions.Where(_ => _.Equals(interfaceProperty.GetDefaultMethod().GetMethodDescription())).Any())
+							var matchMethodGroups = properties.GroupBy(_ => interfaceProperty.Value.GetDefaultMethod().Match(_.Value.GetDefaultMethod())).ToDictionary(_ => _.Key);
+
+							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 							{
-								properties.Add(interfaceProperty);
+								properties.Add(new PropertyMockableResult(interfaceProperty.Value,
+									interfaceProperty.RequiresExplicitInterfaceImplementation, interfaceProperty.Accessors));
 							}
 						}
 					}
@@ -212,24 +219,24 @@ namespace Rocks.Extensions
 		internal static string Validate(this Type @this, SerializationOptions options, NameGenerator generator)
 		{
 			if (@this.IsSealed && !@this.GetConstructors()
-				.Where(_ => _.GetParameters().Length == 1 && 
+				.Where(_ => _.GetParameters().Length == 1 &&
 					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>).IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
 			{
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
-			if(options == SerializationOptions.Supported && !@this.IsInterface &&
+			if (options == SerializationOptions.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) == null)
 			{
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(@this.GetSafeName());
-         }
+			}
 
 			if (@this.IsAbstract &&
 				(@this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
 				@this.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
 				@this.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{
-				if (!@this.Assembly.CanBeSeenByMockAssembly(false, false, false, generator))
+				if (!@this.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
 				{
 					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
 				}
@@ -242,7 +249,7 @@ namespace Rocks.Extensions
 		{
 			var root = @this;
 
-			while(root.HasElementType)
+			while (root.HasElementType)
 			{
 				root = root.GetElementType();
 			}
@@ -253,9 +260,9 @@ namespace Rocks.Extensions
 		internal static bool CanBeSeenByMockAssembly(this Type @this, NameGenerator generator)
 		{
 			var root = @this.GetRootElementType();
-         return root.IsPublic || (root.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
+			return root.IsPublic || (root.Assembly.GetCustomAttributes<InternalsVisibleToAttribute>()
 				.Where(_ => _.AssemblyName == generator.AssemblyName).Any());
-      }
+		}
 
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
@@ -291,7 +298,7 @@ namespace Rocks.Extensions
 				foreach (var argument in @this.GetGenericArguments())
 				{
 					genericArguments.Add($"{argument.GetSafeName()}{argument.GetGenericArguments(namespaces).Arguments}");
-               var constraint = argument.GetConstraints(namespaces);
+					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))
 					{

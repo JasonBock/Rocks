@@ -2,7 +2,7 @@
 
 namespace Rocks.Extensions
 {
-	internal sealed class MockableResult<T>
+	internal class MockableResult<T>
 		where T : MemberInfo
 	{
 		internal MockableResult(T value, bool requiresExplicitInterfaceImplementation)

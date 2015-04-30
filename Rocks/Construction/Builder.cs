@@ -117,7 +117,7 @@ namespace Rocks.Construction
 				}
 				else if (!baseMethod.IsPrivate && baseMethod.IsAbstract)
 				{
-					var visibility = baseMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+					var visibility = CodeTemplates.GetVisibility(baseMethod.IsFamily, baseMethod.IsFamilyOrAssembly);
 
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						CodeTemplates.GetNonPublicFunctionImplementationTemplate(visibility, methodInformation.Description,
@@ -224,7 +224,7 @@ namespace Rocks.Construction
 				}
 				else if (!eventMethod.IsPrivate && eventMethod.IsAbstract)
 				{
-					var visibility = eventMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+					var visibility = CodeTemplates.GetVisibility(eventMethod.IsFamily, eventMethod.IsFamilyOrAssembly);
 
 					if (eventHandlerType.IsGenericType)
 					{
@@ -250,8 +250,10 @@ namespace Rocks.Construction
 		{
 			var generatedProperties = new List<string>();
 
-			foreach (var baseProperty in this.BaseType.GetMockableProperties(this.NameGenerator))
+			foreach (var property in this.BaseType.GetMockableProperties(this.NameGenerator))
 			{
+				var baseProperty = property.Value;
+
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
 				var propertyMethod = baseProperty.GetDefaultMethod();
@@ -262,11 +264,10 @@ namespace Rocks.Construction
 				{
 					var propertyImplementations = new List<string>();
 
-					if (baseProperty.CanRead)
+					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
 					{
 						var getMethod = baseProperty.GetMethod;
-						var getVisibility = getMethod.IsPublic ? string.Empty :
-							getMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						var getVisibility = getMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(getMethod.IsFamily, getMethod.IsFamilyOrAssembly);
 						var getArgumentNameList = getMethod.GetArgumentNameList();
 						var getDelegateCast = getMethod.GetDelegateCast();
 
@@ -294,11 +295,10 @@ namespace Rocks.Construction
 						}
 					}
 
-					if (baseProperty.CanWrite)
+					if (property.Accessors == PropertyAccessors.Set || property.Accessors == PropertyAccessors.GetAndSet)
 					{
 						var setMethod = baseProperty.SetMethod;
-						var setVisibility = setMethod.IsPublic ? string.Empty :
-							setMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						var setVisibility = setMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(setMethod.IsFamily, setMethod.IsFamilyOrAssembly);
 						var setArgumentNameList = setMethod.GetArgumentNameList();
 						var setDelegateCast = setMethod.GetDelegateCast();
 
@@ -341,11 +341,11 @@ namespace Rocks.Construction
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
 				{
 					var propertyImplementations = new List<string>();
-					var visibility = propertyMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+					var visibility = CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
 
-					if (baseProperty.CanRead)
+					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
 					{
-						var getVisibility = baseProperty.GetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						var getVisibility = CodeTemplates.GetVisibility(baseProperty.GetMethod.IsFamily, baseProperty.GetMethod.IsFamilyOrAssembly);
 
 						if (getVisibility == visibility)
 						{
@@ -355,9 +355,9 @@ namespace Rocks.Construction
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertyGetTemplate(getVisibility));
 					}
 
-					if (baseProperty.CanWrite)
+					if (property.Accessors == PropertyAccessors.Set || property.Accessors == PropertyAccessors.GetAndSet)
 					{
-						var setVisibility = baseProperty.SetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
+						var setVisibility = CodeTemplates.GetVisibility(baseProperty.SetMethod.IsFamily, baseProperty.SetMethod.IsFamilyOrAssembly);
 
 						if (setVisibility == visibility)
 						{

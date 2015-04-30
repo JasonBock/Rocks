@@ -8,10 +8,11 @@ namespace Rocks.Extensions
 	internal static class AssemblyExtensions
 	{
 		internal static bool CanBeSeenByMockAssembly(this Assembly @this, bool isMemberPublic, 
-			bool isMemberPrivate, bool isMemberFamily, NameGenerator generator)
+			bool isMemberPrivate, bool isMemberFamily, bool isMemberFamilyOrAssembly, NameGenerator generator)
 		{
-			return isMemberPublic || isMemberFamily || (!isMemberPrivate && @this.GetCustomAttributes<InternalsVisibleToAttribute>()
-				.Where(_ => _.AssemblyName == generator.AssemblyName).Any());
+			return isMemberPublic || isMemberFamily || isMemberFamilyOrAssembly ||
+				(!isMemberPrivate && @this.GetCustomAttributes<InternalsVisibleToAttribute>()
+					.Where(_ => _.AssemblyName == generator.AssemblyName).Any());
 		}
 	}
 }
