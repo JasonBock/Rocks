@@ -187,7 +187,7 @@ namespace Rocks.Extensions
 				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
 		}
 
-		internal static string Validate(this Type @this)
+		internal static string Validate(this Type @this, SerializationOptions options)
 		{
 			if (@this.IsSealed && !@this.GetConstructors()
 				.Where(_ => _.GetParameters().Length == 1 && 
@@ -195,6 +195,12 @@ namespace Rocks.Extensions
 			{
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
+
+			if(options == SerializationOptions.Supported && !@this.IsInterface &&
+				@this.GetConstructor(Type.EmptyTypes) == null)
+			{
+				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(@this.GetSafeName());
+         }
 
 			if (@this.IsAbstract &&
 				(@this.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||

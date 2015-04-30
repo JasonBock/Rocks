@@ -36,6 +36,4 @@ namespace Rocks.Tests
 		protected abstract event EventHandler ProtectedEvent;
 		internal abstract event EventHandler InternalEvent;
 	}
-
-	//public sealed class x : NonPublicAndPublicMembers
 }

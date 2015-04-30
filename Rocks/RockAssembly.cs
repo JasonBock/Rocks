@@ -45,7 +45,7 @@ namespace Rocks
 			var allowUnsafe = false;
 
          Parallel.ForEach(assembly.GetExportedTypes()
-				.Where(_ => string.IsNullOrWhiteSpace(_.Validate()) && !typeof(Array).IsAssignableFrom(_) &&
+				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization)) && !typeof(Array).IsAssignableFrom(_) &&
 					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) && 
 					!typeof(Delegate).IsAssignableFrom(_)), _ =>
 				{

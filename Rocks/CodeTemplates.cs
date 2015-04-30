@@ -217,7 +217,7 @@ $@"public {methodNameWithOverride}
 }}";
 
 		public static string GetConstructorTemplate(string typeName, string argumentNames, string argumentNamesWithTypes) =>
-$@"public {typeName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers, {argumentNamesWithTypes})
+$@"public {typeName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers{argumentNamesWithTypes})
 	: base({argumentNames})
 {{
 	this.handlers = handlers;
@@ -297,7 +297,7 @@ $@"{visibility} {methodNameWithOverride}
 
 		public static string GetClassTemplate(string usingStatements, string mockTypeName, string baseType, 
 			string implementedMethods, string implementedProperties, string implementedEvents, string generatedConstructors, string baseTypeNamespace, 
-			string classAttributes, string noArgumentConstructor, string constructorName, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
+			string classAttributes, string noArgumentConstructor, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
 $@"{usingStatements}
 
 namespace {baseTypeNamespace}
@@ -309,11 +309,6 @@ namespace {baseTypeNamespace}
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
 		{noArgumentConstructor}
-
-		public {constructorName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
-		{{
-			this.handlers = handlers;
-		}}
 
 		{generatedConstructors}
 

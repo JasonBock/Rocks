@@ -259,7 +259,7 @@ namespace Rocks.Tests
 		public void GetConstructorTemplate()
 		{
 			Assert.AreEqual(
-@"public a(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers, c)
+@"public a(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlersc)
 	: base(b)
 {
 	this.handlers = handlers;
@@ -360,12 +360,7 @@ namespace h
 	{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
-		j
-
-		public k(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
-		{
-			this.handlers = handlers;
-		}
+		k
 
 		g
 
@@ -398,7 +393,7 @@ namespace h
 	}
 
 	l
-}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", true, "m"));
+}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"));
 		}
 
 		[Test]
@@ -415,12 +410,7 @@ namespace h
 	{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
-		j
-
-		public k(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
-		{
-			this.handlers = handlers;
-		}
+		k
 
 		g
 
@@ -453,7 +443,7 @@ namespace h
 	}
 
 	l
-}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", false, "m"));
+}", CodeTemplates.GetClassTemplate("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"));
 		}
 
 		[Test]

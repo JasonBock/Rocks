@@ -40,14 +40,25 @@ namespace Rocks.Construction
 			var generatedConstructors = new List<string>();
 			var constructorName = this.GetTypeNameWithNoGenerics();
 
-			foreach (var constructor in this.BaseType.GetConstructors(ReflectionValues.PublicInstance))
+			if (this.BaseType.IsInterface)
 			{
-				var parameters = constructor.GetParameters();
-
-				if (parameters.Length > 0)
+				generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
+					constructorName, string.Empty, string.Empty));
+			}
+			else
+			{
+				foreach (var constructor in this.BaseType.GetConstructors(ReflectionValues.PublicNonPublicInstance)
+					.Where(_ => !_.IsPrivate))
 				{
+					var parameters = constructor.GetParameters(this.Namespaces);
+
+					if (!string.IsNullOrWhiteSpace(parameters))
+					{
+						parameters = $", {parameters}";
+					}
+
 					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
-						constructorName, constructor.GetArgumentNameList(), constructor.GetParameters(this.Namespaces)));
+						constructorName, constructor.GetArgumentNameList(), parameters));
 					this.IsUnsafe |= constructor.IsUnsafeToMock();
 				}
 			}
@@ -138,11 +149,11 @@ namespace Rocks.Construction
 				return baseMethod.ReturnType.IsValueType ||
 					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
 							visibility) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
 							visibility);
 			}
@@ -173,7 +184,7 @@ namespace Rocks.Construction
 			else
 			{
 				return CodeTemplates.GetActionMethodWithNoArgumentsTemplate(
-					baseMethod.MetadataToken, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride, 
+					baseMethod.MetadataToken, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride,
 					visibility);
 			}
 		}
@@ -195,14 +206,14 @@ namespace Rocks.Construction
 					if (eventHandlerType.IsGenericType)
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override, 
-                     $"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
+						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
+							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 						this.Namespaces.Add(eventGenericType.Namespace);
 					}
 					else
 					{
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override, 
-                     eventHandlerType.GetSafeName(), @event.Name));
+						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
+							eventHandlerType.GetSafeName(), @event.Name));
 					}
 
 					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
@@ -261,10 +272,10 @@ namespace Rocks.Construction
 							var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
 							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", 
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
 						}
 						else
@@ -310,7 +321,7 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetPropertyIndexerTemplate(
-							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters, 
+							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
 							string.Join(Environment.NewLine, propertyImplementations)));
 					}
 					else
@@ -318,7 +329,7 @@ namespace Rocks.Construction
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetPropertyTemplate(
 							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
-                     string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations)));
 					}
 
 					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
@@ -332,7 +343,7 @@ namespace Rocks.Construction
 					{
 						var getVisibility = baseProperty.GetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
 
-						if(getVisibility == visibility)
+						if (getVisibility == visibility)
 						{
 							getVisibility = string.Empty;
 						}
@@ -340,7 +351,7 @@ namespace Rocks.Construction
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertyGetTemplate(getVisibility));
 					}
 
-					if(baseProperty.CanWrite)
+					if (baseProperty.CanWrite)
 					{
 						var setVisibility = baseProperty.SetMethod.IsFamily ? CodeTemplates.Protected : CodeTemplates.Internal;
 
@@ -361,15 +372,15 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyIndexerTemplate(visibility,
-							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters, 
-                     string.Join(Environment.NewLine, propertyImplementations)));
+							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
+							string.Join(Environment.NewLine, propertyImplementations)));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyTemplate(visibility,
 							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
-                     string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations)));
 					}
 
 					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
@@ -383,7 +394,7 @@ namespace Rocks.Construction
 
 		protected string GetTypeNameWithGenericsAndNoTextFormatting() => $"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
 
-      private string MakeCode()
+		private string MakeCode()
 		{
 			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null;
 			var methods = this.GetGeneratedMethods();
@@ -401,7 +412,7 @@ namespace Rocks.Construction
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
 
-         var @class = CodeTemplates.GetClassTemplate(
+			var @class = CodeTemplates.GetClassTemplate(
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
@@ -415,7 +426,7 @@ namespace Rocks.Construction
 					"[Serializable]" : string.Empty,
 				this.Options.Serialization == SerializationOptions.Supported ?
 					CodeTemplates.GetConstructorNoArgumentsTemplate(this.GetTypeNameWithNoGenerics()) : string.Empty,
-				this.GetTypeNameWithNoGenerics(), this.GetAdditionNamespaceCode(),
+				this.GetAdditionNamespaceCode(),
 				this.IsUnsafe, baseTypeGenericArguments.Constraints);
 
 			if (this.RequiresObsoleteSuppression)

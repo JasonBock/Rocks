@@ -16,7 +16,7 @@ namespace Rocks
 		public static IRock<T> Create<T>(Options options)
 			where T : class
 		{
-			var message = typeof(T).Validate();
+			var message = typeof(T).Validate(options.Serialization);
 
 			if (!string.IsNullOrWhiteSpace(message))
 			{
@@ -47,7 +47,7 @@ namespace Rocks
 			var result = default(IRock<T>);
 			var isSuccessful = false;
 
-			var message = typeof(T).Validate();
+			var message = typeof(T).Validate(options.Serialization);
 
 			if (string.IsNullOrWhiteSpace(message))
 			{

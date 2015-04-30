@@ -15,19 +15,37 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate());
+			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate(SerializationOptions.NotSupported));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor()
 		{
-			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate());
+			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate(SerializationOptions.NotSupported));
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasObjectConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate());
+			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate(SerializationOptions.NotSupported));
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported()
+		{
+			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(SerializationOptions.Supported));
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported()
+		{
+			Assert.AreEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(SerializationOptions.NotSupported));
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported()
+		{
+			Assert.AreEqual(string.Empty, typeof(IHaveNoPublicConstructor).Validate(SerializationOptions.Supported));
 		}
 
 		[Test]
@@ -685,4 +703,11 @@ namespace Rocks.Tests.Extensions
 	{
 		public HaveObjectConstructor(object handlers) { }
 	}
+
+	public class HaveNoPublicConstructor
+	{
+		private HaveNoPublicConstructor() { }
+	}
+
+	public interface IHaveNoPublicConstructor { }
 }
