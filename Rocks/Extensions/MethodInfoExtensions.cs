@@ -150,7 +150,7 @@ namespace Rocks.Extensions
 				@this = @this.GetGenericMethodDefinition();
 			}
 
-			namespaces.Add(@this.ReturnType.Namespace);
+			@this.ReturnType.AddNamespaces(namespaces);
 
 			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?

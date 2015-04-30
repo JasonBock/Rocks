@@ -12,6 +12,21 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static bool AddNamespaces(this Type @this, SortedSet<string> namespaces)
+		{
+			namespaces.Add(@this.Namespace);
+
+			if(@this.IsGenericType)
+			{
+				foreach(var genericType in @this.GetGenericArguments())
+				{
+					genericType.AddNamespaces(namespaces);
+				}
+			}
+
+			return true;
+		}
+
 		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)

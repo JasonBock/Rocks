@@ -62,7 +62,7 @@ namespace Rocks.Extensions
 		{
 			return string.Join(", ",
 				from parameter in @this.GetParameters()
-				let _ = namespaces.Add(parameter.ParameterType.Namespace)
+				let _ = parameter.ParameterType.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
 				let parameterType = parameter.ParameterType.IsByRef ?
 					$"{parameter.ParameterType.GetElementType().GetSafeName()}{parameter.ParameterType.GetElementType().GetGenericArguments(namespaces).Arguments}" :
