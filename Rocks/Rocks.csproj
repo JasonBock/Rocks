@@ -97,6 +97,7 @@
     <Compile Include="Extensions\PropertyMockableResult.cs" />
     <Compile Include="Extensions\MockableResultOfT.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
+    <Compile Include="Extensions\TypeDissector.cs" />
     <Compile Include="InMemoryRock.cs" />
     <Compile Include="IRock - Actions.cs" />
     <Compile Include="IRock - Delegates.cs" />

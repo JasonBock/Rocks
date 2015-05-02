@@ -26,6 +26,20 @@ namespace Rocks.Extensions
 
 			return true;
 		}
+		internal static string GetFullName(this Type @this)
+		{
+			return @this.GetFullName(new SortedSet<string>());
+		}
+
+		internal static string GetFullName(this Type @this, SortedSet<string> namespaces)
+		{
+			var dissector = new TypeDissector(@this);
+
+			var pointer = dissector.IsPointer ? "*" : string.Empty;
+			var array = dissector.IsArray ? "[]" : string.Empty;
+
+			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).Arguments}{pointer}{array}";
+      }
 
 		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
