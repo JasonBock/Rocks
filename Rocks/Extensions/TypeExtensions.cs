@@ -253,6 +253,14 @@ namespace Rocks.Extensions
 				}
 			}
 
+			if(!@this.IsAbstract &&
+				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance).Length == 
+					@this.GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Count() &&
+				!@this.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
+			{
+				return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
+			}
+
 			return string.Empty;
 		}
 
