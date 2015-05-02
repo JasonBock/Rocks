@@ -316,6 +316,10 @@ namespace Rocks.Construction
 						}
 					}
 
+					var visibility = property.RequiresExplicitInterfaceImplementation ? string.Empty : CodeTemplates.Public;
+					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation ?
+						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
+
 					if (indexers.Length > 0)
 					{
 						var parameters = string.Join(", ",
@@ -326,14 +330,14 @@ namespace Rocks.Construction
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetPropertyIndexerTemplate(
 							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetPropertyTemplate(
 							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 					}
 
 					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
@@ -341,7 +345,8 @@ namespace Rocks.Construction
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
 				{
 					var propertyImplementations = new List<string>();
-					var visibility = CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
+					var visibility = property.RequiresExplicitInterfaceImplementation ? string.Empty : 
+						CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
 
 					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
 					{
@@ -367,6 +372,9 @@ namespace Rocks.Construction
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertySetTemplate(setVisibility));
 					}
 
+					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation ?
+						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
+
 					if (indexers.Length > 0)
 					{
 						var parameters = string.Join(", ",
@@ -377,14 +385,14 @@ namespace Rocks.Construction
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyIndexerTemplate(visibility,
 							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyTemplate(visibility,
 							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations)));
+							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
 					}
 
 					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;

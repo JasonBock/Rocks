@@ -91,7 +91,7 @@ namespace Rocks.Extensions
 							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 							{
 								properties.Add(new PropertyMockableResult(interfaceProperty.Value,
-									interfaceProperty.RequiresExplicitInterfaceImplementation, interfaceProperty.Accessors));
+									matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly), interfaceProperty.Accessors));
 							}
 						}
 					}

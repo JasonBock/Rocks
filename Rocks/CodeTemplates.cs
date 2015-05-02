@@ -13,11 +13,11 @@
 		public static string GetAssemblyDelegateTemplate(string returnType, string delegateName, string arguments, bool isUnsafe) => 
 			$"public {CodeTemplates.GetIsUnsafe(isUnsafe)} delegate {returnType} {delegateName}({arguments});";
 		
-		public static string GetPropertyTemplate(string returnType, string name, string getSet) => 
-			$"public {returnType} {name} {{ {getSet} }}";
+		public static string GetPropertyTemplate(string returnType, string name, string getSet, string visibility, string explicitInterfaceName) => 
+			$"{visibility} {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";
 
-		public static string GetPropertyIndexerTemplate(string returnType, string indexerArguments, string getSet) => 
-			$"public {returnType} this[{indexerArguments}] {{ {getSet} }}";
+		public static string GetPropertyIndexerTemplate(string returnType, string indexerArguments, string getSet, string visibility, string explicitInterfaceName) => 
+			$"{visibility} {returnType} {explicitInterfaceName}this[{indexerArguments}] {{ {getSet} }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValueTemplate(int methodHandle, string argumentNames, string returnTypeName, 
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
@@ -204,11 +204,11 @@ $@"{visibility} override {methodName}
 	return default({returnTypeName});
 }}";
 
-		public static string GetNonPublicPropertyTemplate(string visibility, string returnType, string name, string getSet) =>
-			$"{visibility} override {returnType} {name} {{ {getSet} }}";
+		public static string GetNonPublicPropertyTemplate(string visibility, string returnType, string name, string getSet, string explicitInterfaceName) =>
+			$"{visibility} override {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";
 
-		public static string GetNonPublicPropertyIndexerTemplate(string visibility, string returnType, string indexerArguments, string getSet) =>
-			$"{visibility} override {returnType} this[{indexerArguments}] {{ {getSet} }}";
+		public static string GetNonPublicPropertyIndexerTemplate(string visibility, string returnType, string indexerArguments, string getSet, string explicitInterfaceName) =>
+			$"{visibility} override {returnType} {explicitInterfaceName}this[{indexerArguments}] {{ {getSet} }}";
 
 		public static string GetNonPublicPropertyGetTemplate(string visibility) => $"{visibility} get;";
 

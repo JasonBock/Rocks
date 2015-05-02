@@ -42,13 +42,13 @@ namespace Rocks.Tests
 		[Test]
 		public void GetPropertyTemplate()
 		{
-			Assert.AreEqual("public a b { c }", CodeTemplates.GetPropertyTemplate("a", "b", "c"));
+			Assert.AreEqual("d a eb { c }", CodeTemplates.GetPropertyTemplate("a", "b", "c", "d", "e"));
 		}
 
 		[Test]
 		public void GetPropertyIndexerTemplate()
 		{
-			Assert.AreEqual("public a this[b] { c }", CodeTemplates.GetPropertyIndexerTemplate("a", "b", "c"));
+			Assert.AreEqual("d a ethis[b] { c }", CodeTemplates.GetPropertyIndexerTemplate("a", "b", "c", "d", "e"));
 		}
 
 		[Test]
