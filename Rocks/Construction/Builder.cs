@@ -48,22 +48,20 @@ namespace Rocks.Construction
 			}
 			else
 			{
-				foreach (var constructor in this.BaseType.GetConstructors(ReflectionValues.PublicNonPublicInstance)
-					.Where(_ => !_.IsPrivate))
+				foreach (var constructor in this.BaseType.GetMockableConstructors(this.NameGenerator))
 				{
-					if (constructor.CanBeSeenByMockAssembly(this.NameGenerator))
+					var baseConstructor = constructor.Value;
+
+					var parameters = baseConstructor.GetParameters(this.Namespaces);
+
+					if (!string.IsNullOrWhiteSpace(parameters))
 					{
-						var parameters = constructor.GetParameters(this.Namespaces);
-
-						if (!string.IsNullOrWhiteSpace(parameters))
-						{
-							parameters = $", {parameters}";
-						}
-
-						generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
-							constructorName, constructor.GetArgumentNameList(), parameters));
-						this.IsUnsafe |= constructor.IsUnsafeToMock();
+						parameters = $", {parameters}";
 					}
+
+					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
+						constructorName, baseConstructor.GetArgumentNameList(), parameters));
+					this.IsUnsafe |= baseConstructor.IsUnsafeToMock();
 				}
 			}
 

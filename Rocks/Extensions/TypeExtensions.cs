@@ -41,6 +41,15 @@ namespace Rocks.Extensions
 			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).Arguments}{pointer}{array}";
       }
 
+		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator)
+		{
+			return new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
+				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance)
+					.Where(_ => !_.IsPrivate &&
+						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator))
+					.Select(_ => new MockableResult<ConstructorInfo>(_, false)).ToList());
+		}
+
 		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)

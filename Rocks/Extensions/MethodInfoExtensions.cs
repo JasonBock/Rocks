@@ -113,8 +113,10 @@ namespace Rocks.Extensions
 		internal static string GetExpectationChecks(this MethodInfo @this)
 		{
 			return string.Join(" && ",
-				@this.GetParameters().Select(_ =>
-					CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
+				@this.GetParameters()
+				.Where(_ => !new TypeDissector(_.ParameterType).IsPointer)
+				.Select(_ => CodeTemplates.GetExpectationTemplate(_.Name, 
+					$"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this)
