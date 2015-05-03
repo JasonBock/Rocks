@@ -7,6 +7,11 @@ namespace Rocks.Extensions
 {
 	internal static class MethodBaseExtensions
 	{
+		internal static bool IsExtern(this MethodBase @this)
+		{
+			return (@this.MethodImplementationFlags & MethodImplAttributes.InternalCall) != 0;
+      }
+
 		internal static GenericArgumentsResult GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
 		{
 			var arguments = string.Empty;

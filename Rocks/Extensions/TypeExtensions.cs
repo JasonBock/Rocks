@@ -59,8 +59,12 @@ namespace Rocks.Extensions
 
 		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
-			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
+			var objectMethods = @this.IsInterface ? 
+				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
+
+         var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal &&
+					!objectMethods.Where(om => om.Match(_) == MethodMatch.Exact).Any() &&
 					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, _.IsFamilyOrAssembly, generator))
 				.Select(_ => new MockableResult<MethodInfo>(_, false)));
 
