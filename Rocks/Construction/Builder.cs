@@ -62,6 +62,7 @@ namespace Rocks.Construction
 					generatedConstructors.Add(CodeTemplates.GetConstructorTemplate(
 						constructorName, baseConstructor.GetArgumentNameList(), parameters));
 					this.IsUnsafe |= baseConstructor.IsUnsafeToMock();
+					this.RequiresObsoleteSuppression |= baseConstructor.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 			}
 

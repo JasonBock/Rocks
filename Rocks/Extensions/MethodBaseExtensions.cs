@@ -48,8 +48,11 @@ namespace Rocks.Extensions
 
 		internal static string GetExpectationExceptionMessage(this MethodBase @this)
 		{
-			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).Arguments}({@this.GetLiteralArgumentNameList()})";
-      }
+			var hasPointerTypes = @this.GetParameters()
+				.Where(_ => new TypeDissector(_.ParameterType).IsPointer).Any();
+			var argumentlist = hasPointerTypes ? @this.GetParameters(new SortedSet<string>()) : @this.GetLiteralArgumentNameList();
+			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).Arguments}({argumentlist})";
+		}
 
 		internal static string GetLiteralArgumentNameList(this MethodBase @this)
 		{

@@ -112,6 +112,7 @@
     <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensionsTests.cs" />
     <Compile Include="Extensions\IMockExtensionsTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionsGetParametersTests.cs" />
+    <Compile Include="Extensions\MethodBaseExtensionsGetExpectationsExceptionMessageTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionsTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsContainsRefAndOrOutParametersTests.cs" />

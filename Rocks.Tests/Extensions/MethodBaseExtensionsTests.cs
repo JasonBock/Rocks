@@ -31,13 +31,6 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetExpectationExceptionMessage()
-		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
-			Assert.AreEqual("TargetWithGenerics<T, U>({a}, {b}, {c})", target.GetExpectationExceptionMessage());
-		}
-
-		[Test]
 		public void GetGenericArguments()
 		{
 			var namespaces = new SortedSet<string>();
