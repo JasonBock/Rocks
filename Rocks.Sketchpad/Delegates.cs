@@ -8,14 +8,19 @@ namespace Rocks.Sketchpad
 		public delegate void RefTargetWithoutGeneric(ref Guid a);
 		public delegate void RefTargetWithGeneric<T>(ref T a);
 		public unsafe delegate void TargetWithPointer(int* a);
+		public delegate void TargetWithSpecialType(TypedReference a);
 
 		private static void TargetWithGeneric<T>(ref T a) { }
 		private unsafe static void PointerTarget(int* a) { }
+		private static void SpecialTarget(TypedReference a) { }
 
 		public unsafe static void Test<Q>()
 		{
 			var pointerDelegate = new TargetWithPointer(Delegates.PointerTarget);
 			pointerDelegate(default(int*));
+
+			var specialDelegate = new TargetWithSpecialType(Delegates.SpecialTarget);
+
 			var generic = new RefTargetWithGeneric<Guid>(Delegates.TargetWithGeneric<Guid>);
 			var castedGeneric = (generic as RefTargetWithGeneric<Guid>);
 

@@ -77,11 +77,15 @@ namespace Rocks.Extensions
 				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
 		}
 
-		internal static bool ContainsRefAndOrOutParametersOrPointerTypes(this MethodInfo @this)
+		internal static bool ContainsDelegateConditions(this MethodInfo @this)
 		{
 			return (from parameter in @this.GetParameters()
 					  let parameterType = parameter.ParameterType
-					  where parameter.IsOut || parameterType.IsByRef || new TypeDissector(parameterType).IsPointer
+					  where parameter.IsOut || parameterType.IsByRef || 
+						typeof(TypedReference).IsAssignableFrom(parameterType) ||
+						typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
+						typeof(ArgIterator).IsAssignableFrom(parameterType) || 
+						new TypeDissector(parameterType).IsPointer
 					  select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
 		}
 

@@ -28,12 +28,12 @@ namespace Rocks.Construction
 			var baseMethod = method.Value;
 			var description = baseMethod.GetMethodDescription(this.Namespaces);
 			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
-			var containsRefAndOrOutParameters = baseMethod.ContainsRefAndOrOutParametersOrPointerTypes();
+			var containsDelegateConditions = baseMethod.ContainsDelegateConditions();
 
 			var key = baseMethod.MetadataToken;
 			string delegateCast = null;
 
-			if(!containsRefAndOrOutParameters)
+			if(!containsDelegateConditions)
 			{
 				delegateCast = baseMethod.GetDelegateCast();
          }
@@ -58,7 +58,7 @@ namespace Rocks.Construction
 			
 			return new MethodInformation
 			{
-				ContainsRefAndOrOutParametersOrPointerTypes = containsRefAndOrOutParameters,
+				ContainsRefAndOrOutParametersOrPointerTypes = containsDelegateConditions,
 				DelegateCast = delegateCast,
 				Description = description,
 				DescriptionWithOverride = descriptionWithOverride

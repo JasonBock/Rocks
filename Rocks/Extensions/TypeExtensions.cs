@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using static Rocks.Extensions.AssemblyExtensions;
 
 namespace Rocks.Extensions
 {
@@ -46,6 +45,7 @@ namespace Rocks.Extensions
 			return new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
 				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance)
 					.Where(_ => !_.IsPrivate &&
+						(_.GetCustomAttribute<ObsoleteAttribute>() == null || !_.GetCustomAttribute<ObsoleteAttribute>().IsError) &&
 						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator) &&
 						!_.GetParameters().Where(p => !p.ParameterType.CanBeSeenByMockAssembly(generator)).Any())
 					.Select(_ => new MockableResult<ConstructorInfo>(_, false)).ToList());
@@ -293,7 +293,7 @@ namespace Rocks.Extensions
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
 			return (from method in @this.GetMethods(ReflectionValues.PublicInstance)
-					  where method.ContainsRefAndOrOutParametersOrPointerTypes()
+					  where method.ContainsDelegateConditions()
 					  select method).Any();
 		}
 
