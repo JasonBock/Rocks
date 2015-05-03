@@ -27,7 +27,18 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
 		}
 
+		[Test]
+		public void GetExpectationChecksWithGenericTypes()
+		{
+			var expectedExpectation =
+@"(methodHandler.Expectations[""a""] as ArgumentExpectation<IEquatable<Int32>>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as ArgumentExpectation<String>).IsValid(c, ""c"")";
+			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
+			var expectations = target.GetExpectationChecks();
+			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
+		}
+
 		public void TargetWithArguments(int a, string c) { }
+		public void TargetWithGenerics(IEquatable<int> a, string c) { }
 		public unsafe void TargetWithPointers(int a, Guid* b, string c) { }
 	}
 }

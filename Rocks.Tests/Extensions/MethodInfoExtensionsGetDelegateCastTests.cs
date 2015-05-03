@@ -28,6 +28,13 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetDelegateCastWithComplexGenericArguments()
+		{
+			var target = this.GetType().GetMethod(nameof(this.TargetWithComplexGeneric));
+			Assert.AreEqual("Func<IGeneric<Int32>, IGeneric<Int32>>", target.GetDelegateCast());
+		}
+
+		[Test]
 		public void GetDelegateCastWithArgumentsAndReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
@@ -53,6 +60,9 @@ namespace Rocks.Tests.Extensions
 		public void TargetWithArguments(int a, string c) { }
 		public int TargetWithArgumentsAndReturnValue(int a, string c) { return 0; }
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
+		public IGeneric<int> TargetWithComplexGeneric(IGeneric<int> a) { return null; }
 		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) { return default(U); }
 	}
+
+	public interface IGeneric<T> { }
 }

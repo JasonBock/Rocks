@@ -109,9 +109,9 @@ namespace Rocks.Extensions
 			}
 			else
 			{
-				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => $"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}"));
+				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => $"{_.ParameterType.GetFullName()}"));
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}<{genericArgumentTypes}>";
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetFullName()}>" : $"{methodKind}<{genericArgumentTypes}>";
 			}
 		}
 
@@ -120,8 +120,7 @@ namespace Rocks.Extensions
 			return string.Join(" && ",
 				@this.GetParameters()
 				.Where(_ => !new TypeDissector(_.ParameterType).IsPointer)
-				.Select(_ => CodeTemplates.GetExpectationTemplate(_.Name, 
-					$"{_.ParameterType.GetSafeName()}{_.ParameterType.GetGenericArguments(new SortedSet<string>()).Arguments}")));
+				.Select(_ => CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetFullName()}")));
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this)
