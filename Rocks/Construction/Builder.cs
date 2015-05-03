@@ -78,7 +78,7 @@ namespace Rocks.Construction
 				var methodInformation = this.GetMethodInformation(method);
 				var baseMethod = method.Value;
 				var argumentNameList = baseMethod.GetArgumentNameList();
-				var outInitializers = !methodInformation.ContainsRefAndOrOutParameters ? string.Empty : baseMethod.GetOutInitializers();
+				var outInitializers = !methodInformation.ContainsRefAndOrOutParametersOrPointerTypes ? string.Empty : baseMethod.GetOutInitializers();
 
 				if (baseMethod.IsPublic)
 				{
@@ -87,9 +87,9 @@ namespace Rocks.Construction
 					// Either the base method contains no refs/outs, or the user specified a delegate
 					// to use to handle that method (remember, types with methods with refs/outs are gen'd
 					// each time, and that's the only reason the handlers are passed in).
-					if (!methodInformation.ContainsRefAndOrOutParameters || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
+					if (!methodInformation.ContainsRefAndOrOutParametersOrPointerTypes || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 					{
-						if (!methodInformation.ContainsRefAndOrOutParameters && baseMethod.GetParameters().Length > 0)
+						if (!methodInformation.ContainsRefAndOrOutParametersOrPointerTypes && baseMethod.GetParameters().Length > 0)
 						{
 							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
@@ -101,7 +101,7 @@ namespace Rocks.Construction
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
 								visibility));
 
-							if (methodInformation.ContainsRefAndOrOutParameters)
+							if (methodInformation.ContainsRefAndOrOutParametersOrPointerTypes)
 							{
 								this.HandleRefOutMethod(baseMethod, methodInformation);
 							}
@@ -133,7 +133,7 @@ namespace Rocks.Construction
 
 		protected class MethodInformation
 		{
-			public bool ContainsRefAndOrOutParameters { get; set; }
+			public bool ContainsRefAndOrOutParametersOrPointerTypes { get; set; }
 			public string DelegateCast { get; set; }
 			public string Description { get; set; }
 			public string DescriptionWithOverride { get; set; }

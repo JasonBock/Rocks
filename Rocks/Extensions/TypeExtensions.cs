@@ -293,7 +293,7 @@ namespace Rocks.Extensions
 		internal static bool ContainsRefAndOrOutParameters(this Type @this)
 		{
 			return (from method in @this.GetMethods(ReflectionValues.PublicInstance)
-					  where method.ContainsRefAndOrOutParameters()
+					  where method.ContainsRefAndOrOutParametersOrPointerTypes()
 					  select method).Any();
 		}
 

@@ -115,7 +115,7 @@
     <Compile Include="Extensions\MethodBaseExtensionsGetExpectationsExceptionMessageTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionsTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
-    <Compile Include="Extensions\MethodInfoExtensionsContainsRefAndOrOutParametersTests.cs" />
+    <Compile Include="Extensions\MethodInfoExtensionsContainsRefAndOrOutParametersOrPointerTypesTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsGetDelegateCastTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsGetMethodDescriptionTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsGetExpectationChecksTests.cs" />

@@ -77,11 +77,12 @@ namespace Rocks.Extensions
 				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
 		}
 
-		internal static bool ContainsRefAndOrOutParameters(this MethodInfo @this)
+		internal static bool ContainsRefAndOrOutParametersOrPointerTypes(this MethodInfo @this)
 		{
 			return (from parameter in @this.GetParameters()
-					  where parameter.IsOut || parameter.ParameterType.IsByRef
-					  select parameter).Any();
+					  let parameterType = parameter.ParameterType
+					  where parameter.IsOut || parameterType.IsByRef || new TypeDissector(parameterType).IsPointer
+					  select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
 		}
 
 		internal static string GetOutInitializers(this MethodInfo @this)
