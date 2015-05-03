@@ -14,6 +14,14 @@ namespace Rocks.Tests.Extensions
 				.GetMethod(nameof(this.TargetWithOutArgument)).GetOutInitializers());
 		}
 
+		[Test]
+		public void ContainsOutInitializersWhenArgumentTypeIsArray()
+		{
+			Assert.AreEqual("a = default(Int32[]);", this.GetType()
+				.GetMethod(nameof(this.TargetWithOutArrayArgument)).GetOutInitializers());
+		}
+
 		public void TargetWithOutArgument(out int a) { a = 0; }
+		public void TargetWithOutArrayArgument(out int[] a) { a = null; }
 	}
 }

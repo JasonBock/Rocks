@@ -94,7 +94,7 @@ namespace Rocks.Extensions
 			return string.Join(Environment.NewLine,
 				from parameter in @this.GetParameters()
 				where parameter.IsOut
-				select $"{parameter.Name} = default({parameter.ParameterType.GetElementType().GetSafeName()});");
+				select $"{parameter.Name} = default({parameter.ParameterType.GetFullName()});");
 		}
 
 		internal static string GetDelegateCast(this MethodInfo @this)
