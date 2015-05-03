@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Contracts\IHaveGenericsThatAreUsedInReturnValue.cs" />
     <Compile Include="Contracts\Interface1.cs" />
     <Compile Include="Extensions\Class3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

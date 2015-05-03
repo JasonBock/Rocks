@@ -11,6 +11,12 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static bool RequiresExplicitCast(this Type @this)
+		{
+			return @this.IsValueType ||
+				(@this.IsGenericParameter && (@this.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0);
+      }
+
 		internal static bool AddNamespaces(this Type @this, SortedSet<string> namespaces)
 		{
 			namespaces.Add(@this.Namespace);

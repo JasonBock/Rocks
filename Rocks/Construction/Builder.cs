@@ -149,8 +149,7 @@ namespace Rocks.Construction
 
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return baseMethod.ReturnType.IsValueType ||
-					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+				return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
@@ -175,8 +174,7 @@ namespace Rocks.Construction
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return baseMethod.ReturnType.IsValueType ||
-					(baseMethod.ReturnType.IsGenericParameter && (baseMethod.ReturnType.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0) ?
+				return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility) :
@@ -274,7 +272,7 @@ namespace Rocks.Construction
 						{
 							var getExpectationChecks = getMethod.GetExpectationChecks();
 							var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
-							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
+							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
 									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
@@ -284,7 +282,7 @@ namespace Rocks.Construction
 						}
 						else
 						{
-							propertyImplementations.Add(getMethod.ReturnType.IsValueType ?
+							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(
 									getMethod.MetadataToken, getArgumentNameList,
 									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast, getVisibility) :

@@ -124,6 +124,7 @@
     <Compile Include="Extensions\MethodInfoExtensionsTests.cs" />
     <Compile Include="Extensions\ParameterInfoExtensionsTests.cs" />
     <Compile Include="Extensions\TypeDissectorTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsRequiresExplicitCastTests.cs" />
     <Compile Include="Extensions\TypeExtensionsAddNamespacesTests.cs" />
     <Compile Include="Extensions\TypeExtensionsCanBeSeenByMockAssemblyTests.cs" />
     <Compile Include="Extensions\TypeExtensionsFindMethodTests.cs" />

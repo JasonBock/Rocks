@@ -45,45 +45,52 @@ namespace Rocks.Sketchpad
 
 	public static class Generics
 	{
-		private static void TestGenerics()
+		public static void Test()
 		{
 			var genericType = typeof(IGeneric<string>);
+			Console.Out.WriteLine($"{nameof(genericType.IsGenericParameter)}: {genericType.IsGenericParameter}");
 
-			var methodThatUsesTName = nameof(IGeneric<string>.MethodThatUsesT);
-			Console.Out.WriteLine(methodThatUsesTName);
-			var methodThatUsesT = genericType.GetMethod(methodThatUsesTName);
-			Console.Out.WriteLine($"{nameof(methodThatUsesT.IsGenericMethod)}: {methodThatUsesT.IsGenericMethod}");
-         Console.Out.WriteLine($"{nameof(methodThatUsesT.IsGenericMethodDefinition)}: {methodThatUsesT.IsGenericMethodDefinition}");
-			Console.Out.WriteLine();
+			var genericTypeArgument = genericType.GetGenericArguments()[0];
+			Console.Out.WriteLine($"{nameof(genericTypeArgument.IsGenericParameter)}: {genericTypeArgument.IsGenericParameter}");
 
-			var methodThatUsesItsOwnGenericName = nameof(IGeneric<string>.MethodThatUsesItsOwnGeneric);
-			Console.Out.WriteLine(methodThatUsesItsOwnGenericName);
-			var methodThatUsesItsOwnGeneric = genericType.GetMethod(methodThatUsesItsOwnGenericName);
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGeneric.IsGenericMethod)}: {methodThatUsesItsOwnGeneric.IsGenericMethod}");
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGeneric.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGeneric.IsGenericMethodDefinition}");
-			var methodThatUsesItsOwnGenericConstructed = methodThatUsesItsOwnGeneric.MakeGenericMethod(typeof(int));
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethod)}: {methodThatUsesItsOwnGenericConstructed.IsGenericMethod}");
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition}");
-			Generics.ShowGenericAttributes(methodThatUsesItsOwnGeneric);
-			Console.Out.WriteLine();
+			var genericArgument = typeof(IGeneric<>).GetGenericArguments()[0];
+			Console.Out.WriteLine($"{nameof(genericArgument.IsGenericParameter)}: {genericArgument.IsGenericParameter}");
 
-			var methodThatUsesItsOwnGenericWithNonTypeConstraintsName = nameof(IGeneric<string>.MethodThatUsesItsOwnGenericWithNonTypeConstraints);
-			Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraintsName);
-			var methodThatUsesItsOwnGenericWithNonTypeConstraints = genericType.GetMethod(methodThatUsesItsOwnGenericWithNonTypeConstraintsName);
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethod)}: { methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethod}");
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethodDefinition}");
-			Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraints.GetParameters()[0].ParameterType.Name);
-			Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraints.GetParameters()[1].ParameterType.Name);
-			Generics.ShowGenericAttributes(methodThatUsesItsOwnGenericWithNonTypeConstraints);
-			Console.Out.WriteLine();
+			//var methodThatUsesTName = nameof(IGeneric<string>.MethodThatUsesT);
+			//Console.Out.WriteLine(methodThatUsesTName);
+			//var methodThatUsesT = genericType.GetMethod(methodThatUsesTName);
+			//Console.Out.WriteLine($"{nameof(methodThatUsesT.IsGenericMethod)}: {methodThatUsesT.IsGenericMethod}");
+			//      Console.Out.WriteLine($"{nameof(methodThatUsesT.IsGenericMethodDefinition)}: {methodThatUsesT.IsGenericMethodDefinition}");
+			//Console.Out.WriteLine();
 
-			var methodThatUsesItsOwnGenericWithTypeConstraintsName = nameof(IGeneric<string>.MethodThatUsesItsOwnGenericWithTypeConstraints);
-			Console.Out.WriteLine(methodThatUsesItsOwnGenericWithTypeConstraintsName);
-			var methodThatUsesItsOwnGenericWithTypeConstraints = genericType.GetMethod(methodThatUsesItsOwnGenericWithTypeConstraintsName);
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethod)}: {methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethod}");
-			Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethodDefinition}");
-			Generics.ShowGenericAttributes(methodThatUsesItsOwnGenericWithTypeConstraints);
-			Console.Out.WriteLine();
+			//var methodThatUsesItsOwnGenericName = nameof(IGeneric<string>.MethodThatUsesItsOwnGeneric);
+			//Console.Out.WriteLine(methodThatUsesItsOwnGenericName);
+			//var methodThatUsesItsOwnGeneric = genericType.GetMethod(methodThatUsesItsOwnGenericName);
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGeneric.IsGenericMethod)}: {methodThatUsesItsOwnGeneric.IsGenericMethod}");
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGeneric.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGeneric.IsGenericMethodDefinition}");
+			//var methodThatUsesItsOwnGenericConstructed = methodThatUsesItsOwnGeneric.MakeGenericMethod(typeof(int));
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethod)}: {methodThatUsesItsOwnGenericConstructed.IsGenericMethod}");
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericConstructed.IsGenericMethodDefinition}");
+			//Generics.ShowGenericAttributes(methodThatUsesItsOwnGeneric);
+			//Console.Out.WriteLine();
+
+			//var methodThatUsesItsOwnGenericWithNonTypeConstraintsName = nameof(IGeneric<string>.MethodThatUsesItsOwnGenericWithNonTypeConstraints);
+			//Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraintsName);
+			//var methodThatUsesItsOwnGenericWithNonTypeConstraints = genericType.GetMethod(methodThatUsesItsOwnGenericWithNonTypeConstraintsName);
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethod)}: { methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethod}");
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericWithNonTypeConstraints.IsGenericMethodDefinition}");
+			//Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraints.GetParameters()[0].ParameterType.Name);
+			//Console.Out.WriteLine(methodThatUsesItsOwnGenericWithNonTypeConstraints.GetParameters()[1].ParameterType.Name);
+			//Generics.ShowGenericAttributes(methodThatUsesItsOwnGenericWithNonTypeConstraints);
+			//Console.Out.WriteLine();
+
+			//var methodThatUsesItsOwnGenericWithTypeConstraintsName = nameof(IGeneric<string>.MethodThatUsesItsOwnGenericWithTypeConstraints);
+			//Console.Out.WriteLine(methodThatUsesItsOwnGenericWithTypeConstraintsName);
+			//var methodThatUsesItsOwnGenericWithTypeConstraints = genericType.GetMethod(methodThatUsesItsOwnGenericWithTypeConstraintsName);
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethod)}: {methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethod}");
+			//Console.Out.WriteLine($"{nameof(methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethodDefinition)}: {methodThatUsesItsOwnGenericWithTypeConstraints.IsGenericMethodDefinition}");
+			//Generics.ShowGenericAttributes(methodThatUsesItsOwnGenericWithTypeConstraints);
+			//Console.Out.WriteLine();
 		}
 
 		private static void ShowGenericAttributes(MethodInfo method)
