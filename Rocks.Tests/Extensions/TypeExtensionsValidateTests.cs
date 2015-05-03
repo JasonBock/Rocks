@@ -54,7 +54,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported()
 		{
-			Assert.AreEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
+			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
 				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
 		}
 

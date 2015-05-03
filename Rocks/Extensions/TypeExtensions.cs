@@ -46,7 +46,8 @@ namespace Rocks.Extensions
 			return new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
 				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance)
 					.Where(_ => !_.IsPrivate &&
-						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator))
+						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator) &&
+						!_.GetParameters().Where(p => !p.ParameterType.CanBeSeenByMockAssembly(generator)).Any())
 					.Select(_ => new MockableResult<ConstructorInfo>(_, false)).ToList());
 		}
 
@@ -262,12 +263,9 @@ namespace Rocks.Extensions
 				}
 			}
 
-			if(!@this.IsAbstract &&
-				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance).Length == 
-					@this.GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Count() &&
-				!@this.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
+			if(!@this.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
 			{
-				return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
+				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(@this.GetSafeName());
 			}
 
 			return string.Empty;

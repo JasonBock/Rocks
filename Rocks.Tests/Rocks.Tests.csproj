@@ -112,7 +112,7 @@
     <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensionsTests.cs" />
     <Compile Include="Extensions\IMockExtensionsTests.cs" />
     <Compile Include="Extensions\MethodBaseExtensionsGetParametersTests.cs" />
-    <Compile Include="Extensions\MethodBaseExtensionTests.cs" />
+    <Compile Include="Extensions\MethodBaseExtensionsTests.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensionsTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsContainsRefAndOrOutParametersTests.cs" />
     <Compile Include="Extensions\MethodInfoExtensionsGetDelegateCastTests.cs" />
@@ -129,6 +129,7 @@
     <Compile Include="Extensions\TypeExtensionsFindPropertyTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetFullNameTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetGenericArgumentsTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsGetMockableConstructorsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetMockableEventsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetMockableMethodsTests.cs" />
     <Compile Include="Extensions\TypeExtensionsGetSafeNameTests.cs" />

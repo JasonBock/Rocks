@@ -7,7 +7,7 @@ using System;
 namespace Rocks.Tests.Extensions
 {
 	[TestFixture]
-	public sealed class MethodBaseExtensionTests
+	public sealed class MethodBaseExtensionsTests
 	{
 		[Test]
 		public void GetArgumentNameList()
