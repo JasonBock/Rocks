@@ -350,7 +350,9 @@ namespace Rocks.Tests
 		public void GetClassTemplateWhenIsUnsafeIsTrue()
 		{
 			Assert.AreEqual(
-@"a
+@"#pragma warning disable CS8019
+a
+#pragma warning restore CS8019
 
 namespace h
 {
@@ -402,7 +404,9 @@ namespace h
 		public void GetClassTemplateWhenIsUnsafeIsFalse()
 		{
 			Assert.AreEqual(
-@"a
+@"#pragma warning disable CS8019
+a
+#pragma warning restore CS8019
 
 namespace h
 {

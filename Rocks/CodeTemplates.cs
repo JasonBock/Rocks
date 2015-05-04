@@ -302,7 +302,9 @@ $@"{visibility} {methodNameWithOverride}
 		public static string GetClassTemplate(string usingStatements, string mockTypeName, string baseType, 
 			string implementedMethods, string implementedProperties, string implementedEvents, string generatedConstructors, string baseTypeNamespace, 
 			string classAttributes, string noArgumentConstructor, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
-$@"{usingStatements}
+$@"#pragma warning disable CS8019
+{usingStatements}
+#pragma warning restore CS8019
 
 namespace {baseTypeNamespace}
 {{
