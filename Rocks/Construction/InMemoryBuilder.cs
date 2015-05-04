@@ -48,7 +48,7 @@ namespace Rocks.Construction
 						delegateType = delegateType.GetGenericTypeDefinition();
 					}
 
-					delegateCast = $"{delegateType.GetSafeName(baseMethod, this.Namespaces)}{delegateType.GetGenericArguments(this.Namespaces).Arguments}";
+					delegateCast = $"{delegateType.GetFullName(this.Namespaces)}";
             }
 				else
 				{

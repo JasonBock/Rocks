@@ -22,7 +22,7 @@ namespace Rocks.Construction
 			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType))
 		{
 			var name = this.BaseType.IsGenericTypeDefinition ?
-				$"{baseType.GetSafeName()}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : baseType.GetSafeName();
+				$"{baseType.GetFullName(this.Namespaces)}" : baseType.GetSafeName();
 			this.TypeName = $"Rock{name}";
 		}
 

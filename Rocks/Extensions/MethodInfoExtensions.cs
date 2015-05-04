@@ -105,7 +105,7 @@ namespace Rocks.Extensions
 			if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(new SortedSet<string>()).Arguments}>" : $"{methodKind}";
+					$"{methodKind}<{@this.ReturnType.GetFullName()}>" : $"{methodKind}";
 			}
 			else
 			{
@@ -161,7 +161,7 @@ namespace Rocks.Extensions
 
 			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
-				"void" : $"{@this.ReturnType.GetSafeName()}{@this.ReturnType.GetGenericArguments(namespaces).Arguments}";
+				"void" : $"{@this.ReturnType.GetFullName(namespaces)}";
 
 			var methodName = @this.Name;
 			var generics = string.Empty;
@@ -176,7 +176,7 @@ namespace Rocks.Extensions
 
 			var parameters = @this.GetParameters(namespaces);
 			var explicitInterfaceName = requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-				$"{@this.DeclaringType.GetSafeName()}{@this.DeclaringType.GetGenericArguments(namespaces).Arguments}." : string.Empty;
+				$"{@this.DeclaringType.GetFullName(namespaces)}." : string.Empty;
 
 			return $"{isOverride}{returnType} {explicitInterfaceName}{methodName}{generics}({parameters}){constraints}";
 		}

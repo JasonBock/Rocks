@@ -343,7 +343,7 @@ namespace Rocks.Extensions
 
 				foreach (var argument in @this.GetGenericArguments())
 				{
-					genericArguments.Add($"{argument.GetSafeName()}{argument.GetGenericArguments(namespaces).Arguments}");
+					genericArguments.Add($"{argument.GetFullName(namespaces)}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))

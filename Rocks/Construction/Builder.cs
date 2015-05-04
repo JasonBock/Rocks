@@ -153,11 +153,11 @@ namespace Rocks.Construction
 			{
 				return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
 							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
 							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
 			}
@@ -178,11 +178,11 @@ namespace Rocks.Construction
 			{
 				return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
 							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
 							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
 			}
@@ -280,10 +280,10 @@ namespace Rocks.Construction
 							var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
 							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetFullName(this.Namespaces)}",
 									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueTemplate(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
+									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetFullName(this.Namespaces)}",
 									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
 						}
 						else
@@ -291,10 +291,10 @@ namespace Rocks.Construction
 							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 								CodeTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexersTemplate(
 									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast, getVisibility) :
+									$"{getMethod.ReturnType.GetFullName(this.Namespaces)}", getDelegateCast, getVisibility) :
 								CodeTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersTemplate(
 									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetSafeName()}{getMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}", getDelegateCast, getVisibility));
+									$"{getMethod.ReturnType.GetFullName(this.Namespaces)}", getDelegateCast, getVisibility));
 						}
 					}
 
@@ -322,7 +322,7 @@ namespace Rocks.Construction
 					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
 						string.Empty : CodeTemplates.Public;
 					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
+						$"{property.Value.DeclaringType.GetFullName(this.Namespaces)}." : string.Empty;
 
 					if (indexers.Length > 0)
 					{
@@ -333,14 +333,14 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetPropertyIndexerTemplate(
-							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
+							$"{@override}{baseProperty.PropertyType.GetFullName(this.Namespaces)}", parameters,
 							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetPropertyTemplate(
-							$"{@override}{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
+							$"{@override}{baseProperty.PropertyType.GetFullName(this.Namespaces)}", baseProperty.Name,
 							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 					}
 
@@ -377,7 +377,7 @@ namespace Rocks.Construction
 					}
 
 					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
+						$"{property.Value.DeclaringType.GetFullName(this.Namespaces)}." : string.Empty;
 
 					if (indexers.Length > 0)
 					{
@@ -388,14 +388,14 @@ namespace Rocks.Construction
 
 						// Indexer
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyIndexerTemplate(visibility,
-							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", parameters,
+							$"{baseProperty.PropertyType.GetFullName(this.Namespaces)}", parameters,
 							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
 					}
 					else
 					{
 						// Normal
 						generatedProperties.Add(CodeTemplates.GetNonPublicPropertyTemplate(visibility,
-							$"{baseProperty.PropertyType.GetSafeName()}{baseProperty.PropertyType.GetGenericArguments(this.Namespaces).Arguments}", baseProperty.Name,
+							$"{baseProperty.PropertyType.GetFullName(this.Namespaces)}", baseProperty.Name,
 							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
 					}
 
@@ -432,7 +432,7 @@ namespace Rocks.Construction
 				string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};")),
-				this.TypeName, $"{this.BaseType.GetSafeName()}{baseTypeGenericArguments.Arguments}",
+				this.TypeName, this.BaseType.GetFullName(),
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties),
 				string.Join(Environment.NewLine, events),
