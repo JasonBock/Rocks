@@ -5,7 +5,8 @@ namespace Rocks.Extensions
 	internal sealed class PropertyMockableResult
 		: MockableResult<PropertyInfo>
 	{
-		internal PropertyMockableResult(PropertyInfo value, bool requiresExplicitInterfaceImplementation, PropertyAccessors accessors)
+		internal PropertyMockableResult(PropertyInfo value, RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, 
+			PropertyAccessors accessors)
 			: base(value, requiresExplicitInterfaceImplementation)
 		{
 			this.Accessors = accessors;

@@ -190,14 +190,14 @@ $@"{visibility} set
 		public static string GetExpectationTemplate(string parameterName, string parameterTypeName) => 
 			$"(methodHandler.Expectations[\"{parameterName}\"] as ArgumentExpectation<{parameterTypeName}>).IsValid({parameterName}, \"{parameterName}\")";
 
-		public static string GetNonPublicActionImplementationTemplate(string visibility, string methodName, string outInitializers) =>
-$@"{visibility} override {methodName}
+		public static string GetNonPublicActionImplementationTemplate(string visibility, string methodName, string outInitializers, string requiresNew) =>
+$@"{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
 }}";
 
-		public static string GetNonPublicFunctionImplementationTemplate(string visibility, string methodName, string outInitializers, string returnTypeName) =>
-$@"{visibility} override {methodName}
+		public static string GetNonPublicFunctionImplementationTemplate(string visibility, string methodName, string outInitializers, string returnTypeName, string requiresNew) =>
+$@"{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
 	
@@ -320,7 +320,9 @@ namespace {baseTypeNamespace}
 
 		{implementedProperties}
 
+#pragma warning disable CS0067
 		{implementedEvents}
+#pragma warning restore CS0067
 
 		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
 		{{
@@ -348,8 +350,8 @@ namespace {baseTypeNamespace}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
-$@"{visibility} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew) =>
+$@"{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -378,8 +380,8 @@ $@"{visibility} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, 
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility) =>
-$@"{visibility} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew) =>
+$@"{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -401,8 +403,8 @@ $@"{visibility} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
-$@"{visibility} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew) =>
+$@"{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -431,8 +433,8 @@ $@"{visibility} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName,
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility) =>
-$@"{visibility} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew) =>
+$@"{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;

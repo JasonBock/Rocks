@@ -58,7 +58,7 @@ namespace Rocks.Construction
 			
 			return new MethodInformation
 			{
-				ContainsRefAndOrOutParametersOrPointerTypes = containsDelegateConditions,
+				ContainsDelegateConditions = containsDelegateConditions,
 				DelegateCast = delegateCast,
 				Description = description,
 				DescriptionWithOverride = descriptionWithOverride

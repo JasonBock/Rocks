@@ -141,15 +141,16 @@ namespace Rocks.Extensions
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
 		{
-			return @this.GetMethodDescription(namespaces, false, false);
+			return @this.GetMethodDescription(namespaces, false, RequiresExplicitInterfaceImplementation.No);
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
 		{
-			return @this.GetMethodDescription(namespaces, includeOverride, false);
+			return @this.GetMethodDescription(namespaces, includeOverride, RequiresExplicitInterfaceImplementation.No);
 		}
 
-		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride, bool requiresExplicitInterfaceImplementation)
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride,
+			RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation)
 		{
 			if (@this.IsGenericMethod)
 			{
@@ -174,7 +175,7 @@ namespace Rocks.Extensions
 			}
 
 			var parameters = @this.GetParameters(namespaces);
-			var explicitInterfaceName = requiresExplicitInterfaceImplementation ?
+			var explicitInterfaceName = requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{@this.DeclaringType.GetSafeName()}{@this.DeclaringType.GetGenericArguments(namespaces).Arguments}." : string.Empty;
 
 			return $"{isOverride}{returnType} {explicitInterfaceName}{methodName}{generics}({parameters}){constraints}";

@@ -54,10 +54,10 @@ namespace Rocks.Extensions
 						(_.GetCustomAttribute<ObsoleteAttribute>() == null || !_.GetCustomAttribute<ObsoleteAttribute>().IsError) &&
 						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator) &&
 						!_.GetParameters().Where(p => !p.ParameterType.CanBeSeenByMockAssembly(generator)).Any())
-					.Select(_ => new MockableResult<ConstructorInfo>(_, false)).ToList());
+					.Select(_ => new MockableResult<ConstructorInfo>(_, RequiresExplicitInterfaceImplementation.No)).ToList());
 		}
 
-		internal static ReadOnlyCollection<MockableResult<MethodInfo>> GetMockableMethods(this Type @this, NameGenerator generator)
+		internal static ReadOnlyCollection<MethodMockableResult> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
 			var objectMethods = @this.IsInterface ? 
 				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
@@ -66,7 +66,7 @@ namespace Rocks.Extensions
 				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal &&
 					!objectMethods.Where(om => om.Match(_) == MethodMatch.Exact).Any() &&
 					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, _.IsFamilyOrAssembly, generator))
-				.Select(_ => new MockableResult<MethodInfo>(_, false)));
+				.Select(_ => new MockableResult<MethodInfo>(_, RequiresExplicitInterfaceImplementation.No)));
 
 			if (@this.IsInterface)
 			{
@@ -75,7 +75,7 @@ namespace Rocks.Extensions
 				foreach (var @interface in @this.GetInterfaces())
 				{
 					var interfaceMethods = @interface.GetMethods()
-						.Where(_ => !_.IsSpecialName);
+						.Where(_ => !_.IsSpecialName && !objectMethods.Where(om => om.Match(_) == MethodMatch.Exact).Any());
 
 					foreach (var interfaceMethod in interfaceMethods)
 					{
@@ -86,14 +86,22 @@ namespace Rocks.Extensions
 							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 							{
 								methods.Add(new MockableResult<MethodInfo>(
-									interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly)));
+									interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly) ? 
+										RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No));
 							}
 						}
 					}
 				}
 			}
 
-			return methods.ToList().AsReadOnly();
+			var baseStaticMethods = @this.IsInterface ?
+				typeof(object).GetMethods().Where(_ => _.IsStatic).ToList() :
+				@this.GetMethods().Where(_ => _.IsStatic).ToList();
+
+			return methods.Select(_ => new MethodMockableResult(
+				_.Value, _.RequiresExplicitInterfaceImplementation,
+				baseStaticMethods.Where(osm => osm.Match(_.Value) == MethodMatch.Exact).Any() ? 
+					RequiresIsNewImplementation.Yes : RequiresIsNewImplementation.No)).ToList().AsReadOnly();
 		}
 
 		internal static ReadOnlyCollection<PropertyMockableResult> GetMockableProperties(this Type @this, NameGenerator generator)
@@ -107,7 +115,7 @@ namespace Rocks.Extensions
 					property.SetMethod.DeclaringType.Assembly.CanBeSeenByMockAssembly(
 					property.SetMethod.IsPublic, property.SetMethod.IsPrivate, property.SetMethod.IsFamily, property.SetMethod.IsFamilyOrAssembly, generator)
 				where canGet || canSet
-				select new PropertyMockableResult(property, false,
+				select new PropertyMockableResult(property, RequiresExplicitInterfaceImplementation.No,
 					(canGet && canSet ? PropertyAccessors.GetAndSet : (canGet ? PropertyAccessors.Get : PropertyAccessors.Set))));
 
 			if (@this.IsInterface)
@@ -125,7 +133,9 @@ namespace Rocks.Extensions
 							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 							{
 								properties.Add(new PropertyMockableResult(interfaceProperty.Value,
-									matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly), interfaceProperty.Accessors));
+									matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly) ?
+										RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No, 
+									interfaceProperty.Accessors));
 							}
 						}
 					}

@@ -78,30 +78,31 @@ namespace Rocks.Construction
 				var methodInformation = this.GetMethodInformation(method);
 				var baseMethod = method.Value;
 				var argumentNameList = baseMethod.GetArgumentNameList();
-				var outInitializers = !methodInformation.ContainsRefAndOrOutParametersOrPointerTypes ? string.Empty : baseMethod.GetOutInitializers();
+				var outInitializers = !methodInformation.ContainsDelegateConditions ? string.Empty : baseMethod.GetOutInitializers();
 
 				if (baseMethod.IsPublic)
 				{
-					var visibility = method.RequiresExplicitInterfaceImplementation ? string.Empty : CodeTemplates.Public;
+					var visibility = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+						string.Empty : CodeTemplates.Public;
 
 					// Either the base method contains no refs/outs, or the user specified a delegate
 					// to use to handle that method (remember, types with methods with refs/outs are gen'd
 					// each time, and that's the only reason the handlers are passed in).
-					if (!methodInformation.ContainsRefAndOrOutParametersOrPointerTypes || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
+					if (!methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 					{
-						if (!methodInformation.ContainsRefAndOrOutParametersOrPointerTypes && baseMethod.GetParameters().Length > 0)
+						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
 						{
 							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility));
+								visibility, method.RequiresNewImplementation));
 						}
 						else
 						{
 							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility));
+								visibility, method.RequiresNewImplementation));
 
-							if (methodInformation.ContainsRefAndOrOutParametersOrPointerTypes)
+							if (methodInformation.ContainsDelegateConditions)
 							{
 								this.HandleRefOutMethod(baseMethod, methodInformation);
 							}
@@ -120,9 +121,10 @@ namespace Rocks.Construction
 
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						CodeTemplates.GetNonPublicFunctionImplementationTemplate(visibility, methodInformation.Description,
-							outInitializers, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}") :
+							outInitializers, $"{baseMethod.ReturnType.GetFullName()}",
+							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
 						CodeTemplates.GetNonPublicActionImplementationTemplate(visibility, methodInformation.Description,
-							outInitializers));
+							outInitializers, method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty));
 
 					this.RequiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
@@ -133,7 +135,7 @@ namespace Rocks.Construction
 
 		protected class MethodInformation
 		{
-			public bool ContainsRefAndOrOutParametersOrPointerTypes { get; set; }
+			public bool ContainsDelegateConditions { get; set; }
 			public string DelegateCast { get; set; }
 			public string Description { get; set; }
 			public string DescriptionWithOverride { get; set; }
@@ -142,7 +144,7 @@ namespace Rocks.Construction
 		protected abstract MethodInformation GetMethodInformation(MockableResult<MethodInfo> baseMethod);
 
 		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
-			string visibility)
+			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
 		{
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
@@ -153,11 +155,11 @@ namespace Rocks.Construction
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility) :
+							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility);
+							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
 			}
 			else
 			{
@@ -170,17 +172,19 @@ namespace Rocks.Construction
 		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
 
 		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
-			string visibility)
+			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
 				return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility) :
+							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
+							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetSafeName()}{baseMethod.ReturnType.GetGenericArguments(this.Namespaces).Arguments}",
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility);
+							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
+							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
 			}
 			else
 			{
@@ -199,7 +203,8 @@ namespace Rocks.Construction
 				var eventHandlerType = @event.EventHandlerType;
 				this.Namespaces.Add(eventHandlerType.Namespace);
 				var eventMethod = @event.AddMethod;
-				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(eventMethod, false));
+				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(
+					eventMethod, RequiresExplicitInterfaceImplementation.No));
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
 				if (eventMethod.IsPublic)
@@ -254,7 +259,8 @@ namespace Rocks.Construction
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
 				var propertyMethod = baseProperty.GetDefaultMethod();
-				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(propertyMethod, false));
+				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(
+					propertyMethod, RequiresExplicitInterfaceImplementation.No));
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
 				if (propertyMethod.IsPublic)
@@ -313,8 +319,9 @@ namespace Rocks.Construction
 						}
 					}
 
-					var visibility = property.RequiresExplicitInterfaceImplementation ? string.Empty : CodeTemplates.Public;
-					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation ?
+					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+						string.Empty : CodeTemplates.Public;
+					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
 
 					if (indexers.Length > 0)
@@ -342,8 +349,8 @@ namespace Rocks.Construction
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
 				{
 					var propertyImplementations = new List<string>();
-					var visibility = property.RequiresExplicitInterfaceImplementation ? string.Empty : 
-						CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
+					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+						string.Empty : CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
 
 					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
 					{
@@ -369,7 +376,7 @@ namespace Rocks.Construction
 						propertyImplementations.Add(CodeTemplates.GetNonPublicPropertySetTemplate(setVisibility));
 					}
 
-					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation ?
+					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						$"{property.Value.DeclaringType.GetSafeName()}{property.Value.DeclaringType.GetGenericArguments(this.Namespaces).Arguments}." : string.Empty;
 
 					if (indexers.Length > 0)
@@ -411,13 +418,13 @@ namespace Rocks.Construction
 			var properties = this.GetGeneratedProperties();
 			var events = this.GetGeneratedEvents();
 
-			this.Namespaces.Add(this.BaseType.Namespace);
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
 			this.Namespaces.Add(typeof(IMock).Namespace);
 			this.Namespaces.Add(typeof(HandlerInformation).Namespace);
 			this.Namespaces.Add(typeof(string).Namespace);
 			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
 			this.Namespaces.Add(typeof(BindingFlags).Namespace);
+			this.Namespaces.Remove(this.BaseType.Namespace);
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
 

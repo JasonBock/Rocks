@@ -93,10 +93,13 @@
     <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
+    <Compile Include="Extensions\MethodMockableResult.cs" />
     <Compile Include="Extensions\MethodMatch.cs" />
     <Compile Include="Extensions\PropertyMockableResult.cs" />
     <Compile Include="Extensions\MockableResultOfT.cs" />
     <Compile Include="Extensions\ParameterInfoExtensions.cs" />
+    <Compile Include="Extensions\RequiresExplicitInterfaceImplementation.cs" />
+    <Compile Include="Extensions\RequiresIsNewImplementation.cs" />
     <Compile Include="Extensions\TypeDissector.cs" />
     <Compile Include="InMemoryRock.cs" />
     <Compile Include="IRock - Actions.cs" />
