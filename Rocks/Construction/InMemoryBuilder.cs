@@ -23,46 +23,25 @@ namespace Rocks.Construction
 			this.TypeName = $"Rock{name}";
 		}
 
-		protected override MethodInformation GetMethodInformation(MockableResult<MethodInfo> method)
+		protected override string GetDelegateCast(MethodInfo baseMethod)
 		{
-			var baseMethod = method.Value;
-			var description = baseMethod.GetMethodDescription(this.Namespaces);
-			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
-			var containsDelegateConditions = baseMethod.ContainsDelegateConditions();
-
 			var key = baseMethod.MetadataToken;
-			string delegateCast = null;
 
-			if(!containsDelegateConditions)
+			if (this.Handlers.ContainsKey(key))
 			{
-				delegateCast = baseMethod.GetDelegateCast();
+				var delegateType = this.Handlers[key][0].Method.GetType();
+
+				if(baseMethod.IsGenericMethodDefinition)
+				{
+					delegateType = delegateType.GetGenericTypeDefinition();
+				}
+
+				return $"{delegateType.GetFullName(this.Namespaces)}";
          }
 			else
 			{
-				if(this.Handlers.ContainsKey(key))
-				{
-					var delegateType = this.Handlers[key][0].Method.GetType();
-
-					if(baseMethod.IsGenericMethodDefinition)
-					{
-						delegateType = delegateType.GetGenericTypeDefinition();
-					}
-
-					delegateCast = $"{delegateType.GetFullName(this.Namespaces)}";
-            }
-				else
-				{
-					delegateCast = string.Empty;
-				}
+				return string.Empty;
 			}
-			
-			return new MethodInformation
-			{
-				ContainsDelegateConditions = containsDelegateConditions,
-				DelegateCast = delegateCast,
-				Description = description,
-				DescriptionWithOverride = descriptionWithOverride
-			};
 		}
 
 		protected override string GetDirectoryForFile()

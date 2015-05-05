@@ -133,15 +133,33 @@ namespace Rocks.Construction
 			return generatedMethods;
 		}
 
-		protected class MethodInformation
+		private MethodInformation GetMethodInformation(MockableResult<MethodInfo> method)
 		{
-			public bool ContainsDelegateConditions { get; set; }
-			public string DelegateCast { get; set; }
-			public string Description { get; set; }
-			public string DescriptionWithOverride { get; set; }
+			var baseMethod = method.Value;
+			var description = baseMethod.GetMethodDescription(this.Namespaces);
+			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
+			var containsDelegateConditions = baseMethod.ContainsDelegateConditions();
+			string delegateCast = null;
+
+			if (!containsDelegateConditions)
+			{
+				delegateCast = baseMethod.GetDelegateCast();
+			}
+			else
+			{
+				delegateCast = this.GetDelegateCast(baseMethod);
+			}
+
+			return new MethodInformation
+			{
+				ContainsDelegateConditions = containsDelegateConditions,
+				DelegateCast = delegateCast,
+				Description = description,
+				DescriptionWithOverride = descriptionWithOverride
+			};
 		}
 
-		protected abstract MethodInformation GetMethodInformation(MockableResult<MethodInfo> baseMethod);
+		protected abstract string GetDelegateCast(MethodInfo baseMethod);
 
 		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
@@ -494,5 +512,13 @@ $@"#pragma warning disable CS0618
 		internal string TypeName { get; set; }
 		private bool RequiresObsoleteSuppression { get; set; }
 		protected NameGenerator NameGenerator { get; private set; }
+
+		protected class MethodInformation
+		{
+			public bool ContainsDelegateConditions { get; set; }
+			public string DelegateCast { get; set; }
+			public string Description { get; set; }
+			public string DescriptionWithOverride { get; set; }
+		}
 	}
 }

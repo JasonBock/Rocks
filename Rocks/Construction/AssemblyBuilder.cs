@@ -31,30 +31,9 @@ namespace Rocks.Construction
 			return Path.Combine(Directory.GetCurrentDirectory(), this.BaseType.Namespace.Replace(".", "\\"));
 		}
 
-		protected override MethodInformation GetMethodInformation(MockableResult<MethodInfo> method)
+		protected override string GetDelegateCast(MethodInfo baseMethod)
 		{
-			var baseMethod = method.Value;
-			var description = baseMethod.GetMethodDescription(this.Namespaces);
-			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
-			var containsDelegateConditions = baseMethod.ContainsDelegateConditions();
-			string delegateCast = null;
-
-			if(!containsDelegateConditions)
-			{
-				delegateCast = baseMethod.GetDelegateCast();
-         }
-			else
-			{
-				delegateCast = $"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
-			}
-
-			return new MethodInformation
-			{
-				ContainsDelegateConditions = containsDelegateConditions,
-				DelegateCast = delegateCast,
-				Description = description,
-				DescriptionWithOverride = descriptionWithOverride
-			};
+			return $"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 		}
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)
