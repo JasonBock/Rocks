@@ -20,10 +20,13 @@ namespace Rocks.Construction
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType),
-				  new EventsBuilder(baseType, namespaces, new AssemblyNameGenerator(baseType), new AssemblyMethodInformationBuilder(namespaces, baseType)),
-				  new AssemblyMethodInformationBuilder(namespaces, baseType))
+				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces))
+		{ }
+
+		protected override Tuple<ReadOnlyCollection<string>, bool> GetGeneratedEvents()
 		{
-			this.TypeName = this.InformationBuilder.TypeName;
+			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
+				this.NameGenerator, this.InformationBuilder);
 		}
 
 		protected override string GetDirectoryForFile()

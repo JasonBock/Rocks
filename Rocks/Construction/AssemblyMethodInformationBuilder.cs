@@ -9,14 +9,10 @@ namespace Rocks.Construction
 	internal sealed class AssemblyMethodInformationBuilder
 		: MethodInformationBuilder
 	{
-		internal AssemblyMethodInformationBuilder(SortedSet<string> namespaces,
-			Type baseType)
+		internal AssemblyMethodInformationBuilder(SortedSet<string> namespaces, Type baseType)
 			: base(namespaces)
 		{
 			this.BaseType = baseType;
-			var name = this.BaseType.IsGenericTypeDefinition ?
-				$"{baseType.GetFullName(namespaces)}" : baseType.GetSafeName();
-			this.TypeName = $"Rock{name}";
 		}
 
 		protected override string GetDelegateCast(MethodInfo baseMethod)
@@ -32,9 +28,9 @@ namespace Rocks.Construction
 			return methodCount > 1 ? baseMethod.MethodHandle.Value.ToString() : string.Empty;
 		}
 
-		private string GetTypeNameWithGenericsAndNoTextFormatting() => $"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
+		private string GetTypeNameWithGenericsAndNoTextFormatting() => 
+			$"{new AssemblyTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
 
-		internal string TypeName { get; private set; }
 		internal Type BaseType { get; private set; }
 	}
 }

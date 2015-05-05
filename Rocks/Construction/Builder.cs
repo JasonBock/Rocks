@@ -23,7 +23,7 @@ namespace Rocks.Construction
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options, NameGenerator generator,
-			EventsBuilder events, TInformationBuilder informationBuilder)
+			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator)
 		{
 			this.BaseType = baseType;
 			this.IsUnsafe = this.BaseType.IsUnsafeToMock();
@@ -31,9 +31,11 @@ namespace Rocks.Construction
 			this.Namespaces = namespaces;
 			this.Options = options;
 			this.NameGenerator = generator;
-			this.Events = events;
 			this.InformationBuilder = informationBuilder;
+			this.TypeName = typeNameGenerator.Generate(baseType);
       }
+
+		protected abstract Tuple<ReadOnlyCollection<string>, bool> GetGeneratedEvents();
 
 		internal virtual void Build()
 		{
@@ -352,12 +354,13 @@ namespace Rocks.Construction
 
 		private string MakeCode()
 		{
-			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
-				this.Events.RequiresObsoleteSuppression;
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties();
-			var events = this.Events.Events;
+			var events = this.GetGeneratedEvents();
+
+			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
+				events.Item2;
 
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
 			this.Namespaces.Add(typeof(IMock).Namespace);
@@ -376,7 +379,7 @@ namespace Rocks.Construction
 				this.TypeName, this.BaseType.GetFullName(),
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties),
-				string.Join(Environment.NewLine, events),
+				string.Join(Environment.NewLine, events.Item1),
 				string.Join(Environment.NewLine, constructors),
 				this.BaseType.Namespace,
 				this.Options.Serialization == SerializationOptions.Supported ?
@@ -435,7 +438,6 @@ $@"#pragma warning disable CS0618
 		internal string TypeName { get; set; }
 		private bool RequiresObsoleteSuppression { get; set; }
 		protected NameGenerator NameGenerator { get; private set; }
-		internal EventsBuilder Events { get; private set; }
 		internal TInformationBuilder InformationBuilder { get; private set; }
 	}
 }

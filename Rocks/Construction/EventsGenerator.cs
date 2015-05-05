@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System; 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.Reflection.CustomAttributeExtensions;
@@ -8,18 +8,13 @@ using Rocks.Extensions;
 
 namespace Rocks.Construction
 {
-	internal sealed class EventsBuilder
+	internal sealed class EventsGenerator
 	{
-		internal EventsBuilder(Type baseType, SortedSet<string> namespaces,
+		internal Tuple<ReadOnlyCollection<string>, bool> Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder builder)
 		{
-			this.Events = this.GetGeneratedEvents(baseType, namespaces, generator, builder);
-		}
-
-		private ReadOnlyCollection<string> GetGeneratedEvents(Type baseType, SortedSet<string> namespaces,
-			NameGenerator generator, MethodInformationBuilder builder)
-		{
-			var generatedEvents = new List<string>();
+			var requiresObsoleteSuppression = false;
+         var generatedEvents = new List<string>();
 
 			foreach (var @event in baseType.GetMockableEvents(generator))
 			{
@@ -47,7 +42,7 @@ namespace Rocks.Construction
 							eventHandlerType.GetSafeName(), @event.Name));
 					}
 
-					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
+					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 				else if (!eventMethod.IsPrivate && eventMethod.IsAbstract)
 				{
@@ -66,14 +61,11 @@ namespace Rocks.Construction
 							eventHandlerType.GetSafeName(), @event.Name));
 					}
 
-					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
+					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
 				}
 			}
 
-			return generatedEvents.AsReadOnly();
-		}
-
-		internal ReadOnlyCollection<string> Events { get; }
-		internal bool RequiresObsoleteSuppression { get; private set; }
+			return new Tuple<ReadOnlyCollection<string>, bool>(generatedEvents.AsReadOnly(), requiresObsoleteSuppression);
+      }
    }
 }

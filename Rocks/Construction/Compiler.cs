@@ -39,7 +39,7 @@ namespace Rocks.Construction
 				var results = compilation.Emit(assemblyStream,
 					pdbStream: pdbStream);
 
-				if (!results.Success)
+				if (!results.Success || results.Diagnostics.Length > 0)
 				{
 					throw new CompilationException(results.Diagnostics);
 				}
