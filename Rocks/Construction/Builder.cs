@@ -17,11 +17,13 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction
 {
-	internal abstract class Builder
+	internal abstract class Builder<TInformationBuilder>
+		where TInformationBuilder : MethodInformationBuilder
 	{
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options, NameGenerator generator)
+			SortedSet<string> namespaces, Options options, NameGenerator generator,
+			EventsBuilder events, TInformationBuilder informationBuilder)
 		{
 			this.BaseType = baseType;
 			this.IsUnsafe = this.BaseType.IsUnsafeToMock();
@@ -29,7 +31,9 @@ namespace Rocks.Construction
 			this.Namespaces = namespaces;
 			this.Options = options;
 			this.NameGenerator = generator;
-		}
+			this.Events = events;
+			this.InformationBuilder = informationBuilder;
+      }
 
 		internal virtual void Build()
 		{
@@ -74,8 +78,8 @@ namespace Rocks.Construction
 			var generatedMethods = new List<string>();
 
 			foreach (var method in this.BaseType.GetMockableMethods(this.NameGenerator))
-			{
-				var methodInformation = this.GetMethodInformation(method);
+			{				
+				var methodInformation = this.InformationBuilder.Build(method);
 				var baseMethod = method.Value;
 				var argumentNameList = baseMethod.GetArgumentNameList();
 				var outInitializers = !methodInformation.ContainsDelegateConditions ? string.Empty : baseMethod.GetOutInitializers();
@@ -133,34 +137,6 @@ namespace Rocks.Construction
 			return generatedMethods;
 		}
 
-		private MethodInformation GetMethodInformation(MockableResult<MethodInfo> method)
-		{
-			var baseMethod = method.Value;
-			var description = baseMethod.GetMethodDescription(this.Namespaces);
-			var descriptionWithOverride = baseMethod.GetMethodDescription(this.Namespaces, true, method.RequiresExplicitInterfaceImplementation);
-			var containsDelegateConditions = baseMethod.ContainsDelegateConditions();
-			string delegateCast = null;
-
-			if (!containsDelegateConditions)
-			{
-				delegateCast = baseMethod.GetDelegateCast();
-			}
-			else
-			{
-				delegateCast = this.GetDelegateCast(baseMethod);
-			}
-
-			return new MethodInformation
-			{
-				ContainsDelegateConditions = containsDelegateConditions,
-				DelegateCast = delegateCast,
-				Description = description,
-				DescriptionWithOverride = descriptionWithOverride
-			};
-		}
-
-		protected abstract string GetDelegateCast(MethodInfo baseMethod);
-
 		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
 		{
@@ -212,60 +188,6 @@ namespace Rocks.Construction
 			}
 		}
 
-		private List<string> GetGeneratedEvents()
-		{
-			var generatedEvents = new List<string>();
-
-			foreach (var @event in this.BaseType.GetMockableEvents(this.NameGenerator))
-			{
-				var eventHandlerType = @event.EventHandlerType;
-				this.Namespaces.Add(eventHandlerType.Namespace);
-				var eventMethod = @event.AddMethod;
-				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(
-					eventMethod, RequiresExplicitInterfaceImplementation.No));
-				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
-
-				if (eventMethod.IsPublic)
-				{
-					if (eventHandlerType.IsGenericType)
-					{
-						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
-							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
-						this.Namespaces.Add(eventGenericType.Namespace);
-					}
-					else
-					{
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
-							eventHandlerType.GetSafeName(), @event.Name));
-					}
-
-					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-				else if (!eventMethod.IsPrivate && eventMethod.IsAbstract)
-				{
-					var visibility = CodeTemplates.GetVisibility(eventMethod.IsFamily, eventMethod.IsFamilyOrAssembly);
-
-					if (eventHandlerType.IsGenericType)
-					{
-						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(CodeTemplates.GetNonPublicEventTemplate(visibility,
-							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
-						this.Namespaces.Add(eventGenericType.Namespace);
-					}
-					else
-					{
-						generatedEvents.Add(CodeTemplates.GetNonPublicEventTemplate(visibility,
-							eventHandlerType.GetSafeName(), @event.Name));
-					}
-
-					this.RequiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-			}
-
-			return generatedEvents;
-		}
-
 		private List<string> GetGeneratedProperties()
 		{
 			var generatedProperties = new List<string>();
@@ -277,7 +199,7 @@ namespace Rocks.Construction
 				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
 				var indexers = baseProperty.GetIndexParameters();
 				var propertyMethod = baseProperty.GetDefaultMethod();
-				var methodInformation = this.GetMethodInformation(new MockableResult<MethodInfo>(
+				var methodInformation = this.InformationBuilder.Build(new MockableResult<MethodInfo>(
 					propertyMethod, RequiresExplicitInterfaceImplementation.No));
 				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
 
@@ -430,11 +352,12 @@ namespace Rocks.Construction
 
 		private string MakeCode()
 		{
-			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null;
+			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
+				this.Events.RequiresObsoleteSuppression;
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties();
-			var events = this.GetGeneratedEvents();
+			var events = this.Events.Events;
 
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
 			this.Namespaces.Add(typeof(IMock).Namespace);
@@ -512,13 +435,7 @@ $@"#pragma warning disable CS0618
 		internal string TypeName { get; set; }
 		private bool RequiresObsoleteSuppression { get; set; }
 		protected NameGenerator NameGenerator { get; private set; }
-
-		protected class MethodInformation
-		{
-			public bool ContainsDelegateConditions { get; set; }
-			public string DelegateCast { get; set; }
-			public string Description { get; set; }
-			public string DescriptionWithOverride { get; set; }
-		}
+		internal EventsBuilder Events { get; private set; }
+		internal TInformationBuilder InformationBuilder { get; private set; }
 	}
 }

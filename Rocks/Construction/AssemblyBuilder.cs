@@ -12,28 +12,23 @@ using static Rocks.Extensions.TypeExtensions;
 namespace Rocks.Construction
 {
 	internal sealed class AssemblyBuilder
-		: Builder
+		: Builder<AssemblyMethodInformationBuilder>
 	{
 		private readonly List<string> generatedDelegates = new List<string>();
 
 		internal AssemblyBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
-			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType))
+			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType),
+				  new EventsBuilder(baseType, namespaces, new AssemblyNameGenerator(baseType), new AssemblyMethodInformationBuilder(namespaces, baseType)),
+				  new AssemblyMethodInformationBuilder(namespaces, baseType))
 		{
-			var name = this.BaseType.IsGenericTypeDefinition ?
-				$"{baseType.GetFullName(this.Namespaces)}" : baseType.GetSafeName();
-			this.TypeName = $"Rock{name}";
+			this.TypeName = this.InformationBuilder.TypeName;
 		}
 
 		protected override string GetDirectoryForFile()
 		{
 			return Path.Combine(Directory.GetCurrentDirectory(), this.BaseType.Namespace.Replace(".", "\\"));
-		}
-
-		protected override string GetDelegateCast(MethodInfo baseMethod)
-		{
-			return $"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 		}
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)

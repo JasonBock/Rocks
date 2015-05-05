@@ -11,37 +11,18 @@ using static Rocks.Extensions.TypeExtensions;
 namespace Rocks.Construction
 {
 	internal sealed class InMemoryBuilder
-		: Builder
+		: Builder<InMemoryMethodInformationBuilder>
 	{
 		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
-			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator())
+			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator(), 
+				  new EventsBuilder(baseType, namespaces, new InMemoryNameGenerator(), new InMemoryMethodInformationBuilder(namespaces, handlers)),
+				  new InMemoryMethodInformationBuilder(namespaces, handlers))
 		{
 			var name = this.BaseType.IsGenericTypeDefinition ?
 				$"{Guid.NewGuid().ToString("N")}{this.BaseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
 			this.TypeName = $"Rock{name}";
-		}
-
-		protected override string GetDelegateCast(MethodInfo baseMethod)
-		{
-			var key = baseMethod.MetadataToken;
-
-			if (this.Handlers.ContainsKey(key))
-			{
-				var delegateType = this.Handlers[key][0].Method.GetType();
-
-				if(baseMethod.IsGenericMethodDefinition)
-				{
-					delegateType = delegateType.GetGenericTypeDefinition();
-				}
-
-				return $"{delegateType.GetFullName(this.Namespaces)}";
-         }
-			else
-			{
-				return string.Empty;
-			}
 		}
 
 		protected override string GetDirectoryForFile()

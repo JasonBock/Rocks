@@ -74,8 +74,13 @@
     <Compile Include="CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />
+    <Compile Include="Construction\AssemblyMethodInformationBuilder.cs" />
     <Compile Include="Construction\AssemblyNameGenerator.cs" />
+    <Compile Include="Construction\EventsBuilder.cs" />
+    <Compile Include="Construction\InMemoryMethodInformationBuilder.cs" />
     <Compile Include="Construction\InMemoryNameGenerator.cs" />
+    <Compile Include="Construction\MethodInformation.cs" />
+    <Compile Include="Construction\MethodInformationBuilder.cs" />
     <Compile Include="Construction\NameGenerator.cs" />
     <Compile Include="Construction\Builder.cs" />
     <Compile Include="Construction\Compiler.cs" />
