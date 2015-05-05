@@ -23,7 +23,7 @@ namespace Rocks.Construction
 				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces))
 		{ }
 
-		protected override Tuple<ReadOnlyCollection<string>, bool> GetGeneratedEvents()
+		protected override GetGeneratedEventsResults GetGeneratedEvents()
 		{
 			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
 				this.NameGenerator, this.InformationBuilder);

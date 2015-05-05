@@ -15,7 +15,7 @@ namespace Rocks.Construction
 				new InMemoryMethodInformationBuilder(namespaces, handlers), new InMemoryTypeNameGenerator(namespaces))
 		{ }
 
-		protected override Tuple<ReadOnlyCollection<string>, bool> GetGeneratedEvents()
+		protected override GetGeneratedEventsResults GetGeneratedEvents()
 		{
 			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
 				this.NameGenerator, this.InformationBuilder);

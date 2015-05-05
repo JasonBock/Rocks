@@ -76,6 +76,7 @@
     <Compile Include="Construction\AssemblyCompiler.cs" />
     <Compile Include="Construction\AssemblyMethodInformationBuilder.cs" />
     <Compile Include="Construction\AssemblyNameGenerator.cs" />
+    <Compile Include="Construction\GetGeneratedEventsResults.cs" />
     <Compile Include="Construction\InMemoryTypeNameGenerator.cs" />
     <Compile Include="Construction\AssemblyTypeNameGenerator.cs" />
     <Compile Include="Construction\EventsGenerator.cs" />

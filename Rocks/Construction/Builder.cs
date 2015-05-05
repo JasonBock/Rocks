@@ -35,7 +35,7 @@ namespace Rocks.Construction
 			this.TypeName = typeNameGenerator.Generate(baseType);
       }
 
-		protected abstract Tuple<ReadOnlyCollection<string>, bool> GetGeneratedEvents();
+		protected abstract GetGeneratedEventsResults GetGeneratedEvents();
 
 		internal virtual void Build()
 		{
@@ -360,7 +360,7 @@ namespace Rocks.Construction
 			var events = this.GetGeneratedEvents();
 
 			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
-				events.Item2;
+				events.RequiresObsoleteSuppression;
 
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
 			this.Namespaces.Add(typeof(IMock).Namespace);
@@ -379,7 +379,7 @@ namespace Rocks.Construction
 				this.TypeName, this.BaseType.GetFullName(),
 				string.Join(Environment.NewLine, methods),
 				string.Join(Environment.NewLine, properties),
-				string.Join(Environment.NewLine, events.Item1),
+				string.Join(Environment.NewLine, events.Events),
 				string.Join(Environment.NewLine, constructors),
 				this.BaseType.Namespace,
 				this.Options.Serialization == SerializationOptions.Supported ?

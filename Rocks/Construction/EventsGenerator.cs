@@ -10,7 +10,7 @@ namespace Rocks.Construction
 {
 	internal sealed class EventsGenerator
 	{
-		internal Tuple<ReadOnlyCollection<string>, bool> Generate(Type baseType, SortedSet<string> namespaces,
+		internal GetGeneratedEventsResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder builder)
 		{
 			var requiresObsoleteSuppression = false;
@@ -65,7 +65,7 @@ namespace Rocks.Construction
 				}
 			}
 
-			return new Tuple<ReadOnlyCollection<string>, bool>(generatedEvents.AsReadOnly(), requiresObsoleteSuppression);
+			return new GetGeneratedEventsResults(generatedEvents.AsReadOnly(), requiresObsoleteSuppression);
       }
    }
 }
