@@ -99,6 +99,7 @@
     <Compile Include="Extensions\ExpressionOfTExtensions.cs" />
     <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensions.cs" />
     <Compile Include="Extensions\IMockExtensions.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Extensions\MethodBaseExtensions.cs" />
     <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
     <Compile Include="Extensions\MethodInfoExtensions.cs" />
