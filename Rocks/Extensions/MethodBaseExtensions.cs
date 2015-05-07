@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using static Rocks.Extensions.IListOfCustomAttributeDataExtensions;
 
 namespace Rocks.Extensions
 {
@@ -24,7 +24,7 @@ namespace Rocks.Extensions
 
 				foreach (var argument in @this.GetGenericArguments())
 				{
-					genericArguments.Add(argument.GetSafeName());
+					genericArguments.Add($"{argument.GetCustomAttributesData().GetAttributes(false, namespaces, null)}{argument.GetSafeName()}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))
@@ -70,10 +70,14 @@ namespace Rocks.Extensions
 		{
 			return string.Join(", ",
 				from parameter in @this.GetParameters()
-				let parameterType = parameter.ParameterType
-				let _ = parameterType.AddNamespaces(namespaces)
+				let attributes = parameter.GetAttributes(namespaces)
+				let type = parameter.ParameterType
+				let optionalValue = parameter.IsOptional && parameter.HasDefaultValue ? 
+					(parameter.RawDefaultValue == null ? " = null" : 
+						(typeof(string).IsAssignableFrom(type) ? $" = \"{parameter.RawDefaultValue}\"" : $" = {parameter.RawDefaultValue}")) : string.Empty
+				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
-				select $"{modifier}{parameterType.GetFullName(namespaces)} {parameter.Name}");
-		}
+				select $"{attributes}{modifier}{type.GetFullName(namespaces)} {parameter.Name}{optionalValue}");
+      }
 	}
 }

@@ -196,8 +196,8 @@ $@"{visibility} {requiresNew} override {methodName}
 	{outInitializers}	
 }}";
 
-		public static string GetNonPublicFunctionImplementationTemplate(string visibility, string methodName, string outInitializers, string returnTypeName, string requiresNew) =>
-$@"{visibility} {requiresNew} override {methodName}
+		public static string GetNonPublicFunctionImplementationTemplate(string visibility, string methodName, string outInitializers, string returnTypeName, string requiresNew, string returnTypeAttributes) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
 	
@@ -352,8 +352,8 @@ namespace {baseTypeNamespace}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew) =>
-$@"{visibility} {requiresNew} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -382,8 +382,8 @@ $@"{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, 
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew) =>
-$@"{visibility} {requiresNew} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -405,8 +405,8 @@ $@"{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueMethodTemplate(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew) =>
-$@"{visibility} {requiresNew} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -435,8 +435,8 @@ $@"{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(int methodHandle, string argumentNames, string returnTypeName,
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew) =>
-$@"{visibility} {requiresNew} {methodNameWithOverride}
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;

@@ -19,12 +19,12 @@ namespace Rocks.Tests
 		public void GetNonPublicFunctionImplementationTemplate()
 		{
 			Assert.AreEqual(
-@"a e override b
+@"fa e override b
 {
 	c	
 	
 	return default(d);
-}", CodeTemplates.GetNonPublicFunctionImplementationTemplate("a", "b", "c", "d", "e"));
+}", CodeTemplates.GetNonPublicFunctionImplementationTemplate("a", "b", "c", "d", "e", "f"));
 		}
 
 		[Test]
@@ -458,7 +458,7 @@ namespace h
 		public void GetFunctionWithReferenceTypeReturnValueMethodTemplate()
 		{
 			Assert.AreEqual(
-@"i j h
+@"ki j h
 {
 	f
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -484,14 +484,14 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i", "j"));
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
 		}
 
 		[Test]
 		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate()
 		{
 			Assert.AreEqual(
-@"g h f
+@"ig h f
 {
 	e
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -510,14 +510,14 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h"));
+}", CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i"));
 		}
 
 		[Test]
 		public void GetFunctionWithValueTypeReturnValueMethodTemplate()
 		{
 			Assert.AreEqual(
-@"i j h
+@"ki j h
 {
 	f
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -543,14 +543,14 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i", "j"));
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
 		}
 
 		[Test]
 		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate()
 		{
 			Assert.AreEqual(
-@"g h f
+@"ig h f
 {
 	e
 	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
@@ -569,7 +569,7 @@ namespace h
 	{
 		throw new NotImplementedException();
 	}
-}", CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h"));
+}", CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(1, "b", "c", "d", "e", "f", "g", "h", "i"));
 		}
 	}
 }

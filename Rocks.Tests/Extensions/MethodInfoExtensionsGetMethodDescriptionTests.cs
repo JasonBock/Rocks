@@ -136,6 +136,60 @@ namespace Rocks.Tests.Extensions
 			Assert.IsTrue(namespaces.Contains(typeof(IEnumerable<>).Namespace), nameof(namespaces.Contains));
 		}
 
+		[Test]
+		public void GetMethodDescriptionForMemberWithNoAttributes()
+		{
+			var target = typeof(HaveNoAttributes).GetMethod(nameof(HaveNoAttributes.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<T>(T a, Guid b)", description, nameof(description));
+		}
+
+		[Test]
+		public void GetMethodDescriptionForMemberWithAttribute()
+		{
+			var target = typeof(HaveAttribute).GetMethod(nameof(HaveAttribute.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<[GetAttributes(True)]T>([GetAttributes(True)]T a, [GetAttributes(True)]Guid b)", description, nameof(description));
+		}
+
+		[Test]
+		public void GetMethodDescriptionForMemberWithAttributeUsingEnumInConstructor()
+		{
+			var target = typeof(HaveAttributeWithEnumInConstructor).GetMethod(nameof(HaveAttributeWithEnumInConstructor.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<[GetAttributes((SomeValues)2)]T>([GetAttributes((SomeValues)2)]T a, [GetAttributes((SomeValues)2)]Guid b)", description, nameof(description));
+		}
+
+		[Test]
+		public void GetMethodDescriptionForMemberWithAttributeUsingNamedArguments()
+		{
+			var target = typeof(HaveAttributeUsingNamedArguments).GetMethod(nameof(HaveAttributeUsingNamedArguments.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<[GetAttributes(True, TargetString = \"TargetString\")]T>([GetAttributes(True, TargetString = \"TargetString\")]T a, [GetAttributes(True, TargetString = \"TargetString\")]Guid b)", description, nameof(description));
+		}
+
+		[Test]
+		public void GetMethodDescriptionForMemberWithAttributeUsingMultipleConstructorAndNamedArguments()
+		{
+			var target = typeof(HaveAttributeUsingMultipleConstructorAndNamedArguments).GetMethod(nameof(HaveAttributeUsingMultipleConstructorAndNamedArguments.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<[GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]T>([GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]T a, [GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]Guid b)", description, nameof(description));
+		}
+
+		[Test]
+		public void GetMethodDescriptionForMemberWithMultipleAttributes()
+		{
+			var target = typeof(HaveMultipleAttributes).GetMethod(nameof(HaveMultipleAttributes.Target));
+			var namespaces = new SortedSet<string>();
+			var description = target.GetMethodDescription(namespaces);
+			Assert.AreEqual("Guid Target<[Mutliple, GetAttributes(True)]T>([Mutliple, GetAttributes(True)]T a, [Mutliple, GetAttributes(True)]Guid b)", description, nameof(description));
+		}
+
 		public void TargetWithNoArguments() { }
 		public int TargetWithNoArgumentsAndReturnValue() { return 0; }
 		public void TargetWithArguments(int a, string c) { }
@@ -161,4 +215,57 @@ namespace Rocks.Tests.Extensions
 	{
 		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) { return null; }
    }
+
+
+	public enum SomeValues
+	{
+		HereIsOne,
+		AndAnother,
+		OneMore
+	}
+
+	public sealed class GetAttributesAttribute : Attribute
+	{
+		public GetAttributesAttribute(SomeValues TargetEnum) { }
+		public GetAttributesAttribute(bool targetBool) { }
+		public GetAttributesAttribute(bool targetBool, int targetInt) { }
+		public GetAttributesAttribute(string targetString) { }
+
+		public SomeValues TargetEnum { get; set; }
+		public bool TargetBool { get; }
+		public string TargetString { get; set; }
+		public int TargetInt { get; set; }
+	}
+
+	public sealed class MutlipleAttribute : Attribute { }
+
+	public class HaveNoAttributes
+	{
+		public Guid Target<T>(T a, Guid b) { return Guid.Empty; }
+	}
+
+	public class HaveMultipleAttributes
+	{
+		public Guid Target<[Mutliple, GetAttributes(true)]T>([Mutliple, GetAttributes(true)]T a, [Mutliple, GetAttributes(true)]Guid b) { return Guid.Empty; }
+	}
+
+	public class HaveAttribute
+	{
+		public Guid Target<[GetAttributes(true)]T>([GetAttributes(true)]T a, [GetAttributes(true)]Guid b) { return Guid.Empty; }
+	}
+
+	public class HaveAttributeWithEnumInConstructor
+	{
+		public Guid Target<[GetAttributes(SomeValues.OneMore)]T>([GetAttributes(SomeValues.OneMore)]T a, [GetAttributes(SomeValues.OneMore)]Guid b) { return Guid.Empty; }
+	}
+
+	public class HaveAttributeUsingNamedArguments
+	{
+		public Guid Target<[GetAttributes(true, TargetString = "TargetString")]T>([GetAttributes(true, TargetString = "TargetString")]T a, [GetAttributes(true, TargetString = "TargetString")]Guid b) { return Guid.Empty; }
+	}
+
+	public class HaveAttributeUsingMultipleConstructorAndNamedArguments
+	{
+		public Guid Target<[GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T>([GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T a, [GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]Guid b) { return Guid.Empty; }
+	}
 }

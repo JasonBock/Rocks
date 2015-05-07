@@ -69,14 +69,14 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithInOutAttributes()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("Char[] buffer, Int32 index, Int32 count", this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithInOut)).GetParameters(namespaces));
+			Assert.AreEqual("[In, Out]Char[] buffer, Int32 index, Int32 count", this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithInOut)).GetParameters(namespaces));
 		}
 
 		[Test]
 		public void GetParametersWithOutAttributeArray()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("String[] a", this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayAttribute)).GetParameters(namespaces));
+			Assert.AreEqual("[Out]String[] a", this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayAttribute)).GetParameters(namespaces));
 		}
 
 		[Test]
@@ -86,9 +86,17 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("UsedByBase<TKey, TValue>[] a", typeof(TargetUsingBase<,>).GetMethod("Target").GetParameters(namespaces));
 		}
 
+		[Test]
+		public void GetParametersWithOptionalArguments()
+		{
+			var namespaces = new SortedSet<string>();
+			Assert.AreEqual("Int32 a = 0, String c = \"c\", String d = null", this.GetType().GetMethod(nameof(this.TargetWithOptionalArguments)).GetParameters(namespaces));
+		}
+
 		public void TargetWithOutArrayAttribute([Out] string[] a) { }
 		public int TargetWithInOut([In, Out] char[] buffer, int index, int count) { return 0; }
 		public void TargetWithArguments(int a, string c) { }
+		public void TargetWithOptionalArguments(int a = 0, string c = "c", string d = null) { }
 		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }
 		public void TargetWithParamsArgument(params int[] a) { }
 		public unsafe void TargetWithUnsafeArguments(byte* a) { }

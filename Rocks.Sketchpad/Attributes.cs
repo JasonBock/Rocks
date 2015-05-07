@@ -15,6 +15,13 @@ public static class Attributes
 			!string.IsNullOrWhiteSpace(constructorArguments) ? constructorArguments : namedArguments;
 		var attribute = $"{name}({arguments})";
 		Console.Out.WriteLine(attribute);
+
+		var x = typeof(IMy).GetMethod("Target");
+
+		foreach(var y in x.GetParameters())
+		{
+			Console.Out.WriteLine(y.GetCustomAttributesData());
+		}
    }
 }
 
@@ -37,8 +44,11 @@ public sealed class TestAttribute : Attribute
 [AttributeUsage(AttributeTargets.Parameter)]
 public sealed class MyParameterAttribute : Attribute { }
 
-[AttributeUsage(AttributeTargets.ReturnValue, AllowMultiple = false, Inherited = true)]
+[AttributeUsage(AttributeTargets.ReturnValue)]
 public sealed class MyReturnValueAttribute : Attribute { }
+
+[AttributeUsage(AttributeTargets.ReturnValue)]
+public sealed class MyReturnValue2Attribute : Attribute { }
 
 [AttributeUsage(AttributeTargets.Method)]
 public sealed class MyMethodAttribute : Attribute { }
@@ -61,6 +71,8 @@ public interface IMy
 	string TargetProperty { get; set; }
 
 	[MyMethod]
+	[return: MyReturnValue]
+	[return: MyReturnValue2]
 	Guid Target<[MyGenericParameter] T>([MarshalAs(UnmanagedType.Bool), MyParameter, Out] int a);
 }
 
@@ -81,8 +93,8 @@ public class OhMy : IMy
 
 	public event EventHandler TargetEvent;
 
-	public Guid Target<[MyGenericParameter]
-	T>([MarshalAs(UnmanagedType.Bool), MyParameter, Out]int a)
+	[return: MyReturnValue]
+	public Guid Target<[MyGenericParameter]T>([MarshalAs(UnmanagedType.Bool), MyParameter, Out]int a)
 	{
 		throw new NotImplementedException();
 	}

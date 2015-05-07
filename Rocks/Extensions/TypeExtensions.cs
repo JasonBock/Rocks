@@ -11,6 +11,26 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		internal static string GetAttributes(this Type @this)
+		{
+			return @this.GetAttributes(false, new SortedSet<string>());
+		}
+
+		internal static string GetAttributes(this Type @this, bool isReturn)
+		{
+			return @this.GetAttributes(isReturn, new SortedSet<string>());
+		}
+
+		internal static string GetAttributes(this Type @this, SortedSet<string> namespaces)
+		{
+			return @this.GetAttributes(false, namespaces);
+		}
+
+		internal static string GetAttributes(this Type @this, bool isReturn, SortedSet<string> namespaces)
+		{
+			return @this.GetCustomAttributesData().GetAttributes(isReturn, namespaces, null);
+		}
+
 		internal static bool RequiresExplicitCast(this Type @this)
 		{
 			return @this.IsValueType ||
@@ -319,16 +339,15 @@ namespace Rocks.Extensions
 
 		internal static string GetSafeName(this Type @this)
 		{
-			return @this.GetSafeName(null, null);
+			return @this.GetSafeName(null, new SortedSet<string>());
 		}
 
 		internal static string GetSafeName(this Type @this, MethodBase context, SortedSet<string> namespaces)
 		{
-			var name = !string.IsNullOrWhiteSpace(@this.FullName) ?
+			namespaces.Add(@this.Namespace);
+			return !string.IsNullOrWhiteSpace(@this.FullName) ?
 				@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
 				@this.Name.Split('`')[0];
-
-			return name;
 		}
 
 		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)

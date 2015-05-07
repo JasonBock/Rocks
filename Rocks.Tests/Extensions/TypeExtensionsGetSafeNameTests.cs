@@ -95,7 +95,8 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("MapForNonGeneric",
 				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName(
 					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForNonGeneric)), namespaces));
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForNonGeneric).Namespace));
 		}
 
 		[Test]
@@ -105,7 +106,8 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(
 					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).Namespace));
 		}
 
 		[Test]
@@ -115,7 +117,8 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("MapForGeneric",
 				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(
 					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
+			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<>).Namespace));
 		}
 
 		[Test]

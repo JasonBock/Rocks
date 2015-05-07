@@ -12,9 +12,9 @@ namespace Rocks.Sketchpad
 			var outAttributeModifierParameters = typeof(IOutAttributeModifier).GetMethod(nameof(IOutAttributeModifier.OutAttributeModifier)).GetParameters()[0];
 			var outAndOutAttributeModifierParameters = typeof(IOutAndOutAttributeModifier).GetMethod(nameof(IOutAndOutAttributeModifier.OutAndOutAttributeModifier)).GetParameters()[0];
 
-			Console.Out.WriteLine($"{outModifierParameter} {outModifierParameter.IsOut} {outModifierParameter.GetCustomAttribute<OutAttribute>() != null} {outModifierParameter.ParameterType.IsByRef} ");
-			Console.Out.WriteLine($"{outAttributeModifierParameters} {outAttributeModifierParameters.IsOut} {outAttributeModifierParameters.GetCustomAttribute<OutAttribute>() != null} {outAttributeModifierParameters.ParameterType.IsByRef}");
-			Console.Out.WriteLine($"{outAndOutAttributeModifierParameters} {outAndOutAttributeModifierParameters.IsOut} {outAndOutAttributeModifierParameters.GetCustomAttribute<OutAttribute>() != null} {outAndOutAttributeModifierParameters.ParameterType.IsByRef}");
+			Console.Out.WriteLine($"{outModifierParameter} {outModifierParameter.IsOut} {outModifierParameter.IsIn} {outModifierParameter.GetCustomAttribute<OutAttribute>() != null} {outModifierParameter.ParameterType.IsByRef} ");
+			Console.Out.WriteLine($"{outAttributeModifierParameters} {outAttributeModifierParameters.IsOut} {outAttributeModifierParameters.IsIn} {outAttributeModifierParameters.GetCustomAttribute<OutAttribute>() != null} {outAttributeModifierParameters.ParameterType.IsByRef}");
+			Console.Out.WriteLine($"{outAndOutAttributeModifierParameters} {outAndOutAttributeModifierParameters.IsOut} {outAndOutAttributeModifierParameters.IsIn} {outAndOutAttributeModifierParameters.GetCustomAttribute<OutAttribute>() != null} {outAndOutAttributeModifierParameters.ParameterType.IsByRef}");
 		}
 	}
 
@@ -38,7 +38,7 @@ namespace Rocks.Sketchpad
 
 	public class IOAM : IOutAttributeModifier
 	{
-		public void OutAttributeModifier(int a)
+		public void OutAttributeModifier([Out] int a)
 		{
 			throw new NotImplementedException();
 		}

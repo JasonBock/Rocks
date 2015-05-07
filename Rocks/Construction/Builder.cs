@@ -128,7 +128,8 @@ namespace Rocks.Construction
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						CodeTemplates.GetNonPublicFunctionImplementationTemplate(visibility, methodInformation.Description,
 							outInitializers, $"{baseMethod.ReturnType.GetFullName()}",
-							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
+							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty, 
+							baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces)) :
 						CodeTemplates.GetNonPublicActionImplementationTemplate(visibility, methodInformation.Description,
 							outInitializers, method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty));
 
@@ -147,15 +148,18 @@ namespace Rocks.Construction
 
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return baseMethod.ReturnType.RequiresExplicitCast() ?
+				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
+            return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
-						CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
+							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
+							returnTypeAttributes):
+                  CodeTemplates.GetFunctionWithReferenceTypeReturnValueMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
+							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
+							returnTypeAttributes);
 			}
 			else
 			{
@@ -172,15 +176,18 @@ namespace Rocks.Construction
 		{
 			if (baseMethod.ReturnType != typeof(void))
 			{
-				return baseMethod.ReturnType.RequiresExplicitCast() ?
+				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
+            return baseMethod.ReturnType.RequiresExplicitCast() ?
 						CodeTemplates.GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty) :
+							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
+							returnTypeAttributes) :
 						CodeTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodTemplate(
 							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty);
+							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
+							returnTypeAttributes);
 			}
 			else
 			{

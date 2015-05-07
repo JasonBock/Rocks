@@ -12,7 +12,7 @@ namespace Rocks.Tests
 			var argumentA = default(int);
 			var argumentB = default(string[]);
 
-			var rock = Rock.Create<IParamsAndOptionalArgumentTests>();
+			var rock = Rock.Create<IParamsAndOptionalArgumentTests>(new Options(CodeFileOptions.Create));
 			rock.Handle<int, string[]>(_ => _.HasParams(44, "a", "b"),
 				(a, b) => { argumentA = a; argumentB = b; });
 
