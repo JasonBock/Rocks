@@ -53,12 +53,12 @@ namespace Rocks.Construction
 		private MetadataReference[] GetReferences()
 		{
 			var references = new List<MetadataReference>(
-				this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromAssembly(_)));
+				this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)));
 			references.AddRange(new[]
 				{
-					MetadataReference.CreateFromAssembly(typeof(object).Assembly),
-					MetadataReference.CreateFromAssembly(typeof(IMock).Assembly),
-					MetadataReference.CreateFromAssembly(typeof(Action<,,,,,,,,>).Assembly),
+					MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+					MetadataReference.CreateFromFile(typeof(IMock).Assembly.Location),
+					MetadataReference.CreateFromFile(typeof(Action<,,,,,,,,>).Assembly.Location),
 				});
 			return references.ToArray();
 		}
