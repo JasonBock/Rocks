@@ -6,7 +6,6 @@ namespace Rocks.Sketchpad
 	public sealed class ArgumentExpectation<T>
 	{
 		private bool isAny;
-		private bool isExpression;
 		private bool isValue;
 		private Delegate expression;
 		private T value = default(T);
@@ -34,7 +33,6 @@ namespace Rocks.Sketchpad
 				throw new ArgumentNullException(nameof(expression));
 			}
 
-			this.isExpression = true;
 			this.expression = Expression.Lambda(expression).Compile();
 		}
 
@@ -48,47 +46,6 @@ namespace Rocks.Sketchpad
 
 	public static class ExpressionEvaluation
 	{
-		public static void Evaluate<T>(Expression<Action<T>> handler)
-		{
-			var argumentIndex = 0;
-			var expressionMethod = (handler.Body as MethodCallExpression);
-			var expressionMethodArguments = expressionMethod.Method.GetParameters();
-
-			foreach (var argument in expressionMethod.Arguments)
-			{
-				var expressionMethodArgument = expressionMethodArguments[argumentIndex];
-
-				switch (argument.NodeType)
-				{
-					case ExpressionType.Constant:
-						Console.Out.WriteLine($"{nameof(ExpressionType.Constant)} for {expressionMethodArgument.Name}: {(argument as ConstantExpression).Value}");
-						break;
-					case ExpressionType.Call:
-						var method = (argument as MethodCallExpression).Method;
-						var validMethod = typeof(Arg).GetMethod(nameof(Arg.IsAny));
-
-						if (method.Name == validMethod.Name && method.DeclaringType == validMethod.DeclaringType)
-						{
-							Console.Out.WriteLine($"{nameof(ExpressionType.Call)} for {expressionMethodArgument.Name}: {method.Name}");
-						}
-						else
-						{
-							Console.Out.WriteLine($"{nameof(ExpressionType.Call)} captured for {expressionMethodArgument.Name}: {argument.ToString()}");
-							var callInvoker = Expression.Lambda(argument).Compile();
-							Console.Out.WriteLine($"{nameof(ExpressionType.Call)} value for {expressionMethodArgument.Name}: {callInvoker.DynamicInvoke()}");
-						}
-						break;
-					default:
-						Console.Out.WriteLine($"{argument.NodeType.ToString()} captured for {expressionMethodArgument.Name}: {argument.ToString()}");
-						var defaultInvoker = Expression.Lambda(argument).Compile();
-						Console.Out.WriteLine($"{argument.NodeType.ToString()} value for {expressionMethodArgument.Name}: {defaultInvoker.DynamicInvoke()}");
-						break;
-				}
-
-				argumentIndex++;
-			}
-		}
-
 		public static void Evaluate<T, TReturn>(Expression<Func<T, TReturn>> handler)
 		{
 			var m = (handler.Body as MethodCallExpression).Method;
