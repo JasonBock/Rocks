@@ -173,6 +173,7 @@
     <Compile Include="MultipleExpectationsTests.cs" />
     <Compile Include="NestedTypesTests.cs" />
     <Compile Include="NonPublicTests.cs" />
+    <Compile Include="ObsoleteTests.cs" />
     <Compile Include="OptionsTests.cs" />
     <Compile Include="ParamsAndOptionalArgumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
