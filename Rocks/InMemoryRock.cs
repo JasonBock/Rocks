@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks
@@ -47,25 +46,37 @@ namespace Rocks
 			var rockType = default(Type);
 			var key = new CacheKey(tType, this.options);
 
-			lock (Rock.CacheLock)
+			if(this.options.Caching == CachingOptions.UseCache)
 			{
-				if (Rock.Cache.ContainsKey(key))
+				lock (Rock.CacheLock)
 				{
-					rockType = Rock.Cache[key];
+					if (Rock.Cache.ContainsKey(key))
+					{
+						rockType = Rock.Cache[key];
+					}
+					else
+					{
+						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, this.options).Mock;
+
+						if (!tType.ContainsRefAndOrOutParameters())
+						{
+							Rock.Cache.Add(key, rockType);
+						}
+
+						if (this.options.Serialization == SerializationOptions.Supported)
+						{
+							Rock.Binder.Assemblies.Add(rockType.Assembly);
+						}
+					}
 				}
-				else
+			}
+			else
+			{
+				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, this.options).Mock;
+
+				if (this.options.Serialization == SerializationOptions.Supported)
 				{
-					rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, this.options).Mock;
-
-					if (!tType.ContainsRefAndOrOutParameters())
-					{
-						Rock.Cache.Add(key, rockType);
-					}
-
-					if (this.options.Serialization == SerializationOptions.Supported)
-					{
-						Rock.Binder.Assemblies.Add(rockType.Assembly);
-					}
+					Rock.Binder.Assemblies.Add(rockType.Assembly);
 				}
 			}
 
