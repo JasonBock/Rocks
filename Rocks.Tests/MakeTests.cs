@@ -9,10 +9,11 @@ namespace Rocks.Tests
 		[Test]
 		public void Make()
 		{
+			// TODO need to support all method and property scenarios.
 			var chunk = Rock.Make<IAmForMaking>(new Options(OptimizationLevel.Debug, CodeFileOptions.Create));
 			chunk.TargetMethod();
-
-			// TODO need to support all method and property scenarios.
+			chunk.TargetProperty = 44;
+			var x = chunk.TargetProperty;
 		}
 	}
 

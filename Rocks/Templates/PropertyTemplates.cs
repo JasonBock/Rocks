@@ -110,6 +110,12 @@ $@"{visibility} get
 	}}
 }}";
 
+		public static string GetPropertyGetForMake(string visibility, string returnType) =>
+$@"{visibility} get
+{{
+	return default({returnType});
+}}";
+
 		public static string GetPropertySet(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string methodWithArgumentValues, string visibility) =>
 $@"{visibility} set
@@ -171,6 +177,9 @@ $@"{visibility} set
 		throw new NotImplementedException();
 	}}
 }}";
+
+		public static string GetPropertySetForMake(string visibility) =>
+$@"{visibility} set {{ }}";
 
 		public static string GetNonPublicProperty(string visibility, string returnType, string name, string getSet, string explicitInterfaceName) =>
 			$"{visibility} override {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";

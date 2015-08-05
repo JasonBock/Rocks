@@ -133,6 +133,16 @@ namespace Rocks.Tests.Templates
 		}
 
 		[Test]
+		public void GetPropertyGetForMake()
+		{
+			Assert.AreEqual(
+@"a get
+{
+	return default(b);
+}", PropertyTemplates.GetPropertyGetForMake("a", "b"));
+		}
+
+		[Test]
 		public void GetPropertySet()
 		{
 			Assert.AreEqual(
@@ -198,6 +208,12 @@ namespace Rocks.Tests.Templates
 		throw new NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d"));
+		}
+
+		[Test]
+		public void GetPropertySetForMake()
+		{
+			Assert.AreEqual("a set { }", PropertyTemplates.GetPropertySetForMake("a"));
 		}
 	}
 }

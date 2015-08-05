@@ -234,28 +234,34 @@ namespace Rocks.Construction
 						var getVisibility = getMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(getMethod.IsFamily, getMethod.IsFamilyOrAssembly);
 						var getArgumentNameList = getMethod.GetArgumentNameList();
 						var getDelegateCast = getMethod.GetDelegateCast();
+						var returnType = getMethod.ReturnType.GetFullName(this.Namespaces);
 
-						if (getMethod.GetParameters().Length > 0)
+						if (this.IsMake)
 						{
-							var getExpectationChecks = getMethod.GetExpectationChecks();
-							var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
-							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
-								PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetFullName(this.Namespaces)}",
-									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
-								PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(
-									getMethod.MetadataToken, getArgumentNameList, $"{getMethod.ReturnType.GetFullName(this.Namespaces)}",
-									getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
-						}
+							propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility, returnType));
+                  }
 						else
 						{
-							propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
-								PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(
-									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetFullName(this.Namespaces)}", getDelegateCast, getVisibility) :
-								PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(
-									getMethod.MetadataToken, getArgumentNameList,
-									$"{getMethod.ReturnType.GetFullName(this.Namespaces)}", getDelegateCast, getVisibility));
+							if (getMethod.GetParameters().Length > 0)
+							{
+								var getExpectationChecks = getMethod.GetExpectationChecks();
+								var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
+								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
+									PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(
+										getMethod.MetadataToken, getArgumentNameList, returnType,
+										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
+									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(
+										getMethod.MetadataToken, getArgumentNameList, returnType,
+										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
+							}
+							else
+							{
+								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
+									PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(
+										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility) :
+									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(
+										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility));
+							}
 						}
 					}
 
@@ -266,17 +272,24 @@ namespace Rocks.Construction
 						var setArgumentNameList = setMethod.GetArgumentNameList();
 						var setDelegateCast = setMethod.GetDelegateCast();
 
-						if (setMethod.GetParameters().Length > 0)
+						if(this.IsMake)
 						{
-							var setExpectationChecks = setMethod.GetExpectationChecks();
-							var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
-							propertyImplementations.Add(PropertyTemplates.GetPropertySet(
-								setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage, setVisibility));
+							propertyImplementations.Add(PropertyTemplates.GetPropertySetForMake(setVisibility));
 						}
 						else
 						{
-							propertyImplementations.Add(PropertyTemplates.GetPropertySetAndNoIndexers(
-								setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility));
+							if (setMethod.GetParameters().Length > 0)
+							{
+								var setExpectationChecks = setMethod.GetExpectationChecks();
+								var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
+								propertyImplementations.Add(PropertyTemplates.GetPropertySet(
+									setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage, setVisibility));
+							}
+							else
+							{
+								propertyImplementations.Add(PropertyTemplates.GetPropertySetAndNoIndexers(
+									setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility));
+							}
 						}
 					}
 
