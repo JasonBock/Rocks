@@ -1,4 +1,5 @@
 ﻿using Rocks.Extensions;
+using Rocks.Templates;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,7 +50,7 @@ namespace Rocks.Construction
 
 		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription)
 		{
-			this.generatedDelegates.Add(CodeTemplates.GetAssemblyDelegateTemplate(
+			this.generatedDelegates.Add(MethodTemplates.GetAssemblyDelegate(
 				baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(null, this.Namespaces),
 				methodDescription.DelegateCast,
 				baseMethod.GetParameters(this.Namespaces), baseMethod.IsUnsafeToMock()));

@@ -58,7 +58,7 @@
     <Compile Include="CacheKey.cs" />
     <Compile Include="CachingOptions.cs" />
     <Compile Include="CodeFileOptions.cs" />
-    <Compile Include="CodeTemplates.cs" />
+    <Compile Include="Templates\CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />
     <Compile Include="Construction\AssemblyMethodInformationBuilder.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Construction\Builder.cs" />
     <Compile Include="Construction\Compiler.cs" />
     <Compile Include="Construction\TypeNameGenerator.cs" />
+    <Compile Include="MakeResult.cs" />
     <Compile Include="CreateResult.cs" />
     <Compile Include="ErrorMessages.cs" />
     <Compile Include="Exceptions\PropertyNotFoundException.cs" />
@@ -129,6 +130,10 @@
     <Compile Include="Construction\InMemoryMaker.cs" />
     <Compile Include="AssemblyBinder.cs" />
     <Compile Include="SerializationOptions.cs" />
+    <Compile Include="Templates\ConstructorTemplates.cs" />
+    <Compile Include="Templates\EventTemplates.cs" />
+    <Compile Include="Templates\MethodTemplates.cs" />
+    <Compile Include="Templates\PropertyTemplates.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
   <ItemGroup>

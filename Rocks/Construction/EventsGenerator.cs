@@ -1,10 +1,11 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using static System.Reflection.CustomAttributeExtensions;
 using static Rocks.Extensions.TypeExtensions;
 using System.Reflection;
 using Rocks.Extensions;
+using Rocks.Templates;
 
 namespace Rocks.Construction
 {
@@ -32,13 +33,13 @@ namespace Rocks.Construction
 					if (eventHandlerType.IsGenericType)
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
+						generatedEvents.Add(EventTemplates.GetEvent(@override,
 							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 						namespaces.Add(eventGenericType.Namespace);
 					}
 					else
 					{
-						generatedEvents.Add(CodeTemplates.GetEventTemplate(@override,
+						generatedEvents.Add(EventTemplates.GetEvent(@override,
 							eventHandlerType.GetSafeName(), @event.Name));
 					}
 
@@ -51,13 +52,13 @@ namespace Rocks.Construction
 					if (eventHandlerType.IsGenericType)
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(CodeTemplates.GetNonPublicEventTemplate(visibility,
+						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
 							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
 						namespaces.Add(eventGenericType.Namespace);
 					}
 					else
 					{
-						generatedEvents.Add(CodeTemplates.GetNonPublicEventTemplate(visibility,
+						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
 							eventHandlerType.GetSafeName(), @event.Name));
 					}
 

@@ -1,4 +1,5 @@
 ﻿using Rocks.Construction;
+using Rocks.Templates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,7 +121,7 @@ namespace Rocks.Extensions
 			return string.Join(" && ",
 				@this.GetParameters()
 				.Where(_ => !new TypeDissector(_.ParameterType).IsPointer)
-				.Select(_ => CodeTemplates.GetExpectationTemplate(_.Name, $"{_.ParameterType.GetFullName()}")));
+				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}")));
 		}
 
 		internal static string GetMethodDescription(this MethodInfo @this)

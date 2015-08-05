@@ -80,7 +80,7 @@
     <Compile Include="AssemblyBinderTests.cs" />
     <Compile Include="CacheKeyTests.cs" />
     <Compile Include="CachingTests.cs" />
-    <Compile Include="CodeTemplatesTests.cs" />
+    <Compile Include="Templates\CodeTemplatesTests.cs" />
     <Compile Include="Construction\InMemoryCompilerTests.cs" />
     <Compile Include="Construction\InMemoryBuilderTests.cs" />
     <Compile Include="ClassTests.cs" />
@@ -169,6 +169,7 @@
     <Compile Include="HandlePropertyTests.cs" />
     <Compile Include="HandlerInformationOfTTests.cs" />
     <Compile Include="HandlerInformationTests.cs" />
+    <Compile Include="MakeTests.cs" />
     <Compile Include="MethodAdornmentTests.cs" />
     <Compile Include="MultipleExpectationsTests.cs" />
     <Compile Include="NestedTypesTests.cs" />
@@ -184,6 +185,10 @@
     <Compile Include="RockAssemblyTests.cs" />
     <Compile Include="RockTests.cs" />
     <Compile Include="SerializationTests.cs" />
+    <Compile Include="Templates\ConstructorTemplatesTests.cs" />
+    <Compile Include="Templates\EventTemplatesTests.cs" />
+    <Compile Include="Templates\MethodTemplatesTests.cs" />
+    <Compile Include="Templates\PropertyTemplatesTests.cs" />
     <Compile Include="VerificationTests.cs" />
     <Compile Include="SetupFixture.cs" />
   </ItemGroup>
