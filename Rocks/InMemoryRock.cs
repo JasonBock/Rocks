@@ -52,18 +52,20 @@ namespace Rocks
 			{
 				lock (Rock.CacheLock)
 				{
-					if (Rock.Cache.ContainsKey(key))
+					var cache = this.isMake ? Rock.MakeCache : Rock.Cache;
+
+					if (cache.ContainsKey(key))
 					{
-						rockType = Rock.Cache[key];
+						rockType = cache[key];
 					}
 					else
 					{
 						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, 
 							this.options, this.isMake).Mock;
 
-						if (!tType.ContainsRefAndOrOutParameters())
+						if (this.isMake || !tType.ContainsRefAndOrOutParameters())
 						{
-							Rock.Cache.Add(key, rockType);
+							cache.Add(key, rockType);
 						}
 
 						if (this.options.Serialization == SerializationOptions.Supported)

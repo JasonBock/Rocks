@@ -74,7 +74,7 @@ namespace Rocks
 		private static Options MapForMake(Options options)
 		{
 			return new Options(options.Level, options.CodeFile, 
-				options.Serialization, CachingOptions.GenerateNewVersion);
+				options.Serialization, CachingOptions.UseCache);
 		}
 
 		public static T Make<T>(Options options)
@@ -124,5 +124,6 @@ namespace Rocks
 		internal static AssemblyBinder Binder { get; } = new AssemblyBinder();
       internal static Dictionary<CacheKey, Type> Cache { get; } = new Dictionary<CacheKey, Type>();
       internal static object CacheLock { get; } = new object();
-   }
+		internal static Dictionary<CacheKey, Type> MakeCache { get; } = new Dictionary<CacheKey, Type>();
+	}
 }

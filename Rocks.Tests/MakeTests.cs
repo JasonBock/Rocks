@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Rocks.Tests
 {
@@ -34,6 +33,15 @@ namespace Rocks.Tests
 
 			chunk[44] = 44;
 			var y = chunk[44];
+		}
+
+		[Test]
+		public void EnsureMakeAlwaysUsesCache()
+		{
+			var chunk1 = Rock.Make<IAmForMaking>(new Options(CachingOptions.GenerateNewVersion));
+			var chunk2 = Rock.Make<IAmForMaking>(new Options(CachingOptions.GenerateNewVersion));
+
+			Assert.AreEqual(chunk2.GetType(), chunk1.GetType());
 		}
 	}
 
