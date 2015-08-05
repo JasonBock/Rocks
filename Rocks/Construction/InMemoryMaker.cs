@@ -12,9 +12,9 @@ namespace Rocks.Construction
 
 		internal InMemoryMaker(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options)
+			SortedSet<string> namespaces, Options options, bool isMake)
 		{
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, isMake);
 			builder.Build();
 
 			var compiler = new InMemoryCompiler(new List<SyntaxTree> { builder.Tree }, options.Level,

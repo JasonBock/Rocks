@@ -11,10 +11,12 @@ namespace Rocks
 		where T : class
 	{
 		private readonly Options options;
+		private readonly bool isMake;
 
-		internal InMemoryRock(Options options)
+		internal InMemoryRock(Options options, bool isMake)
 		{
 			this.options = options;
+			this.isMake = isMake;
 		}
 
 		public override T Make()
@@ -56,7 +58,8 @@ namespace Rocks
 					}
 					else
 					{
-						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, this.options).Mock;
+						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, 
+							this.options, this.isMake).Mock;
 
 						if (!tType.ContainsRefAndOrOutParameters())
 						{
@@ -72,7 +75,8 @@ namespace Rocks
 			}
 			else
 			{
-				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, this.options).Mock;
+				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, 
+					this.options, this.isMake).Mock;
 
 				if (this.options.Serialization == SerializationOptions.Supported)
 				{

@@ -21,7 +21,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
 			Assert.AreSame(baseType, builder.BaseType, nameof(builder.BaseType));
@@ -55,7 +55,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
 			var tree = builder.Tree.ToString();
@@ -75,7 +75,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
 			var tree = builder.Tree.ToString();
@@ -95,7 +95,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
 			var tree = builder.Tree.ToString();
@@ -115,7 +115,7 @@ namespace Rocks.Tests.Construction
 			var namespaces = new SortedSet<string> { baseType.Namespace };
 			var options = new Options();
 
-			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options);
+			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
 			var tree = builder.Tree.ToString();

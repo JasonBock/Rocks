@@ -10,9 +10,10 @@ namespace Rocks.Construction
 	{
 		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options)
+			SortedSet<string> namespaces, Options options, bool isMake)
 			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator(),
-				new InMemoryMethodInformationBuilder(namespaces, handlers), new InMemoryTypeNameGenerator(namespaces))
+				new InMemoryMethodInformationBuilder(namespaces, handlers), 
+				new InMemoryTypeNameGenerator(namespaces), isMake)
 		{ }
 
 		protected override GetGeneratedEventsResults GetGeneratedEvents()

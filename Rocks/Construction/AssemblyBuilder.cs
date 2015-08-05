@@ -21,7 +21,7 @@ namespace Rocks.Construction
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options)
 			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType),
-				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces))
+				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces), false)
 		{ }
 
 		protected override GetGeneratedEventsResults GetGeneratedEvents()

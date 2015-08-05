@@ -27,16 +27,16 @@ namespace Rocks
 				throw new ValidationException(message);
 			}
 
-			return Rock.NewRock<T>(options);
+			return Rock.NewRock<T>(options, false);
 		}
 
-		private static IRock<T> NewRock<T>(Options options)
+		private static IRock<T> NewRock<T>(Options options, bool isMake)
 			where T : class
 		{
 			var tType = typeof(T);
 			// Can assume only sealed typed with the right constructor passed the .Validate() test.
 			return tType.IsSealed ? new AssemblyRock<T>(options) as IRock<T> : 
-				new InMemoryRock<T>(options) as IRock<T>;
+				new InMemoryRock<T>(options, isMake) as IRock<T>;
 		}
 
 		public static CreateResult<T> TryCreate<T>()
@@ -58,7 +58,7 @@ namespace Rocks
 
 			if (string.IsNullOrWhiteSpace(message))
 			{
-				result = Rock.NewRock<T>(options);
+				result = Rock.NewRock<T>(options, false);
 				isSuccessful = true;
 			}
 
@@ -91,7 +91,7 @@ namespace Rocks
 				throw new ValidationException(message);
 			}
 
-			return Rock.NewRock<T>(mappedOptions).Make();
+			return Rock.NewRock<T>(mappedOptions, true).Make();
 		}
 
 		public static MakeResult<T> TryMake<T>()
@@ -114,7 +114,7 @@ namespace Rocks
 
 			if (string.IsNullOrWhiteSpace(message))
 			{
-				result = Rock.NewRock<T>(mappedOptions).Make();
+				result = Rock.NewRock<T>(mappedOptions, true).Make();
 				isSuccessful = true;
 			}
 

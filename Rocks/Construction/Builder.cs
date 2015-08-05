@@ -24,7 +24,8 @@ namespace Rocks.Construction
 		internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options, NameGenerator generator,
-			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator)
+			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator,
+			bool isMake)
 		{
 			this.BaseType = baseType;
 			this.IsUnsafe = this.BaseType.IsUnsafeToMock();
@@ -34,6 +35,7 @@ namespace Rocks.Construction
 			this.NameGenerator = generator;
 			this.InformationBuilder = informationBuilder;
 			this.TypeName = typeNameGenerator.Generate(baseType);
+			this.IsMake = isMake;
       }
 
 		protected abstract GetGeneratedEventsResults GetGeneratedEvents();
@@ -447,5 +449,6 @@ $@"#pragma warning disable CS0618
 		private bool RequiresObsoleteSuppression { get; set; }
 		protected NameGenerator NameGenerator { get; private set; }
 		internal TInformationBuilder InformationBuilder { get; private set; }
+		internal bool IsMake { get; }
 	}
 }
