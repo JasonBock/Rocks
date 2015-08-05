@@ -10,7 +10,7 @@ using static Rocks.Extensions.IMockExtensions;
 namespace Rocks.Tests
 {
 	[TestFixture]
-	public sealed class RockAssemblyTests
+	public class RockAssemblyTests
 	{
 		private Assembly assembly;
 
@@ -67,7 +67,7 @@ namespace Rocks.Tests
 			Assert.IsTrue(this.wasMethod5DelegateCalled);
 		}
 
-		[Test, Ignore("A")]
+		[Test, Ignore("a")]
 		public void GenerateForMscorlib()
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();

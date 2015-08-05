@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
@@ -8,7 +9,6 @@ namespace Rocks.Tests
 		[Test]
 		public void Make()
 		{
-			// TODO need to support all method and property scenarios.
 			var chunk = Rock.Make<IAmForMaking>();
 			var outInt = default(int);
 
@@ -19,6 +19,8 @@ namespace Rocks.Tests
 			chunk.TargetActionWithGeneric<int>(44);
 			chunk.TargetActionWithGenericAndOut<int>(out outInt);
 			chunk.TargetActionWithGenericAndRef<int>(ref outInt);
+			var actionResult = chunk.TargetActionAsync();
+			Assert.IsTrue(actionResult.IsCompleted);
 
 			chunk.TargetFunc();
 			chunk.TargetFunc(44);
@@ -27,6 +29,9 @@ namespace Rocks.Tests
 			chunk.TargetFuncWithGeneric<int>(44);
 			chunk.TargetFuncWithGenericAndOut<int>(out outInt);
 			chunk.TargetFuncWithGenericAndRef<int>(ref outInt);
+			var funcResult = chunk.TargetFuncAsync();
+			Assert.IsTrue(funcResult.IsCompleted);
+			Assert.AreEqual(default(int), funcResult.Result);
 
 			chunk.TargetProperty = 44;
 			var x = chunk.TargetProperty;
@@ -54,6 +59,7 @@ namespace Rocks.Tests
 		void TargetActionWithGeneric<T>(T a);
 		void TargetActionWithGenericAndOut<T>(out T a);
 		void TargetActionWithGenericAndRef<T>(ref T a);
+		Task TargetActionAsync();
 		int TargetFunc();
 		int TargetFunc(int a);
 		int TargetFuncWithOut(out int a);
@@ -61,6 +67,7 @@ namespace Rocks.Tests
 		int TargetFuncWithGeneric<T>(T a);
 		int TargetFuncWithGenericAndOut<T>(out T a);
 		int TargetFuncWithGenericAndRef<T>(ref T a);
+		Task<int> TargetFuncAsync();
 		int TargetProperty { get; set; }
 		int this[int a] { get; set; }
 	}

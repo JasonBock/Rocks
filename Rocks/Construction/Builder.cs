@@ -130,7 +130,7 @@ namespace Rocks.Construction
 
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						MethodTemplates.GetNonPublicFunctionImplementation(visibility, methodInformation.Description,
-							outInitializers, $"{baseMethod.ReturnType.GetFullName()}",
+							outInitializers, baseMethod.ReturnType,
 							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
 							baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces)) :
 						MethodTemplates.GetNonPublicActionImplementation(visibility, methodInformation.Description,
@@ -156,7 +156,7 @@ namespace Rocks.Construction
 				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
 				return this.IsMake ?
 					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
-						visibility, requiresNew, returnTypeAttributes, returnTypeName) :
+						visibility, requiresNew, returnTypeAttributes, baseMethod.ReturnType) :
 					baseMethod.ReturnType.RequiresExplicitCast() ?
 						MethodTemplates.GetFunctionWithValueTypeReturnValue(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,
@@ -189,7 +189,7 @@ namespace Rocks.Construction
 				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
 				return this.IsMake ?
 					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
-						visibility, requiresNew, returnTypeAttributes, returnTypeName) :
+						visibility, requiresNew, returnTypeAttributes, baseMethod.ReturnType) :
 					baseMethod.ReturnType.RequiresExplicitCast() ?
 						MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,

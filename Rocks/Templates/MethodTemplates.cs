@@ -1,7 +1,31 @@
-﻿namespace Rocks.Templates
+﻿using System;
+using System.Threading.Tasks;
+using static Rocks.Extensions.TypeExtensions;
+
+namespace Rocks.Templates
 {
 	public static class MethodTemplates
 	{
+		public static string GetDefaultReturnValue(Type returnType)
+		{
+			if (typeof(Task).IsAssignableFrom(returnType))
+			{
+				if (returnType.IsGenericType && typeof(Task<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
+				{
+					var taskReturnType = returnType.GetGenericArguments()[0].GetFullName();
+					return $"Task.FromResult<{taskReturnType}>(default({taskReturnType}))";
+				}
+				else
+				{
+					return "Task.CompletedTask";
+				}
+			}
+			else
+			{
+				return $"default({returnType.GetFullName()})";
+			}
+		}
+
 		public static string GetAssemblyDelegate(string returnType, string delegateName, string arguments, bool isUnsafe) =>
 			$"public {CodeTemplates.GetIsUnsafe(isUnsafe)} delegate {returnType} {delegateName}({arguments});";
 
@@ -11,12 +35,12 @@ $@"{visibility} {requiresNew} override {methodName}
 	{outInitializers}	
 }}";
 
-		public static string GetNonPublicFunctionImplementation(string visibility, string methodName, string outInitializers, string returnTypeName, string requiresNew, string returnTypeAttributes) =>
+		public static string GetNonPublicFunctionImplementation(string visibility, string methodName, string outInitializers, Type returnType, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
 	
-	return default({returnTypeName});
+	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
 
 		public static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
@@ -207,12 +231,12 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		public static string GetFunctionForMake(string outInitializers, string methodNameWithOverride, string visibility,
-			string requiresNew, string returnTypeAttributes, string returnTypeName) =>
+			string requiresNew, string returnTypeAttributes, Type returnType) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	return default({returnTypeName});
+	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
 	}
 }

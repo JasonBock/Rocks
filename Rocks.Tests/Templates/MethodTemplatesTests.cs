@@ -1,11 +1,33 @@
 ﻿using NUnit.Framework;
 using Rocks.Templates;
+using System.Threading.Tasks;
 
 namespace Rocks.Tests.Templates
 {
 	[TestFixture]
 	public sealed class MethodTemplatesTests
 	{
+		[Test]
+		public void GetDefaultReturnValueForGenericTask()
+		{
+			Assert.AreEqual("Task.FromResult<Int32>(default(Int32))",
+				MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)));
+		}
+
+		[Test]
+		public void GetDefaultReturnValueForTask()
+		{
+			Assert.AreEqual("Task.CompletedTask",
+				MethodTemplates.GetDefaultReturnValue(typeof(Task)));
+		}
+
+		[Test]
+		public void GetDefaultReturnValueForNonTaskType()
+		{
+			Assert.AreEqual("default(Int32)",
+				MethodTemplates.GetDefaultReturnValue(typeof(int)));
+		}
+
 		[Test]
 		public void GetNonPublicActionImplementation()
 		{
@@ -24,8 +46,8 @@ namespace Rocks.Tests.Templates
 {
 	c	
 	
-	return default(d);
-}", MethodTemplates.GetNonPublicFunctionImplementation("a", "b", "c", "d", "e", "f"));
+	return default(Int32);
+}", MethodTemplates.GetNonPublicFunctionImplementation("a", "b", "c", typeof(int), "e", "f"));
 		}
 
 		[Test]
@@ -180,8 +202,8 @@ namespace Rocks.Tests.Templates
 {
 	a
 
-	return default(f);
-}", MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", "f"));
+	return default(Int32);
+}", MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", typeof(int)));
 		}
 
 		[Test]
