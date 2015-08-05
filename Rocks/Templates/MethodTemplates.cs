@@ -64,6 +64,12 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 }}";
 
+		public static string GetActionMethodForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
+{{
+	{outInitializers}
+}}";
+
 		public static string GetActionMethodWithNoArguments(int methodHandle, string argumentNames, string delegateCast, string outInitializers,
 			string methodNameWithOverride, string visibility) =>
 $@"{visibility} {methodNameWithOverride}
@@ -86,6 +92,12 @@ $@"{visibility} {methodNameWithOverride}
 	{{
 		throw new NotImplementedException();
 	}}
+}}";
+
+		public static string GetActionMethodWithNoArgumentsForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
+$@"{visibility} {methodNameWithOverride}
+{{
+	{outInitializers}
 }}";
 
 		public static string GetFunctionWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
@@ -192,6 +204,15 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	{{
 		throw new NotImplementedException();
 	}}
+}}";
+
+		public static string GetFunctionForMake(string outInitializers, string methodNameWithOverride, string visibility,
+			string requiresNew, string returnTypeAttributes, string returnTypeName) =>
+$@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
+{{
+	{outInitializers}
+
+	return default({returnTypeName});
 }}";
 	}
 }

@@ -6,13 +6,13 @@ namespace Rocks.Tests
 	[TestFixture]
 	public sealed class MakeTests
 	{
-		[Test, Ignore("Still working on feature...")]
+		[Test]
 		public void Make()
 		{
 			var chunk = Rock.Make<IAmForMaking>(new Options(OptimizationLevel.Debug, CodeFileOptions.Create));
 			chunk.TargetMethod();
-			chunk.TargetProperty = 42;
-			var x = chunk.TargetProperty;
+
+			// TODO need to support all method and property scenarios.
 		}
 	}
 

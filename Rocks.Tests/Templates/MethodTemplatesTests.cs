@@ -93,6 +93,16 @@ namespace Rocks.Tests.Templates
 		}
 
 		[Test]
+		public void GetActionMethodForMake()
+		{
+			Assert.AreEqual(
+@"c b
+{
+	a
+}", MethodTemplates.GetActionMethodForMake("a", "b", "c"));
+		}
+
+		[Test]
 		public void GetActionMethodWithNoArguments()
 		{
 			Assert.AreEqual(
@@ -117,6 +127,16 @@ namespace Rocks.Tests.Templates
 		throw new NotImplementedException();
 	}
 }", MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"));
+		}
+
+		[Test]
+		public void GetActionMethodWithNoArgumentsForMake()
+		{
+			Assert.AreEqual(
+@"c b
+{
+	a
+}", MethodTemplates.GetActionMethodWithNoArgumentsForMake("a", "b", "c"));
 		}
 
 		[Test]
@@ -150,6 +170,18 @@ namespace Rocks.Tests.Templates
 		throw new NotImplementedException();
 	}
 }", MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
+		}
+
+		[Test]
+		public void GetFunctionForMake()
+		{
+			Assert.AreEqual(
+@"ec d b
+{
+	a
+
+	return default(f);
+}", MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", "f"));
 		}
 
 		[Test]

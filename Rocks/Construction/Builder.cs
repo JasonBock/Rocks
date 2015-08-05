@@ -36,7 +36,7 @@ namespace Rocks.Construction
 			this.InformationBuilder = informationBuilder;
 			this.TypeName = typeNameGenerator.Generate(baseType);
 			this.IsMake = isMake;
-      }
+		}
 
 		protected abstract GetGeneratedEventsResults GetGeneratedEvents();
 
@@ -83,7 +83,7 @@ namespace Rocks.Construction
 			var generatedMethods = new List<string>();
 
 			foreach (var method in this.BaseType.GetMockableMethods(this.NameGenerator))
-			{				
+			{
 				var methodInformation = this.InformationBuilder.Build(method);
 				var baseMethod = method.Value;
 				var argumentNameList = baseMethod.GetArgumentNameList();
@@ -91,13 +91,13 @@ namespace Rocks.Construction
 
 				if (baseMethod.IsPublic)
 				{
-					var visibility = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+					var visibility = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						string.Empty : CodeTemplates.Public;
 
 					// Either the base method contains no refs/outs, or the user specified a delegate
 					// to use to handle that method (remember, types with methods with refs/outs are gen'd
 					// each time, and that's the only reason the handlers are passed in).
-					if (!methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
+					if (this.IsMake || !methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 					{
 						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
 						{
@@ -131,7 +131,7 @@ namespace Rocks.Construction
 					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
 						MethodTemplates.GetNonPublicFunctionImplementation(visibility, methodInformation.Description,
 							outInitializers, $"{baseMethod.ReturnType.GetFullName()}",
-							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty, 
+							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
 							baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces)) :
 						MethodTemplates.GetNonPublicActionImplementation(visibility, methodInformation.Description,
 							outInitializers, method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty));
@@ -148,27 +148,31 @@ namespace Rocks.Construction
 		{
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
+			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
+			var returnTypeName = baseMethod.ReturnType.GetFullName();
 
-			if (baseMethod.ReturnType != typeof(void))
+         if (baseMethod.ReturnType != typeof(void))
 			{
 				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
-            return baseMethod.ReturnType.RequiresExplicitCast() ?
+				return this.IsMake ?
+					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
+						visibility, requiresNew, returnTypeAttributes, returnTypeName) :
+					baseMethod.ReturnType.RequiresExplicitCast() ?
 						MethodTemplates.GetFunctionWithValueTypeReturnValue(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
+							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
-							returnTypeAttributes):
+							visibility, requiresNew, returnTypeAttributes) :
 						MethodTemplates.GetFunctionWithReferenceTypeReturnValue(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName()}",
+							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
-							returnTypeAttributes);
+							visibility, requiresNew, returnTypeAttributes);
 			}
 			else
 			{
-				return MethodTemplates.GetActionMethod(
-					baseMethod.MetadataToken, argumentNameList, expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-					visibility);
+				return this.IsMake ?
+					MethodTemplates.GetActionMethodForMake(outInitializers, methodDescriptionWithOverride, visibility) :
+					MethodTemplates.GetActionMethod(baseMethod.MetadataToken, argumentNameList, expectationChecks,
+						delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride, visibility);
 			}
 		}
 
@@ -177,26 +181,31 @@ namespace Rocks.Construction
 		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
 		{
-			if (baseMethod.ReturnType != typeof(void))
+			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
+			var returnTypeName = baseMethod.ReturnType.GetFullName(this.Namespaces);
+
+         if (baseMethod.ReturnType != typeof(void))
 			{
 				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
-            return baseMethod.ReturnType.RequiresExplicitCast() ?
+				return this.IsMake ?
+					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
+						visibility, requiresNew, returnTypeAttributes, returnTypeName) :
+					baseMethod.ReturnType.RequiresExplicitCast() ?
 						MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
+							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
-							returnTypeAttributes) :
+							requiresNew, returnTypeAttributes) :
 						MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, $"{baseMethod.ReturnType.GetFullName(this.Namespaces)}",
+							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
-							returnTypeAttributes);
+							requiresNew, returnTypeAttributes);
 			}
 			else
 			{
-				return MethodTemplates.GetActionMethodWithNoArguments(
-					baseMethod.MetadataToken, argumentNameList, delegateCast, outInitializers, methodDescriptionWithOverride,
-					visibility);
+				return this.IsMake ?
+					MethodTemplates.GetActionMethodWithNoArgumentsForMake(outInitializers, methodDescriptionWithOverride, visibility) :
+					MethodTemplates.GetActionMethodWithNoArguments(baseMethod.MetadataToken, argumentNameList, delegateCast, 
+						outInitializers, methodDescriptionWithOverride, visibility);
 			}
 		}
 
@@ -271,7 +280,7 @@ namespace Rocks.Construction
 						}
 					}
 
-					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						string.Empty : CodeTemplates.Public;
 					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						$"{property.Value.DeclaringType.GetFullName(this.Namespaces)}." : string.Empty;
@@ -301,7 +310,7 @@ namespace Rocks.Construction
 				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
 				{
 					var propertyImplementations = new List<string>();
-					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ? 
+					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						string.Empty : CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
 
 					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
