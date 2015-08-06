@@ -78,6 +78,7 @@
     <Compile Include="ArgTests.cs" />
     <Compile Include="ArgumentExpectationOfTTests.cs" />
     <Compile Include="AssemblyBinderTests.cs" />
+    <Compile Include="AsyncTests.cs" />
     <Compile Include="CacheKeyTests.cs" />
     <Compile Include="CachingTests.cs" />
     <Compile Include="MakeResultsTests.cs" />

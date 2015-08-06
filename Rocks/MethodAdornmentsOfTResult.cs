@@ -1,4 +1,6 @@
-﻿namespace Rocks
+﻿using System;
+
+namespace Rocks
 {
 	public sealed class MethodAdornments<TResult>
 		: MethodAdornments
@@ -10,6 +12,12 @@
 		public MethodAdornments<TResult> Returns(TResult returnValue)
 		{
 			(this.handler as HandlerInformation<TResult>).ReturnValue = returnValue;
+			return this;
+		}
+
+		public MethodAdornments<TResult> Returns(Func<TResult> returnValue)
+		{
+			(this.handler as HandlerInformation<TResult>).ReturnValue = returnValue();
 			return this;
 		}
 	}
