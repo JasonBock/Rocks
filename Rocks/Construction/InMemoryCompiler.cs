@@ -9,9 +9,9 @@ namespace Rocks.Construction
 	internal sealed class InMemoryCompiler
 		: Compiler<MemoryStream>
 	{
-		internal InMemoryCompiler(IEnumerable<SyntaxTree> trees, OptimizationLevel level, ReadOnlyCollection<Assembly> referencedAssemblies,
+		internal InMemoryCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, ReadOnlyCollection<Assembly> referencedAssemblies,
 			bool allowUnsafe)
-			: base(trees, level, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe)
+			: base(trees, optimization, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe)
 		{ }
 
 		protected override MemoryStream GetAssemblyStream()

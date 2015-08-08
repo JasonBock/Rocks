@@ -1097,7 +1097,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1106,7 +1106,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1115,7 +1115,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1124,7 +1124,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1133,7 +1133,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1145,7 +1145,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, TPropertyValue>(Expression<Func<T1>> indexer1, Func<T1, TPropertyValue> getter, Action<T1, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1157,7 +1157,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1166,7 +1166,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1175,7 +1175,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1184,7 +1184,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1193,7 +1193,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1205,7 +1205,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Func<T1, T2, TPropertyValue> getter, Action<T1, T2, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1217,7 +1217,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1226,7 +1226,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1235,7 +1235,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1244,7 +1244,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1253,7 +1253,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1265,7 +1265,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, T3, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Func<T1, T2, T3, TPropertyValue> getter, Action<T1, T2, T3, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1277,7 +1277,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1286,7 +1286,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Get);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.Get);
 			var info = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1295,7 +1295,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1304,7 +1304,7 @@ namespace Rocks
 
 		public MethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.Set);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.Set);
 			var info = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.SetMethod.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
@@ -1313,7 +1313,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,
@@ -1325,7 +1325,7 @@ namespace Rocks
 
 		public PropertyMethodAdornments Handle<T1, T2, T3, T4, TPropertyValue>(Expression<Func<T1>> indexer1, Expression<Func<T2>> indexer2, Expression<Func<T3>> indexer3, Expression<Func<T4>> indexer4, Func<T1, T2, T3, T4, TPropertyValue> getter, Action<T1, T2, T3, T4, TPropertyValue> setter, uint expectedCallCount)
 		{
-			var property = typeof(T).FindProperty(new[] { indexer1.Body.Type, indexer2.Body.Type, indexer3.Body.Type, indexer4.Body.Type }, PropertyAccessors.GetAndSet);
+			var property = typeof(T).FindProperty(new[] { typeof(T1), typeof(T2), typeof(T3), typeof(T4) }, PropertyAccessors.GetAndSet);
 			var getInfo = property.GetGetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), getter, expectedCallCount);
 			var setInfo = property.GetSetterHandler(new List<Expression> { indexer1.Body, indexer2.Body, indexer3.Body, indexer4.Body }.AsReadOnly(), setter, expectedCallCount);
 			this.Handlers.AddOrUpdate(property.GetMethod.MetadataToken,

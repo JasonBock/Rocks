@@ -1,81 +1,79 @@
-﻿using Microsoft.CodeAnalysis;
-
-namespace Rocks
+﻿namespace Rocks
 {
 	public sealed class Options
 	{
 		public Options()
-			: this(OptimizationLevel.Release, CodeFileOptions.None, SerializationOptions.NotSupported, 
+			: this(OptimizationSetting.Release, CodeFileOptions.None, SerializationOptions.NotSupported, 
 				CachingOptions.UseCache)
 		{ }
 
 		public Options(CodeFileOptions codeFile)
-			: this(OptimizationLevel.Release, codeFile, SerializationOptions.NotSupported, 
+			: this(OptimizationSetting.Release, codeFile, SerializationOptions.NotSupported, 
 				CachingOptions.UseCache)
 		{ }
 
-		public Options(OptimizationLevel level)
+		public Options(OptimizationSetting level)
 			: this(level, CodeFileOptions.None, SerializationOptions.NotSupported,
 				CachingOptions.UseCache)
 		{ }
 
 		public Options(SerializationOptions serialization)
-			: this(OptimizationLevel.Release, CodeFileOptions.None, serialization,
+			: this(OptimizationSetting.Release, CodeFileOptions.None, serialization,
 				CachingOptions.UseCache)
 		{ }
 
 		public Options(CachingOptions caching)
-			: this(OptimizationLevel.Release, CodeFileOptions.None, SerializationOptions.NotSupported, 
+			: this(OptimizationSetting.Release, CodeFileOptions.None, SerializationOptions.NotSupported, 
 				caching)
 		{ }
 
-		public Options(OptimizationLevel level, CodeFileOptions codeFile)
+		public Options(OptimizationSetting level, CodeFileOptions codeFile)
 			: this(level, codeFile, SerializationOptions.NotSupported,
 				CachingOptions.UseCache)
 		{ }
 
-		public Options(OptimizationLevel level, SerializationOptions serialization)
+		public Options(OptimizationSetting level, SerializationOptions serialization)
 			: this(level, CodeFileOptions.None, serialization,
 				CachingOptions.UseCache)
 		{ }
 
-		public Options(OptimizationLevel level, CachingOptions caching)
+		public Options(OptimizationSetting level, CachingOptions caching)
 			: this(level, CodeFileOptions.None, SerializationOptions.NotSupported, caching)
 		{ }
 
 		public Options(CodeFileOptions codeFile, SerializationOptions serialization)
-			: this(OptimizationLevel.Release, codeFile, serialization,
+			: this(OptimizationSetting.Release, codeFile, serialization,
 				CachingOptions.UseCache)
 		{ }
 
 		public Options(CodeFileOptions codeFile, CachingOptions caching)
-			: this(OptimizationLevel.Release, codeFile, SerializationOptions.NotSupported, caching)
+			: this(OptimizationSetting.Release, codeFile, SerializationOptions.NotSupported, caching)
 		{ }
 
 		public Options(SerializationOptions serialization, CachingOptions caching)
-			: this(OptimizationLevel.Release, CodeFileOptions.None, serialization, caching)
+			: this(OptimizationSetting.Release, CodeFileOptions.None, serialization, caching)
 		{ }
 
-		public Options(OptimizationLevel level, CodeFileOptions codeFile, SerializationOptions serialization)
+		public Options(OptimizationSetting level, CodeFileOptions codeFile, SerializationOptions serialization)
 			: this(level, codeFile, serialization, CachingOptions.UseCache)
 		{ }
 
-		public Options(OptimizationLevel level, SerializationOptions serialization, CachingOptions caching)
+		public Options(OptimizationSetting level, SerializationOptions serialization, CachingOptions caching)
 			: this(level, CodeFileOptions.None, serialization, caching)
 		{ }
 
-		public Options(OptimizationLevel level, CodeFileOptions codeFile, CachingOptions caching)
+		public Options(OptimizationSetting level, CodeFileOptions codeFile, CachingOptions caching)
 			: this(level, codeFile, SerializationOptions.NotSupported, caching)
 		{ }
 
 		public Options(CodeFileOptions codeFile, SerializationOptions serialization, CachingOptions caching)
-			: this(OptimizationLevel.Release, codeFile, serialization, caching)
+			: this(OptimizationSetting.Release, codeFile, serialization, caching)
 		{ }
 
-		public Options(OptimizationLevel level, CodeFileOptions codeFile, SerializationOptions serialization,
+		public Options(OptimizationSetting level, CodeFileOptions codeFile, SerializationOptions serialization,
 			CachingOptions caching)
 		{
-			this.Level = level;
+			this.Optimization = level;
 			this.CodeFile = codeFile;
 			this.Serialization = serialization;
 			this.Caching = caching;
@@ -85,13 +83,13 @@ namespace Rocks
 		{
 			return this.CodeFile.GetHashCode() ^
 				((int)this.Serialization << 1).GetHashCode() ^
-				((int)this.Level << 2).GetHashCode() ^
+				((int)this.Optimization << 2).GetHashCode() ^
 				((int)this.Caching << 3).GetHashCode();
 		}
 
 		public CachingOptions Caching { get; }
 		public CodeFileOptions CodeFile { get; }
-		public OptimizationLevel Level { get; }
+		public OptimizationSetting Optimization { get; }
 		public SerializationOptions Serialization { get; }
 	}
 }

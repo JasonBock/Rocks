@@ -73,7 +73,7 @@ namespace Rocks
 
 		private static Options MapForMake(Options options)
 		{
-			return new Options(options.Level, options.CodeFile, 
+			return new Options(options.Optimization, options.CodeFile, 
 				options.Serialization, CachingOptions.UseCache);
 		}
 

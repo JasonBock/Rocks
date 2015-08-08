@@ -55,7 +55,7 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithFile()
 		{
-			var rock = Rock.Create<IFileTests>(new Options(OptimizationLevel.Debug, CodeFileOptions.Create));
+			var rock = Rock.Create<IFileTests>(new Options(OptimizationSetting.Debug, CodeFileOptions.Create));
 			rock.Handle(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();

@@ -23,11 +23,11 @@ namespace Rocks.Tests.Construction
 			builder.Build();
 
 			var trees = new[] { builder.Tree };
-			var compiler = new InMemoryCompiler(trees, options.Level, 
+			var compiler = new InMemoryCompiler(trees, options.Optimization, 
 				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe);
 			compiler.Compile();
 
-			Assert.AreEqual(options.Level, compiler.Level, nameof(compiler.Level));
+			Assert.AreEqual(options.Optimization, compiler.Optimization, nameof(compiler.Optimization));
 			Assert.AreSame(trees, compiler.Trees, nameof(compiler.Trees));
 			Assert.IsNotNull(compiler.Result, nameof(compiler.Result));
 			Assert.IsNotNull(

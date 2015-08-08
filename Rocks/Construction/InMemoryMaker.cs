@@ -17,7 +17,7 @@ namespace Rocks.Construction
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, isMake);
 			builder.Build();
 
-			var compiler = new InMemoryCompiler(new List<SyntaxTree> { builder.Tree }, options.Level,
+			var compiler = new InMemoryCompiler(new List<SyntaxTree> { builder.Tree }, options.Optimization,
 				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe);
 			compiler.Compile();
 

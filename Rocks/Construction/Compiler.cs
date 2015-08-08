@@ -13,10 +13,10 @@ namespace Rocks.Construction
 	internal abstract class Compiler<T>
 		where T : Stream
 	{
-		protected Compiler(IEnumerable<SyntaxTree> trees, OptimizationLevel level, string assemblyName,
+		protected Compiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, string assemblyName,
 			ReadOnlyCollection<Assembly> referencedAssemblies, bool allowUnsafe)
 		{
-			this.Level = level;
+			this.Optimization = optimization;
 			this.AssemblyName = assemblyName;
 			this.Trees = trees;
 			this.ReferencedAssemblies = referencedAssemblies;
@@ -28,7 +28,8 @@ namespace Rocks.Construction
 			var compilation = CSharpCompilation.Create(this.AssemblyName,
 				options: new CSharpCompilationOptions(
 					OutputKind.DynamicallyLinkedLibrary,
-					optimizationLevel: this.Level,
+					optimizationLevel: this.Optimization == OptimizationSetting.Release ? 
+						OptimizationLevel.Release : OptimizationLevel.Debug,
 					allowUnsafe: this.AllowUnsafe),
 				syntaxTrees: this.Trees,
 				references: this.GetReferences());
@@ -69,7 +70,7 @@ namespace Rocks.Construction
 		protected virtual void Complete() { }
 
 		internal string AssemblyName { get; }
-		internal OptimizationLevel Level { get; }
+		internal OptimizationSetting Optimization { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }
 		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; }
 		internal Assembly Result { get; set; }
