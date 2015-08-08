@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?> 
+<package>
+	<metadata> 
+		<id>Rocks</id> 
+		<version>1.0.0-beta1</version> 
+		<authors>Jason Bock</authors> 
+		<owners>Jason Bock</owners>
+		<description>A mocking library based on the Compiler API.</description> 
+		<projectUrl>https://github.com/JasonBock/Rocks</projectUrl>
+		<licenseUrl>https://github.com/JasonBock/Rocks</licenseUrl>
+		<tags>netframework</tags>
+		<language>en-US</language> 
+		<dependencies>
+			<dependency id="Microsoft.CodeAnalysis.CSharp" version="1.0.0" />
+		</dependencies>
+	</metadata> 
+</package>
