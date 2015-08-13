@@ -6,7 +6,7 @@ namespace Rocks.Sketchpad
 	{
 		public static void Run()
 		{
-			Quickstart.RunWithMake();
+			Quickstart.RunSimple();
 		}
 
 		public delegate void RefTargetDelegate(ref int a);
