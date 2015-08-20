@@ -12,6 +12,23 @@ namespace Rocks.Tests
 	public sealed class SerializationTests
 	{
 		[Test]
+		public void RoundtripWithExpressions()
+		{
+			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
+			rock.Handle(_ => _.Target(Arg.Is<string>(p => p == "44" || p == "55")));
+
+			var chunk = rock.Make();
+
+			var formatter = new BinaryFormatter();
+			formatter.Binder = Rock.Binder;
+
+			using (var stream = new MemoryStream())
+			{
+				Assert.Throws<SerializationException>(() => formatter.Serialize(stream, chunk));
+			}
+		}
+
+		[Test]
 		public void RoundtripWithBinary()
 		{
 			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));

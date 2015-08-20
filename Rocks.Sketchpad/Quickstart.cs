@@ -2,11 +2,23 @@
 
 namespace Rocks.Sketchpad
 {
+	public interface ITest
+	{
+		void Run();
+	}
+
 	public static class Quickstart
 	{
 		public static void Run()
 		{
-			Quickstart.RunSimple();
+			var rock = Rock.Create<ITest>(
+				new Options(OptimizationSetting.Debug, CodeFileOptions.Create));
+			rock.Handle(_ => _.Run());
+
+			var chunk = rock.Make();
+			chunk.Run();
+
+			rock.Verify();
 		}
 
 		public delegate void RefTargetDelegate(ref int a);
@@ -33,7 +45,9 @@ namespace Rocks.Sketchpad
 			rock.Handle(_ => _.Target(1))
 				.Raises(nameof(IHaveAnEvent.TargetEvent), EventArgs.Empty);
 
+#pragma warning disable CS0219 // Variable is assigned but its value is never used
 			var wasEventRaised = false;
+#pragma warning restore CS0219 // Variable is assigned but its value is never used
 			var chunk = rock.Make();
 			chunk.TargetEvent += (s, e) => wasEventRaised = true;
 			chunk.Target(1);
