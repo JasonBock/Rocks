@@ -15,5 +15,7 @@ namespace Rocks
 		}
 
 		public static T IsAny<T>() { return default(T); }
+
+		public static T IsDefault<T>() { return default(T); }
 	}
 }

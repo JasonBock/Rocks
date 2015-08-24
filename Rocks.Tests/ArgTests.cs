@@ -24,5 +24,11 @@ namespace Rocks.Tests
 		{
 			Assert.AreEqual(default(string), Arg.IsAny<string>(), nameof(Arg.IsAny));
 		}
+
+		[Test]
+		public void CallIsDefault()
+		{
+			Assert.AreEqual(default(string), Arg.IsDefault<string>(), nameof(Arg.IsDefault));
+		}
 	}
 }
