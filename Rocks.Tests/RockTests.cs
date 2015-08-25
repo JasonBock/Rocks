@@ -93,10 +93,10 @@ namespace Rocks.Tests
 		[Test]
 		public void RemakeWithSameOptions()
 		{
-			var rock = Rock.Create<ISameRemake>(new Options(SerializationOptions.Supported));
+			var rock = Rock.Create<ISameRemake>(new Options(serialization: SerializationOptions.Supported));
 			var chunk = rock.Make();
 
-			var secondRock = Rock.Create<ISameRemake>(new Options(SerializationOptions.Supported));
+			var secondRock = Rock.Create<ISameRemake>(new Options(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
 			Assert.AreEqual(chunk.GetType(), secondChunk.GetType());
@@ -105,10 +105,10 @@ namespace Rocks.Tests
 		[Test]
 		public void RemakeWithDifferentOptions()
 		{
-			var rock = Rock.Create<IDifferentRemake>(new Options(SerializationOptions.NotSupported));
+			var rock = Rock.Create<IDifferentRemake>(new Options(serialization: SerializationOptions.NotSupported));
 			var chunk = rock.Make();
 
-			var secondRock = Rock.Create<IDifferentRemake>(new Options(SerializationOptions.Supported));
+			var secondRock = Rock.Create<IDifferentRemake>(new Options(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
 			Assert.AreNotEqual(chunk.GetType(), secondChunk.GetType());

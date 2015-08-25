@@ -14,14 +14,15 @@ namespace Rocks.Construction
 		where T : Stream
 	{
 		protected Compiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, string assemblyName,
-			ReadOnlyCollection<Assembly> referencedAssemblies, bool allowUnsafe)
+			ReadOnlyCollection<Assembly> referencedAssemblies, bool allowUnsafe, AllowWarnings allowWarnings)
 		{
 			this.Optimization = optimization;
 			this.AssemblyName = assemblyName;
 			this.Trees = trees;
 			this.ReferencedAssemblies = referencedAssemblies;
 			this.AllowUnsafe = allowUnsafe;
-		}
+			this.AllowWarnings = allowWarnings;
+      }
 
 		internal void Compile()
 		{
@@ -40,7 +41,8 @@ namespace Rocks.Construction
 				var results = compilation.Emit(assemblyStream,
 					pdbStream: pdbStream);
 
-				if (!results.Success || results.Diagnostics.Length > 0)
+				if (!results.Success || 
+					(this.AllowWarnings == AllowWarnings.No && results.Diagnostics.Length > 0))
 				{
 					throw new CompilationException(results.Diagnostics);
 				}
@@ -69,6 +71,7 @@ namespace Rocks.Construction
 		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }
 		protected virtual void Complete() { }
 
+		internal AllowWarnings AllowWarnings { get; }
 		internal string AssemblyName { get; }
 		internal OptimizationSetting Optimization { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }

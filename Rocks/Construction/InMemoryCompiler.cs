@@ -10,8 +10,8 @@ namespace Rocks.Construction
 		: Compiler<MemoryStream>
 	{
 		internal InMemoryCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, ReadOnlyCollection<Assembly> referencedAssemblies,
-			bool allowUnsafe)
-			: base(trees, optimization, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe)
+			bool allowUnsafe, AllowWarnings allowWarnings)
+			: base(trees, optimization, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe, allowWarnings)
 		{ }
 
 		protected override MemoryStream GetAssemblyStream()

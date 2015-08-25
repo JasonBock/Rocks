@@ -18,7 +18,7 @@ namespace Rocks.Construction
 			builder.Build();
 
 			var compiler = new InMemoryCompiler(new List<SyntaxTree> { builder.Tree }, options.Optimization,
-				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe);
+				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe, options.AllowWarnings);
 			compiler.Compile();
 
 			this.Mock = compiler.Result.GetType($"{baseType.Namespace}.{builder.TypeName}");

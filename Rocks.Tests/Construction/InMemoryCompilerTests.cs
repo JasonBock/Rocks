@@ -24,7 +24,8 @@ namespace Rocks.Tests.Construction
 
 			var trees = new[] { builder.Tree };
 			var compiler = new InMemoryCompiler(trees, options.Optimization, 
-				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe);
+				new List<Assembly> { baseType.Assembly }.AsReadOnly(), builder.IsUnsafe,
+				options.AllowWarnings);
 			compiler.Compile();
 
 			Assert.AreEqual(options.Optimization, compiler.Optimization, nameof(compiler.Optimization));

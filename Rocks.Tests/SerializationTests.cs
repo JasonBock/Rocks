@@ -14,7 +14,7 @@ namespace Rocks.Tests
 		[Test]
 		public void RoundtripWithExpressions()
 		{
-			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new Options(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target(Arg.Is<string>(p => p == "44" || p == "55")));
 
 			var chunk = rock.Make();
@@ -31,7 +31,7 @@ namespace Rocks.Tests
 		[Test]
 		public void RoundtripWithBinary()
 		{
-			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new Options(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
@@ -54,7 +54,7 @@ namespace Rocks.Tests
 		[Test]
 		public void RoundtripWithXml()
 		{
-			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new Options(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
@@ -76,7 +76,7 @@ namespace Rocks.Tests
 		[Test]
 		public void RoundtripWithNetDataContract()
 		{
-			var rock = Rock.Create<IAmSerializable>(new Options(SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new Options(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();

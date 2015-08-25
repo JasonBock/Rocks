@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllowWarnings.cs" />
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />

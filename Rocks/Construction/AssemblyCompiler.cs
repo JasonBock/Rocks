@@ -14,8 +14,8 @@ namespace Rocks.Construction
 
 		internal AssemblyCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
 			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies, string assemblyPath,
-			bool allowUnsafe)
-			: base(trees, optimization, assemblyName, referencedAssemblies, allowUnsafe)
+			bool allowUnsafe, AllowWarnings allowWarnings)
+			: base(trees, optimization, assemblyName, referencedAssemblies, allowUnsafe, allowWarnings)
 		{
 			this.assemblyPath = assemblyPath;
 		}

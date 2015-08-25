@@ -61,8 +61,9 @@ namespace Rocks
 			var referencedAssemblies = this.assembly.GetReferencedAssemblies().Select(_ => Assembly.Load(_)).ToList();
 			referencedAssemblies.Add(this.assembly);
 
-         var compiler = new AssemblyCompiler(trees, this.options.Optimization, new AssemblyNameGenerator(this.assembly).AssemblyName, 
-				referencedAssemblies.AsReadOnly(), currentDirectory, allowUnsafe);
+         var compiler = new AssemblyCompiler(trees, this.options.Optimization, 
+				new AssemblyNameGenerator(this.assembly).AssemblyName, 
+				referencedAssemblies.AsReadOnly(), currentDirectory, allowUnsafe, this.options.AllowWarnings);
 			compiler.Compile();
 			return compiler.Result;
       }
