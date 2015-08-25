@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 
 namespace Rocks.Sketchpad
 {
@@ -12,7 +13,7 @@ namespace Rocks.Sketchpad
 		public static void Run()
 		{
 			var rock = Rock.Create<ITest>(
-				new Options(OptimizationSetting.Debug, CodeFileOptions.Create));
+				new RockOptions(OptimizationSetting.Debug, CodeFileOptions.Create));
 			rock.Handle(_ => _.Run());
 
 			var chunk = rock.Make();

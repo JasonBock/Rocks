@@ -1,5 +1,6 @@
 ﻿using Rocks.Construction;
 using Rocks.Exceptions;
+using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using static Rocks.Extensions.TypeExtensions;
@@ -11,10 +12,10 @@ namespace Rocks
 		public static IRock<T> Create<T>()
 			where T : class
 		{
-			return Rock.Create<T>(new Options());
+			return Rock.Create<T>(new RockOptions());
 		}
 
-		public static IRock<T> Create<T>(Options options)
+		public static IRock<T> Create<T>(RockOptions options)
 			where T : class
 		{
 			var tType = typeof(T);
@@ -30,7 +31,7 @@ namespace Rocks
 			return Rock.NewRock<T>(options, false);
 		}
 
-		private static IRock<T> NewRock<T>(Options options, bool isMake)
+		private static IRock<T> NewRock<T>(RockOptions options, bool isMake)
 			where T : class
 		{
 			var tType = typeof(T);
@@ -42,10 +43,10 @@ namespace Rocks
 		public static CreateResult<T> TryCreate<T>()
 			where T : class
 		{
-			return Rock.TryCreate<T>(new Options());
+			return Rock.TryCreate<T>(new RockOptions());
 		}
 
-		public static CreateResult<T> TryCreate<T>(Options options)
+		public static CreateResult<T> TryCreate<T>(RockOptions options)
 			where T : class
 		{
 			var result = default(IRock<T>);
@@ -68,16 +69,16 @@ namespace Rocks
 		public static T Make<T>()
 			where T : class
 		{
-			return Rock.Make<T>(new Options());
+			return Rock.Make<T>(new RockOptions());
 		}
 
-		private static Options MapForMake(Options options)
+		private static RockOptions MapForMake(RockOptions options)
 		{
-			return new Options(options.Optimization, options.CodeFile, 
+			return new RockOptions(options.Optimization, options.CodeFile, 
 				options.Serialization, CachingOptions.UseCache);
 		}
 
-		public static T Make<T>(Options options)
+		public static T Make<T>(RockOptions options)
 			where T : class
 		{
 			var mappedOptions = Rock.MapForMake(options);
@@ -97,10 +98,10 @@ namespace Rocks
 		public static MakeResult<T> TryMake<T>()
 			where T : class
 		{
-			return Rock.TryMake<T>(new Options());
+			return Rock.TryMake<T>(new RockOptions());
 		}
 
-		public static MakeResult<T> TryMake<T>(Options options)
+		public static MakeResult<T> TryMake<T>(RockOptions options)
 			where T : class
 		{
 			var mappedOptions = Rock.MapForMake(options);

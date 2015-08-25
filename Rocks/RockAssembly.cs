@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Construction;
+using Rocks.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,21 +17,21 @@ namespace Rocks
 	{
 		private readonly Assembly assembly;
 		private readonly string currentDirectory;
-		private readonly Options options;
+		private readonly RockOptions options;
 
 		public RockAssembly(Assembly assembly)
-			: this(assembly, new Options())
+			: this(assembly, new RockOptions())
 		{ }
 
-		public RockAssembly(Assembly assembly, Options options)
+		public RockAssembly(Assembly assembly, RockOptions options)
 			: this(assembly, options, Environment.CurrentDirectory)
 		{ }
 
 		public RockAssembly(Assembly assembly, string currentDirectory)
-			: this(assembly, new Options(), currentDirectory)
+			: this(assembly, new RockOptions(), currentDirectory)
 		{ }
 
-		public RockAssembly(Assembly assembly, Options options, string currentDirectory)
+		public RockAssembly(Assembly assembly, RockOptions options, string currentDirectory)
 		{
 			this.assembly = assembly;
 			this.options = options;

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Options;
 using System;
 
 namespace Rocks.Tests
@@ -10,9 +11,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenEqual()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new Options(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 			var cacheKey2 = new CacheKey(this.GetType(),
-				new Options(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 
 			Assert.AreEqual(cacheKey1, cacheKey2);
 		}
@@ -21,9 +22,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenNotEqualViaDifferentOptions()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new Options(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 			var cacheKey2 = new CacheKey(this.GetType(),
-				new Options(OptimizationSetting.Release, CodeFileOptions.None, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.None, SerializationOptions.Supported));
 
 			Assert.AreNotEqual(cacheKey1, cacheKey2);
 		}
@@ -32,9 +33,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenNotEqualViaDifferentTypes()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new Options(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 			var cacheKey2 = new CacheKey(typeof(Guid),
-				new Options(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
+				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 
 			Assert.AreNotEqual(cacheKey1, cacheKey2);
 		}

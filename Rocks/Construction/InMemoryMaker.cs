@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace Rocks.Construction
 
 		internal InMemoryMaker(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options, bool isMake)
+			SortedSet<string> namespaces, RockOptions options, bool isMake)
 		{
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, isMake);
 			builder.Build();

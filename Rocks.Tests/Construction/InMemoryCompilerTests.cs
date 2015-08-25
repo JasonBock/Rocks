@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Construction;
+using Rocks.Options;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();

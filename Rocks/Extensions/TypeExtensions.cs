@@ -1,5 +1,6 @@
 ﻿using Rocks.Construction;
 using Rocks.Exceptions;
+using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

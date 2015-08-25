@@ -179,7 +179,7 @@
     <Compile Include="NestedTypesTests.cs" />
     <Compile Include="NonPublicTests.cs" />
     <Compile Include="ObsoleteTests.cs" />
-    <Compile Include="OptionsTests.cs" />
+    <Compile Include="Options\RockOptionsTests.cs" />
     <Compile Include="ParamsAndOptionalArgumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyMethodAdornmentsTests.cs" />

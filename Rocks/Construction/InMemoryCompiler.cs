@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
+using Rocks.Options;
 
 namespace Rocks.Construction
 {

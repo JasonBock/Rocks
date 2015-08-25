@@ -1,8 +1,8 @@
-﻿namespace Rocks
+﻿namespace Rocks.Options
 {
-	public sealed class Options
+	public sealed class RockOptions
 	{
-		public Options(OptimizationSetting level = OptimizationSetting.Release, 
+		public RockOptions(OptimizationSetting level = OptimizationSetting.Release, 
 			CodeFileOptions codeFile = CodeFileOptions.None, 
 			SerializationOptions serialization = SerializationOptions.NotSupported,
 			CachingOptions caching = CachingOptions.UseCache, 

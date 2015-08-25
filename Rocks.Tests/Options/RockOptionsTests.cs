@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
+using Rocks.Options;
 
-namespace Rocks.Tests
+namespace Rocks.Tests.Options
 {
 	[TestFixture]
 	public sealed class OptionsTests
@@ -8,7 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithDefaults()
 		{
-			var options = new Options();
+			var options = new RockOptions();
 			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
@@ -20,7 +21,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithOptimizationLevelDebug()
 		{
-			var options = new Options(level: OptimizationSetting.Debug);
+			var options = new RockOptions(level: OptimizationSetting.Debug);
 			Assert.AreEqual(OptimizationSetting.Debug, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
@@ -32,7 +33,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithCodeFileOptionsCreate()
 		{
-			var options = new Options(codeFile: CodeFileOptions.Create);
+			var options = new RockOptions(codeFile: CodeFileOptions.Create);
 			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
@@ -44,7 +45,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithSerializationOptionsSupported()
 		{
-			var options = new Options(serialization: SerializationOptions.Supported);
+			var options = new RockOptions(serialization: SerializationOptions.Supported);
 			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
@@ -56,7 +57,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithCachingOptionsGenerateNewVersion()
 		{
-			var options = new Options(caching: CachingOptions.GenerateNewVersion);
+			var options = new RockOptions(caching: CachingOptions.GenerateNewVersion);
 			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
@@ -68,7 +69,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithAllowWarningsYes()
 		{
-			var options = new Options(allowWarnings: AllowWarnings.Yes);
+			var options = new RockOptions(allowWarnings: AllowWarnings.Yes);
 			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
 			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
 			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));

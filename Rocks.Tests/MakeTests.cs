@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Options;
 using System.Threading.Tasks;
 
 namespace Rocks.Tests
@@ -43,8 +44,8 @@ namespace Rocks.Tests
 		[Test]
 		public void EnsureMakeAlwaysUsesCache()
 		{
-			var chunk1 = Rock.Make<IAmForMaking>(new Options(caching: CachingOptions.GenerateNewVersion));
-			var chunk2 = Rock.Make<IAmForMaking>(new Options(caching: CachingOptions.GenerateNewVersion));
+			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
+			var chunk2 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
 
 			Assert.AreEqual(chunk2.GetType(), chunk1.GetType());
 		}

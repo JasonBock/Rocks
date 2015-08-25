@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
 using Rocks.Extensions;
+using Rocks.Options;
 using Rocks.Templates;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Rocks.Construction
 	{
       internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options, NameGenerator generator,
+			SortedSet<string> namespaces, RockOptions options, NameGenerator generator,
 			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator,
 			bool isMake)
 		{
@@ -455,7 +456,7 @@ namespace Rocks.Construction
 		protected abstract string GetDirectoryForFile();
 		protected virtual string GetAdditionNamespaceCode() => string.Empty;
 
-		internal Options Options { get; }
+		internal RockOptions Options { get; }
 		internal SyntaxTree Tree { get; private set; }
 		internal Type BaseType { get; }
 		internal bool IsUnsafe { get; private set; }

@@ -118,7 +118,7 @@ namespace Rocks.Tests
 		public void MakeOutActionWithDelegate()
 		{
 			var a = 1;
-			var rock = Rock.Create<IHaveRefAndOut>(new Options(codeFile: CodeFileOptions.Create));
+			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Handle(_ => _.OutTarget(out a), new OutTarget(this.MyActionOutTarget));
 
 			var chunk = rock.Make();

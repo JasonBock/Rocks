@@ -1,4 +1,5 @@
 ﻿using Rocks.Extensions;
+using Rocks.Options;
 using Rocks.Templates;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Rocks.Construction
 
 		internal AssemblyBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options)
+			SortedSet<string> namespaces, RockOptions options)
 			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType),
 				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces), false)
 		{ }

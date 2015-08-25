@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Rocks.Construction;
 using Rocks.Exceptions;
+using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
@@ -53,7 +54,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
@@ -73,7 +74,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
@@ -93,7 +94,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
@@ -113,7 +114,7 @@ namespace Rocks.Tests.Construction
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
 			var namespaces = new SortedSet<string> { baseType.Namespace };
-			var options = new Options();
+			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();

@@ -4,6 +4,7 @@ using Rocks.Exceptions;
 using System.IO;
 using System.Runtime.InteropServices;
 using System;
+using Rocks.Options;
 
 namespace Rocks.Tests
 {
@@ -55,7 +56,7 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithFile()
 		{
-			var rock = Rock.Create<IFileTests>(new Options(OptimizationSetting.Debug, CodeFileOptions.Create));
+			var rock = Rock.Create<IFileTests>(new RockOptions(OptimizationSetting.Debug, CodeFileOptions.Create));
 			rock.Handle(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();
@@ -93,10 +94,10 @@ namespace Rocks.Tests
 		[Test]
 		public void RemakeWithSameOptions()
 		{
-			var rock = Rock.Create<ISameRemake>(new Options(serialization: SerializationOptions.Supported));
+			var rock = Rock.Create<ISameRemake>(new RockOptions(serialization: SerializationOptions.Supported));
 			var chunk = rock.Make();
 
-			var secondRock = Rock.Create<ISameRemake>(new Options(serialization: SerializationOptions.Supported));
+			var secondRock = Rock.Create<ISameRemake>(new RockOptions(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
 			Assert.AreEqual(chunk.GetType(), secondChunk.GetType());
@@ -105,10 +106,10 @@ namespace Rocks.Tests
 		[Test]
 		public void RemakeWithDifferentOptions()
 		{
-			var rock = Rock.Create<IDifferentRemake>(new Options(serialization: SerializationOptions.NotSupported));
+			var rock = Rock.Create<IDifferentRemake>(new RockOptions(serialization: SerializationOptions.NotSupported));
 			var chunk = rock.Make();
 
-			var secondRock = Rock.Create<IDifferentRemake>(new Options(serialization: SerializationOptions.Supported));
+			var secondRock = Rock.Create<IDifferentRemake>(new RockOptions(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
 			Assert.AreNotEqual(chunk.GetType(), secondChunk.GetType());

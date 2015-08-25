@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -10,7 +11,7 @@ namespace Rocks.Construction
 	{
 		internal InMemoryBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
-			SortedSet<string> namespaces, Options options, bool isMake)
+			SortedSet<string> namespaces, RockOptions options, bool isMake)
 			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator(),
 				new InMemoryMethodInformationBuilder(namespaces, handlers), 
 				new InMemoryTypeNameGenerator(namespaces), isMake)

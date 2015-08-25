@@ -1038,6 +1038,25 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithALotOfIndexers()
+		{
+			var a0 = 0;
+			var a1 = 1;
+			var a2 = 2;
+			var a3 = 3;
+			var a4 = 4;
+
+			var rock = Rock.Create<IHaveALotOfIndexers>();
+			rock.Handle(() => new object[] { a0, a1, a2, a3, a4 });
+
+			var chunk = rock.Make();
+			chunk[a0, a1, a2, a3, a4] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a0, a1, a2, a3, a4];
+
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGenericReturnValue()
 		{
 			var rock = Rock.Create<IProperties<Guid>>();
@@ -1059,5 +1078,10 @@ namespace Rocks.Tests
 	public interface IProperties<T>
 	{
 		IEnumerable<T> Target { get; set; }
+	}
+
+	public interface IHaveALotOfIndexers
+	{
+		string this[int a0, int a1, int a2, int a3, int a4] { get; set; }
 	}
 }

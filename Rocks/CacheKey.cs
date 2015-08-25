@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 
 namespace Rocks
 {
@@ -6,9 +7,9 @@ namespace Rocks
 		: IEquatable<CacheKey>
 	{
 		private Type type;
-		private Options options;
+		private RockOptions options;
 
-		internal CacheKey(Type type, Options options)
+		internal CacheKey(Type type, RockOptions options)
 		{
 			this.type = type;
 			this.options = options;

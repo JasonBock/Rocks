@@ -51,15 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllowWarnings.cs" />
+    <Compile Include="Options\AllowWarnings.cs" />
     <Compile Include="Arg.cs" />
     <Compile Include="ArgumentExpectationOfT.cs" />
     <Compile Include="ArgumentExpectation.cs" />
     <Compile Include="AssemblyRock.cs" />
     <Compile Include="CacheKey.cs" />
-    <Compile Include="CachingOptions.cs" />
-    <Compile Include="CodeFileOptions.cs" />
-    <Compile Include="OptimizationSetting.cs" />
+    <Compile Include="Options\CachingOptions.cs" />
+    <Compile Include="Options\CodeFileOptions.cs" />
+    <Compile Include="Options\OptimizationSetting.cs" />
     <Compile Include="Templates\ClassTemplates.cs" />
     <Compile Include="Templates\CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
@@ -128,11 +128,11 @@
     <Compile Include="Rock.cs" />
     <Compile Include="Exceptions\VerificationException.cs" />
     <Compile Include="Exceptions\CompilationException.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="Options\RockOptions.cs" />
     <Compile Include="Exceptions\ValidationException.cs" />
     <Compile Include="Construction\InMemoryMaker.cs" />
     <Compile Include="AssemblyBinder.cs" />
-    <Compile Include="SerializationOptions.cs" />
+    <Compile Include="Options\SerializationOptions.cs" />
     <Compile Include="Templates\ConstructorTemplates.cs" />
     <Compile Include="Templates\EventTemplates.cs" />
     <Compile Include="Templates\MethodTemplates.cs" />

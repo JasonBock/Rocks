@@ -1,4 +1,4 @@
-﻿namespace Rocks
+﻿namespace Rocks.Options
 {
 	public enum CachingOptions
 	{

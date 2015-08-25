@@ -16,8 +16,7 @@ namespace Rocks.Tests
 
 		public RockAssemblyTests()
 		{
-			this.assembly = new RockAssembly(typeof(Class1).Assembly,
-				new Options(codeFile: CodeFileOptions.Create)).Result;
+			this.assembly = new RockAssembly(typeof(Class1).Assembly).Result;
 		}
 
 		[Test]
@@ -67,7 +66,7 @@ namespace Rocks.Tests
 			Assert.IsTrue(this.wasMethod5DelegateCalled);
 		}
 
-		[Test, Ignore("A")]
+		[Test]
 		public void GenerateForMscorlib()
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();

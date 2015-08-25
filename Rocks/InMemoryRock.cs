@@ -1,4 +1,5 @@
 ﻿using Rocks.Construction;
+using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,10 +11,10 @@ namespace Rocks
 		: RockCore<T>
 		where T : class
 	{
-		private readonly Options options;
+		private readonly RockOptions options;
 		private readonly bool isMake;
 
-		internal InMemoryRock(Options options, bool isMake)
+		internal InMemoryRock(RockOptions options, bool isMake)
 		{
 			this.options = options;
 			this.isMake = isMake;
