@@ -4,9 +4,9 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Templates
 {
-	public static class MethodTemplates
+	internal static class MethodTemplates
 	{
-		public static string GetDefaultReturnValue(Type returnType)
+		internal static string GetDefaultReturnValue(Type returnType)
 		{
 			if (typeof(Task).IsAssignableFrom(returnType))
 			{
@@ -26,16 +26,16 @@ namespace Rocks.Templates
 			}
 		}
 
-		public static string GetAssemblyDelegate(string returnType, string delegateName, string arguments, bool isUnsafe) =>
+		internal static string GetAssemblyDelegate(string returnType, string delegateName, string arguments, bool isUnsafe) =>
 			$"public {CodeTemplates.GetIsUnsafe(isUnsafe)} delegate {returnType} {delegateName}({arguments});";
 
-		public static string GetNonPublicActionImplementation(string visibility, string methodName, string outInitializers, string requiresNew) =>
+		internal static string GetNonPublicActionImplementation(string visibility, string methodName, string outInitializers, string requiresNew) =>
 $@"{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
 }}";
 
-		public static string GetNonPublicFunctionImplementation(string visibility, string methodName, string outInitializers, Type returnType, string requiresNew, string returnTypeAttributes) =>
+		internal static string GetNonPublicFunctionImplementation(string visibility, string methodName, string outInitializers, Type returnType, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 {{
 	{outInitializers}	
@@ -43,13 +43,13 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
 
-		public static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
+		internal static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
 	throw new NotImplementedException();
 }}";
 
-		public static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
+		internal static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
 $@"{visibility} {methodNameWithOverride}
 {{
@@ -88,13 +88,13 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetActionMethodForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
+		internal static string GetActionMethodForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 }}";
 
-		public static string GetActionMethodWithNoArguments(int methodHandle, string argumentNames, string delegateCast, string outInitializers,
+		internal static string GetActionMethodWithNoArguments(int methodHandle, string argumentNames, string delegateCast, string outInitializers,
 			string methodNameWithOverride, string visibility) =>
 $@"{visibility} {methodNameWithOverride}
 {{
@@ -118,13 +118,13 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetActionMethodWithNoArgumentsForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
+		internal static string GetActionMethodWithNoArgumentsForMake(string outInitializers, string methodNameWithOverride, string visibility) =>
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 }}";
 
-		public static string GetFunctionWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
+		internal static string GetFunctionWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
 			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
@@ -154,7 +154,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithReferenceTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
+		internal static string GetFunctionWithReferenceTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
 			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
@@ -177,7 +177,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithValueTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
+		internal static string GetFunctionWithValueTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
 			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
@@ -207,7 +207,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionWithValueTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
+		internal static string GetFunctionWithValueTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
 			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
@@ -230,7 +230,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	}}
 }}";
 
-		public static string GetFunctionForMake(string outInitializers, string methodNameWithOverride, string visibility,
+		internal static string GetFunctionForMake(string outInitializers, string methodNameWithOverride, string visibility,
 			string requiresNew, string returnTypeAttributes, Type returnType) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{

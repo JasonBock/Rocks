@@ -21,7 +21,7 @@ namespace Rocks.Construction
 	internal abstract class Builder<TInformationBuilder>
 		where TInformationBuilder : MethodInformationBuilder
 	{
-		internal Builder(Type baseType,
+      internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, Options options, NameGenerator generator,
 			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator,
@@ -45,7 +45,7 @@ namespace Rocks.Construction
 			this.Tree = this.MakeTree();
 		}
 
-		private List<string> GetGeneratedConstructors()
+		private string GetGeneratedConstructors()
 		{
 			var generatedConstructors = new List<string>();
 			var constructorName = this.GetTypeNameWithNoGenerics();
@@ -75,10 +75,10 @@ namespace Rocks.Construction
 				}
 			}
 
-			return generatedConstructors;
+			return string.Join(Environment.NewLine, generatedConstructors);
 		}
 
-		private List<string> GetGeneratedMethods()
+		private string GetGeneratedMethods()
 		{
 			var generatedMethods = new List<string>();
 
@@ -140,7 +140,7 @@ namespace Rocks.Construction
 				}
 			}
 
-			return generatedMethods;
+			return string.Join(Environment.NewLine, generatedMethods);
 		}
 
 		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
@@ -209,7 +209,7 @@ namespace Rocks.Construction
 			}
 		}
 
-		private List<string> GetGeneratedProperties()
+		private string GetGeneratedProperties()
 		{
 			var generatedProperties = new List<string>();
 
@@ -377,7 +377,7 @@ namespace Rocks.Construction
 				}
 			}
 
-			return generatedProperties;
+			return string.Join(Environment.NewLine, generatedProperties);
 		}
 
 		protected string GetTypeNameWithNoGenerics() => this.TypeName.Split('<').First();
@@ -389,10 +389,11 @@ namespace Rocks.Construction
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties();
-			var events = this.GetGeneratedEvents();
+			var generatedEvents = this.GetGeneratedEvents();
+			var events = generatedEvents.Events.Count > 0 ? EventTemplates.GetEvents(generatedEvents.Events) : string.Empty;
 
 			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
-				events.RequiresObsoleteSuppression;
+				generatedEvents.RequiresObsoleteSuppression;
 
 			this.Namespaces.Add(typeof(ExpectationException).Namespace);
 			this.Namespaces.Add(typeof(IMock).Namespace);
@@ -404,15 +405,13 @@ namespace Rocks.Construction
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
 
-			var @class = CodeTemplates.GetClass(
-				string.Join(Environment.NewLine,
+			var namespaces = string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
-					 select $"using {@namespace};")),
+					 select $"using {@namespace};"));
+
+			var @class = ClassTemplates.GetClass(namespaces,
 				this.TypeName, this.BaseType.GetFullName(),
-				string.Join(Environment.NewLine, methods),
-				string.Join(Environment.NewLine, properties),
-				string.Join(Environment.NewLine, events.Events),
-				string.Join(Environment.NewLine, constructors),
+				methods, properties, events, constructors,
 				this.BaseType.Namespace,
 				this.Options.Serialization == SerializationOptions.Supported ?
 					"[Serializable]" : string.Empty,
@@ -423,12 +422,7 @@ namespace Rocks.Construction
 
 			if (this.RequiresObsoleteSuppression)
 			{
-				@class =
-$@"#pragma warning disable CS0618
-#pragma warning disable CS0672
-{@class}
-#pragma warning restore CS0672
-#pragma warning restore CS0618";
+				@class = ClassTemplates.GetClassWithObsoleteSuppression(@class);
 			}
 
 			return @class;

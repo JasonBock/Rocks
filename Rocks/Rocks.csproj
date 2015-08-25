@@ -60,6 +60,7 @@
     <Compile Include="CachingOptions.cs" />
     <Compile Include="CodeFileOptions.cs" />
     <Compile Include="OptimizationSetting.cs" />
+    <Compile Include="Templates\ClassTemplates.cs" />
     <Compile Include="Templates\CodeTemplates.cs" />
     <Compile Include="Construction\AssemblyBuilder.cs" />
     <Compile Include="Construction\AssemblyCompiler.cs" />

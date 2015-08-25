@@ -72,8 +72,7 @@ namespace Rocks.Tests
 		{
 			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
-			new RockAssembly(typeof(object).Assembly,
-				new Options(codeFile: CodeFileOptions.Create));
+			new RockAssembly(typeof(object).Assembly);
 
 			stopwatch.Stop();
 
