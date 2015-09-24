@@ -10,7 +10,7 @@ namespace Rocks.Tests.Templates
 		public void GetConstructor()
 		{
 			Assert.AreEqual(
-@"public a(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlersc)
+@"public a(SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlersc)
 	: base(b)
 {
 	this.handlers = handlers;
@@ -23,8 +23,8 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"public a() 
 { 
-	this.handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
-		new System.Collections.Generic.Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+	this.handlers = new SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>(
+		new SCG.Dictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>());
 }", ConstructorTemplates.GetConstructorWithNoArguments("a"));
 		}
 	}

@@ -10,14 +10,14 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForGenericTask()
 		{
-			Assert.AreEqual("Task.FromResult<Int32>(default(Int32))",
+			Assert.AreEqual("STT.Task.FromResult<Int32>(default(Int32))",
 				MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)));
 		}
 
 		[Test]
 		public void GetDefaultReturnValueForTask()
 		{
-			Assert.AreEqual("Task.CompletedTask",
+			Assert.AreEqual("STT.Task.CompletedTask",
 				MethodTemplates.GetDefaultReturnValue(typeof(Task)));
 		}
 
@@ -68,7 +68,7 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"public a
 {
-	throw new NotImplementedException();
+	throw new S.NotImplementedException();
 }", MethodTemplates.GetRefOutNotImplementedMethod("a"));
 		}
 
@@ -79,7 +79,7 @@ namespace Rocks.Tests.Templates
 @"h g
 {
 	e
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -104,12 +104,12 @@ namespace Rocks.Tests.Templates
 
 		if(!foundMatch)
 		{
-			throw new ExpectationException($""No handlers were found for f"");
+			throw new RE.ExpectationException($""No handlers were found for f"");
 		}
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h"));
 		}
@@ -131,7 +131,7 @@ namespace Rocks.Tests.Templates
 @"f e
 {
 	d
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -146,7 +146,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"));
 		}
@@ -168,7 +168,7 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -178,18 +178,18 @@ namespace Rocks.Tests.Templates
 			{
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as e)(b) as c :
-					(methodHandler as HandlerInformation<c>).ReturnValue;
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
 		}
 
-		throw new ExpectationException($""No handlers were found for g"");
+		throw new RE.ExpectationException($""No handlers were found for g"");
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
 		}
@@ -213,21 +213,21 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as d)(b) as c :
-			(methodHandler as HandlerInformation<c>).ReturnValue;
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"));
 		}
@@ -239,7 +239,7 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -249,18 +249,18 @@ namespace Rocks.Tests.Templates
 			{
 				var result = methodHandler.Method != null ?
 					(c)(methodHandler.Method as e)(b) :
-					(methodHandler as HandlerInformation<c>).ReturnValue;
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
 		}
 
-		throw new ExpectationException($""No handlers were found for g"");
+		throw new RE.ExpectationException($""No handlers were found for g"");
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
 		}
@@ -272,21 +272,21 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(c)(methodHandler.Method as d)(b) :
-			(methodHandler as HandlerInformation<c>).ReturnValue;
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"));
 		}

@@ -24,7 +24,7 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"g get
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -34,18 +34,18 @@ namespace Rocks.Tests.Templates
 			{
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as e)(b) as c :
-					(methodHandler as HandlerInformation<c>).ReturnValue;
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
 		}
 
-		throw new ExpectationException($""No handlers were found for f"");
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g"));
 		}
@@ -56,21 +56,21 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"e get
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as d)(b) as c :
-			(methodHandler as HandlerInformation<c>).ReturnValue;
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"));
 		}
@@ -81,7 +81,7 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"g get
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -91,18 +91,18 @@ namespace Rocks.Tests.Templates
 			{
 				var result = methodHandler.Method != null ?
 					(c)(methodHandler.Method as e)(b) :
-					(methodHandler as HandlerInformation<c>).ReturnValue;
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}
 		}
 
-		throw new ExpectationException($""No handlers were found for f"");
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g"));
 		}
@@ -113,21 +113,21 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"e get
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(c)(methodHandler.Method as d)(b) :
-			(methodHandler as HandlerInformation<c>).ReturnValue;
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"));
 		}
@@ -148,7 +148,7 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"f set
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -173,12 +173,12 @@ namespace Rocks.Tests.Templates
 
 		if(!foundMatch)
 		{
-			throw new ExpectationException($""No handlers were found for e"");
+			throw new RE.ExpectationException($""No handlers were found for e"");
 		}
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertySet(1, "b", "c", "d", "e", "f"));
 		}
@@ -189,7 +189,7 @@ namespace Rocks.Tests.Templates
 			Assert.AreEqual(
 @"d set
 {
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue(1, out methodHandlers))
 	{
@@ -205,7 +205,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}
 }", PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d"));
 		}

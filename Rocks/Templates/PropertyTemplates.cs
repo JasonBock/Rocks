@@ -12,7 +12,7 @@
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
 $@"{visibility} get
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -22,18 +22,18 @@ $@"{visibility} get
 			{{
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
 		}}
 
-		throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -41,21 +41,21 @@ $@"{visibility} get
 			string delegateCast, string visibility) =>
 $@"{visibility} get
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnType} :
-			(methodHandler as HandlerInformation<{returnType}>).ReturnValue;
+			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -63,7 +63,7 @@ $@"{visibility} get
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
 $@"{visibility} get
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -73,18 +73,18 @@ $@"{visibility} get
 			{{
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
 		}}
 
-		throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -92,21 +92,21 @@ $@"{visibility} get
 			string delegateCast, string visibility) =>
 $@"{visibility} get
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			({returnType})(methodHandler.Method as {delegateCast})({argumentNames}) :
-			(methodHandler as HandlerInformation<{returnType}>).ReturnValue;
+			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -120,7 +120,7 @@ $@"{visibility} get
 			string methodWithArgumentValues, string visibility) =>
 $@"{visibility} set
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -145,12 +145,12 @@ $@"{visibility} set
 
 		if(!foundMatch)
 		{{
-			throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+			throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 		}}
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -158,7 +158,7 @@ $@"{visibility} set
 			string delegateCast, string visibility) =>
 $@"{visibility} set
 {{
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -174,7 +174,7 @@ $@"{visibility} set
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 

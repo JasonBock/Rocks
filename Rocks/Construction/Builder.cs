@@ -396,12 +396,6 @@ namespace Rocks.Construction
 			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
 				generatedEvents.RequiresObsoleteSuppression;
 
-			this.Namespaces.Add(typeof(ExpectationException).Namespace);
-			this.Namespaces.Add(typeof(IMock).Namespace);
-			this.Namespaces.Add(typeof(HandlerInformation).Namespace);
-			this.Namespaces.Add(typeof(string).Namespace);
-			this.Namespaces.Add(typeof(ReadOnlyDictionary<,>).Namespace);
-			this.Namespaces.Add(typeof(BindingFlags).Namespace);
 			this.Namespaces.Remove(this.BaseType.Namespace);
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);

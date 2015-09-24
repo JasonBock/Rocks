@@ -14,15 +14,22 @@ $@"#pragma warning disable CS0618
 			string classAttributes, string noArgumentConstructor, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
 $@"#pragma warning disable CS8019
 {usingStatements}
+using R = Rocks;
+using RE = Rocks.Exceptions;
+using S = System;
+using SCG = System.Collections.Generic;
+using SCO = System.Collections.ObjectModel;
+using SR = System.Reflection;
+using STT = System.Threading.Tasks;
 #pragma warning restore CS8019
 
 namespace {baseTypeNamespace}
 {{
 	{classAttributes}
 	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
-		: {baseType}, Rocks.IMock {baseTypeConstraints}
+		: {baseType}, R.IMock {baseTypeConstraints}
 	{{
-		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
+		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
 		{noArgumentConstructor}
 
@@ -34,17 +41,17 @@ namespace {baseTypeNamespace}
 
 		{implementedEvents}
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
 		{{
 			get {{ return this.handlers; }}
 		}}
 
-		void Rocks.IMock.Raise(string eventName, EventArgs args)
+		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{{
 			var thisType = this.GetType();
 
-			var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, 
-				BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
+				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
 
 			if (eventDelegate != null)
 			{{

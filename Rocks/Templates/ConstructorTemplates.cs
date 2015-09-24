@@ -3,7 +3,7 @@
 	internal static class ConstructorTemplates
 	{
 		internal static string GetConstructor(string typeName, string argumentNames, string argumentNamesWithTypes) =>
-$@"public {typeName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers{argumentNamesWithTypes})
+$@"public {typeName}(SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers{argumentNamesWithTypes})
 	: base({argumentNames})
 {{
 	this.handlers = handlers;
@@ -12,8 +12,8 @@ $@"public {typeName}(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformati
 		internal static string GetConstructorWithNoArguments(string mockTypeName) =>
 $@"public {mockTypeName}() 
 {{ 
-	this.handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
-		new System.Collections.Generic.Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
+	this.handlers = new SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>(
+		new SCG.Dictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>());
 }}";
 	}
 }

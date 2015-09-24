@@ -13,11 +13,11 @@ namespace Rocks.Templates
 				if (returnType.IsGenericType && typeof(Task<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
 				{
 					var taskReturnType = returnType.GetGenericArguments()[0].GetFullName();
-					return $"Task.FromResult<{taskReturnType}>(default({taskReturnType}))";
+					return $"STT.Task.FromResult<{taskReturnType}>(default({taskReturnType}))";
 				}
 				else
 				{
-					return "Task.CompletedTask";
+					return "STT.Task.CompletedTask";
 				}
 			}
 			else
@@ -42,11 +42,11 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 	
 	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
-
+		
 		internal static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride}
 {{
-	throw new NotImplementedException();
+	throw new S.NotImplementedException();
 }}";
 
 		internal static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
@@ -54,7 +54,7 @@ $@"public {methodNameWithOverride}
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -79,12 +79,12 @@ $@"{visibility} {methodNameWithOverride}
 
 		if(!foundMatch)
 		{{
-			throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+			throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 		}}
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -99,7 +99,7 @@ $@"{visibility} {methodNameWithOverride}
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -114,7 +114,7 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -129,7 +129,7 @@ $@"{visibility} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -139,18 +139,18 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 			{{
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
 		}}
 
-		throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -159,21 +159,21 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-			(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -182,7 +182,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
@@ -192,18 +192,18 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 			{{
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-					(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
 		}}
 
-		throw new ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 
@@ -212,21 +212,21 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	ReadOnlyCollection<HandlerInformation> methodHandlers = null;
+	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
 	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
 			({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-			(methodHandler as HandlerInformation<{returnTypeName}>).ReturnValue;
+			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
 	else
 	{{
-		throw new NotImplementedException();
+		throw new S.NotImplementedException();
 	}}
 }}";
 

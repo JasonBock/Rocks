@@ -11,7 +11,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecks()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as ArgumentExpectation<String>).IsValid(c, ""c"")";
+@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var expectations = target.GetExpectationChecks();
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
@@ -21,7 +21,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecksWithPointerTypes()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as ArgumentExpectation<String>).IsValid(c, ""c"")";
+@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithPointers));
 			var expectations = target.GetExpectationChecks();
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
@@ -31,7 +31,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecksWithGenericTypes()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as ArgumentExpectation<IEquatable<Int32>>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as ArgumentExpectation<String>).IsValid(c, ""c"")";
+@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<IEquatable<Int32>>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			var expectations = target.GetExpectationChecks();
 			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));

@@ -23,15 +23,22 @@ a
 			Assert.AreEqual(
 @"#pragma warning disable CS8019
 a
+using R = Rocks;
+using RE = Rocks.Exceptions;
+using S = System;
+using SCG = System.Collections.Generic;
+using SCO = System.Collections.ObjectModel;
+using SR = System.Reflection;
+using STT = System.Threading.Tasks;
 #pragma warning restore CS8019
 
 namespace h
 {
 	i
 	public unsafe sealed class b
-		: c, Rocks.IMock m
+		: c, R.IMock m
 	{
-		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
+		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
 		k
 
@@ -43,17 +50,17 @@ namespace h
 
 		f
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
 		{
 			get { return this.handlers; }
 		}
 
-		void Rocks.IMock.Raise(string eventName, EventArgs args)
+		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
 			var thisType = this.GetType();
 
-			var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, 
-				BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
+				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
 
 			if (eventDelegate != null)
 			{
@@ -75,15 +82,22 @@ namespace h
 			Assert.AreEqual(
 @"#pragma warning disable CS8019
 a
+using R = Rocks;
+using RE = Rocks.Exceptions;
+using S = System;
+using SCG = System.Collections.Generic;
+using SCO = System.Collections.ObjectModel;
+using SR = System.Reflection;
+using STT = System.Threading.Tasks;
 #pragma warning restore CS8019
 
 namespace h
 {
 	i
 	public  sealed class b
-		: c, Rocks.IMock m
+		: c, R.IMock m
 	{
-		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
+		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
 		k
 
@@ -95,17 +109,17 @@ namespace h
 
 		f
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
 		{
 			get { return this.handlers; }
 		}
 
-		void Rocks.IMock.Raise(string eventName, EventArgs args)
+		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
 			var thisType = this.GetType();
 
-			var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, 
-				BindingFlags.Instance | BindingFlags.NonPublic).GetValue(this);
+			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
+				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
 
 			if (eventDelegate != null)
 			{
