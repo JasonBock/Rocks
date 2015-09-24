@@ -22,6 +22,32 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithGetAndSetPropertyButOnlyExpectGetter()
+		{
+			var rock = Rock.Create<IProperties>();
+			rock.Handle(nameof(IProperties.GetterAndSetter), () => "44");
+
+			var chunk = rock.Make();
+			Assert.AreEqual("44", chunk.GetterAndSetter);
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeWithGetAndSetPropertyButOnlyExpectSetter()
+		{
+			string value = null;
+			var rock = Rock.Create<IProperties>();
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), _ => value = _);
+
+			var chunk = rock.Make();
+			chunk.GetterAndSetter = "44";
+			Assert.AreEqual("44", value);
+
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
