@@ -1,9 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rocks.Exceptions;
 using System.IO;
-using System.Runtime.InteropServices;
-using System;
 using Rocks.Options;
 
 namespace Rocks.Tests
@@ -72,6 +69,13 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWhenTypeNameExistsInRocksAssembly()
+		{
+			var rock = Rock.Create<SomeNamespaceOtherThanRocks.IMock>();
+			var chunk = rock.Make();
+		}
+
+		[Test]
 		public void Remake()
 		{
 			var rock = Rock.Create<IRockTests>();
@@ -135,5 +139,14 @@ namespace Rocks.Tests
 	public interface IFileTests
 	{
 		void Member(string a, int b);
+	}
+
+	namespace SomeNamespaceOtherThanRocks
+	{
+		public abstract class ArgumentExpectation { }
+      public interface IMock
+		{
+			void Target(ArgumentExpectation a);
+		}
 	}
 }

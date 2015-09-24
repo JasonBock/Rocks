@@ -340,15 +340,25 @@ namespace Rocks.Extensions
 
 		internal static string GetSafeName(this Type @this)
 		{
-			return @this.GetSafeName(null, new SortedSet<string>());
+			return @this.GetSafeName(new SortedSet<string>());
 		}
 
-		internal static string GetSafeName(this Type @this, MethodBase context, SortedSet<string> namespaces)
+		internal static string GetSafeName(this Type @this, SortedSet<string> namespaces)
 		{
 			namespaces.Add(@this.Namespace);
-			return !string.IsNullOrWhiteSpace(@this.FullName) ?
-				@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-				@this.Name.Split('`')[0];
+
+			var isConflictingTypeName = typeof(TypeExtensions).Assembly.GetTypes().Any(_ => _.Name == @this.Name);
+
+			if(isConflictingTypeName)
+			{
+				return @this.FullName.Split('`')[0];
+         }
+			else
+			{
+				return !string.IsNullOrWhiteSpace(@this.FullName) ?
+					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+					@this.Name.Split('`')[0];
+			}
 		}
 
 		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)

@@ -21,7 +21,7 @@ namespace Rocks.Extensions
 					(typeof(ParamArrayAttribute).IsAssignableFrom(attributeData.AttributeType)) ||
 					(typeof(OptionalAttribute).IsAssignableFrom(attributeData.AttributeType))))
 				{
-					var name = attributeData.AttributeType.GetSafeName(null, namespaces);
+					var name = attributeData.AttributeType.GetSafeName(namespaces);
 
 					if (name.EndsWith(IListOfCustomAttributeDataExtensions.AttributeName))
 					{
@@ -31,14 +31,14 @@ namespace Rocks.Extensions
 					var constructorArguments = string.Join(", ",
 						(from argument in attributeData.ConstructorArguments
 						 let argumentType = argument.ArgumentType
-						 let typeCast = argumentType.IsEnum ? $"({argumentType.GetSafeName(null, namespaces)})" : string.Empty
+						 let typeCast = argumentType.IsEnum ? $"({argumentType.GetSafeName(namespaces)})" : string.Empty
 						 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.Value}\"" : argument.Value
 						 select $"{typeCast}{argumentValue}").ToArray());
 					var namedArguments = !typeof(MarshalAsAttribute).IsAssignableFrom(attributeData.AttributeType) ?
 						string.Join(", ",
 							(from argument in attributeData.NamedArguments
 							 let argumentType = argument.TypedValue.ArgumentType
-							 let typeCast = argumentType.IsEnum ? $"({argumentType.GetSafeName(null, namespaces)})" : string.Empty
+							 let typeCast = argumentType.IsEnum ? $"({argumentType.GetSafeName(namespaces)})" : string.Empty
 							 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.TypedValue.Value}\"" : argument.TypedValue.Value
 							 select $"{argument.MemberName} = {typeCast}{argumentValue}").ToArray()) : string.Empty;
 					var arguments = !string.IsNullOrWhiteSpace(constructorArguments) && !string.IsNullOrWhiteSpace(namedArguments) ?

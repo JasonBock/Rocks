@@ -17,7 +17,7 @@ namespace Rocks.Construction
 		{
 			var name = baseType.IsGenericTypeDefinition ?
 				$"{baseType.GetFullName(this.Namespaces)}" : baseType.GetSafeName();
-			return $"Rock{name}";
+			return $"Rock{name.Replace(".", string.Empty)}";
 		}
 
 		private SortedSet<string> Namespaces { get; set; }

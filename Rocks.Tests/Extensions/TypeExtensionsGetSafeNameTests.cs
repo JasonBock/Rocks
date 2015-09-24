@@ -89,34 +89,31 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithNoGenericsAndContext()
+		public void GetSafeNameForDelegateWithNoGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
 			Assert.AreEqual("MapForNonGeneric",
-				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName(
-					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForNonGeneric)), namespaces));
+				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName(namespaces));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForNonGeneric).Namespace));
 		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithSpecifiedGenericsAndContext()
+		public void GetSafeNameForDelegateWithSpecifiedGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
 			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(
-					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
+				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(namespaces));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).Namespace));
 		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndContext()
+		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
 			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(
-					typeof(IMapToDelegates).GetMethod(nameof(IMapToDelegates.MapForGeneric)), namespaces));
+				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(namespaces));
 			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
 			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<>).Namespace));
 		}
@@ -139,6 +136,12 @@ namespace Rocks.Tests.Extensions
 			Assert.AreEqual("Byte*[]", typeof(byte*[]).GetSafeName());
 		}
 
+		[Test]
+		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName()
+		{
+			Assert.AreEqual("TypeExtensionsNamespace.IMock", typeof(TypeExtensionsNamespace.IMock).GetSafeName());
+		}
+
 		public class SubnestedClass
 		{
 			public interface IAmSubnested { }
@@ -151,4 +154,9 @@ namespace Rocks.Tests.Extensions
 	}
 
 	public interface IHaveGenerics<T> { }
+}
+
+namespace TypeExtensionsNamespace
+{
+	public interface IMock { }
 }

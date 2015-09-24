@@ -81,6 +81,8 @@
     <Compile Include="AsyncTests.cs" />
     <Compile Include="CacheKeyTests.cs" />
     <Compile Include="CachingTests.cs" />
+    <Compile Include="Construction\AssemblyNameGeneratorTests.cs" />
+    <Compile Include="Construction\AssemblyTypeNameGeneratorTests.cs" />
     <Compile Include="MakeResultsTests.cs" />
     <Compile Include="OptionalArgumentsTests.cs" />
     <Compile Include="Templates\ClassTemplatesTests.cs" />

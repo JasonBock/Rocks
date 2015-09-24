@@ -29,7 +29,7 @@ namespace h
 {
 	i
 	public unsafe sealed class b
-		: c, IMock m
+		: c, Rocks.IMock m
 	{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
@@ -43,12 +43,12 @@ namespace h
 
 		f
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
 		{
 			get { return this.handlers; }
 		}
 
-		void IMock.Raise(string eventName, EventArgs args)
+		void Rocks.IMock.Raise(string eventName, EventArgs args)
 		{
 			var thisType = this.GetType();
 
@@ -81,7 +81,7 @@ namespace h
 {
 	i
 	public  sealed class b
-		: c, IMock m
+		: c, Rocks.IMock m
 	{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
@@ -95,12 +95,12 @@ namespace h
 
 		f
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
 		{
 			get { return this.handlers; }
 		}
 
-		void IMock.Raise(string eventName, EventArgs args)
+		void Rocks.IMock.Raise(string eventName, EventArgs args)
 		{
 			var thisType = this.GetType();
 

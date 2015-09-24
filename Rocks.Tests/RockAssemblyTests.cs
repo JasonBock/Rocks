@@ -1,9 +1,11 @@
 ﻿using NUnit.Framework;
+using Rocks.Options;
 using Rocks.RockAssemblyTestContainer;
 using Rocks.RockAssemblyTestContainer.Contracts;
 using Rocks.RockAssemblyTestContainer.Extensions.TestAssembly.Extensions;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Reflection;
 using static Rocks.Extensions.IMockExtensions;
 
@@ -67,15 +69,15 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void GenerateForMscorlib()
+		public void GenerateForAssemblyThatContainsObject()
 		{
-			var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+			var stopwatch = Stopwatch.StartNew();
 
-			new RockAssembly(typeof(object).Assembly);
+			new RockAssembly(typeof(object).Assembly, new RockOptions(OptimizationSetting.Debug, CodeFileOptions.Create));
 
 			stopwatch.Stop();
-
-			Assert.Pass($"Total time to generate mocks for mscorlib: {stopwatch.Elapsed}");
+				
+			Assert.Pass($"Total time to generate mocks for {typeof(object).Assembly.FullName} : {stopwatch.Elapsed}");
 		}
 
 		public Guid Method4(string a, ref int b)

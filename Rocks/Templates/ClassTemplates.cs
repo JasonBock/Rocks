@@ -20,7 +20,7 @@ namespace {baseTypeNamespace}
 {{
 	{classAttributes}
 	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
-		: {baseType}, IMock {baseTypeConstraints}
+		: {baseType}, Rocks.IMock {baseTypeConstraints}
 	{{
 		private ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
 
@@ -34,12 +34,12 @@ namespace {baseTypeNamespace}
 
 		{implementedEvents}
 
-		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> IMock.Handlers
+		ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Rocks.IMock.Handlers
 		{{
 			get {{ return this.handlers; }}
 		}}
 
-		void IMock.Raise(string eventName, EventArgs args)
+		void Rocks.IMock.Raise(string eventName, EventArgs args)
 		{{
 			var thisType = this.GetType();
 
