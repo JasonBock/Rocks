@@ -81,8 +81,12 @@
     <Compile Include="AsyncTests.cs" />
     <Compile Include="CacheKeyTests.cs" />
     <Compile Include="CachingTests.cs" />
+    <Compile Include="Construction\InMemoryTypeNameGeneratorTests.cs" />
     <Compile Include="Construction\AssemblyNameGeneratorTests.cs" />
     <Compile Include="Construction\AssemblyTypeNameGeneratorTests.cs" />
+    <Compile Include="Construction\GetGeneratedEventsResultsTests.cs" />
+    <Compile Include="Construction\MethodInformationTests.cs" />
+    <Compile Include="Extensions\MockableResultOfTTests.cs" />
     <Compile Include="MakeResultsTests.cs" />
     <Compile Include="OptionalArgumentsTests.cs" />
     <Compile Include="Templates\ClassTemplatesTests.cs" />

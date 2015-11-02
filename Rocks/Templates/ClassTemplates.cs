@@ -13,7 +13,6 @@ $@"#pragma warning disable CS0618
 			string implementedMethods, string implementedProperties, string implementedEvents, string generatedConstructors, string baseTypeNamespace,
 			string classAttributes, string noArgumentConstructor, string additionalCode, bool isUnsafe, string baseTypeConstraints) =>
 $@"#pragma warning disable CS8019
-{usingStatements}
 using R = Rocks;
 using RE = Rocks.Exceptions;
 using S = System;
@@ -21,6 +20,7 @@ using SCG = System.Collections.Generic;
 using SCO = System.Collections.ObjectModel;
 using SR = System.Reflection;
 using STT = System.Threading.Tasks;
+{usingStatements}
 #pragma warning restore CS8019
 
 namespace {baseTypeNamespace}

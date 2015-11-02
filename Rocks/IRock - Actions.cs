@@ -9,7 +9,7 @@ namespace Rocks
 		MethodAdornments Handle(Expression<Action<T>> expression);
 		MethodAdornments Handle(Expression<Action<T>> expression, uint expectedCallCount);
 		MethodAdornments Handle(Expression<Action<T>> expression, Action handler);
-      MethodAdornments Handle(Expression<Action<T>> expression, Action handler, uint expectedCallCount);
+		MethodAdornments Handle(Expression<Action<T>> expression, Action handler, uint expectedCallCount);
 		MethodAdornments Handle<T1>(Expression<Action<T>> expression, Action<T1> handler);
 		MethodAdornments Handle<T1>(Expression<Action<T>> expression, Action<T1> handler, uint expectedCallCount);
 		MethodAdornments Handle<T1, T2>(Expression<Action<T>> expression, Action<T1, T2> handler);

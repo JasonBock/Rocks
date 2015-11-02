@@ -22,7 +22,6 @@ a
 		{
 			Assert.AreEqual(
 @"#pragma warning disable CS8019
-a
 using R = Rocks;
 using RE = Rocks.Exceptions;
 using S = System;
@@ -30,6 +29,7 @@ using SCG = System.Collections.Generic;
 using SCO = System.Collections.ObjectModel;
 using SR = System.Reflection;
 using STT = System.Threading.Tasks;
+a
 #pragma warning restore CS8019
 
 namespace h
@@ -81,7 +81,6 @@ namespace h
 		{
 			Assert.AreEqual(
 @"#pragma warning disable CS8019
-a
 using R = Rocks;
 using RE = Rocks.Exceptions;
 using S = System;
@@ -89,6 +88,7 @@ using SCG = System.Collections.Generic;
 using SCO = System.Collections.ObjectModel;
 using SR = System.Reflection;
 using STT = System.Threading.Tasks;
+a
 #pragma warning restore CS8019
 
 namespace h

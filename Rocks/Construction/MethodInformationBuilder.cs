@@ -28,6 +28,6 @@ namespace Rocks.Construction
 		}
 
 		protected abstract string GetDelegateCast(MethodInfo baseMethod);
-		internal SortedSet<string> Namespaces { get; private set; }
+		internal SortedSet<string> Namespaces { get; }
 	}
 }

@@ -79,26 +79,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Async.cs" />
-    <Compile Include="Attributes.cs" />
-    <Compile Include="Classes.cs" />
-    <Compile Include="Delegates.cs" />
-    <Compile Include="Events.cs" />
-    <Compile Include="Generics.cs" />
-    <Compile Include="Handlers.cs" />
-    <Compile Include="InAndOut.cs" />
-    <Compile Include="Inheritance.cs" />
-    <Compile Include="Members.cs" />
-    <Compile Include="MethodHandles.cs" />
-    <Compile Include="MoqTests.cs" />
-    <Compile Include="NestedClasses.cs" />
-    <Compile Include="OutAndRefAndParams.cs" />
-    <Compile Include="OutParameters.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Properties.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quickstart.cs" />
-    <Compile Include="TempRock.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
