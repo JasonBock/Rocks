@@ -1,16 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks", "Rocks\Rocks.csproj", "{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{89CFC639-AF25-4B43-98F1-0655172F4125}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9AE9E82E-9A06-4C10-A623-19C3C8205FC6}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{81F83C5E-AFE8-40E1-B01C-7A8A569FCA70}"
 EndProject
@@ -22,15 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task.Tests", "Rocks.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{A704991B-9FCF-4957-B605-961177A52388}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC4F2554-931A-4D15-A5BE-E15727D6834E}"
-	ProjectSection(SolutionItems) = preProject
-		Performance1.psess = Performance1.psess
-	EndProjectSection
-EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
