@@ -5,15 +5,15 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.Persistence
 {
-	internal sealed class AssemblyCompiler
+	internal sealed class PersistenceCompiler
 		: Compiler<FileStream>
 	{
 		private string assemblyFileName;
 		private string assemblyPath;
 
-		internal AssemblyCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
+		internal PersistenceCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
 			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies, string assemblyPath,
 			bool allowUnsafe, AllowWarnings allowWarnings)
 			: base(trees, optimization, assemblyName, referencedAssemblies, allowUnsafe, allowWarnings)

@@ -4,12 +4,12 @@ using System.Reflection;
 using System.Linq;
 using Rocks.Extensions;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.Persistence
 {
-	internal sealed class AssemblyMethodInformationBuilder
+	internal sealed class PersistenceMethodInformationBuilder
 		: MethodInformationBuilder
 	{
-		internal AssemblyMethodInformationBuilder(SortedSet<string> namespaces, Type baseType)
+		internal PersistenceMethodInformationBuilder(SortedSet<string> namespaces, Type baseType)
 			: base(namespaces)
 		{
 			this.BaseType = baseType;
@@ -29,7 +29,7 @@ namespace Rocks.Construction
 		}
 
 		private string GetTypeNameWithGenericsAndNoTextFormatting() => 
-			$"{new AssemblyTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
+			$"{new PersistenceTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
 
 		internal Type BaseType { get; private set; }
 	}

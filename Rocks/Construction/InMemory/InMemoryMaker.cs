@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.InMemory
 {
 	internal sealed class InMemoryMaker
 	{

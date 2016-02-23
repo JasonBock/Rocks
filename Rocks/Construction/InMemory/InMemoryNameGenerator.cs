@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rocks.Construction
+﻿namespace Rocks.Construction.InMemory
 {
 	internal sealed class InMemoryNameGenerator
 		: NameGenerator

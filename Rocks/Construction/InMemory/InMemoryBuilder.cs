@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.InMemory
 {
 	internal sealed class InMemoryBuilder
 		: Builder<InMemoryMethodInformationBuilder>
@@ -16,12 +16,6 @@ namespace Rocks.Construction
 				new InMemoryMethodInformationBuilder(namespaces, handlers), 
 				new InMemoryTypeNameGenerator(namespaces), isMake)
 		{ }
-
-		protected override GetGeneratedEventsResults GetGeneratedEvents()
-		{
-			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
-				this.NameGenerator, this.InformationBuilder);
-		}
 
 		protected override string GetDirectoryForFile()
 		{

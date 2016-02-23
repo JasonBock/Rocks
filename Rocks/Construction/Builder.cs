@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Rocks.Exceptions;
+using Rocks.Construction.Generators;
 using Rocks.Extensions;
 using Rocks.Options;
 using Rocks.Templates;
@@ -14,7 +14,6 @@ using System.Text;
 using static Rocks.Extensions.ConstructorInfoExtensions;
 using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
-using static Rocks.Extensions.PropertyInfoExtensions;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction
@@ -22,7 +21,7 @@ namespace Rocks.Construction
 	internal abstract class Builder<TInformationBuilder>
 		where TInformationBuilder : MethodInformationBuilder
 	{
-      internal Builder(Type baseType,
+		internal Builder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, RockOptions options, NameGenerator generator,
 			TInformationBuilder informationBuilder, TypeNameGenerator typeNameGenerator,
@@ -39,347 +38,38 @@ namespace Rocks.Construction
 			this.IsMake = isMake;
 		}
 
-		protected abstract GetGeneratedEventsResults GetGeneratedEvents();
-
 		internal virtual void Build()
 		{
 			this.Tree = this.MakeTree();
 		}
 
-		private string GetGeneratedConstructors()
+		private GenerateResults GetGeneratedEvents()
 		{
-			var generatedConstructors = new List<string>();
-			var constructorName = this.GetTypeNameWithNoGenerics();
-
-			if (this.BaseType.IsInterface)
-			{
-				generatedConstructors.Add(ConstructorTemplates.GetConstructor(
-					constructorName, string.Empty, string.Empty));
-			}
-			else
-			{
-				foreach (var constructor in this.BaseType.GetMockableConstructors(this.NameGenerator))
-				{
-					var baseConstructor = constructor.Value;
-
-					var parameters = baseConstructor.GetParameters(this.Namespaces);
-
-					if (!string.IsNullOrWhiteSpace(parameters))
-					{
-						parameters = $", {parameters}";
-					}
-
-					generatedConstructors.Add(ConstructorTemplates.GetConstructor(
-						constructorName, baseConstructor.GetArgumentNameList(), parameters));
-					this.IsUnsafe |= baseConstructor.IsUnsafeToMock();
-					this.RequiresObsoleteSuppression |= baseConstructor.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-			}
-
-			return string.Join(Environment.NewLine, generatedConstructors);
+			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
+				this.NameGenerator, this.InformationBuilder);
 		}
 
-		private string GetGeneratedMethods()
+		private GenerateResults GetGeneratedConstructors()
 		{
-			var generatedMethods = new List<string>();
-
-			foreach (var method in this.BaseType.GetMockableMethods(this.NameGenerator))
-			{
-				var methodInformation = this.InformationBuilder.Build(method);
-				var baseMethod = method.Value;
-				var argumentNameList = baseMethod.GetArgumentNameList();
-				var outInitializers = !methodInformation.ContainsDelegateConditions ? string.Empty : baseMethod.GetOutInitializers();
-
-				if (baseMethod.IsPublic)
-				{
-					var visibility = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						string.Empty : CodeTemplates.Public;
-
-					// Either the base method contains no refs/outs, or the user specified a delegate
-					// to use to handle that method (remember, types with methods with refs/outs are gen'd
-					// each time, and that's the only reason the handlers are passed in).
-					if (this.IsMake || !methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
-					{
-						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
-						{
-							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility, method.RequiresNewImplementation));
-						}
-						else
-						{
-							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility, method.RequiresNewImplementation));
-
-							if (methodInformation.ContainsDelegateConditions)
-							{
-								this.HandleRefOutMethod(baseMethod, methodInformation);
-							}
-						}
-					}
-					else
-					{
-						generatedMethods.Add(MethodTemplates.GetRefOutNotImplementedMethod(methodInformation.DescriptionWithOverride));
-					}
-
-					this.RequiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-				else if (!baseMethod.IsPrivate && baseMethod.IsAbstract)
-				{
-					var visibility = CodeTemplates.GetVisibility(baseMethod.IsFamily, baseMethod.IsFamilyOrAssembly);
-
-					generatedMethods.Add(baseMethod.ReturnType != typeof(void) ?
-						MethodTemplates.GetNonPublicFunctionImplementation(visibility, methodInformation.Description,
-							outInitializers, baseMethod.ReturnType,
-							method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty,
-							baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces)) :
-						MethodTemplates.GetNonPublicActionImplementation(visibility, methodInformation.Description,
-							outInitializers, method.RequiresNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty));
-
-					this.RequiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-			}
-
-			return string.Join(Environment.NewLine, generatedMethods);
+			return new ConstructorsGenerator().Generate(this.BaseType,
+				this.Namespaces, this.NameGenerator, this.GetTypeNameWithNoGenerics());
 		}
 
-		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
-			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
+		private GenerateResults GetGeneratedMethods()
 		{
-			var expectationChecks = baseMethod.GetExpectationChecks();
-			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
-			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
-			var returnTypeName = baseMethod.ReturnType.GetFullName();
+			return new MethodsGenerator().Generate(this.BaseType,
+				this.Namespaces, this.NameGenerator, this.InformationBuilder,
+				this.IsMake, this.HandleRefOutMethod);
+		}
 
-         if (baseMethod.ReturnType != typeof(void))
-			{
-				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
-				return this.IsMake ?
-					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
-						visibility, requiresNew, returnTypeAttributes, baseMethod.ReturnType) :
-					baseMethod.ReturnType.RequiresExplicitCast() ?
-						MethodTemplates.GetFunctionWithValueTypeReturnValue(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresNew, returnTypeAttributes) :
-						MethodTemplates.GetFunctionWithReferenceTypeReturnValue(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresNew, returnTypeAttributes);
-			}
-			else
-			{
-				return this.IsMake ?
-					MethodTemplates.GetActionMethodForMake(outInitializers, methodDescriptionWithOverride, visibility) :
-					MethodTemplates.GetActionMethod(baseMethod.MetadataToken, argumentNameList, expectationChecks,
-						delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride, visibility);
-			}
+		private GenerateResults GetGeneratedProperties()
+		{
+			return new PropertiesGenerator().Generate(this.BaseType,
+				this.Namespaces, this.NameGenerator, this.InformationBuilder,
+				this.IsMake);
 		}
 
 		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
-
-		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, string outInitializers, string methodDescriptionWithOverride,
-			string visibility, RequiresIsNewImplementation requiresIsNewImplementation)
-		{
-			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
-			var returnTypeName = baseMethod.ReturnType.GetFullName(this.Namespaces);
-
-         if (baseMethod.ReturnType != typeof(void))
-			{
-				var returnTypeAttributes = baseMethod.ReturnParameter.GetAttributes(true, this.Namespaces);
-				return this.IsMake ?
-					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
-						visibility, requiresNew, returnTypeAttributes, baseMethod.ReturnType) :
-					baseMethod.ReturnType.RequiresExplicitCast() ?
-						MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes) :
-						MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes);
-			}
-			else
-			{
-				return this.IsMake ?
-					MethodTemplates.GetActionMethodWithNoArgumentsForMake(outInitializers, methodDescriptionWithOverride, visibility) :
-					MethodTemplates.GetActionMethodWithNoArguments(baseMethod.MetadataToken, argumentNameList, delegateCast, 
-						outInitializers, methodDescriptionWithOverride, visibility);
-			}
-		}
-
-		private string GetGeneratedProperties()
-		{
-			var generatedProperties = new List<string>();
-
-			foreach (var property in this.BaseType.GetMockableProperties(this.NameGenerator))
-			{
-				var baseProperty = property.Value;
-
-				this.Namespaces.Add(baseProperty.PropertyType.Namespace);
-				var indexers = baseProperty.GetIndexParameters();
-				var propertyMethod = baseProperty.GetDefaultMethod();
-				var methodInformation = this.InformationBuilder.Build(new MockableResult<MethodInfo>(
-					propertyMethod, RequiresExplicitInterfaceImplementation.No));
-				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
-
-				if (propertyMethod.IsPublic)
-				{
-					var propertyImplementations = new List<string>();
-
-					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
-					{
-						var getMethod = baseProperty.GetMethod;
-						var getVisibility = getMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(getMethod.IsFamily, getMethod.IsFamilyOrAssembly);
-						var getArgumentNameList = getMethod.GetArgumentNameList();
-						var getDelegateCast = getMethod.GetDelegateCast();
-						var returnType = getMethod.ReturnType.GetFullName(this.Namespaces);
-
-						if (this.IsMake)
-						{
-							propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility, returnType));
-                  }
-						else
-						{
-							if (getMethod.GetParameters().Length > 0)
-							{
-								var getExpectationChecks = getMethod.GetExpectationChecks();
-								var getExpectationExceptionMessage = getMethod.GetExpectationExceptionMessage();
-								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
-									PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(
-										getMethod.MetadataToken, getArgumentNameList, returnType,
-										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
-									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(
-										getMethod.MetadataToken, getArgumentNameList, returnType,
-										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
-							}
-							else
-							{
-								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
-									PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(
-										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility) :
-									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(
-										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility));
-							}
-						}
-					}
-
-					if (property.Accessors == PropertyAccessors.Set || property.Accessors == PropertyAccessors.GetAndSet)
-					{
-						var setMethod = baseProperty.SetMethod;
-						var setVisibility = setMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(setMethod.IsFamily, setMethod.IsFamilyOrAssembly);
-						var setArgumentNameList = setMethod.GetArgumentNameList();
-						var setDelegateCast = setMethod.GetDelegateCast();
-
-						if(this.IsMake)
-						{
-							propertyImplementations.Add(PropertyTemplates.GetPropertySetForMake(setVisibility));
-						}
-						else
-						{
-							if (setMethod.GetParameters().Length > 0)
-							{
-								var setExpectationChecks = setMethod.GetExpectationChecks();
-								var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
-								propertyImplementations.Add(PropertyTemplates.GetPropertySet(
-									setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage, setVisibility));
-							}
-							else
-							{
-								propertyImplementations.Add(PropertyTemplates.GetPropertySetAndNoIndexers(
-									setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility));
-							}
-						}
-					}
-
-					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						string.Empty : CodeTemplates.Public;
-					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						$"{property.Value.DeclaringType.GetFullName(this.Namespaces)}." : string.Empty;
-
-					if (indexers.Length > 0)
-					{
-						var parameters = string.Join(", ",
-							from indexer in indexers
-							let _ = this.Namespaces.Add(indexer.ParameterType.Namespace)
-							select $"{indexer.ParameterType.Name} {indexer.Name}");
-
-						// Indexer
-						generatedProperties.Add(PropertyTemplates.GetPropertyIndexer(
-							$"{@override}{baseProperty.PropertyType.GetFullName(this.Namespaces)}", parameters,
-							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
-					}
-					else
-					{
-						// Normal
-						generatedProperties.Add(PropertyTemplates.GetProperty(
-							$"{@override}{baseProperty.PropertyType.GetFullName(this.Namespaces)}", baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
-					}
-
-					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-				else if (!propertyMethod.IsPrivate && propertyMethod.IsAbstract)
-				{
-					var propertyImplementations = new List<string>();
-					var visibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						string.Empty : CodeTemplates.GetVisibility(propertyMethod.IsFamily, propertyMethod.IsFamilyOrAssembly);
-
-					if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
-					{
-						var getVisibility = CodeTemplates.GetVisibility(baseProperty.GetMethod.IsFamily, baseProperty.GetMethod.IsFamilyOrAssembly);
-
-						if (getVisibility == visibility)
-						{
-							getVisibility = string.Empty;
-						}
-
-						propertyImplementations.Add(PropertyTemplates.GetNonPublicPropertyGet(getVisibility));
-					}
-
-					if (property.Accessors == PropertyAccessors.Set || property.Accessors == PropertyAccessors.GetAndSet)
-					{
-						var setVisibility = CodeTemplates.GetVisibility(baseProperty.SetMethod.IsFamily, baseProperty.SetMethod.IsFamilyOrAssembly);
-
-						if (setVisibility == visibility)
-						{
-							setVisibility = string.Empty;
-						}
-
-						propertyImplementations.Add(PropertyTemplates.GetNonPublicPropertySet(setVisibility));
-					}
-
-					var explicitInterfaceName = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-						$"{property.Value.DeclaringType.GetFullName(this.Namespaces)}." : string.Empty;
-
-					if (indexers.Length > 0)
-					{
-						var parameters = string.Join(", ",
-							from indexer in indexers
-							let _ = this.Namespaces.Add(indexer.ParameterType.Namespace)
-							select $"{indexer.ParameterType.Name} {indexer.Name}");
-
-						// Indexer
-						generatedProperties.Add(PropertyTemplates.GetNonPublicPropertyIndexer(visibility,
-							$"{baseProperty.PropertyType.GetFullName(this.Namespaces)}", parameters,
-							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
-					}
-					else
-					{
-						// Normal
-						generatedProperties.Add(PropertyTemplates.GetNonPublicProperty(visibility,
-							$"{baseProperty.PropertyType.GetFullName(this.Namespaces)}", baseProperty.Name,
-							string.Join(Environment.NewLine, propertyImplementations), explicitInterfaceName));
-					}
-
-					this.RequiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
-				}
-			}
-
-			return string.Join(Environment.NewLine, generatedProperties);
-		}
 
 		protected string GetTypeNameWithNoGenerics() => this.TypeName.Split('<').First();
 
@@ -390,11 +80,12 @@ namespace Rocks.Construction
 			var methods = this.GetGeneratedMethods();
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties();
-			var generatedEvents = this.GetGeneratedEvents();
-			var events = generatedEvents.Events.Count > 0 ? EventTemplates.GetEvents(generatedEvents.Events) : string.Empty;
+			var events = this.GetGeneratedEvents();
 
+			this.IsUnsafe |= constructors.IsUnsafe || events.IsUnsafe || methods.IsUnsafe || properties.IsUnsafe;
 			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
-				generatedEvents.RequiresObsoleteSuppression;
+				constructors.RequiresObsoleteSuppression || events.RequiresObsoleteSuppression || 
+				methods.RequiresObsoleteSuppression || properties.RequiresObsoleteSuppression;
 
 			this.Namespaces.Remove(this.BaseType.Namespace);
 
@@ -406,7 +97,7 @@ namespace Rocks.Construction
 
 			var @class = ClassTemplates.GetClass(namespaces,
 				this.TypeName, this.BaseType.GetFullName(),
-				methods, properties, events, constructors,
+				methods.Result, properties.Result, events.Result, constructors.Result,
 				this.BaseType.Namespace,
 				this.Options.Serialization == SerializationOptions.Supported ?
 					"[Serializable]" : string.Empty,

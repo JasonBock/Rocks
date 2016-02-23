@@ -11,25 +11,19 @@ using static Rocks.Extensions.MethodBaseExtensions;
 using static Rocks.Extensions.MethodInfoExtensions;
 using static Rocks.Extensions.TypeExtensions;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.Persistence
 {
-	internal sealed class AssemblyBuilder
-		: Builder<AssemblyMethodInformationBuilder>
+	internal sealed class PersistenceBuilder
+		: Builder<PersistenceMethodInformationBuilder>
 	{
 		private readonly List<string> generatedDelegates = new List<string>();
 
-		internal AssemblyBuilder(Type baseType,
+		internal PersistenceBuilder(Type baseType,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, RockOptions options)
-			: base(baseType, handlers, namespaces, options, new AssemblyNameGenerator(baseType),
-				  new AssemblyMethodInformationBuilder(namespaces, baseType), new AssemblyTypeNameGenerator(namespaces), false)
+			: base(baseType, handlers, namespaces, options, new PersistenceNameGenerator(baseType),
+				  new PersistenceMethodInformationBuilder(namespaces, baseType), new PersistenceTypeNameGenerator(namespaces), false)
 		{ }
-
-		protected override GetGeneratedEventsResults GetGeneratedEvents()
-		{
-			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
-				this.NameGenerator, this.InformationBuilder);
-		}
 
 		protected override string GetDirectoryForFile()
 		{

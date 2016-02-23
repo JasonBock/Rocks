@@ -1,4 +1,6 @@
 ﻿using Rocks.Construction;
+using Rocks.Construction.InMemory;
+using Rocks.Construction.Persistence;
 using Rocks.Exceptions;
 using Rocks.Options;
 using System;
@@ -20,7 +22,7 @@ namespace Rocks
 		{
 			var tType = typeof(T);
 			var message = tType.Validate(options.Serialization,
-				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator :
+				tType.IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
 
 			if (!string.IsNullOrWhiteSpace(message))
@@ -54,7 +56,7 @@ namespace Rocks
 			var tType = typeof(T);
 
 			var message = tType.Validate(options.Serialization,
-				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator :
+				tType.IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
 
 			if (string.IsNullOrWhiteSpace(message))
@@ -84,7 +86,7 @@ namespace Rocks
 			var mappedOptions = Rock.MapForMake(options);
 			var tType = typeof(T);
 			var message = tType.Validate(mappedOptions.Serialization,
-				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator :
+				tType.IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
 
 			if (!string.IsNullOrWhiteSpace(message))
@@ -110,7 +112,7 @@ namespace Rocks
 
 			var tType = typeof(T);
 			var message = tType.Validate(mappedOptions.Serialization,
-				tType.IsSealed ? new AssemblyNameGenerator(tType) as NameGenerator :
+				tType.IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
 
 			if (string.IsNullOrWhiteSpace(message))

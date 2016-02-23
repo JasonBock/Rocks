@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using Rocks.Options;
 using Rocks.Tests.Types;
 using System.Collections.ObjectModel;

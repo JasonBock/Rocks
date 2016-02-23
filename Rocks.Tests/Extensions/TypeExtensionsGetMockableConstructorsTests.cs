@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using Rocks.Tests.Types;
 using System;
 using static Rocks.Extensions.TypeExtensions;
@@ -12,14 +12,16 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMockableConstructorsFromAbstractTypeWithProtectedConstructorThatUsesProtectedInternalType()
 		{
-			var constructors = typeof(HasConstructorWithArgumentThatUsesProtectedInternalType).GetMockableConstructors(new InMemoryNameGenerator());
+			var constructors = typeof(HasConstructorWithArgumentThatUsesProtectedInternalType).GetMockableConstructors(
+				new InMemoryNameGenerator());
 			Assert.AreEqual(0, constructors.Count);
 		}
 
 		[Test]
 		public void GetMockableConstructorsFromTypeWithObsoleteConstructors()
 		{
-			var constructors = typeof(HasObsoleteConstructors).GetMockableConstructors(new InMemoryNameGenerator());
+			var constructors = typeof(HasObsoleteConstructors).GetMockableConstructors(
+				new InMemoryNameGenerator());
 			Assert.AreEqual(1, constructors.Count);
 		}
 	}

@@ -6,11 +6,11 @@ using System.Reflection;
 using Rocks.Extensions;
 using Rocks.Templates;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.Generators
 {
 	internal sealed class EventsGenerator
 	{
-		internal GetGeneratedEventsResults Generate(Type baseType, SortedSet<string> namespaces,
+		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder builder)
 		{
 			var requiresObsoleteSuppression = false;
@@ -65,7 +65,8 @@ namespace Rocks.Construction
 				}
 			}
 
-			return new GetGeneratedEventsResults(generatedEvents.AsReadOnly(), requiresObsoleteSuppression);
+			var result = generatedEvents.Count > 0 ? EventTemplates.GetEvents(generatedEvents.AsReadOnly()) : string.Empty;
+			return new GenerateResults(result, requiresObsoleteSuppression, false);
       }
    }
 }

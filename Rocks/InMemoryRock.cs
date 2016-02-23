@@ -1,4 +1,5 @@
 ﻿using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;

@@ -1,14 +1,12 @@
 ﻿#pragma warning disable CS0618
 using NUnit.Framework;
-using Rocks.Construction;
-using Rocks.Exceptions;
+using Rocks.Construction.InMemory;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Reflection;
 
-namespace Rocks.Tests.Construction
+namespace Rocks.Tests.Construction.InMemory
 {
 	[TestFixture]
 	public sealed class InMemoryBuilderTests

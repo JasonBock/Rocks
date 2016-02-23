@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using System;
 using System.Linq;
 using static Rocks.Extensions.TypeExtensions;

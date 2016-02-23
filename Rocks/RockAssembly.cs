@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Construction;
+using Rocks.Construction.Persistence;
 using Rocks.Options;
 using System;
 using System.Collections.Concurrent;
@@ -46,11 +47,11 @@ namespace Rocks
 			var allowUnsafe = false;
 
          Parallel.ForEach(assembly.GetExportedTypes()
-				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization, new AssemblyNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
+				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization, new PersistenceNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
 					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) && 
 					!typeof(Delegate).IsAssignableFrom(_)), _ =>
 				{
-					var builder = new AssemblyBuilder(_, 
+					var builder = new PersistenceBuilder(_, 
 						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 							new Dictionary<int, ReadOnlyCollection<HandlerInformation>>()), 
 						new SortedSet<string>(), this.options);
@@ -62,8 +63,8 @@ namespace Rocks
 			var referencedAssemblies = this.assembly.GetReferencedAssemblies().Select(_ => Assembly.Load(_)).ToList();
 			referencedAssemblies.Add(this.assembly);
 
-         var compiler = new AssemblyCompiler(trees, this.options.Optimization, 
-				new AssemblyNameGenerator(this.assembly).AssemblyName, 
+         var compiler = new PersistenceCompiler(trees, this.options.Optimization, 
+				new PersistenceNameGenerator(this.assembly).AssemblyName, 
 				referencedAssemblies.AsReadOnly(), currentDirectory, allowUnsafe, this.options.AllowWarnings);
 			compiler.Compile();
 			return compiler.Result;

@@ -3,7 +3,7 @@ using System.Reflection;
 using Rocks.Extensions;
 using System.Collections.ObjectModel;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.InMemory
 {
 	internal sealed class InMemoryMethodInformationBuilder :
 		MethodInformationBuilder

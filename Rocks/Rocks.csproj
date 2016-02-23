@@ -1,168 +1,172 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-	<PropertyGroup>
-		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-		<ProjectGuid>{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}</ProjectGuid>
-		<OutputType>Library</OutputType>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<RootNamespace>Rocks</RootNamespace>
-		<AssemblyName>Rocks</AssemblyName>
-		<TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-		<FileAlignment>512</FileAlignment>
-		<TargetFrameworkProfile />
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<OutputPath>bin\Debug\</OutputPath>
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
-		<OutputPath>bin\Release\</OutputPath>
-		<DefineConstants>TRACE</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	</PropertyGroup>
-	<ItemGroup>
-		<Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.1.1\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.1.1\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="System" />
-		<Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-		<Reference Include="System.Reflection.Metadata, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Reflection.Metadata.1.1.0\lib\dotnet5.2\System.Reflection.Metadata.dll</HintPath>
-			<Private>True</Private>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Include="Options\AllowWarnings.cs" />
-		<Compile Include="Arg.cs" />
-		<Compile Include="ArgumentExpectationOfT.cs" />
-		<Compile Include="ArgumentExpectation.cs" />
-		<Compile Include="AssemblyRock.cs" />
-		<Compile Include="CacheKey.cs" />
-		<Compile Include="Options\CachingOptions.cs" />
-		<Compile Include="Options\CodeFileOptions.cs" />
-		<Compile Include="Options\OptimizationSetting.cs" />
-		<Compile Include="Templates\ClassTemplates.cs" />
-		<Compile Include="Templates\CodeTemplates.cs" />
-		<Compile Include="Construction\AssemblyBuilder.cs" />
-		<Compile Include="Construction\AssemblyCompiler.cs" />
-		<Compile Include="Construction\AssemblyMethodInformationBuilder.cs" />
-		<Compile Include="Construction\AssemblyNameGenerator.cs" />
-		<Compile Include="Construction\GetGeneratedEventsResults.cs" />
-		<Compile Include="Construction\InMemoryTypeNameGenerator.cs" />
-		<Compile Include="Construction\AssemblyTypeNameGenerator.cs" />
-		<Compile Include="Construction\EventsGenerator.cs" />
-		<Compile Include="Construction\InMemoryMethodInformationBuilder.cs" />
-		<Compile Include="Construction\InMemoryNameGenerator.cs" />
-		<Compile Include="Construction\MethodInformation.cs" />
-		<Compile Include="Construction\MethodInformationBuilder.cs" />
-		<Compile Include="Construction\NameGenerator.cs" />
-		<Compile Include="Construction\Builder.cs" />
-		<Compile Include="Construction\Compiler.cs" />
-		<Compile Include="Construction\TypeNameGenerator.cs" />
-		<Compile Include="MakeResult.cs" />
-		<Compile Include="CreateResult.cs" />
-		<Compile Include="ErrorMessages.cs" />
-		<Compile Include="Exceptions\PropertyNotFoundException.cs" />
-		<Compile Include="Exceptions\ExpectationException.cs" />
-		<Compile Include="Extensions\AssemblyExtensions.cs" />
-		<Compile Include="Extensions\ConstructorInfoExtensions.cs" />
-		<Compile Include="Extensions\ExpressionExtensions.cs" />
-		<Compile Include="Extensions\GenericArgumentsResult.cs" />
-		<Compile Include="Extensions\ExpressionOfTExtensions.cs" />
-		<Compile Include="Extensions\IDictionaryOfTKeyTValueExtensions.cs" />
-		<Compile Include="Extensions\IListOfCustomAttributeDataExtensions.cs" />
-		<Compile Include="Extensions\IMockExtensions.cs" />
-		<Compile Include="Extensions\MethodBaseExtensions.cs" />
-		<Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
-		<Compile Include="Extensions\MethodInfoExtensions.cs" />
-		<Compile Include="Extensions\MethodMockableResult.cs" />
-		<Compile Include="Extensions\MethodMatch.cs" />
-		<Compile Include="Extensions\PropertyMockableResult.cs" />
-		<Compile Include="Extensions\MockableResultOfT.cs" />
-		<Compile Include="Extensions\ParameterInfoExtensions.cs" />
-		<Compile Include="Extensions\RequiresExplicitInterfaceImplementation.cs" />
-		<Compile Include="Extensions\RequiresIsNewImplementation.cs" />
-		<Compile Include="Extensions\TypeDissector.cs" />
-		<Compile Include="InMemoryRock.cs" />
-		<Compile Include="IRock - Actions.cs" />
-		<Compile Include="IRock - Delegates.cs" />
-		<Compile Include="IRock - Properties.cs" />
-		<Compile Include="IRock - Functions.cs" />
-		<Compile Include="MethodAdornments.cs" />
-		<Compile Include="PropertyMethodAdornments.cs" />
-		<Compile Include="RaiseEventInformation.cs" />
-		<Compile Include="ReflectionValues.cs" />
-		<Compile Include="RockAssembly.cs" />
-		<Compile Include="RockCore.cs" />
-		<Compile Include="IRock - Core.cs" />
-		<Compile Include="PropertyAccessors.cs" />
-		<Compile Include="Extensions\PropertyInfoExtensions.cs" />
-		<Compile Include="Extensions\TypeExtensions.cs" />
-		<Compile Include="HandlerInformationOfT.cs" />
-		<Compile Include="HandlerInformation.cs" />
-		<Compile Include="Construction\InMemoryBuilder.cs" />
-		<Compile Include="Construction\InMemoryCompiler.cs" />
-		<Compile Include="IMock.cs" />
-		<Compile Include="ObjectEquality.cs" />
-		<Compile Include="Properties\AssemblyInfo.cs" />
-		<Compile Include="MethodAdornmentsOfTResult.cs" />
-		<Compile Include="Rock.cs" />
-		<Compile Include="Exceptions\VerificationException.cs" />
-		<Compile Include="Exceptions\CompilationException.cs" />
-		<Compile Include="Options\RockOptions.cs" />
-		<Compile Include="Exceptions\ValidationException.cs" />
-		<Compile Include="Construction\InMemoryMaker.cs" />
-		<Compile Include="AssemblyBinder.cs" />
-		<Compile Include="Options\SerializationOptions.cs" />
-		<Compile Include="Templates\ConstructorTemplates.cs" />
-		<Compile Include="Templates\EventTemplates.cs" />
-		<Compile Include="Templates\MethodTemplates.cs" />
-		<Compile Include="Templates\PropertyTemplates.cs" />
-		<Compile Include="Values.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="packages.config" />
-		<None Include="Rocks.nuspec">
-			<SubType>Designer</SubType>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
-		<Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-		<Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-	</ItemGroup>
-	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-	<!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B6E15A91-620A-4E5F-9E66-8CA4F1CB05D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Rocks</RootNamespace>
+    <AssemblyName>Rocks</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.1.1.1\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.1.1.1\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.1.0\lib\dotnet5.2\System.Reflection.Metadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Construction\Generators\ConstructorsGenerator.cs" />
+    <Compile Include="Construction\Generators\MethodsGenerator.cs" />
+    <Compile Include="Construction\Persistence\PersistenceBuilder.cs" />
+    <Compile Include="Construction\Persistence\PersistenceCompiler.cs" />
+    <Compile Include="Construction\Persistence\PersistenceMethodInformationBuilder.cs" />
+    <Compile Include="Construction\Persistence\PersistenceNameGenerator.cs" />
+    <Compile Include="Construction\Persistence\PersistenceTypeNameGenerator.cs" />
+    <Compile Include="Construction\InMemory\InMemoryBuilder.cs" />
+    <Compile Include="Construction\InMemory\InMemoryCompiler.cs" />
+    <Compile Include="Construction\InMemory\InMemoryMaker.cs" />
+    <Compile Include="Construction\InMemory\InMemoryMethodInformationBuilder.cs" />
+    <Compile Include="Construction\InMemory\InMemoryNameGenerator.cs" />
+    <Compile Include="Construction\InMemory\InMemoryTypeNameGenerator.cs" />
+    <Compile Include="Construction\Generators\PropertiesGenerator.cs" />
+    <Compile Include="Options\AllowWarnings.cs" />
+    <Compile Include="Arg.cs" />
+    <Compile Include="ArgumentExpectationOfT.cs" />
+    <Compile Include="ArgumentExpectation.cs" />
+    <Compile Include="AssemblyRock.cs" />
+    <Compile Include="CacheKey.cs" />
+    <Compile Include="Options\CachingOptions.cs" />
+    <Compile Include="Options\CodeFileOptions.cs" />
+    <Compile Include="Options\OptimizationSetting.cs" />
+    <Compile Include="Templates\ClassTemplates.cs" />
+    <Compile Include="Templates\CodeTemplates.cs" />
+    <Compile Include="Construction\Generators\GenerateResults.cs" />
+    <Compile Include="Construction\Generators\EventsGenerator.cs" />
+    <Compile Include="Construction\MethodInformation.cs" />
+    <Compile Include="Construction\MethodInformationBuilder.cs" />
+    <Compile Include="Construction\NameGenerator.cs" />
+    <Compile Include="Construction\Builder.cs" />
+    <Compile Include="Construction\Compiler.cs" />
+    <Compile Include="Construction\TypeNameGenerator.cs" />
+    <Compile Include="MakeResult.cs" />
+    <Compile Include="CreateResult.cs" />
+    <Compile Include="ErrorMessages.cs" />
+    <Compile Include="Exceptions\PropertyNotFoundException.cs" />
+    <Compile Include="Exceptions\ExpectationException.cs" />
+    <Compile Include="Extensions\AssemblyExtensions.cs" />
+    <Compile Include="Extensions\ConstructorInfoExtensions.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Extensions\GenericArgumentsResult.cs" />
+    <Compile Include="Extensions\ExpressionOfTExtensions.cs" />
+    <Compile Include="Extensions\IDictionaryOfTKeyTValueExtensions.cs" />
+    <Compile Include="Extensions\IListOfCustomAttributeDataExtensions.cs" />
+    <Compile Include="Extensions\IMockExtensions.cs" />
+    <Compile Include="Extensions\MethodBaseExtensions.cs" />
+    <Compile Include="Extensions\MethodCallExpressionExtensions.cs" />
+    <Compile Include="Extensions\MethodInfoExtensions.cs" />
+    <Compile Include="Extensions\MethodMockableResult.cs" />
+    <Compile Include="Extensions\MethodMatch.cs" />
+    <Compile Include="Extensions\PropertyMockableResult.cs" />
+    <Compile Include="Extensions\MockableResultOfT.cs" />
+    <Compile Include="Extensions\ParameterInfoExtensions.cs" />
+    <Compile Include="Extensions\RequiresExplicitInterfaceImplementation.cs" />
+    <Compile Include="Extensions\RequiresIsNewImplementation.cs" />
+    <Compile Include="Extensions\TypeDissector.cs" />
+    <Compile Include="InMemoryRock.cs" />
+    <Compile Include="IRock - Actions.cs" />
+    <Compile Include="IRock - Delegates.cs" />
+    <Compile Include="IRock - Properties.cs" />
+    <Compile Include="IRock - Functions.cs" />
+    <Compile Include="MethodAdornments.cs" />
+    <Compile Include="PropertyMethodAdornments.cs" />
+    <Compile Include="RaiseEventInformation.cs" />
+    <Compile Include="ReflectionValues.cs" />
+    <Compile Include="RockAssembly.cs" />
+    <Compile Include="RockCore.cs" />
+    <Compile Include="IRock - Core.cs" />
+    <Compile Include="PropertyAccessors.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="HandlerInformationOfT.cs" />
+    <Compile Include="HandlerInformation.cs" />
+    <Compile Include="IMock.cs" />
+    <Compile Include="ObjectEquality.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MethodAdornmentsOfTResult.cs" />
+    <Compile Include="Rock.cs" />
+    <Compile Include="Exceptions\VerificationException.cs" />
+    <Compile Include="Exceptions\CompilationException.cs" />
+    <Compile Include="Options\RockOptions.cs" />
+    <Compile Include="Exceptions\ValidationException.cs" />
+    <Compile Include="AssemblyBinder.cs" />
+    <Compile Include="Options\SerializationOptions.cs" />
+    <Compile Include="Templates\ConstructorTemplates.cs" />
+    <Compile Include="Templates\EventTemplates.cs" />
+    <Compile Include="Templates\MethodTemplates.cs" />
+    <Compile Include="Templates\PropertyTemplates.cs" />
+    <Compile Include="Values.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Rocks.nuspec">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		 Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   -->
-	<Target Name="AfterBuild">
-		<GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">
-			<Output TaskParameter="Assemblies" ItemName="AnalyzerAssemblyInfo" />
-		</GetAssemblyIdentity>
-		<Exec Command="&quot;$(SolutionDir)packages\NuGet.CommandLine.3.3.0\tools\NuGet.exe&quot; pack Rocks.nuspec -NoPackageAnalysis -Version %(AnalyzerAssemblyInfo.Version) -OutputDirectory ." WorkingDirectory="$(OutDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
-			<Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
-		</Exec>
-	</Target>
+  <Target Name="AfterBuild">
+    <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">
+      <Output TaskParameter="Assemblies" ItemName="AnalyzerAssemblyInfo" />
+    </GetAssemblyIdentity>
+    <Exec Command="&quot;$(SolutionDir)packages\NuGet.CommandLine.3.3.0\tools\NuGet.exe&quot; pack Rocks.nuspec -NoPackageAnalysis -Version %(AnalyzerAssemblyInfo.Version) -OutputDirectory ." WorkingDirectory="$(OutDir)" LogStandardErrorAsError="true" ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec" />
+    </Exec>
+  </Target>
 </Project>

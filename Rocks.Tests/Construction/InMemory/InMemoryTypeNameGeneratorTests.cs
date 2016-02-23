@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
-using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using System;
 using System.Collections.Generic;
 
-namespace Rocks.Tests.Construction
+namespace Rocks.Tests.Construction.InMemory
 {
 	[TestFixture]
 	public sealed class InMemoryTypeNameGeneratorTests

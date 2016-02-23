@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using static Rocks.Extensions.TypeExtensions;
 
-namespace Rocks.Construction
+namespace Rocks.Construction.Persistence
 {
-	internal sealed class InMemoryTypeNameGenerator
+	internal sealed class PersistenceTypeNameGenerator
 		: TypeNameGenerator
 	{
-		internal InMemoryTypeNameGenerator(SortedSet<string> namespaces)
+		internal PersistenceTypeNameGenerator(SortedSet<string> namespaces)
 			: base()
 		{
 			this.Namespaces = namespaces;
@@ -16,8 +16,8 @@ namespace Rocks.Construction
 		internal override string Generate(Type baseType)
 		{
 			var name = baseType.IsGenericTypeDefinition ?
-				$"{Guid.NewGuid().ToString("N")}{baseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
-			return $"Rock{name}";
+				$"{baseType.GetFullName(this.Namespaces)}" : baseType.GetSafeName();
+			return $"Rock{name.Replace(".", string.Empty)}";
 		}
 
 		private SortedSet<string> Namespaces { get; set; }

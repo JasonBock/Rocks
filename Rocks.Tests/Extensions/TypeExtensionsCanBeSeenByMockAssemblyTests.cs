@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Construction;
+using Rocks.Construction.InMemory;
 using Rocks.Tests.Types;
 using static Rocks.Extensions.TypeExtensions;
 
