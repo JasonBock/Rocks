@@ -17,7 +17,6 @@ namespace Rocks
 	public sealed class RockAssembly
 	{
 		private readonly Assembly assembly;
-		private readonly string currentDirectory;
 		private readonly RockOptions options;
 
 		public RockAssembly(Assembly assembly)
@@ -25,18 +24,10 @@ namespace Rocks
 		{ }
 
 		public RockAssembly(Assembly assembly, RockOptions options)
-			: this(assembly, options, Environment.CurrentDirectory)
-		{ }
-
-		public RockAssembly(Assembly assembly, string currentDirectory)
-			: this(assembly, new RockOptions(), currentDirectory)
-		{ }
-
-		public RockAssembly(Assembly assembly, RockOptions options, string currentDirectory)
+			: base()
 		{
 			this.assembly = assembly;
 			this.options = options;
-			this.currentDirectory = currentDirectory;
 			this.Result = this.Generate();
 		}
 
@@ -65,7 +56,8 @@ namespace Rocks
 
          var compiler = new PersistenceCompiler(trees, this.options.Optimization, 
 				new PersistenceNameGenerator(this.assembly).AssemblyName, 
-				referencedAssemblies.AsReadOnly(), currentDirectory, allowUnsafe, this.options.AllowWarnings);
+				referencedAssemblies.AsReadOnly(), 
+				this.options.CodeFileDirectory, allowUnsafe, this.options.AllowWarnings);
 			compiler.Compile();
 			return compiler.Result;
       }

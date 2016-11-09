@@ -121,8 +121,9 @@ namespace Rocks.Construction
 
 			if (this.Options.CodeFile == CodeFileOptions.Create)
 			{
-				Directory.CreateDirectory(this.GetDirectoryForFile());
-				var fileName = Path.Combine(this.GetDirectoryForFile(),
+				var fileDirectory = this.GetDirectoryForFile();
+				Directory.CreateDirectory(fileDirectory);
+				var fileName = Path.Combine(fileDirectory,
 					$"{this.GetTypeNameWithGenericsAndNoTextFormatting()}.cs");
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class)

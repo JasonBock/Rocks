@@ -12,7 +12,8 @@ namespace Rocks.Tests
 			var rock = Rock.Create<IHandleAction1ArgumentTests>(
 				new Rocks.Options.RockOptions(
 					level: Rocks.Options.OptimizationSetting.Debug,
-					codeFile: Rocks.Options.CodeFileOptions.Create));
+					codeFile: Rocks.Options.CodeFileOptions.Create,
+					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 			rock.Handle(_ => _.Target(1));
 			
 			var chunk = rock.Make();

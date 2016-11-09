@@ -53,13 +53,18 @@ namespace Rocks.Tests
 		[Test]
 		public void MakeWithFile()
 		{
-			var rock = Rock.Create<IFileTests>(new RockOptions(OptimizationSetting.Debug, CodeFileOptions.Create));
+			var testDirectory = TestContext.CurrentContext.TestDirectory;
+			var rock = Rock.Create<IFileTests>(
+				new RockOptions(
+					level: OptimizationSetting.Debug, 
+					codeFile: CodeFileOptions.Create,
+					codeFileDirectory: testDirectory));
 			rock.Handle(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
 			Assert.AreEqual(typeof(IFileTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
-			Assert.IsTrue(File.Exists($"{chunkType.Name}.cs"), nameof(File.Exists));
+			Assert.IsTrue(File.Exists(Path.Combine(testDirectory, $"{chunkType.Name}.cs")), nameof(File.Exists));
 
 			var chunkAsRock = chunk as IMock;
 			Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));

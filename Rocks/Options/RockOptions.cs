@@ -1,4 +1,6 @@
-﻿namespace Rocks.Options
+﻿using System.IO;
+
+namespace Rocks.Options
 {
 	public sealed class RockOptions
 	{
@@ -6,14 +8,16 @@
 			CodeFileOptions codeFile = CodeFileOptions.None, 
 			SerializationOptions serialization = SerializationOptions.NotSupported,
 			CachingOptions caching = CachingOptions.UseCache, 
-			AllowWarnings allowWarnings = AllowWarnings.No)
+			AllowWarnings allowWarnings = AllowWarnings.No,
+			string codeFileDirectory = null)
 		{
 			this.Optimization = level;
 			this.CodeFile = codeFile;
 			this.Serialization = serialization;
 			this.Caching = caching;
 			this.AllowWarnings = allowWarnings;
-      }
+			this.CodeFileDirectory = codeFileDirectory ?? Directory.GetCurrentDirectory();
+		}
 
 		public override int GetHashCode()
 		{
@@ -27,6 +31,7 @@
 		public AllowWarnings AllowWarnings { get; }
 		public CachingOptions Caching { get; }
 		public CodeFileOptions CodeFile { get; }
+		public string CodeFileDirectory { get; }
 		public OptimizationSetting Optimization { get; }
 		public SerializationOptions Serialization { get; }
 	}

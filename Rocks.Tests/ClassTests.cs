@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Options;
 using System;
 
 namespace Rocks.Tests
@@ -10,7 +11,10 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var rock = Rock.Create<ClassTestsTarget>(
-				new Rocks.Options.RockOptions(codeFile: Rocks.Options.CodeFileOptions.Create, level: Rocks.Options.OptimizationSetting.Debug));
+				new RockOptions(
+					codeFile: CodeFileOptions.Create, 
+					codeFileDirectory: TestContext.CurrentContext.TestDirectory,
+					level: OptimizationSetting.Debug));
 			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();

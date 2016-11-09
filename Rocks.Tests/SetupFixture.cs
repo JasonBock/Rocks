@@ -6,11 +6,11 @@ namespace Rocks.Tests
 	[SetUpFixture]
 	public sealed class SetupFixture
 	{
-		[SetUp]
-		public void SetUp() => SetupFixture.CleanUpRockFiles();
+		[OneTimeSetUp]
+		public static void SetUp() => SetupFixture.CleanUpRockFiles();
 
-		[TearDown]
-		public void TearDown() => SetupFixture.CleanUpRockFiles();
+		[OneTimeTearDown]
+		public static void TearDown() => SetupFixture.CleanUpRockFiles();
 
 		private static void CleanUpRockFiles()
 		{

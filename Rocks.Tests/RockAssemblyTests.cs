@@ -18,7 +18,9 @@ namespace Rocks.Tests
 
 		public RockAssemblyTests()
 		{
-			this.assembly = new RockAssembly(typeof(Class1).Assembly).Result;
+			var class1Assembly = typeof(Class1).Assembly;
+			this.assembly = new RockAssembly(class1Assembly, 
+				new RockOptions(codeFileDirectory: TestContext.CurrentContext.TestDirectory)).Result;
 		}
 
 		[Test]
@@ -73,7 +75,11 @@ namespace Rocks.Tests
 		{
 			var stopwatch = Stopwatch.StartNew();
 
-			new RockAssembly(typeof(object).Assembly, new RockOptions(OptimizationSetting.Debug, CodeFileOptions.Create));
+			new RockAssembly(typeof(object).Assembly, 
+				new RockOptions(
+					level: OptimizationSetting.Debug, 
+					codeFile: CodeFileOptions.Create,
+					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 
 			stopwatch.Stop();
 				

@@ -19,7 +19,7 @@ namespace Rocks.Construction.InMemory
 
 		protected override string GetDirectoryForFile()
 		{
-			return Directory.GetCurrentDirectory();
+			return this.Options.CodeFileDirectory;
 		}
 	}
 }
