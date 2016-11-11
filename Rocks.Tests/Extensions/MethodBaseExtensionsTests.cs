@@ -13,21 +13,21 @@ namespace Rocks.Tests.Extensions
 		public void GetArgumentNameList()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
-			Assert.AreEqual("a, c", target.GetArgumentNameList());
+			Assert.That(target.GetArgumentNameList(), Is.EqualTo("a, c"));
 		}
 
 		[Test]
 		public void GetArgumentNameListWithParams()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithParamsArgument));
-			Assert.AreEqual("a", target.GetArgumentNameList());
+			Assert.That(target.GetArgumentNameList(), Is.EqualTo("a"));
 		}
 
 		[Test]
 		public void GetLiteralArgumentNameList()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
-			Assert.AreEqual("{a}, {c}", target.GetLiteralArgumentNameList());
+			Assert.That(target.GetLiteralArgumentNameList(), Is.EqualTo("{a}, {c}"));
 		}
 
 		[Test]
@@ -37,10 +37,10 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			var arguments = target.GetGenericArguments(namespaces);
 
-         Assert.AreEqual("<T, U>", arguments.Arguments, nameof(arguments.Arguments));
-			Assert.AreEqual("where T : new() where U : T", arguments.Constraints, nameof(arguments.Constraints));
-			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains));
+         Assert.That(arguments.Arguments, Is.EqualTo("<T, U>"), nameof(arguments.Arguments));
+			Assert.That(arguments.Constraints, Is.EqualTo("where T : new() where U : T"), nameof(arguments.Constraints));
+			Assert.That(namespaces.Count, Is.EqualTo(1), nameof(namespaces.Count));
+			Assert.That(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains), Is.True);
 		}
 
 		[Test]
@@ -50,9 +50,9 @@ namespace Rocks.Tests.Extensions
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var arguments = target.GetGenericArguments(namespaces);
 
-			Assert.AreEqual(string.Empty, arguments.Arguments, nameof(arguments.Arguments));
-			Assert.AreEqual(string.Empty, arguments.Constraints, nameof(arguments.Constraints));
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.That(arguments.Arguments, Is.Empty, nameof(arguments.Arguments));
+			Assert.That(arguments.Constraints, Is.Empty, nameof(arguments.Constraints));
+			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 
 		public void TargetWithOutArrayAttribute([Out] string[] a) { }
