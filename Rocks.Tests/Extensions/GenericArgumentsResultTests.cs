@@ -15,8 +15,8 @@ namespace Rocks.Tests.Extensions
 
 			var result = new GenericArgumentsResult(arguments, constraints);
 
-			Assert.AreEqual(arguments, result.Arguments, nameof(result.Arguments));
-			Assert.AreEqual(constraints, result.Constraints, nameof(result.Constraints));
+			Assert.That(result.Arguments, Is.EqualTo(arguments), nameof(result.Arguments));
+			Assert.That(result.Constraints, Is.EqualTo(constraints), nameof(result.Constraints));
 		}
 	}
 }

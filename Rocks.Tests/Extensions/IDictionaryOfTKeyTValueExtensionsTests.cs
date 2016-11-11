@@ -13,7 +13,7 @@ namespace Rocks.Tests.Extensions
 			var keyedValues = new Dictionary<string, Value>();
 			keyedValues.AddOrUpdate("a", () => new Value { Data = "b" }, null);
 
-			Assert.AreEqual("b", keyedValues["a"].Data);
+			Assert.That(keyedValues["a"].Data, Is.EqualTo("b"));
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace Rocks.Tests.Extensions
 			var keyedValues = new Dictionary<string, Value> { { "a", new Value { Data = "b" } } };
 			keyedValues.AddOrUpdate("a", null, _ => _.Data = "c");
 
-			Assert.AreEqual("c", keyedValues["a"].Data);
+			Assert.That(keyedValues["a"].Data, Is.EqualTo("c"));
 		}
 	}
 

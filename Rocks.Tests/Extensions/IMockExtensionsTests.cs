@@ -17,10 +17,10 @@ namespace Rocks.Tests.Extensions
 			var chunk = rock.Make();
 
 			var failures = (chunk as IMock).GetVerificationFailures();
-			Assert.AreEqual(1, failures.Count);
+			Assert.That(failures.Count, Is.EqualTo(1));
 			var failure = failures[0];
-			Assert.IsTrue(failure.EndsWith("method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount));
-			Assert.IsTrue(failure.StartsWith("Type: Rocks.Tests.Extensions.Rock"));
+			Assert.That(failure.EndsWith("method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount), Is.True);
+			Assert.That(failure.StartsWith("Type: Rocks.Tests.Extensions.Rock"), Is.True);
 		}
 
 		[Test]
@@ -33,7 +33,7 @@ namespace Rocks.Tests.Extensions
 			chunk.TargetMethod();
 
 			var failures = (chunk as IMock).GetVerificationFailures();
-			Assert.AreEqual(0, failures.Count);
+			Assert.That(failures.Count, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -46,7 +46,7 @@ namespace Rocks.Tests.Extensions
 			var uses = new UsesIMockExtensions(chunk, true);
 			chunk.Raise(nameof(IMockExtensions.TargetEvent), EventArgs.Empty);
 
-			Assert.IsTrue(uses.WasEventRaised);
+			Assert.That(uses.WasEventRaised, Is.True);
 		}
 
 		[Test]
@@ -59,7 +59,7 @@ namespace Rocks.Tests.Extensions
 			var uses = new UsesIMockExtensions(chunk, false);
 			chunk.Raise(nameof(IMockExtensions.TargetEvent), EventArgs.Empty);
 
-			Assert.IsFalse(uses.WasEventRaised);
+			Assert.That(uses.WasEventRaised, Is.False);
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace Rocks.Tests.Extensions
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => (chunk as IMock).Verify());
+			Assert.That(() => (chunk as IMock).Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -82,7 +82,7 @@ namespace Rocks.Tests.Extensions
 			var chunk = rock.Make();
 			chunk.TargetMethod();
 
-			Assert.DoesNotThrow(() => (chunk as IMock).Verify());
+			Assert.That(() => (chunk as IMock).Verify(), Throws.Nothing);
 		}
 	}
 

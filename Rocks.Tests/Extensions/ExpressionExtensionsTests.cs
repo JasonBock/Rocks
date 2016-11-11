@@ -14,13 +14,13 @@ namespace Rocks.Tests.Extensions
 			var expectation = Expression.Call(this.GetType().GetMethod(nameof(ExpressionExtensionsTests.Create)))
 				.Create() as ArgumentExpectation<int>;
 
-			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsTrue(expectation.IsExpression, nameof(expectation.IsExpression));
-			Assert.IsFalse(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNotNull(expectation.Expression, nameof(expectation.Expression));
-			Assert.AreEqual(default(int), expectation.Value, nameof(expectation.Value));
+			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
+			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));
+			Assert.That(expectation.IsExpression, Is.True, nameof(expectation.IsExpression));
+			Assert.That(expectation.IsValue, Is.False, nameof(expectation.IsValue));
+			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
+			Assert.That(expectation.Expression, Is.Not.Null, nameof(expectation.Expression));
+			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
 		}
 
 		[Test]
@@ -29,13 +29,13 @@ namespace Rocks.Tests.Extensions
 			Expression<Func<int>> argument = () => Arg.Is<int>(_ => false);
 			var expectation = argument.Body.Create() as ArgumentExpectation<int>;
 
-			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsTrue(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsFalse(expectation.IsExpression, nameof(expectation.IsExpression));
-			Assert.IsFalse(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNotNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNull(expectation.Expression, nameof(expectation.Expression));
-			Assert.AreEqual(default(int), expectation.Value, nameof(expectation.Value));
+			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
+			Assert.That(expectation.IsEvaluation, Is.True, nameof(expectation.IsEvaluation));
+			Assert.That(expectation.IsExpression, Is.False, nameof(expectation.IsExpression));
+			Assert.That(expectation.IsValue, Is.False, nameof(expectation.IsValue));
+			Assert.That(expectation.Evaluation, Is.Not.Null, nameof(expectation.Evaluation));
+			Assert.That(expectation.Expression, Is.Null, nameof(expectation.Expression));
+			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
 		}
 
 		[Test]
@@ -44,13 +44,13 @@ namespace Rocks.Tests.Extensions
 			Expression<Func<int>> argument = () => Arg.IsAny<int>();
 			var expectation = argument.Body.Create() as ArgumentExpectation<int>;
 
-			Assert.IsTrue(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsFalse(expectation.IsExpression, nameof(expectation.IsExpression));
-			Assert.IsFalse(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNull(expectation.Expression, nameof(expectation.Expression));
-			Assert.AreEqual(default(int), expectation.Value, nameof(expectation.Value));
+			Assert.That(expectation.IsAny, Is.True, nameof(expectation.IsAny));
+			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));
+			Assert.That(expectation.IsExpression, Is.False, nameof(expectation.IsExpression));
+			Assert.That(expectation.IsValue, Is.False, nameof(expectation.IsValue));
+			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
+			Assert.That(expectation.Expression, Is.Null, nameof(expectation.Expression));
+			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
 		}
 
 		[Test]
@@ -58,13 +58,13 @@ namespace Rocks.Tests.Extensions
 		{
 			var expectation = Expression.Constant(44).Create() as ArgumentExpectation<int>;
 
-			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsFalse(expectation.IsExpression, nameof(expectation.IsExpression));
-			Assert.IsTrue(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNull(expectation.Expression, nameof(expectation.Expression));
-			Assert.AreEqual(44, expectation.Value, nameof(expectation.Value));
+			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
+			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));
+			Assert.That(expectation.IsExpression, Is.False, nameof(expectation.IsExpression));
+			Assert.That(expectation.IsValue, Is.True, nameof(expectation.IsValue));
+			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
+			Assert.That(expectation.Expression, Is.Null, nameof(expectation.Expression));
+			Assert.That(expectation.Value, Is.EqualTo(44), nameof(expectation.Value));
 		}
 
 		[Test]
@@ -75,13 +75,13 @@ namespace Rocks.Tests.Extensions
 				Expression.Constant(1))
 				.Create() as ArgumentExpectation<int>;
 
-			Assert.IsFalse(expectation.IsAny, nameof(expectation.IsAny));
-			Assert.IsFalse(expectation.IsEvaluation, nameof(expectation.IsEvaluation));
-			Assert.IsTrue(expectation.IsExpression, nameof(expectation.IsExpression));
-			Assert.IsFalse(expectation.IsValue, nameof(expectation.IsValue));
-			Assert.IsNull(expectation.Evaluation, nameof(expectation.Evaluation));
-			Assert.IsNotNull(expectation.Expression, nameof(expectation.Expression));
-			Assert.AreEqual(default(int), expectation.Value, nameof(expectation.Value));
+			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
+			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));
+			Assert.That(expectation.IsExpression, Is.True, nameof(expectation.IsExpression));
+			Assert.That(expectation.IsValue, Is.False, nameof(expectation.IsValue));
+			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
+			Assert.That(expectation.Expression, Is.Not.Null, nameof(expectation.Expression));
+			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
 		}
 
 		public static int Create() { return 44; }

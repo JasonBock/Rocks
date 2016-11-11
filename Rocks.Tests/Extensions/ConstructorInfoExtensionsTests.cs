@@ -11,55 +11,61 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void IsUnsafeForMockForPublicCtorWithNoArguments()
 		{
-			Assert.IsFalse(typeof(SafePublicConstructors).GetConstructor(Type.EmptyTypes).IsUnsafeToMock());
+			Assert.That(typeof(SafePublicConstructors).GetConstructor(Type.EmptyTypes).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForPublicCtorWithSafeArguments()
 		{
-			Assert.IsFalse(typeof(SafePublicConstructors).GetConstructor(new[] { typeof(int) }).IsUnsafeToMock());
+			Assert.That(typeof(SafePublicConstructors).GetConstructor(new[] { typeof(int) }).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForProtectedCtorWithNoArguments()
 		{
-			Assert.IsFalse(typeof(SafeProtectedConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock());
+			Assert.That(typeof(SafeProtectedConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForProtectedCtorWithSafeArguments()
 		{
-			Assert.IsFalse(typeof(SafeProtectedConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock());
+			Assert.That(typeof(SafeProtectedConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForInternalCtorWithNoArguments()
 		{
-			Assert.IsFalse(typeof(SafeInternalConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock());
+			Assert.That(typeof(SafeInternalConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForInternalCtorWithSafeArguments()
 		{
-			Assert.IsFalse(typeof(SafeInternalConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock());
+			Assert.That(typeof(SafeInternalConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForPublicCtorWithUnsafeArguments()
 		{
-			Assert.IsTrue(typeof(UnsafePublicConstructors).GetConstructor(new[] { typeof(int*) }).IsUnsafeToMock());
+			Assert.That(typeof(UnsafePublicConstructors).GetConstructor(new[] { typeof(int*) }).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForProtectedCtorWithUnsafeArguments()
 		{
-			Assert.IsTrue(typeof(UnsafeProtectedConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeProtectedConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeForMockForInternalCtorWithUnsafeArguments()
 		{
-			Assert.IsTrue(typeof(UnsafeInternalConstructors).GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeInternalConstructors).GetConstructor(
+				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock(), Is.True);
 		}
 	}
 
