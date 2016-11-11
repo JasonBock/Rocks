@@ -10,57 +10,57 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ContainsRefArguments()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithRefArgument)
-				.GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithRefArgument)
+				.GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsOutArguments()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithOutArgument)
-				.GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithOutArgument)
+				.GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsByValArguments()
 		{
-			Assert.IsFalse(typeof(IHaveMethodWithByValArgument)
-				.GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithByValArgument)
+				.GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsDelegateConditions(), Is.False);
 		}
 
 		[Test]
 		public void ContainsPointerTypeArguments()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithPointerTypeArgument)
-				.GetMethod(nameof(IHaveMethodWithPointerTypeArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithPointerTypeArgument)
+				.GetMethod(nameof(IHaveMethodWithPointerTypeArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsPointerTypeReturnType()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithPointerTypeReturnType)
-				.GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithPointerTypeReturnType)
+				.GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsArgIterator()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithArgIteratorArgument)
-				.GetMethod(nameof(IHaveMethodWithArgIteratorArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithArgIteratorArgument)
+				.GetMethod(nameof(IHaveMethodWithArgIteratorArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsRuntimeArgumentHandle()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithRuntimeArgumentHandleArgument)
-				.GetMethod(nameof(IHaveMethodWithRuntimeArgumentHandleArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithRuntimeArgumentHandleArgument)
+				.GetMethod(nameof(IHaveMethodWithRuntimeArgumentHandleArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 
 		[Test]
 		public void ContainsTypedReference()
 		{
-			Assert.IsTrue(typeof(IHaveMethodWithTypedReferenceArgument)
-				.GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions());
+			Assert.That(typeof(IHaveMethodWithTypedReferenceArgument)
+				.GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions(), Is.True);
 		}
 	}
 

@@ -10,219 +10,254 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicVirtualSafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicVirtualSafeReturn)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicVirtualSafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicVirtualSafeArgument)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicNonVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicNonVirtualSafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicNonVirtualSafeReturn)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicNonVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicNonVirtualSafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicNonVirtualSafeArgument)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicAbstractSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicAbstractSafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicAbstractSafeReturn)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicAbstractSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicAbstractSafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicAbstractSafeArgument)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedNonVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedNonVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedNonVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedNonVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedNonVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedNonVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedAbstractSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedAbstractSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedAbstractSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedAbstractSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedAbstractSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedAbstractSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalNonVirtualSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalNonVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalNonVirtualSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalNonVirtualSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalNonVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalNonVirtualSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalAbstractSafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalAbstractSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalAbstractSafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalAbstractSafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalAbstractSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalAbstractSafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicVirtualUnsafeReturn()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicVirtualUnsafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicVirtualUnsafeReturn)).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicVirtualUnsafeArgument()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicVirtualUnsafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicVirtualUnsafeArgument)).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicNonVirtualUnsafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicNonVirtualUnsafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicNonVirtualUnsafeReturn)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicNonVirtualUnsafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicNonVirtualUnsafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicNonVirtualUnsafeArgument)).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicAbstractUnsafeReturn()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicAbstractUnsafeReturn)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicAbstractUnsafeReturn)).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodPublicAbstractUnsafeArgument()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod(nameof(UnsafeMembers.MethodPublicAbstractUnsafeArgument)).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				nameof(UnsafeMembers.MethodPublicAbstractUnsafeArgument)).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedVirtualUnsafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedVirtualUnsafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedNonVirtualUnsafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedNonVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedNonVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedNonVirtualUnsafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodProtectedNonVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedNonVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedAbstractUnsafeReturn()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod("MethodProtectedAbstractUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedAbstractUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodProtectedAbstractUnsafeArgument()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod("MethodProtectedAbstractUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodProtectedAbstractUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalVirtualUnsafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalVirtualUnsafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalNonVirtualUnsafeReturn()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalNonVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalNonVirtualUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalNonVirtualUnsafeArgument()
 		{
-			Assert.IsFalse(typeof(UnsafeMembers).GetMethod("MethodInternalNonVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalNonVirtualUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalAbstractUnsafeReturn()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod("MethodInternalAbstractUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalAbstractUnsafeReturn", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithMethodInternalAbstractUnsafeArgument()
 		{
-			Assert.IsTrue(typeof(UnsafeMembers).GetMethod("MethodInternalAbstractUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMembers).GetMethod(
+				"MethodInternalAbstractUnsafeArgument", BindingFlags.NonPublic | BindingFlags.Instance).IsUnsafeToMock(), Is.True);
 		}
-
 	}
 
 	public abstract unsafe class UnsafeMembers

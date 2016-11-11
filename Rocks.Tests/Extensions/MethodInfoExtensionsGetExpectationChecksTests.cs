@@ -14,7 +14,7 @@ namespace Rocks.Tests.Extensions
 @"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var expectations = target.GetExpectationChecks();
-			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
+			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));
 		}
 
 		[Test]
@@ -24,7 +24,7 @@ namespace Rocks.Tests.Extensions
 @"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<Int32>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithPointers));
 			var expectations = target.GetExpectationChecks();
-			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
+			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace Rocks.Tests.Extensions
 @"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<IEquatable<Int32>>).IsValid(a, ""a"") && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<String>).IsValid(c, ""c"")";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			var expectations = target.GetExpectationChecks();
-			Assert.AreEqual(expectedExpectation, expectations, nameof(expectations));
+			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));
 		}
 
 		public void TargetWithArguments(int a, string c) { }

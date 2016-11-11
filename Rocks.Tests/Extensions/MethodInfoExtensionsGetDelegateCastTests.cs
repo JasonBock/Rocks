@@ -10,49 +10,49 @@ namespace Rocks.Tests.Extensions
 		public void GetDelegateCastWithNoArguments()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArguments));
-			Assert.AreEqual("Action", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithNoArgumentsAndReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArgumentsAndReturnValue));
-			Assert.AreEqual("Func<Int32>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArguments()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
-			Assert.AreEqual("Action<Int32, String>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<Int32, String>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithComplexGenericArguments()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithComplexGeneric));
-			Assert.AreEqual("Func<IGeneric<Int32>, IGeneric<Int32>>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<Int32>, IGeneric<Int32>>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArgumentsAndReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
-			Assert.AreEqual("Func<Int32, String, Int32>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32, String, Int32>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenerics()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
-			Assert.AreEqual("Action<Int32, U, String, V>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<Int32, U, String, V>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenericsAndReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
-			Assert.AreEqual("Func<Int32, U, String, V, U>", target.GetDelegateCast());
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32, U, String, V, U>"));
 		}
 
 		public void TargetWithNoArguments() { }
