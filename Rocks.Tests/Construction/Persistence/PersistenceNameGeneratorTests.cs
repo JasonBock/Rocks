@@ -10,7 +10,7 @@ namespace Rocks.Tests.Construction.Persistence
 		public void Generate()
 		{
 			var generator = new PersistenceNameGenerator(typeof(PersistenceNameGeneratorTests));
-			Assert.AreEqual("Rocks.Tests.Rocks", generator.AssemblyName);
+			Assert.That(generator.AssemblyName, Is.EqualTo("Rocks.Tests.Rocks"));
 		}
 	}
 }

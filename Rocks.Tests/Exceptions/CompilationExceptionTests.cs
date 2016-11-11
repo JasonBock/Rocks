@@ -22,7 +22,7 @@ namespace Rocks.Tests.Exceptions
 		{
 			var diagnostics = ImmutableArray.Create<Diagnostic>();
          var exception = new CompilationException(diagnostics);
-			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));
+			Assert.That(exception.Diagnostics, Is.EqualTo(diagnostics), nameof(exception.Diagnostics));
 		}
 
 		[Test]
@@ -37,8 +37,8 @@ namespace Rocks.Tests.Exceptions
 			var message = Guid.NewGuid().ToString("N");
          var diagnostics = ImmutableArray.Create<Diagnostic>();
 			var exception = new CompilationException(diagnostics, message);
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.Diagnostics, Is.EqualTo(diagnostics), nameof(exception.Diagnostics));
 		}
 
 		[Test]
@@ -54,9 +54,9 @@ namespace Rocks.Tests.Exceptions
 			var message = Guid.NewGuid().ToString("N");
 			var diagnostics = ImmutableArray.Create<Diagnostic>();
 			var exception = new CompilationException(diagnostics, message, inner);
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.AreEqual(diagnostics, exception.Diagnostics, nameof(exception.Diagnostics));
-			Assert.AreSame(inner, exception.InnerException, nameof(exception.InnerException));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.Diagnostics, Is.EqualTo(diagnostics), nameof(exception.Diagnostics));
+			Assert.That(exception.InnerException, Is.SameAs(inner), nameof(exception.InnerException));
 		}
 
 		[Test]

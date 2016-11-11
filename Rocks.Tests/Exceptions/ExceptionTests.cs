@@ -16,23 +16,23 @@ namespace Rocks.Tests.Exceptions
 		protected void CreateExceptionTest()
 		{
 			var exception = new T();
-			Assert.IsNotNull(exception.Message, nameof(exception.Message));
-			Assert.IsNull(exception.InnerException, nameof(exception.InnerException));
+			Assert.That(exception.Message, Is.Not.Null, nameof(exception.Message));
+			Assert.That(exception.InnerException, Is.Null, nameof(exception.InnerException));
 		}
 
 		protected void CreateExceptionWithMessageTest(string message)
 		{
 			var exception = Activator.CreateInstance(typeof(T), message) as T;
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.IsNull(exception.InnerException, nameof(exception.InnerException));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.InnerException, Is.Null, nameof(exception.InnerException));
 		}
 
 		protected void CreateExceptionWithMessageAndInnerExceptionTest(string message)
 		{
 			var innerException = new TInner();
 			var exception = Activator.CreateInstance(typeof(T), message, innerException) as T;
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.AreEqual(innerException, exception.InnerException, nameof(exception.InnerException));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.InnerException, Is.EqualTo(innerException), nameof(exception.InnerException));
 		}
 
 		protected void RoundtripExceptionTest(string message)
@@ -49,8 +49,8 @@ namespace Rocks.Tests.Exceptions
 				newException = formatter.Deserialize(stream) as T;
 			}
 
-			Assert.IsNotNull(newException);
-			Assert.AreEqual(message, newException.Message, nameof(exception.Message));
+			Assert.That(newException, Is.Not.Null);
+			Assert.That(newException.Message, Is.EqualTo(message), nameof(exception.Message));
 		}
 	}
 }

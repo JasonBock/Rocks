@@ -29,13 +29,13 @@ namespace Rocks.Tests.Construction.InMemory
 				options.AllowWarnings);
 			compiler.Compile();
 
-			Assert.AreEqual(options.Optimization, compiler.Optimization, nameof(compiler.Optimization));
-			Assert.AreSame(trees, compiler.Trees, nameof(compiler.Trees));
-			Assert.IsNotNull(compiler.Result, nameof(compiler.Result));
-			Assert.IsNotNull(
+			Assert.That(compiler.Optimization, Is.EqualTo(options.Optimization), nameof(compiler.Optimization));
+			Assert.That(compiler.Trees, Is.SameAs(trees), nameof(compiler.Trees));
+			Assert.That(compiler.Result, Is.Not.Null, nameof(compiler.Result));
+			Assert.That(
 				(from type in compiler.Result.GetTypes()
 				where baseType.IsAssignableFrom(type)
-				select type).Single());
+				select type).Single(), Is.Not.Null);
 		}
 	}
 

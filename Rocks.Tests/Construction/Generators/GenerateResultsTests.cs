@@ -16,10 +16,10 @@ namespace Rocks.Tests.Construction.Generators
 
 			var results = new GenerateResults(result, requires, isUnsafe);
 
-			Assert.AreSame(result, results.Result, nameof(results.Result));
-			Assert.AreEqual(requires, results.RequiresObsoleteSuppression,
+			Assert.That(results.Result, Is.SameAs(result), nameof(results.Result));
+			Assert.That(results.RequiresObsoleteSuppression, Is.EqualTo(requires),
 				nameof(results.RequiresObsoleteSuppression));
-			Assert.AreEqual(isUnsafe, results.IsUnsafe,
+			Assert.That(results.IsUnsafe, Is.EqualTo(isUnsafe),
 				nameof(results.IsUnsafe));
 		}
 	}

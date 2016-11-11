@@ -19,8 +19,8 @@ namespace Rocks.Tests.Exceptions
 		public void CreateWithFailures()
 		{
 			var exception = new VerificationException(new List<string> { "failure" }.AsReadOnly());
-			Assert.AreEqual(1, exception.Failures.Count, nameof(exception.Failures.Count));
-			Assert.AreEqual("failure", exception.Failures[0], nameof(exception.Failures));
+			Assert.That(exception.Failures.Count, Is.EqualTo(1), nameof(exception.Failures.Count));
+			Assert.That(exception.Failures[0], Is.EqualTo("failure"), nameof(exception.Failures));
 		}
 
 		[Test]
@@ -34,9 +34,9 @@ namespace Rocks.Tests.Exceptions
 		{
 			var message = Guid.NewGuid().ToString("N");
          var exception = new VerificationException(new List <string> { "failure" }.AsReadOnly(), message);
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.AreEqual(1, exception.Failures.Count, nameof(exception.Failures.Count));
-			Assert.AreEqual("failure", exception.Failures[0], nameof(exception.Failures));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.Failures.Count, Is.EqualTo(1), nameof(exception.Failures.Count));
+			Assert.That(exception.Failures[0], Is.EqualTo("failure"), nameof(exception.Failures));
 		}
 
 		[Test]
@@ -51,10 +51,10 @@ namespace Rocks.Tests.Exceptions
 			var inner = new Exception();
 			var message = Guid.NewGuid().ToString("N");
 			var exception = new VerificationException(new List<string> { "failure" }.AsReadOnly(), message, inner);
-			Assert.AreSame(inner, exception.InnerException, nameof(exception.InnerException));
-			Assert.AreEqual(message, exception.Message, nameof(exception.Message));
-			Assert.AreEqual(1, exception.Failures.Count, nameof(exception.Failures.Count));
-			Assert.AreEqual("failure", exception.Failures[0], nameof(exception.Failures));
+			Assert.That(exception.InnerException, Is.SameAs(inner), nameof(exception.InnerException));
+			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
+			Assert.That(exception.Failures.Count, Is.EqualTo(1), nameof(exception.Failures.Count));
+			Assert.That(exception.Failures[0], Is.EqualTo("failure"), nameof(exception.Failures));
 		}
 
 		[Test]

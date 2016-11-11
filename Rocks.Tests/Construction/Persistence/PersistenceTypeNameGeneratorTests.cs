@@ -11,16 +11,16 @@ namespace Rocks.Tests.Construction
 		public void GenerateWhenTypeIsGenericTypeDefinition()
 		{
 			var generator = new PersistenceTypeNameGenerator(new SortedSet<string>());
-			Assert.AreEqual($"Rock{nameof(PersistenceTypeNameGeneratorTests)}IAmNotGeneric", 
-            generator.Generate(typeof(IAmNotGeneric)));
+			Assert.That(generator.Generate(typeof(IAmNotGeneric)), 
+				Is.EqualTo($"Rock{nameof(PersistenceTypeNameGeneratorTests)}IAmNotGeneric"));
 		}
 
 		[Test]
 		public void GenerateWhenTypeIsNotGenericTypeDefinition()
 		{
 			var generator = new PersistenceTypeNameGenerator(new SortedSet<string>());
-			Assert.AreEqual($"Rock{nameof(PersistenceTypeNameGeneratorTests)}IAmGeneric<T>", 
-				generator.Generate(typeof(IAmGeneric<>)));
+			Assert.That(generator.Generate(typeof(IAmGeneric<>)),
+				Is.EqualTo($"Rock{nameof(PersistenceTypeNameGeneratorTests)}IAmGeneric<T>"));
 		}
 
 		public interface IAmNotGeneric { }

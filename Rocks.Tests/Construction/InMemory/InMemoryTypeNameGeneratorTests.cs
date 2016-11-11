@@ -14,11 +14,11 @@ namespace Rocks.Tests.Construction.InMemory
 			var generator = new InMemoryTypeNameGenerator(new SortedSet<string>());
 			var name = generator.Generate(typeof(IAmNotGeneric));
 
-         Assert.IsTrue(name.StartsWith("Rock"));
+         Assert.That(name.StartsWith("Rock"), Is.True);
 
 			var restOfName = name.Substring(4);
 
-			Assert.DoesNotThrow(() => Guid.Parse(restOfName));
+			Assert.That(() => Guid.Parse(restOfName), Throws.Nothing);
 		}
 
 		[Test]
@@ -28,13 +28,13 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var name = generator.Generate(typeof(IAmGeneric<>));
 
-			Assert.IsTrue(name.StartsWith("Rock"));
-			Assert.IsTrue(name.EndsWith("<T>"));
+			Assert.That(name.StartsWith("Rock"), Is.True);
+			Assert.That(name.EndsWith("<T>"), Is.True);
 
 			var restOfName = name.Substring(4);
 			restOfName = restOfName.Substring(0, restOfName.Length - 3);
 
-			Assert.DoesNotThrow(() => Guid.Parse(restOfName));
+			Assert.That(() => Guid.Parse(restOfName), Throws.Nothing);
 		}
 
 		public interface IAmNotGeneric { }

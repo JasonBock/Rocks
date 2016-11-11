@@ -23,21 +23,21 @@ namespace Rocks.Tests.Construction.InMemory
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
 			builder.Build();
 
-			Assert.AreSame(baseType, builder.BaseType, nameof(builder.BaseType));
-			Assert.AreSame(handlers, builder.Handlers, nameof(builder.Handlers));
-			Assert.AreSame(namespaces, builder.Namespaces, nameof(builder.Namespaces));
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.That(builder.BaseType, Is.SameAs(baseType), nameof(builder.BaseType));
+			Assert.That(builder.Handlers, Is.SameAs(handlers), nameof(builder.Handlers));
+			Assert.That(builder.Namespaces, Is.SameAs(namespaces), nameof(builder.Namespaces));
+			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 
-			Assert.AreSame(options, builder.Options, nameof(builder.Options));
-			Assert.IsNotNull(builder.Tree, nameof(builder.Tree));
-			Assert.IsTrue(!string.IsNullOrWhiteSpace(builder.TypeName), nameof(builder.TypeName));
+			Assert.That(builder.Options, Is.SameAs(options), nameof(builder.Options));
+			Assert.That(builder.Tree, Is.Not.Null, nameof(builder.Tree));
+			Assert.That(!string.IsNullOrWhiteSpace(builder.TypeName), Is.True, nameof(builder.TypeName));
 
 			var tree = builder.Tree.ToString();
 
-			Assert.IsFalse(tree.StartsWith("#pragma warning disable CS0618"));
-			Assert.IsFalse(tree.Contains("#pragma warning disable CS0672"));
-			Assert.IsFalse(tree.Contains("#pragma warning restore CS0672"));
-			Assert.IsFalse(tree.EndsWith("#pragma warning restore CS0618"));
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.False);
+			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.False);
+			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.False);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.False);
 		}
 
 		[Test]
@@ -54,10 +54,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
-			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
-			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
-			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
+			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
 		}
 
 		[Test]
@@ -74,10 +74,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
-			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
-			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
-			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
+			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
 		}
 
 		[Test]
@@ -94,10 +94,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
-			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
-			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
-			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
+			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
 		}
 
 		[Test]
@@ -114,10 +114,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.IsTrue(tree.StartsWith("#pragma warning disable CS0618"));
-			Assert.IsTrue(tree.Contains("#pragma warning disable CS0672"));
-			Assert.IsTrue(tree.Contains("#pragma warning restore CS0672"));
-			Assert.IsTrue(tree.EndsWith("#pragma warning restore CS0618"));
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
+			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
 		}
 	}
 

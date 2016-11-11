@@ -18,13 +18,13 @@ namespace Rocks.Tests.Construction
 			var information = new MethodInformation(containsDelegateConditions,
 				delegateCast, description, descriptionWithOverride);
 
-			Assert.AreEqual(containsDelegateConditions, information.ContainsDelegateConditions,
+			Assert.That(information.ContainsDelegateConditions, Is.EqualTo(containsDelegateConditions),
 				nameof(information.ContainsDelegateConditions));
-			Assert.AreEqual(delegateCast, information.DelegateCast,
+			Assert.That(information.DelegateCast, Is.EqualTo(delegateCast),
 				nameof(information.DelegateCast));
-			Assert.AreEqual(description, information.Description,
+			Assert.That(information.Description, Is.EqualTo(description),
 				nameof(information.Description));
-			Assert.AreEqual(descriptionWithOverride, information.DescriptionWithOverride,
+			Assert.That(information.DescriptionWithOverride, Is.EqualTo(descriptionWithOverride),
 				nameof(information.DescriptionWithOverride));
 		}
 	}
