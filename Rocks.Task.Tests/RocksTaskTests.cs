@@ -23,7 +23,7 @@ namespace Rocks.Task.Tests
 			task.BuildEngine = engineMock.Make();
 			task.Execute();
 
-			Assert.IsNotNull(task.Result);
+			Assert.That(task.Result, Is.Not.Null);
 
 			engineMock.Verify();
 		}
