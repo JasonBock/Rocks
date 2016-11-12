@@ -18,7 +18,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
 			rock.Verify();
 		}
 
@@ -30,7 +30,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -45,7 +45,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[44];
 			propertyValue = chunk[44];
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
 			rock.Verify();
 		}
 
@@ -57,7 +57,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -69,23 +69,23 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[44];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithSetIndexerProperty()
 		{
 			var indexer1 = Guid.NewGuid();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.AreEqual(indexer1SetValue, setValue, nameof(setValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -97,24 +97,24 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithSetIndexerPropertyAndExpectedCallCount()
 		{
 			var indexer1 = Guid.NewGuid();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
-			chunk[indexer1] = indexer1SetValue;
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.AreEqual(indexer1SetValue, setValue, nameof(setValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -126,7 +126,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -141,14 +141,14 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk[indexer1] = indexer1.ToString();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerProperty()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -157,10 +157,10 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
-			Assert.AreEqual(indexer1SetValue, setValue, nameof(setValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -168,7 +168,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -176,16 +176,16 @@ namespace Rocks.Tests
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
 
 			var chunk = rock.Make();
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -195,14 +195,14 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -212,11 +212,11 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
 			propertyValue = chunk[indexer1];
-			chunk[indexer1] = indexer1SetValue;
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
-			Assert.AreEqual(indexer1SetValue, setValue, nameof(setValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -224,7 +224,7 @@ namespace Rocks.Tests
 		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -232,17 +232,17 @@ namespace Rocks.Tests
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
 
 			var chunk = rock.Make();
-			chunk[indexer1] = indexer1SetValue;
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -251,17 +251,17 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
-			chunk[indexer1] = indexer1SetValue;
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -272,14 +272,14 @@ namespace Rocks.Tests
 			var propertyValue = chunk[indexer1];
 			propertyValue = chunk[indexer1];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
 		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
-			var indexer1SetValue = Guid.NewGuid().ToString();
+			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
 			string setValue = null;
 
@@ -289,9 +289,9 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1];
 			propertyValue = chunk[indexer1];
-			chunk[indexer1] = indexer1SetValue;
+			chunk[indexer1] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 	}
 

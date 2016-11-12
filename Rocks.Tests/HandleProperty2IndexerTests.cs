@@ -18,7 +18,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[44, 45];
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
 			rock.Verify();
 		}
 
@@ -30,7 +30,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -45,7 +45,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[44, 45];
 			propertyValue = chunk[44, 45];
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
 			rock.Verify();
 		}
 
@@ -57,7 +57,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -69,7 +69,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[44, 45];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -86,7 +86,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.AreEqual(indexerSetValue, setValue, nameof(setValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -98,7 +98,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -116,7 +116,7 @@ namespace Rocks.Tests
 			chunk[indexer1, indexer2] = indexerSetValue;
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.AreEqual(indexerSetValue, setValue, nameof(setValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -128,7 +128,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -145,7 +145,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -164,8 +164,8 @@ namespace Rocks.Tests
 			var propertyValue = chunk[indexer1, indexer2];
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
-			Assert.AreEqual(indexerSetValue, setValue, nameof(setValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -183,7 +183,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -199,7 +199,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[indexer1, indexer2];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -220,8 +220,8 @@ namespace Rocks.Tests
 			chunk[indexer1, indexer2] = indexerSetValue;
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.AreEqual(returnValue, propertyValue, nameof(propertyValue));
-			Assert.AreEqual(indexerSetValue, setValue, nameof(setValue));
+			Assert.That(propertyValue, Is.EqualTo(returnValue), nameof(propertyValue));
+			Assert.That(setValue, Is.EqualTo(indexerSetValue), nameof(setValue));
 			rock.Verify();
 		}
 
@@ -240,7 +240,7 @@ namespace Rocks.Tests
 			chunk[indexer1, indexer2] = indexerSetValue;
 			chunk[indexer1, indexer2] = indexerSetValue;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -259,7 +259,7 @@ namespace Rocks.Tests
 			chunk[indexer1, indexer2] = indexerSetValue;
 			var propertyValue = chunk[indexer1, indexer2];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -277,7 +277,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[indexer1, indexer2];
 			propertyValue = chunk[indexer1, indexer2];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -296,7 +296,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[indexer1, indexer2];
 			propertyValue = chunk[indexer1, indexer2];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 	}
 
