@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using Rocks.Construction;
 using Rocks.Construction.InMemory;
 using Rocks.Tests.Types;
 using static Rocks.Extensions.TypeExtensions;
@@ -12,13 +11,13 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void CanBeSeenWhenTypeIsInAssemblyWithInternalsVisibleTo()
 		{
-			Assert.IsTrue(this.GetType().CanBeSeenByMockAssembly(new InMemoryNameGenerator()));
+			Assert.That(this.GetType().CanBeSeenByMockAssembly(new InMemoryNameGenerator()), Is.True);
 		}
 
 		[Test]
 		public void CanBeSeenWhenTypeIsInAssemblyWithNoInternalsVisibleToAndPublic()
 		{
-			Assert.IsTrue(typeof(HaveInternalAbstractProperty).CanBeSeenByMockAssembly(new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveInternalAbstractProperty).CanBeSeenByMockAssembly(new InMemoryNameGenerator()), Is.True);
 		}
 	}
 }

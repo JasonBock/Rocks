@@ -13,13 +13,13 @@ namespace Rocks.Tests.Extensions
 
 			var foundMethod = typeof(IMetadata).FindMethod(method.MetadataToken);
 
-			Assert.AreEqual(method, foundMethod);
+			Assert.That(foundMethod, Is.EqualTo(method));
 		}
 
 		[Test]
 		public void FindMethodWhenTokenDoesNotExist()
 		{
-			Assert.IsNull(typeof(IMetadata).FindMethod(0));
+			Assert.That(typeof(IMetadata).FindMethod(0), Is.Null);
 		}
 
 		[Test]
@@ -29,7 +29,7 @@ namespace Rocks.Tests.Extensions
 
 			var foundMethod = typeof(Metadata).FindMethod(method.MetadataToken);
 
-			Assert.AreEqual(method, foundMethod);
+			Assert.That(foundMethod, Is.EqualTo(method));
 		}
 	}
 

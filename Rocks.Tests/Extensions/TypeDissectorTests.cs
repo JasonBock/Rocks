@@ -10,44 +10,44 @@ namespace Rocks.Tests.Extensions
 		public void DissectSimpleType()
 		{
 			var dissector = new TypeDissector(typeof(int));
-			Assert.IsFalse(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsFalse(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsFalse(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
 		public void DissectArrayType()
 		{
 			var dissector = new TypeDissector(typeof(int[]));
-			Assert.IsTrue(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsFalse(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsFalse(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
 		public void DissectPointerArrayType()
 		{
 			var dissector = new TypeDissector(typeof(int*[]));
-			Assert.IsTrue(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsFalse(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsTrue(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
 		public void DissectPointerType()
 		{
 			var dissector = new TypeDissector(typeof(int*));
-			Assert.IsFalse(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsFalse(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsTrue(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
@@ -55,11 +55,11 @@ namespace Rocks.Tests.Extensions
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRef)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
-			Assert.IsFalse(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsTrue(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsFalse(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
@@ -67,11 +67,11 @@ namespace Rocks.Tests.Extensions
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointer)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
-			Assert.IsFalse(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsTrue(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsTrue(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
@@ -79,11 +79,11 @@ namespace Rocks.Tests.Extensions
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefArray)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
-			Assert.IsTrue(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsTrue(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsFalse(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		[Test]
@@ -91,11 +91,11 @@ namespace Rocks.Tests.Extensions
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointerArray)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
-			Assert.IsTrue(dissector.IsArray, nameof(dissector.IsArray));
-			Assert.IsTrue(dissector.IsByRef, nameof(dissector.IsByRef));
-			Assert.IsTrue(dissector.IsPointer, nameof(dissector.IsPointer));
-			Assert.AreEqual(typeof(int), dissector.RootType, nameof(dissector.RootType));
-			Assert.AreEqual("Int32", dissector.SafeName, nameof(dissector.SafeName));
+			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
+			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
+			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
+			Assert.That(dissector.RootType, Is.EqualTo(typeof(int)), nameof(dissector.RootType));
+			Assert.That(dissector.SafeName, Is.EqualTo("Int32"), nameof(dissector.SafeName));
 		}
 
 		public void TargetWithByRef(ref int a) { }

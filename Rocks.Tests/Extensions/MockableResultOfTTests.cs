@@ -14,8 +14,8 @@ namespace Rocks.Tests.Extensions
 			var requires = RequiresExplicitInterfaceImplementation.Yes;
 
          var result = new MockableResult<MethodBase>(method, requires);
-			Assert.AreEqual(method, result.Value, nameof(result.Value));
-			Assert.AreEqual(requires, result.RequiresExplicitInterfaceImplementation, 
+			Assert.That(result.Value, Is.EqualTo(method), nameof(result.Value));
+			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(requires),
 				nameof(result.RequiresExplicitInterfaceImplementation));
 		}
 	}
