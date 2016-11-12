@@ -14,7 +14,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var constructors = typeof(HasConstructorWithArgumentThatUsesProtectedInternalType).GetMockableConstructors(
 				new InMemoryNameGenerator());
-			Assert.AreEqual(0, constructors.Count);
+			Assert.That(constructors.Count, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var constructors = typeof(HasObsoleteConstructors).GetMockableConstructors(
 				new InMemoryNameGenerator());
-			Assert.AreEqual(1, constructors.Count);
+			Assert.That(constructors.Count, Is.EqualTo(1));
 		}
 	}
 

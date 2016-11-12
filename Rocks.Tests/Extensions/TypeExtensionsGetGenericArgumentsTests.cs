@@ -13,9 +13,9 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var arguments = typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments(namespaces);
 
-         Assert.AreEqual("<T>", arguments.Arguments);
-			Assert.AreEqual(string.Empty, arguments.Constraints);
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+         Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
+			Assert.That(arguments.Constraints, Is.Empty);
+			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 
 		[Test]
@@ -24,20 +24,21 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var arguments = typeof(IHaveGenericsWithConstraints<>).GetGenericArguments(namespaces);
 
-			Assert.AreEqual("<T>", arguments.Arguments);
-			Assert.AreEqual("where T : class", arguments.Constraints);
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
+			Assert.That(arguments.Constraints, Is.EqualTo("where T : class"));
+			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 
 		[Test]
 		public void GetGenericArgumentsForComplexGenericType()
 		{
 			var namespaces = new SortedSet<string>();
-			var arguments = typeof(HaveMethodWithComplexGenericType<>).GetMethod(nameof(HaveMethodWithComplexGenericType<int>.Target)).ReturnType.GetGenericArguments(namespaces);
+			var arguments = typeof(HaveMethodWithComplexGenericType<>).GetMethod(
+				nameof(HaveMethodWithComplexGenericType<int>.Target)).ReturnType.GetGenericArguments(namespaces);
 
-			Assert.AreEqual("<KeyValuePair<Int64, TSource>>", arguments.Arguments);
-			Assert.AreEqual(string.Empty, arguments.Constraints);
-			Assert.AreEqual(0, namespaces.Count, nameof(namespaces.Count));
+			Assert.That(arguments.Arguments, Is.EqualTo("<KeyValuePair<Int64, TSource>>"));
+			Assert.That(arguments.Constraints, Is.Empty);
+			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 	}
 

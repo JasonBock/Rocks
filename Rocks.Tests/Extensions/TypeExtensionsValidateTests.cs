@@ -13,57 +13,57 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ValidateWhenTypeIsAbstractAndHasInternalConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveInternalConstructor).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveInternalConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsAbstractAndHasInternalAbstractProperty()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveInternalAbstractProperty).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveInternalAbstractProperty).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(DoNotHaveHandlerConstructor).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(DoNotHaveHandlerConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor()
 		{
-			Assert.AreEqual(string.Empty, typeof(HaveHandlerConstructor).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveHandlerConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasObjectConstructor()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveObjectConstructor).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveObjectConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
-				SerializationOptions.Supported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveNoPublicConstructor).Validate(
+				SerializationOptions.Supported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported()
 		{
-			Assert.AreNotEqual(string.Empty, typeof(HaveNoPublicConstructor).Validate(
-				SerializationOptions.NotSupported, new InMemoryNameGenerator()));
+			Assert.That(typeof(HaveNoPublicConstructor).Validate(
+				SerializationOptions.NotSupported, new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 
 		[Test]
 		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported()
 		{
-			Assert.AreEqual(string.Empty, typeof(IHaveNoPublicConstructor).Validate(
-				SerializationOptions.Supported, new InMemoryNameGenerator()));
+			Assert.That(typeof(IHaveNoPublicConstructor).Validate(
+				SerializationOptions.Supported, new InMemoryNameGenerator()), Is.Empty);
 		}
 	}
 

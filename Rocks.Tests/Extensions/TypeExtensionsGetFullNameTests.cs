@@ -9,37 +9,37 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetFullNameForValueType()
 		{
-			Assert.AreEqual("Int32", typeof(int).GetFullName());
+			Assert.That(typeof(int).GetFullName(), Is.EqualTo("Int32"));
 		}
 
 		[Test]
 		public void GetFullNameForArray()
 		{
-			Assert.AreEqual("Int32[]", typeof(int[]).GetFullName());
+			Assert.That(typeof(int[]).GetFullName(), Is.EqualTo("Int32[]"));
 		}
 
 		[Test]
 		public void GetFullNameForArrayOfOpenGenericTypes()
 		{
-			Assert.AreEqual("IAmAGeneric<T>[]", typeof(IAmAGeneric<>).MakeArrayType().GetFullName());
+			Assert.That(typeof(IAmAGeneric<>).MakeArrayType().GetFullName(), Is.EqualTo("IAmAGeneric<T>[]"));
 		}
 
 		[Test]
 		public void GetFullNameForArrayOfClosedGenericTypes()
 		{
-			Assert.AreEqual("IAmAGeneric<Int32>[]", typeof(IAmAGeneric<int>).MakeArrayType().GetFullName());
+			Assert.That(typeof(IAmAGeneric<int>).MakeArrayType().GetFullName(), Is.EqualTo("IAmAGeneric<Int32>[]"));
 		}
 
 		[Test]
 		public void GetFullNameForOpenGenericTypes()
 		{
-			Assert.AreEqual("IAmAGeneric<T>", typeof(IAmAGeneric<>).GetFullName());
+			Assert.That(typeof(IAmAGeneric<>).GetFullName(), Is.EqualTo("IAmAGeneric<T>"));
 		}
 
 		[Test]
 		public void GetFullNameForClosedGenericTypes()
 		{
-			Assert.AreEqual("IAmAGeneric<Int32>", typeof(IAmAGeneric<int>).GetFullName());
+			Assert.That(typeof(IAmAGeneric<int>).GetFullName(), Is.EqualTo("IAmAGeneric<Int32>"));
 		}
 	}
 

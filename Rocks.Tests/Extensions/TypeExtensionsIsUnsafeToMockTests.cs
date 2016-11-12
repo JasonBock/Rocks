@@ -10,73 +10,73 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers()
 		{
-			Assert.IsFalse(typeof(ISafeMembers).IsUnsafeToMock());
+			Assert.That(typeof(ISafeMembers).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue()
 		{
-			Assert.IsTrue(typeof(IUnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock());
+			Assert.That(typeof(IUnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments()
 		{
-			Assert.IsTrue(typeof(IUnsafeMethodWithUnsafeArguments).IsUnsafeToMock());
+			Assert.That(typeof(IUnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafePropertyType()
 		{
-			Assert.IsTrue(typeof(IUnsafePropertyWithUnsafePropertyType).IsUnsafeToMock());
+			Assert.That(typeof(IUnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeIndexer()
 		{
-			Assert.IsTrue(typeof(IUnsafePropertyWithUnsafeIndexer).IsUnsafeToMock());
+			Assert.That(typeof(IUnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithSafeInterfaceWithUnsafeEventArgs()
 		{
-			Assert.IsFalse(typeof(ISafeEventWithUnsafeEventArgs).IsUnsafeToMock());
+			Assert.That(typeof(ISafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithSafeClassWithSafeMembers()
 		{
-			Assert.IsFalse(typeof(SafeMembers).IsUnsafeToMock());
+			Assert.That(typeof(SafeMembers).IsUnsafeToMock(), Is.False);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue()
 		{
-			Assert.IsTrue(typeof(UnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeArguments()
 		{
-			Assert.IsTrue(typeof(UnsafeMethodWithUnsafeArguments).IsUnsafeToMock());
+			Assert.That(typeof(UnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeClassWithUnsafePropertyType()
 		{
-			Assert.IsTrue(typeof(UnsafePropertyWithUnsafePropertyType).IsUnsafeToMock());
+			Assert.That(typeof(UnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithUnsafeClassWithUnsafeIndexer()
 		{
-			Assert.IsTrue(typeof(UnsafePropertyWithUnsafeIndexer).IsUnsafeToMock());
+			Assert.That(typeof(UnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
 		}
 
 		[Test]
 		public void IsUnsafeToMockWithSafeClassWithUnsafeEventArgs()
 		{
-			Assert.IsFalse(typeof(SafeEventWithUnsafeEventArgs).IsUnsafeToMock());
+			Assert.That(typeof(SafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
 		}
 	}
 

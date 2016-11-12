@@ -14,15 +14,15 @@ namespace Rocks.Tests.Extensions
 		public void GetMockableMethodsWhenTypeHasProtectedInternalAbstractMethod()
 		{
 			var methods = typeof(HasProtectedInternalAbstractMethod).GetMockableMethods(new InMemoryNameGenerator());
-			Assert.IsTrue(methods.Where(_ => _.Value.Name == "Target").Any());
+			Assert.That(methods.Where(_ => _.Value.Name == "Target").Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableMethodsWhenTypeIsInterfaceAndHasObjectMethods()
 		{
 			var methods = typeof(IHaveObjectMethods).GetMockableMethods(new InMemoryNameGenerator());
-			Assert.AreEqual(1, methods.Count);
-			Assert.IsTrue(methods[0].Value.Name == "Target");
+			Assert.That(methods.Count, Is.EqualTo(1));
+			Assert.That(methods[0].Value.Name == "Target", Is.True);
 		}
 	}
 

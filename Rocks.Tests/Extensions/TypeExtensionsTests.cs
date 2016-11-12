@@ -13,27 +13,27 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ContainsRefArguments()
 		{
-			Assert.IsTrue(typeof(IAmTypeWithMethodWithRefArgument).ContainsRefAndOrOutParameters());
+			Assert.That(typeof(IAmTypeWithMethodWithRefArgument).ContainsRefAndOrOutParameters(), Is.True);
 		}
 
 		[Test]
 		public void ContainsOutArguments()
 		{
-			Assert.IsTrue(typeof(IAmTypeWithMethodWithOutArgument).ContainsRefAndOrOutParameters());
+			Assert.That(typeof(IAmTypeWithMethodWithOutArgument).ContainsRefAndOrOutParameters(), Is.True);
 		}
 
 		[Test]
 		public void ContainsByValArguments()
 		{
-			Assert.IsFalse(typeof(IAmTypeWithMethodWithByValArgument).ContainsRefAndOrOutParameters());
+			Assert.That(typeof(IAmTypeWithMethodWithByValArgument).ContainsRefAndOrOutParameters(), Is.False);
 		}
 
 		[Test]
 		public void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()
 		{
 			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods(new InMemoryNameGenerator());
-			Assert.AreEqual(1, methods.Count);
-			Assert.IsTrue(methods.Where(_ => _.Value.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any());
+			Assert.That(methods.Count, Is.EqualTo(1));
+			Assert.That(methods.Where(_ => _.Value.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any(), Is.True);
 		}
 
 		public delegate void RefTargetWithoutGeneric(ref Guid a);

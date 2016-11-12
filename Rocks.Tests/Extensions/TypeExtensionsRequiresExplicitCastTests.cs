@@ -9,25 +9,27 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void RequiresExplicitCastForReferenceType()
 		{
-			Assert.IsFalse(typeof(string).RequiresExplicitCast());
+			Assert.That(typeof(string).RequiresExplicitCast(), Is.False);
 		}
 
 		[Test]
 		public void RequiresExplicitCastForValueType()
 		{
-			Assert.IsTrue(typeof(int).RequiresExplicitCast());
+			Assert.That(typeof(int).RequiresExplicitCast(), Is.True);
 		}
 
 		[Test]
 		public void RequiresExplicitCastForGenericTypeWithReferenceConstraint()
 		{
-			Assert.IsFalse(typeof(IRequireCasts<,>).GetMethod(nameof(IRequireCasts<string, int>.TargetWithConstraint)).ReturnType.RequiresExplicitCast());
+			Assert.That(typeof(IRequireCasts<,>).GetMethod(
+				nameof(IRequireCasts<string, int>.TargetWithConstraint)).ReturnType.RequiresExplicitCast(), Is.False);
 		}
 
 		[Test]
 		public void RequiresExplicitCastForGenericTypeWithNoReferenceConstraint()
 		{
-			Assert.IsTrue(typeof(IRequireCasts<,>).GetMethod(nameof(IRequireCasts<string, int>.TargetWithNoConstraint)).ReturnType.RequiresExplicitCast());
+			Assert.That(typeof(IRequireCasts<,>).GetMethod(
+				nameof(IRequireCasts<string, int>.TargetWithNoConstraint)).ReturnType.RequiresExplicitCast(), Is.True);
 		}
 	}
 

@@ -11,135 +11,140 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetSafeName()
 		{
-			Assert.AreEqual("TypeExtensionsGetSafeNameTests.SubnestedClass.IAmSubnested",
-				typeof(SubnestedClass.IAmSubnested).GetSafeName());
+			Assert.That(typeof(SubnestedClass.IAmSubnested).GetSafeName(),
+				Is.EqualTo("TypeExtensionsGetSafeNameTests.SubnestedClass.IAmSubnested"));
 		}
 
 		[Test]
 		public void GetSafeNameWithOpenGenerics()
 		{
-			Assert.AreEqual("IHaveGenerics", typeof(IHaveGenerics<>).GetSafeName());
+			Assert.That(typeof(IHaveGenerics<>).GetSafeName(),
+				Is.EqualTo("IHaveGenerics"));
 		}
 
 		[Test]
 		public void GetSafeNameWithClosedGenerics()
 		{
-			Assert.AreEqual("IHaveGenerics", typeof(IHaveGenerics<string>).GetSafeName());
+			Assert.That(typeof(IHaveGenerics<string>).GetSafeName(),
+				Is.EqualTo("IHaveGenerics"));
 		}
 
 		[Test]
 		public void GetSafeNameWithNestedOpenGenerics()
 		{
-			Assert.AreEqual("NestedGenerics.IHaveGenerics", typeof(NestedGenerics.IHaveGenerics<>).GetSafeName());
+			Assert.That(typeof(NestedGenerics.IHaveGenerics<>).GetSafeName(),
+				Is.EqualTo("NestedGenerics.IHaveGenerics"));
 		}
 
 		[Test]
 		public void GetSafeNameWithNestedClosedGenerics()
 		{
-			Assert.AreEqual("NestedGenerics.IHaveGenerics", typeof(NestedGenerics.IHaveGenerics<string>).GetSafeName());
+			Assert.That(typeof(NestedGenerics.IHaveGenerics<string>).GetSafeName(),
+				Is.EqualTo("NestedGenerics.IHaveGenerics"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments()
 		{
-			Assert.AreEqual("RefTargetWithoutGeneric",
-				typeof(Rocks.Tests.Extensions.RefTargetWithoutGeneric).GetSafeName());
+			Assert.That(typeof(RefTargetWithoutGeneric).GetSafeName(),
+				Is.EqualTo("RefTargetWithoutGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments()
 		{
-			Assert.AreEqual("RefTargetWithGeneric",
-				typeof(Rocks.Tests.Extensions.RefTargetWithGeneric<>).GetSafeName());
+			Assert.That(typeof(RefTargetWithGeneric<>).GetSafeName(),
+				Is.EqualTo("RefTargetWithGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments()
 		{
-			Assert.AreEqual("TypeExtensionsTests.RefTargetWithoutGeneric",
-				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithoutGeneric).GetSafeName());
+			Assert.That(typeof(TypeExtensionsTests.RefTargetWithoutGeneric).GetSafeName(),
+				Is.EqualTo("TypeExtensionsTests.RefTargetWithoutGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments()
 		{
-			Assert.AreEqual("TypeExtensionsTests.RefTargetWithGeneric",
-				typeof(Rocks.Tests.Extensions.TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName());
+			Assert.That(typeof(TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName(),
+				Is.EqualTo("TypeExtensionsTests.RefTargetWithGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenerics()
 		{
-			Assert.AreEqual("MapForNonGeneric",
-				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName());
+			Assert.That(typeof(MapForNonGeneric).GetSafeName(),
+				Is.EqualTo("MapForNonGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithSpecifiedGenerics()
 		{
-			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName());
+			Assert.That(typeof(MapForGeneric<Guid>).GetSafeName(),
+				Is.EqualTo("MapForGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenerics()
 		{
-			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName());
+			Assert.That(typeof(MapForGeneric<>).GetSafeName(),
+				Is.EqualTo("MapForGeneric"));
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("MapForNonGeneric",
-				typeof(Rocks.Tests.Extensions.MapForNonGeneric).GetSafeName(namespaces));
-			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForNonGeneric).Namespace));
+			Assert.That(typeof(MapForNonGeneric).GetSafeName(namespaces),
+				Is.EqualTo("MapForNonGeneric"));
+			Assert.That(namespaces.Count, Is.EqualTo(1), nameof(namespaces.Count));
+			Assert.That(namespaces.Contains(typeof(MapForNonGeneric).Namespace), Is.True);
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithSpecifiedGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).GetSafeName(namespaces));
-			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<Guid>).Namespace));
+			Assert.That(typeof(MapForGeneric<Guid>).GetSafeName(namespaces),
+				Is.EqualTo("MapForGeneric"));
+			Assert.That(namespaces.Count, Is.EqualTo(1), nameof(namespaces.Count));
+			Assert.That(namespaces.Contains(typeof(MapForGeneric<Guid>).Namespace), Is.True);
 		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndNamespaces()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.AreEqual("MapForGeneric",
-				typeof(Rocks.Tests.Extensions.MapForGeneric<>).GetSafeName(namespaces));
-			Assert.AreEqual(1, namespaces.Count, nameof(namespaces.Count));
-			Assert.IsTrue(namespaces.Contains(typeof(Rocks.Tests.Extensions.MapForGeneric<>).Namespace));
+			Assert.That(typeof(MapForGeneric<>).GetSafeName(namespaces),
+				Is.EqualTo("MapForGeneric"));
+			Assert.That(namespaces.Count, Is.EqualTo(1), nameof(namespaces.Count));
+			Assert.That(namespaces.Contains(typeof(MapForGeneric<>).Namespace), Is.True);
 		}
 
 		[Test]
 		public void GetSafeNameForPointerType()
 		{
-			Assert.AreEqual("Byte*", typeof(byte*).GetSafeName());
+			Assert.That(typeof(byte*).GetSafeName(), Is.EqualTo("Byte*"));
 		}
 
 		[Test]
 		public void GetSafeNameForArrayType()
 		{
-			Assert.AreEqual("Byte[]", typeof(byte[]).GetSafeName());
+			Assert.That(typeof(byte[]).GetSafeName(), Is.EqualTo("Byte[]"));
 		}
 
 		[Test]
 		public void GetSafeNameForArrayOfPointersType()
 		{
-			Assert.AreEqual("Byte*[]", typeof(byte*[]).GetSafeName());
+			Assert.That(typeof(byte*[]).GetSafeName(), Is.EqualTo("Byte*[]"));
 		}
 
 		[Test]
 		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName()
 		{
-			Assert.AreEqual("TypeExtensionsNamespace.IMock", typeof(TypeExtensionsNamespace.IMock).GetSafeName());
+			Assert.That(typeof(TypeExtensionsNamespace.IMock).GetSafeName(),
+				Is.EqualTo("TypeExtensionsNamespace.IMock"));
 		}
 
 		public class SubnestedClass

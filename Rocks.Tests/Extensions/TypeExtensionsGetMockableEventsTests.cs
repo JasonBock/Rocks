@@ -13,49 +13,49 @@ namespace Rocks.Tests.Extensions
 		public void GetMockableEventsFromBaseInterface()
 		{
 			var events = typeof(IMockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(1, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any());
+			Assert.That(events.Count, Is.EqualTo(1));
+			Assert.That(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableEventsFromSubInterface()
 		{
 			var events = typeof(IMockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(2, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any());
-			Assert.IsTrue(events.Where(_ => _.Name == nameof(IMockableEventsSub.SubInterfaceEvent)).Any());
+			Assert.That(events.Count, Is.EqualTo(2));
+			Assert.That(events.Where(_ => _.Name == nameof(IMockableEventsBase.BaseInterfaceEvent)).Any(), Is.True);
+			Assert.That(events.Where(_ => _.Name == nameof(IMockableEventsSub.SubInterfaceEvent)).Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableEventsFromAbstractClass()
 		{
 			var events = typeof(MockableEventsAbstract).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(1, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == "AbstractClassEvent").Any());
+			Assert.That(events.Count, Is.EqualTo(1));
+			Assert.That(events.Where(_ => _.Name == "AbstractClassEvent").Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableEventsFromSubClassFromAbstract()
 		{
 			var events = typeof(MockableEventsSubFromAbstract).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(1, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == "AbstractClassEvent").Any());
+			Assert.That(events.Count, Is.EqualTo(1));
+			Assert.That(events.Where(_ => _.Name == "AbstractClassEvent").Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableEventsFromBaseClass()
 		{
 			var events = typeof(MockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(1, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any());
+			Assert.That(events.Count, Is.EqualTo(1));
+			Assert.That(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any(), Is.True);
 		}
 
 		[Test]
 		public void GetMockableEventsFromSubClass()
 		{
 			var events = typeof(MockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
-			Assert.AreEqual(1, events.Count);
-			Assert.IsTrue(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any());
+			Assert.That(events.Count, Is.EqualTo(1));
+			Assert.That(events.Where(_ => _.Name == nameof(MockableEventsBase.BaseVirtualClassEvent)).Any(), Is.True);
 		}
 	}
 
