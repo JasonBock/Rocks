@@ -19,8 +19,8 @@ namespace Rocks.Tests
 			adornments.RaisesOnGetter("a", EventArgs.Empty);
 			adornments.RaisesOnSetter("b", EventArgs.Empty);
 
-			Assert.AreEqual(1, getterInfo.GetRaiseEvents().Count);
-			Assert.AreEqual(1, setterInfo.GetRaiseEvents().Count);
+			Assert.That(getterInfo.GetRaiseEvents().Count, Is.EqualTo(1));
+			Assert.That(setterInfo.GetRaiseEvents().Count, Is.EqualTo(1));
 		}
 	}
 }

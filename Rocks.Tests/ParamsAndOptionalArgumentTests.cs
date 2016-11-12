@@ -19,10 +19,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.HasParams(44, "a", "b");
 
-			Assert.AreEqual(44, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB.Length, nameof(argumentB.Length));
-			Assert.AreEqual("a", argumentB[0], nameof(argumentB));
-			Assert.AreEqual("b", argumentB[1], nameof(argumentB));
+			Assert.That(argumentA, Is.EqualTo(44), nameof(argumentA));
+			Assert.That(argumentB.Length, Is.EqualTo(2), nameof(argumentB.Length));
+			Assert.That(argumentB[0], Is.EqualTo("a"), nameof(argumentB));
+			Assert.That(argumentB[1], Is.EqualTo("b"), nameof(argumentB));
 
 			rock.Verify();
 		}
@@ -42,10 +42,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.HasOptionals(44, Guid.Empty);
 
-			Assert.AreEqual(44, argumentA, nameof(argumentA));
-			Assert.AreEqual(Guid.Empty, argumentB, nameof(argumentB));
-			Assert.AreEqual("c", argumentC, nameof(argumentC));
-			Assert.AreEqual(44d, argumentD, nameof(argumentD));
+			Assert.That(argumentA, Is.EqualTo(44), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(Guid.Empty), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo("c"), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(44d), nameof(argumentD));
 
 			rock.Verify();
 		}
@@ -65,10 +65,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.HasOptionals(44, Guid.Empty, "d", 55);
 
-			Assert.AreEqual(44, argumentA, nameof(argumentA));
-			Assert.AreEqual(Guid.Empty, argumentB, nameof(argumentB));
-			Assert.AreEqual("d", argumentC, nameof(argumentC));
-			Assert.AreEqual(55d, argumentD, nameof(argumentD));
+			Assert.That(argumentA, Is.EqualTo(44), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(Guid.Empty), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo("d"), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(55d), nameof(argumentD));
 
 			rock.Verify();
 		}

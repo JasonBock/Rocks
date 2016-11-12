@@ -26,9 +26,9 @@ namespace Rocks.Tests
 		[Test]
 		public void Create()
 		{
-			Assert.IsNotNull(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"));
-			Assert.IsNotNull(this.assembly.GetType($"{typeof(Interface1<>).Namespace}.Rock{typeof(Interface1<>).Name}"));
-         Assert.IsNull(this.assembly.GetType($"{typeof(Class3).Namespace}.Rock{nameof(Class3)}"));
+			Assert.That(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"), Is.Not.Null);
+			Assert.That(this.assembly.GetType($"{typeof(Interface1<>).Namespace}.Rock{typeof(Interface1<>).Name}"), Is.Not.Null);
+         Assert.That(this.assembly.GetType($"{typeof(Class3).Namespace}.Rock{nameof(Class3)}"), Is.Null);
 		}
 
 		[Test]
@@ -36,7 +36,7 @@ namespace Rocks.Tests
 		{
 			var rock = typeof(Rock).GetMethod(nameof(Rock.Create), Type.EmptyTypes).MakeGenericMethod(
 				new[] { this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}") }).Invoke(null, null);
-			Assert.IsTrue(typeof(AssemblyRock<>).IsAssignableFrom(rock.GetType().GetGenericTypeDefinition()));
+			Assert.That(typeof(AssemblyRock<>).IsAssignableFrom(rock.GetType().GetGenericTypeDefinition()), Is.True);
 		}
 
 		[Test]
@@ -65,9 +65,9 @@ namespace Rocks.Tests
 			mock.Method4("a", ref b);
 			mock.Method5("a", ref b);
 
-			Assert.AreEqual(0, (mock as IMock).GetVerificationFailures().Count);
-			Assert.IsTrue(this.wasMethod4DelegateCalled);
-			Assert.IsTrue(this.wasMethod5DelegateCalled);
+			Assert.That((mock as IMock).GetVerificationFailures().Count, Is.EqualTo(0));
+			Assert.That(this.wasMethod4DelegateCalled, Is.True);
+			Assert.That(this.wasMethod5DelegateCalled, Is.True);
 		}
 
 		[Test]
@@ -82,7 +82,7 @@ namespace Rocks.Tests
 					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 
 			stopwatch.Stop();
-				
+
 			Assert.Pass($"Total time to generate mocks for {typeof(object).Assembly.FullName} : {stopwatch.Elapsed}");
 		}
 

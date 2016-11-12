@@ -11,29 +11,29 @@ namespace Rocks.Tests
 		[Test]
 		public void Create()
 		{
-			Assert.IsNotNull(Rock.Create<IRockTests>(), nameof(Rock.Create));
+			Assert.That(Rock.Create<IRockTests>(), Is.Not.Null, nameof(Rock.Create));
 		}
 
 		[Test]
 		public void CreateWhenTypeIsSealed()
 		{
-			Assert.Throws<ValidationException>(() => Rock.Create<string>());
+			Assert.That(() => Rock.Create<string>(), Throws.TypeOf<ValidationException>());
 		}
 
 		[Test]
 		public void TryCreate()
 		{
 			var result = Rock.TryCreate<IRockTests>();
-			Assert.IsTrue(result.IsSuccessful, nameof(result.IsSuccessful));
-			Assert.IsNotNull(result.Result, nameof(result.Result));
+			Assert.That(result.IsSuccessful, nameof(result.IsSuccessful), Is.True);
+			Assert.That(result.Result, Is.Not.Null, nameof(result.Result));
 		}
 
 		[Test]
 		public void TryCreateWhenTypeIsSealed()
 		{
 			var result = Rock.TryCreate<string>();
-         Assert.IsFalse(result.IsSuccessful);
-			Assert.IsNull(result.Result, nameof(result.Result));
+			Assert.That(result.IsSuccessful, Is.False);
+			Assert.That(result.Result, Is.Null, nameof(result.Result));
 		}
 
 		[Test]
@@ -44,10 +44,10 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
-         Assert.AreEqual(typeof(IRockTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
+			Assert.That(chunkType.Namespace, Is.EqualTo(typeof(IRockTests).Namespace), nameof(chunkType.Namespace));
 
 			var chunkAsRock = chunk as IMock;
-         Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));
+			Assert.That(chunkAsRock.Handlers.Count, Is.EqualTo(1), nameof(chunkAsRock.Handlers.Count));
 		}
 
 		[Test]
@@ -56,18 +56,18 @@ namespace Rocks.Tests
 			var testDirectory = TestContext.CurrentContext.TestDirectory;
 			var rock = Rock.Create<IFileTests>(
 				new RockOptions(
-					level: OptimizationSetting.Debug, 
+					level: OptimizationSetting.Debug,
 					codeFile: CodeFileOptions.Create,
 					codeFileDirectory: testDirectory));
 			rock.Handle(_ => _.Member("a", 44));
 
 			var chunk = rock.Make();
 			var chunkType = chunk.GetType();
-			Assert.AreEqual(typeof(IFileTests).Namespace, chunkType.Namespace, nameof(chunkType.Namespace));
-			Assert.IsTrue(File.Exists(Path.Combine(testDirectory, $"{chunkType.Name}.cs")), nameof(File.Exists));
+			Assert.That(chunkType.Namespace, Is.EqualTo(typeof(IFileTests).Namespace), nameof(chunkType.Namespace));
+			Assert.That(File.Exists(Path.Combine(testDirectory, $"{chunkType.Name}.cs")), Is.True, nameof(File.Exists));
 
 			var chunkAsRock = chunk as IMock;
-			Assert.AreEqual(1, chunkAsRock.Handlers.Count, nameof(chunkAsRock.Handlers.Count));
+			Assert.That(chunkAsRock.Handlers.Count, Is.EqualTo(1), nameof(chunkAsRock.Handlers.Count));
 
 			chunk.Member("a", 44);
 			rock.Verify();
@@ -109,7 +109,7 @@ namespace Rocks.Tests
 			var secondRock = Rock.Create<ISameRemake>(new RockOptions(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
-			Assert.AreEqual(chunk.GetType(), secondChunk.GetType());
+			Assert.That(secondChunk.GetType(), Is.EqualTo(chunk.GetType()));
 		}
 
 		[Test]
@@ -121,7 +121,7 @@ namespace Rocks.Tests
 			var secondRock = Rock.Create<IDifferentRemake>(new RockOptions(serialization: SerializationOptions.Supported));
 			var secondChunk = secondRock.Make();
 
-			Assert.AreNotEqual(chunk.GetType(), secondChunk.GetType());
+			Assert.That(secondChunk.GetType(), Is.Not.EqualTo(chunk.GetType()));
 		}
 	}
 
@@ -149,7 +149,7 @@ namespace Rocks.Tests
 	namespace SomeNamespaceOtherThanRocks
 	{
 		public abstract class ArgumentExpectation { }
-      public interface IMock
+		public interface IMock
 		{
 			void Target(ArgumentExpectation a);
 		}

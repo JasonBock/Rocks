@@ -56,7 +56,7 @@ namespace Rocks.Tests
 			chunk.Target("a", "44");
 			chunk.Target("a", 44);
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -68,7 +68,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target("a", "44"));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target("c", "44"));
+			Assert.That(() => chunk.Target("c", "44"), Throws.TypeOf<ExpectationException>());
 		}
 	}
 

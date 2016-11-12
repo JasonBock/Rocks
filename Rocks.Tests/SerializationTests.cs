@@ -25,7 +25,7 @@ namespace Rocks.Tests
 
 			using (var stream = new MemoryStream())
 			{
-				Assert.Throws<SerializationException>(() => formatter.Serialize(stream, chunk));
+				Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
 			}
 		}
 
@@ -50,7 +50,7 @@ namespace Rocks.Tests
 
 			newChunk.Target("44");
 			(newChunk as IMock).Verify();
-      }
+		}
 
 		[Test]
 		public void RoundtripWithXml()
@@ -71,7 +71,7 @@ namespace Rocks.Tests
 			}
 
 			// Shows that the dictionary of handlers doesn't get serialized.
-			Assert.Throws<NotImplementedException>(() => newChunk.Target("44"));
+			Assert.That(() => newChunk.Target("44"), Throws.TypeOf<NotImplementedException>());
 		}
 
 		[Test]
@@ -109,7 +109,7 @@ namespace Rocks.Tests
 
 			using (var stream = new MemoryStream())
 			{
-				Assert.Throws<SerializationException>(() => formatter.Serialize(stream, chunk));
+				Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
 			}
 		}
 	}

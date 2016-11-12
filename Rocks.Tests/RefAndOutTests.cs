@@ -43,7 +43,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.RefTarget(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -60,8 +60,8 @@ namespace Rocks.Tests
 			chunk.TargetEvent += (s, e) => eventRaisedCount++;
 			chunk.RefTarget(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(a, Is.EqualTo(2), nameof(a));
+			Assert.That(eventRaisedCount, Is.EqualTo(1), nameof(eventRaisedCount));
 			rock.Verify();
 		}
 
@@ -76,7 +76,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.RefTargetWithGeneric(ref a);
 
-			Assert.AreNotEqual(Guid.Empty, a, nameof(a));
+			Assert.That(a, Is.Not.EqualTo(Guid.Empty), nameof(a));
 			rock.Verify();
 		}
 
@@ -91,7 +91,7 @@ namespace Rocks.Tests
 			chunk.RefTarget(ref a);
 			chunk.RefTarget(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -109,8 +109,8 @@ namespace Rocks.Tests
 			chunk.RefTarget(ref a);
 			chunk.RefTarget(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(a, Is.EqualTo(2), nameof(a));
+			Assert.That(eventRaisedCount, Is.EqualTo(2), nameof(eventRaisedCount));
 			rock.Verify();
 		}
 
@@ -124,7 +124,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.OutTarget(out a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -139,7 +139,7 @@ namespace Rocks.Tests
 			chunk.OutTarget(out a);
 			chunk.OutTarget(out a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -153,7 +153,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.RefTargetWithReturn(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -168,7 +168,7 @@ namespace Rocks.Tests
 			chunk.RefTargetWithReturn(ref a);
 			chunk.RefTargetWithReturn(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -182,7 +182,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.OutTargetWithReturn(out a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
@@ -197,7 +197,7 @@ namespace Rocks.Tests
 			chunk.OutTargetWithReturn(out a);
 			chunk.OutTargetWithReturn(out a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 	}

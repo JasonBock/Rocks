@@ -37,15 +37,16 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target(22, "b", 43));
+			Assert.That(() => chunk.Target(22, "b", 43), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
 		public void MakeWhenMethodHasNoOptionalArgumentsAndIsDefaultIsUsed()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
-			Assert.Throws<ExpectationException>(
-				() => rock.Handle(_ => _.TargetWithNoOptionalArguments(Arg.IsDefault<int>())));
+			Assert.That(
+				() => rock.Handle(_ => _.TargetWithNoOptionalArguments(Arg.IsDefault<int>())),
+				Throws.TypeOf<ExpectationException>());
 		}
 	}
 

@@ -12,8 +12,8 @@ namespace Rocks.Tests
 			var args = new EventArgs();
 			var information = new RaiseEventInformation("a", args);
 
-			Assert.AreEqual("a", information.Name, nameof(information.Name));
-			Assert.AreSame(args, information.Args, nameof(information.Args));
+			Assert.That(information.Name, Is.EqualTo("a"), nameof(information.Name));
+			Assert.That(information.Args, Is.EqualTo(args), nameof(information.Args));
 		}
 	}
 }

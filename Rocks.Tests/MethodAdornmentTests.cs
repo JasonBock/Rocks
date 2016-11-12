@@ -13,7 +13,7 @@ namespace Rocks.Tests
 			var adornments = new MethodAdornments(info);
 
 			var events = info.GetRaiseEvents();
-			Assert.AreEqual(0, events.Count, nameof(events.Count));
+			Assert.That(events.Count, Is.EqualTo(0), nameof(events.Count));
 		}
 
 		[Test]
@@ -25,11 +25,11 @@ namespace Rocks.Tests
 			var newAdornments = adornments.Raises("a", args);
 
 			var events = info.GetRaiseEvents();
-			Assert.AreEqual(1, events.Count);
+			Assert.That(events.Count, Is.EqualTo(1), nameof(events.Count));
 			var @event = events[0];
-			Assert.AreEqual("a", @event.Name, nameof(@event.Name));
-			Assert.AreSame(args, @event.Args, nameof(@event.Args));
-			Assert.AreSame(adornments, newAdornments, nameof(newAdornments));
+			Assert.That(@event.Name, Is.EqualTo("a"), nameof(@event.Name));
+			Assert.That(@event.Args, Is.EqualTo(args), nameof(@event.Args));
+			Assert.That(newAdornments, Is.EqualTo(adornments), nameof(newAdornments));
 		}
 	}
 }

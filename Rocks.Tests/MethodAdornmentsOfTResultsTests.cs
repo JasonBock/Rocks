@@ -14,7 +14,7 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var handler = new HandlerInformation<string>(expectations);
 			var returnValue = new MethodAdornments<string>(handler);
-			Assert.AreEqual(default(string), handler.ReturnValue, nameof(handler.ReturnValue));
+			Assert.That(handler.ReturnValue, Is.EqualTo(default(string)), nameof(handler.ReturnValue));
 		}
 
 		[Test]
@@ -25,7 +25,7 @@ namespace Rocks.Tests
 			var handler = new HandlerInformation<string>(expectations);
 			var returnValue = new MethodAdornments<string>(handler);
 			returnValue.Returns(newReturnValue);
-			Assert.AreEqual(newReturnValue, handler.ReturnValue, nameof(handler.ReturnValue));
+			Assert.That(handler.ReturnValue, Is.EqualTo(newReturnValue), nameof(handler.ReturnValue));
 		}
 
 		[Test]
@@ -36,7 +36,7 @@ namespace Rocks.Tests
 			var handler = new HandlerInformation<string>(expectations);
 			var returnValue = new MethodAdornments<string>(handler);
 			returnValue.Returns(new Func<string>(() => newReturnValue));
-			Assert.AreEqual(newReturnValue, handler.ReturnValue, nameof(handler.ReturnValue));
+			Assert.That(handler.ReturnValue, Is.EqualTo(newReturnValue), nameof(handler.ReturnValue));
 		}
 	}
 }

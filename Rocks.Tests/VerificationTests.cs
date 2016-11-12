@@ -21,7 +21,7 @@ namespace Rocks.Tests
 			HandlerInformation rvHandler = null;
 			roHandlers.TryGetValue("x", out rvHandler);
 
-			Assert.AreEqual(42, (rvHandler as HandlerInformation<int>).ReturnValue);
+			Assert.That((rvHandler as HandlerInformation<int>).ReturnValue, Is.EqualTo(42));
 		}
 
 		[Test]
@@ -44,7 +44,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -57,7 +57,7 @@ namespace Rocks.Tests
 			chunk.Target();
 			chunk.Target();
 
-			Assert.DoesNotThrow(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.Nothing);
 		}
 
 		[Test]
@@ -66,7 +66,7 @@ namespace Rocks.Tests
 			var rock = Rock.Create<IVerification>();
 			var chunk = rock.Make();
 
-			Assert.Throws<NotImplementedException>(() => chunk.Target());
+			Assert.That(() => chunk.Target(), Throws.TypeOf<NotImplementedException>());
 		}
 	}
 

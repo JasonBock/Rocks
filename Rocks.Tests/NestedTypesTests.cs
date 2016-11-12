@@ -21,7 +21,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.Target(ref a);
 
-			Assert.AreEqual(2, a, nameof(a));
+			Assert.That(a, Is.EqualTo(2), nameof(a));
 			rock.Verify();
 		}
 
