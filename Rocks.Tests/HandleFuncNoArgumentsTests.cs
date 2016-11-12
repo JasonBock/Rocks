@@ -35,7 +35,7 @@ namespace Rocks.Tests
 			chunk.ReferenceTarget();
 			chunk.ValueTarget();
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -50,8 +50,10 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.ValueTarget()).Returns(intReturnValue);
 
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}
@@ -69,8 +71,10 @@ namespace Rocks.Tests
 				() => { return intReturnValue; });
 
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}
@@ -83,10 +87,14 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.ValueTarget(), 2);
 
 			var chunk = rock.Make();
-			Assert.AreEqual(default(string), chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(default(string), chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(default(int), chunk.ValueTarget(), nameof(chunk.ValueTarget));
-			Assert.AreEqual(default(int), chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(default(string)), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(default(string)), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(default(int)), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(default(int)), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}
@@ -102,10 +110,14 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.ValueTarget(), 2).Returns(intReturnValue);
 
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}
@@ -123,10 +135,14 @@ namespace Rocks.Tests
 				() => { return intReturnValue; }, 2);
 
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ReferenceTarget(),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
+			Assert.That(chunk.ValueTarget(),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
 
 			rock.Verify();
 		}

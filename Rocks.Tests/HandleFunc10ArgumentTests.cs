@@ -35,7 +35,7 @@ namespace Rocks.Tests
 			chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 			chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100);
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -62,17 +62,18 @@ namespace Rocks.Tests
 				(a, b, c, d, e, f, g, h, i, j) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; return intReturnValue; });
 			
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
-			Assert.AreEqual(5, argumentE, nameof(argumentE));
-			Assert.AreEqual(6, argumentF, nameof(argumentF));
-			Assert.AreEqual(7, argumentG, nameof(argumentG));
-			Assert.AreEqual(8, argumentH, nameof(argumentH));
-			Assert.AreEqual(9, argumentI, nameof(argumentI));
-			Assert.AreEqual(10, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(5), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(6), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(7), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(8), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(9), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(10), nameof(argumentJ));
 			argumentA = 0;
 			argumentB = 0;
 			argumentC = 0;
@@ -83,17 +84,18 @@ namespace Rocks.Tests
 			argumentH = 0;
 			argumentI = 0;
 			argumentJ = 0;
-         Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100), nameof(chunk.ValueTarget));
-			Assert.AreEqual(10, argumentA, nameof(argumentA));
-			Assert.AreEqual(20, argumentB, nameof(argumentB));
-			Assert.AreEqual(30, argumentC, nameof(argumentC));
-			Assert.AreEqual(40, argumentD, nameof(argumentD));
-			Assert.AreEqual(50, argumentE, nameof(argumentE));
-			Assert.AreEqual(60, argumentF, nameof(argumentF));
-			Assert.AreEqual(70, argumentG, nameof(argumentG));
-			Assert.AreEqual(80, argumentH, nameof(argumentH));
-			Assert.AreEqual(90, argumentI, nameof(argumentI));
-			Assert.AreEqual(100, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
+			Assert.That(argumentA, Is.EqualTo(10), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(20), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(30), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(40), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(50), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(60), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(70), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(80), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(90), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(100), nameof(argumentJ));
 
 			rock.Verify();
 		}
@@ -137,17 +139,18 @@ namespace Rocks.Tests
 				(a, b, c, d, e, f, g, h, i, j) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; argumentF = f; argumentG = g; argumentH = h; argumentI = i; argumentJ = j; return intReturnValue; }, 2);
 
 			var chunk = rock.Make();
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
-			Assert.AreEqual(5, argumentE, nameof(argumentE));
-			Assert.AreEqual(6, argumentF, nameof(argumentF));
-			Assert.AreEqual(7, argumentG, nameof(argumentG));
-			Assert.AreEqual(8, argumentH, nameof(argumentH));
-			Assert.AreEqual(9, argumentI, nameof(argumentI));
-			Assert.AreEqual(10, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(5), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(6), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(7), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(8), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(9), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(10), nameof(argumentJ));
 			argumentA = 0;
 			argumentB = 0;
 			argumentC = 0;
@@ -158,17 +161,18 @@ namespace Rocks.Tests
 			argumentH = 0;
 			argumentI = 0;
 			argumentJ = 0;
-			Assert.AreEqual(stringReturnValue, chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), nameof(chunk.ReferenceTarget));
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
-			Assert.AreEqual(5, argumentE, nameof(argumentE));
-			Assert.AreEqual(6, argumentF, nameof(argumentF));
-			Assert.AreEqual(7, argumentG, nameof(argumentG));
-			Assert.AreEqual(8, argumentH, nameof(argumentH));
-			Assert.AreEqual(9, argumentI, nameof(argumentI));
-			Assert.AreEqual(10, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ReferenceTarget(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+				Is.EqualTo(stringReturnValue), nameof(chunk.ReferenceTarget));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(5), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(6), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(7), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(8), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(9), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(10), nameof(argumentJ));
 			argumentA = 0;
 			argumentB = 0;
 			argumentC = 0;
@@ -179,17 +183,18 @@ namespace Rocks.Tests
 			argumentH = 0;
 			argumentI = 0;
 			argumentJ = 0;
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100), nameof(chunk.ValueTarget));
-			Assert.AreEqual(10, argumentA, nameof(argumentA));
-			Assert.AreEqual(20, argumentB, nameof(argumentB));
-			Assert.AreEqual(30, argumentC, nameof(argumentC));
-			Assert.AreEqual(40, argumentD, nameof(argumentD));
-			Assert.AreEqual(50, argumentE, nameof(argumentE));
-			Assert.AreEqual(60, argumentF, nameof(argumentF));
-			Assert.AreEqual(70, argumentG, nameof(argumentG));
-			Assert.AreEqual(80, argumentH, nameof(argumentH));
-			Assert.AreEqual(90, argumentI, nameof(argumentI));
-			Assert.AreEqual(100, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
+			Assert.That(argumentA, Is.EqualTo(10), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(20), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(30), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(40), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(50), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(60), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(70), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(80), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(90), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(100), nameof(argumentJ));
 			argumentA = 0;
 			argumentB = 0;
 			argumentC = 0;
@@ -200,17 +205,18 @@ namespace Rocks.Tests
 			argumentH = 0;
 			argumentI = 0;
 			argumentJ = 0;
-			Assert.AreEqual(intReturnValue, chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100), nameof(chunk.ValueTarget));
-			Assert.AreEqual(10, argumentA, nameof(argumentA));
-			Assert.AreEqual(20, argumentB, nameof(argumentB));
-			Assert.AreEqual(30, argumentC, nameof(argumentC));
-			Assert.AreEqual(40, argumentD, nameof(argumentD));
-			Assert.AreEqual(50, argumentE, nameof(argumentE));
-			Assert.AreEqual(60, argumentF, nameof(argumentF));
-			Assert.AreEqual(70, argumentG, nameof(argumentG));
-			Assert.AreEqual(80, argumentH, nameof(argumentH));
-			Assert.AreEqual(90, argumentI, nameof(argumentI));
-			Assert.AreEqual(100, argumentJ, nameof(argumentJ));
+			Assert.That(chunk.ValueTarget(10, 20, 30, 40, 50, 60, 70, 80, 90, 100),
+				Is.EqualTo(intReturnValue), nameof(chunk.ValueTarget));
+			Assert.That(argumentA, Is.EqualTo(10), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(20), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(30), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(40), nameof(argumentD));
+			Assert.That(argumentE, Is.EqualTo(50), nameof(argumentE));
+			Assert.That(argumentF, Is.EqualTo(60), nameof(argumentF));
+			Assert.That(argumentG, Is.EqualTo(70), nameof(argumentG));
+			Assert.That(argumentH, Is.EqualTo(80), nameof(argumentH));
+			Assert.That(argumentI, Is.EqualTo(90), nameof(argumentI));
+			Assert.That(argumentJ, Is.EqualTo(100), nameof(argumentJ));
 
 			rock.Verify();
 		}

@@ -30,7 +30,7 @@ namespace Rocks.Tests
 			chunk.TargetEvent += (s, e) => wasEventRaised = true;
 			chunk.Target(1, 2, 3, 4);
 
-			Assert.IsTrue(wasEventRaised);
+			Assert.That(wasEventRaised, Is.True);
 			rock.Verify();
 		}
 
@@ -48,10 +48,10 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
 
 			rock.Verify();
 		}
@@ -83,19 +83,19 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.Target(1, 2, 3, 4);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
 			argumentA = 0;
 			argumentB = 0;
 			argumentC = 0;
 			argumentD = 0;
 			chunk.Target(1, 2, 3, 4);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.AreEqual(2, argumentB, nameof(argumentB));
-			Assert.AreEqual(3, argumentC, nameof(argumentC));
-			Assert.AreEqual(4, argumentD, nameof(argumentD));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.EqualTo(2), nameof(argumentB));
+			Assert.That(argumentC, Is.EqualTo(3), nameof(argumentC));
+			Assert.That(argumentD, Is.EqualTo(4), nameof(argumentD));
 
 			rock.Verify();
 		}

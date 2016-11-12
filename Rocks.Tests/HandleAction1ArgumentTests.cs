@@ -34,7 +34,7 @@ namespace Rocks.Tests
 			chunk.TargetEvent += (s, e) => wasEventRaised = true;
 			chunk.Target(1);
 
-			Assert.IsTrue(wasEventRaised);
+			Assert.That(wasEventRaised, Is.True);
 			rock.Verify();
 		}
 
@@ -49,7 +49,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.Target(1);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 
 			rock.Verify();
 		}
@@ -78,10 +78,10 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.Target(1);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 			argumentA = 0;
 			chunk.Target(1);
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 
 			rock.Verify();
 		}
