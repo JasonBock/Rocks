@@ -28,7 +28,7 @@ namespace Rocks.Tests
 			rock.Handle(nameof(IProperties.GetterAndSetter), () => "44");
 
 			var chunk = rock.Make();
-			Assert.AreEqual("44", chunk.GetterAndSetter);
+			Assert.That(chunk.GetterAndSetter, Is.EqualTo("44"));
 
 			rock.Verify();
 		}
@@ -42,7 +42,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = "44";
-			Assert.AreEqual("44", value);
+			Assert.That(value, Is.EqualTo("44"));
 
 			rock.Verify();
 		}
@@ -61,7 +61,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 			var value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -79,7 +79,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 			var value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -98,7 +98,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 			var value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -111,7 +111,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -123,7 +123,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var value = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -157,7 +157,7 @@ namespace Rocks.Tests
 			var value = chunk.GetterAndSetter;
 			value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -177,7 +177,7 @@ namespace Rocks.Tests
 			var value = chunk.GetterAndSetter;
 			value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -198,7 +198,7 @@ namespace Rocks.Tests
 			var value = chunk.GetterAndSetter;
 			value = chunk.GetterAndSetter;
 
-			Assert.AreEqual(4, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(4));
 			rock.Verify();
 		}
 
@@ -213,7 +213,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 			var value = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -227,7 +227,7 @@ namespace Rocks.Tests
 			var value = chunk.GetterAndSetter;
 			value = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -244,8 +244,8 @@ namespace Rocks.Tests
 			chunk.TargetEvent += (s, e) => eventRaisedCount++;
 			var value = chunk.GetterOnly;
 
-			Assert.AreEqual(returnValue, value);
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(value, Is.EqualTo(returnValue));
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -260,7 +260,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var value = chunk.GetterOnly;
 
-			Assert.AreEqual(returnValue, value);
+			Assert.That(value, Is.EqualTo(returnValue));
 			rock.Verify();
 		}
 
@@ -274,7 +274,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -289,7 +289,7 @@ namespace Rocks.Tests
 			var value = chunk.GetterOnly;
 			value = chunk.GetterOnly;
 
-			Assert.AreEqual(returnValue, value);
+			Assert.That(value, Is.EqualTo(returnValue));
 			rock.Verify();
 		}
 
@@ -308,8 +308,8 @@ namespace Rocks.Tests
 			var value = chunk.GetterOnly;
 			value = chunk.GetterOnly;
 
-			Assert.AreEqual(returnValue, value);
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(value, Is.EqualTo(returnValue));
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -323,7 +323,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -337,7 +337,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var value = chunk.GetterOnly;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -352,7 +352,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.SetterOnly = data;
 
-			Assert.AreEqual(data, setValue);
+			Assert.That(setValue, Is.EqualTo(data));
 			rock.Verify();
 		}
 
@@ -371,8 +371,8 @@ namespace Rocks.Tests
 			chunk.TargetEvent += (s, e) => eventRaisedCount++;
 			chunk.SetterOnly = data;
 
-			Assert.AreEqual(data, setValue);
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(setValue, Is.EqualTo(data));
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -387,7 +387,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -403,7 +403,7 @@ namespace Rocks.Tests
 			chunk.SetterOnly = data;
 			chunk.SetterOnly = data;
 
-			Assert.AreEqual(data, setValue);
+			Assert.That(setValue, Is.EqualTo(data));
 			rock.Verify();
 		}
 
@@ -423,8 +423,8 @@ namespace Rocks.Tests
 			chunk.SetterOnly = data;
 			chunk.SetterOnly = data;
 
-			Assert.AreEqual(data, setValue);
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(setValue, Is.EqualTo(data));
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -439,7 +439,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -454,7 +454,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.SetterOnly = data;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -471,8 +471,8 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
 			rock.Verify();
 		}
 
@@ -493,9 +493,9 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -516,9 +516,9 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -540,9 +540,9 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -559,7 +559,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = data;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -575,7 +575,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -589,7 +589,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -608,8 +608,8 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
 			rock.Verify();
 		}
 
@@ -632,9 +632,9 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -657,9 +657,9 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -683,9 +683,9 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.AreEqual(setValue, data, "Setter");
-			Assert.AreEqual(returnValue, propertyValue, "Getter");
-			Assert.AreEqual(4, eventRaisedCount);
+			Assert.That(data, Is.EqualTo(setValue), "Setter");
+			Assert.That(propertyValue, Is.EqualTo(returnValue), "Getter");
+			Assert.That(eventRaisedCount, Is.EqualTo(4));
 			rock.Verify();
 		}
 
@@ -703,7 +703,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			chunk.GetterAndSetter = data;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -721,7 +721,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -738,7 +738,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -756,7 +756,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -771,7 +771,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -788,7 +788,7 @@ namespace Rocks.Tests
 			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -825,7 +825,7 @@ namespace Rocks.Tests
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 			var propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -846,7 +846,7 @@ namespace Rocks.Tests
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 			var propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(1, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(1));
 			rock.Verify();
 		}
 
@@ -868,7 +868,7 @@ namespace Rocks.Tests
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 			var propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -885,7 +885,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -901,7 +901,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var propertyValue = chunk[a, b, c];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -942,7 +942,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -965,7 +965,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(2, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
 			rock.Verify();
 		}
 
@@ -989,7 +989,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.AreEqual(4, eventRaisedCount);
+			Assert.That(eventRaisedCount, Is.EqualTo(4));
 			rock.Verify();
 		}
 
@@ -1007,7 +1007,7 @@ namespace Rocks.Tests
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -1025,7 +1025,7 @@ namespace Rocks.Tests
 			chunk[a, b, c] = Guid.NewGuid().ToString();
 			var propertyValue = chunk[a, b, c];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -1042,7 +1042,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -1060,7 +1060,7 @@ namespace Rocks.Tests
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
-			Assert.Throws<VerificationException>(() => rock.Verify());
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]

@@ -21,7 +21,7 @@ namespace Rocks.Tests
 			chunk.TargetActionWithGenericAndOut<int>(out outInt);
 			chunk.TargetActionWithGenericAndRef<int>(ref outInt);
 			var actionResult = chunk.TargetActionAsync();
-			Assert.IsTrue(actionResult.IsCompleted);
+			Assert.That(actionResult.IsCompleted, Is.True);
 
 			chunk.TargetFunc();
 			chunk.TargetFunc(44);
@@ -31,8 +31,8 @@ namespace Rocks.Tests
 			chunk.TargetFuncWithGenericAndOut<int>(out outInt);
 			chunk.TargetFuncWithGenericAndRef<int>(ref outInt);
 			var funcResult = chunk.TargetFuncAsync();
-			Assert.IsTrue(funcResult.IsCompleted);
-			Assert.AreEqual(default(int), funcResult.Result);
+			Assert.That(funcResult.IsCompleted, Is.True);
+			Assert.That(funcResult.Result, Is.EqualTo(default(int)));
 
 			chunk.TargetProperty = 44;
 			var x = chunk.TargetProperty;
@@ -47,7 +47,7 @@ namespace Rocks.Tests
 			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
 			var chunk2 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
 
-			Assert.AreEqual(chunk2.GetType(), chunk1.GetType());
+			Assert.That(chunk1.GetType(), Is.EqualTo(chunk2.GetType()));
 		}
 	}
 

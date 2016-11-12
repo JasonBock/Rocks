@@ -13,10 +13,10 @@ namespace Rocks.Tests
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation<int>(expectations);
-			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(default(int), information.ReturnValue, nameof(information.ReturnValue));
+			Assert.That(information.Method, Is.Null, nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(1), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.ReturnValue, Is.EqualTo(default(int)), nameof(information.ReturnValue));
 		}
 
 		[Test]
@@ -25,10 +25,10 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
          var information = new HandlerInformation<int>(method, expectations);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(1, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(default(int), information.ReturnValue, nameof(information.ReturnValue));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(1), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.ReturnValue, Is.EqualTo(default(int)), nameof(information.ReturnValue));
 		}
 
 		[Test]
@@ -36,10 +36,10 @@ namespace Rocks.Tests
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation<int>(2, expectations);
-			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(default(int), information.ReturnValue, nameof(information.ReturnValue));
+			Assert.That(information.Method, Is.Null, nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.ReturnValue, Is.EqualTo(default(int)), nameof(information.ReturnValue));
 		}
 
 		[Test]
@@ -48,10 +48,10 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
 			var information = new HandlerInformation<int>(method, 2, expectations);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(default(int), information.ReturnValue, nameof(information.ReturnValue));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.ReturnValue, Is.EqualTo(default(int)), nameof(information.ReturnValue));
 		}
 
 		[Test]
@@ -61,7 +61,7 @@ namespace Rocks.Tests
 			var information = new HandlerInformation<int>(expectations);
 			information.ReturnValue = 1;
 
-			Assert.AreEqual(1, information.ReturnValue, nameof(information.ReturnValue));
+			Assert.That(information.ReturnValue, Is.EqualTo(1), nameof(information.ReturnValue));
 		}
 	}
 }

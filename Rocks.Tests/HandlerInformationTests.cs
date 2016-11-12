@@ -12,10 +12,10 @@ namespace Rocks.Tests
 		public void Create()
 		{
 			var information = new HandlerInformation();
-			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.Null, nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.Null, nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(0), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -23,10 +23,10 @@ namespace Rocks.Tests
 		{
 			var method = new Action(() => { });
          var information = new HandlerInformation(method);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.Null, nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(0), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -39,20 +39,20 @@ namespace Rocks.Tests
 				});
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, expectations);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.IsNull(information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.Null, nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(1), nameof(information.Expectations.Count));
 		}
 
 		[Test]
 		public void CreateWithExpectedCallCount()
 		{
 			var information = new HandlerInformation(2);
-			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.Null, nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(0), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -64,10 +64,10 @@ namespace Rocks.Tests
 					{ "a", new ArgumentExpectation<int>() }
 				});
 			var information = new HandlerInformation(2, expectations);
-			Assert.IsNull(information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.Null, nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(1), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -75,10 +75,10 @@ namespace Rocks.Tests
 		{
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, 2);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(0, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(0), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -91,10 +91,10 @@ namespace Rocks.Tests
 				});
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, 2, expectations);
-			Assert.AreSame(method, information.Method, nameof(information.Method));
-			Assert.AreEqual(2, information.ExpectedCallCount, nameof(information.ExpectedCallCount));
-			Assert.AreEqual(0, information.CallCount, nameof(information.CallCount));
-			Assert.AreEqual(1, information.Expectations.Count, nameof(information.Expectations.Count));
+			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
+			Assert.That(information.ExpectedCallCount, Is.EqualTo(2), nameof(information.ExpectedCallCount));
+			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
+			Assert.That(information.Expectations.Count, Is.EqualTo(1), nameof(information.Expectations.Count));
 		}
 
 		[Test]
@@ -104,7 +104,7 @@ namespace Rocks.Tests
 			var information = new HandlerInformation(expectations);
 			information.IncrementCallCount();
 
-			Assert.AreEqual(1, information.CallCount, nameof(information.CallCount));
+			Assert.That(information.CallCount, Is.EqualTo(1), nameof(information.CallCount));
 		}
 
 		[Test]
@@ -115,7 +115,7 @@ namespace Rocks.Tests
 			information.IncrementCallCount();
 			var result = information.Verify();
 
-			Assert.AreEqual(0, result.Count, nameof(result.Count));
+			Assert.That(result.Count, Is.EqualTo(0), nameof(result.Count));
 		}
 
 		[Test]
@@ -125,7 +125,7 @@ namespace Rocks.Tests
 			var information = new HandlerInformation(expectations);
 			var result = information.Verify();
 
-			Assert.AreEqual(1, result.Count, nameof(result.Count));
+			Assert.That(result.Count, Is.EqualTo(1), nameof(result.Count));
 		}
 
 		[Test]
@@ -136,7 +136,7 @@ namespace Rocks.Tests
 			information.IncrementCallCount();
 			var result = information.Verify();
 
-         Assert.AreEqual(1, result.Count, nameof(result.Count));
+			Assert.That(result.Count, Is.EqualTo(1), nameof(result.Count));
 		}
 	}
 }
