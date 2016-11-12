@@ -10,72 +10,72 @@ namespace Rocks.Tests.Options
 		public void CreateWithDefaults()
 		{
 			var options = new RockOptions();
-			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.UseCache, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.No, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(4, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(4), nameof(options.GetHashCode));
 		}
 
 		[Test]
 		public void CreateWithOptimizationLevelDebug()
 		{
 			var options = new RockOptions(level: OptimizationSetting.Debug);
-			Assert.AreEqual(OptimizationSetting.Debug, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.UseCache, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.No, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(0, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Debug), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(0), nameof(options.GetHashCode));
 		}
 
 		[Test]
 		public void CreateWithCodeFileOptionsCreate()
 		{
 			var options = new RockOptions(codeFile: CodeFileOptions.Create);
-			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.Create, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.UseCache, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.No, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(5, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.Create), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(5), nameof(options.GetHashCode));
 		}
 
 		[Test]
 		public void CreateWithSerializationOptionsSupported()
 		{
 			var options = new RockOptions(serialization: SerializationOptions.Supported);
-			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.Supported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.UseCache, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.No, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(6, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.Supported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(6), nameof(options.GetHashCode));
 		}
 
 		[Test]
 		public void CreateWithCachingOptionsGenerateNewVersion()
 		{
 			var options = new RockOptions(caching: CachingOptions.GenerateNewVersion);
-			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.GenerateNewVersion, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.No, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(12, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.GenerateNewVersion), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(12), nameof(options.GetHashCode));
 		}
 
 		[Test]
 		public void CreateWithAllowWarningsYes()
 		{
 			var options = new RockOptions(allowWarnings: AllowWarnings.Yes);
-			Assert.AreEqual(OptimizationSetting.Release, options.Optimization, nameof(options.Optimization));
-			Assert.AreEqual(CodeFileOptions.None, options.CodeFile, nameof(options.CodeFile));
-			Assert.AreEqual(SerializationOptions.NotSupported, options.Serialization, nameof(options.Serialization));
-			Assert.AreEqual(CachingOptions.UseCache, options.Caching, nameof(options.Caching));
-			Assert.AreEqual(AllowWarnings.Yes, options.AllowWarnings, nameof(options.AllowWarnings));
-			Assert.AreEqual(20, options.GetHashCode(), nameof(options.GetHashCode));
+			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.Yes), nameof(options.AllowWarnings));
+			Assert.That(options.GetHashCode(), Is.EqualTo(20), nameof(options.GetHashCode));
 		}
 	}
 }

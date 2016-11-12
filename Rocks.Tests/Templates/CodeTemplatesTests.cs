@@ -9,7 +9,8 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetExpectation()
 		{
-			Assert.AreEqual("(methodHandler.Expectations[\"a\"] as R.ArgumentExpectation<b>).IsValid(a, \"a\")", CodeTemplates.GetExpectation("a", "b"));
+			Assert.That(CodeTemplates.GetExpectation("a", "b"), Is.EqualTo(
+				"(methodHandler.Expectations[\"a\"] as R.ArgumentExpectation<b>).IsValid(a, \"a\")"));
 		}
 	}
 }

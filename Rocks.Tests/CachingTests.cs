@@ -19,7 +19,7 @@ namespace Rocks.Tests
 
 			var mock2 = rock2.Make();
 
-			Assert.AreEqual(mock2.GetType(), mock1.GetType());
+			Assert.That(mock1.GetType(), Is.EqualTo(mock2.GetType()));
 		}
 
 		[Test]
@@ -35,7 +35,7 @@ namespace Rocks.Tests
 
 			var mock2 = rock2.Make();
 
-			Assert.AreNotEqual(mock2.GetType(), mock1.GetType());
+			Assert.That(mock1.GetType(), Is.Not.EqualTo(mock2.GetType()));
 		}
 	}
 

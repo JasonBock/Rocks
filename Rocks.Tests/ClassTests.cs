@@ -32,7 +32,7 @@ namespace Rocks.Tests
 			var chunk = rock.Make(new object[] { 2 });
 			chunk.TargetMethod();
 
-			Assert.AreEqual(2, chunk.Value, nameof(chunk.Value));
+			Assert.That(chunk.Value, Is.EqualTo(2), nameof(chunk.Value));
 
 			rock.Verify();
 		}

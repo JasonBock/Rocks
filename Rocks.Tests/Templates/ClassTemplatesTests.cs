@@ -9,18 +9,18 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetClassWithObsoleteSuppression()
 		{
-			Assert.AreEqual(
+			Assert.That(ClassTemplates.GetClassWithObsoleteSuppression("a"), Is.EqualTo(
 @"#pragma warning disable CS0618
 #pragma warning disable CS0672
 a
 #pragma warning restore CS0672
-#pragma warning restore CS0618", ClassTemplates.GetClassWithObsoleteSuppression("a"));
+#pragma warning restore CS0618"));
 		}
 
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsTrue()
 		{
-			Assert.AreEqual(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -73,13 +73,13 @@ namespace h
 
 		l
 	}
-}", ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"));
+}"));
 		}
 
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsFalse()
 		{
-			Assert.AreEqual(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -132,7 +132,7 @@ namespace h
 
 		l
 	}
-}", ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"));
+}"));
 		}
 	}
 }

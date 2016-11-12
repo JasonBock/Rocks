@@ -10,8 +10,8 @@ namespace Rocks.Tests
 		{
 			var rock = Rock.Create<ICreateResultsTests>();
          var result = new CreateResult<ICreateResultsTests>(true, rock);
-			Assert.IsTrue(result.IsSuccessful, nameof(result.IsSuccessful));
-			Assert.AreSame(rock, result.Result, nameof(result.Result));
+			Assert.That(result.IsSuccessful, Is.True, nameof(result.IsSuccessful));
+			Assert.That(result.Result, Is.SameAs(rock), nameof(result.Result));
 		}
 	}
 

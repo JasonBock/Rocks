@@ -9,7 +9,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetEvent()
 		{
-			Assert.AreEqual("public a event b c;", EventTemplates.GetEvent("a", "b", "c"));
+			Assert.That(EventTemplates.GetEvent("a", "b", "c"), Is.EqualTo("public a event b c;"));
 		}
 	}
 }

@@ -10,25 +10,25 @@ namespace Rocks.Tests
 		public void CallIs()
 		{
 			var evaluation = new Func<string, bool>(_ => !string.IsNullOrWhiteSpace(_));
-			Assert.AreEqual(default(string), Arg.Is<string>(evaluation), nameof(Arg.Is));
+			Assert.That(Arg.Is<string>(evaluation), Is.EqualTo(default(string)), nameof(Arg.Is));
 		}
 
 		[Test]
 		public void CallIsWithNullEvaluation()
 		{
-			Assert.Throws<ArgumentNullException>(() => Arg.Is<string>(null), nameof(Arg.Is));
+			Assert.That(() => Arg.Is<string>(null), Throws.TypeOf<ArgumentNullException>(), nameof(Arg.Is));
 		}
 
 		[Test]
 		public void CallIsAny()
 		{
-			Assert.AreEqual(default(string), Arg.IsAny<string>(), nameof(Arg.IsAny));
+			Assert.That(Arg.IsAny<string>(), Is.EqualTo(default(string)), nameof(Arg.IsAny));
 		}
 
 		[Test]
 		public void CallIsDefault()
 		{
-			Assert.AreEqual(default(string), Arg.IsDefault<string>(), nameof(Arg.IsDefault));
+			Assert.That(Arg.IsDefault<string>(), Is.EqualTo(default(string)), nameof(Arg.IsDefault));
 		}
 	}
 }

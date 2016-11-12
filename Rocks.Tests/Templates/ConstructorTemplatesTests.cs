@@ -9,23 +9,23 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetConstructor()
 		{
-			Assert.AreEqual(
+			Assert.That(ConstructorTemplates.GetConstructor("a", "b", "c"), Is.EqualTo(
 @"public a(SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlersc)
 	: base(b)
 {
 	this.handlers = handlers;
-}", ConstructorTemplates.GetConstructor("a", "b", "c"));
+}"));
 		}
 
 		[Test]
 		public void GetConstructorNoArguments()
 		{
-			Assert.AreEqual(
+			Assert.That(ConstructorTemplates.GetConstructorWithNoArguments("a"), Is.EqualTo(
 @"public a() 
 { 
 	this.handlers = new SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>(
 		new SCG.Dictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>>());
-}", ConstructorTemplates.GetConstructorWithNoArguments("a"));
+}"));
 		}
 	}
 }

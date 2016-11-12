@@ -10,72 +10,74 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForGenericTask()
 		{
-			Assert.AreEqual("STT.Task.FromResult<Int32>(default(Int32))",
-				MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)));
+			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)),
+				Is.EqualTo("STT.Task.FromResult<Int32>(default(Int32))"));
 		}
 
 		[Test]
 		public void GetDefaultReturnValueForTask()
 		{
-			Assert.AreEqual("STT.Task.CompletedTask",
-				MethodTemplates.GetDefaultReturnValue(typeof(Task)));
+			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task)),
+				Is.EqualTo("STT.Task.CompletedTask"));
 		}
 
 		[Test]
 		public void GetDefaultReturnValueForNonTaskType()
 		{
-			Assert.AreEqual("default(Int32)",
-				MethodTemplates.GetDefaultReturnValue(typeof(int)));
+			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(int)),
+				Is.EqualTo("default(Int32)"));
 		}
 
 		[Test]
 		public void GetNonPublicActionImplementation()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetNonPublicActionImplementation("a", "b", "c", "d"), Is.EqualTo(
 @"a d override b
 {
 	c	
-}", MethodTemplates.GetNonPublicActionImplementation("a", "b", "c", "d"));
+}"));
 		}
 
 		[Test]
 		public void GetNonPublicFunctionImplementation()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetNonPublicFunctionImplementation("a", "b", "c", typeof(int), "e", "f"), Is.EqualTo(
 @"fa e override b
 {
 	c	
 	
 	return default(Int32);
-}", MethodTemplates.GetNonPublicFunctionImplementation("a", "b", "c", typeof(int), "e", "f"));
+}"));
 		}
 
 		[Test]
 		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsFalse()
 		{
-			Assert.AreEqual("public  delegate a b(c);", MethodTemplates.GetAssemblyDelegate("a", "b", "c", false));
+			Assert.That(MethodTemplates.GetAssemblyDelegate("a", "b", "c", false),
+				Is.EqualTo("public  delegate a b(c);"));
 		}
 
 		[Test]
 		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsTrue()
 		{
-			Assert.AreEqual("public unsafe delegate a b(c);", MethodTemplates.GetAssemblyDelegate("a", "b", "c", true));
+			Assert.That(MethodTemplates.GetAssemblyDelegate("a", "b", "c", true),
+				Is.EqualTo("public unsafe delegate a b(c);"));
 		}
 
 		[Test]
 		public void GetRefOutNotImplementedMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetRefOutNotImplementedMethod("a"), Is.EqualTo(
 @"public a
 {
 	throw new S.NotImplementedException();
-}", MethodTemplates.GetRefOutNotImplementedMethod("a"));
+}"));
 		}
 
 		[Test]
 		public void GetActionMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h"), Is.EqualTo(
 @"h g
 {
 	e
@@ -111,23 +113,23 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h"));
+}"));
 		}
 
 		[Test]
 		public void GetActionMethodForMake()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetActionMethodForMake("a", "b", "c"), Is.EqualTo(
 @"c b
 {
 	a
-}", MethodTemplates.GetActionMethodForMake("a", "b", "c"));
+}"));
 		}
 
 		[Test]
 		public void GetActionMethodWithNoArguments()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"), Is.EqualTo(
 @"f e
 {
 	d
@@ -148,23 +150,23 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"));
+}"));
 		}
 
 		[Test]
 		public void GetActionMethodWithNoArgumentsForMake()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetActionMethodWithNoArgumentsForMake("a", "b", "c"), Is.EqualTo(
 @"c b
 {
 	a
-}", MethodTemplates.GetActionMethodWithNoArgumentsForMake("a", "b", "c"));
+}"));
 		}
 
 		[Test]
 		public void GetFunctionWithReferenceTypeReturnValueMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
 @"ki j h
 {
 	f
@@ -191,25 +193,25 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
+}"));
 		}
 
 		[Test]
 		public void GetFunctionForMake()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", typeof(int)), Is.EqualTo(
 @"ec d b
 {
 	a
 
 	return default(Int32);
-}", MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", typeof(int)));
+}"));
 		}
 
 		[Test]
 		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
 @"ig h f
 {
 	e
@@ -229,13 +231,13 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"));
+}"));
 		}
 
 		[Test]
 		public void GetFunctionWithValueTypeReturnValueMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
 @"ki j h
 {
 	f
@@ -262,13 +264,13 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"));
+}"));
 		}
 
 		[Test]
 		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethod()
 		{
-			Assert.AreEqual(
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
 @"ig h f
 {
 	e
@@ -288,7 +290,7 @@ namespace Rocks.Tests.Templates
 	{
 		throw new S.NotImplementedException();
 	}
-}", MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"));
+}"));
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Rocks.Tests
 			var cacheKey2 = new CacheKey(this.GetType(),
 				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 
-			Assert.AreEqual(cacheKey1, cacheKey2);
+			Assert.That(cacheKey2, Is.EqualTo(cacheKey1));
 		}
 
 		[Test]
@@ -26,7 +26,7 @@ namespace Rocks.Tests
 			var cacheKey2 = new CacheKey(this.GetType(),
 				new RockOptions(OptimizationSetting.Release, CodeFileOptions.None, SerializationOptions.Supported));
 
-			Assert.AreNotEqual(cacheKey1, cacheKey2);
+			Assert.That(cacheKey2, Is.Not.EqualTo(cacheKey1));
 		}
 
 		[Test]
@@ -37,7 +37,7 @@ namespace Rocks.Tests
 			var cacheKey2 = new CacheKey(typeof(Guid),
 				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, SerializationOptions.Supported));
 
-			Assert.AreNotEqual(cacheKey1, cacheKey2);
+			Assert.That(cacheKey2, Is.Not.EqualTo(cacheKey1));
 		}
 	}
 }

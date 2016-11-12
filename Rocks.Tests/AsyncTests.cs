@@ -13,7 +13,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult<int>(44));
 
 			var uses = new UsesAsync(rock.Make());
-			Assert.AreEqual(44, await uses.RunGoAsync());
+			Assert.That(await uses.RunGoAsync(), Is.EqualTo(44));
 
 			rock.Verify();
 		}
@@ -30,7 +30,7 @@ namespace Rocks.Tests
 				});
 
 			var uses = new UsesAsync(rock.Make());
-			Assert.AreEqual(44, await uses.RunGoAsync());
+			Assert.That(await uses.RunGoAsync(), Is.EqualTo(44));
 
 			rock.Verify();
 		}

@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public void Create()
 		{
 			var binder = new AssemblyBinder();
-			Assert.AreEqual(0, binder.Assemblies.Count);
+			Assert.That(binder.Assemblies.Count, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -17,8 +17,8 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.AreEqual(1, binder.Assemblies.Count);
-			Assert.IsTrue(binder.Assemblies.Contains(this.GetType().Assembly));
+			Assert.That(binder.Assemblies.Count, Is.EqualTo(1));
+			Assert.That(binder.Assemblies.Contains(this.GetType().Assembly), Is.True);
 		}
 
 		[Test]
@@ -27,8 +27,8 @@ namespace Rocks.Tests
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.AreEqual(1, binder.Assemblies.Count);
-			Assert.IsTrue(binder.Assemblies.Contains(this.GetType().Assembly));
+			Assert.That(binder.Assemblies.Count, Is.EqualTo(1));
+			Assert.That(binder.Assemblies.Contains(this.GetType().Assembly), Is.True);
 		}
 
 		[Test]
@@ -36,7 +36,8 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.AreEqual(this.GetType(), binder.BindToType(this.GetType().Assembly.FullName, this.GetType().FullName));
+			Assert.That(binder.BindToType(this.GetType().Assembly.FullName, this.GetType().FullName),
+				Is.EqualTo(this.GetType()));
 		}
 
 		[Test]
@@ -44,7 +45,7 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.IsNull(binder.BindToType(this.GetType().Assembly.FullName, typeof(Rock).FullName));
+			Assert.That(binder.BindToType(this.GetType().Assembly.FullName, typeof(Rock).FullName), Is.Null);
 		}
 
 		[Test]
@@ -52,7 +53,7 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.IsNull(binder.BindToType(typeof(Rock).Assembly.FullName, this.GetType().FullName));
+			Assert.That(binder.BindToType(typeof(Rock).Assembly.FullName, this.GetType().FullName), Is.Null);
 		}
 	}
 }
