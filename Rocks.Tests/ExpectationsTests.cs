@@ -23,7 +23,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target(1));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target(2));
+			Assert.That(() => chunk.Target(2), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -43,7 +43,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target(1));
+			Assert.That(() => chunk.Target(1), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -73,7 +73,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target(ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target(1));
+			Assert.That(() => chunk.Target(1), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -93,7 +93,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target(44 + ExpectationsTests.Create()));
 
 			var chunk = rock.Make();
-			Assert.Throws<ExpectationException>(() => chunk.Target(1));
+			Assert.That(() => chunk.Target(1), Throws.TypeOf<ExpectationException>());
 		}
 
 		public static int Create() { return 44; }

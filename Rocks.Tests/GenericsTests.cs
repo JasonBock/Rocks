@@ -22,8 +22,8 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var result = chunk.TargetWithNoConstraints<Base>(1, expectationB);
 
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.IsNotNull(argumentB, nameof(argumentB));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
 
 			rock.Verify();
 		}
@@ -54,8 +54,8 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var result = chunk.TargetWithNonTypeConstrains<Base>(1, expectationB);
 
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.IsNotNull(argumentB, nameof(argumentB));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
 
 			rock.Verify();
 		}
@@ -74,8 +74,8 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			var result = chunk.TargetWithTypeConstraints<Base>(1, expectationB);
 
-			Assert.AreEqual(1, argumentA, nameof(argumentA));
-			Assert.IsNotNull(argumentB, nameof(argumentB));
+			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
+			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
 
 			rock.Verify();
 		}
@@ -103,11 +103,11 @@ namespace Rocks.Tests
 			chunk.TargetWithMultipleConstraints<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
 				expectationA, expectationB, expectationC, expectationD, expectationE);
 
-			Assert.IsNotNull(argumentA, nameof(argumentB));
-			Assert.IsNotNull(argumentB, nameof(argumentB));
-			Assert.IsNotNull(argumentC, nameof(argumentC));
-			Assert.AreNotEqual(Guid.Empty, argumentD, nameof(argumentD));
-			Assert.IsNotNull(argumentE, nameof(argumentE));
+			Assert.That(argumentA, Is.Not.Null, nameof(argumentA));
+			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
+			Assert.That(argumentC, Is.Not.Null, nameof(argumentC));
+			Assert.That(argumentD, Is.Not.EqualTo(Guid.Empty), nameof(argumentD));
+			Assert.That(argumentE, Is.Not.Null, nameof(argumentE));
 
 			rock.Verify();
 		}

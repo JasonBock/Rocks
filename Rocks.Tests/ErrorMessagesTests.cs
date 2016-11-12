@@ -8,13 +8,15 @@ namespace Rocks.Tests
 		[Test]
 		public void GetCannotMockSealedType()
 		{
-			Assert.AreEqual("Cannot mock the sealed type a.", ErrorMessages.GetCannotMockSealedType("a"));
+			Assert.That(ErrorMessages.GetCannotMockSealedType("a"),
+				Is.EqualTo("Cannot mock the sealed type a."));
 		}
 
 		[Test]
 		public void GetVerificationFailed()
 		{
-			Assert.AreEqual("Type: a, method: b, message: c", ErrorMessages.GetVerificationFailed("a", "b", "c"));
+			Assert.That(ErrorMessages.GetVerificationFailed("a", "b", "c"),
+				Is.EqualTo("Type: a, method: b, message: c"));
 		}
 	}
 }
