@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Options;
+using System.IO;
 
 namespace Rocks.Tests.Options
 {
@@ -9,73 +10,77 @@ namespace Rocks.Tests.Options
 		[Test]
 		public void CreateWithDefaults()
 		{
-			var options = new RockOptions();
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(4), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(), 
+				OptimizationSetting.Release, CodeFileOptions.None,
+				SerializationOptions.NotSupported, CachingOptions.UseCache, AllowWarnings.No,
+				Directory.GetCurrentDirectory(), 4);
+		}
+
+		[Test]
+		public void CreateWithCodeFileDirectory()
+		{
+			OptionsTests.AssertOptions(new RockOptions(codeFileDirectory: "directory"),
+				OptimizationSetting.Release, CodeFileOptions.None,
+				SerializationOptions.NotSupported, CachingOptions.UseCache, AllowWarnings.No,
+				"directory", 4);
 		}
 
 		[Test]
 		public void CreateWithOptimizationLevelDebug()
 		{
-			var options = new RockOptions(level: OptimizationSetting.Debug);
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Debug), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(0), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(level: OptimizationSetting.Debug), 
+				OptimizationSetting.Debug, CodeFileOptions.None,
+				SerializationOptions.NotSupported, CachingOptions.UseCache, AllowWarnings.No,
+				Directory.GetCurrentDirectory(), 0);
 		}
 
 		[Test]
 		public void CreateWithCodeFileOptionsCreate()
 		{
-			var options = new RockOptions(codeFile: CodeFileOptions.Create);
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.Create), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(5), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(codeFile: CodeFileOptions.Create),
+				OptimizationSetting.Release, CodeFileOptions.Create,
+				SerializationOptions.NotSupported, CachingOptions.UseCache, AllowWarnings.No,
+				Directory.GetCurrentDirectory(), 5);
 		}
 
 		[Test]
 		public void CreateWithSerializationOptionsSupported()
 		{
-			var options = new RockOptions(serialization: SerializationOptions.Supported);
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.Supported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(6), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(serialization: SerializationOptions.Supported),
+				OptimizationSetting.Release, CodeFileOptions.None,
+				SerializationOptions.Supported, CachingOptions.UseCache, AllowWarnings.No,
+				Directory.GetCurrentDirectory(), 6);
 		}
 
 		[Test]
 		public void CreateWithCachingOptionsGenerateNewVersion()
 		{
-			var options = new RockOptions(caching: CachingOptions.GenerateNewVersion);
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.GenerateNewVersion), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.No), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(12), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(caching: CachingOptions.GenerateNewVersion),
+				OptimizationSetting.Release, CodeFileOptions.None,
+				SerializationOptions.NotSupported, CachingOptions.GenerateNewVersion, AllowWarnings.No,
+				Directory.GetCurrentDirectory(), 12);
 		}
 
 		[Test]
 		public void CreateWithAllowWarningsYes()
 		{
-			var options = new RockOptions(allowWarnings: AllowWarnings.Yes);
-			Assert.That(options.Optimization, Is.EqualTo(OptimizationSetting.Release), nameof(options.Optimization));
-			Assert.That(options.CodeFile, Is.EqualTo(CodeFileOptions.None), nameof(options.CodeFile));
-			Assert.That(options.Serialization, Is.EqualTo(SerializationOptions.NotSupported), nameof(options.Serialization));
-			Assert.That(options.Caching, Is.EqualTo(CachingOptions.UseCache), nameof(options.Caching));
-			Assert.That(options.AllowWarnings, Is.EqualTo(AllowWarnings.Yes), nameof(options.AllowWarnings));
-			Assert.That(options.GetHashCode(), Is.EqualTo(20), nameof(options.GetHashCode));
+			OptionsTests.AssertOptions(new RockOptions(allowWarnings: AllowWarnings.Yes),
+				OptimizationSetting.Release, CodeFileOptions.None,
+				SerializationOptions.NotSupported, CachingOptions.UseCache, AllowWarnings.Yes,
+				Directory.GetCurrentDirectory(), 20);
+		}
+
+		private static void AssertOptions(RockOptions options,
+			OptimizationSetting level, CodeFileOptions codeFile, SerializationOptions serialization,
+			CachingOptions caching, AllowWarnings allowWarnings, string codeFileDirectory, int hashCode)
+		{
+			Assert.That(options.Optimization, Is.EqualTo(level), nameof(options.Optimization));
+			Assert.That(options.CodeFile, Is.EqualTo(codeFile), nameof(options.CodeFile));
+			Assert.That(options.Serialization, Is.EqualTo(serialization), nameof(options.Serialization));
+			Assert.That(options.Caching, Is.EqualTo(caching), nameof(options.Caching));
+			Assert.That(options.AllowWarnings, Is.EqualTo(allowWarnings), nameof(options.AllowWarnings));
+			Assert.That(options.CodeFileDirectory, Is.EqualTo(codeFileDirectory), nameof(options.CodeFileDirectory));
+			Assert.That(options.GetHashCode(), Is.EqualTo(hashCode ^ options.CodeFileDirectory.GetHashCode()), nameof(options.GetHashCode));
 		}
 	}
 }

@@ -25,7 +25,8 @@ namespace Rocks.Options
 				((int)this.Serialization << 1).GetHashCode() ^
 				((int)this.Optimization << 2).GetHashCode() ^
 				((int)this.Caching << 3).GetHashCode() ^
-				((int)this.AllowWarnings << 4).GetHashCode();
+				((int)this.AllowWarnings << 4).GetHashCode() ^
+				this.CodeFileDirectory.GetHashCode();
 		}
 
 		public AllowWarnings AllowWarnings { get; }
