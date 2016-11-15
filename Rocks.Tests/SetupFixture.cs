@@ -7,17 +7,33 @@ namespace Rocks.Tests
 	public sealed class SetupFixture
 	{
 		[OneTimeSetUp]
-		public static void SetUp() => SetupFixture.CleanUpRockFiles();
+		public static void SetUp() => SetupFixture.CleanUpCodeFilesAndFolders();
 
 		[OneTimeTearDown]
-		public static void TearDown() => SetupFixture.CleanUpRockFiles();
+		public static void TearDown() => SetupFixture.CleanUpCodeFilesAndFolders();
 
-		private static void CleanUpRockFiles()
+		private static void CleanUpCodeFilesAndFolders()
 		{
-			// TODO: need to change this to include subdirectories.
-			foreach (var rockFile in Directory.GetFiles(Directory.GetCurrentDirectory(), "Rock*.cs"))
+			var testDirectory = TestContext.CurrentContext.TestDirectory;
+
+			SetupFixture.DeleteFiles(testDirectory);
+
+			foreach(var rockDirectory in Directory.GetDirectories(testDirectory))
+			{
+				Directory.Delete(rockDirectory, true);
+			}
+		}
+
+		private static void DeleteFiles(string directory)
+		{
+			foreach (var rockFile in Directory.GetFiles(directory, "Rock*.cs"))
 			{
 				File.Delete(rockFile);
+			}
+
+			foreach (var rockDirectory in Directory.GetDirectories(directory))
+			{
+				SetupFixture.DeleteFiles(rockDirectory);
 			}
 		}
 	}
