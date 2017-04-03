@@ -43,7 +43,9 @@ namespace Rocks.Construction
 					pdbStream: pdbStream);
 
 				if (!results.Success || 
-					(this.AllowWarnings == AllowWarnings.No && results.Diagnostics.Length > 0))
+					(this.AllowWarnings == AllowWarnings.No && 
+						results.Diagnostics.Length > 0 && 
+						results.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != results.Diagnostics.Length))
 				{
 					throw new CompilationException(results.Diagnostics);
 				}
