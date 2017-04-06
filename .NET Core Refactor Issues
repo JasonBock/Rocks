@@ -1,5 +1,9 @@
 #if !NETCOREAPP1_1
 
+(Rocky gets farther than I do)
+* Update VS2017
+* Blow away all code and re-clone
+
 Well, .NET Core is building, but nothing runs. So, for now....
 
 * DONE - Create a Rocks.NETFramework.sln and only put .NET Framework stuff in there. Make sure that builds and all tests pass.

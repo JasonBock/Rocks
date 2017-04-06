@@ -33,6 +33,8 @@ namespace Rocks.Construction.InMemory
 #if !NETCOREAPP1_1
 			this.Result = Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
 #else
+			assemblyStream.Position = 0;
+			pdbStream.Position = 0;
 			this.Result = AssemblyLoadContext.Default.LoadFromStream(assemblyStream, pdbStream);
 #endif
 		}
