@@ -2,7 +2,7 @@
 
 Well, .NET Core is building, but nothing runs. So, for now....
 
-* Create a Rocks.NETFramework.sln and only put .NET Framework stuff in there. Make sure that builds and all tests pass.
+* DONE - Create a Rocks.NETFramework.sln and only put .NET Framework stuff in there. Make sure that builds and all tests pass.
 	* Rocks.Shared
 	* Rocks.NETFramework
 	* Rocks.RockAssemblyTestContainer.Shared
@@ -12,7 +12,10 @@ Well, .NET Core is building, but nothing runs. So, for now....
 	* Rocks.Tests.Shared
 	* Rocks.Tests.NETFramework
 	* Rocks.Run.NETFramework
-* Create a Rocks.NETCore.sln and only put .NET Core stuff in there. Make sure that builds (tests won't run though).
+	* Rocks.Task
+	* Rocks.Task.Tests
+	* Rocks.Sketchpad
+* DONE - Create a Rocks.NETCore.sln and only put .NET Core stuff in there. Make sure that builds (tests won't run though).
 	* Rocks.Shared
 	* Rocks.NETCore
 	* Rocks.RockAssemblyTestContainer.Shared
@@ -22,11 +25,11 @@ Well, .NET Core is building, but nothing runs. So, for now....
 	* Rocks.Tests.Shared
 	* Rocks.Tests.NETCore
 	* Rocks.Run.NETCore
-* Delete the Rocks.Refactor solution
-* Clear out the Rocks folder
-* Move all the code from Rocks.Refactor to Rocks
-* Git commit
-* Yell at MS on .NET MVP e-mail :)
+* DONE - Delete Rocks.Refactor.sln
+* DONE - Clear out the Rocks folder
+* DONE - Move all the code from Rocks.Refactor to Rocks
+* DONE - Git commit
+* DONE - ASK FOR HELP on the .NET MVP e-mail :)
 
 
 * I'm throwing .GetTypeInfo() everywhere, should refactor to get it only once per scope
