@@ -1,0 +1,35 @@
+#if !NETCOREAPP1_1
+
+Well, .NET Core is building, but nothing runs. So, for now....
+
+* Create a Rocks.NETFramework.sln and only put .NET Framework stuff in there. Make sure that builds and all tests pass.
+	* Rocks.Shared
+	* Rocks.NETFramework
+	* Rocks.RockAssemblyTestContainer.Shared
+	* Rocks.RockAssemblyTestContainer.NETFramework
+	* Rocks.Tests.Types.Shared
+	* Rocks.Tests.Types.NETFramework
+	* Rocks.Tests.Shared
+	* Rocks.Tests.NETFramework
+	* Rocks.Run.NETFramework
+* Create a Rocks.NETCore.sln and only put .NET Core stuff in there. Make sure that builds (tests won't run though).
+	* Rocks.Shared
+	* Rocks.NETCore
+	* Rocks.RockAssemblyTestContainer.Shared
+	* Rocks.RockAssemblyTestContainer.NETCore
+	* Rocks.Tests.Types.Shared
+	* Rocks.Tests.Types.NETCore
+	* Rocks.Tests.Shared
+	* Rocks.Tests.NETCore
+	* Rocks.Run.NETCore
+* Delete the Rocks.Refactor solution
+* Clear out the Rocks folder
+* Move all the code from Rocks.Refactor to Rocks
+* Git commit
+* Yell at MS on .NET MVP e-mail :)
+
+
+* I'm throwing .GetTypeInfo() everywhere, should refactor to get it only once per scope
+* I have NO tests around IListOfCustomAttributeDataExtensions.GetAttributes() - ugh!
+* Why does the .NET Core projects insist on generating the AssemblyInfo attributes?
+* Delegate.CreateDelegate is not available in .NET Core. Should revisit to see if there's a workaround.

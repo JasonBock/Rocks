@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>d83a2ff7-3f0a-4149-8d06-7e096104823d</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Rocks.Tests.Types.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)HasConstructorWithArgumentThatUsesProtectedInternalType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HasProtectedInternalAbstractMethod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HaveInternalAbstractProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HaveInternalConstructor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+</Project>
