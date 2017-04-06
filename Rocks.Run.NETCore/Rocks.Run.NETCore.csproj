@@ -17,11 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rocks.NETCore\Rocks.NETCore.csproj" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.0.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.0.0" />
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <ProjectReference Include="..\Rocks.NETCore\Rocks.NETCore.csproj" />
   </ItemGroup>
 </Project>
