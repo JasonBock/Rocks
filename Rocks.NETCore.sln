@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.Types.NETCore",
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rocks.Tests.Shared", "Rocks.Tests.Shared\Rocks.Tests.Shared.shproj", "{ADAD2C69-DF7C-4702-829C-D33D9BB179A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETCore", "Rocks.Tests.NETCore\Rocks.Tests.NETCore.csproj", "{B2F2FFAE-5A1B-45A9-997E-68D203FC5C69}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Rocks.RockAssemblyTestContainer.Shared\Rocks.RockAssemblyTestContainer.Shared.projitems*{12cf91bb-ea04-46de-bef1-fdb6941d738a}*SharedItemsImports = 13
@@ -47,6 +49,10 @@ Global
 		{F8BA59C0-8C39-466E-945A-1047E4FB33E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8BA59C0-8C39-466E-945A-1047E4FB33E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8BA59C0-8C39-466E-945A-1047E4FB33E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F2FFAE-5A1B-45A9-997E-68D203FC5C69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F2FFAE-5A1B-45A9-997E-68D203FC5C69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F2FFAE-5A1B-45A9-997E-68D203FC5C69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F2FFAE-5A1B-45A9-997E-68D203FC5C69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
