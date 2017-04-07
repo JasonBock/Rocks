@@ -33,14 +33,14 @@ namespace Rocks.Construction
 					}
 				}
 
-				var baseDirectory = AppContext.BaseDirectory;
-				var assemblyFiles = Directory.EnumerateFiles(baseDirectory, "*.dll");
-				var assemblyNames = assemblyFiles.Select(Path.GetFileNameWithoutExtension).ToList();
+				var platformAssemblyPaths = new HashSet<string>(
+					(AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string).Split(Path.PathSeparator));
+				var platformAssemblyNames = platformAssemblyPaths.Select(Path.GetFileNameWithoutExtension);
 				var assemblies = new HashSet<Assembly>();
 
-				foreach (var assemblyName in assemblyNames)
+				foreach (var platformAssemblyName in platformAssemblyNames)
 				{
-					assemblies.Add(Assembly.Load(new AssemblyName(assemblyName)));
+					assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
 				}
 
 				assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
@@ -51,6 +51,25 @@ namespace Rocks.Construction
 				}
 
 				return assemblies;
+
+				//var baseDirectory = AppContext.BaseDirectory;
+				//var assemblyFiles = Directory.EnumerateFiles(baseDirectory, "*.dll");
+				//var assemblyNames = assemblyFiles.Select(Path.GetFileNameWithoutExtension).ToList();
+				//var assemblies = new HashSet<Assembly>();
+
+				//foreach (var assemblyName in assemblyNames)
+				//{
+				//	assemblies.Add(Assembly.Load(new AssemblyName(assemblyName)));
+				//}
+
+				//assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
+
+				//foreach (var assembly in assemblies.ToList())
+				//{
+				//	LoadDependencies(assemblies, assembly);
+				//}
+
+				//return assemblies;
 			});
 #endif
 	}

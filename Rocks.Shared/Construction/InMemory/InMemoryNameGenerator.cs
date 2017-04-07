@@ -1,4 +1,6 @@
-﻿namespace Rocks.Construction.InMemory
+﻿using System;
+
+namespace Rocks.Construction.InMemory
 {
 	internal sealed class InMemoryNameGenerator
 		: NameGenerator
@@ -7,7 +9,11 @@
 
 		internal InMemoryNameGenerator()
 		{
+#if !NETCOREAPP1_1
 			this.AssemblyName = InMemoryNameGenerator.DefaultAssemblyName;
+#else
+			this.AssemblyName = $"{InMemoryNameGenerator.DefaultAssemblyName}{Guid.NewGuid().ToString("N")}";
+#endif
 		}
 	}
 }
