@@ -1,4 +1,7 @@
-﻿using System;
+﻿using NUnit.Common;
+using NUnitLite;
+using System;
+using System.Reflection;
 
 namespace Rocks.Tests.NETCore
 {
@@ -6,7 +9,8 @@ namespace Rocks.Tests.NETCore
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var writter = new ExtendedTextWrapper(Console.Out);
+			new AutoRun(typeof(Program).GetTypeInfo().Assembly).Execute(args, writter, Console.In);
 		}
 	}
 }
