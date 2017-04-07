@@ -14,10 +14,10 @@ namespace Rocks.Run.NETCore
 
 			var chunk = rock.Make();
 			Console.WriteLine("Finished");
-			//chunk.TargetAction();
-			//Console.WriteLine(chunk.TargetFunc());
+			chunk.TargetAction();
+			Console.WriteLine(chunk.TargetFunc());
 
-			//rock.Verify();
+			rock.Verify();
 		}
 	}
 
