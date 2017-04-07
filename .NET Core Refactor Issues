@@ -1,5 +1,41 @@
 #if !NETCOREAPP1_1
 
+OK! Now I'm getting farther, here are the compilation errors:
+
++		[0]	(74,85): error CS0539: 'Rock536a3b972860480ca4c6fa4fa0338a70.Handlers' in explicit interface declaration is not a member of interface	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[1]	(79,16): error CS0539: 'Rock536a3b972860480ca4c6fa4fa0338a70.Raise(string, EventArgs)' in explicit interface declaration is not a member of interface	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[2]	(16,16): error CS0012: The type 'EventArgs' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[3]	(16,16): error CS0012: The type 'ReadOnlyDictionary<,>' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.ObjectModel, Version=4.0.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[4]	(36,20): error CS0012: The type 'Delegate' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[5]	(38,19): error CS0012: The type 'Delegate' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[6]	(41,17): error CS0012: The type 'Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[7]	(42,17): error CS0012: The type 'Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[8]	(57,30): error CS0012: The type 'Delegate' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[9]	(58,26): error CS0012: The type 'Delegate' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[10]	(59,5): error CS0012: The type 'Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[11]	(60,17): error CS0012: The type 'Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
++		[12]	(61,17): error CS0012: The type 'Object' is defined in an assembly that is not referenced. You must add a reference to assembly 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e'.	Microsoft.CodeAnalysis.Diagnostic {Microsoft.CodeAnalysis.CSharp.CSDiagnostic}
+
+There are a couple of lines of code that need to change:
+
+ADD:
+using System.Reflection;
+
+
+var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
+			
+			--TO--
+			
+var eventDelegate = (S.MulticastDelegate)thisType.GetTypeInfo().GetField(eventName, SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
+
+
+handler.Method.Invoke(handler.Target, new object[]{this, args});
+
+			--TO--
+			
+handler.GetMethodInfo().Invoke(handler.Target, new object[]{this, args});
+
+					
 (Rocky gets farther than I do)
 * Update VS2017
 * Blow away all code and re-clone

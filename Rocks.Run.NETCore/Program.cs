@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 
 namespace Rocks.Run.NETCore
 {
@@ -7,14 +8,14 @@ namespace Rocks.Run.NETCore
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Start");
-			var rock = Rock.Create<IAmSimple>();
+			var rock = Rock.Create<IAmSimple>(new RockOptions(codeFile: CodeFileOptions.Create));
 			rock.Handle(_ => _.TargetAction());
 			rock.Handle(_ => _.TargetFunc()).Returns(44);
 
 			var chunk = rock.Make();
 			Console.WriteLine("Finished");
 			//chunk.TargetAction();
-			//var result = chunk.TargetFunc();
+			//Console.WriteLine(chunk.TargetFunc());
 
 			//rock.Verify();
 		}
