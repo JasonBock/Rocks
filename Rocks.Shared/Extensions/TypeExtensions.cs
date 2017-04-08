@@ -321,6 +321,54 @@ namespace Rocks.Extensions
 
 			return string.Empty;
 		}
+#if NETCOREAPP1_1
+		internal static ConstructorInfo FindConstructor(this Type @this, BindingFlags flags, Type[] types)
+		{
+			var constructors = @this.GetMembers(flags).OfType<ConstructorInfo>().ToArray();
+
+			foreach(var constructor in constructors)
+			{
+				var parameters = constructor.GetParameters();
+
+				if(parameters.Length == types.Length)
+				{
+					var parametersExact = true;
+
+					for(var i = 0; i < parameters.Length; i++)
+					{
+						parametersExact &= parameters[i].ParameterType == types[i];
+					}
+
+					if(parametersExact)
+					{
+						return constructor;
+					}
+				}
+			}
+
+			foreach (var constructor in constructors)
+			{
+				var parameters = constructor.GetParameters();
+
+				if (parameters.Length == types.Length)
+				{
+					var parametersAssignable = true;
+
+					for (var i = 0; i < parameters.Length; i++)
+					{
+						parametersAssignable &= parameters[i].ParameterType.IsAssignableFrom(types[i]);
+					}
+
+					if (parametersAssignable)
+					{
+						return constructor;
+					}
+				}
+			}
+
+			return null;
+		}
+#endif
 
 		internal static Type GetRootElementType(this Type @this)
 		{

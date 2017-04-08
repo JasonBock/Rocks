@@ -25,13 +25,9 @@ namespace Rocks.Extensions
 					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 						null, new[] { @this.Type }, null).Invoke(new[] { value }) as ArgumentExpectation;
 #else
-					return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-						.OfType<ConstructorInfo>().Single(_ =>
-						{
-							var parameters = _.GetParameters();
-
-							return parameters.Length == 1 && parameters[0].ParameterType == @this.Type;
-						}).Invoke(new[] { value }) as ArgumentExpectation;
+					return argumentExpectationType
+						.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { @this.Type })
+						.Invoke(new[] { value }) as ArgumentExpectation;
 #endif
 				case ExpressionType.Call:
 					var argumentMethodCall = (@this as MethodCallExpression);
@@ -46,8 +42,9 @@ namespace Rocks.Extensions
 						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
 #else
-						return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-							.OfType<ConstructorInfo>().Single(_ => _.GetParameters().Length == 0).Invoke(null) as ArgumentExpectation;
+						return argumentExpectationType
+							.FindConstructor(ReflectionValues.PublicNonPublicInstance, Type.EmptyTypes)
+							.Invoke(null) as ArgumentExpectation;
 #endif
 					}
 					else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
@@ -58,13 +55,9 @@ namespace Rocks.Extensions
 						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, new[] { genericMethodType }, null).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
 #else
-						return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-							.OfType<ConstructorInfo>().Single(_ =>
-							{
-								var parameters = _.GetParameters();
-
-								return parameters.Length == 1 && parameters[0].ParameterType == genericMethodType;
-							}).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
+						return argumentExpectationType
+							.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { genericMethodType })
+							.Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
 #endif
 					}
 					else if (argumentMethod.Name == isDefaultMethod.Name)
@@ -80,13 +73,9 @@ namespace Rocks.Extensions
 							return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 								null, new[] { @this.Type }, null).Invoke(new[] { parameter.DefaultValue }) as ArgumentExpectation;
 #else
-							return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-								.OfType<ConstructorInfo>().Single(_ =>
-								{
-									var parameters = _.GetParameters();
-
-									return parameters.Length == 1 && parameters[0].ParameterType == @this.Type;
-								}).Invoke(new[] { parameter.DefaultValue }) as ArgumentExpectation;
+							return argumentExpectationType
+								.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { @this.Type })
+								.Invoke(new[] { parameter.DefaultValue }) as ArgumentExpectation;
 #endif
 						}
 					}
@@ -96,13 +85,9 @@ namespace Rocks.Extensions
 						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
 #else
-						return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-							.OfType<ConstructorInfo>().Single(_ =>
-							{
-								var parameters = _.GetParameters();
-
-								return parameters.Length == 1 && parameters[0].ParameterType == typeof(Expression);
-							}).Invoke(new[] { @this }) as ArgumentExpectation;
+						return argumentExpectationType
+							.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Expression) })
+							.Invoke(new[] { @this }) as ArgumentExpectation;
 #endif
 					}
 				default:
@@ -110,13 +95,9 @@ namespace Rocks.Extensions
 					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 						null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
 #else
-					return argumentExpectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-						.OfType<ConstructorInfo>().Single(_ =>
-						{
-							var parameters = _.GetParameters();
-
-							return parameters.Length == 1 && parameters[0].ParameterType == typeof(Expression);
-						}).Invoke(new[] { @this }) as ArgumentExpectation;
+					return argumentExpectationType
+						.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Expression) })
+						.Invoke(new[] { @this }) as ArgumentExpectation;
 #endif
 			}
 		}

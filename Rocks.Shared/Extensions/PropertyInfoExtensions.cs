@@ -63,8 +63,8 @@ namespace Rocks.Extensions
 			var expectation = expectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
 				Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
 #else
-			var expectation = expectationType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ => _.GetParameters().Length == 0)
+			var expectation = expectationType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, Type.EmptyTypes)
 				.Invoke(null) as ArgumentExpectation;
 #endif
 			return new Tuple<string, ArgumentExpectation>(Values.PropertySetterArgumentName, expectation);
@@ -87,13 +87,9 @@ namespace Rocks.Extensions
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 1 && parameters[0].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #endif
 		}
 
@@ -110,13 +106,9 @@ namespace Rocks.Extensions
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 1 && parameters[0].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -128,13 +120,9 @@ namespace Rocks.Extensions
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 1 && parameters[0].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -146,15 +134,9 @@ namespace Rocks.Extensions
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 && 
-						parameters[0].ParameterType == typeof(uint) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -166,15 +148,9 @@ namespace Rocks.Extensions
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 &&
-						parameters[0].ParameterType == typeof(uint) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -186,15 +162,9 @@ namespace Rocks.Extensions
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 &&
-						parameters[0].ParameterType == typeof(uint) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #endif
 		}
 
@@ -211,15 +181,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -231,15 +195,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -251,16 +209,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 3 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(uint) &&
-						parameters[2].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -272,16 +223,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 3 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(uint) &&
-						parameters[2].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
 #endif
 		}
 
@@ -293,15 +237,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 2 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #endif
 		}
 
@@ -318,16 +256,9 @@ namespace Rocks.Extensions
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
 				.Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #else
-			return handlerType.GetMembers(ReflectionValues.PublicNonPublicInstance)
-				.OfType<ConstructorInfo>().Single(_ =>
-				{
-					var parameters = _.GetParameters();
-
-					return parameters.Length == 3 &&
-						parameters[0].ParameterType == typeof(Delegate) &&
-						parameters[1].ParameterType == typeof(uint) &&
-						parameters[2].ParameterType == typeof(ReadOnlyDictionary<string, ArgumentExpectation>);
-				}).Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+			return handlerType
+				.FindConstructor(ReflectionValues.PublicNonPublicInstance, new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) })
+				.Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
 #endif
 		}
 
