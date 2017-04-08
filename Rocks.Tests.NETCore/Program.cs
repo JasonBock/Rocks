@@ -11,8 +11,6 @@ namespace Rocks.Tests.NETCore
 		{
 			var wrapper = new ExtendedTextWrapper(Console.Out);
 			new AutoRun(typeof(Program).GetTypeInfo().Assembly).Execute(args, wrapper, Console.In);
-
-			//new Rocks.Tests.MultipleExpectationsTests().HandleMultiple();
 		}
 	}
 }

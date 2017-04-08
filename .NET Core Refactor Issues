@@ -35,12 +35,17 @@ Well, .NET Core is building, but nothing runs. So, for now....
 * DONE - Git commit
 * DONE - ASK FOR HELP on the .NET MVP e-mail :)
 
+Limitations
+* .NET Core doesn't support serialization, so you can't serialize mocks there
+* You can't load assemblies with the same name in .NET Core, but if you create a new name, then GenerateWhenPublicAndNonPublicMembersExist in .NET Framework fails because the "RockQuarry" InternalsVisibleTo thing doesn't work. So this feature won't work in .NET Core.
 
+TODOs
 * I'm throwing .GetTypeInfo() everywhere, should refactor to get it only once per scope
 * I have NO tests around IListOfCustomAttributeDataExtensions.GetAttributes() - ugh!
 * Why does the .NET Core projects insist on generating the AssemblyInfo attributes?
 * Delegate.CreateDelegate is not available in .NET Core. Should revisit to see if there's a workaround.
-* ExpressionExtensions - create an extension that generalizes "GetConstructor"
+* ExpressionExtensions - create an extension that generalizes "GetConstructor". Did that, it's called "FindConstructor()". Needs tests :)
+* In Validate(), check to see if the type is marked as Obsolete, and if it has, do not allow the mocking process to continue. I believe the compilation process will cack when you try to use an obsolete type.
 
 
 OK! Now I'm getting farther, here are the compilation errors:
@@ -165,3 +170,117 @@ Rocks.Tests.CachingTests.CreateTwoMocksWithCaching
    at Rocks.InMemoryRock`1.GetMockType(ReadOnlyDictionary`2 readOnlyHandlers) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\InMemoryRock.cs:line 65
    at Rocks.InMemoryRock`1.Make() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\InMemoryRock.cs:line 27
    at Rocks.Tests.CachingTests.CreateTwoMocksWithCaching() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\CachingTests.cs:line 15]]></stack-trace>
+   
+   
+Message: Rocks.Exceptions.ValidationException : The type NonPublicAndPublicMembers has internal abstract member(s) without an appropriate InternalsVisibleToAttribute to allow the mock to override the member(s).
+
+OK, we have tension here....
+.NET Framework has this: [assembly: InternalsVisibleTo("RockQuarry")]
+But in .NET Core I changed the name to add a Guid because it was complaining that an assembly with the same name already exists.
+But if I DON'T change the name, then I get the error.
+
+
+Now getting about 580 tests to succeed
+FIXED:
+          <test-case id="1036" name="MakeWithCustomConstructor" fullname="Rocks.Tests.ClassTests.MakeWithCustomConstructor" methodname="MakeWithCustomConstructor" classname="Rocks.Tests.ClassTests" runstate="Runnable" seed="1394636412" result="Failed" label="Error" start-time="2017-04-07 23:50:53Z" end-time="2017-04-07 23:50:53Z" duration="0.246089" asserts="0">
+            <failure>
+              <message><![CDATA[System.MissingMethodException : Constructor on type 'Rocks.Tests.Rock7b857d327e2b435a96c1c3bab22482a0' not found.]]></message>
+              <stack-trace><![CDATA[   at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes, StackCrawlMark& stackMark)
+   at System.Activator.CreateInstance(Type type, BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture, Object[] activationAttributes)
+   at System.Activator.CreateInstance(Type type, Object[] args)
+   at Rocks.InMemoryRock`1.Make(Object[] constructorArguments) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\InMemoryRock.cs:line 42
+   at Rocks.Tests.ClassTests.MakeWithCustomConstructor() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\ClassTests.cs:line 32]]></stack-trace>
+            </failure>
+          </test-case>
+		  
+          <test-case id="1277" name="MakeWithGetAndSetIndexerProperty" fullname="Rocks.Tests.HandleProperty1IndexerTests.MakeWithGetAndSetIndexerProperty" methodname="MakeWithGetAndSetIndexerProperty" classname="Rocks.Tests.HandleProperty1IndexerTests" runstate="Runnable" seed="889040366" result="Failed" label="Error" start-time="2017-04-08 00:14:01Z" end-time="2017-04-08 00:14:01Z" duration="0.055253" asserts="0">
+            <failure>
+              <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object.]]></message>
+              <stack-trace><![CDATA[   at Rocks.Extensions.PropertyInfoExtensions.GetGetterHandler(PropertyInfo this, ReadOnlyCollection`1 indexers, Delegate handler) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Extensions\PropertyInfoExtensions.cs:line 175
+   at Rocks.RockCore`1.Handle[T1,TPropertyValue](Expression`1 indexer1, Func`2 getter, Action`2 setter) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockCore.cs:line 1137
+   at Rocks.Tests.HandleProperty1IndexerTests.MakeWithGetAndSetIndexerProperty() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\HandleProperty1IndexerTests.cs:line 156]]></stack-trace>
+            </failure>
+          </test-case>
+
+Down to 8 errors:
+          <test-case id="1435" name="HandleMultiple" fullname="Rocks.Tests.MultipleExpectationsTests.HandleMultiple" methodname="HandleMultiple" classname="Rocks.Tests.MultipleExpectationsTests" runstate="Runnable" seed="19303942" result="Failed" label="Error" start-time="2017-04-08 01:23:31Z" end-time="2017-04-08 01:23:31Z" duration="0.071546" asserts="0">
+            <failure>
+              <message><![CDATA[System.InvalidOperationException : Sequence contains no matching element]]></message>
+              <stack-trace><![CDATA[   at System.Linq.Enumerable.Single[TSource](IEnumerable`1 source, Func`2 predicate)
+   at Rocks.Extensions.ExpressionExtensions.Create(Expression this, Type expectationType, ParameterInfo parameter) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Extensions\ExpressionExtensions.cs:line 28
+   at Rocks.Extensions.MethodCallExpressionExtensions.GetArgumentExpectations(MethodCallExpression this) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Extensions\MethodCallExpressionExtensions.cs:line 22
+   at Rocks.RockCore`1.Handle(Expression`1 expression) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockCore.cs:line 61
+   at Rocks.Tests.MultipleExpectationsTests.HandleMultiple() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\MultipleExpectationsTests.cs:line 14]]></stack-trace>
+            </failure>
+          </test-case>
+		  
+          <test-case id="1442" name="GenerateWhenPublicAndNonPublicMembersExist" fullname="Rocks.Tests.NonPublicTests.GenerateWhenPublicAndNonPublicMembersExist" methodname="GenerateWhenPublicAndNonPublicMembersExist" classname="Rocks.Tests.NonPublicTests" runstate="Runnable" seed="129315257" result="Failed" label="Error" start-time="2017-04-08 01:23:31Z" end-time="2017-04-08 01:23:31Z" duration="0.002309" asserts="0">
+            <failure>
+              <message><![CDATA[Rocks.Exceptions.ValidationException : The type NonPublicAndPublicMembers has internal abstract member(s) without an appropriate InternalsVisibleToAttribute to allow the mock to override the member(s).]]></message>
+              <stack-trace><![CDATA[   at Rocks.Rock.Create[T](RockOptions options) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Rock.cs:line 40
+   at Rocks.Rock.Create[T]() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Rock.cs:line 18
+   at Rocks.Tests.NonPublicTests.GenerateWhenPublicAndNonPublicMembersExist() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\NonPublicTests.cs:line 12]]></stack-trace>
+            </failure>
+          </test-case>
+
+          <test-case id="1473" name="GenerateForAssemblyThatContainsObject" fullname="Rocks.Tests.RockAssemblyTests.GenerateForAssemblyThatContainsObject" methodname="GenerateForAssemblyThatContainsObject" classname="Rocks.Tests.RockAssemblyTests" runstate="Runnable" seed="961604888" result="Failed" label="Error" start-time="2017-04-08 01:23:32Z" end-time="2017-04-08 01:23:39Z" duration="6.611092" asserts="0">
+            <failure>
+              <message><![CDATA[Rocks.Exceptions.CompilationException : Exception of type 'Rocks.Exceptions.CompilationException' was thrown.]]></message>
+              <stack-trace><![CDATA[   at Rocks.Construction.Compiler`1.Compile() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Construction\Compiler.cs:line 136
+   at Rocks.RockAssembly.Generate() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockAssembly.cs:line 65
+   at Rocks.RockAssembly..ctor(Assembly assembly, RockOptions options) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockAssembly.cs:line 31
+   at Rocks.Tests.RockAssemblyTests.GenerateForAssemblyThatContainsObject() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\RockAssemblyTests.cs:line 80]]></stack-trace>
+            </failure>
+          </test-case>
+		  
+4 failures left:
+This one I can't do anything about. It's the assembly name issue in .NET Core. Will not run this in .NET Core to resolve
+          <test-case id="1442" name="GenerateWhenPublicAndNonPublicMembersExist" fullname="Rocks.Tests.NonPublicTests.GenerateWhenPublicAndNonPublicMembersExist" methodname="GenerateWhenPublicAndNonPublicMembersExist" classname="Rocks.Tests.NonPublicTests" runstate="Runnable" seed="1318114354" result="Failed" label="Error" start-time="2017-04-08 03:54:42Z" end-time="2017-04-08 03:54:42Z" duration="0.057540" asserts="0">
+            <failure>
+              <message><![CDATA[Rocks.Exceptions.ValidationException : The type NonPublicAndPublicMembers has internal abstract member(s) without an appropriate InternalsVisibleToAttribute to allow the mock to override the member(s).]]></message>
+              <stack-trace><![CDATA[   at Rocks.Rock.Create[T](RockOptions options) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Rock.cs:line 40
+   at Rocks.Rock.Create[T]() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Rock.cs:line 18
+   at Rocks.Tests.NonPublicTests.GenerateWhenPublicAndNonPublicMembersExist() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\NonPublicTests.cs:line 12]]></stack-trace>
+            </failure>
+          </test-case>
+
+It's not clear to me why some of these errors are coming up, though the ContextStaticAttribute Obsolete issue is an interesting one that I should probably handle. That is, in Validate(), check to see if the type is marked as Obsolete, and if it has, do not allow the mocking process to continue.
+
+For now, I'll not run this test in .NET Core
+<test-case id="1473" name="GenerateForAssemblyThatContainsObject" fullname="Rocks.Tests.RockAssemblyTests.GenerateForAssemblyThatContainsObject" methodname="GenerateForAssemblyThatContainsObject" classname="Rocks.Tests.RockAssemblyTests" runstate="Runnable" seed="1857136235" result="Failed" label="Error" start-time="2017-04-08 03:54:44Z" end-time="2017-04-08 03:54:50Z" duration="5.935912" asserts="0">
+            <failure>
+              <message><![CDATA[Rocks.Exceptions.CompilationException : Exception of type 'Rocks.Exceptions.CompilationException' was thrown.]]></message>
+              <stack-trace><![CDATA[   at Rocks.Construction.Compiler`1.Compile() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\Construction\Compiler.cs:line 136
+   at Rocks.RockAssembly.Generate() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockAssembly.cs:line 65
+   at Rocks.RockAssembly..ctor(Assembly assembly, RockOptions options) in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Shared\RockAssembly.cs:line 31
+   at Rocks.Tests.RockAssemblyTests.GenerateForAssemblyThatContainsObject() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\RockAssemblyTests.cs:line 80]]></stack-trace>
+            </failure>
+          </test-case>
+		  
+    [0]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\RockContextStaticAttribute.cs(16,54): error CS0619: 'ContextStaticAttribute' is obsolete: 'ContextStaticAttribute is not supported in this release. It has been left in so that legacy tools can be used with this release, but it cannot be used in your code.'
+    [1]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\Text\RockUTF8Encoding.cs(594,33): error CS0115: 'RockUTF8Encoding.IsAlwaysNormalized(NormalizationForm)': no suitable method found to override
+    [2]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\Text\RockEncoding.cs(447,33): error CS0115: 'RockEncoding.IsAlwaysNormalized(NormalizationForm)': no suitable method found to override
+    [3]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\Text\RockUTF7Encoding.cs(589,33): error CS0115: 'RockUTF7Encoding.IsAlwaysNormalized(NormalizationForm)': no suitable method found to override
+    [4]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\Text\RockUnicodeEncoding.cs(594,33): error CS0115: 'RockUnicodeEncoding.IsAlwaysNormalized(NormalizationForm)': no suitable method found to override
+    [5]: C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System\Text\RockASCIIEncoding.cs(543,33): error CS0115: 'RockASCIIEncoding.IsAlwaysNormalized(NormalizationForm)': no suitable method found to override
+		  
+		  
+              <failure>
+                <message><![CDATA[  Expected string length 1093 but was 1142. Strings differ at index 256.
+  Expected: "...= System.Threading.Tasks;\r\na\r\n#pragma warning restore CS80..."
+  But was:  "...= System.Threading.Tasks;\r\na\r\nusing System.Reflection;\r\n#p..."
+  ------------------------------------------------^
+]]></message>
+                <stack-trace><![CDATA[at Rocks.Tests.Templates.ClassTemplatesTests.GetClassTemplateWhenIsUnsafeIsFalse() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\Templates\ClassTemplatesTests.cs:line 82
+]]></stack-trace>
+              </failure>
+
+              <failure>
+                <message><![CDATA[  Expected string length 1099 but was 1148. Strings differ at index 256.
+  Expected: "...= System.Threading.Tasks;\r\na\r\n#pragma warning restore CS80..."
+  But was:  "...= System.Threading.Tasks;\r\na\r\nusing System.Reflection;\r\n#p..."
+  ------------------------------------------------^
+]]></message>
+                <stack-trace><![CDATA[at Rocks.Tests.Templates.ClassTemplatesTests.GetClassTemplateWhenIsUnsafeIsTrue() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\Templates\ClassTemplatesTests.cs:line 23
+]]></stack-trace>
+              </failure>
