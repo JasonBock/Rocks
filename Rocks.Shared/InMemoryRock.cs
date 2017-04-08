@@ -39,7 +39,11 @@ namespace Rocks
 			var arguments = new List<object> { readOnlyHandlers };
 			arguments.AddRange(constructorArguments);
 
+#if !NETCOREAPP1_1
 			var rock = Activator.CreateInstance(rockType, arguments.ToArray(), null);
+#else
+			var rock = Activator.CreateInstance(rockType, arguments.ToArray());
+#endif
 			this.Rocks.Add(rock as IMock);
 			return rock as T;
 		}

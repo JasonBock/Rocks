@@ -9,8 +9,10 @@ namespace Rocks.Tests.NETCore
 	{
 		static void Main(string[] args)
 		{
+			var wrapper = new ExtendedTextWrapper(Console.Out);
+			new AutoRun(typeof(Program).GetTypeInfo().Assembly).Execute(args, wrapper, Console.In);
 
-			//Rocks.Tests.CachingTests.CreateTwoMocksWithCaching
+			//new HandleProperty1IndexerTests().MakeWithGetAndSetIndexerProperty();
 		}
 	}
 }
