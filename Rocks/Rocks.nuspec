@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Rocks</id>
+		<version>1.1.1</version>
+		<authors>Jason Bock</authors>
+		<owners>Jason Bock</owners>
+		<description>A mocking library based on the Compiler API.</description>
+		<projectUrl>https://github.com/JasonBock/Rocks</projectUrl>
+		<licenseUrl>https://github.com/JasonBock/Rocks</licenseUrl>
+		<tags>netframework</tags>
+		<language>en-US</language>
+		<dependencies>
+			<dependency id="Microsoft.CodeAnalysis.CSharp" version="1.1.1" />
+		</dependencies>
+	</metadata>
+	<files>
+		<!-- .NET 4.6 Client -->
+		<file src="Rocks.dll" target="lib\net46" />
+	</files>
+</package>

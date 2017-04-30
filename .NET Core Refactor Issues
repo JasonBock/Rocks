@@ -284,3 +284,17 @@ For now, I'll not run this test in .NET Core
                 <stack-trace><![CDATA[at Rocks.Tests.Templates.ClassTemplatesTests.GetClassTemplateWhenIsUnsafeIsTrue() in M:\JasonBock\Personal\Code Projects\Rocks\Rocks.Tests.Shared\Templates\ClassTemplatesTests.cs:line 23
 ]]></stack-trace>
               </failure>
+
+
+Let's approach this a bit differently....use one project with multitarget: http://dontcodetired.com/blog/post/Multiple-Platform-Targeting-in-Visual-Studio-2017
+
+* Create a Rocks.sln
+* Create a Rocks.csproj file as a .NET Core class library
+* Copy all of the code from Rocks.Shared here. Also make sure to update the csproj file with any changes I needed to do to make the Compiler API stuff work
+* Add "net461" to the targets.
+* Build and make sure it works.
+* Create a Rocks.Tests project to reference this one. This may be tricky at NUnit didn't support the "new" .NET Core project, so this may only be "net461" for now.
+* Copy all of the code from Rocks.Tests.Shared here. Also make sure to update the csproj file with any changes I needed to do to make the Compiler API stuff work
+* Run tests.
+* If I can't get .NET Core tests to run, create another Rocks.Tests.NETCoreTarget project (the name has to be this way to not collide with one that's there) and use NUnitLite
+* If all of this works, then commit it, and then remove the shared and reference projects.

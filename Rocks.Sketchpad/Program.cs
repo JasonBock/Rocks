@@ -1,14 +1,27 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 
 namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		public static readonly string Key = Guid.NewGuid().ToString();
-
 		static void Main(string[] args)
 		{
-			MethodCallContext.Test();
+			var rock = Rock.Create<IDoSomething>(
+				new RockOptions(
+					level: OptimizationSetting.Debug,
+					codeFile: CodeFileOptions.Create));
+			rock.Handle(_ => _.GetValue()).Returns(22);
+
+			var chunk = rock.Make();
+			Console.Out.WriteLine(chunk.GetValue());
+
+			rock.Verify();
 		}
+	}
+
+	public interface IDoSomething
+	{
+		int GetValue();
 	}
 }
