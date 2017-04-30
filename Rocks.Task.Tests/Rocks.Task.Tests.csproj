@@ -132,17 +132,17 @@
     <Compile Include="RocksTaskTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rocks.NETFramework\Rocks.NETFramework.csproj">
-      <Project>{bfa941a6-8634-45fd-a9a3-c173bce96d6e}</Project>
-      <Name>Rocks.NETFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Rocks.RockAssemblyTestContainer.NETFramework\Rocks.RockAssemblyTestContainer.NETFramework.csproj">
-      <Project>{e52ff051-db63-4efa-a078-d0b2dd550473}</Project>
-      <Name>Rocks.RockAssemblyTestContainer.NETFramework</Name>
+    <ProjectReference Include="..\Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj">
+      <Project>{b0a078fc-bfb9-44bb-b55c-cc8ac0c128c4}</Project>
+      <Name>Rocks.RockAssemblyTestContainer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rocks.Task\Rocks.Task.csproj">
       <Project>{66d83481-d2bc-42e8-9624-c5e07ae41efc}</Project>
       <Name>Rocks.Task</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rocks\Rocks.csproj">
+      <Project>{5630ab3f-b029-4fe0-b883-37f47283ac1b}</Project>
+      <Name>Rocks</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

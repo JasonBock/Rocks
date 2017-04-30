@@ -128,18 +128,18 @@
     <Compile Include="RocksTask.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rocks.NETFramework\Rocks.NETFramework.csproj">
-      <Project>{bfa941a6-8634-45fd-a9a3-c173bce96d6e}</Project>
-      <Name>Rocks.NETFramework</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rocks\Rocks.csproj">
+      <Project>{5630ab3f-b029-4fe0-b883-37f47283ac1b}</Project>
+      <Name>Rocks</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
