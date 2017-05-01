@@ -298,3 +298,11 @@ Let's approach this a bit differently....use one project with multitarget: http:
 * Run tests.
 * If I can't get .NET Core tests to run, create another Rocks.Tests.NETCoreTarget project (the name has to be this way to not collide with one that's there) and use NUnitLite
 * If all of this works, then commit it, and then remove the shared and reference projects.
+
+
+* Create "Rocks.Tests.NETCoreTarget" and "Rocks.Tests.NETFrameworkTarget" projects to run NUnitLite on my tests for now.
+* Add the "Rocks.Task" and "Rocks.Task.Tests" projects.
+
+System.Private.CoreLib.Rocks
+
+"C:\Users\jasonb\.nuget\packages\nunit\3.6.1\lib\netstandard1.6\System.Private.CoreLib.Rocks.dll"

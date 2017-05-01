@@ -16,9 +16,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.Types", "Rocks.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETCoreTarget", "Rocks.Tests.NETCoreTarget\Rocks.Tests.NETCoreTarget.csproj", "{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETCore", "Rocks.Tests.NETCore\Rocks.Tests.NETCore.csproj", "{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETFrameworkTarget", "Rocks.Tests.NETFrameworkTarget\Rocks.Tests.NETFrameworkTarget.csproj", "{E71D1FAA-F788-450A-8EDB-44231570610C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETFramework", "Rocks.Tests.NETFramework\Rocks.Tests.NETFramework.csproj", "{E71D1FAA-F788-450A-8EDB-44231570610C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task", "Rocks.Task\Rocks.Task.csproj", "{66D83481-D2BC-42E8-9624-C5E07AE41EFC}"
 EndProject

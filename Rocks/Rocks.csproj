@@ -13,6 +13,8 @@
     <Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
     <PackageLicenseUrl>https://github.com/JasonBock/Rocks/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jasonbock/rocks/</PackageProjectUrl>
+    <PackageVersion>2.0.0</PackageVersion>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
