@@ -14,7 +14,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var arguments = typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments(namespaces);
 
-         Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
+			Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
 			Assert.That(arguments.Constraints, Is.Empty);
 			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
@@ -49,7 +49,6 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveMethodWithComplexGenericType<TSource>
 	{
-		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) { return null; }
+		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
 	}
-
 }

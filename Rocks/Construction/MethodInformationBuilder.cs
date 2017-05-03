@@ -7,10 +7,7 @@ namespace Rocks.Construction
 {
 	internal abstract class MethodInformationBuilder
 	{
-		internal MethodInformationBuilder(SortedSet<string> namespaces)
-		{
-			this.Namespaces = namespaces;
-		}
+		internal MethodInformationBuilder(SortedSet<string> namespaces) => this.Namespaces = namespaces;
 
 		internal MethodInformation Build(MockableResult<MethodInfo> method)
 		{

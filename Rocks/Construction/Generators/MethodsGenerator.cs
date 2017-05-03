@@ -38,15 +38,15 @@ namespace Rocks.Construction.Generators
 						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
 						{
 							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, 
-								methodInformation.DescriptionWithOverride, visibility, 
+								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers,
+								methodInformation.DescriptionWithOverride, visibility,
 								method.RequiresNewImplementation, namespaces, isMake));
 						}
 						else
 						{
 							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility, method.RequiresNewImplementation, 
+								visibility, method.RequiresNewImplementation,
 								namespaces, isMake));
 
 							if (methodInformation.ContainsDelegateConditions)
@@ -78,11 +78,11 @@ namespace Rocks.Construction.Generators
 				}
 			}
 
-			return new GenerateResults(string.Join(Environment.NewLine, generatedMethods), 
+			return new GenerateResults(string.Join(Environment.NewLine, generatedMethods),
 				requiresObsoleteSuppression, false);
 		}
 
-		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, 
+		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
 			string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation,
 			SortedSet<string> namespaces, bool isMake)
@@ -117,8 +117,8 @@ namespace Rocks.Construction.Generators
 			}
 		}
 
-		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList, 
-			string outInitializers, string methodDescriptionWithOverride, string visibility, 
+		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
+			string outInitializers, string methodDescriptionWithOverride, string visibility,
 			RequiresIsNewImplementation requiresIsNewImplementation,
 			SortedSet<string> namespaces, bool isMake)
 		{

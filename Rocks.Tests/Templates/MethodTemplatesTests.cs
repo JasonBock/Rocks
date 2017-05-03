@@ -8,39 +8,30 @@ namespace Rocks.Tests.Templates
 	public sealed class MethodTemplatesTests
 	{
 		[Test]
-		public void GetDefaultReturnValueForGenericTask()
-		{
+		public void GetDefaultReturnValueForGenericTask() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)),
 				Is.EqualTo("STT.Task.FromResult<Int32>(default(Int32))"));
-		}
 
 		[Test]
-		public void GetDefaultReturnValueForTask()
-		{
+		public void GetDefaultReturnValueForTask() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task)),
 				Is.EqualTo("STT.Task.CompletedTask"));
-		}
 
 		[Test]
-		public void GetDefaultReturnValueForNonTaskType()
-		{
+		public void GetDefaultReturnValueForNonTaskType() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(int)),
 				Is.EqualTo("default(Int32)"));
-		}
 
 		[Test]
-		public void GetNonPublicActionImplementation()
-		{
+		public void GetNonPublicActionImplementation() =>
 			Assert.That(MethodTemplates.GetNonPublicActionImplementation("a", "b", "c", "d"), Is.EqualTo(
 @"a d override b
 {
 	c	
 }"));
-		}
 
 		[Test]
-		public void GetNonPublicFunctionImplementation()
-		{
+		public void GetNonPublicFunctionImplementation() =>
 			Assert.That(MethodTemplates.GetNonPublicFunctionImplementation("a", "b", "c", typeof(int), "e", "f"), Is.EqualTo(
 @"fa e override b
 {
@@ -48,35 +39,27 @@ namespace Rocks.Tests.Templates
 	
 	return default(Int32);
 }"));
-		}
 
 		[Test]
-		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsFalse()
-		{
+		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsFalse() =>
 			Assert.That(MethodTemplates.GetAssemblyDelegate("a", "b", "c", false),
 				Is.EqualTo("public  delegate a b(c);"));
-		}
 
 		[Test]
-		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsTrue()
-		{
+		public void GetAssemblyDelegateTemplateWhenIsUnsafeIsTrue() =>
 			Assert.That(MethodTemplates.GetAssemblyDelegate("a", "b", "c", true),
 				Is.EqualTo("public unsafe delegate a b(c);"));
-		}
 
 		[Test]
-		public void GetRefOutNotImplementedMethod()
-		{
+		public void GetRefOutNotImplementedMethod() =>
 			Assert.That(MethodTemplates.GetRefOutNotImplementedMethod("a"), Is.EqualTo(
 @"public a
 {
 	throw new S.NotImplementedException();
 }"));
-		}
 
 		[Test]
-		public void GetActionMethod()
-		{
+		public void GetActionMethod() =>
 			Assert.That(MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h"), Is.EqualTo(
 @"h g
 {
@@ -114,21 +97,17 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetActionMethodForMake()
-		{
+		public void GetActionMethodForMake() =>
 			Assert.That(MethodTemplates.GetActionMethodForMake("a", "b", "c"), Is.EqualTo(
 @"c b
 {
 	a
 }"));
-		}
 
 		[Test]
-		public void GetActionMethodWithNoArguments()
-		{
+		public void GetActionMethodWithNoArguments() =>
 			Assert.That(MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"), Is.EqualTo(
 @"f e
 {
@@ -151,21 +130,17 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetActionMethodWithNoArgumentsForMake()
-		{
+		public void GetActionMethodWithNoArgumentsForMake() =>
 			Assert.That(MethodTemplates.GetActionMethodWithNoArgumentsForMake("a", "b", "c"), Is.EqualTo(
 @"c b
 {
 	a
 }"));
-		}
 
 		[Test]
-		public void GetFunctionWithReferenceTypeReturnValueMethod()
-		{
+		public void GetFunctionWithReferenceTypeReturnValueMethod() =>
 			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
 @"ki j h
 {
@@ -194,11 +169,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetFunctionForMake()
-		{
+		public void GetFunctionForMake() =>
 			Assert.That(MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", typeof(int)), Is.EqualTo(
 @"ec d b
 {
@@ -206,11 +179,9 @@ namespace Rocks.Tests.Templates
 
 	return default(Int32);
 }"));
-		}
 
 		[Test]
-		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethod()
-		{
+		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethod() =>
 			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
 @"ig h f
 {
@@ -232,11 +203,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetFunctionWithValueTypeReturnValueMethod()
-		{
+		public void GetFunctionWithValueTypeReturnValueMethod() =>
 			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
 @"ki j h
 {
@@ -265,11 +234,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethod()
-		{
+		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethod() =>
 			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
 @"ig h f
 {
@@ -291,6 +258,5 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 	}
 }

@@ -10,10 +10,7 @@ namespace Rocks.Tests.Exceptions
 		: ExceptionTests<VerificationException, Exception>
 	{
 		[Test]
-		public void Create()
-		{
-			base.CreateExceptionTest();
-		}
+		public void Create() => base.CreateExceptionTest();
 
 		[Test]
 		public void CreateWithFailures()
@@ -24,26 +21,22 @@ namespace Rocks.Tests.Exceptions
 		}
 
 		[Test]
-		public void CreateWithMessage()
-		{
+		public void CreateWithMessage() =>
 			base.CreateExceptionWithMessageTest(Guid.NewGuid().ToString("N"));
-      }
 
 		[Test]
 		public void CreateWithMessageAndFailures()
 		{
 			var message = Guid.NewGuid().ToString("N");
-         var exception = new VerificationException(new List <string> { "failure" }.AsReadOnly(), message);
+			var exception = new VerificationException(new List <string> { "failure" }.AsReadOnly(), message);
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.Failures.Count, Is.EqualTo(1), nameof(exception.Failures.Count));
 			Assert.That(exception.Failures[0], Is.EqualTo("failure"), nameof(exception.Failures));
 		}
 
 		[Test]
-		public void CreateWithMessageAndInnerException()
-		{
+		public void CreateWithMessageAndInnerException() =>
 			base.CreateExceptionWithMessageAndInnerExceptionTest(Guid.NewGuid().ToString("N"));
-		}
 
 		[Test]
 		public void CreateWithMessageAndInnerExceptionAndFailures()
@@ -59,10 +52,8 @@ namespace Rocks.Tests.Exceptions
 
 #if !NETCOREAPP1_1
 		[Test]
-		public void Roundtrip()
-		{
+		public void Roundtrip() =>
 			base.RoundtripExceptionTest(Guid.NewGuid().ToString("N"));
-		}
 #endif
 	}
 }

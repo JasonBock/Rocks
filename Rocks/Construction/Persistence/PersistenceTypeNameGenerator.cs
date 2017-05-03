@@ -9,10 +9,7 @@ namespace Rocks.Construction.Persistence
 		: TypeNameGenerator
 	{
 		internal PersistenceTypeNameGenerator(SortedSet<string> namespaces)
-			: base()
-		{
-			this.Namespaces = namespaces;
-		}
+			: base() => this.Namespaces = namespaces;
 
 		internal override string Generate(Type baseType)
 		{
@@ -21,6 +18,6 @@ namespace Rocks.Construction.Persistence
 			return $"Rock{name.Replace(".", string.Empty)}";
 		}
 
-		private SortedSet<string> Namespaces { get; set; }
+		private SortedSet<string> Namespaces { get; }
 	}
 }

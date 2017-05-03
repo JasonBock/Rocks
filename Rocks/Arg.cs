@@ -6,7 +6,7 @@ namespace Rocks
 	{
 		public static T Is<T>(Func<T, bool> evaluation)
 		{
-			if(evaluation == null)
+			if (evaluation == null)
 			{
 				throw new ArgumentNullException(nameof(evaluation));
 			}
@@ -14,8 +14,8 @@ namespace Rocks
 			return default(T);
 		}
 
-		public static T IsAny<T>() { return default(T); }
+		public static T IsAny<T>() => default(T);
 
-		public static T IsDefault<T>() { return default(T); }
+		public static T IsDefault<T>() => default(T);
 	}
 }

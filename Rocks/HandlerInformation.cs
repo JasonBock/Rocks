@@ -51,15 +51,9 @@ namespace Rocks
 			this.Expectations = expectations;
 		}
 
-		internal void AddRaiseEvent(RaiseEventInformation raiseEvent)
-		{
-			this.raiseEvents.Add(raiseEvent);
-		}
+		internal void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
 
-		public void IncrementCallCount()
-		{
-			Interlocked.Increment(ref this.callCount);
-		}
+		public void IncrementCallCount() => Interlocked.Increment(ref this.callCount);
 
 		public void RaiseEvents(IMock target)
 		{
@@ -94,7 +88,7 @@ namespace Rocks
 
 		internal int CallCount
 		{
-			get { return this.callCount; }
+			get => this.callCount; 
 		}
 
 		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; }

@@ -26,7 +26,7 @@ namespace Rocks
 						return false;
 					}
 
-					for (int i = 0; i < array1.Length; i++)
+					for (var i = 0; i < array1.Length; i++)
 					{
 						if (!ObjectEquality.AreEqual(array1.GetValue(i), array2.GetValue(i)))
 						{

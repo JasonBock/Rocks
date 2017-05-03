@@ -38,36 +38,25 @@ namespace Rocks.Construction
 			this.IsMake = isMake;
 		}
 
-		internal virtual void Build()
-		{
-			this.Tree = this.MakeTree();
-		}
+		internal virtual void Build() => this.Tree = this.MakeTree();
 
-		private GenerateResults GetGeneratedEvents()
-		{
-			return new EventsGenerator().Generate(this.BaseType, this.Namespaces,
+		private GenerateResults GetGeneratedEvents() =>
+			new EventsGenerator().Generate(this.BaseType, this.Namespaces,
 				this.NameGenerator, this.InformationBuilder);
-		}
 
-		private GenerateResults GetGeneratedConstructors()
-		{
-			return new ConstructorsGenerator().Generate(this.BaseType,
+		private GenerateResults GetGeneratedConstructors() =>
+			new ConstructorsGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.GetTypeNameWithNoGenerics());
-		}
 
-		private GenerateResults GetGeneratedMethods()
-		{
-			return new MethodsGenerator().Generate(this.BaseType,
+		private GenerateResults GetGeneratedMethods() => 
+			new MethodsGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
 				this.IsMake, this.HandleRefOutMethod);
-		}
 
-		private GenerateResults GetGeneratedProperties()
-		{
-			return new PropertiesGenerator().Generate(this.BaseType,
+		private GenerateResults GetGeneratedProperties() =>
+			new PropertiesGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
 				this.IsMake);
-		}
 
 		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
 

@@ -44,10 +44,7 @@ namespace Rocks
 		/// <param name="a">A <see cref="CacheKey" /> or a null reference.</param>
 		/// <param name="b">A <see cref="CacheKey" /> or a null reference.</param>
 		/// <returns><b>true</b> if the value of <paramref name="a"/> is different from the value of <paramref name="b"/>; otherwise, <b>false</b>. </returns>
-		public static bool operator !=(CacheKey a, CacheKey b)
-		{
-			return !(a == b);
-		}
+		public static bool operator !=(CacheKey a, CacheKey b) => !(a == b);
 
 		/// <summary>
 		/// Determines whether this instance of <see cref="CacheKey" /> and a 
@@ -75,14 +72,8 @@ namespace Rocks
 		/// <param name="obj">An <see cref="Object" />.</param>
 		/// <returns><b>true</b> if <paramref name="obj"/> is a <see cref="CacheKey" /> and its value 
 		/// is the same as this instance; otherwise, <b>false</b>.</returns>
-		public override bool Equals(object obj)
-		{
-			return this.Equals(obj as CacheKey);
-		}
+		public override bool Equals(object obj) => this.Equals(obj as CacheKey);
 
-		public override int GetHashCode()
-		{
-			return this.type.GetHashCode() ^ this.options.GetHashCode();
-		}
+		public override int GetHashCode() => this.type.GetHashCode() ^ this.options.GetHashCode();
 	}
 }

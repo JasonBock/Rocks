@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 
 namespace Rocks.Construction.InMemory
 {
@@ -13,13 +12,10 @@ namespace Rocks.Construction.InMemory
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers,
 			SortedSet<string> namespaces, RockOptions options, bool isMake)
 			: base(baseType, handlers, namespaces, options, new InMemoryNameGenerator(),
-				new InMemoryMethodInformationBuilder(namespaces, handlers), 
+				new InMemoryMethodInformationBuilder(namespaces, handlers),
 				new InMemoryTypeNameGenerator(namespaces), isMake)
 		{ }
 
-		protected override string GetDirectoryForFile()
-		{
-			return this.Options.CodeFileDirectory;
-		}
+		protected override string GetDirectoryForFile() => this.Options.CodeFileDirectory;
 	}
 }

@@ -9,88 +9,64 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsGetSafeNameTests
 	{
 		[Test]
-		public void GetSafeName()
-		{
+		public void GetSafeName() =>
 			Assert.That(typeof(SubnestedClass.IAmSubnested).GetSafeName(),
 				Is.EqualTo("TypeExtensionsGetSafeNameTests.SubnestedClass.IAmSubnested"));
-		}
 
 		[Test]
-		public void GetSafeNameWithOpenGenerics()
-		{
+		public void GetSafeNameWithOpenGenerics() =>
 			Assert.That(typeof(IHaveGenerics<>).GetSafeName(),
 				Is.EqualTo("IHaveGenerics"));
-		}
 
 		[Test]
-		public void GetSafeNameWithClosedGenerics()
-		{
+		public void GetSafeNameWithClosedGenerics() =>
 			Assert.That(typeof(IHaveGenerics<string>).GetSafeName(),
 				Is.EqualTo("IHaveGenerics"));
-		}
 
 		[Test]
-		public void GetSafeNameWithNestedOpenGenerics()
-		{
+		public void GetSafeNameWithNestedOpenGenerics() =>
 			Assert.That(typeof(NestedGenerics.IHaveGenerics<>).GetSafeName(),
 				Is.EqualTo("NestedGenerics.IHaveGenerics"));
-		}
 
 		[Test]
-		public void GetSafeNameWithNestedClosedGenerics()
-		{
+		public void GetSafeNameWithNestedClosedGenerics() =>
 			Assert.That(typeof(NestedGenerics.IHaveGenerics<string>).GetSafeName(),
 				Is.EqualTo("NestedGenerics.IHaveGenerics"));
-		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments()
-		{
+		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments() =>
 			Assert.That(typeof(RefTargetWithoutGeneric).GetSafeName(),
 				Is.EqualTo("RefTargetWithoutGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments()
-		{
+		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments() =>
 			Assert.That(typeof(RefTargetWithGeneric<>).GetSafeName(),
 				Is.EqualTo("RefTargetWithGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments()
-		{
+		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments() =>
 			Assert.That(typeof(TypeExtensionsTests.RefTargetWithoutGeneric).GetSafeName(),
 				Is.EqualTo("TypeExtensionsTests.RefTargetWithoutGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments()
-		{
+		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments() =>
 			Assert.That(typeof(TypeExtensionsTests.RefTargetWithGeneric<Guid>).GetSafeName(),
 				Is.EqualTo("TypeExtensionsTests.RefTargetWithGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithNoGenerics()
-		{
+		public void GetSafeNameForDelegateWithNoGenerics() =>
 			Assert.That(typeof(MapForNonGeneric).GetSafeName(),
 				Is.EqualTo("MapForNonGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithSpecifiedGenerics()
-		{
+		public void GetSafeNameForDelegateWithSpecifiedGenerics() =>
 			Assert.That(typeof(MapForGeneric<Guid>).GetSafeName(),
 				Is.EqualTo("MapForGeneric"));
-		}
 
 		[Test]
-		public void GetSafeNameForDelegateWithoutSpecifiedGenerics()
-		{
+		public void GetSafeNameForDelegateWithoutSpecifiedGenerics() =>
 			Assert.That(typeof(MapForGeneric<>).GetSafeName(),
 				Is.EqualTo("MapForGeneric"));
-		}
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndNamespaces()
@@ -123,29 +99,21 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetSafeNameForPointerType()
-		{
+		public void GetSafeNameForPointerType() =>
 			Assert.That(typeof(byte*).GetSafeName(), Is.EqualTo("Byte*"));
-		}
 
 		[Test]
-		public void GetSafeNameForArrayType()
-		{
+		public void GetSafeNameForArrayType() =>
 			Assert.That(typeof(byte[]).GetSafeName(), Is.EqualTo("Byte[]"));
-		}
 
 		[Test]
-		public void GetSafeNameForArrayOfPointersType()
-		{
+		public void GetSafeNameForArrayOfPointersType() =>
 			Assert.That(typeof(byte*[]).GetSafeName(), Is.EqualTo("Byte*[]"));
-		}
 
 		[Test]
-		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName()
-		{
+		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName() =>
 			Assert.That(typeof(TypeExtensionsNamespace.IMock).GetSafeName(),
 				Is.EqualTo("TypeExtensionsNamespace.IMock"));
-		}
 
 		public class SubnestedClass
 		{

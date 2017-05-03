@@ -13,13 +13,14 @@ namespace Rocks.Tests
 		public void TryThis()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-			var handlers = new Dictionary<string, HandlerInformation>();
-			handlers.Add("x", new HandlerInformation<int>(expectations) { ReturnValue = 42 });
+			var handlers = new Dictionary<string, HandlerInformation>
+			{
+				{ "x", new HandlerInformation<int>(expectations) { ReturnValue = 42 } }
+			};
 
 			var roHandlers = new ReadOnlyDictionary<string, HandlerInformation>(handlers);
 
-			HandlerInformation rvHandler = null;
-			roHandlers.TryGetValue("x", out rvHandler);
+			roHandlers.TryGetValue("x", out var rvHandler);
 
 			Assert.That((rvHandler as HandlerInformation<int>).ReturnValue, Is.EqualTo(42));
 		}

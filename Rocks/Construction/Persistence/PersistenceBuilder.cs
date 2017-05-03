@@ -25,10 +25,8 @@ namespace Rocks.Construction.Persistence
 				  new PersistenceMethodInformationBuilder(namespaces, baseType), new PersistenceTypeNameGenerator(namespaces), false)
 		{ }
 
-		protected override string GetDirectoryForFile()
-		{
-			return Path.Combine(this.Options.CodeFileDirectory, this.BaseType.Namespace.Replace(".", "\\"));
-		}
+		protected override string GetDirectoryForFile() =>
+			Path.Combine(this.Options.CodeFileDirectory, this.BaseType.Namespace.Replace(".", "\\"));
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)
 		{
@@ -38,17 +36,13 @@ namespace Rocks.Construction.Persistence
 			return methodCount > 1 ? baseMethod.MetadataToken.ToString() : string.Empty;
 		}
 
-		protected override string GetAdditionNamespaceCode()
-		{
-			return string.Join(Environment.NewLine, this.generatedDelegates);
-		}
+		protected override string GetAdditionNamespaceCode() =>
+			string.Join(Environment.NewLine, this.generatedDelegates);
 
-		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription)
-		{
+		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) =>
 			this.generatedDelegates.Add(MethodTemplates.GetAssemblyDelegate(
 				baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(this.Namespaces),
 				methodDescription.DelegateCast,
 				baseMethod.GetParameters(this.Namespaces), baseMethod.IsUnsafeToMock()));
-		}
 	}
 }

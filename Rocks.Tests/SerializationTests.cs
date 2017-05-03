@@ -21,8 +21,10 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 
-			var formatter = new BinaryFormatter();
-			formatter.Binder = Rock.Binder;
+			var formatter = new BinaryFormatter()
+			{
+				Binder = Rock.Binder
+			};
 
 			using (var stream = new MemoryStream())
 			{
@@ -39,9 +41,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			IAmSerializable newChunk = null;
 
-			var formatter = new BinaryFormatter();
-			formatter.Binder = Rock.Binder;
-
+			var formatter = new BinaryFormatter()
+			{
+				Binder = Rock.Binder
+			};
 			using (var stream = new MemoryStream())
 			{
 				formatter.Serialize(stream, chunk);
@@ -84,8 +87,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			IAmSerializable newChunk = null;
 
-			var serializer = new NetDataContractSerializer();
-			serializer.Binder = Rock.Binder;
+			var serializer = new NetDataContractSerializer()
+			{
+				Binder = Rock.Binder
+			};
 
 			using (var stream = new MemoryStream())
 			{

@@ -6,10 +6,7 @@ namespace Rocks
 	{
 		protected HandlerInformation handler;
 
-		public MethodAdornments(HandlerInformation handler)
-		{
-			this.handler = handler;
-		}
+		public MethodAdornments(HandlerInformation handler) => this.handler = handler;
 
 		public MethodAdornments Raises(string eventName, EventArgs args)
 		{

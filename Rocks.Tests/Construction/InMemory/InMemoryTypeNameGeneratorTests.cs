@@ -14,7 +14,7 @@ namespace Rocks.Tests.Construction.InMemory
 			var generator = new InMemoryTypeNameGenerator(new SortedSet<string>());
 			var name = generator.Generate(typeof(IAmNotGeneric));
 
-         Assert.That(name.StartsWith("Rock"), Is.True);
+			Assert.That(name.StartsWith("Rock"), Is.True);
 
 			var restOfName = name.Substring(4);
 

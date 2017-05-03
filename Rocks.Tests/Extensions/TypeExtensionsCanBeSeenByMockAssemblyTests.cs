@@ -9,15 +9,11 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsCanBeSeenByMockAssemblyTests
 	{
 		[Test]
-		public void CanBeSeenWhenTypeIsInAssemblyWithInternalsVisibleTo()
-		{
+		public void CanBeSeenWhenTypeIsInAssemblyWithInternalsVisibleTo() =>
 			Assert.That(this.GetType().CanBeSeenByMockAssembly(new InMemoryNameGenerator()), Is.True);
-		}
 
 		[Test]
-		public void CanBeSeenWhenTypeIsInAssemblyWithNoInternalsVisibleToAndPublic()
-		{
+		public void CanBeSeenWhenTypeIsInAssemblyWithNoInternalsVisibleToAndPublic() =>
 			Assert.That(typeof(HaveInternalAbstractProperty).CanBeSeenByMockAssembly(new InMemoryNameGenerator()), Is.True);
-		}
 	}
 }

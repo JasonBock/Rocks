@@ -8,8 +8,7 @@ namespace Rocks.Tests.Options
 	public sealed class OptionsTests
 	{
 		[Test]
-		public void CreateWithDefaults()
-		{
+		public void CreateWithDefaults() =>
 			OptionsTests.AssertOptions(new RockOptions(), 
 				OptimizationSetting.Release, CodeFileOptions.None,
 #if !NETCOREAPP1_1
@@ -17,11 +16,9 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.UseCache, AllowWarnings.No,
 				Directory.GetCurrentDirectory(), 4);
-		}
 
 		[Test]
-		public void CreateWithCodeFileDirectory()
-		{
+		public void CreateWithCodeFileDirectory() =>
 			OptionsTests.AssertOptions(new RockOptions(codeFileDirectory: "directory"),
 				OptimizationSetting.Release, CodeFileOptions.None,
 #if !NETCOREAPP1_1
@@ -29,11 +26,9 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.UseCache, AllowWarnings.No,
 				"directory", 4);
-		}
 
 		[Test]
-		public void CreateWithOptimizationLevelDebug()
-		{
+		public void CreateWithOptimizationLevelDebug() =>
 			OptionsTests.AssertOptions(new RockOptions(level: OptimizationSetting.Debug), 
 				OptimizationSetting.Debug, CodeFileOptions.None,
 #if !NETCOREAPP1_1
@@ -41,11 +36,9 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.UseCache, AllowWarnings.No,
 				Directory.GetCurrentDirectory(), 0);
-		}
 
 		[Test]
-		public void CreateWithCodeFileOptionsCreate()
-		{
+		public void CreateWithCodeFileOptionsCreate() =>
 			OptionsTests.AssertOptions(new RockOptions(codeFile: CodeFileOptions.Create),
 				OptimizationSetting.Release, CodeFileOptions.Create,
 #if !NETCOREAPP1_1
@@ -53,23 +46,19 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.UseCache, AllowWarnings.No,
 				Directory.GetCurrentDirectory(), 5);
-		}
 
 #if !NETCOREAPP1_1
 		[Test]
-		public void CreateWithSerializationOptionsSupported()
-		{
+		public void CreateWithSerializationOptionsSupported() =>
 			OptionsTests.AssertOptions(new RockOptions(serialization: SerializationOptions.Supported),
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.Supported,
 				CachingOptions.UseCache, AllowWarnings.No,
 				Directory.GetCurrentDirectory(), 6);
-		}
 #endif
 
 		[Test]
-		public void CreateWithCachingOptionsGenerateNewVersion()
-		{
+		public void CreateWithCachingOptionsGenerateNewVersion() =>
 			OptionsTests.AssertOptions(new RockOptions(caching: CachingOptions.GenerateNewVersion),
 				OptimizationSetting.Release, CodeFileOptions.None,
 #if !NETCOREAPP1_1
@@ -77,11 +66,9 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.GenerateNewVersion, AllowWarnings.No,
 				Directory.GetCurrentDirectory(), 12);
-		}
 
 		[Test]
-		public void CreateWithAllowWarningsYes()
-		{
+		public void CreateWithAllowWarningsYes() =>
 			OptionsTests.AssertOptions(new RockOptions(allowWarnings: AllowWarnings.Yes),
 				OptimizationSetting.Release, CodeFileOptions.None,
 #if !NETCOREAPP1_1
@@ -89,7 +76,6 @@ namespace Rocks.Tests.Options
 #endif
 				CachingOptions.UseCache, AllowWarnings.Yes,
 				Directory.GetCurrentDirectory(), 20);
-		}
 
 #if !NETCOREAPP1_1
 		private static void AssertOptions(RockOptions options,

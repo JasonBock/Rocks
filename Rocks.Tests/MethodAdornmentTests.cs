@@ -20,8 +20,8 @@ namespace Rocks.Tests
 		public void Raises()
 		{
 			var args = new EventArgs();
-         var info = new HandlerInformation();
-         var adornments = new MethodAdornments(info);
+			var info = new HandlerInformation();
+			var adornments = new MethodAdornments(info);
 			var newAdornments = adornments.Raises("a", args);
 
 			var events = info.GetRaiseEvents();

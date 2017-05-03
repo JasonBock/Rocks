@@ -9,10 +9,7 @@ namespace Rocks.Construction.InMemory
 		: TypeNameGenerator
 	{
 		internal InMemoryTypeNameGenerator(SortedSet<string> namespaces)
-			: base()
-		{
-			this.Namespaces = namespaces;
-		}
+			: base() => this.Namespaces = namespaces;
 
 		internal override string Generate(Type baseType)
 		{
@@ -21,6 +18,6 @@ namespace Rocks.Construction.InMemory
 			return $"Rock{name}";
 		}
 
-		private SortedSet<string> Namespaces { get; set; }
+		private SortedSet<string> Namespaces { get; }
 	}
 }

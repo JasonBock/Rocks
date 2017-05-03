@@ -19,10 +19,8 @@ namespace Rocks.Sketchpad
 
 	public static class IRockOfITargetExtensions
 	{
-		public static void Foo(this IRock<ITarget> @this, Argument<int> a)
-		{
+		public static void Foo(this IRock<ITarget> @this, Argument<int> a) =>
 			Console.Out.WriteLine(a.Value);
-		}
 	}
 
 	public class UsesArguments
@@ -37,15 +35,10 @@ namespace Rocks.Sketchpad
 
 	public class Argument<T>
 	{
-		public static implicit operator Argument<T>(T value)
-		{
-			return new Argument<T>(value);
-		}
+		public static implicit operator Argument<T>(T value) =>
+			new Argument<T>(value);
 
-		public Argument(T value)
-		{
-			this.Value = value;
-		}
+		public Argument(T value) => this.Value = value;
 
 		public T Value { get; }
 	}

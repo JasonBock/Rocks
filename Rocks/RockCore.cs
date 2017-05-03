@@ -14,17 +14,15 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks
 {
-	internal abstract class RockCore<T> 
+	internal abstract class RockCore<T>
 		: IRock<T>
 		where T : class
 	{
 		protected RockCore() { }
 
-		protected ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> CreateReadOnlyHandlerDictionary()
-		{
-			return new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
+		protected ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> CreateReadOnlyHandlerDictionary() =>
+			new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				this.Handlers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.AsReadOnly()));
-		}
 
 		public MethodAdornments Handle(Expression<Action<T>> expression, Delegate handler)
 		{
@@ -937,7 +935,7 @@ namespace Rocks
 			}
 
 			return new PropertyMethodAdornments(
-				getterInfo != null ? new MethodAdornments(getterInfo) : null, 
+				getterInfo != null ? new MethodAdornments(getterInfo) : null,
 				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 

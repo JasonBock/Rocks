@@ -45,14 +45,10 @@ namespace Rocks.Tests
 	{
 		private readonly IAmAsync amAsync;
 
-		public UsesAsync(IAmAsync amAsync)
-		{
+		public UsesAsync(IAmAsync amAsync) =>
 			this.amAsync = amAsync;
-		}
 
-		public async Task<int> RunGoAsync()
-		{
-			return await this.amAsync.GoAsync();
-		}
+		public async Task<int> RunGoAsync() =>
+			await this.amAsync.GoAsync();
 	}
 }

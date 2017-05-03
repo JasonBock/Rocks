@@ -8,76 +8,52 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsIsUnsafeToMockTests
 	{
 		[Test]
-		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers()
-		{
+		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers() =>
 			Assert.That(typeof(ISafeMembers).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue()
-		{
+		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue() =>
 			Assert.That(typeof(IUnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments()
-		{
+		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments() =>
 			Assert.That(typeof(IUnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafePropertyType()
-		{
+		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafePropertyType() =>
 			Assert.That(typeof(IUnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeIndexer()
-		{
+		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeIndexer() =>
 			Assert.That(typeof(IUnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithSafeInterfaceWithUnsafeEventArgs()
-		{
+		public void IsUnsafeToMockWithSafeInterfaceWithUnsafeEventArgs() =>
 			Assert.That(typeof(ISafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithSafeClassWithSafeMembers()
-		{
+		public void IsUnsafeToMockWithSafeClassWithSafeMembers() =>
 			Assert.That(typeof(SafeMembers).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue()
-		{
+		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue() =>
 			Assert.That(typeof(UnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeArguments()
-		{
+		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafePropertyType()
-		{
+		public void IsUnsafeToMockWithUnsafeClassWithUnsafePropertyType() =>
 			Assert.That(typeof(UnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeIndexer()
-		{
+		public void IsUnsafeToMockWithUnsafeClassWithUnsafeIndexer() =>
 			Assert.That(typeof(UnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeToMockWithSafeClassWithUnsafeEventArgs()
-		{
+		public void IsUnsafeToMockWithSafeClassWithUnsafeEventArgs() =>
 			Assert.That(typeof(SafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
-		}
 	}
 
 	public interface ISafeMembers
@@ -122,9 +98,9 @@ namespace Rocks.Tests.Extensions
 	public class SafeMembers
 	{
 		public virtual void Target() { }
-		public virtual int TargetReturn() { return 0; }
+		public virtual int TargetReturn() => 0;
 		public virtual int TargetProperty { get; set; }
-		public virtual int this[int a] { get { return 0; } set { } }
+		public virtual int this[int a] { get => 0; set { } }
 #pragma warning disable 67
 		public virtual event EventHandler MyEvent;
 #pragma warning restore 67
@@ -132,7 +108,7 @@ namespace Rocks.Tests.Extensions
 
 	public unsafe class UnsafeMethodWithUnsafeReturnValue
 	{
-		public virtual byte* Target() { return default(byte*); }
+		public virtual byte* Target() => default(byte*); 
 	}
 
 	public unsafe class UnsafeMethodWithUnsafeArguments
@@ -147,7 +123,7 @@ namespace Rocks.Tests.Extensions
 
 	public unsafe class UnsafePropertyWithUnsafeIndexer
 	{
-		public virtual int this[byte* a] { get { return 0; } set { } }
+		public virtual int this[byte* a] { get => 0; set { } }
 	}
 
 	public class SafeEventWithUnsafeEventArgs

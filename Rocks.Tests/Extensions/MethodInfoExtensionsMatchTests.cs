@@ -9,84 +9,72 @@ namespace Rocks.Tests.Extensions
 	public sealed class MethodInfoExtensionsMatchTests
 	{
 		[Test]
-		public void MatchWhenExact()
-		{
+		public void MatchWhenExact() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithExact).GetMethod(nameof(OtherMatchWithExact.GetString))), Is.EqualTo(MethodMatch.Exact));
-		}
 
 		[Test]
-		public void MatchWhenDifferentName()
-		{
+		public void MatchWhenDifferentName() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentName).GetMethod(nameof(OtherMatchWithDifferentName.GetAString))), Is.EqualTo(MethodMatch.None));
-		}
 
 		[Test]
-		public void MatchWhenDifferentArgumentCount()
-		{
+		public void MatchWhenDifferentArgumentCount() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentArgumentCount).GetMethod(nameof(OtherMatchWithDifferentArgumentCount.GetString))), Is.EqualTo(MethodMatch.None));
-		}
 
 		[Test]
-		public void MatchWhenDifferentArgumentType()
-		{
+		public void MatchWhenDifferentArgumentType() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentArgumentType).GetMethod(nameof(OtherMatchWithDifferentArgumentType.GetString))), Is.EqualTo(MethodMatch.None));
-		}
 
 		[Test]
-		public void MatchWhenDifferentModifier()
-		{
+		public void MatchWhenDifferentModifier() =>
 			Assert.That(typeof(TargetMatch).GetTypeInfo().GetMethod(
 				nameof(TargetMatch.GetString)).Match(
 					typeof(OtherMatchWithDifferentModifier).GetMethod(nameof(OtherMatchWithDifferentModifier.GetString))), 
 				Is.EqualTo(MethodMatch.None));
-		}
 
 		[Test]
-		public void MatchWhenDifferentReturnType()
-		{
+		public void MatchWhenDifferentReturnType() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentReturnType).GetTypeInfo().GetMethod(
 					nameof(OtherMatchWithDifferentReturnType.GetString))), 
 				Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
-		}
 	}
 
 	public class TargetMatch
 	{
-		public string GetString(int a) { return null; }
+		public string GetString(int a) => null; 
 	}
 
 	public class OtherMatchWithExact
 	{
-		public string GetString(int a) { return null; }
+		public string GetString(int a) => null; 
 	}
 
 	public class OtherMatchWithDifferentArgumentCount
 	{
-		public string GetString(int a, Guid b) { return null; }
+		public string GetString(int a, Guid b) => null; 
 	}
 
 	public class OtherMatchWithDifferentName
 	{
-		public string GetAString(int a) { return null; }
+		public string GetAString(int a) => null;
 	}
 
 	public class OtherMatchWithDifferentArgumentType
 	{
-		public string GetString(Guid a) { return null; }
+		public string GetString(Guid a) => null; 
 	}
 
 	public class OtherMatchWithDifferentModifier
 	{
-		public string GetString(ref int a) { return null; }
+		public string GetString(ref int a) => null; 
 	}
 
 	public class OtherMatchWithDifferentReturnType
 	{
-		public Guid GetString(int a) { return default(Guid); }
+		public Guid GetString(int a) => default(Guid); 
 	}
 }

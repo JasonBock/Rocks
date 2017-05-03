@@ -54,7 +54,7 @@ namespace Rocks
 			var rockType = default(Type);
 			var key = new CacheKey(tType, this.options);
 
-			if(this.options.Caching == CachingOptions.UseCache)
+			if (this.options.Caching == CachingOptions.UseCache)
 			{
 				lock (Rock.CacheLock)
 				{
@@ -66,7 +66,7 @@ namespace Rocks
 					}
 					else
 					{
-						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, 
+						rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces,
 							this.options, this.isMake).Mock;
 
 						if (this.isMake || !tType.ContainsRefAndOrOutParameters())
@@ -84,7 +84,7 @@ namespace Rocks
 			}
 			else
 			{
-				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces, 
+				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces,
 					this.options, this.isMake).Mock;
 
 #if !NETCOREAPP1_1

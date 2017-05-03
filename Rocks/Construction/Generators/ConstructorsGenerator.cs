@@ -43,7 +43,7 @@ namespace Rocks.Construction.Generators
 				}
 			}
 
-			return new GenerateResults(string.Join(Environment.NewLine, generatedConstructors), 
+			return new GenerateResults(string.Join(Environment.NewLine, generatedConstructors),
 				requiresObsoleteSuppression, isUnsafe);
 		}
 	}

@@ -18,25 +18,20 @@ namespace Rocks.Construction.InMemory
 			: base(trees, optimization, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe, allowWarnings)
 		{ }
 
-		protected override MemoryStream GetAssemblyStream()
-		{
-			return new MemoryStream();
-		}
+		protected override MemoryStream GetAssemblyStream() => new MemoryStream();
 
-		protected override MemoryStream GetPdbStream()
-		{
-			return new MemoryStream();
-		}
+		protected override MemoryStream GetPdbStream() => new MemoryStream();
 
-		protected override void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream)
-		{
 #if !NETCOREAPP1_1
+		protected override void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream) =>
 			this.Result = Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
 #else
+		protected override void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream)
+		{
 			assemblyStream.Position = 0;
 			pdbStream.Position = 0;
 			this.Result = AssemblyLoadContext.Default.LoadFromStream(assemblyStream, pdbStream);
-#endif
 		}
+#endif
 	}
 }

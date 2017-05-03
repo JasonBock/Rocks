@@ -96,7 +96,7 @@ namespace Rocks.Tests
 			Assert.That(() => chunk.Target(1), Throws.TypeOf<ExpectationException>());
 		}
 
-		public static int Create() { return 44; }
+		public static int Create() => 44;
 	}
 
 	public interface IExpectationsTests

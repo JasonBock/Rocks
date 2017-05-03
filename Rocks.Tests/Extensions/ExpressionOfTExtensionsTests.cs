@@ -52,9 +52,6 @@ namespace Rocks.Tests.Extensions
 			Assert.That(expectation.Value, Is.EqualTo("44"), nameof(expectation.Value));
 		}
 
-		private static string GetValue()
-		{
-			return "44";
-		}
-   }
+		private static string GetValue() => "44";
+	}
 }

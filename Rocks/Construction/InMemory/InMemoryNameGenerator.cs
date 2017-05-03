@@ -7,13 +7,11 @@ namespace Rocks.Construction.InMemory
 	{
 		private static string DefaultAssemblyName = "RockQuarry";
 
-		internal InMemoryNameGenerator()
-		{
+		internal InMemoryNameGenerator() =>
 #if !NETCOREAPP1_1
 			this.AssemblyName = InMemoryNameGenerator.DefaultAssemblyName;
 #else
 			this.AssemblyName = $"{InMemoryNameGenerator.DefaultAssemblyName}{Guid.NewGuid().ToString("N")}";
 #endif
-		}
 	}
 }

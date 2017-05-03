@@ -57,12 +57,12 @@ namespace Rocks.Tests.Extensions
 		}
 
 		public void TargetWithNoArguments() { }
-		public int TargetWithNoArgumentsAndReturnValue() { return 0; }
+		public int TargetWithNoArgumentsAndReturnValue() => 0; 
 		public void TargetWithArguments(int a, string c) { }
-		public int TargetWithArgumentsAndReturnValue(int a, string c) { return 0; }
+		public int TargetWithArgumentsAndReturnValue(int a, string c) => 0; 
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
-		public IGeneric<int> TargetWithComplexGeneric(IGeneric<int> a) { return null; }
-		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) { return default(U); }
+		public IGeneric<int> TargetWithComplexGeneric(IGeneric<int> a) => null; 
+		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) => default(U); 
 	}
 
 	public interface IGeneric<T> { }

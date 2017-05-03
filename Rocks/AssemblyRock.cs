@@ -10,10 +10,7 @@ namespace Rocks
 	{
 		private readonly RockOptions options;
 
-		internal AssemblyRock(RockOptions options)
-		{
-			this.options = options;
-		}
+		internal AssemblyRock(RockOptions options) => this.options = options;
 
 		public override T Make()
 		{

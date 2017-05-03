@@ -9,66 +9,48 @@ namespace Rocks.Tests.Extensions
 	public sealed class ConstructorInfoExtensionsTests
 	{
 		[Test]
-		public void IsUnsafeForMockForPublicCtorWithNoArguments()
-		{
+		public void IsUnsafeForMockForPublicCtorWithNoArguments() =>
 			Assert.That(typeof(SafePublicConstructors).GetConstructor(Type.EmptyTypes).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForPublicCtorWithSafeArguments()
-		{
+		public void IsUnsafeForMockForPublicCtorWithSafeArguments() =>
 			Assert.That(typeof(SafePublicConstructors).GetConstructor(new[] { typeof(int) }).IsUnsafeToMock(), Is.False);
-		}
 
 #if !NETCOREAPP1_1
 		[Test]
-		public void IsUnsafeForMockForProtectedCtorWithNoArguments()
-		{
+		public void IsUnsafeForMockForProtectedCtorWithNoArguments() =>
 			Assert.That(typeof(SafeProtectedConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForProtectedCtorWithSafeArguments()
-		{
+		public void IsUnsafeForMockForProtectedCtorWithSafeArguments() =>
 			Assert.That(typeof(SafeProtectedConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForInternalCtorWithNoArguments()
-		{
+		public void IsUnsafeForMockForInternalCtorWithNoArguments() =>
 			Assert.That(typeof(SafeInternalConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, Type.EmptyTypes, null).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForInternalCtorWithSafeArguments()
-		{
+		public void IsUnsafeForMockForInternalCtorWithSafeArguments() =>
 			Assert.That(typeof(SafeInternalConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int) }, null).IsUnsafeToMock(), Is.False);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForProtectedCtorWithUnsafeArguments()
-		{
+		public void IsUnsafeForMockForProtectedCtorWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafeProtectedConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock(), Is.True);
-		}
 
 		[Test]
-		public void IsUnsafeForMockForInternalCtorWithUnsafeArguments()
-		{
+		public void IsUnsafeForMockForInternalCtorWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafeInternalConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock(), Is.True);
-		}
 #endif
 
 		[Test]
-		public void IsUnsafeForMockForPublicCtorWithUnsafeArguments()
-		{
+		public void IsUnsafeForMockForPublicCtorWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafePublicConstructors).GetConstructor(new[] { typeof(int*) }).IsUnsafeToMock(), Is.True);
-		}
 	}
 
 	public class SafePublicConstructors
@@ -86,7 +68,7 @@ namespace Rocks.Tests.Extensions
 	public class SafeProtectedConstructors
 	{
 		protected SafeProtectedConstructors() { }
-      protected SafeProtectedConstructors(int a) { }
+		protected SafeProtectedConstructors(int a) { }
 	}
 
 	public unsafe class UnsafePublicConstructors

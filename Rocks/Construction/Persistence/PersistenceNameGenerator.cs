@@ -10,9 +10,7 @@ namespace Rocks.Construction.Persistence
 			: this(type.GetTypeInfo().Assembly)
 		{ }
 
-		internal PersistenceNameGenerator(Assembly assembly)
-		{
+		internal PersistenceNameGenerator(Assembly assembly) =>
 			this.AssemblyName = $"{assembly.GetName().Name}.Rocks";
-		}
 	}
 }

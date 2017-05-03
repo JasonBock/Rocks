@@ -9,10 +9,7 @@ namespace Rocks
 	public sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{
-		internal ArgumentExpectation()
-		{
-			this.IsAny = true;
-		}
+		internal ArgumentExpectation() => this.IsAny = true;
 
 		internal ArgumentExpectation(T value)
 		{
@@ -22,14 +19,9 @@ namespace Rocks
 
 		internal ArgumentExpectation(Func<T, bool> evaluation)
 		{
-			if (evaluation == null)
-			{
-				throw new ArgumentNullException(nameof(evaluation));
-			}
-
 			this.IsEvaluation = true;
-			this.Evaluation = evaluation;
-      }
+			this.Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
+		}
 
 		internal ArgumentExpectation(Expression expression)
 		{
@@ -41,7 +33,7 @@ namespace Rocks
 			this.IsExpression = true;
 			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
-		
+
 		public bool IsValid(T value, string parameter)
 		{
 			var isValid = true;
@@ -63,7 +55,7 @@ namespace Rocks
 			}
 
 			return isValid;
-      }
+		}
 
 		internal Func<T, bool> Evaluation { get; }
 		internal Delegate Expression { get; }

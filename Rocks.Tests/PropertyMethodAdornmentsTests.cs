@@ -12,7 +12,7 @@ namespace Rocks.Tests
 			var getterInfo = new HandlerInformation();
 			var setterInfo = new HandlerInformation();
 
-         var getter = new MethodAdornments(getterInfo);
+			var getter = new MethodAdornments(getterInfo);
 			var setter = new MethodAdornments(setterInfo);
 
 			var adornments = new PropertyMethodAdornments(getter, setter);

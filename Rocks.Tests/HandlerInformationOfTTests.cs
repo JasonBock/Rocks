@@ -24,7 +24,7 @@ namespace Rocks.Tests
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
-         var information = new HandlerInformation<int>(method, expectations);
+			var information = new HandlerInformation<int>(method, expectations);
 			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
 			Assert.That(information.ExpectedCallCount, Is.EqualTo(1), nameof(information.ExpectedCallCount));
 			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));
@@ -58,9 +58,10 @@ namespace Rocks.Tests
 		public void SetReturnValue()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-			var information = new HandlerInformation<int>(expectations);
-			information.ReturnValue = 1;
-
+			var information = new HandlerInformation<int>(expectations)
+			{
+				ReturnValue = 1
+			};
 			Assert.That(information.ReturnValue, Is.EqualTo(1), nameof(information.ReturnValue));
 		}
 	}

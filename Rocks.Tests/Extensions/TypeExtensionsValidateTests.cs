@@ -11,84 +11,68 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsValidateTests
 	{
 		[Test]
-		public void ValidateWhenTypeIsAbstractAndHasInternalConstructor()
-		{
+		public void ValidateWhenTypeIsAbstractAndHasInternalConstructor() =>
 			Assert.That(typeof(HaveInternalConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsAbstractAndHasInternalAbstractProperty()
-		{
+		public void ValidateWhenTypeIsAbstractAndHasInternalAbstractProperty() =>
 			Assert.That(typeof(HaveInternalAbstractProperty).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor()
-		{
+		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor() =>
 			Assert.That(typeof(DoNotHaveHandlerConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor()
-		{
+		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor() =>
 			Assert.That(typeof(HaveHandlerConstructor).Validate(
 #if !NETCOREAPP1_1				
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsSealedAndHasObjectConstructor()
-		{
+		public void ValidateWhenTypeIsSealedAndHasObjectConstructor() =>
 			Assert.That(typeof(HaveObjectConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported()
-		{
+		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported() =>
 			Assert.That(typeof(HaveNoPublicConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.Supported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported()
-		{
+		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported() =>
 			Assert.That(typeof(HaveNoPublicConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.NotSupported,
 #endif
 				new InMemoryNameGenerator()), Is.Not.Empty);
-		}
 
 		[Test]
-		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported()
-		{
+		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported() =>
 			Assert.That(typeof(IHaveNoPublicConstructor).Validate(
 #if !NETCOREAPP1_1
 				SerializationOptions.Supported,
 #endif
 				new InMemoryNameGenerator()), Is.Empty);
-		}
 	}
 
 	public sealed class DoNotHaveHandlerConstructor { }

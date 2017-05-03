@@ -7,9 +7,7 @@ namespace Rocks.Tests.Templates
 	public sealed class EventTemplatesTests
 	{
 		[Test]
-		public void GetEvent()
-		{
+		public void GetEvent() =>
 			Assert.That(EventTemplates.GetEvent("a", "b", "c"), Is.EqualTo("public a event b c;"));
-		}
 	}
 }

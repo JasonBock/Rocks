@@ -11,22 +11,16 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsTests
 	{
 		[Test]
-		public void ContainsRefArguments()
-		{
+		public void ContainsRefArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithRefArgument).ContainsRefAndOrOutParameters(), Is.True);
-		}
 
 		[Test]
-		public void ContainsOutArguments()
-		{
+		public void ContainsOutArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithOutArgument).ContainsRefAndOrOutParameters(), Is.True);
-		}
 
 		[Test]
-		public void ContainsByValArguments()
-		{
+		public void ContainsByValArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithByValArgument).ContainsRefAndOrOutParameters(), Is.False);
-		}
 
 		[Test]
 		public void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()

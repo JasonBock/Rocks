@@ -26,7 +26,7 @@ namespace Rocks.Sketchpad
 
 		public void Dispose()
 		{
-			if(this.oldThis != null)
+			if (this.oldThis != null)
 			{
 				CallContext.SetData(ThisContext.Key, this.oldThis);
 			}
@@ -36,10 +36,7 @@ namespace Rocks.Sketchpad
 			}
 		}
 
-		public static object GetThis()
-		{
-			return CallContext.GetData(ThisContext.Key);
-		}
+		public static object GetThis() => CallContext.GetData(ThisContext.Key);
 	}
 
 	public class OuterClass

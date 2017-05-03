@@ -9,144 +9,104 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsFindPropertyTests
 	{
 		[Test]
-		public void FindPropertyWhenPropertyDoesNotExist()
-		{
+		public void FindPropertyWhenPropertyDoesNotExist() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty("x", PropertyAccessors.Get), 
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindReadOnlyPropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindReadOnlyPropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.ReadOnly), PropertyAccessors.Get).Name, 
 				Is.EqualTo(nameof(ITypeExtensions.ReadOnly)));
-		}
 
 		[Test]
-		public void FindReadOnlyPropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindReadOnlyPropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.ReadOnly), PropertyAccessors.GetAndSet),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindReadOnlyPropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindReadOnlyPropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.ReadOnly), PropertyAccessors.Set),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyPropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindWriteOnlyPropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.WriteOnly), PropertyAccessors.Get),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyPropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindWriteOnlyPropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.WriteOnly), PropertyAccessors.GetAndSet),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyPropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindWriteOnlyPropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.WriteOnly), PropertyAccessors.Set).Name,
 				Is.EqualTo(nameof(ITypeExtensions.WriteOnly)));
-		}
 
 		[Test]
-		public void FindReadWritePropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindReadWritePropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.Property), PropertyAccessors.Get).Name,
 				Is.EqualTo(nameof(ITypeExtensions.Property)));
-		}
 
 		[Test]
-		public void FindReadWritePropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindReadWritePropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.Property), PropertyAccessors.GetAndSet).Name,
 				Is.EqualTo(nameof(ITypeExtensions.Property)));
-		}
 
 		[Test]
-		public void FindReadWritePropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindReadWritePropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(nameof(ITypeExtensions.Property), PropertyAccessors.Set).Name,
 				Is.EqualTo(nameof(ITypeExtensions.Property)));
-		}
 
 		[Test]
-		public void FindIndexerPropertyWhenPropertyDoesNotExist()
-		{
+		public void FindIndexerPropertyWhenPropertyDoesNotExist() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(new Type[] { typeof(double) }, PropertyAccessors.Get),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(new[] { typeof(string) }, PropertyAccessors.Get).Name,
 				Is.EqualTo("Item"));
-		}
 
 		[Test]
-		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(new[] { typeof(string) }, PropertyAccessors.GetAndSet),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindReadOnlyIndexerPropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(new[] { typeof(string) }, PropertyAccessors.Set),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(new[] { typeof(int) }, PropertyAccessors.Get),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(() => typeof(ITypeExtensions).FindProperty(new[] { typeof(int) }, PropertyAccessors.GetAndSet),
 				Throws.TypeOf<PropertyNotFoundException>());
-		}
 
 		[Test]
-		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindWriteOnlyIndexerPropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(new[] { typeof(int) }, PropertyAccessors.Set).Name,
 				Is.EqualTo("Item"));
-		}
 
 		[Test]
-		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsGet()
-		{
+		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsGet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(new[] { typeof(Guid) }, PropertyAccessors.Get).Name,
 				Is.EqualTo("Item"));
-		}
 
 		[Test]
-		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsGetAndSet()
-		{
+		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsGetAndSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(new[] { typeof(Guid) }, PropertyAccessors.GetAndSet).Name,
 				Is.EqualTo("Item"));
-		}
 
 		[Test]
-		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsSet()
-		{
+		public void FindReadWriteIndexerPropertyWhenPropertyAccessorIsSet() =>
 			Assert.That(typeof(ITypeExtensions).FindProperty(new[] { typeof(Guid) }, PropertyAccessors.Set).Name,
 				Is.EqualTo("Item"));
-		}
 	}
 
 	public interface ITypeExtensions

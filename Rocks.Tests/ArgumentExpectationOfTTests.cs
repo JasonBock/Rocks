@@ -23,11 +23,9 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithNullEvaluation()
-		{
+		public void CreateWithNullEvaluation() =>
 			Assert.That(() => new ArgumentExpectation<int>(null as Func<int, bool>),
 				Throws.TypeOf<ArgumentNullException>());
-		}
 
 		[Test]
 		public void CreateWithEvaluation()
@@ -140,10 +138,8 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithNullExpression()
-		{
+		public void CreateWithNullExpression() =>
 			Assert.That(() => new ArgumentExpectation<string>(null as Expression), Throws.TypeOf<ArgumentNullException>());
-		}
 
 		[Test]
 		public void CreateWithInvalidValueFromExpression()
@@ -161,9 +157,6 @@ namespace Rocks.Tests
 			Assert.That(expectation.IsValid("a", "a"), Is.True, nameof(expectation.IsValid));
 		}
 
-		public static string GetValue()
-		{
-			return "a";
-		}
+		public static string GetValue() => "a";
 	}
 }

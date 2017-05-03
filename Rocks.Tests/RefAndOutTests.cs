@@ -6,20 +6,11 @@ namespace Rocks.Tests
 	[TestFixture]
 	public sealed class RefAndOutTests
 	{
-		private void MyActionOutTarget(out int a)
-		{
-			a = 2;
-		}
+		private void MyActionOutTarget(out int a) => a = 2;
 
-		private void MyActionRefTarget(ref int a)
-		{
-			a = 2;
-		}
+		private void MyActionRefTarget(ref int a) => a = 2;
 
-		private void MyActionRefGuidTarget(ref Guid a)
-		{
-			a = Guid.NewGuid();
-		}
+		private void MyActionRefGuidTarget(ref Guid a) => a = Guid.NewGuid();
 
 		private int MyFuncRefTarget(ref int a)
 		{

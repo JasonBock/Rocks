@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Rocks
 {
-	public partial interface IRock<T> 
+	public partial interface IRock<T>
 		where T : class
 	{
 		MethodAdornments Handle(Expression<Action<T>> expression);

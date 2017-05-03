@@ -14,21 +14,15 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CallIsWithNullEvaluation()
-		{
+		public void CallIsWithNullEvaluation() =>
 			Assert.That(() => Arg.Is<string>(null), Throws.TypeOf<ArgumentNullException>(), nameof(Arg.Is));
-		}
 
 		[Test]
-		public void CallIsAny()
-		{
+		public void CallIsAny() =>
 			Assert.That(Arg.IsAny<string>(), Is.EqualTo(default(string)), nameof(Arg.IsAny));
-		}
 
 		[Test]
-		public void CallIsDefault()
-		{
+		public void CallIsDefault() =>
 			Assert.That(Arg.IsDefault<string>(), Is.EqualTo(default(string)), nameof(Arg.IsDefault));
-		}
 	}
 }

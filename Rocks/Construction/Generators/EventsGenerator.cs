@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using static System.Reflection.CustomAttributeExtensions;
-using static Rocks.Extensions.TypeExtensions;
-using System.Reflection;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using Rocks.Templates;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using static Rocks.Extensions.TypeExtensions;
+using static System.Reflection.CustomAttributeExtensions;
 
 namespace Rocks.Construction.Generators
 {
@@ -14,7 +14,7 @@ namespace Rocks.Construction.Generators
 			NameGenerator generator, MethodInformationBuilder builder)
 		{
 			var requiresObsoleteSuppression = false;
-         var generatedEvents = new List<string>();
+			var generatedEvents = new List<string>();
 
 			foreach (var @event in baseType.GetMockableEvents(generator))
 			{
@@ -67,6 +67,6 @@ namespace Rocks.Construction.Generators
 
 			var result = generatedEvents.Count > 0 ? EventTemplates.GetEvents(generatedEvents.AsReadOnly()) : string.Empty;
 			return new GenerateResults(result, requiresObsoleteSuppression, false);
-      }
-   }
+		}
+	}
 }

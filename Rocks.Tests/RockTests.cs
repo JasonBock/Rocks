@@ -9,16 +9,12 @@ namespace Rocks.Tests
 	public sealed class RockTests
 	{
 		[Test]
-		public void Create()
-		{
+		public void Create() => 
 			Assert.That(Rock.Create<IRockTests>(), Is.Not.Null, nameof(Rock.Create));
-		}
 
 		[Test]
-		public void CreateWhenTypeIsSealed()
-		{
+		public void CreateWhenTypeIsSealed() =>
 			Assert.That(() => Rock.Create<string>(), Throws.TypeOf<ValidationException>());
-		}
 
 		[Test]
 		public void TryCreate()

@@ -10,29 +10,17 @@ namespace Rocks
 		: HandlerInformation
 	{
 		internal HandlerInformation(ReadOnlyDictionary<string, ArgumentExpectation> expectations)
-			: base(null, 1, expectations)
-		{
-			this.ReturnValue = default(T);
-		}
+			: base(null, 1, expectations) => this.ReturnValue = default(T);
 
 		internal HandlerInformation(Delegate method, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
-			: base(method, 1, expectations)
-		{
-			this.ReturnValue = default(T);
-		}
+			: base(method, 1, expectations) => this.ReturnValue = default(T);
 
 		internal HandlerInformation(uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
-			: base(null, expectedCallCount, expectations)
-		{
-			this.ReturnValue = default(T);
-		}
+			: base(null, expectedCallCount, expectations) => this.ReturnValue = default(T);
 
 		internal HandlerInformation(Delegate method, uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
-			: base(method, expectedCallCount, expectations)
-		{
-			this.ReturnValue = default(T);
-		}
+			: base(method, expectedCallCount, expectations) => this.ReturnValue = default(T);
 
-		public T ReturnValue{ get; internal set; }
+		public T ReturnValue { get; internal set; }
 	}
 }

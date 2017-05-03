@@ -13,10 +13,7 @@ namespace Rocks
 	public static class Rock
 	{
 		public static IRock<T> Create<T>()
-			where T : class
-		{
-			return Rock.Create<T>(new RockOptions());
-		}
+			where T : class => Rock.Create<T>(new RockOptions());
 
 		public static IRock<T> Create<T>(RockOptions options)
 			where T : class
@@ -45,15 +42,12 @@ namespace Rocks
 		{
 			var tType = typeof(T);
 			// Can assume only sealed typed with the right constructor passed the .Validate() test.
-			return tType.GetTypeInfo().IsSealed ? new AssemblyRock<T>(options) as IRock<T> : 
+			return tType.GetTypeInfo().IsSealed ? new AssemblyRock<T>(options) as IRock<T> :
 				new InMemoryRock<T>(options, isMake) as IRock<T>;
 		}
 
 		public static CreateResult<T> TryCreate<T>()
-			where T : class
-		{
-			return Rock.TryCreate<T>(new RockOptions());
-		}
+			where T : class => Rock.TryCreate<T>(new RockOptions());
 
 		public static CreateResult<T> TryCreate<T>(RockOptions options)
 			where T : class
@@ -82,21 +76,16 @@ namespace Rocks
 		}
 
 		public static T Make<T>()
-			where T : class
-		{
-			return Rock.Make<T>(new RockOptions());
-		}
+			where T : class => Rock.Make<T>(new RockOptions());
 
-		private static RockOptions MapForMake(RockOptions options)
-		{
+		private static RockOptions MapForMake(RockOptions options) =>
 #if !NETCOREAPP1_1
-			return new RockOptions(options.Optimization, options.CodeFile, 
+			new RockOptions(options.Optimization, options.CodeFile,
 				options.Serialization, CachingOptions.UseCache);
 #else
-			return new RockOptions(options.Optimization, options.CodeFile, 
+			new RockOptions(options.Optimization, options.CodeFile, 
 				CachingOptions.UseCache);
 #endif
-		}
 
 		public static T Make<T>(RockOptions options)
 			where T : class
@@ -121,10 +110,7 @@ namespace Rocks
 		}
 
 		public static MakeResult<T> TryMake<T>()
-			where T : class
-		{
-			return Rock.TryMake<T>(new RockOptions());
-		}
+			where T : class => Rock.TryMake<T>(new RockOptions());
 
 		public static MakeResult<T> TryMake<T>(RockOptions options)
 			where T : class
@@ -156,7 +142,7 @@ namespace Rocks
 		internal static AssemblyBinder Binder { get; } = new AssemblyBinder();
 #endif
 		internal static Dictionary<CacheKey, Type> Cache { get; } = new Dictionary<CacheKey, Type>();
-      internal static object CacheLock { get; } = new object();
+		internal static object CacheLock { get; } = new object();
 		internal static Dictionary<CacheKey, Type> MakeCache { get; } = new Dictionary<CacheKey, Type>();
 	}
 }

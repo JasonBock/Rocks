@@ -12,7 +12,7 @@ namespace Rocks.Tests.Construction
 		{
 			var containsDelegateConditions = true;
 			var delegateCast = Guid.NewGuid().ToString("N");
-         var description = Guid.NewGuid().ToString("N");
+			var description = Guid.NewGuid().ToString("N");
 			var descriptionWithOverride = Guid.NewGuid().ToString("N");
 
 			var information = new MethodInformation(containsDelegateConditions,

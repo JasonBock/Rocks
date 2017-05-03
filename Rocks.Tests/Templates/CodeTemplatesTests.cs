@@ -7,10 +7,8 @@ namespace Rocks.Tests.Templates
 	public sealed class CodeTemplatesTests
 	{
 		[Test]
-		public void GetExpectation()
-		{
+		public void GetExpectation() =>
 			Assert.That(CodeTemplates.GetExpectation("a", "b"), Is.EqualTo(
 				"(methodHandler.Expectations[\"a\"] as R.ArgumentExpectation<b>).IsValid(a, \"a\")"));
-		}
 	}
 }

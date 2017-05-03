@@ -42,15 +42,9 @@ namespace Rocks.Tests
 	{
 		public ClassTestsTarget() { }
 
-		public ClassTestsTarget(int value)
-		{
-			this.Value = value;
-		}
+		public ClassTestsTarget(int value) => this.Value = value;
 
-		public virtual void TargetMethod()
-		{
-			this.TargetEvent(this, EventArgs.Empty);
-		}
+		public virtual void TargetMethod() => this.TargetEvent(this, EventArgs.Empty);
 
 		public virtual int TargetProperty { get; set; }
 

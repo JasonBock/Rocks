@@ -11,11 +11,10 @@ namespace Rocks.Tests
 		public void Make()
 		{
 			var chunk = Rock.Make<IAmForMaking>();
-			var outInt = default(int);
 
 			chunk.TargetAction();
 			chunk.TargetAction(44);
-			chunk.TargetActionWithOut(out outInt);
+			chunk.TargetActionWithOut(out var outInt);
 			chunk.TargetActionWithRef(ref outInt);
 			chunk.TargetActionWithGeneric<int>(44);
 			chunk.TargetActionWithGenericAndOut<int>(out outInt);

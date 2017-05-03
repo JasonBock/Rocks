@@ -222,15 +222,15 @@ namespace Rocks.Tests.Extensions
 		}
 
 		public void TargetWithNoArguments() { }
-		public int TargetWithNoArgumentsAndReturnValue() { return 0; }
+		public int TargetWithNoArgumentsAndReturnValue() => 0; 
 		public void TargetWithArguments(int a, string c) { }
-		public int TargetWithArgumentsAndReturnValue(int a, string c) { return 0; }
+		public int TargetWithArgumentsAndReturnValue(int a, string c) => 0; 
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
-		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) { return default(U); }
-		public void TargetWithOutArgument(out int a) { a = 0; }
+		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) => default(U);
+		public void TargetWithOutArgument(out int a) => a = 0;
 		public void TargetWithRefArgument(ref int a) { }
 		public void TargetWithParamsArgument(params int[] a) { }
-		public void TargetWithArrayArguments(int[] a, string[] b, ref Guid[] c, out double[] d) { d = null; }
+		public void TargetWithArrayArguments(int[] a, string[] b, ref Guid[] c, out double[] d) => d = null; 
 		public void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : Source, ISource where W : struct where X : V { }
 
 		public interface ISource { }
@@ -244,8 +244,8 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveMethodWithComplexGenericReturnType<TSource>
 	{
-		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) { return null; }
-   }
+		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
+	}
 
 
 	public enum SomeValues
@@ -272,31 +272,31 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveNoAttributes
 	{
-		public Guid Target<T>(T a, Guid b) { return Guid.Empty; }
+		public Guid Target<T>(T a, Guid b) => Guid.Empty; 
 	}
 
 	public class HaveMultipleAttributes
 	{
-		public Guid Target<[Mutliple, GetAttributes(true)]T>([Mutliple, GetAttributes(true)]T a, [Mutliple, GetAttributes(true)]Guid b) { return Guid.Empty; }
+		public Guid Target<[Mutliple, GetAttributes(true)]T>([Mutliple, GetAttributes(true)]T a, [Mutliple, GetAttributes(true)]Guid b) => Guid.Empty; 
 	}
 
 	public class HaveAttribute
 	{
-		public Guid Target<[GetAttributes(true)]T>([GetAttributes(true)]T a, [GetAttributes(true)]Guid b) { return Guid.Empty; }
+		public Guid Target<[GetAttributes(true)]T>([GetAttributes(true)]T a, [GetAttributes(true)]Guid b) => Guid.Empty;
 	}
 
 	public class HaveAttributeWithEnumInConstructor
 	{
-		public Guid Target<[GetAttributes(SomeValues.OneMore)]T>([GetAttributes(SomeValues.OneMore)]T a, [GetAttributes(SomeValues.OneMore)]Guid b) { return Guid.Empty; }
+		public Guid Target<[GetAttributes(SomeValues.OneMore)]T>([GetAttributes(SomeValues.OneMore)]T a, [GetAttributes(SomeValues.OneMore)]Guid b) => Guid.Empty; 
 	}
 
 	public class HaveAttributeUsingNamedArguments
 	{
-		public Guid Target<[GetAttributes(true, TargetString = "TargetString")]T>([GetAttributes(true, TargetString = "TargetString")]T a, [GetAttributes(true, TargetString = "TargetString")]Guid b) { return Guid.Empty; }
+		public Guid Target<[GetAttributes(true, TargetString = "TargetString")]T>([GetAttributes(true, TargetString = "TargetString")]T a, [GetAttributes(true, TargetString = "TargetString")]Guid b) => Guid.Empty; 
 	}
 
 	public class HaveAttributeUsingMultipleConstructorAndNamedArguments
 	{
-		public Guid Target<[GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T>([GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T a, [GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]Guid b) { return Guid.Empty; }
+		public Guid Target<[GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T>([GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]T a, [GetAttributes(true, 2, TargetString = "TargetString", TargetInt = 3)]Guid b) => Guid.Empty;
 	}
 }

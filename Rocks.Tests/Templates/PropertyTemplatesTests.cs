@@ -7,22 +7,17 @@ namespace Rocks.Tests.Templates
 	public sealed class PropertyTemplatesTests
 	{
 		[Test]
-		public void GetProperty()
-		{
+		public void GetProperty() =>
 			Assert.That(PropertyTemplates.GetProperty("a", "b", "c", "d", "e"),
 				Is.EqualTo("d a eb { c }"));
-		}
 
 		[Test]
-		public void GetPropertyIndexer()
-		{
+		public void GetPropertyIndexer() =>
 			Assert.That(PropertyTemplates.GetPropertyIndexer("a", "b", "c", "d", "e"),
 				Is.EqualTo("d a ethis[b] { c }"));
-		}
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValue()
-		{
+		public void GetPropertyGetWithReferenceTypeReturnValue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g"), Is.EqualTo(
 @"g get
 {
@@ -50,11 +45,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers()
-		{
+		public void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"), Is.EqualTo(
 @"e get
 {
@@ -75,11 +68,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValue()
-		{
+		public void GetPropertyGetWithValueTypeReturnValue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g"), Is.EqualTo(
 @"g get
 {
@@ -107,11 +98,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValueAndNoIndexers()
-		{
+		public void GetPropertyGetWithValueTypeReturnValueAndNoIndexers() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"), Is.EqualTo(
 @"e get
 {
@@ -132,21 +121,17 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertyGetForMake()
-		{
+		public void GetPropertyGetForMake() =>
 			Assert.That(PropertyTemplates.GetPropertyGetForMake("a", "b"), Is.EqualTo(
 @"a get
 {
 	return default(b);
 }"));
-		}
 
 		[Test]
-		public void GetPropertySet()
-		{
+		public void GetPropertySet() =>
 			Assert.That(PropertyTemplates.GetPropertySet(1, "b", "c", "d", "e", "f"), Is.EqualTo(
 @"f set
 {
@@ -183,11 +168,9 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertySetAndNoIndexers()
-		{
+		public void GetPropertySetAndNoIndexers() =>
 			Assert.That(PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d"), Is.EqualTo(
 @"d set
 {
@@ -210,13 +193,10 @@ namespace Rocks.Tests.Templates
 		throw new S.NotImplementedException();
 	}
 }"));
-		}
 
 		[Test]
-		public void GetPropertySetForMake()
-		{
+		public void GetPropertySetForMake() =>
 			Assert.That(PropertyTemplates.GetPropertySetForMake("a"),
 				Is.EqualTo("a set { }"));
-		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Rocks.Tests.Extensions
 		public void GetMockableMethodsWhenTypeHasProtectedInternalAbstractMethod()
 		{
 			var methods = typeof(HasProtectedInternalAbstractMethod).GetMockableMethods(new InMemoryNameGenerator());
-			Assert.That(methods.Where(_ => _.Value.Name == "Target").Any(), Is.True);
+			Assert.That(methods.Where(_ => _.Value.Name == nameof(IHaveObjectMethods.Target)).Any(), Is.True);
 		}
 
 		[Test]
@@ -22,7 +22,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var methods = typeof(IHaveObjectMethods).GetMockableMethods(new InMemoryNameGenerator());
 			Assert.That(methods.Count, Is.EqualTo(1));
-			Assert.That(methods[0].Value.Name == "Target", Is.True);
+			Assert.That(methods[0].Value.Name == nameof(IHaveObjectMethods.Target), Is.True);
 		}
 	}
 

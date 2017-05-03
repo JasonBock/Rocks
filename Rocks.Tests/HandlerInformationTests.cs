@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void CreateWithMethod()
 		{
 			var method = new Action(() => { });
-         var information = new HandlerInformation(method);
+			var information = new HandlerInformation(method);
 			Assert.That(information.Method, Is.SameAs(method), nameof(information.Method));
 			Assert.That(information.ExpectedCallCount, Is.Null, nameof(information.ExpectedCallCount));
 			Assert.That(information.CallCount, Is.EqualTo(0), nameof(information.CallCount));

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
-using Rocks.Extensions;
+using System.Reflection;
 
 namespace Rocks.Construction.Persistence
 {
@@ -10,15 +10,10 @@ namespace Rocks.Construction.Persistence
 		: MethodInformationBuilder
 	{
 		internal PersistenceMethodInformationBuilder(SortedSet<string> namespaces, Type baseType)
-			: base(namespaces)
-		{
-			this.BaseType = baseType;
-		}
+			: base(namespaces) => this.BaseType = baseType;
 
-		protected override string GetDelegateCast(MethodInfo baseMethod)
-		{
-			return $"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
-		}
+		protected override string GetDelegateCast(MethodInfo baseMethod) =>
+			$"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)
 		{
@@ -31,6 +26,6 @@ namespace Rocks.Construction.Persistence
 		private string GetTypeNameWithGenericsAndNoTextFormatting() => 
 			$"{new PersistenceTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
 
-		internal Type BaseType { get; private set; }
+		internal Type BaseType { get; }
 	}
 }

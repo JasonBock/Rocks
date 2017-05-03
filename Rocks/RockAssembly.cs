@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Construction;
 using Rocks.Construction.Persistence;
 using Rocks.Options;
 using System;
@@ -37,34 +36,34 @@ namespace Rocks
 			var trees = new ConcurrentBag<SyntaxTree>();
 			var allowUnsafe = false;
 
-         Parallel.ForEach(this.assembly.GetExportedTypes()
+			Parallel.ForEach(this.assembly.GetExportedTypes()
 #if !NETCOREAPP1_1
 				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization, new PersistenceNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
 #else
 				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(new PersistenceNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
 #endif
-					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) && 
+					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) &&
 					!typeof(Delegate).IsAssignableFrom(_)), _ =>
 				{
-					var builder = new PersistenceBuilder(_, 
+					var builder = new PersistenceBuilder(_,
 						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
-							new Dictionary<int, ReadOnlyCollection<HandlerInformation>>()), 
+							new Dictionary<int, ReadOnlyCollection<HandlerInformation>>()),
 						new SortedSet<string>(), this.options);
 					builder.Build();
 					trees.Add(builder.Tree);
 					allowUnsafe |= builder.IsUnsafe;
-            });
+				});
 
 			var referencedAssemblies = this.assembly.GetReferencedAssemblies().Select(_ => Assembly.Load(_)).ToList();
 			referencedAssemblies.Add(this.assembly);
 
-         var compiler = new PersistenceCompiler(trees, this.options.Optimization, 
-				new PersistenceNameGenerator(this.assembly).AssemblyName, 
-				referencedAssemblies.AsReadOnly(), 
+			var compiler = new PersistenceCompiler(trees, this.options.Optimization,
+				new PersistenceNameGenerator(this.assembly).AssemblyName,
+				referencedAssemblies.AsReadOnly(),
 				this.options.CodeFileDirectory, allowUnsafe, this.options.AllowWarnings);
 			compiler.Compile();
 			return compiler.Result;
-      }
+		}
 
 		public Assembly Result { get; }
 	}

@@ -7,17 +7,24 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var rock = Rock.Create<IDoSomething>(
-				new RockOptions(
-					level: OptimizationSetting.Debug,
+			IThingy chunk = null;
+			var rock = Rock.Create<IThingy>(
+				new RockOptions(level: OptimizationSetting.Debug,
 					codeFile: CodeFileOptions.Create));
-			rock.Handle(_ => _.GetValue()).Returns(22);
-
-			var chunk = rock.Make();
-			Console.Out.WriteLine(chunk.GetValue());
-
-			rock.Verify();
+			rock.Handle(r => r.DoSomething(), () => chunk.Called = true);
+			rock.Handle(nameof(IThingy.Called));
+			chunk = rock.Make();
+			chunk.DoSomething();
 		}
+	}
+
+	public interface IThingy
+	{
+		bool Called { get; set; }
+		void DoSomething();
+		void DoNothing();
+		int One();
+		int Zero();
 	}
 
 	public interface IDoSomething

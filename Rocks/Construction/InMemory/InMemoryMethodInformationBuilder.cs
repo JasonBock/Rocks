@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace Rocks.Construction.InMemory
 {
@@ -10,10 +10,7 @@ namespace Rocks.Construction.InMemory
 	{
 		internal InMemoryMethodInformationBuilder(SortedSet<string> namespaces,
 			ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers)
-			: base(namespaces)
-		{
-			this.Handlers = handlers;
-		}
+			: base(namespaces) => this.Handlers = handlers;
 
 		protected override string GetDelegateCast(MethodInfo baseMethod)
 		{
@@ -36,6 +33,6 @@ namespace Rocks.Construction.InMemory
 			}
 		}
 
-		internal ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; private set; }
+		internal ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> Handlers { get; }
 	}
 }

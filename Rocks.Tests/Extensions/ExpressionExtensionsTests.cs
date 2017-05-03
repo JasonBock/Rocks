@@ -85,6 +85,6 @@ namespace Rocks.Tests.Extensions
 			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
 		}
 
-		public static int Create() { return 44; }
+		public static int Create() => 44; 
 	}
 }
