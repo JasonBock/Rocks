@@ -7,14 +7,17 @@
     <Version>2.0.0</Version>
     <Copyright>Copyright © 2017</Copyright>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/jasonbock/rocks/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/jasonbock/ironbefunge</RepositoryUrl>
     <Authors>Jason Bock</Authors>
     <Company />
     <Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
-    <PackageLicenseUrl>https://github.com/JasonBock/Rocks/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/jasonbock/rocks/</PackageProjectUrl>
-    <PackageVersion>2.0.0</PackageVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <PackageLicenseUrl>https://github.com/JasonBock/IronBefunge/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jasonbock/ironbefunge</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageVersion>2.0.0</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>

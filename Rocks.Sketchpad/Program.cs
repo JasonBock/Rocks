@@ -1,34 +1,29 @@
-﻿using Rocks.Options;
-using System;
-
-namespace Rocks.Sketchpad
+﻿namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
 		static void Main(string[] args)
 		{
-			IThingy chunk = null;
-			var rock = Rock.Create<IThingy>(
-				new RockOptions(level: OptimizationSetting.Debug,
-					codeFile: CodeFileOptions.Create));
-			rock.Handle(r => r.DoSomething(), () => chunk.Called = true);
-			rock.Handle(nameof(IThingy.Called));
-			chunk = rock.Make();
-			chunk.DoSomething();
+			var rockOne = Rock.Create<IDoTwoThings>();
+			rockOne.Handle(_ => _.MethodOne(1));
+
+			var rockTwo = Rock.Create<IDoTwoThings>();
+			rockTwo.Handle(_ => _.MethodTwo(2));
+
+			var chunkOne = rockOne.Make();
+			var chunkTwo = rockTwo.Make();
+
+			chunkOne.MethodOne(1);
+			chunkTwo.MethodTwo(2);
+
+			rockOne.Verify();
+			rockTwo.Verify();
 		}
 	}
 
-	public interface IThingy
+	public interface IDoTwoThings
 	{
-		bool Called { get; set; }
-		void DoSomething();
-		void DoNothing();
-		int One();
-		int Zero();
-	}
-
-	public interface IDoSomething
-	{
-		int GetValue();
+		void MethodOne(int x);
+		void MethodTwo(int x);
 	}
 }
