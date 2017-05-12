@@ -19,6 +19,8 @@ namespace Rocks.Construction.Generators
 			foreach (var @event in baseType.GetMockableEvents(generator))
 			{
 				var eventHandlerType = @event.EventHandlerType;
+				var eventHandlerTypeInfo = eventHandlerType.GetTypeInfo();
+
 				namespaces.Add(eventHandlerType.Namespace);
 
 				var eventMethod = @event.AddMethod;
@@ -29,7 +31,7 @@ namespace Rocks.Construction.Generators
 
 				if (eventMethod.IsPublic)
 				{
-					if (eventHandlerType.GetTypeInfo().IsGenericType)
+					if (eventHandlerTypeInfo.IsGenericType)
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
 						generatedEvents.Add(EventTemplates.GetEvent(@override,
@@ -48,7 +50,7 @@ namespace Rocks.Construction.Generators
 				{
 					var visibility = CodeTemplates.GetVisibility(eventMethod.IsFamily, eventMethod.IsFamilyOrAssembly);
 
-					if (eventHandlerType.GetTypeInfo().IsGenericType)
+					if (eventHandlerTypeInfo.IsGenericType)
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
 						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
