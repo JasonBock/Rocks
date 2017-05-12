@@ -12,20 +12,14 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
-		internal static string GetAttributes(this Type @this)
-		{
-			return @this.GetAttributes(false, new SortedSet<string>());
-		}
+		internal static string GetAttributes(this Type @this) =>
+			@this.GetAttributes(false, new SortedSet<string>());
 
-		internal static string GetAttributes(this Type @this, bool isReturn)
-		{
-			return @this.GetAttributes(isReturn, new SortedSet<string>());
-		}
+		internal static string GetAttributes(this Type @this, bool isReturn) =>
+			@this.GetAttributes(isReturn, new SortedSet<string>());
 
-		internal static string GetAttributes(this Type @this, SortedSet<string> namespaces)
-		{
-			return @this.GetAttributes(false, namespaces);
-		}
+		internal static string GetAttributes(this Type @this, SortedSet<string> namespaces) =>
+			@this.GetAttributes(false, namespaces);
 
 		internal static string GetAttributes(this Type @this, bool isReturn, SortedSet<string> namespaces)
 		{
@@ -39,9 +33,10 @@ namespace Rocks.Extensions
 
 		internal static bool RequiresExplicitCast(this Type @this)
 		{
-			return @this.GetTypeInfo().IsValueType ||
-				(@this.IsGenericParameter && (@this.GetTypeInfo().GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0);
-      }
+			var thisTypeInfo = @this.GetTypeInfo();
+			return thisTypeInfo.IsValueType ||
+				(@this.IsGenericParameter && (thisTypeInfo.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0);
+		}
 
 		internal static bool AddNamespaces(this Type @this, SortedSet<string> namespaces)
 		{
@@ -57,10 +52,9 @@ namespace Rocks.Extensions
 
 			return true;
 		}
-		internal static string GetFullName(this Type @this)
-		{
-			return @this.GetFullName(new SortedSet<string>());
-		}
+
+		internal static string GetFullName(this Type @this) =>
+			@this.GetFullName(new SortedSet<string>());
 
 		internal static string GetFullName(this Type @this, SortedSet<string> namespaces)
 		{
@@ -70,31 +64,31 @@ namespace Rocks.Extensions
 			var array = dissector.IsArray ? "[]" : string.Empty;
 
 			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).Arguments}{pointer}{array}";
-      }
+		}
 
-		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator)
-		{
-			return new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
+		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator) =>
+			new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
 				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance)
 					.Where(_ => !_.IsPrivate &&
 						(_.GetCustomAttribute<ObsoleteAttribute>() == null || !_.GetCustomAttribute<ObsoleteAttribute>().IsError) &&
 						_.DeclaringType.GetTypeInfo().Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator) &&
 						!_.GetParameters().Where(p => !p.ParameterType.CanBeSeenByMockAssembly(generator)).Any())
 					.Select(_ => new MockableResult<ConstructorInfo>(_, RequiresExplicitInterfaceImplementation.No)).ToList());
-		}
 
 		internal static ReadOnlyCollection<MethodMockableResult> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
+			var thisTypeInfo = @this.GetTypeInfo();
+
 			var objectMethods = @this.GetTypeInfo().IsInterface ? 
 				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
 
-         var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
+			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
 				.Where(_ => !_.IsSpecialName && _.IsVirtual && !_.IsFinal &&
 					!objectMethods.Where(om => om.Match(_) == MethodMatch.Exact).Any() &&
 					_.DeclaringType.GetTypeInfo().Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, _.IsFamilyOrAssembly, generator))
 				.Select(_ => new MockableResult<MethodInfo>(_, RequiresExplicitInterfaceImplementation.No)));
 
-			if (@this.GetTypeInfo().IsInterface)
+			if (thisTypeInfo.IsInterface)
 			{
 				var namespaces = new SortedSet<string>();
 
@@ -120,7 +114,7 @@ namespace Rocks.Extensions
 				}
 			}
 
-			var baseStaticMethods = @this.GetTypeInfo().IsInterface ?
+			var baseStaticMethods = thisTypeInfo.IsInterface ?
 				typeof(object).GetMethods().Where(_ => _.IsStatic).ToList() :
 				@this.GetMethods().Where(_ => _.IsStatic).ToList();
 
@@ -197,9 +191,11 @@ namespace Rocks.Extensions
 			{
 				var types = new List<Type>(@this.GetInterfaces());
 
-				if (@this.GetTypeInfo().BaseType != null)
+				var baseType = @this.GetTypeInfo().BaseType;
+
+				if (baseType != null)
 				{
-					types.Add(@this.GetTypeInfo().BaseType);
+					types.Add(baseType);
 				}
 
 				return (from type in types
@@ -274,13 +270,11 @@ namespace Rocks.Extensions
 			return property;
 		}
 
-		internal static bool IsUnsafeToMock(this Type @this)
-		{
-			return @this.IsPointer ||
+		internal static bool IsUnsafeToMock(this Type @this) =>
+			@this.IsPointer ||
 				@this.GetMethods(ReflectionValues.PublicNonPublicInstance).Where(m => m.IsUnsafeToMock()).Any() ||
 				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafeToMock(false)).Any() ||
 				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
-		}
 
 #if !NETCOREAPP1_1
 		internal static string Validate(this Type @this, SerializationOptions options, NameGenerator generator)
@@ -288,7 +282,9 @@ namespace Rocks.Extensions
 		internal static string Validate(this Type @this, NameGenerator generator)
 #endif
 		{
-			if (@this.GetTypeInfo().IsSealed && !@this.GetConstructors()
+			var thisTypeInfo = @this.GetTypeInfo();
+
+			if (thisTypeInfo.IsSealed && !@this.GetConstructors()
 				.Where(_ => _.GetParameters().Length == 1 &&
 					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>).IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
 			{
@@ -302,19 +298,19 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(@this.GetSafeName());
 			}
 #endif
-			if (@this.GetTypeInfo().IsAbstract &&
-				(@this.GetTypeInfo().GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Any() ||
-            @this.GetTypeInfo().GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
-				@this.GetTypeInfo().GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
-				@this.GetTypeInfo().GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
+			if (thisTypeInfo.IsAbstract &&
+				(thisTypeInfo.GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Any() ||
+				thisTypeInfo.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
+				thisTypeInfo.GetProperties(ReflectionValues.NonPublicInstance).Where(_ => _.GetDefaultMethod().IsAssembly && _.GetDefaultMethod().IsAbstract).Any() ||
+				thisTypeInfo.GetEvents(ReflectionValues.NonPublicInstance).Where(_ => _.AddMethod.IsAssembly && _.AddMethod.IsAbstract).Any()))
 			{
-				if (!@this.GetTypeInfo().Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
+				if (!thisTypeInfo.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
 				{
 					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
 				}
 			}
 
-			if(!@this.GetTypeInfo().IsInterface && @this.GetMockableConstructors(generator).Count == 0)
+			if(!thisTypeInfo.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
 			{
 				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(@this.GetSafeName());
 			}
@@ -389,17 +385,13 @@ namespace Rocks.Extensions
 				.Where(_ => _.AssemblyName == generator.AssemblyName).Any());
 		}
 
-		internal static bool ContainsRefAndOrOutParameters(this Type @this)
-		{
-			return (from method in @this.GetMethods(ReflectionValues.PublicInstance)
-					  where method.ContainsDelegateConditions()
-					  select method).Any();
-		}
+		internal static bool ContainsRefAndOrOutParameters(this Type @this) =>
+			(from method in @this.GetMethods(ReflectionValues.PublicInstance)
+				where method.ContainsDelegateConditions()
+				select method).Any();
 
-		internal static string GetSafeName(this Type @this)
-		{
-			return @this.GetSafeName(new SortedSet<string>());
-		}
+		internal static string GetSafeName(this Type @this) =>
+			@this.GetSafeName(new SortedSet<string>());
 
 		internal static string GetSafeName(this Type @this, SortedSet<string> namespaces)
 		{
@@ -410,7 +402,7 @@ namespace Rocks.Extensions
 			if(isConflictingTypeName)
 			{
 				return @this.FullName.Split('`')[0];
-         }
+			}
 			else
 			{
 				return !string.IsNullOrWhiteSpace(@this.FullName) ?
@@ -454,8 +446,10 @@ namespace Rocks.Extensions
 		{
 			if (@this.IsGenericParameter)
 			{
-				var constraints = @this.GetTypeInfo().GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
-				var constraintedTypes = @this.GetTypeInfo().GetGenericParameterConstraints();
+				var thisTypeInfo = @this.GetTypeInfo();
+
+				var constraints = thisTypeInfo.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+				var constraintedTypes = thisTypeInfo.GetGenericParameterConstraints();
 
 				if (constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
 				{

@@ -10,7 +10,7 @@ namespace Rocks.Extensions
 		internal static bool IsExtern(this MethodBase @this)
 		{
 			return (@this.MethodImplementationFlags & MethodImplAttributes.InternalCall) != 0;
-      }
+		}
 
 		internal static GenericArgumentsResult GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
 		{
@@ -83,6 +83,6 @@ namespace Rocks.Extensions
 				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
 				select $"{attributes}{modifier}{type.GetFullName(namespaces)} {parameter.Name}{optionalValue}");
-      }
+		}
 	}
 }

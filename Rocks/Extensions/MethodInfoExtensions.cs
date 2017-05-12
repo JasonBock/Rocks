@@ -55,7 +55,7 @@ namespace Rocks.Extensions
 				{
 					if ((thisParameters[i].ParameterType != otherParameters[i].ParameterType) ||
 						(thisParameters[i].GetModifier() != otherParameters[i].GetModifier()))
-               {
+					{
 						return MethodMatch.None;
 					}
 				}
@@ -64,10 +64,8 @@ namespace Rocks.Extensions
 			}
 		}
 
-		internal static bool IsUnsafeToMock(this MethodInfo @this)
-		{
-			return @this.IsUnsafeToMock(true);
-		}
+		internal static bool IsUnsafeToMock(this MethodInfo @this) =>
+			@this.IsUnsafeToMock(true);
 
 		internal static bool IsUnsafeToMock(this MethodInfo @this, bool checkForSpecialName)
 		{
@@ -78,27 +76,23 @@ namespace Rocks.Extensions
 				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
 		}
 
-		internal static bool ContainsDelegateConditions(this MethodInfo @this)
-		{
-			return (from parameter in @this.GetParameters()
-					  let parameterType = parameter.ParameterType
-					  where parameter.IsOut || parameterType.IsByRef ||
+		internal static bool ContainsDelegateConditions(this MethodInfo @this) =>
+			(from parameter in @this.GetParameters()
+				let parameterType = parameter.ParameterType
+				where parameter.IsOut || parameterType.IsByRef ||
 #if !NETCOREAPP1_1
-						typeof(TypedReference).IsAssignableFrom(parameterType) ||
-						typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
-						typeof(ArgIterator).IsAssignableFrom(parameterType) ||
+				typeof(TypedReference).IsAssignableFrom(parameterType) ||
+				typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
+				typeof(ArgIterator).IsAssignableFrom(parameterType) ||
 #endif
-						new TypeDissector(parameterType).IsPointer
-					  select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
-		}
+				new TypeDissector(parameterType).IsPointer
+					select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
 
-		internal static string GetOutInitializers(this MethodInfo @this)
-		{
-			return string.Join(Environment.NewLine,
+		internal static string GetOutInitializers(this MethodInfo @this) =>
+			string.Join(Environment.NewLine,
 				from parameter in @this.GetParameters()
 				where parameter.IsOut
 				select $"{parameter.Name} = default({parameter.ParameterType.GetFullName()});");
-		}
 
 		internal static string GetDelegateCast(this MethodInfo @this)
 		{
@@ -118,18 +112,14 @@ namespace Rocks.Extensions
 			}
 		}
 
-		internal static string GetExpectationChecks(this MethodInfo @this)
-		{
-			return string.Join(" && ",
+		internal static string GetExpectationChecks(this MethodInfo @this) =>
+			string.Join(" && ",
 				@this.GetParameters()
 				.Where(_ => !new TypeDissector(_.ParameterType).IsPointer)
 				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}")));
-		}
 
-		internal static string GetMethodDescription(this MethodInfo @this)
-		{
-			return @this.GetMethodDescription(new SortedSet<string>(), false);
-		}
+		internal static string GetMethodDescription(this MethodInfo @this) =>
+			@this.GetMethodDescription(new SortedSet<string>(), false);
 
 		internal static void AddNamespaces(this MethodInfo @this, SortedSet<string> namespaces)
 		{
@@ -142,15 +132,11 @@ namespace Rocks.Extensions
 			}
 		}
 
-		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces)
-		{
-			return @this.GetMethodDescription(namespaces, false, RequiresExplicitInterfaceImplementation.No);
-		}
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces) =>
+			@this.GetMethodDescription(namespaces, false, RequiresExplicitInterfaceImplementation.No);
 
-		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride)
-		{
-			return @this.GetMethodDescription(namespaces, includeOverride, RequiresExplicitInterfaceImplementation.No);
-		}
+		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride) =>
+			@this.GetMethodDescription(namespaces, includeOverride, RequiresExplicitInterfaceImplementation.No);
 
 		internal static string GetMethodDescription(this MethodInfo @this, SortedSet<string> namespaces, bool includeOverride,
 			RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation)
