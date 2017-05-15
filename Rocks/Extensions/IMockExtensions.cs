@@ -20,7 +20,7 @@ namespace Rocks.Extensions
 						var method = @this.GetType().FindMethod(pair.Key);
 						var description = method.GetMethodDescription(new SortedSet<string>());
 
-                  failures.Add(ErrorMessages.GetVerificationFailed(@this.GetType().FullName, description, failure));
+						failures.Add(ErrorMessages.GetVerificationFailed(@this.GetType().FullName, description, failure));
 					}
 				}
 			}
@@ -30,9 +30,7 @@ namespace Rocks.Extensions
 
 		public static void Raise(this object @this, string eventName, EventArgs args)
 		{
-			var mock = @this as IMock;
-
-			if(mock != null)
+			if (@this is IMock mock)
 			{
 				mock.Raise(eventName, args);
 			}

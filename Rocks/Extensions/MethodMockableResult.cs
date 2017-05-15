@@ -7,10 +7,8 @@ namespace Rocks.Extensions
 	{
 		internal MethodMockableResult(MethodInfo value, RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 			RequiresIsNewImplementation requiresIsNewImplementation) 
-			: base(value, requiresExplicitInterfaceImplementation)
-		{
+			: base(value, requiresExplicitInterfaceImplementation) =>
 			this.RequiresNewImplementation = requiresIsNewImplementation;
-		}
 
 		internal RequiresIsNewImplementation RequiresNewImplementation { get; }
 	}

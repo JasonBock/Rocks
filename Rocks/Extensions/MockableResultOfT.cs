@@ -12,6 +12,6 @@ namespace Rocks.Extensions
 		}
 
 		internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
-      internal T Value { get; }
+		internal T Value { get; }
 	}
 }

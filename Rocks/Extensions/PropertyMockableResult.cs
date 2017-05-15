@@ -7,10 +7,8 @@ namespace Rocks.Extensions
 	{
 		internal PropertyMockableResult(PropertyInfo value, RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, 
 			PropertyAccessors accessors)
-			: base(value, requiresExplicitInterfaceImplementation)
-		{
+			: base(value, requiresExplicitInterfaceImplementation) =>
 			this.Accessors = accessors;
-		}
 
 		internal PropertyAccessors Accessors { get; }
 	}

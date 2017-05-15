@@ -19,10 +19,8 @@ namespace Rocks.Extensions
 			return true;
 		}
 
-		internal static bool IsUnsafeToMock(this ConstructorInfo @this)
-		{
-			return (@this.IsPublic || @this.IsAssembly || @this.IsFamily) &&
+		internal static bool IsUnsafeToMock(this ConstructorInfo @this) =>
+			(@this.IsPublic || @this.IsAssembly || @this.IsFamily) &&
 				@this.GetParameters().Where(param => param.ParameterType.IsPointer).Any();
-		}
 	}
 }

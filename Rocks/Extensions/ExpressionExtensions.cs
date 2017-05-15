@@ -8,10 +8,8 @@ namespace Rocks.Extensions
 {
 	internal static class ExpressionExtensions
 	{
-		internal static ArgumentExpectation Create(this Expression @this)
-		{
-			return @this.Create(@this.Type, null);
-		}
+		internal static ArgumentExpectation Create(this Expression @this) =>
+			@this.Create(@this.Type, null);
 
 		internal static ArgumentExpectation Create(this Expression @this, Type expectationType, ParameterInfo parameter)
 		{

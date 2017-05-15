@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -9,15 +8,11 @@ namespace Rocks.Extensions
 {
 	internal static class PropertyInfoExtensions
 	{
-		internal static MethodInfo GetDefaultMethod(this PropertyInfo @this)
-		{
-			return @this.CanRead ? @this.GetMethod : @this.SetMethod;
-      }
+		internal static MethodInfo GetDefaultMethod(this PropertyInfo @this) =>
+			@this.CanRead ? @this.GetMethod : @this.SetMethod;
 
-		private static ReadOnlyDictionary<string, ArgumentExpectation> CreateEmptyExpectations()
-		{
-			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-		}
+		private static ReadOnlyDictionary<string, ArgumentExpectation> CreateEmptyExpectations() =>
+			new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 
 		private static Dictionary<string, ArgumentExpectation> GetIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
@@ -27,17 +22,15 @@ namespace Rocks.Extensions
 			for (var i = 0; i < indexers.Count; i++)
 			{
 				var propertyIndexer = propertyIndexers[i];
-            expectations.Add(propertyIndexer.Name, indexers[i].Create(
+				expectations.Add(propertyIndexer.Name, indexers[i].Create(
 					propertyIndexer.ParameterType, propertyIndexer));
 			}
 
 			return expectations;
 		}
 
-		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetGetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
-		{
-			return new ReadOnlyDictionary<string, ArgumentExpectation>(@this.GetIndexerExpectations(indexers));
-		}
+		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetGetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers) =>
+			new ReadOnlyDictionary<string, ArgumentExpectation>(@this.GetIndexerExpectations(indexers));
 
 		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetSetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
@@ -93,10 +86,8 @@ namespace Rocks.Extensions
 #endif
 		}
 
-		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this)
-		{
-			return new HandlerInformation(@this.CreateDefaultSetterExpectationDictionary());
-		}
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this) =>
+			new HandlerInformation(@this.CreateDefaultSetterExpectationDictionary());
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
@@ -168,10 +159,8 @@ namespace Rocks.Extensions
 #endif
 		}
 
-		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, uint expectedCallCount)
-		{
-			return new HandlerInformation(expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
-		}
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, uint expectedCallCount) =>
+			new HandlerInformation(expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler)
 		{
@@ -243,10 +232,8 @@ namespace Rocks.Extensions
 #endif
 		}
 
-		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler)
-		{
-			return new HandlerInformation(handler, @this.CreateDefaultSetterExpectationDictionary());
-		}
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler) =>
+			new HandlerInformation(handler, @this.CreateDefaultSetterExpectationDictionary());
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount)
 		{
@@ -262,9 +249,7 @@ namespace Rocks.Extensions
 #endif
 		}
 
-		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount)
-		{
-			return new HandlerInformation(handler, expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
-		}
+		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount) =>
+			new HandlerInformation(handler, expectedCallCount, @this.CreateDefaultSetterExpectationDictionary());
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-namespace Rocks.Extensions
+﻿namespace Rocks.Extensions
 {
 	internal enum RequiresExplicitInterfaceImplementation
 	{

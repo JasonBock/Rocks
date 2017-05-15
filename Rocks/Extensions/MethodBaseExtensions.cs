@@ -7,10 +7,8 @@ namespace Rocks.Extensions
 {
 	internal static class MethodBaseExtensions
 	{
-		internal static bool IsExtern(this MethodBase @this)
-		{
-			return (@this.MethodImplementationFlags & MethodImplAttributes.InternalCall) != 0;
-		}
+		internal static bool IsExtern(this MethodBase @this) =>
+			(@this.MethodImplementationFlags & MethodImplAttributes.InternalCall) != 0;
 
 		internal static GenericArgumentsResult GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
 		{
@@ -48,13 +46,11 @@ namespace Rocks.Extensions
 			return new GenericArgumentsResult(arguments, constraints);
 		}
 
-		internal static string GetArgumentNameList(this MethodBase @this)
-		{
-			return string.Join(", ",
+		internal static string GetArgumentNameList(this MethodBase @this) =>
+			string.Join(", ",
 				(from parameter in @this.GetParameters()
 				 let modifier = parameter.GetModifier(true)
 				 select $"{modifier}{parameter.Name}"));
-		}
 
 		internal static string GetExpectationExceptionMessage(this MethodBase @this)
 		{
@@ -64,16 +60,13 @@ namespace Rocks.Extensions
 			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).Arguments}({argumentlist})";
 		}
 
-		internal static string GetLiteralArgumentNameList(this MethodBase @this)
-		{
-			return string.Join(", ",
+		internal static string GetLiteralArgumentNameList(this MethodBase @this) =>
+			string.Join(", ",
 				(from parameter in @this.GetParameters()
 				 select $"{{{parameter.Name}}}"));
-		}
 
-		internal static string GetParameters(this MethodBase @this, SortedSet<string> namespaces)
-		{
-			return string.Join(", ",
+		internal static string GetParameters(this MethodBase @this, SortedSet<string> namespaces) =>
+			string.Join(", ",
 				from parameter in @this.GetParameters()
 				let attributes = parameter.GetAttributes(namespaces)
 				let type = parameter.ParameterType
@@ -83,6 +76,5 @@ namespace Rocks.Extensions
 				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
 				select $"{attributes}{modifier}{type.GetFullName(namespaces)} {parameter.Name}{optionalValue}");
-		}
 	}
 }

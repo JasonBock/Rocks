@@ -17,22 +17,14 @@ namespace Rocks.Exceptions
 		public CompilationException(string message) : base(message) { }
 		public CompilationException(string message, Exception inner) : base(message, inner) { }
 
-		public CompilationException(ImmutableArray<Diagnostic> diagnostics)
-		{
+		public CompilationException(ImmutableArray<Diagnostic> diagnostics) =>
 			this.Diagnostics = diagnostics;
-		}
 
 		public CompilationException(ImmutableArray<Diagnostic> diagnostics, string message)
-			: base(message)
-		{
-			this.Diagnostics = diagnostics;
-		}
+			: base(message) => this.Diagnostics = diagnostics;
 
 		public CompilationException(ImmutableArray<Diagnostic> diagnostics, string message, Exception inner)
-			: base(message, inner)
-		{
-			this.Diagnostics = diagnostics;
-		}
+			: base(message, inner) => this.Diagnostics = diagnostics;
 
 #if !NETCOREAPP1_1
 		private CompilationException(SerializationInfo info, StreamingContext context)
