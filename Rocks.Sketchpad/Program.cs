@@ -1,29 +1,39 @@
-﻿namespace Rocks.Sketchpad
+﻿using System;
+using System.Linq;
+using System.Reflection;
+
+namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
 		static void Main(string[] args)
 		{
-			var rockOne = Rock.Create<IDoTwoThings>();
-			rockOne.Handle(_ => _.MethodOne(1));
+			//var iObsoleteType = typeof(Program).GetTypeInfo().Assembly.GetTypes()
+			//	.Where(_ => _.Name == "IObsoleteType")
+			//	.Single();
 
-			var rockTwo = Rock.Create<IDoTwoThings>();
-			rockTwo.Handle(_ => _.MethodTwo(2));
+			//var createMethod = typeof(Rock).GetMethod("Create", Type.EmptyTypes)
+			//		.MakeGenericMethod(iObsoleteType);
+			//var rock = createMethod.Invoke(null, null);
 
-			var chunkOne = rockOne.Make();
-			var chunkTwo = rockTwo.Make();
+			//var makeMethod = rock.GetType().GetTypeInfo().GetMethod("Make", Type.EmptyTypes);
+			//makeMethod.Invoke(rock, null);
 
-			chunkOne.MethodOne(1);
-			chunkTwo.MethodTwo(2);
+			var rock = Rock.Create<IObsoleteType>();
+			rock.Handle(_ => _.OK());
 
-			rockOne.Verify();
-			rockTwo.Verify();
+			var chunk = rock.Make();
+			chunk.OK();
+
+			rock.Verify();
 		}
 	}
 
-	public interface IDoTwoThings
+	//[Obsolete("Don't use this", false)]
+	public interface IObsoleteType
 	{
-		void MethodOne(int x);
-		void MethodTwo(int x);
+		void OK();
+		[Obsolete("Don't call this", true)]
+		void Obsolete();
 	}
 }
