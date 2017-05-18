@@ -291,6 +291,11 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
 			}
 
+			if(thisTypeInfo.GetCustomAttribute<ObsoleteAttribute>()?.IsError ?? false)
+			{
+				return ErrorMessages.GetCannotMockObsoleteType(@this.GetSafeName());
+			}
+
 #if !NETCOREAPP1_1
 			if (options == SerializationOptions.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) == null)

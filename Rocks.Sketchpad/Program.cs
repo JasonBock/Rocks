@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Rocks.Options;
+using System;
 using System.Linq;
 using System.Reflection;
+using System.Resources;
+using System.Text;
 
 namespace Rocks.Sketchpad
 {
@@ -8,6 +11,14 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
+			var rock = Rock.Create<UnicodeEncoding>();
+			rock.Make();
+
+			//new RockAssembly(typeof(object).GetTypeInfo().Assembly,
+			//	new RockOptions(
+			//		level: OptimizationSetting.Debug,
+			//		codeFile: CodeFileOptions.Create));
+
 			//var iObsoleteType = typeof(Program).GetTypeInfo().Assembly.GetTypes()
 			//	.Where(_ => _.Name == "IObsoleteType")
 			//	.Single();
@@ -19,13 +30,13 @@ namespace Rocks.Sketchpad
 			//var makeMethod = rock.GetType().GetTypeInfo().GetMethod("Make", Type.EmptyTypes);
 			//makeMethod.Invoke(rock, null);
 
-			var rock = Rock.Create<IObsoleteType>();
-			rock.Handle(_ => _.OK());
+			//var rock = Rock.Create<IObsoleteType>();
+			//rock.Handle(_ => _.OK());
 
-			var chunk = rock.Make();
-			chunk.OK();
+			//var chunk = rock.Make();
+			//chunk.OK();
 
-			rock.Verify();
+			//rock.Verify();
 		}
 	}
 

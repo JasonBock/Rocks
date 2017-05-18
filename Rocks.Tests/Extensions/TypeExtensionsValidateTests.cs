@@ -2,7 +2,9 @@
 using Rocks.Construction.InMemory;
 using Rocks.Options;
 using Rocks.Tests.Types;
+using System;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -73,7 +75,37 @@ namespace Rocks.Tests.Extensions
 				SerializationOptions.Supported,
 #endif
 				new InMemoryNameGenerator()), Is.Empty);
+
+		[Test]
+		public void ValidateWhenTypeIsObsoleteAndErrorIsFalse()
+		{
+			var obsoleteType = this.GetType().GetTypeInfo().Assembly
+				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsFalse");
+			Assert.That(obsoleteType.Validate(
+#if !NETCOREAPP1_1
+				SerializationOptions.Supported,
+#endif
+				new InMemoryNameGenerator()), Is.Empty);
+		}
+
+		[Test]
+		public void ValidateWhenTypeIsObsoleteAndErrorIsTrue()
+		{
+			var obsoleteType = this.GetType().GetTypeInfo().Assembly
+				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsTrue");
+			Assert.That(obsoleteType.Validate(
+#if !NETCOREAPP1_1
+				SerializationOptions.Supported,
+#endif
+				new InMemoryNameGenerator()), Is.Not.Empty);
+		}
 	}
+
+	[Obsolete("Don't use me.", false)]
+	public interface IAmObsoleteWithErrorAsFalse { }
+
+	[Obsolete("Don't use me.", true)]
+	public interface IAmObsoleteWithErrorAsTrue { }
 
 	public sealed class DoNotHaveHandlerConstructor { }
 
