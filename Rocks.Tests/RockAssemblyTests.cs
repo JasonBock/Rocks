@@ -70,7 +70,6 @@ namespace Rocks.Tests
 			Assert.That(this.wasMethod4DelegateCalled, Is.True);
 			Assert.That(this.wasMethod5DelegateCalled, Is.True);
 		}
-#endif
 
 		[Test]
 		public void GenerateForAssemblyThatContainsObject()
@@ -87,6 +86,7 @@ namespace Rocks.Tests
 
 			Assert.Pass($"Total time to generate mocks for {typeof(object).GetTypeInfo().Assembly.FullName} : {stopwatch.Elapsed}");
 		}
+#endif
 
 		public Guid Method4(string a, ref int b)
 		{

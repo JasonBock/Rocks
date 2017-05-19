@@ -25,8 +25,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Tests\Rocks.Tests.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>
