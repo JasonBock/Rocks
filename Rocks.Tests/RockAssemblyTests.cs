@@ -90,23 +90,19 @@ namespace Rocks.Tests
 
 		public Guid Method4(string a, ref int b)
 		{
-#if !NETCOREAPP1_1
 			this.wasMethod4DelegateCalled = true;
-#endif
 			return default(Guid);
 		}
 
 		public Guid Method5<U>(string a, ref U b)
 		{
-#if !NETCOREAPP1_1
 			this.wasMethod5DelegateCalled = true;
-#endif
 			return default(Guid);
 		}
 
-#if !NETCOREAPP1_1
+#pragma warning disable CS0414
 		private bool wasMethod4DelegateCalled;
 		private bool wasMethod5DelegateCalled;
-#endif
+#pragma warning restore CS0414
 	}
 }

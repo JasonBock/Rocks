@@ -5,6 +5,8 @@
 		public static string GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(string typeName) =>
 			$"Cannot mock the sealed type {typeName} when serialization is requested and no public constructor with no arguments exists.";
 
+		public static string GetCannotMockObsoleteType(string typeName) => $"Cannot mock the obsolete type {typeName}.";
+
 		public static string GetCannotMockSealedType(string typeName) => $"Cannot mock the sealed type {typeName}.";
 
 		public static string GetCannotMockTypeWithInternalAbstractMembers(string typeName) =>

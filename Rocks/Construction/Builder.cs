@@ -80,6 +80,12 @@ namespace Rocks.Construction
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
 
+#if NETCOREAPP1_1
+			// The template automatically adds this namespace
+			// so remove it.
+			this.Namespaces.Remove("System.Reflection");
+#endif
+
 			var namespaces = string.Join(Environment.NewLine,
 					(from @namespace in this.Namespaces
 					 select $"using {@namespace};"));
