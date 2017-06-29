@@ -231,6 +231,10 @@ namespace Rocks.Tests
 			Assert.That(new TypeDissector(typeof(string)).SafeName, Is.EqualTo("string"));
 
 		[Test]
+		public void GetSafeNameForObjectPrimitiveType() =>
+			Assert.That(new TypeDissector(typeof(object)).SafeName, Is.EqualTo("object"));
+
+		[Test]
 		public void GetSafeNameForPointerType() =>
 			Assert.That(new TypeDissector(typeof(byte*)).SafeName, Is.EqualTo("byte"));
 

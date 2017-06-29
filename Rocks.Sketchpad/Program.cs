@@ -1,5 +1,4 @@
-﻿using Rocks.Extensions;
-using Rocks.Options;
+﻿using Rocks.Options;
 using System;
 using System.Text;
 
@@ -7,19 +6,8 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main(string[] args)
-		{
-			Console.Out.WriteLine(new TypeDissector(typeof(byte*[])).SafeName);
-			Console.ReadLine();
-
-			//var rock = Rock.Create<IHavePrimitives>(
-			//	new RockOptions(
-			//		level: OptimizationSetting.Debug,
-			//		codeFile: CodeFileOptions.Create));
-			//rock.Handle(_ => _.DoSomething(3)).Returns('c');
-
-			//var chunk = rock.Make();
-		}
+		static void Main(string[] args) =>
+			Program.UnicodeTest();
 
 		private static void UnicodeTest()
 		{

@@ -25,6 +25,7 @@ namespace Rocks
 				{ typeof(float).Name, "float" },
 				{ typeof(decimal).Name, "decimal" },
 				{ typeof(string).Name, "string" },
+				{ typeof(object).Name, "object" }
 			}.ToImmutableDictionary();
 
 		internal TypeDissector(Type type)
