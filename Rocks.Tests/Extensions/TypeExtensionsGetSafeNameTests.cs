@@ -99,16 +99,72 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public void GetSafeNameForBoolPrimitiveType() =>
+			Assert.That(typeof(bool).GetSafeName(), Is.EqualTo("bool"));
+
+		[Test]
+		public void GetSafeNameForBytePrimitiveType() =>
+			Assert.That(typeof(byte).GetSafeName(), Is.EqualTo("byte"));
+
+		[Test]
+		public void GetSafeNameForSBytePrimitiveType() =>
+			Assert.That(typeof(sbyte).GetSafeName(), Is.EqualTo("sbyte"));
+
+		[Test]
+		public void GetSafeNameForShortPrimitiveType() =>
+			Assert.That(typeof(short).GetSafeName(), Is.EqualTo("short"));
+
+		[Test]
+		public void GetSafeNameForUShortPrimitiveType() =>
+			Assert.That(typeof(ushort).GetSafeName(), Is.EqualTo("ushort"));
+
+		[Test]
+		public void GetSafeNameForIntPrimitiveType() =>
+			Assert.That(typeof(int).GetSafeName(), Is.EqualTo("int"));
+
+		[Test]
+		public void GetSafeNameForUIntPrimitiveType() =>
+			Assert.That(typeof(uint).GetSafeName(), Is.EqualTo("uint"));
+
+		[Test]
+		public void GetSafeNameForLongPrimitiveType() =>
+			Assert.That(typeof(long).GetSafeName(), Is.EqualTo("long"));
+
+		[Test]
+		public void GetSafeNameForULongPrimitiveType() =>
+			Assert.That(typeof(ulong).GetSafeName(), Is.EqualTo("ulong"));
+
+		[Test]
+		public void GetSafeNameForCharPrimitiveType() =>
+			Assert.That(typeof(char).GetSafeName(), Is.EqualTo("char"));
+
+		[Test]
+		public void GetSafeNameForDoublePrimitiveType() =>
+			Assert.That(typeof(double).GetSafeName(), Is.EqualTo("double"));
+
+		[Test]
+		public void GetSafeNameForFloatPrimitiveType() =>
+			Assert.That(typeof(float).GetSafeName(), Is.EqualTo("float"));
+
+		[Test]
+		public void GetSafeNameForDecimalPrimitiveType() =>
+			Assert.That(typeof(decimal).GetSafeName(), Is.EqualTo("decimal"));
+
+		[Test]
+		public void GetSafeNameForStringPrimitiveType() =>
+			Assert.That(typeof(string).GetSafeName(), Is.EqualTo("string"));
+
+		[Test]
 		public void GetSafeNameForPointerType() =>
-			Assert.That(typeof(byte*).GetSafeName(), Is.EqualTo("Byte*"));
+			Assert.That(typeof(byte*).GetSafeName(), Is.EqualTo("byte*"));
 
 		[Test]
 		public void GetSafeNameForArrayType() =>
-			Assert.That(typeof(byte[]).GetSafeName(), Is.EqualTo("Byte[]"));
+			Assert.That(typeof(byte[]).GetSafeName(), Is.EqualTo("byte[]"));
 
 		[Test]
 		public void GetSafeNameForArrayOfPointersType() =>
-			Assert.That(typeof(byte*[]).GetSafeName(), Is.EqualTo("Byte*[]"));
+			Assert.That(typeof(byte*[]).GetSafeName(), Is.EqualTo("byte*[]"));
 
 		[Test]
 		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName() =>

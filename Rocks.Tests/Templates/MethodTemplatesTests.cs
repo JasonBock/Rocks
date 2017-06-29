@@ -10,7 +10,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForGenericTask() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)),
-				Is.EqualTo("STT.Task.FromResult<Int32>(default(Int32))"));
+				Is.EqualTo("STT.Task.FromResult<int>(default(int))"));
 
 		[Test]
 		public void GetDefaultReturnValueForTask() =>
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForNonTaskType() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(int)),
-				Is.EqualTo("default(Int32)"));
+				Is.EqualTo("default(int)"));
 
 		[Test]
 		public void GetNonPublicActionImplementation() =>
@@ -37,7 +37,7 @@ namespace Rocks.Tests.Templates
 {
 	c	
 	
-	return default(Int32);
+	return default(int);
 }"));
 
 		[Test]
@@ -174,7 +174,7 @@ namespace Rocks.Tests.Templates
 {
 	a
 
-	return default(Int32);
+	return default(int);
 }"));
 
 		[Test]

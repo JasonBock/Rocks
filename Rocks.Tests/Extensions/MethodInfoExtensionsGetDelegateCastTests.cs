@@ -18,42 +18,42 @@ namespace Rocks.Tests.Extensions
 		public void GetDelegateCastWithNoArgumentsAndReturnValue()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithNoArgumentsAndReturnValue));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArguments()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithArguments));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<Int32, String>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<int, string>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithComplexGenericArguments()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithComplexGeneric));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<Int32>, IGeneric<Int32>>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<int>, IGeneric<int>>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArgumentsAndReturnValue()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32, String, Int32>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, string, int>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenerics()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithGenerics));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<Int32, U, String, V>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<int, U, string, V>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenericsAndReturnValue()
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<Int32, U, String, V, U>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, U, string, V, U>"));
 		}
 
 		public void TargetWithNoArguments() { }

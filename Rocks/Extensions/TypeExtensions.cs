@@ -3,6 +3,7 @@ using Rocks.Exceptions;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,25 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
+		private static readonly ImmutableDictionary<string, string> simplifiedPrimitiveNames =
+			new Dictionary<string, string>
+			{
+				{ typeof(bool).Name, "bool" },
+				{ typeof(byte).Name, "byte" },
+				{ typeof(sbyte).Name, "sbyte" },
+				{ typeof(short).Name, "short" },
+				{ typeof(ushort).Name, "ushort" },
+				{ typeof(int).Name, "int" },
+				{ typeof(uint).Name, "uint" },
+				{ typeof(long).Name, "long" },
+				{ typeof(ulong).Name, "ulong" },
+				{ typeof(char).Name, "char" },
+				{ typeof(double).Name, "double" },
+				{ typeof(float).Name, "float" },
+				{ typeof(decimal).Name, "decimal" },
+				{ typeof(string).Name, "string" },
+			}.ToImmutableDictionary();
+
 		internal static string GetAttributes(this Type @this) =>
 			@this.GetAttributes(false, new SortedSet<string>());
 
@@ -79,7 +99,7 @@ namespace Rocks.Extensions
 		{
 			var thisTypeInfo = @this.GetTypeInfo();
 
-			var objectMethods = @this.GetTypeInfo().IsInterface ? 
+			var objectMethods = thisTypeInfo.IsInterface ? 
 				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
 
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
@@ -401,18 +421,27 @@ namespace Rocks.Extensions
 		internal static string GetSafeName(this Type @this, SortedSet<string> namespaces)
 		{
 			namespaces.Add(@this.Namespace);
+			var thisName = @this.Name;
+			var thisFullName = @this.FullName;
 
-			var isConflictingTypeName = typeof(TypeExtensions).GetTypeInfo().Assembly.GetTypes().Any(_ => _.Name == @this.Name);
+			var isConflictingTypeName = typeof(TypeExtensions).GetTypeInfo().Assembly.GetTypes().Any(_ => _.Name == thisName);
 
 			if(isConflictingTypeName)
 			{
-				return @this.FullName.Split('`')[0];
+				return thisFullName.Split('`')[0];
 			}
 			else
 			{
-				return !string.IsNullOrWhiteSpace(@this.FullName) ?
-					@this.FullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-					@this.Name.Split('`')[0];
+				var name = !string.IsNullOrWhiteSpace(thisFullName) ?
+					thisFullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+					thisName.Split('`')[0];
+
+				if(TypeExtensions.simplifiedPrimitiveNames.ContainsKey(name))
+				{
+					name = TypeExtensions.simplifiedPrimitiveNames[name];
+				}
+
+				return name;
 			}
 		}
 

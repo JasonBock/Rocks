@@ -20,7 +20,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithPointers));
 			Assert.That(target.GetExpectationExceptionMessage(),
-				Is.EqualTo("TargetWithPointers(Int32* a)"));
+				Is.EqualTo("TargetWithPointers(int* a)"));
 		}
 
 		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }

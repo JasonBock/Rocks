@@ -8,11 +8,11 @@ namespace Rocks.Tests.Extensions
 	{
 		[Test]
 		public void GetFullNameForValueType() =>
-			Assert.That(typeof(int).GetFullName(), Is.EqualTo("Int32"));
+			Assert.That(typeof(int).GetFullName(), Is.EqualTo("int"));
 
 		[Test]
 		public void GetFullNameForArray() =>
-			Assert.That(typeof(int[]).GetFullName(), Is.EqualTo("Int32[]"));
+			Assert.That(typeof(int[]).GetFullName(), Is.EqualTo("int[]"));
 
 		[Test]
 		public void GetFullNameForArrayOfOpenGenericTypes() =>
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Extensions
 
 		[Test]
 		public void GetFullNameForArrayOfClosedGenericTypes() =>
-			Assert.That(typeof(IAmAGeneric<int>).MakeArrayType().GetFullName(), Is.EqualTo("IAmAGeneric<Int32>[]"));
+			Assert.That(typeof(IAmAGeneric<int>).MakeArrayType().GetFullName(), Is.EqualTo("IAmAGeneric<int>[]"));
 
 		[Test]
 		public void GetFullNameForOpenGenericTypes() =>
@@ -28,7 +28,7 @@ namespace Rocks.Tests.Extensions
 
 		[Test]
 		public void GetFullNameForClosedGenericTypes() =>
-			Assert.That(typeof(IAmAGeneric<int>).GetFullName(), Is.EqualTo("IAmAGeneric<Int32>"));
+			Assert.That(typeof(IAmAGeneric<int>).GetFullName(), Is.EqualTo("IAmAGeneric<int>"));
 	}
 
 	public interface IAmAGeneric<T> { }
