@@ -48,10 +48,7 @@ namespace h
 
 		f
 
-		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
-		{
-			get { return this.handlers; }
-		}
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
 		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
@@ -106,10 +103,7 @@ namespace h
 
 		f
 
-		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
-		{
-			get { return this.handlers; }
-		}
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
 		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
@@ -165,10 +159,7 @@ namespace h
 
 		f
 
-		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
-		{
-			get { return this.handlers; }
-		}
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
 		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
@@ -223,10 +214,7 @@ namespace h
 
 		f
 
-		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers
-		{
-			get { return this.handlers; }
-		}
+		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
 		void R.IMock.Raise(string eventName, S.EventArgs args)
 		{
