@@ -19,15 +19,14 @@ namespace Rocks.Options
 			this.AllowWarnings = allowWarnings;
 			this.CodeFileDirectory = codeFileDirectory ?? Directory.GetCurrentDirectory();
 		}
-		public override int GetHashCode()
-		{
-			return this.CodeFile.GetHashCode() ^
+
+		public override int GetHashCode() =>
+			this.CodeFile.GetHashCode() ^
 				((int)this.Serialization << 1).GetHashCode() ^
 				((int)this.Optimization << 2).GetHashCode() ^
 				((int)this.Caching << 3).GetHashCode() ^
 				((int)this.AllowWarnings << 4).GetHashCode() ^
 				this.CodeFileDirectory.GetHashCode();
-		}
 #else
 		public RockOptions(OptimizationSetting level = OptimizationSetting.Release, 
 			CodeFileOptions codeFile = CodeFileOptions.None, 
@@ -42,14 +41,12 @@ namespace Rocks.Options
 			this.CodeFileDirectory = codeFileDirectory ?? Directory.GetCurrentDirectory();
 		}
 
-		public override int GetHashCode()
-		{
-			return this.CodeFile.GetHashCode() ^
+		public override int GetHashCode() =>
+			this.CodeFile.GetHashCode() ^
 				((int)this.Optimization << 2).GetHashCode() ^
 				((int)this.Caching << 3).GetHashCode() ^
 				((int)this.AllowWarnings << 4).GetHashCode() ^
 				this.CodeFileDirectory.GetHashCode();
-		}
 #endif
 
 		public AllowWarnings AllowWarnings { get; }
