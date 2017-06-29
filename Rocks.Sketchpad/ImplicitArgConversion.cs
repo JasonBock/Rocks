@@ -9,6 +9,10 @@ namespace Rocks.Sketchpad
 			var ua = new UsesArguments();
 			ua.Foo(44, Guid.NewGuid(), "a");
 			(null as IRock<ITarget>).Foo(22);
+
+			var rock = Rock.Create<ITarget>();
+			rock.Foo(44);
+			rock.Handle(_ => _.Foo(Arg.Is<int>(v => v % 2 == 0)));
 		}
 	}
 
@@ -20,7 +24,7 @@ namespace Rocks.Sketchpad
 	public static class IRockOfITargetExtensions
 	{
 		public static void Foo(this IRock<ITarget> @this, Argument<int> a) =>
-			Console.Out.WriteLine(a.Value);
+			@this.Handle(_ => _.Foo(a.Value));
 	}
 
 	public class UsesArguments

@@ -17,7 +17,8 @@
     <PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>2.0.1</PackageVersion>
+    <PackageVersion>2.1.0</PackageVersion>
+    <PackageIconUrl>https://github.com/JasonBock/Rocks/blob/master/Images/RocksIcon.png</PackageIconUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
