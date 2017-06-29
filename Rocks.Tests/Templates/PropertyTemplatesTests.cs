@@ -21,9 +21,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g"), Is.EqualTo(
 @"g get
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -51,9 +49,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"), Is.EqualTo(
 @"e get
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -74,9 +70,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g"), Is.EqualTo(
 @"g get
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -104,9 +98,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e"), Is.EqualTo(
 @"e get
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -135,9 +127,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertySet(1, "b", "c", "d", "e", "f"), Is.EqualTo(
 @"f set
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var foundMatch = false;
 
@@ -174,9 +164,7 @@ namespace Rocks.Tests.Templates
 			Assert.That(PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d"), Is.EqualTo(
 @"d set
 {
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 

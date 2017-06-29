@@ -55,9 +55,8 @@ $@"public {methodNameWithOverride}
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var foundMatch = false;
 				
@@ -100,9 +99,8 @@ $@"{visibility} {methodNameWithOverride}
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -130,9 +128,8 @@ $@"{visibility} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -160,9 +157,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -183,9 +179,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -213,9 +208,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?

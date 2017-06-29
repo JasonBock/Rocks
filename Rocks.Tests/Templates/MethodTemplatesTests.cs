@@ -64,9 +64,8 @@ namespace Rocks.Tests.Templates
 @"h g
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var foundMatch = false;
 				
@@ -112,9 +111,8 @@ namespace Rocks.Tests.Templates
 @"f e
 {
 	d
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -145,9 +143,8 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -186,9 +183,8 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -210,9 +206,8 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -241,9 +236,8 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
