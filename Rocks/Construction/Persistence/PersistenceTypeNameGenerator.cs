@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction.Persistence
 {
@@ -14,7 +14,7 @@ namespace Rocks.Construction.Persistence
 		internal override string Generate(Type baseType)
 		{
 			var name = baseType.GetTypeInfo().IsGenericTypeDefinition ?
-				$"{baseType.GetFullName(this.Namespaces)}" : baseType.GetSafeName();
+				$"{baseType.GetFullName(this.Namespaces)}" : new TypeDissector(baseType).SafeName;
 			return $"Rock{name.Replace(".", string.Empty)}";
 		}
 

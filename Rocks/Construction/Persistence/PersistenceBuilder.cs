@@ -39,10 +39,14 @@ namespace Rocks.Construction.Persistence
 		protected override string GetAdditionNamespaceCode() =>
 			string.Join(Environment.NewLine, this.generatedDelegates);
 
-		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) =>
+		protected override void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription)
+		{
+			var returnType = baseMethod.ReturnType;
 			this.generatedDelegates.Add(MethodTemplates.GetAssemblyDelegate(
-				baseMethod.ReturnType == typeof(void) ? "void" : baseMethod.ReturnType.GetSafeName(this.Namespaces),
+				baseMethod.ReturnType == typeof(void) ? "void" : new TypeDissector(returnType).SafeName,
 				methodDescription.DelegateCast,
 				baseMethod.GetParameters(this.Namespaces), baseMethod.IsUnsafeToMock()));
+			this.Namespaces.Add(returnType.Namespace);
+		}
 	}
 }

@@ -3,7 +3,6 @@ using Rocks.Exceptions;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
@@ -13,25 +12,6 @@ namespace Rocks.Extensions
 {
 	internal static class TypeExtensions
 	{
-		private static readonly ImmutableDictionary<string, string> simplifiedPrimitiveNames =
-			new Dictionary<string, string>
-			{
-				{ typeof(bool).Name, "bool" },
-				{ typeof(byte).Name, "byte" },
-				{ typeof(sbyte).Name, "sbyte" },
-				{ typeof(short).Name, "short" },
-				{ typeof(ushort).Name, "ushort" },
-				{ typeof(int).Name, "int" },
-				{ typeof(uint).Name, "uint" },
-				{ typeof(long).Name, "long" },
-				{ typeof(ulong).Name, "ulong" },
-				{ typeof(char).Name, "char" },
-				{ typeof(double).Name, "double" },
-				{ typeof(float).Name, "float" },
-				{ typeof(decimal).Name, "decimal" },
-				{ typeof(string).Name, "string" },
-			}.ToImmutableDictionary();
-
 		internal static string GetAttributes(this Type @this) =>
 			@this.GetAttributes(false, new SortedSet<string>());
 
@@ -306,21 +286,23 @@ namespace Rocks.Extensions
 
 			if (thisTypeInfo.IsSealed && !@this.GetConstructors()
 				.Where(_ => _.GetParameters().Length == 1 &&
-					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>).IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
+					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>)
+					.IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
 			{
-				return ErrorMessages.GetCannotMockSealedType(@this.GetSafeName());
+				return ErrorMessages.GetCannotMockSealedType(new TypeDissector(@this).SafeName);
 			}
 
 			if(thisTypeInfo.GetCustomAttribute<ObsoleteAttribute>()?.IsError ?? false)
 			{
-				return ErrorMessages.GetCannotMockObsoleteType(@this.GetSafeName());
+				return ErrorMessages.GetCannotMockObsoleteType(new TypeDissector(@this).SafeName);
 			}
 
 #if !NETCOREAPP1_1
 			if (options == SerializationOptions.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) == null)
 			{
-				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(@this.GetSafeName());
+				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(
+					new TypeDissector(@this).SafeName);
 			}
 #endif
 			if (thisTypeInfo.IsAbstract &&
@@ -331,13 +313,13 @@ namespace Rocks.Extensions
 			{
 				if (!thisTypeInfo.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
 				{
-					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(@this.GetSafeName());
+					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(new TypeDissector(@this).SafeName);
 				}
 			}
 
 			if(!thisTypeInfo.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
 			{
-				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(@this.GetSafeName());
+				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(new TypeDissector(@this).SafeName);
 			}
 
 			return string.Empty;
@@ -415,36 +397,6 @@ namespace Rocks.Extensions
 				where method.ContainsDelegateConditions()
 				select method).Any();
 
-		internal static string GetSafeName(this Type @this) =>
-			@this.GetSafeName(new SortedSet<string>());
-
-		internal static string GetSafeName(this Type @this, SortedSet<string> namespaces)
-		{
-			namespaces.Add(@this.Namespace);
-			var thisName = @this.Name;
-			var thisFullName = @this.FullName;
-
-			var isConflictingTypeName = typeof(TypeExtensions).GetTypeInfo().Assembly.GetTypes().Any(_ => _.Name == thisName);
-
-			if(isConflictingTypeName)
-			{
-				return thisFullName.Split('`')[0];
-			}
-			else
-			{
-				var name = !string.IsNullOrWhiteSpace(thisFullName) ?
-					thisFullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
-					thisName.Split('`')[0];
-
-				if(TypeExtensions.simplifiedPrimitiveNames.ContainsKey(name))
-				{
-					name = TypeExtensions.simplifiedPrimitiveNames[name];
-				}
-
-				return name;
-			}
-		}
-
 		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)
 		{
 			var arguments = string.Empty;
@@ -501,7 +453,7 @@ namespace Rocks.Extensions
 					{
 						foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.GetTypeInfo().IsClass ? 0 : 1))
 						{
-							constraintValues.Add(constraintedType.GetSafeName());
+							constraintValues.Add(new TypeDissector(constraintedType).SafeName);
 							namespaces.Add(constraintedType.Namespace);
 						}
 
@@ -515,7 +467,7 @@ namespace Rocks.Extensions
 						}
 					}
 
-					return $"where {@this.GetSafeName()} : {string.Join(", ", constraintValues)}";
+					return $"where {new TypeDissector(@this).SafeName} : {string.Join(", ", constraintValues)}";
 				}
 			}
 			else

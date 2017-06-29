@@ -9,7 +9,7 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			Console.Out.WriteLine(typeof(byte*[]).GetSafeName());
+			Console.Out.WriteLine(new TypeDissector(typeof(byte*[])).SafeName);
 			Console.ReadLine();
 
 			//var rock = Rock.Create<IHavePrimitives>(

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using static Rocks.Extensions.IListOfCustomAttributeDataExtensions;
 
 namespace Rocks.Extensions
 {
@@ -27,7 +26,7 @@ namespace Rocks.Extensions
 #else
 					var attributeData = argument.GetTypeInfo().CustomAttributes.ToList();
 #endif
-					genericArguments.Add($"{attributeData.GetAttributes(false, namespaces, null)}{argument.GetSafeName()}");
+					genericArguments.Add($"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))

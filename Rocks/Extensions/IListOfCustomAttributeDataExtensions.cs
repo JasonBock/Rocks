@@ -21,7 +21,9 @@ namespace Rocks.Extensions
 					(typeof(ParamArrayAttribute).IsAssignableFrom(attributeData.AttributeType)) ||
 					(typeof(OptionalAttribute).IsAssignableFrom(attributeData.AttributeType))))
 				{
-					var name = attributeData.AttributeType.GetSafeName(namespaces);
+					var attributeType = attributeData.AttributeType;
+					var name = new TypeDissector(attributeType).SafeName;
+					namespaces.Add(attributeType.Namespace);
 
 					if (name.EndsWith(IListOfCustomAttributeDataExtensions.AttributeName))
 					{
@@ -31,14 +33,16 @@ namespace Rocks.Extensions
 					var constructorArguments = string.Join(", ",
 						(from argument in attributeData.ConstructorArguments
 						 let argumentType = argument.ArgumentType
-						 let typeCast = argumentType.GetTypeInfo().IsEnum ? $"({argumentType.GetSafeName(namespaces)})" : string.Empty
+						 let namespaceAdd = namespaces.Add(argumentType.Namespace)
+						 let typeCast = argumentType.GetTypeInfo().IsEnum ? $"({new TypeDissector(argumentType).SafeName})" : string.Empty
 						 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.Value}\"" : argument.Value
 						 select $"{typeCast}{argumentValue}").ToArray());
 					var namedArguments = !typeof(MarshalAsAttribute).IsAssignableFrom(attributeData.AttributeType) ?
 						string.Join(", ",
 							(from argument in attributeData.NamedArguments
 							 let argumentType = argument.TypedValue.ArgumentType
-							 let typeCast = argumentType.GetTypeInfo().IsEnum ? $"({argumentType.GetSafeName(namespaces)})" : string.Empty
+							 let namespaceAdd = namespaces.Add(argumentType.Namespace)
+							 let typeCast = argumentType.GetTypeInfo().IsEnum ? $"({new TypeDissector(argumentType).SafeName})" : string.Empty
 							 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.TypedValue.Value}\"" : argument.TypedValue.Value
 							 select $"{argument.MemberName} = {typeCast}{argumentValue}").ToArray()) : string.Empty;
 					var arguments = !string.IsNullOrWhiteSpace(constructorArguments) && !string.IsNullOrWhiteSpace(namedArguments) ?
