@@ -45,10 +45,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 }}";
 		
 		internal static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
-$@"public {methodNameWithOverride}
-{{
-	throw new S.NotImplementedException();
-}}";
+$@"public {methodNameWithOverride} =>
+	throw new S.NotImplementedException();";
 
 		internal static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
