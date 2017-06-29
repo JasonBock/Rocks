@@ -35,13 +35,13 @@ namespace Rocks.Construction.Generators
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
 						generatedEvents.Add(EventTemplates.GetEvent(@override,
-							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
+							$"EventHandler<{new TypeDissector(eventGenericType).SafeName}>", @event.Name));
 						namespaces.Add(eventGenericType.Namespace);
 					}
 					else
 					{
 						generatedEvents.Add(EventTemplates.GetEvent(@override,
-							eventHandlerType.GetSafeName(), @event.Name));
+							new TypeDissector(eventHandlerType).SafeName, @event.Name));
 					}
 
 					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
@@ -54,13 +54,13 @@ namespace Rocks.Construction.Generators
 					{
 						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
 						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
-							$"EventHandler<{eventGenericType.GetSafeName()}>", @event.Name));
+							$"EventHandler<{new TypeDissector(eventGenericType).SafeName}>", @event.Name));
 						namespaces.Add(eventGenericType.Namespace);
 					}
 					else
 					{
 						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
-							eventHandlerType.GetSafeName(), @event.Name));
+							new TypeDissector(eventHandlerType).SafeName, @event.Name));
 					}
 
 					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;

@@ -6,7 +6,10 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main(string[] args)
+		static void Main(string[] args) =>
+			Program.UnicodeTest();
+
+		private static void UnicodeTest()
 		{
 			var rock = Rock.Create<UnicodeEncoding>(
 				new RockOptions(
@@ -20,5 +23,10 @@ namespace Rocks.Sketchpad
 
 			rock.Verify();
 		}
+	}
+
+	public interface IHavePrimitives
+	{
+		char DoSomething(int x);
 	}
 }

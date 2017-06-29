@@ -10,7 +10,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForGenericTask() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(Task<int>)),
-				Is.EqualTo("STT.Task.FromResult<Int32>(default(Int32))"));
+				Is.EqualTo("STT.Task.FromResult<int>(default(int))"));
 
 		[Test]
 		public void GetDefaultReturnValueForTask() =>
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetDefaultReturnValueForNonTaskType() =>
 			Assert.That(MethodTemplates.GetDefaultReturnValue(typeof(int)),
-				Is.EqualTo("default(Int32)"));
+				Is.EqualTo("default(int)"));
 
 		[Test]
 		public void GetNonPublicActionImplementation() =>
@@ -37,7 +37,7 @@ namespace Rocks.Tests.Templates
 {
 	c	
 	
-	return default(Int32);
+	return default(int);
 }"));
 
 		[Test]
@@ -53,10 +53,8 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetRefOutNotImplementedMethod() =>
 			Assert.That(MethodTemplates.GetRefOutNotImplementedMethod("a"), Is.EqualTo(
-@"public a
-{
-	throw new S.NotImplementedException();
-}"));
+@"public a =>
+	throw new S.NotImplementedException();"));
 
 		[Test]
 		public void GetActionMethod() =>
@@ -64,9 +62,8 @@ namespace Rocks.Tests.Templates
 @"h g
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var foundMatch = false;
 				
@@ -112,9 +109,8 @@ namespace Rocks.Tests.Templates
 @"f e
 {
 	d
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -145,9 +141,8 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -177,7 +172,7 @@ namespace Rocks.Tests.Templates
 {
 	a
 
-	return default(Int32);
+	return default(int);
 }"));
 
 		[Test]
@@ -186,9 +181,8 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -210,9 +204,8 @@ namespace Rocks.Tests.Templates
 @"ki j h
 {
 	f
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		foreach(var methodHandler in methodHandlers)
 		{
@@ -241,9 +234,8 @@ namespace Rocks.Tests.Templates
 @"ig h f
 {
 	e
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
 
-	if (this.handlers.TryGetValue(1, out methodHandlers))
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?

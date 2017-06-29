@@ -12,9 +12,7 @@
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
 $@"{visibility} get
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -41,9 +39,7 @@ $@"{visibility} get
 			string delegateCast, string visibility) =>
 $@"{visibility} get
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -63,9 +59,7 @@ $@"{visibility} get
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
 $@"{visibility} get
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -92,9 +86,7 @@ $@"{visibility} get
 			string delegateCast, string visibility) =>
 $@"{visibility} get
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -120,9 +112,7 @@ $@"{visibility} get
 			string methodWithArgumentValues, string visibility) =>
 $@"{visibility} set
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var foundMatch = false;
 
@@ -158,9 +148,7 @@ $@"{visibility} set
 			string delegateCast, string visibility) =>
 $@"{visibility} set
 {{
-	SCO.ReadOnlyCollection<R.HandlerInformation> methodHandlers = null;
-
-	if (this.handlers.TryGetValue({methodHandle}, out methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 

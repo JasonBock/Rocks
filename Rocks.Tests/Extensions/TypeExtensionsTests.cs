@@ -29,9 +29,6 @@ namespace Rocks.Tests.Extensions
 			Assert.That(methods.Count, Is.EqualTo(1));
 			Assert.That(methods.Where(_ => _.Value.Name == nameof(IHaveSameMethodAsBaseInterface.GetNames)).Any(), Is.True);
 		}
-
-		public delegate void RefTargetWithoutGeneric(ref Guid a);
-		public delegate void RefTargetWithGeneric<T>(ref T a);
 	}
 
 	public class HasNoPublicMembers
