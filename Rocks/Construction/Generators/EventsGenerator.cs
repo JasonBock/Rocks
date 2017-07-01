@@ -31,40 +31,18 @@ namespace Rocks.Construction.Generators
 
 				if (eventMethod.IsPublic)
 				{
-					if (eventHandlerTypeInfo.IsGenericType)
-					{
-						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(EventTemplates.GetEvent(@override,
-							$"EventHandler<{new TypeDissector(eventGenericType).SafeName}>", @event.Name));
-						namespaces.Add(eventGenericType.Namespace);
-					}
-					else
-					{
-						generatedEvents.Add(EventTemplates.GetEvent(@override,
-							new TypeDissector(eventHandlerType).SafeName, @event.Name));
-					}
-
-					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
+					generatedEvents.Add(EventTemplates.GetEvent(@override,
+						eventHandlerType.GetFullName(namespaces), @event.Name));
 				}
 				else if (!eventMethod.IsPrivate && eventMethod.IsAbstract)
 				{
 					var visibility = CodeTemplates.GetVisibility(eventMethod.IsFamily, eventMethod.IsFamilyOrAssembly);
 
-					if (eventHandlerTypeInfo.IsGenericType)
-					{
-						var eventGenericType = eventHandlerType.GetGenericArguments()[0];
-						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
-							$"EventHandler<{new TypeDissector(eventGenericType).SafeName}>", @event.Name));
-						namespaces.Add(eventGenericType.Namespace);
-					}
-					else
-					{
-						generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
-							new TypeDissector(eventHandlerType).SafeName, @event.Name));
-					}
-
-					requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
+					generatedEvents.Add(EventTemplates.GetNonPublicEvent(visibility,
+						eventHandlerType.GetFullName(namespaces), @event.Name));
 				}
+
+				requiresObsoleteSuppression |= @event.GetCustomAttribute<ObsoleteAttribute>() != null;
 			}
 
 			var result = generatedEvents.Count > 0 ? EventTemplates.GetEvents(generatedEvents.AsReadOnly()) : string.Empty;
