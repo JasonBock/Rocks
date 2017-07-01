@@ -1,4 +1,5 @@
 ﻿using Rocks.Options;
+using Rocks.Tests;
 using System;
 using System.Text;
 
@@ -6,8 +7,11 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main(string[] args) =>
-			Program.UnicodeTest();
+		static void Main(string[] args)
+		{
+			var test = new EventsTests();
+			test.CreateWhenEventsHaveGenericEventArgs();
+		}
 
 		private static void UnicodeTest()
 		{
