@@ -18,7 +18,7 @@
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageVersion>2.1.2</PackageVersion>
-    <PackageIconUrl>https://github.com/JasonBock/Rocks/blob/master/Images/RocksIcon.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/JasonBock/Rocks/master/Images/RocksIcon.png</PackageIconUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
