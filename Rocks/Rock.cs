@@ -78,13 +78,28 @@ namespace Rocks
 		public static T Make<T>()
 			where T : class => Rock.Make<T>(new RockOptions());
 
+		/// <summary>
+		/// Ensure that makes are always cached no matter what
+		/// the given options are.
+		/// </summary>
+		/// <param name="options">The requested <seealso cref="RockOptions"/> value from the user.</param>
+		/// <returns>A mapped <seealso cref="RockOptions"/> with caching enabled.</returns>
 		private static RockOptions MapForMake(RockOptions options) =>
 #if !NETCOREAPP1_1
-			new RockOptions(options.Optimization, options.CodeFile,
-				options.Serialization, CachingOptions.UseCache);
+			new RockOptions(
+				level: options.Optimization, 
+				codeFile: options.CodeFile, 
+				serialization: options.Serialization,
+				caching: CachingOptions.UseCache, 
+				allowWarnings: options.AllowWarnings,
+				codeFileDirectory: options.CodeFileDirectory);
 #else
-			new RockOptions(options.Optimization, options.CodeFile, 
-				CachingOptions.UseCache);
+			new RockOptions(
+				level: options.Optimization, 
+				codeFile: options.CodeFile, 
+				caching: CachingOptions.UseCache, 
+				allowWarnings: options.AllowWarnings,
+				codeFileDirectory: options.CodeFileDirectory);
 #endif
 
 		public static T Make<T>(RockOptions options)
