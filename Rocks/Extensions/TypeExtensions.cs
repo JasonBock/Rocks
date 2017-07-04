@@ -215,7 +215,24 @@ namespace Rocks.Extensions
 
 			if (property == null)
 			{
-				throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
+				var types = new List<Type>(@this.GetInterfaces());
+
+				var baseType = @this.GetTypeInfo().BaseType;
+
+				if (baseType != null)
+				{
+					types.Add(baseType);
+				}
+
+				property = (from type in types
+								let baseProperty = type.GetProperty(name)
+								where baseProperty != null
+								select baseProperty).FirstOrDefault();
+
+				if(property == null)
+				{
+					throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
+				}
 			}
 
 			return property;
