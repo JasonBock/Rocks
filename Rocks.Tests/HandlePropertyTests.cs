@@ -1083,6 +1083,18 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithIndexerOnBaseType()
+		{
+			var rock = Rock.Create<ICustomList<int>>();
+			rock.Handle(() => 0, _ => 22);
+
+			var chunk = rock.Make();
+			Assert.That(chunk[0], Is.EqualTo(22));
+
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGenericReturnValue()
 		{
 			var rock = Rock.Create<IProperties<Guid>>();
@@ -1091,6 +1103,10 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 		}
 	}
+
+	public interface ICustomList<T>
+		: IList<T>
+	{ }
 
 	public interface IProperties
 	{

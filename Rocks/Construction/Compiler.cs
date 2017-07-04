@@ -23,12 +23,16 @@ namespace Rocks.Construction
 				{
 					foreach (var reference in fromAssembly.GetReferencedAssemblies())
 					{
-						var assembly = Assembly.Load(reference);
-
-						if (loadedAssemblies.Add(assembly))
+						try
 						{
-							LoadDependencies(loadedAssemblies, assembly);
+							var assembly = Assembly.Load(reference);
+
+							if (loadedAssemblies.Add(assembly))
+							{
+								LoadDependencies(loadedAssemblies, assembly);
+							}
 						}
+						catch (FileNotFoundException) { }
 					}
 				}
 
