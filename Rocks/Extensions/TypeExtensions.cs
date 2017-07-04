@@ -211,28 +211,25 @@ namespace Rocks.Extensions
 
 		internal static PropertyInfo FindProperty(this Type @this, string name)
 		{
-			var property = @this.GetProperty(name);
+			var types = new List<Type> { @this };
+			types.AddRange(@this.GetInterfaces());
+
+			var baseType = @this.GetTypeInfo().BaseType;
+
+			while (baseType != null)
+			{
+				types.Add(baseType);
+				baseType = baseType.GetTypeInfo().BaseType;
+			}
+
+			var property = (from type in types
+								 let baseProperty = type.GetProperty(name)
+								 where baseProperty != null
+								 select baseProperty).FirstOrDefault();
 
 			if (property == null)
 			{
-				var types = new List<Type>(@this.GetInterfaces());
-
-				var baseType = @this.GetTypeInfo().BaseType;
-
-				if (baseType != null)
-				{
-					types.Add(baseType);
-				}
-
-				property = (from type in types
-								let baseProperty = type.GetProperty(name)
-								where baseProperty != null
-								select baseProperty).FirstOrDefault();
-
-				if(property == null)
-				{
-					throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
-				}
+				throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
 			}
 
 			return property;
@@ -266,32 +263,28 @@ namespace Rocks.Extensions
 
 		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers)
 		{
-			var property = (from p in @this.GetProperties()
-								 where p.GetIndexParameters().Any()
-								 let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
-								 where ObjectEquality.AreEqual(pTypes, indexers)
-								 select p).SingleOrDefault();
+			var types = new List<Type> { @this };
+			types.AddRange(@this.GetInterfaces());
+
+			var baseType = @this.GetTypeInfo().BaseType;
+
+			while (baseType != null)
+			{
+				types.Add(baseType);
+				baseType = baseType.GetTypeInfo().BaseType;
+			}
+
+			var property = (
+				from type in types
+				from p in type.GetProperties()
+				where p.GetIndexParameters().Any()
+				let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
+				where ObjectEquality.AreEqual(pTypes, indexers)
+				select p).FirstOrDefault();
 
 			if (property == null)
 			{
-				var types = new List<Type>(@this.GetInterfaces());
-
-				var baseType = @this.GetTypeInfo().BaseType;
-
-				if (baseType != null)
-				{
-					types.Add(baseType);
-				}
-
-				property = (from type in types
-								let baseIndexer = type.FindProperty(indexers)
-								where baseIndexer != null
-								select baseIndexer).FirstOrDefault();
-
-				if (property == null)
-				{
-					throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
-				}
+				throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 			}
 
 			return property;
