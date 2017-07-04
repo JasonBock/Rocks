@@ -79,7 +79,7 @@ namespace Rocks.Extensions
 		{
 			var thisTypeInfo = @this.GetTypeInfo();
 
-			var objectMethods = thisTypeInfo.IsInterface ? 
+			var objectMethods = thisTypeInfo.IsInterface ?
 				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
 
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
@@ -106,7 +106,7 @@ namespace Rocks.Extensions
 							if (!matchMethodGroups.ContainsKey(MethodMatch.Exact))
 							{
 								methods.Add(new MockableResult<MethodInfo>(
-									interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly) ? 
+									interfaceMethod, matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly) ?
 										RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No));
 							}
 						}
@@ -120,7 +120,7 @@ namespace Rocks.Extensions
 
 			return methods.Select(_ => new MethodMockableResult(
 				_.Value, _.RequiresExplicitInterfaceImplementation,
-				baseStaticMethods.Where(osm => osm.Match(_.Value) == MethodMatch.Exact).Any() ? 
+				baseStaticMethods.Where(osm => osm.Match(_.Value) == MethodMatch.Exact).Any() ?
 					RequiresIsNewImplementation.Yes : RequiresIsNewImplementation.No)).ToList().AsReadOnly();
 		}
 
@@ -154,7 +154,7 @@ namespace Rocks.Extensions
 							{
 								properties.Add(new PropertyMockableResult(interfaceProperty.Value,
 									matchMethodGroups.ContainsKey(MethodMatch.DifferByReturnTypeOnly) ?
-										RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No, 
+										RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
 									interfaceProperty.Accessors));
 							}
 						}
@@ -211,7 +211,21 @@ namespace Rocks.Extensions
 
 		internal static PropertyInfo FindProperty(this Type @this, string name)
 		{
-			var property = @this.GetProperty(name);
+			var types = new List<Type> { @this };
+			types.AddRange(@this.GetInterfaces());
+
+			var baseType = @this.GetTypeInfo().BaseType;
+
+			while (baseType != null)
+			{
+				types.Add(baseType);
+				baseType = baseType.GetTypeInfo().BaseType;
+			}
+
+			var property = (from type in types
+								 let baseProperty = type.GetProperty(name)
+								 where baseProperty != null
+								 select baseProperty).FirstOrDefault();
 
 			if (property == null)
 			{
@@ -249,11 +263,24 @@ namespace Rocks.Extensions
 
 		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers)
 		{
-			var property = (from p in @this.GetProperties()
-								 where p.GetIndexParameters().Any()
-								 let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
-								 where ObjectEquality.AreEqual(pTypes, indexers)
-								 select p).SingleOrDefault();
+			var types = new List<Type> { @this };
+			types.AddRange(@this.GetInterfaces());
+
+			var baseType = @this.GetTypeInfo().BaseType;
+
+			while (baseType != null)
+			{
+				types.Add(baseType);
+				baseType = baseType.GetTypeInfo().BaseType;
+			}
+
+			var property = (
+				from type in types
+				from p in type.GetProperties()
+				where p.GetIndexParameters().Any()
+				let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
+				where ObjectEquality.AreEqual(pTypes, indexers)
+				select p).FirstOrDefault();
 
 			if (property == null)
 			{
@@ -292,7 +319,7 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockSealedType(new TypeDissector(@this).SafeName);
 			}
 
-			if(thisTypeInfo.GetCustomAttribute<ObsoleteAttribute>()?.IsError ?? false)
+			if (thisTypeInfo.GetCustomAttribute<ObsoleteAttribute>()?.IsError ?? false)
 			{
 				return ErrorMessages.GetCannotMockObsoleteType(new TypeDissector(@this).SafeName);
 			}
@@ -317,7 +344,7 @@ namespace Rocks.Extensions
 				}
 			}
 
-			if(!thisTypeInfo.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
+			if (!thisTypeInfo.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
 			{
 				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(new TypeDissector(@this).SafeName);
 			}
@@ -394,8 +421,8 @@ namespace Rocks.Extensions
 
 		internal static bool ContainsRefAndOrOutParameters(this Type @this) =>
 			(from method in @this.GetMethods(ReflectionValues.PublicInstance)
-				where method.ContainsDelegateConditions()
-				select method).Any();
+			 where method.ContainsDelegateConditions()
+			 select method).Any();
 
 		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)
 		{

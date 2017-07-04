@@ -1083,6 +1083,31 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void MakeWithIndexerOnBaseType()
+		{
+			var rock = Rock.Create<ICustomList<int>>();
+			rock.Handle(() => 0, _ => 22);
+
+			var chunk = rock.Make();
+			Assert.That(chunk[0], Is.EqualTo(22));
+
+			rock.Verify();
+		}
+
+		[Test]
+		public void MakeFromPropertyOnBaseType()
+		{
+			var value = Guid.NewGuid();
+			var rock = Rock.Create<ISubProperty>();
+			rock.Handle(nameof(ISubProperty.BaseLevel), () => value);
+
+			var chunk = rock.Make();
+			Assert.That(chunk.BaseLevel, Is.EqualTo(value));
+
+			rock.Verify();
+		}
+
+		[Test]
 		public void MakeWithGenericReturnValue()
 		{
 			var rock = Rock.Create<IProperties<Guid>>();
@@ -1090,6 +1115,20 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 		}
+	}
+
+	public interface ICustomList<T>
+		: IList<T>
+	{ }
+
+	public interface IBaseProperty
+	{
+		Guid BaseLevel { get; set; }
+	}
+
+	public interface ISubProperty : IBaseProperty
+	{
+		Guid SubLevel { get; set; }
 	}
 
 	public interface IProperties
