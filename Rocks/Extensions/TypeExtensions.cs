@@ -212,44 +212,25 @@ namespace Rocks.Extensions
 		internal static PropertyInfo FindProperty(this Type @this, string name, PropertyAccessors accessors)
 		{
 			var property = @this.FindProperty(name);
-			TypeExtensions.CheckPropertyAccessors(property, accessors);
+			property.CheckPropertyAccessors(accessors);
 			return property;
 		}
-
-		private static void CheckPropertyAccessors(PropertyInfo property, PropertyAccessors accessors)
-		{
-			if (accessors == PropertyAccessors.Get || accessors == PropertyAccessors.GetAndSet)
-			{
-				if (!property.CanRead)
-				{
-					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be read from.");
-				}
-			}
-
-			if (accessors == PropertyAccessors.Set || accessors == PropertyAccessors.GetAndSet)
-			{
-				if (!property.CanWrite)
-				{
-					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be written to.");
-				}
-			}
-		}
-
-		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers) =>
-			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
-				from p in type.GetProperties()
-				where p.GetIndexParameters().Any()
-				let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
-				where ObjectEquality.AreEqual(pTypes, indexers)
-				select p).FirstOrDefault() ?? 
-			throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 
 		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers, PropertyAccessors accessors)
 		{
 			var property = @this.FindProperty(indexers);
-			TypeExtensions.CheckPropertyAccessors(property, accessors);
+			property.CheckPropertyAccessors(accessors);
 			return property;
 		}
+
+		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers) =>
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
+			 from p in type.GetProperties()
+			 where p.GetIndexParameters().Any()
+			 let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
+			 where ObjectEquality.AreEqual(pTypes, indexers)
+			 select p).FirstOrDefault() ??
+			throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 
 		internal static bool IsUnsafeToMock(this Type @this) =>
 			@this.IsPointer ||

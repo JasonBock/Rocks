@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq.Expressions;
@@ -8,6 +9,25 @@ namespace Rocks.Extensions
 {
 	internal static class PropertyInfoExtensions
 	{
+		internal static void CheckPropertyAccessors(this PropertyInfo @this, PropertyAccessors accessors)
+		{
+			if (accessors == PropertyAccessors.Get || accessors == PropertyAccessors.GetAndSet)
+			{
+				if (!@this.CanRead)
+				{
+					throw new PropertyNotFoundException($"Property {@this.Name} on type {@this.DeclaringType.Name} cannot be read from.");
+				}
+			}
+
+			if (accessors == PropertyAccessors.Set || accessors == PropertyAccessors.GetAndSet)
+			{
+				if (!@this.CanWrite)
+				{
+					throw new PropertyNotFoundException($"Property {@this.Name} on type {@this.DeclaringType.Name} cannot be written to.");
+				}
+			}
+		}
+
 		internal static MethodInfo GetDefaultMethod(this PropertyInfo @this) =>
 			@this.CanRead ? @this.GetMethod : @this.SetMethod;
 
