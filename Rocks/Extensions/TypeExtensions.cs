@@ -181,35 +181,19 @@ namespace Rocks.Extensions
 			return events.ToList().AsReadOnly();
 		}
 
-		internal static MethodInfo FindMethod(this Type @this, int methodHandle)
-		{
-			var foundMethod = (from method in @this.GetMethods()
-									 where method.MetadataToken == methodHandle
-									 select method).FirstOrDefault();
+		internal static MethodInfo FindMethod(this Type @this, int methodHandle) =>
+			(from type in @this.GetTypeHierarchy()
+			 from method in type.GetMethods()
+			 where method.MetadataToken == methodHandle
+			 select method).FirstOrDefault();
 
-			if (foundMethod == null)
-			{
-				var types = new List<Type>(@this.GetInterfaces());
+		internal static PropertyInfo FindProperty(this Type @this, string name) =>
+			(from type in @this.GetTypeHierarchy()
+			 let baseProperty = type.GetProperty(name)
+			 where baseProperty != null
+			 select baseProperty).FirstOrDefault() ?? throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
 
-				var baseType = @this.GetTypeInfo().BaseType;
-
-				if (baseType != null)
-				{
-					types.Add(baseType);
-				}
-
-				return (from type in types
-						  let baseMethod = type.FindMethod(methodHandle)
-						  where baseMethod != null
-						  select baseMethod).FirstOrDefault();
-			}
-			else
-			{
-				return foundMethod;
-			}
-		}
-
-		internal static PropertyInfo FindProperty(this Type @this, string name)
+		private static List<Type> GetTypeHierarchy(this Type @this)
 		{
 			var types = new List<Type> { @this };
 			types.AddRange(@this.GetInterfaces());
@@ -222,17 +206,7 @@ namespace Rocks.Extensions
 				baseType = baseType.GetTypeInfo().BaseType;
 			}
 
-			var property = (from type in types
-								 let baseProperty = type.GetProperty(name)
-								 where baseProperty != null
-								 select baseProperty).FirstOrDefault();
-
-			if (property == null)
-			{
-				throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
-			}
-
-			return property;
+			return types;
 		}
 
 		internal static PropertyInfo FindProperty(this Type @this, string name, PropertyAccessors accessors)
