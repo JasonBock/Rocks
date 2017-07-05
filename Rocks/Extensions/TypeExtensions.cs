@@ -165,45 +165,45 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
-		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator)
-		{
-			var events = new HashSet<EventInfo>(@this.GetEvents(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.AddMethod.IsVirtual && !_.AddMethod.IsFinal && _.AddMethod.CanBeSeenByMockAssembly(generator)));
-
-			if (@this.GetTypeInfo().IsInterface)
-			{
-				foreach (var @interface in @this.GetInterfaces())
-				{
-					events.UnionWith(@interface.GetMockableEvents(generator));
-				}
-			}
-
-			return events.ToList().AsReadOnly();
-		}
+		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator) =>
+			new HashSet<EventInfo>(
+				from type in @this.GetTypeHierarchy(
+					@this.GetTypeInfo().IsInterface ? IncludeInterfaces.Yes : IncludeInterfaces.No, IncludeBaseTypes.No)
+				let typeEvents = type.GetEvents(ReflectionValues.PublicNonPublicInstance)
+				from typeEvent in typeEvents
+				where typeEvent.AddMethod.IsVirtual && !typeEvent.AddMethod.IsFinal && typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
+				select typeEvent).ToList().AsReadOnly();
 
 		internal static MethodInfo FindMethod(this Type @this, int methodHandle) =>
-			(from type in @this.GetTypeHierarchy()
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
 			 from method in type.GetMethods()
 			 where method.MetadataToken == methodHandle
 			 select method).FirstOrDefault();
 
 		internal static PropertyInfo FindProperty(this Type @this, string name) =>
-			(from type in @this.GetTypeHierarchy()
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
 			 let baseProperty = type.GetProperty(name)
 			 where baseProperty != null
 			 select baseProperty).FirstOrDefault() ?? throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
 
-		private static List<Type> GetTypeHierarchy(this Type @this)
+		private static List<Type> GetTypeHierarchy(this Type @this, IncludeInterfaces includeInterfaces, IncludeBaseTypes includeBaseTypes)
 		{
 			var types = new List<Type> { @this };
-			types.AddRange(@this.GetInterfaces());
 
-			var baseType = @this.GetTypeInfo().BaseType;
-
-			while (baseType != null)
+			if(includeInterfaces == IncludeInterfaces.Yes)
 			{
-				types.Add(baseType);
-				baseType = baseType.GetTypeInfo().BaseType;
+				types.AddRange(@this.GetInterfaces());
+			}
+
+			if (includeBaseTypes == IncludeBaseTypes.Yes)
+			{
+				var baseType = @this.GetTypeInfo().BaseType;
+
+				while (baseType != null)
+				{
+					types.Add(baseType);
+					baseType = baseType.GetTypeInfo().BaseType;
+				}
 			}
 
 			return types;

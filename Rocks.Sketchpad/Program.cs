@@ -1,6 +1,7 @@
 ﻿using Rocks.Options;
 using Rocks.Tests;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace Rocks.Sketchpad
@@ -9,8 +10,14 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var test = new EventsTests();
-			test.CreateWhenEventsHaveGenericEventArgs();
+			var type = typeof(SubEvents);
+			foreach(var @event in type.GetTypeInfo().GetEvents(ReflectionValues.PublicNonPublicInstance))
+			{
+				Console.Out.WriteLine(@event.Name);
+			}
+
+			var x = new Rocks.Tests.Extensions.TypeExtensionsGetMockableEventsTests();
+			x.GetMockableEventsFromSubClass();
 		}
 
 		private static void UnicodeTest()
@@ -28,6 +35,18 @@ namespace Rocks.Sketchpad
 			rock.Verify();
 		}
 	}
+
+#pragma warning disable CS0067
+	public class BaseEvents
+	{
+		public event EventHandler BaseEvent;
+	}
+
+	public class SubEvents : BaseEvents
+	{
+		public event EventHandler SubEvent;
+	}
+#pragma warning restore CS0067
 
 	public interface IHavePrimitives
 	{
