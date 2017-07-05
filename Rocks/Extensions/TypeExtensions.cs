@@ -235,34 +235,14 @@ namespace Rocks.Extensions
 			}
 		}
 
-		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers)
-		{
-			var types = new List<Type> { @this };
-			types.AddRange(@this.GetInterfaces());
-
-			var baseType = @this.GetTypeInfo().BaseType;
-
-			while (baseType != null)
-			{
-				types.Add(baseType);
-				baseType = baseType.GetTypeInfo().BaseType;
-			}
-
-			var property = (
-				from type in types
+		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers) =>
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
 				from p in type.GetProperties()
 				where p.GetIndexParameters().Any()
 				let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
 				where ObjectEquality.AreEqual(pTypes, indexers)
-				select p).FirstOrDefault();
-
-			if (property == null)
-			{
-				throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
-			}
-
-			return property;
-		}
+				select p).FirstOrDefault() ?? 
+			throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 
 		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers, PropertyAccessors accessors)
 		{
