@@ -165,137 +165,72 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
-		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator)
-		{
-			var events = new HashSet<EventInfo>(@this.GetEvents(ReflectionValues.PublicNonPublicInstance)
-				.Where(_ => _.AddMethod.IsVirtual && !_.AddMethod.IsFinal && _.AddMethod.CanBeSeenByMockAssembly(generator)));
+		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator) =>
+			new HashSet<EventInfo>(
+				from type in @this.GetTypeHierarchy(
+					@this.GetTypeInfo().IsInterface ? IncludeInterfaces.Yes : IncludeInterfaces.No, IncludeBaseTypes.No)
+				let typeEvents = type.GetEvents(ReflectionValues.PublicNonPublicInstance)
+				from typeEvent in typeEvents
+				where typeEvent.AddMethod.IsVirtual && !typeEvent.AddMethod.IsFinal && typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
+				select typeEvent).ToList().AsReadOnly();
 
-			if (@this.GetTypeInfo().IsInterface)
-			{
-				foreach (var @interface in @this.GetInterfaces())
-				{
-					events.UnionWith(@interface.GetMockableEvents(generator));
-				}
-			}
+		internal static MethodInfo FindMethod(this Type @this, int methodHandle) =>
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
+			 from method in type.GetMethods()
+			 where method.MetadataToken == methodHandle
+			 select method).FirstOrDefault();
 
-			return events.ToList().AsReadOnly();
-		}
+		internal static PropertyInfo FindProperty(this Type @this, string name) =>
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
+			 let baseProperty = type.GetProperty(name)
+			 where baseProperty != null
+			 select baseProperty).FirstOrDefault() ?? throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
 
-		internal static MethodInfo FindMethod(this Type @this, int methodHandle)
-		{
-			var foundMethod = (from method in @this.GetMethods()
-									 where method.MetadataToken == methodHandle
-									 select method).FirstOrDefault();
-
-			if (foundMethod == null)
-			{
-				var types = new List<Type>(@this.GetInterfaces());
-
-				var baseType = @this.GetTypeInfo().BaseType;
-
-				if (baseType != null)
-				{
-					types.Add(baseType);
-				}
-
-				return (from type in types
-						  let baseMethod = type.FindMethod(methodHandle)
-						  where baseMethod != null
-						  select baseMethod).FirstOrDefault();
-			}
-			else
-			{
-				return foundMethod;
-			}
-		}
-
-		internal static PropertyInfo FindProperty(this Type @this, string name)
+		private static List<Type> GetTypeHierarchy(this Type @this, IncludeInterfaces includeInterfaces, IncludeBaseTypes includeBaseTypes)
 		{
 			var types = new List<Type> { @this };
-			types.AddRange(@this.GetInterfaces());
 
-			var baseType = @this.GetTypeInfo().BaseType;
-
-			while (baseType != null)
+			if(includeInterfaces == IncludeInterfaces.Yes)
 			{
-				types.Add(baseType);
-				baseType = baseType.GetTypeInfo().BaseType;
+				types.AddRange(@this.GetInterfaces());
 			}
 
-			var property = (from type in types
-								 let baseProperty = type.GetProperty(name)
-								 where baseProperty != null
-								 select baseProperty).FirstOrDefault();
-
-			if (property == null)
+			if (includeBaseTypes == IncludeBaseTypes.Yes)
 			{
-				throw new PropertyNotFoundException($"Property {name} on type {@this.Name} was not found.");
+				var baseType = @this.GetTypeInfo().BaseType;
+
+				while (baseType != null)
+				{
+					types.Add(baseType);
+					baseType = baseType.GetTypeInfo().BaseType;
+				}
 			}
 
-			return property;
+			return types;
 		}
 
 		internal static PropertyInfo FindProperty(this Type @this, string name, PropertyAccessors accessors)
 		{
 			var property = @this.FindProperty(name);
-			TypeExtensions.CheckPropertyAccessors(property, accessors);
-			return property;
-		}
-
-		private static void CheckPropertyAccessors(PropertyInfo property, PropertyAccessors accessors)
-		{
-			if (accessors == PropertyAccessors.Get || accessors == PropertyAccessors.GetAndSet)
-			{
-				if (!property.CanRead)
-				{
-					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be read from.");
-				}
-			}
-
-			if (accessors == PropertyAccessors.Set || accessors == PropertyAccessors.GetAndSet)
-			{
-				if (!property.CanWrite)
-				{
-					throw new PropertyNotFoundException($"Property {property.Name} on type {property.DeclaringType.Name} cannot be written to.");
-				}
-			}
-		}
-
-		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers)
-		{
-			var types = new List<Type> { @this };
-			types.AddRange(@this.GetInterfaces());
-
-			var baseType = @this.GetTypeInfo().BaseType;
-
-			while (baseType != null)
-			{
-				types.Add(baseType);
-				baseType = baseType.GetTypeInfo().BaseType;
-			}
-
-			var property = (
-				from type in types
-				from p in type.GetProperties()
-				where p.GetIndexParameters().Any()
-				let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
-				where ObjectEquality.AreEqual(pTypes, indexers)
-				select p).FirstOrDefault();
-
-			if (property == null)
-			{
-				throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
-			}
-
+			property.CheckPropertyAccessors(accessors);
 			return property;
 		}
 
 		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers, PropertyAccessors accessors)
 		{
 			var property = @this.FindProperty(indexers);
-			TypeExtensions.CheckPropertyAccessors(property, accessors);
+			property.CheckPropertyAccessors(accessors);
 			return property;
 		}
+
+		internal static PropertyInfo FindProperty(this Type @this, Type[] indexers) =>
+			(from type in @this.GetTypeHierarchy(IncludeInterfaces.Yes, IncludeBaseTypes.Yes)
+			 from p in type.GetProperties()
+			 where p.GetIndexParameters().Any()
+			 let pTypes = p.GetIndexParameters().Select(pi => pi.ParameterType).ToArray()
+			 where ObjectEquality.AreEqual(pTypes, indexers)
+			 select p).FirstOrDefault() ??
+			throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 
 		internal static bool IsUnsafeToMock(this Type @this) =>
 			@this.IsPointer ||
