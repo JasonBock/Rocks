@@ -9,7 +9,7 @@
 			$"{visibility} {returnType} {explicitInterfaceName}this[{indexerArguments}] {{ {getSet} }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName,
-			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
+			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -21,7 +21,7 @@ $@"{visibility} get
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-				methodHandler.RaiseEvents(this);
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -36,7 +36,7 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(int methodHandle, string argumentNames, string returnType,
-			string delegateCast, string visibility) =>
+			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -45,7 +45,7 @@ $@"{visibility} get
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnType} :
 			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
-		methodHandler.RaiseEvents(this);
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -56,7 +56,7 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertyGetWithValueTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName,
-			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility) =>
+			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -68,7 +68,7 @@ $@"{visibility} get
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-				methodHandler.RaiseEvents(this);
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -83,7 +83,7 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexers(int methodHandle, string argumentNames, string returnType,
-			string delegateCast, string visibility) =>
+			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -92,7 +92,7 @@ $@"{visibility} get
 		var result = methodHandler.Method != null ?
 			({returnType})(methodHandler.Method as {delegateCast})({argumentNames}) :
 			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
-		methodHandler.RaiseEvents(this);
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -109,7 +109,7 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertySet(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
-			string methodWithArgumentValues, string visibility) =>
+			string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} set
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -127,7 +127,7 @@ $@"{visibility} set
 					(methodHandler.Method as {delegateCast})({argumentNames});
 				}}
 	
-				methodHandler.RaiseEvents(this);
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				break;
 			}}
@@ -145,7 +145,7 @@ $@"{visibility} set
 }}";
 
 		public static string GetPropertySetAndNoIndexers(int methodHandle, string argumentNames,
-			string delegateCast, string visibility) =>
+			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} set
 {{
 	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
@@ -157,7 +157,7 @@ $@"{visibility} set
 			(methodHandler.Method as {delegateCast})({argumentNames});
 		}}
 	
-		methodHandler.RaiseEvents(this);
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 	}}
 	else

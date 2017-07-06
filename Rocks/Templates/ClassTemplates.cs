@@ -3,6 +3,7 @@
 	internal static class ClassTemplates
 	{
 		internal static string GetRaiseImplementation() =>
+$@"void R.IMockWithEvents.Raise(string eventName, S.EventArgs args)
 		{{
 			var thisType = this.GetType();
 
@@ -46,6 +47,7 @@ namespace {baseTypeNamespace}
 {{
 	{classAttributes}
 	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
+		: {baseType}, {mockType} {baseTypeConstraints}
 	{{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
@@ -62,7 +64,7 @@ namespace {baseTypeNamespace}
 		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
 		{raiseImplementation}
-		
+
 		{additionalCode}
 	}}
 }}";
@@ -88,6 +90,7 @@ namespace {baseTypeNamespace}
 {{
 	{classAttributes}
 	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
+		: {baseType}, {mockType} {baseTypeConstraints}
 	{{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 

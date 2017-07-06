@@ -48,15 +48,15 @@ namespace Rocks.Construction
 			new ConstructorsGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.GetTypeNameWithNoGenerics());
 
-		private GenerateResults GetGeneratedMethods() => 
+		private GenerateResults GetGeneratedMethods(bool hasEvents) =>
 			new MethodsGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
-				this.IsMake, this.HandleRefOutMethod);
+				this.IsMake, this.HandleRefOutMethod, hasEvents);
 
-		private GenerateResults GetGeneratedProperties() =>
+		private GenerateResults GetGeneratedProperties(bool hasEvents) =>
 			new PropertiesGenerator().Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
-				this.IsMake);
+				this.IsMake, hasEvents);
 
 		protected virtual void HandleRefOutMethod(MethodInfo baseMethod, MethodInformation methodDescription) { }
 
@@ -66,14 +66,15 @@ namespace Rocks.Construction
 
 		private string MakeCode()
 		{
-			var methods = this.GetGeneratedMethods();
+			var hasEvents = this.BaseType.HasEvents(this.NameGenerator);
+			var methods = this.GetGeneratedMethods(hasEvents);
 			var constructors = this.GetGeneratedConstructors();
-			var properties = this.GetGeneratedProperties();
+			var properties = this.GetGeneratedProperties(hasEvents);
 			var events = this.GetGeneratedEvents();
 
 			this.IsUnsafe |= constructors.IsUnsafe || events.IsUnsafe || methods.IsUnsafe || properties.IsUnsafe;
 			this.RequiresObsoleteSuppression |= this.BaseType.GetTypeInfo().GetCustomAttribute<ObsoleteAttribute>() != null ||
-				constructors.RequiresObsoleteSuppression || events.RequiresObsoleteSuppression || 
+				constructors.RequiresObsoleteSuppression || events.RequiresObsoleteSuppression ||
 				methods.RequiresObsoleteSuppression || properties.RequiresObsoleteSuppression;
 
 			this.Namespaces.Remove(this.BaseType.Namespace);
@@ -87,8 +88,8 @@ namespace Rocks.Construction
 #endif
 
 			var namespaces = string.Join(Environment.NewLine,
-					(from @namespace in this.Namespaces
-					 select $"using {@namespace};"));
+				(from @namespace in this.Namespaces
+				 select $"using {@namespace};"));
 
 #if !NETCOREAPP1_1
 			var @class = ClassTemplates.GetClass(namespaces,
@@ -100,7 +101,9 @@ namespace Rocks.Construction
 				this.Options.Serialization == SerializationOptions.Supported ?
 					ConstructorTemplates.GetConstructorWithNoArguments(this.GetTypeNameWithNoGenerics()) : string.Empty,
 				this.GetAdditionNamespaceCode(),
-				this.IsUnsafe, baseTypeGenericArguments.Constraints);
+				this.IsUnsafe, baseTypeGenericArguments.Constraints,
+				hasEvents ? "R.IMockWithEvents" : "R.IMock",
+				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
 #else
 			var @class = ClassTemplates.GetClass(namespaces,
 				this.TypeName, this.BaseType.GetFullName(),
@@ -109,7 +112,9 @@ namespace Rocks.Construction
 				string.Empty,
 				string.Empty,
 				this.GetAdditionNamespaceCode(),
-				this.IsUnsafe, baseTypeGenericArguments.Constraints);
+				this.IsUnsafe, baseTypeGenericArguments.Constraints,
+				hasEvents ? "R.IMockWithEvents" : "R.IMock",
+				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
 #endif
 			if (this.RequiresObsoleteSuppression)
 			{

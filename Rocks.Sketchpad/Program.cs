@@ -10,12 +10,8 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var rock = Rock.Create<IStupid>(
-				new RockOptions(codeFile: CodeFileOptions.Create));
-			rock.Handle(_ => _.Foo());
-			var chunk = rock.Make();
-			chunk.Foo();
-			rock.Verify();
+			var test = new HandleProperty1IndexerTests();
+			test.MakeWithGetAndSetIndexerProperty();
 		}
 
 		private static void UnicodeTest()

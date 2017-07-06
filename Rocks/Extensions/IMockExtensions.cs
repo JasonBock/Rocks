@@ -30,7 +30,7 @@ namespace Rocks.Extensions
 
 		public static void Raise(this object @this, string eventName, EventArgs args)
 		{
-			if (@this is IMock mock)
+			if (@this is IMockWithEvents mock)
 			{
 				mock.Raise(eventName, args);
 			}

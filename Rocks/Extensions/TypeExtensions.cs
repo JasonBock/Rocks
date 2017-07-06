@@ -165,24 +165,14 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
-		internal static bool HasEvents(this Type @this, NameGenerator generator)
-		{
-			var thisType = @this.GetTypeInfo();
+		internal static bool HasEvents(this Type @this, NameGenerator generator) =>
+			(from type in @this.GetTypeHierarchy(
+				@this.GetTypeInfo().IsInterface ? IncludeInterfaces.Yes : IncludeInterfaces.No, IncludeBaseTypes.No)
+			from typeEvent in type.GetEvents(ReflectionValues.PublicNonPublicInstance)
+			let typeEventMethod = typeEvent.AddMethod
+			where typeEventMethod.IsPublic || typeEventMethod.IsFamily
+			select typeEvent).Any();
 
-			if (thisType.IsInterface)
-			{
-				return (from type in thisType.GetInterfaces()
-						  from typeEvent in type.GetEvents(ReflectionValues.PublicNonPublicInstance)
-						  where typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
-						  select typeEvent).Any();
-			}
-			else
-			{
-				return (from typeEvent in thisType.GetEvents(ReflectionValues.PublicNonPublicInstance)
-						  where typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
-						  select typeEvent).Any();
-			}
-		}
 		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator) =>
 			new HashSet<EventInfo>(
 				from type in @this.GetTypeHierarchy(
