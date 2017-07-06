@@ -27,16 +27,5 @@ namespace Rocks.Tests
 			returnValue.Returns(newReturnValue);
 			Assert.That(handler.ReturnValue, Is.EqualTo(newReturnValue), nameof(handler.ReturnValue));
 		}
-
-		[Test]
-		public void SetReturnValueFunction()
-		{
-			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-			var newReturnValue = "a";
-			var handler = new HandlerInformation<string>(expectations);
-			var returnValue = new MethodAdornments<string>(handler);
-			returnValue.Returns(new Func<string>(() => newReturnValue));
-			Assert.That(handler.ReturnValue, Is.EqualTo(newReturnValue), nameof(handler.ReturnValue));
-		}
 	}
 }

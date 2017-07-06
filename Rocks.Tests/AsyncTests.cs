@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public async Task RunAsyncAsynchronously()
 		{
 			var rock = Rock.Create<IAmAsync>();
-			rock.Handle(_ => _.GoAsync()).Returns(
+			rock.Handle(_ => _.GoAsync(),
 				async () =>
 				{
 					await Task.Yield();
