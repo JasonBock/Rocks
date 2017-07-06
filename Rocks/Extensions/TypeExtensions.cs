@@ -165,6 +165,24 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
+		internal static bool HasEvents(this Type @this, NameGenerator generator)
+		{
+			var thisType = @this.GetTypeInfo();
+
+			if (thisType.IsInterface)
+			{
+				return (from type in thisType.GetInterfaces()
+						  from typeEvent in type.GetEvents(ReflectionValues.PublicNonPublicInstance)
+						  where typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
+						  select typeEvent).Any();
+			}
+			else
+			{
+				return (from typeEvent in thisType.GetEvents(ReflectionValues.PublicNonPublicInstance)
+						  where typeEvent.AddMethod.CanBeSeenByMockAssembly(generator)
+						  select typeEvent).Any();
+			}
+		}
 		internal static ReadOnlyCollection<EventInfo> GetMockableEvents(this Type @this, NameGenerator generator) =>
 			new HashSet<EventInfo>(
 				from type in @this.GetTypeHierarchy(
@@ -190,7 +208,7 @@ namespace Rocks.Extensions
 		{
 			var types = new List<Type> { @this };
 
-			if(includeInterfaces == IncludeInterfaces.Yes)
+			if (includeInterfaces == IncludeInterfaces.Yes)
 			{
 				types.AddRange(@this.GetInterfaces());
 			}
