@@ -13,7 +13,7 @@ namespace Rocks.Construction.Generators
 	{
 		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder informationBuilder,
-			bool isMake)
+			bool isMake, bool hasEvents)
 		{
 			var requiresObsoleteSuppression = false;
 
@@ -55,18 +55,18 @@ namespace Rocks.Construction.Generators
 								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 									PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(
 										getMethod.MetadataToken, getArgumentNameList, returnType,
-										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility) :
+										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility, hasEvents) :
 									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(
 										getMethod.MetadataToken, getArgumentNameList, returnType,
-										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility));
+										getExpectationChecks, getDelegateCast, getExpectationExceptionMessage, getVisibility, hasEvents));
 							}
 							else
 							{
 								propertyImplementations.Add(getMethod.ReturnType.RequiresExplicitCast() ?
 									PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(
-										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility) :
+										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility, hasEvents) :
 									PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(
-										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility));
+										getMethod.MetadataToken, getArgumentNameList, returnType, getDelegateCast, getVisibility, hasEvents));
 							}
 						}
 					}
@@ -89,12 +89,13 @@ namespace Rocks.Construction.Generators
 								var setExpectationChecks = setMethod.GetExpectationChecks();
 								var setExpectationExceptionMessage = setMethod.GetExpectationExceptionMessage();
 								propertyImplementations.Add(PropertyTemplates.GetPropertySet(
-									setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, setExpectationExceptionMessage, setVisibility));
+									setMethod.MetadataToken, setArgumentNameList, setExpectationChecks, setDelegateCast, 
+									setExpectationExceptionMessage, setVisibility, hasEvents));
 							}
 							else
 							{
 								propertyImplementations.Add(PropertyTemplates.GetPropertySetAndNoIndexers(
-									setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility));
+									setMethod.MetadataToken, setArgumentNameList, setDelegateCast, setVisibility, hasEvents));
 							}
 						}
 					}

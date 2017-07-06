@@ -57,8 +57,8 @@ namespace Rocks.Tests.Templates
 	throw new S.NotImplementedException();"));
 
 		[Test]
-		public void GetActionMethod() =>
-			Assert.That(MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h"), Is.EqualTo(
+		public void GetActionMethodWhenHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h", true), Is.EqualTo(
 @"h g
 {
 	e
@@ -77,8 +77,47 @@ namespace Rocks.Tests.Templates
 				{
 					(methodHandler.Method as d)(b);
 				}
-	
+
 				methodHandler.RaiseEvents(this);
+				methodHandler.IncrementCallCount();
+				break;
+			}
+		}
+
+		if(!foundMatch)
+		{
+			throw new RE.ExpectationException($""No handlers were found for f"");
+		}
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+
+		[Test]
+		public void GetActionMethodWhenHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetActionMethod(1, "b", "c", "d", "e", "f", "g", "h", false), Is.EqualTo(
+@"h g
+{
+	e
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		var foundMatch = false;
+				
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(c)
+			{
+				foundMatch = true;
+
+				if(methodHandler.Method != null)
+				{
+					(methodHandler.Method as d)(b);
+				}
+
+				
 				methodHandler.IncrementCallCount();
 				break;
 			}
@@ -104,8 +143,8 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetActionMethodWithNoArguments() =>
-			Assert.That(MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f"), Is.EqualTo(
+		public void GetActionMethodWithNoArgumentsAndHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f", true), Is.EqualTo(
 @"f e
 {
 	d
@@ -117,8 +156,32 @@ namespace Rocks.Tests.Templates
 		{
 			(methodHandler.Method as c)(b);
 		}
-	
+
 		methodHandler.RaiseEvents(this);
+		methodHandler.IncrementCallCount();
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+
+		[Test]
+		public void GetActionMethodWithNoArgumentsAndHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetActionMethodWithNoArguments(1, "b", "c", "d", "e", "f", false), Is.EqualTo(
+@"f e
+{
+	d
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		if(methodHandler.Method != null)
+		{
+			(methodHandler.Method as c)(b);
+		}
+
+		
 		methodHandler.IncrementCallCount();
 	}
 	else
@@ -136,8 +199,8 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetFunctionWithReferenceTypeReturnValueMethod() =>
-			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
+		public void GetFunctionWithReferenceTypeReturnValueMethodAndHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", true), Is.EqualTo(
 @"ki j h
 {
 	f
@@ -166,6 +229,35 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
+		public void GetFunctionWithReferenceTypeReturnValueMethodAndHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", false), Is.EqualTo(
+@"ki j h
+{
+	f
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(d)
+			{
+				var result = methodHandler.Method != null ?
+					(methodHandler.Method as e)(b) as c :
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+				
+				methodHandler.IncrementCallCount();
+				return result;
+			}
+		}
+
+		throw new RE.ExpectationException($""No handlers were found for g"");
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+		[Test]
 		public void GetFunctionForMake() =>
 			Assert.That(MethodTemplates.GetFunctionForMake("a", "b", "c", "d", "e", typeof(int)), Is.EqualTo(
 @"ec d b
@@ -176,8 +268,8 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethod() =>
-			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
+		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodAndHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i", true), Is.EqualTo(
 @"ig h f
 {
 	e
@@ -199,8 +291,31 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetFunctionWithValueTypeReturnValueMethod() =>
-			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"), Is.EqualTo(
+		public void GetFunctionWithReferenceTypeReturnValueAndNoArgumentsMethodAndHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i", false), Is.EqualTo(
+@"ig h f
+{
+	e
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(methodHandler.Method as d)(b) as c :
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+		
+		methodHandler.IncrementCallCount();
+		return result;
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+
+		[Test]
+		public void GetFunctionWithValueTypeReturnValueMethodAndHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", true), Is.EqualTo(
 @"ki j h
 {
 	f
@@ -229,8 +344,38 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethod() =>
-			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i"), Is.EqualTo(
+		public void GetFunctionWithValueTypeReturnValueMethodAndHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", false), Is.EqualTo(
+@"ki j h
+{
+	f
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		foreach(var methodHandler in methodHandlers)
+		{
+			if(d)
+			{
+				var result = methodHandler.Method != null ?
+					(c)(methodHandler.Method as e)(b) :
+					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+				
+				methodHandler.IncrementCallCount();
+				return result;
+			}
+		}
+
+		throw new RE.ExpectationException($""No handlers were found for g"");
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+
+		[Test]
+		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodAndHasEventsIsTrue() =>
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i", true), Is.EqualTo(
 @"ig h f
 {
 	e
@@ -242,6 +387,29 @@ namespace Rocks.Tests.Templates
 			(c)(methodHandler.Method as d)(b) :
 			(methodHandler as R.HandlerInformation<c>).ReturnValue;
 		methodHandler.RaiseEvents(this);
+		methodHandler.IncrementCallCount();
+		return result;
+	}
+	else
+	{
+		throw new S.NotImplementedException();
+	}
+}"));
+
+		[Test]
+		public void GetFunctionWithValueTypeReturnValueAndNoArgumentsMethodAndHasEventsIsFalse() =>
+			Assert.That(MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(1, "b", "c", "d", "e", "f", "g", "h", "i", false), Is.EqualTo(
+@"ig h f
+{
+	e
+
+	if (this.handlers.TryGetValue(1, out var methodHandlers))
+	{
+		var methodHandler = methodHandlers[0];
+		var result = methodHandler.Method != null ?
+			(c)(methodHandler.Method as d)(b) :
+			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+		
 		methodHandler.IncrementCallCount();
 		return result;
 	}

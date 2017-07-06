@@ -49,7 +49,7 @@ $@"public {methodNameWithOverride} =>
 	throw new S.NotImplementedException();";
 
 		internal static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
-			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility) =>
+			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, bool hasEvents) =>
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -68,8 +68,8 @@ $@"{visibility} {methodNameWithOverride}
 				{{
 					(methodHandler.Method as {delegateCast})({argumentNames});
 				}}
-	
-				methodHandler.RaiseEvents(this);
+
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				break;
 			}}
@@ -93,7 +93,7 @@ $@"{visibility} {methodNameWithOverride}
 }}";
 
 		internal static string GetActionMethodWithNoArguments(int methodHandle, string argumentNames, string delegateCast, string outInitializers,
-			string methodNameWithOverride, string visibility) =>
+			string methodNameWithOverride, string visibility, bool hasEvents) =>
 $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -105,8 +105,8 @@ $@"{visibility} {methodNameWithOverride}
 		{{
 			(methodHandler.Method as {delegateCast})({argumentNames});
 		}}
-	
-		methodHandler.RaiseEvents(this);
+
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 	}}
 	else
@@ -122,7 +122,7 @@ $@"{visibility} {methodNameWithOverride}
 }}";
 
 		internal static string GetFunctionWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes, bool hasEvents) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -136,7 +136,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 				var result = methodHandler.Method != null ?
 					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-				methodHandler.RaiseEvents(this);
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -151,7 +151,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		internal static string GetFunctionWithReferenceTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes, bool hasEvents) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -162,7 +162,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 		var result = methodHandler.Method != null ?
 			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
 			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-		methodHandler.RaiseEvents(this);
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
@@ -173,7 +173,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		internal static string GetFunctionWithValueTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName, string expectationTemplateInstances,
-			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+			string delegateCast, string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes, bool hasEvents) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -187,7 +187,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-				methodHandler.RaiseEvents(this);
+				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
 			}}
@@ -202,7 +202,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 }}";
 
 		internal static string GetFunctionWithValueTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
-			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes) =>
+			string delegateCast, string outInitializers, string methodNameWithOverride, string visibility, string requiresNew, string returnTypeAttributes, bool hasEvents) =>
 $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
@@ -213,7 +213,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 		var result = methodHandler.Method != null ?
 			({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
 			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
-		methodHandler.RaiseEvents(this);
+		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
 	}}

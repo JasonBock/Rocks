@@ -13,7 +13,7 @@ namespace Rocks.Construction.Generators
 	{
 		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder informationBuilder, bool isMake,
-			Action<MethodInfo, MethodInformation> handleRefOutMethod)
+			Action<MethodInfo, MethodInformation> handleRefOutMethod, bool hasEvents)
 		{
 			var requiresObsoleteSuppression = false;
 			var generatedMethods = new List<string>();
@@ -40,14 +40,14 @@ namespace Rocks.Construction.Generators
 							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers,
 								methodInformation.DescriptionWithOverride, visibility,
-								method.RequiresNewImplementation, namespaces, isMake));
+								method.RequiresNewImplementation, namespaces, isMake, hasEvents));
 						}
 						else
 						{
 							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
 								visibility, method.RequiresNewImplementation,
-								namespaces, isMake));
+								namespaces, isMake, hasEvents));
 
 							if (methodInformation.ContainsDelegateConditions)
 							{
@@ -85,7 +85,7 @@ namespace Rocks.Construction.Generators
 		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
 			string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation,
-			SortedSet<string> namespaces, bool isMake)
+			SortedSet<string> namespaces, bool isMake, bool hasEvents)
 		{
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
@@ -102,25 +102,25 @@ namespace Rocks.Construction.Generators
 						MethodTemplates.GetFunctionWithValueTypeReturnValue(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresNew, returnTypeAttributes) :
+							visibility, requiresNew, returnTypeAttributes, hasEvents) :
 						MethodTemplates.GetFunctionWithReferenceTypeReturnValue(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							expectationChecks, delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride,
-							visibility, requiresNew, returnTypeAttributes);
+							visibility, requiresNew, returnTypeAttributes, hasEvents);
 			}
 			else
 			{
 				return isMake ?
 					MethodTemplates.GetActionMethodForMake(outInitializers, methodDescriptionWithOverride, visibility) :
 					MethodTemplates.GetActionMethod(baseMethod.MetadataToken, argumentNameList, expectationChecks,
-						delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride, visibility);
+						delegateCast, outInitializers, expectationExceptionMessage, methodDescriptionWithOverride, visibility, hasEvents);
 			}
 		}
 
 		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
 			string outInitializers, string methodDescriptionWithOverride, string visibility,
 			RequiresIsNewImplementation requiresIsNewImplementation,
-			SortedSet<string> namespaces, bool isMake)
+			SortedSet<string> namespaces, bool isMake, bool hasEvents)
 		{
 			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
 			var returnTypeName = baseMethod.ReturnType.GetFullName(namespaces);
@@ -135,18 +135,18 @@ namespace Rocks.Construction.Generators
 						MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes) :
+							requiresNew, returnTypeAttributes, hasEvents) :
 						MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(
 							baseMethod.MetadataToken, argumentNameList, returnTypeName,
 							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes);
+							requiresNew, returnTypeAttributes, hasEvents);
 			}
 			else
 			{
 				return isMake ?
 					MethodTemplates.GetActionMethodWithNoArgumentsForMake(outInitializers, methodDescriptionWithOverride, visibility) :
 					MethodTemplates.GetActionMethodWithNoArguments(baseMethod.MetadataToken, argumentNameList, delegateCast,
-						outInitializers, methodDescriptionWithOverride, visibility);
+						outInitializers, methodDescriptionWithOverride, visibility, hasEvents);
 			}
 		}
 	}

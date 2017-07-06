@@ -55,7 +55,7 @@ namespace Rocks
 
 		public void IncrementCallCount() => Interlocked.Increment(ref this.callCount);
 
-		public void RaiseEvents(IMock target)
+		public void RaiseEvents(IMockWithEvents target)
 		{
 			foreach (var raiseEvent in this.raiseEvents)
 			{

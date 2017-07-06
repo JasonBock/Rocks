@@ -10,14 +10,8 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var type = typeof(SubEvents);
-			foreach(var @event in type.GetTypeInfo().GetEvents(ReflectionValues.PublicNonPublicInstance))
-			{
-				Console.Out.WriteLine(@event.Name);
-			}
-
-			var x = new Rocks.Tests.Extensions.TypeExtensionsGetMockableEventsTests();
-			x.GetMockableEventsFromSubClass();
+			var test = new HandleProperty1IndexerTests();
+			test.MakeWithGetAndSetIndexerProperty();
 		}
 
 		private static void UnicodeTest()
@@ -37,6 +31,21 @@ namespace Rocks.Sketchpad
 	}
 
 #pragma warning disable CS0067
+	public interface IStupid
+	{
+		void Foo();
+	}
+
+	public interface IBaseEvents
+	{
+		event EventHandler BaseEvent;
+	}
+
+	public interface ISubEvents : IBaseEvents
+	{
+		event EventHandler SubEvent;
+	}
+
 	public class BaseEvents
 	{
 		public event EventHandler BaseEvent;
@@ -45,6 +54,12 @@ namespace Rocks.Sketchpad
 	public class SubEvents : BaseEvents
 	{
 		public event EventHandler SubEvent;
+	}
+
+	public abstract class HandleISubEvents : ISubEvents
+	{
+		public abstract event EventHandler SubEvent;
+		public abstract event EventHandler BaseEvent;
 	}
 #pragma warning restore CS0067
 

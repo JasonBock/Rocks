@@ -18,7 +18,7 @@ a
 #if !NETCOREAPP1_1
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsTrue() =>
-			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"), Is.EqualTo(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -34,7 +34,7 @@ namespace h
 {
 	i
 	public unsafe sealed class b
-		: c, R.IMock m
+		: c, n m
 	{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
@@ -50,21 +50,7 @@ namespace h
 
 		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
-		void R.IMock.Raise(string eventName, S.EventArgs args)
-		{
-			var thisType = this.GetType();
-
-			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
-				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
-
-			if (eventDelegate != null)
-			{
-				foreach (var handler in eventDelegate.GetInvocationList())
-				{
-					handler.Method.Invoke(handler.Target, new object[] { this, args });
-				}
-			}
-		}
+		o
 
 		l
 	}
@@ -72,7 +58,7 @@ namespace h
 #else
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsTrue() =>
-			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m"), Is.EqualTo(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -89,7 +75,7 @@ namespace h
 {
 	i
 	public unsafe sealed class b
-		: c, R.IMock m
+		: c, n m
 	{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
@@ -105,21 +91,7 @@ namespace h
 
 		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
-		void R.IMock.Raise(string eventName, S.EventArgs args)
-		{
-			var thisType = this.GetType();
-
-			var eventDelegate = (S.MulticastDelegate)thisType.GetTypeInfo().GetField(eventName, 
-				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
-
-			if (eventDelegate != null)
-			{
-				foreach (var handler in eventDelegate.GetInvocationList())
-				{
-					handler.GetMethodInfo().Invoke(handler.Target, new object[] { this, args });
-				}
-			}
-		}
+		o
 
 		l
 	}
@@ -129,7 +101,7 @@ namespace h
 #if !NETCOREAPP1_1
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsFalse() =>
-			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"), Is.EqualTo(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -145,7 +117,7 @@ namespace h
 {
 	i
 	public  sealed class b
-		: c, R.IMock m
+		: c, n m
 	{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
@@ -161,21 +133,7 @@ namespace h
 
 		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
-		void R.IMock.Raise(string eventName, S.EventArgs args)
-		{
-			var thisType = this.GetType();
-
-			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
-				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
-
-			if (eventDelegate != null)
-			{
-				foreach (var handler in eventDelegate.GetInvocationList())
-				{
-					handler.Method.Invoke(handler.Target, new object[] { this, args });
-				}
-			}
-		}
+		o
 
 		l
 	}
@@ -183,7 +141,7 @@ namespace h
 #else
 		[Test]
 		public void GetClassTemplateWhenIsUnsafeIsFalse() =>
-			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m"), Is.EqualTo(
+			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
 using RE = Rocks.Exceptions;
@@ -200,7 +158,7 @@ namespace h
 {
 	i
 	public  sealed class b
-		: c, R.IMock m
+		: c, n m
 	{
 		private SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> handlers;
 
@@ -216,21 +174,7 @@ namespace h
 
 		SCO.ReadOnlyDictionary<int, SCO.ReadOnlyCollection<R.HandlerInformation>> R.IMock.Handlers => this.handlers;
 
-		void R.IMock.Raise(string eventName, S.EventArgs args)
-		{
-			var thisType = this.GetType();
-
-			var eventDelegate = (S.MulticastDelegate)thisType.GetTypeInfo().GetField(eventName, 
-				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
-
-			if (eventDelegate != null)
-			{
-				foreach (var handler in eventDelegate.GetInvocationList())
-				{
-					handler.GetMethodInfo().Invoke(handler.Target, new object[] { this, args });
-				}
-			}
-		}
+		o
 
 		l
 	}
