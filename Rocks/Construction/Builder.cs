@@ -66,7 +66,7 @@ namespace Rocks.Construction
 
 		private string MakeCode()
 		{
-			var hasEvents = this.BaseType.HasEvents(this.NameGenerator);
+			var hasEvents = this.BaseType.HasEvents();
 			var methods = this.GetGeneratedMethods(hasEvents);
 			var constructors = this.GetGeneratedConstructors();
 			var properties = this.GetGeneratedProperties(hasEvents);

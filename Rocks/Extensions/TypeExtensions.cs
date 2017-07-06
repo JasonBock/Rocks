@@ -165,7 +165,7 @@ namespace Rocks.Extensions
 			return properties.ToList().AsReadOnly();
 		}
 
-		internal static bool HasEvents(this Type @this, NameGenerator generator) =>
+		internal static bool HasEvents(this Type @this) =>
 			(from type in @this.GetTypeHierarchy(
 				@this.GetTypeInfo().IsInterface ? IncludeInterfaces.Yes : IncludeInterfaces.No, IncludeBaseTypes.No)
 			from typeEvent in type.GetEvents(ReflectionValues.PublicNonPublicInstance)
