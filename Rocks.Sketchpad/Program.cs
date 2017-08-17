@@ -1,8 +1,6 @@
 ﻿using Rocks.Options;
 using Rocks.Tests;
 using System;
-using System.Buffers;
-using System.Reflection;
 using System.Text;
 
 namespace Rocks.Sketchpad
@@ -11,18 +9,9 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var test = new OptionalArgumentsTests();
-			test.MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecified();
-			//var rock = Rock.Create<ArrayPool<int>>(
-			//	new RockOptions(
-			//		level: OptimizationSetting.Debug,
-			//		codeFile: CodeFileOptions.Create));
-			//rock.Handle(_ => _.Rent(2));
-
-			//var chunk = rock.Make();
-			//chunk.Rent(2);
-
-			//rock.Verify();
+			//Rocks.Tests.ExpectationsTests.HandleWithCall
+			var test = new ExpectationsTests();
+			test.HandleWithCall();
 		}
 
 		private static void UnicodeTest()

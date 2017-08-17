@@ -2,13 +2,22 @@
 
 * Need to address these: #if !NETCOREAPP1_1
 
-* Rocks.Tests.NETFramework, Rocks.Task, Rocks.Task.Tests needs to be updated for new .csproj format
+* Rocks.Tests.NETFramework (DONE), Rocks.Task, Rocks.Task.Tests needs to be updated for new .csproj format
 
 * LangVersion should be "latest"
 
 * Still not happy with assembly resolving/loading in Compiler.cs :(
-
-* ArrayPool<T> has Return() with optional clearArray that is "false", but I'm generating "False". The hell?!
+I think I need to do the recursive LoadDependencies and then do them on all the types given by:
+?this.ReferencedAssemblies[0].GetReferencedAssemblies()
+{System.Reflection.AssemblyName[7]}
+    [0]: {netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51}
+    [1]: {nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb}
+    [2]: {Rocks, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
+    [3]: {Rocks.RockAssemblyTestContainer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null}
+    [4]: {System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a}
+    [5]: {Microsoft.CodeAnalysis, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35}
+    [6]: {Rocks.Tests.Types, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
+	
 
 ADDRESSED
 
@@ -17,3 +26,6 @@ Oh well! Gone.
 
 * ArgIterator doesn't exist...do we really care?
 Nope, removing it.
+
+* ArrayPool<T> has Return() with optional clearArray that is "false", but I'm generating "False". The hell?!
+bool.ToString() returns "True" or "False", so created an extension method to address that.

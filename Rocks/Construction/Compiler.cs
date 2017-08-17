@@ -35,21 +35,27 @@ namespace Rocks.Construction
 					}
 				}
 
-				var platformAssemblyPaths = new HashSet<string>(
-					(AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string).Split(Path.PathSeparator));
-				var platformAssemblyNames = platformAssemblyPaths.Select(Path.GetFileNameWithoutExtension);
 				var assemblies = new HashSet<Assembly>();
 
-				foreach (var platformAssemblyName in platformAssemblyNames)
-				{
-					assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
-				}
+				var trustedPlatformAssemblies =
+					(AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string)?.Split(Path.PathSeparator);
 
-				assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
-
-				foreach (var assembly in assemblies.ToList())
+				if (trustedPlatformAssemblies != null)
 				{
-					LoadDependencies(assemblies, assembly);
+					var platformAssemblyPaths = new HashSet<string>(trustedPlatformAssemblies);
+					var platformAssemblyNames = platformAssemblyPaths.Select(Path.GetFileNameWithoutExtension);
+
+					foreach (var platformAssemblyName in platformAssemblyNames)
+					{
+						assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
+					}
+
+					assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
+
+					foreach (var assembly in assemblies.ToList())
+					{
+						LoadDependencies(assemblies, assembly);
+					}
 				}
 
 				return assemblies;
@@ -124,13 +130,29 @@ namespace Rocks.Construction
 		private MetadataReference[] GetReferences()
 		{
 			var references = Compiler.assemblyReferences.Value;
-			this.ReferencedAssemblies.ToList().ForEach(_ => references.Add(_));
 
-			return references
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Cast<MetadataReference>()
-				.ToArray();
+			if (references.Count == 0)
+			{
+				var referencedAssemblies = new List<MetadataReference>(
+					this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)));
+				referencedAssemblies.AddRange(new[]
+					{
+						MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
+						MetadataReference.CreateFromFile(typeof(IMock).GetTypeInfo().Assembly.Location),
+						MetadataReference.CreateFromFile(typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly.Location),
+					});
+				return referencedAssemblies.ToArray();
+			}
+			else
+			{
+				this.ReferencedAssemblies.ToList().ForEach(_ => references.Add(_));
+
+				return references
+					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+					.Select(_ => MetadataReference.CreateFromFile(_.Location))
+					.Cast<MetadataReference>()
+					.ToArray();
+			}
 		}
 
 		protected abstract T GetAssemblyStream();
