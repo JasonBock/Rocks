@@ -13,7 +13,6 @@ namespace Rocks.Construction
 {
 	internal abstract class Compiler
 	{
-#if NETCOREAPP1_1
 		// Lifted from:
 		// https://github.com/dotnet/roslyn/wiki/Runtime-code-generation-using-Roslyn-compilations-in-.NET-Core-App
 		protected static Lazy<HashSet<Assembly>> assemblyReferences =
@@ -55,7 +54,6 @@ namespace Rocks.Construction
 
 				return assemblies;
 			});
-#endif
 	}
 
 	internal abstract class Compiler<T>
@@ -123,20 +121,6 @@ namespace Rocks.Construction
 			this.Complete();
 		}
 
-#if !NETCOREAPP1_1
-		private MetadataReference[] GetReferences()
-		{
-			var references = new List<MetadataReference>(
-				this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)));
-			references.AddRange(new[]
-				{
-					MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(IMock).GetTypeInfo().Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly.Location),
-				});
-			return references.ToArray();
-		}
-#else
 		private MetadataReference[] GetReferences()
 		{
 			var references = Compiler.assemblyReferences.Value;
@@ -148,7 +132,7 @@ namespace Rocks.Construction
 				.Cast<MetadataReference>()
 				.ToArray();
 		}
-#endif
+
 		protected abstract T GetAssemblyStream();
 		protected abstract T GetPdbStream();
 		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }

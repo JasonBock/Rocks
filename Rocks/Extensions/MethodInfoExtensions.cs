@@ -80,11 +80,8 @@ namespace Rocks.Extensions
 			(from parameter in @this.GetParameters()
 				let parameterType = parameter.ParameterType
 				where parameter.IsOut || parameterType.IsByRef ||
-#if !NETCOREAPP1_1
 				typeof(TypedReference).IsAssignableFrom(parameterType) ||
 				typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
-				typeof(ArgIterator).IsAssignableFrom(parameterType) ||
-#endif
 				new TypeDissector(parameterType).IsPointer
 					select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
 

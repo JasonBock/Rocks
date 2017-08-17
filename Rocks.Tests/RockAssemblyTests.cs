@@ -39,7 +39,6 @@ namespace Rocks.Tests
 			Assert.That(typeof(AssemblyRock<>).IsAssignableFrom(rock.GetType().GetGenericTypeDefinition()), Is.True);
 		}
 
-#if !NETCOREAPP1_1
 		[Test]
 		public void GenerateMockWithHandlers()
 		{
@@ -86,7 +85,6 @@ namespace Rocks.Tests
 
 			Assert.Pass($"Total time to generate mocks for {typeof(object).GetTypeInfo().Assembly.FullName} : {stopwatch.Elapsed}");
 		}
-#endif
 
 		public Guid Method4(string a, ref int b)
 		{

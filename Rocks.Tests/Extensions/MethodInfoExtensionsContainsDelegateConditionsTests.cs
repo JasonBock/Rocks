@@ -33,12 +33,6 @@ namespace Rocks.Tests.Extensions
 			Assert.That(typeof(IHaveMethodWithPointerTypeReturnType)
 				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions(), Is.True);
 
-#if !NETCOREAPP1_1
-		[Test]
-		public void ContainsArgIterator() =>
-			Assert.That(typeof(IHaveMethodWithArgIteratorArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithArgIteratorArgument.Target)).ContainsDelegateConditions(), Is.True);
-
 		[Test]
 		public void ContainsRuntimeArgumentHandle() =>
 			Assert.That(typeof(IHaveMethodWithRuntimeArgumentHandleArgument)
@@ -48,7 +42,6 @@ namespace Rocks.Tests.Extensions
 		public void ContainsTypedReference() =>
 			Assert.That(typeof(IHaveMethodWithTypedReferenceArgument)
 				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions(), Is.True);
-#endif
 	}
 
 	public interface IHaveMethodWithPointerTypeArgument
@@ -75,11 +68,6 @@ namespace Rocks.Tests.Extensions
 	{
 		void Target(int a);
 	}
-#if !NETCOREAPP1_1
-	public interface IHaveMethodWithArgIteratorArgument
-	{
-		void Target(ArgIterator a);
-	}
 
 	public interface IHaveMethodWithRuntimeArgumentHandleArgument
 	{
@@ -90,5 +78,4 @@ namespace Rocks.Tests.Extensions
 	{
 		void Target(TypedReference a);
 	}
-#endif
 }
