@@ -11,16 +11,18 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var rock = Rock.Create<ArrayPool<int>>(
-				new RockOptions(
-					level: OptimizationSetting.Debug,
-					codeFile: CodeFileOptions.Create));
-			rock.Handle(_ => _.Rent(2));
+			var test = new OptionalArgumentsTests();
+			test.MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecified();
+			//var rock = Rock.Create<ArrayPool<int>>(
+			//	new RockOptions(
+			//		level: OptimizationSetting.Debug,
+			//		codeFile: CodeFileOptions.Create));
+			//rock.Handle(_ => _.Rent(2));
 
-			var chunk = rock.Make();
-			chunk.Rent(2);
+			//var chunk = rock.Make();
+			//chunk.Rent(2);
 
-			rock.Verify();
+			//rock.Verify();
 		}
 
 		private static void UnicodeTest()
