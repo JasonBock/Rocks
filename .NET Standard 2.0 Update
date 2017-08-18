@@ -29,3 +29,10 @@ Nope, removing it.
 
 * ArrayPool<T> has Return() with optional clearArray that is "false", but I'm generating "False". The hell?!
 bool.ToString() returns "True" or "False", so created an extension method to address that.
+
+
+TAKEAWAYS
+
+* GetReferences() feels really messy with collection allocations. Need to clean that up.
+	* Maybe cache reference lookup?
+	* Don't do so many copies

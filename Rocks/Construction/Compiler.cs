@@ -13,28 +13,28 @@ namespace Rocks.Construction
 {
 	internal abstract class Compiler
 	{
+		internal static void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
+		{
+			foreach (var reference in fromAssembly.GetReferencedAssemblies())
+			{
+				try
+				{
+					var assembly = Assembly.Load(reference);
+
+					if (loadedAssemblies.Add(assembly))
+					{
+						LoadDependencies(loadedAssemblies, assembly);
+					}
+				}
+				catch (FileNotFoundException) { }
+			}
+		}
+
 		// Lifted from:
 		// https://github.com/dotnet/roslyn/wiki/Runtime-code-generation-using-Roslyn-compilations-in-.NET-Core-App
 		protected static Lazy<HashSet<Assembly>> assemblyReferences =
 			new Lazy<HashSet<Assembly>>(() =>
 			{
-				void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
-				{
-					foreach (var reference in fromAssembly.GetReferencedAssemblies())
-					{
-						try
-						{
-							var assembly = Assembly.Load(reference);
-
-							if (loadedAssemblies.Add(assembly))
-							{
-								LoadDependencies(loadedAssemblies, assembly);
-							}
-						}
-						catch (FileNotFoundException) { }
-					}
-				}
-
 				var assemblies = new HashSet<Assembly>();
 
 				var trustedPlatformAssemblies =
@@ -54,7 +54,7 @@ namespace Rocks.Construction
 
 					foreach (var assembly in assemblies.ToList())
 					{
-						LoadDependencies(assemblies, assembly);
+						Compiler.LoadDependencies(assemblies, assembly);
 					}
 				}
 
@@ -133,26 +133,30 @@ namespace Rocks.Construction
 
 			if (references.Count == 0)
 			{
-				var referencedAssemblies = new List<MetadataReference>(
-					this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)));
-				referencedAssemblies.AddRange(new[]
-					{
-						MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
-						MetadataReference.CreateFromFile(typeof(IMock).GetTypeInfo().Assembly.Location),
-						MetadataReference.CreateFromFile(typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly.Location),
-					});
-				return referencedAssemblies.ToArray();
+				var referencedAssemblies = new HashSet<Assembly>(this.ReferencedAssemblies)
+				{
+					typeof(object).GetTypeInfo().Assembly,
+					typeof(IMock).GetTypeInfo().Assembly,
+					typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly
+				};
+
+				foreach (var referencedAssembly in referencedAssemblies.ToList())
+				{
+					Compiler.LoadDependencies(referencedAssemblies, referencedAssembly);
+				}
+
+				references = referencedAssemblies;
 			}
 			else
 			{
 				this.ReferencedAssemblies.ToList().ForEach(_ => references.Add(_));
-
-				return references
-					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-					.Select(_ => MetadataReference.CreateFromFile(_.Location))
-					.Cast<MetadataReference>()
-					.ToArray();
 			}
+
+			return references
+				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+				.Select(_ => MetadataReference.CreateFromFile(_.Location))
+				.Cast<MetadataReference>()
+				.ToArray();
 		}
 
 		protected abstract T GetAssemblyStream();
