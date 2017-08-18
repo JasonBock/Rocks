@@ -2,14 +2,18 @@
 
 * Maybe have a Rocks.Task.Tests.NETFramework console app to run those tests too?
 	
-* LangVersion should be "latest"
-
 * Do I need to reference System.Runtime.Loader anymore?
 
+* GetReferences() feels really messy with collection allocations. Need to clean that up.
+	* Maybe cache reference lookup?
+	* Don't do so many copies
+	
 * Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
 
 
 ADDRESSED
+
+* LangVersion should be "latest"
 
 * Rocks.Tests.NETFramework (DONE), Rocks.Task, Rocks.Task.Tests needs to be updated for new .csproj format
 	* using Microsoft.Build.Framework;
@@ -38,10 +42,3 @@ I think I need to do the recursive LoadDependencies and then do them on all the 
     [4]: {System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a}
     [5]: {Microsoft.CodeAnalysis, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35}
     [6]: {Rocks.Tests.Types, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
-
-
-TAKEAWAYS
-
-* GetReferences() feels really messy with collection allocations. Need to clean that up.
-	* Maybe cache reference lookup?
-	* Don't do so many copies
