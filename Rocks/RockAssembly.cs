@@ -37,11 +37,8 @@ namespace Rocks
 			var allowUnsafe = false;
 
 			Parallel.ForEach(this.assembly.GetExportedTypes()
-#if !NETCOREAPP1_1
-				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization, new PersistenceNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
-#else
-				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(new PersistenceNameGenerator(_))) && !typeof(Array).IsAssignableFrom(_) &&
-#endif
+				.Where(_ => string.IsNullOrWhiteSpace(_.Validate(this.options.Serialization, new PersistenceNameGenerator(_))) && 
+					!typeof(Array).IsAssignableFrom(_) &&
 					!typeof(Enum).IsAssignableFrom(_) && !typeof(ValueType).IsAssignableFrom(_) &&
 					!typeof(Delegate).IsAssignableFrom(_)), _ =>
 				{

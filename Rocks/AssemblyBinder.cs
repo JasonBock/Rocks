@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP1_1
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,4 +21,3 @@ namespace Rocks
 		internal HashSet<Assembly> Assemblies { get; set; }
 	}
 }
-#endif

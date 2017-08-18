@@ -16,7 +16,6 @@ namespace Rocks.Tests.Extensions
 		public void IsUnsafeForMockForPublicCtorWithSafeArguments() =>
 			Assert.That(typeof(SafePublicConstructors).GetConstructor(new[] { typeof(int) }).IsUnsafeToMock(), Is.False);
 
-#if !NETCOREAPP1_1
 		[Test]
 		public void IsUnsafeForMockForProtectedCtorWithNoArguments() =>
 			Assert.That(typeof(SafeProtectedConstructors).GetConstructor(
@@ -46,7 +45,6 @@ namespace Rocks.Tests.Extensions
 		public void IsUnsafeForMockForInternalCtorWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafeInternalConstructors).GetConstructor(
 				BindingFlags.Instance | BindingFlags.NonPublic, Type.DefaultBinder, new[] { typeof(int*) }, null).IsUnsafeToMock(), Is.True);
-#endif
 
 		[Test]
 		public void IsUnsafeForMockForPublicCtorWithUnsafeArguments() =>

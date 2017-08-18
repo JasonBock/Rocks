@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP1_1
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Reflection;
 
 namespace Rocks.Tests
@@ -59,4 +58,3 @@ namespace Rocks.Tests
 		}
 	}
 }
-#endif

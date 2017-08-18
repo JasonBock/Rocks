@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.IO;
-#if !NETCOREAPP1_1
 using System.Runtime.Serialization.Formatters.Binary;
-#endif
 
 namespace Rocks.Tests.Exceptions
 {
@@ -36,7 +34,7 @@ namespace Rocks.Tests.Exceptions
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.InnerException, Is.EqualTo(innerException), nameof(exception.InnerException));
 		}
-#if !NETCOREAPP1_1
+
 		protected void RoundtripExceptionTest(string message)
 		{
 			var exception = Activator.CreateInstance(typeof(T), message) as T;
@@ -54,6 +52,5 @@ namespace Rocks.Tests.Exceptions
 			Assert.That(newException, Is.Not.Null);
 			Assert.That(newException.Message, Is.EqualTo(message), nameof(exception.Message));
 		}
-#endif
 	}
 }

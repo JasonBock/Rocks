@@ -50,10 +50,9 @@ namespace Rocks.Tests.Exceptions
 			Assert.That(exception.Diagnostics, Is.EqualTo(diagnostics), nameof(exception.Diagnostics));
 			Assert.That(exception.InnerException, Is.SameAs(inner), nameof(exception.InnerException));
 		}
-#if !NETCOREAPP1_1
+
 		[Test]
 		public void Roundtrip() =>
 			base.RoundtripExceptionTest(Guid.NewGuid().ToString("N"));
-#endif
 	}
 }

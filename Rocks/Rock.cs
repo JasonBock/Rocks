@@ -19,15 +19,9 @@ namespace Rocks
 			where T : class
 		{
 			var tType = typeof(T);
-#if !NETCOREAPP1_1
 			var message = tType.Validate(options.Serialization,
 				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
-#else
-			var message = tType.Validate(
-				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
-					new InMemoryNameGenerator() as NameGenerator);
-#endif
 
 			if (!string.IsNullOrWhiteSpace(message))
 			{
@@ -56,15 +50,9 @@ namespace Rocks
 			var isSuccessful = false;
 			var tType = typeof(T);
 
-#if !NETCOREAPP1_1
 			var message = tType.Validate(options.Serialization,
 				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
-#else
-			var message = tType.Validate(
-				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
-					new InMemoryNameGenerator() as NameGenerator);
-#endif
 
 			if (string.IsNullOrWhiteSpace(message))
 			{
@@ -85,7 +73,6 @@ namespace Rocks
 		/// <param name="options">The requested <seealso cref="RockOptions"/> value from the user.</param>
 		/// <returns>A mapped <seealso cref="RockOptions"/> with caching enabled.</returns>
 		private static RockOptions MapForMake(RockOptions options) =>
-#if !NETCOREAPP1_1
 			new RockOptions(
 				level: options.Optimization, 
 				codeFile: options.CodeFile, 
@@ -93,29 +80,16 @@ namespace Rocks
 				caching: CachingOptions.UseCache, 
 				allowWarnings: options.AllowWarnings,
 				codeFileDirectory: options.CodeFileDirectory);
-#else
-			new RockOptions(
-				level: options.Optimization, 
-				codeFile: options.CodeFile, 
-				caching: CachingOptions.UseCache, 
-				allowWarnings: options.AllowWarnings,
-				codeFileDirectory: options.CodeFileDirectory);
-#endif
 
 		public static T Make<T>(RockOptions options)
 			where T : class
 		{
 			var mappedOptions = Rock.MapForMake(options);
 			var tType = typeof(T);
-#if !NETCOREAPP1_1
 			var message = tType.Validate(mappedOptions.Serialization,
 				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
-#else
-			var message = tType.Validate(
-				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
-					new InMemoryNameGenerator() as NameGenerator);
-#endif
+
 			if (!string.IsNullOrWhiteSpace(message))
 			{
 				throw new ValidationException(message);
@@ -135,15 +109,10 @@ namespace Rocks
 			var isSuccessful = false;
 
 			var tType = typeof(T);
-#if !NETCOREAPP1_1
 			var message = tType.Validate(mappedOptions.Serialization,
 				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
 					new InMemoryNameGenerator() as NameGenerator);
-#else
-			var message = tType.Validate(
-				tType.GetTypeInfo().IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
-					new InMemoryNameGenerator() as NameGenerator);
-#endif
+
 			if (string.IsNullOrWhiteSpace(message))
 			{
 				result = Rock.NewRock<T>(mappedOptions, true).Make();
@@ -153,9 +122,7 @@ namespace Rocks
 			return new MakeResult<T>(isSuccessful, result);
 		}
 
-#if !NETCOREAPP1_1
 		internal static AssemblyBinder Binder { get; } = new AssemblyBinder();
-#endif
 		internal static Dictionary<CacheKey, Type> Cache { get; } = new Dictionary<CacheKey, Type>();
 		internal static object CacheLock { get; } = new object();
 		internal static Dictionary<CacheKey, Type> MakeCache { get; } = new Dictionary<CacheKey, Type>();

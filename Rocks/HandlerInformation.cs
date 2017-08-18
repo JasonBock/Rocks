@@ -5,9 +5,7 @@ using System.Threading;
 
 namespace Rocks
 {
-#if !NETCOREAPP1_1
 	[Serializable]
-#endif
 	public class HandlerInformation
 	{
 		public const string ErrorAtLeastOnceCallCount = "The method should have been called at least once.";
@@ -86,10 +84,7 @@ namespace Rocks
 			return verifications.AsReadOnly();
 		}
 
-		internal int CallCount
-		{
-			get => this.callCount; 
-		}
+		internal int CallCount => this.callCount;
 
 		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; }
 		internal uint? ExpectedCallCount { get; }

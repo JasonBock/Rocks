@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Rocks
 {
-#if !NETCOREAPP1_1
 	[Serializable]
-#endif
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
 	{

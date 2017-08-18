@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP1_1
-namespace Rocks.Options
+﻿namespace Rocks.Options
 {
 	public enum SerializationOptions
 	{
@@ -7,4 +6,3 @@ namespace Rocks.Options
 		Supported
 	}
 }
-#endif

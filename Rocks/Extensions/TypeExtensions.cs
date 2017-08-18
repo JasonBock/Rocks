@@ -21,15 +21,8 @@ namespace Rocks.Extensions
 		internal static string GetAttributes(this Type @this, SortedSet<string> namespaces) =>
 			@this.GetAttributes(false, namespaces);
 
-		internal static string GetAttributes(this Type @this, bool isReturn, SortedSet<string> namespaces)
-		{
-#if !NETCOREAPP1_1
-			var attributeData = @this.GetCustomAttributesData();
-#else
-			var attributeData = @this.GetTypeInfo().CustomAttributes.ToList();
-#endif
-			return attributeData.GetAttributes(isReturn, namespaces, null);
-		}
+		internal static string GetAttributes(this Type @this, bool isReturn, SortedSet<string> namespaces) =>
+			@this.GetCustomAttributesData().GetAttributes(isReturn, namespaces, null);
 
 		internal static bool RequiresExplicitCast(this Type @this)
 		{
@@ -246,11 +239,7 @@ namespace Rocks.Extensions
 				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafeToMock(false)).Any() ||
 				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
 
-#if !NETCOREAPP1_1
 		internal static string Validate(this Type @this, SerializationOptions options, NameGenerator generator)
-#else
-		internal static string Validate(this Type @this, NameGenerator generator)
-#endif
 		{
 			var thisTypeInfo = @this.GetTypeInfo();
 
@@ -267,14 +256,13 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockObsoleteType(new TypeDissector(@this).SafeName);
 			}
 
-#if !NETCOREAPP1_1
 			if (options == SerializationOptions.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) == null)
 			{
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(
 					new TypeDissector(@this).SafeName);
 			}
-#endif
+
 			if (thisTypeInfo.IsAbstract &&
 				(thisTypeInfo.GetConstructors(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly).Any() ||
 				thisTypeInfo.GetMethods(ReflectionValues.NonPublicInstance).Where(_ => _.IsAssembly && _.IsAbstract).Any() ||
@@ -294,54 +282,6 @@ namespace Rocks.Extensions
 
 			return string.Empty;
 		}
-#if NETCOREAPP1_1
-		internal static ConstructorInfo FindConstructor(this Type @this, BindingFlags flags, Type[] types)
-		{
-			var constructors = @this.GetMembers(flags).OfType<ConstructorInfo>().ToArray();
-
-			foreach(var constructor in constructors)
-			{
-				var parameters = constructor.GetParameters();
-
-				if(parameters.Length == types.Length)
-				{
-					var parametersExact = true;
-
-					for(var i = 0; i < parameters.Length; i++)
-					{
-						parametersExact &= parameters[i].ParameterType == types[i];
-					}
-
-					if(parametersExact)
-					{
-						return constructor;
-					}
-				}
-			}
-
-			foreach (var constructor in constructors)
-			{
-				var parameters = constructor.GetParameters();
-
-				if (parameters.Length == types.Length)
-				{
-					var parametersAssignable = true;
-
-					for (var i = 0; i < parameters.Length; i++)
-					{
-						parametersAssignable &= parameters[i].ParameterType.IsAssignableFrom(types[i]);
-					}
-
-					if (parametersAssignable)
-					{
-						return constructor;
-					}
-				}
-			}
-
-			return null;
-		}
-#endif
 
 		internal static Type GetRootElementType(this Type @this)
 		{

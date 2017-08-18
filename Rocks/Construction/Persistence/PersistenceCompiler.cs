@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Reflection;
-#if NETCOREAPP1_1
-using System.Runtime.Loader;
-#endif
 
 namespace Rocks.Construction.Persistence
 {
@@ -31,10 +28,6 @@ namespace Rocks.Construction.Persistence
 			this.assemblyFileName = assemblyStream.Name;
 
 		protected override void Complete() =>
-#if !NETCOREAPP1_1
 			this.Result = Assembly.LoadFile(this.assemblyFileName);
-#else
-			this.Result = AssemblyLoadContext.Default.LoadFromAssemblyPath(this.assemblyFileName);
-#endif
 	}
 }

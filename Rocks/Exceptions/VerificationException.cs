@@ -1,14 +1,10 @@
 ﻿using System;
-#if !NETCOREAPP1_1
 using System.Runtime.Serialization;
-#endif
 using System.Collections.Generic;
 
 namespace Rocks.Exceptions
 {
-#if !NETCOREAPP1_1
 	[Serializable]
-#endif
 	public sealed class VerificationException
 		: Exception
 	{
@@ -34,11 +30,9 @@ namespace Rocks.Exceptions
 			: base(message, inner) =>
 			this.Failures = failures;
 
-#if !NETCOREAPP1_1
 		private VerificationException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{ }
-#endif
 
 		public IReadOnlyList<string> Failures { get; }
 	}

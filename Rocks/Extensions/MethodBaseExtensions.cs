@@ -21,12 +21,9 @@ namespace Rocks.Extensions
 
 				foreach (var argument in @this.GetGenericArguments())
 				{
-#if !NETCOREAPP1_1
 					var attributeData = argument.GetCustomAttributesData();
-#else
-					var attributeData = argument.GetTypeInfo().CustomAttributes.ToList();
-#endif
-					genericArguments.Add($"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
+					genericArguments.Add(
+						$"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))

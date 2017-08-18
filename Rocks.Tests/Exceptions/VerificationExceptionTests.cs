@@ -50,10 +50,8 @@ namespace Rocks.Tests.Exceptions
 			Assert.That(exception.Failures[0], Is.EqualTo("failure"), nameof(exception.Failures));
 		}
 
-#if !NETCOREAPP1_1
 		[Test]
 		public void Roundtrip() =>
 			base.RoundtripExceptionTest(Guid.NewGuid().ToString("N"));
-#endif
 	}
 }

@@ -81,17 +81,10 @@ namespace Rocks.Construction
 
 			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
 
-#if NETCOREAPP1_1
-			// The template automatically adds this namespace
-			// so remove it.
-			this.Namespaces.Remove("System.Reflection");
-#endif
-
 			var namespaces = string.Join(Environment.NewLine,
 				(from @namespace in this.Namespaces
 				 select $"using {@namespace};"));
 
-#if !NETCOREAPP1_1
 			var @class = ClassTemplates.GetClass(namespaces,
 				this.TypeName, this.BaseType.GetFullName(),
 				methods.Result, properties.Result, events.Result, constructors.Result,
@@ -104,18 +97,7 @@ namespace Rocks.Construction
 				this.IsUnsafe, baseTypeGenericArguments.Constraints,
 				hasEvents ? "R.IMockWithEvents" : "R.IMock",
 				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
-#else
-			var @class = ClassTemplates.GetClass(namespaces,
-				this.TypeName, this.BaseType.GetFullName(),
-				methods.Result, properties.Result, events.Result, constructors.Result,
-				this.BaseType.Namespace,
-				string.Empty,
-				string.Empty,
-				this.GetAdditionNamespaceCode(),
-				this.IsUnsafe, baseTypeGenericArguments.Constraints,
-				hasEvents ? "R.IMockWithEvents" : "R.IMock",
-				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
-#endif
+
 			if (this.RequiresObsoleteSuppression)
 			{
 				@class = ClassTemplates.GetClassWithObsoleteSuppression(@class);
