@@ -4,12 +4,12 @@
 	
 * I don't have tests around Transform() for IEnumerableOfAssemblyExtensions.
 	
-* Ensure GetTypeInfo() is removed
-
 * Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
 
 
 ADDRESSED
+
+* Ensure GetTypeInfo() is removed
 
 * Do I need to reference System.Runtime.Loader anymore?
 
