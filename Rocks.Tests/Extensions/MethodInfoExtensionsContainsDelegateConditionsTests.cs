@@ -11,44 +11,37 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ContainsRefArguments() =>
 			Assert.That(typeof(IHaveMethodWithRefArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsDelegateConditions(), Is.True);
+				.GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
 		public void ContainsOutArguments() =>
 			Assert.That(typeof(IHaveMethodWithOutArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsDelegateConditions(), Is.True);
+				.GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
 		public void ContainsByValArguments() =>
 			Assert.That(typeof(IHaveMethodWithByValArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsDelegateConditions(), Is.False);
+				.GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsDelegateConditions(), Is.False);
 
 		[Test]
 		public void ContainsPointerTypeArguments() =>
 			Assert.That(typeof(IHaveMethodWithPointerTypeArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithPointerTypeArgument.Target)).ContainsDelegateConditions(), Is.True);
+				.GetMethod(nameof(IHaveMethodWithPointerTypeArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
 		public void ContainsPointerTypeReturnType() =>
 			Assert.That(typeof(IHaveMethodWithPointerTypeReturnType)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions(), Is.True);
-
-#if !NETCOREAPP1_1
-		[Test]
-		public void ContainsArgIterator() =>
-			Assert.That(typeof(IHaveMethodWithArgIteratorArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithArgIteratorArgument.Target)).ContainsDelegateConditions(), Is.True);
+				.GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
 		public void ContainsRuntimeArgumentHandle() =>
 			Assert.That(typeof(IHaveMethodWithRuntimeArgumentHandleArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithRuntimeArgumentHandleArgument.Target)).ContainsDelegateConditions(), Is.True);
+				.GetMethod(nameof(IHaveMethodWithRuntimeArgumentHandleArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
 		public void ContainsTypedReference() =>
 			Assert.That(typeof(IHaveMethodWithTypedReferenceArgument)
-				.GetTypeInfo().GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions(), Is.True);
-#endif
+				.GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions(), Is.True);
 	}
 
 	public interface IHaveMethodWithPointerTypeArgument
@@ -75,11 +68,6 @@ namespace Rocks.Tests.Extensions
 	{
 		void Target(int a);
 	}
-#if !NETCOREAPP1_1
-	public interface IHaveMethodWithArgIteratorArgument
-	{
-		void Target(ArgIterator a);
-	}
 
 	public interface IHaveMethodWithRuntimeArgumentHandleArgument
 	{
@@ -90,5 +78,4 @@ namespace Rocks.Tests.Extensions
 	{
 		void Target(TypedReference a);
 	}
-#endif
 }

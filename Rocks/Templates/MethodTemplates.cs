@@ -9,9 +9,9 @@ namespace Rocks.Templates
 	{
 		internal static string GetDefaultReturnValue(Type returnType)
 		{
-			if (typeof(Task).GetTypeInfo().IsAssignableFrom(returnType))
+			if (typeof(Task).IsAssignableFrom(returnType))
 			{
-				if (returnType.GetTypeInfo().IsGenericType && typeof(Task<>).GetTypeInfo().IsAssignableFrom(returnType.GetGenericTypeDefinition()))
+				if (returnType.IsGenericType && typeof(Task<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
 				{
 					var taskReturnType = returnType.GetGenericArguments()[0].GetFullName();
 					return $"STT.Task.FromResult<{taskReturnType}>(default({taskReturnType}))";

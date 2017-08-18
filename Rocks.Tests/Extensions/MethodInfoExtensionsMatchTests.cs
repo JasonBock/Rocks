@@ -30,7 +30,7 @@ namespace Rocks.Tests.Extensions
 
 		[Test]
 		public void MatchWhenDifferentModifier() =>
-			Assert.That(typeof(TargetMatch).GetTypeInfo().GetMethod(
+			Assert.That(typeof(TargetMatch).GetMethod(
 				nameof(TargetMatch.GetString)).Match(
 					typeof(OtherMatchWithDifferentModifier).GetMethod(nameof(OtherMatchWithDifferentModifier.GetString))), 
 				Is.EqualTo(MethodMatch.None));
@@ -38,7 +38,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void MatchWhenDifferentReturnType() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
-				typeof(OtherMatchWithDifferentReturnType).GetTypeInfo().GetMethod(
+				typeof(OtherMatchWithDifferentReturnType).GetMethod(
 					nameof(OtherMatchWithDifferentReturnType.GetString))), 
 				Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
 	}

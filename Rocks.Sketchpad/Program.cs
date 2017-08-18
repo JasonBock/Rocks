@@ -1,7 +1,6 @@
 ﻿using Rocks.Options;
 using Rocks.Tests;
 using System;
-using System.Reflection;
 using System.Text;
 
 namespace Rocks.Sketchpad
@@ -10,8 +9,9 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			var test = new HandleProperty1IndexerTests();
-			test.MakeWithGetAndSetIndexerProperty();
+			//Rocks.Tests.ExpectationsTests.HandleWithCall
+			var test = new ExpectationsTests();
+			test.HandleWithCall();
 		}
 
 		private static void UnicodeTest()

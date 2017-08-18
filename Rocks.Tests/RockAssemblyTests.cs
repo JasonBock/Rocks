@@ -18,7 +18,7 @@ namespace Rocks.Tests
 
 		public RockAssemblyTests()
 		{
-			var class1Assembly = typeof(Class1).GetTypeInfo().Assembly;
+			var class1Assembly = typeof(Class1).Assembly;
 			this.assembly = new RockAssembly(class1Assembly, 
 				new RockOptions(codeFileDirectory: TestContext.CurrentContext.TestDirectory)).Result;
 		}
@@ -39,7 +39,6 @@ namespace Rocks.Tests
 			Assert.That(typeof(AssemblyRock<>).IsAssignableFrom(rock.GetType().GetGenericTypeDefinition()), Is.True);
 		}
 
-#if !NETCOREAPP1_1
 		[Test]
 		public void GenerateMockWithHandlers()
 		{
@@ -76,7 +75,7 @@ namespace Rocks.Tests
 		{
 			var stopwatch = Stopwatch.StartNew();
 
-			new RockAssembly(typeof(object).GetTypeInfo().Assembly, 
+			new RockAssembly(typeof(object).Assembly, 
 				new RockOptions(
 					level: OptimizationSetting.Debug, 
 					codeFile: CodeFileOptions.Create,
@@ -84,9 +83,8 @@ namespace Rocks.Tests
 
 			stopwatch.Stop();
 
-			Assert.Pass($"Total time to generate mocks for {typeof(object).GetTypeInfo().Assembly.FullName} : {stopwatch.Elapsed}");
+			Assert.Pass($"Total time to generate mocks for {typeof(object).Assembly.FullName} : {stopwatch.Elapsed}");
 		}
-#endif
 
 		public Guid Method4(string a, ref int b)
 		{

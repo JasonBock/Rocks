@@ -21,12 +21,9 @@ namespace Rocks.Extensions
 
 				foreach (var argument in @this.GetGenericArguments())
 				{
-#if !NETCOREAPP1_1
 					var attributeData = argument.GetCustomAttributesData();
-#else
-					var attributeData = argument.GetTypeInfo().CustomAttributes.ToList();
-#endif
-					genericArguments.Add($"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
+					genericArguments.Add(
+						$"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))
@@ -71,7 +68,8 @@ namespace Rocks.Extensions
 				let type = parameter.ParameterType
 				let optionalValue = parameter.IsOptional && parameter.HasDefaultValue ? 
 					(parameter.RawDefaultValue == null ? " = null" : 
-						(typeof(string).IsAssignableFrom(type) ? $" = \"{parameter.RawDefaultValue}\"" : $" = {parameter.RawDefaultValue}")) : string.Empty
+						(typeof(string).IsAssignableFrom(type) ? $" = \"{parameter.RawDefaultValue}\"" : 
+						(typeof(bool).IsAssignableFrom(type) ? $" = {((bool)parameter.RawDefaultValue).GetValue()}" : $" = {parameter.RawDefaultValue}"))) : string.Empty
 				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
 				select $"{attributes}{modifier}{type.GetFullName(namespaces)} {parameter.Name}{optionalValue}");

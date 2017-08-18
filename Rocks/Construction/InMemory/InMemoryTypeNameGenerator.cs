@@ -13,7 +13,7 @@ namespace Rocks.Construction.InMemory
 
 		internal override string Generate(Type baseType)
 		{
-			var name = baseType.GetTypeInfo().IsGenericTypeDefinition ?
+			var name = baseType.IsGenericTypeDefinition ?
 				$"{Guid.NewGuid().ToString("N")}{baseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
 			return $"Rock{name}";
 		}

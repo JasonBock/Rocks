@@ -10,7 +10,7 @@ namespace Rocks.Tests
 		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreSpecified()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
-			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), 44L));
+			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), 44L, false));
 
 			var chunk = rock.Make();
 			chunk.Target(22);
@@ -22,7 +22,7 @@ namespace Rocks.Tests
 		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecified()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
-			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
+			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>(), Arg.IsDefault<bool>()));
 
 			var chunk = rock.Make();
 			chunk.Target(22);
@@ -34,7 +34,7 @@ namespace Rocks.Tests
 		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecifiedAndDifferentValuesAreUsedAtCallSite()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
-			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
+			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>(), Arg.IsDefault<bool>()));
 
 			var chunk = rock.Make();
 			Assert.That(() => chunk.Target(22, "b", 43), Throws.TypeOf<ExpectationException>());
@@ -52,7 +52,7 @@ namespace Rocks.Tests
 
 	public interface IHaveOptionalArguments
 	{
-		void Target(int a, string b = "b", long c = 44);
+		void Target(int a, string b = "b", long c = 44, bool d = false);
 		void TargetWithNoOptionalArguments(int a);
 	}
 }

@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescription()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithArguments));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -24,7 +24,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForInterfaceMethod()
 		{
-			var target = typeof(IMethodInfoExtensionsTests).GetTypeInfo()
+			var target = typeof(IMethodInfoExtensionsTests)
 				.GetMethod(nameof(IMethodInfoExtensionsTests.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -36,7 +36,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithOutArgument()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithOutArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -48,7 +48,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithParamsArgument()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithParamsArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -60,7 +60,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithRefArgument()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithRefArgument));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -72,7 +72,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithReturnValue()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -84,7 +84,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithGenericArguments()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -97,7 +97,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithDefinedGenericArguments()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithGenericsAndReturnValue)).MakeGenericMethod(typeof(Guid), typeof(double));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -110,7 +110,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithArrayArgumentss()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithArrayArguments));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -123,7 +123,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithConstraints()
 		{
-			var target = this.GetType().GetTypeInfo()
+			var target = this.GetType()
 				.GetMethod(nameof(this.TargetWithMultipleConstraints));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -138,7 +138,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionWithComplexGenericReturnTypeAndArgumentTypes()
 		{
-			var target = typeof(HaveMethodWithComplexGenericReturnType<>).GetTypeInfo()
+			var target = typeof(HaveMethodWithComplexGenericReturnType<>)
 				.GetMethod(nameof(HaveMethodWithComplexGenericReturnType<int>.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -154,7 +154,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithNoAttributes()
 		{
-			var target = typeof(HaveNoAttributes).GetTypeInfo()
+			var target = typeof(HaveNoAttributes)
 				.GetMethod(nameof(HaveNoAttributes.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -164,7 +164,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithAttribute()
 		{
-			var target = typeof(HaveAttribute).GetTypeInfo()
+			var target = typeof(HaveAttribute)
 				.GetMethod(nameof(HaveAttribute.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -176,7 +176,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithAttributeUsingEnumInConstructor()
 		{
-			var target = typeof(HaveAttributeWithEnumInConstructor).GetTypeInfo()
+			var target = typeof(HaveAttributeWithEnumInConstructor)
 				.GetMethod(nameof(HaveAttributeWithEnumInConstructor.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -188,7 +188,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithAttributeUsingNamedArguments()
 		{
-			var target = typeof(HaveAttributeUsingNamedArguments).GetTypeInfo()
+			var target = typeof(HaveAttributeUsingNamedArguments)
 				.GetMethod(nameof(HaveAttributeUsingNamedArguments.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -200,7 +200,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithAttributeUsingMultipleConstructorAndNamedArguments()
 		{
-			var target = typeof(HaveAttributeUsingMultipleConstructorAndNamedArguments).GetTypeInfo()
+			var target = typeof(HaveAttributeUsingMultipleConstructorAndNamedArguments)
 				.GetMethod(nameof(HaveAttributeUsingMultipleConstructorAndNamedArguments.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
@@ -212,7 +212,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetMethodDescriptionForMemberWithMultipleAttributes()
 		{
-			var target = typeof(HaveMultipleAttributes).GetTypeInfo()
+			var target = typeof(HaveMultipleAttributes)
 				.GetMethod(nameof(HaveMultipleAttributes.Target));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);

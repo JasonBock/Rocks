@@ -1,0 +1,48 @@
+.NET Standard 2.0 Update
+
+* Maybe have a Rocks.Task.Tests.NETFramework console app to run those tests too?
+	
+* I don't have tests around Transform() for IEnumerableOfAssemblyExtensions.
+	
+* Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
+
+
+ADDRESSED
+
+* Ensure GetTypeInfo() is removed
+
+* Do I need to reference System.Runtime.Loader anymore?
+
+* LangVersion should be "latest"
+
+* Rocks.Tests.NETFramework (DONE), Rocks.Task, Rocks.Task.Tests needs to be updated for new .csproj format
+	* using Microsoft.Build.Framework;
+	* using MBU = Microsoft.Build.Utilities;
+	* references Rocks
+
+* Need to address these: #if !NETCOREAPP1_1
+
+* NetDataContractSerializer isn't in .NET Standard 2.0
+Oh well! Gone.
+
+* ArgIterator doesn't exist...do we really care?
+Nope, removing it.
+
+* ArrayPool<T> has Return() with optional clearArray that is "false", but I'm generating "False". The hell?!
+bool.ToString() returns "True" or "False", so created an extension method to address that.
+
+* Still not happy with assembly resolving/loading in Compiler.cs :(
+I think I need to do the recursive LoadDependencies and then do them on all the types given by:
+?this.ReferencedAssemblies[0].GetReferencedAssemblies()
+{System.Reflection.AssemblyName[7]}
+    [0]: {netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51}
+    [1]: {nunit.framework, Version=3.7.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb}
+    [2]: {Rocks, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
+    [3]: {Rocks.RockAssemblyTestContainer, Version=2.0.0.0, Culture=neutral, PublicKeyToken=null}
+    [4]: {System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a}
+    [5]: {Microsoft.CodeAnalysis, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35}
+    [6]: {Rocks.Tests.Types, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
+	
+* GetReferences() feels really messy with collection allocations. Need to clean that up.
+	* Maybe cache reference lookup?
+	* Don't do so many copies

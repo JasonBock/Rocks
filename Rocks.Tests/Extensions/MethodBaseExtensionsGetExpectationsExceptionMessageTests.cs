@@ -10,7 +10,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetExpectationExceptionMessage()
 		{
-			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithGenerics));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			Assert.That(target.GetExpectationExceptionMessage(), 
 				Is.EqualTo("TargetWithGenerics<T, U>({a}, {b}, {c})"));
 		}
@@ -18,7 +18,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetExpectationExceptionMessageWithPointerTypesInArguments()
 		{
-			var target = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithPointers));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithPointers));
 			Assert.That(target.GetExpectationExceptionMessage(),
 				Is.EqualTo("TargetWithPointers(int* a)"));
 		}

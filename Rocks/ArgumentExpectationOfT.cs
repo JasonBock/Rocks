@@ -3,9 +3,7 @@ using System.Linq.Expressions;
 
 namespace Rocks
 {
-#if !NETCOREAPP1_1
 	[Serializable]
-#endif
 	public sealed class ArgumentExpectation<T>
 		: ArgumentExpectation
 	{

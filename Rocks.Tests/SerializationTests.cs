@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP1_1
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rocks.Options;
 using System;
 using System.IO;
@@ -79,31 +78,6 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void RoundtripWithNetDataContract()
-		{
-			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
-			rock.Handle(_ => _.Target("44"));
-
-			var chunk = rock.Make();
-			IAmSerializable newChunk = null;
-
-			var serializer = new NetDataContractSerializer()
-			{
-				Binder = Rock.Binder
-			};
-
-			using (var stream = new MemoryStream())
-			{
-				serializer.WriteObject(stream, chunk);
-				stream.Position = 0;
-				newChunk = serializer.ReadObject(stream) as IAmSerializable;
-			}
-
-			newChunk.Target("44");
-			(newChunk as IMock).Verify();
-		}
-
-		[Test]
 		public void RoundtripWhenMockIsNotSerializable()
 		{
 			var rock = Rock.Create<IAmNotSerializable>();
@@ -130,4 +104,3 @@ namespace Rocks.Tests
 		void Target(string a);
 	}
 }
-#endif

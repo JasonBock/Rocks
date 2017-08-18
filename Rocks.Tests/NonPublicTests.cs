@@ -1,5 +1,4 @@
-﻿#if !NETCOREAPP1_1
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
 
 namespace Rocks.Tests
@@ -38,4 +37,3 @@ namespace Rocks.Tests
 		internal abstract event EventHandler InternalEvent;
 	}
 }
-#endif

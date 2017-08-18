@@ -38,11 +38,7 @@ namespace Rocks
 			var arguments = new List<object> { readOnlyHandlers };
 			arguments.AddRange(constructorArguments);
 
-#if !NETCOREAPP1_1
 			var rock = Activator.CreateInstance(rockType, arguments.ToArray(), null);
-#else
-			var rock = Activator.CreateInstance(rockType, arguments.ToArray());
-#endif
 			this.Rocks.Add(rock as IMock);
 			return rock as T;
 		}
@@ -72,12 +68,11 @@ namespace Rocks
 						{
 							cache.Add(key, rockType);
 						}
-#if !NETCOREAPP1_1
+
 						if (this.options.Serialization == SerializationOptions.Supported)
 						{
 							Rock.Binder.Assemblies.Add(rockType.Assembly);
 						}
-#endif
 					}
 				}
 			}
@@ -86,12 +81,10 @@ namespace Rocks
 				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces,
 					this.options, this.isMake).Mock;
 
-#if !NETCOREAPP1_1
 				if (this.options.Serialization == SerializationOptions.Supported)
 				{
 					Rock.Binder.Assemblies.Add(rockType.Assembly);
 				}
-#endif
 			}
 
 			return rockType;

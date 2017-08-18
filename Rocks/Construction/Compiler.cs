@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
+using Rocks.Extensions;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,10 @@ namespace Rocks.Construction
 {
 	internal abstract class Compiler
 	{
-#if NETCOREAPP1_1
 		// Lifted from:
 		// https://github.com/dotnet/roslyn/wiki/Runtime-code-generation-using-Roslyn-compilations-in-.NET-Core-App
-		protected static Lazy<HashSet<Assembly>> assemblyReferences =
-			new Lazy<HashSet<Assembly>>(() =>
+		protected static Lazy<HashSet<MetadataReference>> assemblyReferences =
+			new Lazy<HashSet<MetadataReference>>(() =>
 			{
 				void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
 				{
@@ -36,26 +36,37 @@ namespace Rocks.Construction
 					}
 				}
 
-				var platformAssemblyPaths = new HashSet<string>(
-					(AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string).Split(Path.PathSeparator));
-				var platformAssemblyNames = platformAssemblyPaths.Select(Path.GetFileNameWithoutExtension);
 				var assemblies = new HashSet<Assembly>();
 
-				foreach (var platformAssemblyName in platformAssemblyNames)
-				{
-					assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
-				}
+				var trustedPlatformAssemblies =
+					(AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES") as string)?.Split(Path.PathSeparator);
 
-				assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
+				if (trustedPlatformAssemblies != null)
+				{
+					var platformAssemblyPaths = new HashSet<string>(trustedPlatformAssemblies);
+					var platformAssemblyNames = platformAssemblyPaths.Select(Path.GetFileNameWithoutExtension);
+
+					foreach (var platformAssemblyName in platformAssemblyNames)
+					{
+						assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
+					}
+
+					assemblies.Add(typeof(Exception).Assembly);
+				}
+				else
+				{
+					assemblies.Add(typeof(object).Assembly);
+					assemblies.Add(typeof(IMock).Assembly);
+					assemblies.Add(typeof(Action<,,,,,,,,>).Assembly);
+				}
 
 				foreach (var assembly in assemblies.ToList())
 				{
 					LoadDependencies(assemblies, assembly);
 				}
 
-				return assemblies;
+				return new HashSet<MetadataReference>(assemblies.Transform());
 			});
-#endif
 	}
 
 	internal abstract class Compiler<T>
@@ -76,27 +87,10 @@ namespace Rocks.Construction
 		internal void Compile()
 		{
 			var options = new CSharpCompilationOptions(
-					OutputKind.DynamicallyLinkedLibrary,
-					optimizationLevel: this.Optimization == OptimizationSetting.Release ?
-						OptimizationLevel.Release : OptimizationLevel.Debug,
-					allowUnsafe: this.AllowUnsafe);
-
-#if NETCOREAPP1_1
-			// CoreFX bug https://github.com/dotnet/corefx/issues/5540 
-			// to workaround it, we are calling internal WithTopLevelBinderFlags(BinderFlags.IgnoreCorLibraryDuplicatedTypes) 
-			// TODO: this API will be public in the future releases of Roslyn. 
-			// This work is tracked in https://github.com/dotnet/roslyn/issues/5855 
-			// Once it's public, we should replace the internal reflection API call by the public one. 
-			var method = typeof(CSharpCompilationOptions).GetMethod("WithTopLevelBinderFlags", BindingFlags.NonPublic | BindingFlags.Instance);
-			// we need to pass BinderFlags.IgnoreCorLibraryDuplicatedTypes, but it's an internal class 
-			// http://source.roslyn.io/#Microsoft.CodeAnalysis.CSharp/Binder/BinderFlags.cs,00f268571bb66b73 
-			options = (CSharpCompilationOptions)method.Invoke(options, new object[] { 1u << 26 });
-
-			options = options.WithSpecificDiagnosticOptions(new Dictionary<string, ReportDiagnostic>
-			{
-				{ "CS1702", ReportDiagnostic.Hidden }
-			});
-#endif
+				OutputKind.DynamicallyLinkedLibrary,
+				optimizationLevel: this.Optimization == OptimizationSetting.Release ?
+					OptimizationLevel.Release : OptimizationLevel.Debug,
+				allowUnsafe: this.AllowUnsafe);
 
 			var compilation = CSharpCompilation.Create(this.AssemblyName,
 				options: options,
@@ -123,32 +117,18 @@ namespace Rocks.Construction
 			this.Complete();
 		}
 
-#if !NETCOREAPP1_1
-		private MetadataReference[] GetReferences()
-		{
-			var references = new List<MetadataReference>(
-				this.ReferencedAssemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)));
-			references.AddRange(new[]
-				{
-					MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(IMock).GetTypeInfo().Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly.Location),
-				});
-			return references.ToArray();
-		}
-#else
 		private MetadataReference[] GetReferences()
 		{
 			var references = Compiler.assemblyReferences.Value;
-			this.ReferencedAssemblies.ToList().ForEach(_ => references.Add(_));
 
-			return references
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Cast<MetadataReference>()
-				.ToArray();
+			foreach (var reference in this.ReferencedAssemblies.Transform())
+			{
+				references.Add(reference);
+			}
+
+			return references.ToArray();
 		}
-#endif
+
 		protected abstract T GetAssemblyStream();
 		protected abstract T GetPdbStream();
 		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }

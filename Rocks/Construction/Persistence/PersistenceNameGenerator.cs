@@ -7,7 +7,7 @@ namespace Rocks.Construction.Persistence
 		: NameGenerator
 	{
 		internal PersistenceNameGenerator(Type type)
-			: this(type.GetTypeInfo().Assembly)
+			: this(type.Assembly)
 		{ }
 
 		internal PersistenceNameGenerator(Assembly assembly) =>

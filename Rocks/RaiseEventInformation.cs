@@ -2,9 +2,7 @@
 
 namespace Rocks
 {
-#if !NETCOREAPP1_1
 	[Serializable]
-#endif
 	internal sealed class RaiseEventInformation
 	{
 		internal RaiseEventInformation(string name, EventArgs args)

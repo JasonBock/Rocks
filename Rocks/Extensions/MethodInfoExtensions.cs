@@ -80,11 +80,8 @@ namespace Rocks.Extensions
 			(from parameter in @this.GetParameters()
 				let parameterType = parameter.ParameterType
 				where parameter.IsOut || parameterType.IsByRef ||
-#if !NETCOREAPP1_1
 				typeof(TypedReference).IsAssignableFrom(parameterType) ||
 				typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
-				typeof(ArgIterator).IsAssignableFrom(parameterType) ||
-#endif
 				new TypeDissector(parameterType).IsPointer
 					select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
 
@@ -148,7 +145,7 @@ namespace Rocks.Extensions
 
 			@this.ReturnType.AddNamespaces(namespaces);
 
-			var isOverride = includeOverride ? (@this.DeclaringType.GetTypeInfo().IsClass ? "override " : string.Empty) : string.Empty;
+			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
 				"void" : $"{@this.ReturnType.GetFullName(namespaces)}";
 
