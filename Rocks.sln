@@ -1,30 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks", "Rocks\Rocks.csproj", "{5630AB3F-B029-4FE0-B883-37F47283AC1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj", "{5630AB3F-B029-4FE0-B883-37F47283AC1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB1CE37F-5C72-4057-A10C-3ACBD77FB044}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{0805F768-D4DF-486B-B13C-21BEE8C06F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{0805F768-D4DF-486B-B13C-21BEE8C06F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETCore", "Rocks.Tests.NETCore\Rocks.Tests.NETCore.csproj", "{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.NETCore", "Rocks.Tests.NETCore\Rocks.Tests.NETCore.csproj", "{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.NETFramework", "Rocks.Tests.NETFramework\Rocks.Tests.NETFramework.csproj", "{E71D1FAA-F788-450A-8EDB-44231570610C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.NETFramework", "Rocks.Tests.NETFramework\Rocks.Tests.NETFramework.csproj", "{E71D1FAA-F788-450A-8EDB-44231570610C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task", "Rocks.Task\Rocks.Task.csproj", "{66D83481-D2BC-42E8-9624-C5E07AE41EFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Task", "Rocks.Task\Rocks.Task.csproj", "{66D83481-D2BC-42E8-9624-C5E07AE41EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Task.Tests", "Rocks.Task.Tests\Rocks.Task.Tests.csproj", "{1954133D-967B-4C80-9E8E-92F07568FD7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Task.Tests", "Rocks.Task.Tests\Rocks.Task.Tests.csproj", "{1954133D-967B-4C80-9E8E-92F07568FD7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{710CF98B-1D8E-4ED5-9A24-51E49136828A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{710CF98B-1D8E-4ED5-9A24-51E49136828A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.PackageUsage.NETCore", "Rocks.PackageUsage.NETCore\Rocks.PackageUsage.NETCore.csproj", "{458CF1BF-6E2D-4EFA-AC03-8298F836219F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.PackageUsage.NETFramework", "Rocks.PackageUsage.NETFramework\Rocks.PackageUsage.NETFramework.csproj", "{31FEC426-5E36-40EA-B622-AB3F6A421930}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,8 +72,19 @@ Global
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{458CF1BF-6E2D-4EFA-AC03-8298F836219F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{458CF1BF-6E2D-4EFA-AC03-8298F836219F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{458CF1BF-6E2D-4EFA-AC03-8298F836219F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{458CF1BF-6E2D-4EFA-AC03-8298F836219F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31FEC426-5E36-40EA-B622-AB3F6A421930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31FEC426-5E36-40EA-B622-AB3F6A421930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31FEC426-5E36-40EA-B622-AB3F6A421930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31FEC426-5E36-40EA-B622-AB3F6A421930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B731400-9095-433E-9FEC-AC34D8308BB7}
 	EndGlobalSection
 EndGlobal
