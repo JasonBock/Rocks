@@ -54,7 +54,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectByRefType()
 		{
-			var type = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithByRef)).GetParameters()[0].ParameterType;
+			var type = this.GetType().GetMethod(nameof(this.TargetWithByRef)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
@@ -66,7 +66,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectByRefPointerType()
 		{
-			var type = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithByRefPointer)).GetParameters()[0].ParameterType;
+			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointer)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
@@ -78,7 +78,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectByRefArrayType()
 		{
-			var type = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithByRefArray)).GetParameters()[0].ParameterType;
+			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefArray)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
@@ -90,7 +90,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectByRefPointerArrayType()
 		{
-			var type = this.GetType().GetTypeInfo().GetMethod(nameof(this.TargetWithByRefPointerArray)).GetParameters()[0].ParameterType;
+			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointerArray)).GetParameters()[0].ParameterType;
 			var dissector = new TypeDissector(type);
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));

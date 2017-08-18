@@ -27,13 +27,13 @@ namespace Rocks.Tests.Extensions
 			Assert.That(results[5].Type, Is.EqualTo(typeof(Guid)), "results[5].Type");
 			Assert.That(results[6].Type, Is.EqualTo(typeof(string)), "results[6].Type");
 
-			Assert.That(typeof(ConstantExpression).GetTypeInfo().IsAssignableFrom(results[0].GetType()), Is.True, "results[0].GetType()");
-			Assert.That(typeof(MethodCallExpression).GetTypeInfo().IsAssignableFrom(results[1].GetType()), Is.True, "results[1].GetType()");
-			Assert.That(typeof(MethodCallExpression).GetTypeInfo().IsAssignableFrom(results[2].GetType()), Is.True, "results[2].GetType()");
-			Assert.That(typeof(MethodCallExpression).GetTypeInfo().IsAssignableFrom(results[3].GetType()), Is.True, "results[3].GetType()");
-			Assert.That(typeof(ConstantExpression).GetTypeInfo().IsAssignableFrom(results[4].GetType()), Is.True, "results[4].GetType()");
-			Assert.That(typeof(MethodCallExpression).GetTypeInfo().IsAssignableFrom(results[5].GetType()), Is.True, "results[5].GetType()");
-			Assert.That(typeof(MethodCallExpression).GetTypeInfo().IsAssignableFrom(results[6].GetType()), Is.True, "results[6].GetType()");
+			Assert.That(typeof(ConstantExpression).IsAssignableFrom(results[0].GetType()), Is.True, "results[0].GetType()");
+			Assert.That(typeof(MethodCallExpression).IsAssignableFrom(results[1].GetType()), Is.True, "results[1].GetType()");
+			Assert.That(typeof(MethodCallExpression).IsAssignableFrom(results[2].GetType()), Is.True, "results[2].GetType()");
+			Assert.That(typeof(MethodCallExpression).IsAssignableFrom(results[3].GetType()), Is.True, "results[3].GetType()");
+			Assert.That(typeof(ConstantExpression).IsAssignableFrom(results[4].GetType()), Is.True, "results[4].GetType()");
+			Assert.That(typeof(MethodCallExpression).IsAssignableFrom(results[5].GetType()), Is.True, "results[5].GetType()");
+			Assert.That(typeof(MethodCallExpression).IsAssignableFrom(results[6].GetType()), Is.True, "results[6].GetType()");
 		}
 
 		[Test]

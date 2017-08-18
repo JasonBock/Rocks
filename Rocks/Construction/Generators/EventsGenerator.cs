@@ -19,7 +19,7 @@ namespace Rocks.Construction.Generators
 			foreach (var @event in baseType.GetMockableEvents(generator))
 			{
 				var eventHandlerType = @event.EventHandlerType;
-				var eventHandlerTypeInfo = eventHandlerType.GetTypeInfo();
+				var eventHandlerTypeInfo = eventHandlerType;
 
 				namespaces.Add(eventHandlerType.Namespace);
 

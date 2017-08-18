@@ -18,7 +18,7 @@ namespace Rocks.Construction.Generators
 
 			var generatedConstructors = new List<string>();
 
-			if (baseType.GetTypeInfo().IsInterface)
+			if (baseType.IsInterface)
 			{
 				generatedConstructors.Add(ConstructorTemplates.GetConstructor(
 					constructorName, string.Empty, string.Empty));

@@ -2,16 +2,16 @@
 
 * Maybe have a Rocks.Task.Tests.NETFramework console app to run those tests too?
 	
-* Do I need to reference System.Runtime.Loader anymore?
-
-* GetReferences() feels really messy with collection allocations. Need to clean that up.
-	* Maybe cache reference lookup?
-	* Don't do so many copies
+* I don't have tests around Transform() for IEnumerableOfAssemblyExtensions.
 	
+* Ensure GetTypeInfo() is removed
+
 * Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
 
 
 ADDRESSED
+
+* Do I need to reference System.Runtime.Loader anymore?
 
 * LangVersion should be "latest"
 
@@ -42,3 +42,7 @@ I think I need to do the recursive LoadDependencies and then do them on all the 
     [4]: {System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a}
     [5]: {Microsoft.CodeAnalysis, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35}
     [6]: {Rocks.Tests.Types, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null}
+	
+* GetReferences() feels really messy with collection allocations. Need to clean that up.
+	* Maybe cache reference lookup?
+	* Don't do so many copies

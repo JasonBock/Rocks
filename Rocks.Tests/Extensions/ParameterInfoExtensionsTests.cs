@@ -10,36 +10,36 @@ namespace Rocks.Tests.Extensions
 	{
 		[Test]
 		public void GetModifierForByVal() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithByValArguments)).GetParameters()[0].GetModifier(), Is.Empty);
 
 		[Test]
 		public void GetModifierForOut() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithOutArgument)).GetParameters()[0].GetModifier(), Is.EqualTo("out "));
 
 		[Test]
 		public void GetModifierForRef() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithRefArgument)).GetParameters()[0].GetModifier(), Is.EqualTo("ref "));
 
 		[Test]
 		public void GetModifierForParams() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithParamsArgument)).GetParameters()[0].GetModifier(), Is.EqualTo("params "));
 		[Test]
 		public void GetModifierForParamsIgnored() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithParamsArgument)).GetParameters()[0].GetModifier(true), Is.Empty);
 
 		[Test]
 		public void GetModifierForInOutAttributes() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithInOutAttributesOnArgument)).GetParameters()[0].GetModifier(), Is.Empty);
 
 		[Test]
 		public void GetModifierForOutAttribute() =>
-			Assert.That(this.GetType().GetTypeInfo().GetMethod(
+			Assert.That(this.GetType().GetMethod(
 				nameof(this.TargetWithOutAttributeOnArgument)).GetParameters()[0].GetModifier(), Is.Empty);
 
 		public void TargetWithInOutAttributesOnArgument([In, Out] int[] a) { }

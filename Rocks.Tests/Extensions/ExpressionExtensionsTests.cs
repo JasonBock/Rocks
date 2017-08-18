@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void CreateForCall()
 		{
-			var expectation = Expression.Call(this.GetType().GetTypeInfo().GetMethod(nameof(ExpressionExtensionsTests.Create)))
+			var expectation = Expression.Call(this.GetType().GetMethod(nameof(ExpressionExtensionsTests.Create)))
 				.Create() as ArgumentExpectation<int>;
 
 			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));

@@ -126,7 +126,7 @@ namespace Rocks.Tests
 		[Test]
 		public void CreateWithExpression()
 		{
-			var expression = Expression.Call(this.GetType().GetTypeInfo().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
+			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
 			var expectation = new ArgumentExpectation<string>(expression);
 			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
 			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));

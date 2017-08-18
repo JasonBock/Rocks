@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
+using Rocks.Extensions;
 using Rocks.Options;
 using System;
 using System.Collections.Generic;
@@ -13,28 +14,28 @@ namespace Rocks.Construction
 {
 	internal abstract class Compiler
 	{
-		internal static void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
-		{
-			foreach (var reference in fromAssembly.GetReferencedAssemblies())
-			{
-				try
-				{
-					var assembly = Assembly.Load(reference);
-
-					if (loadedAssemblies.Add(assembly))
-					{
-						LoadDependencies(loadedAssemblies, assembly);
-					}
-				}
-				catch (FileNotFoundException) { }
-			}
-		}
-
 		// Lifted from:
 		// https://github.com/dotnet/roslyn/wiki/Runtime-code-generation-using-Roslyn-compilations-in-.NET-Core-App
-		protected static Lazy<HashSet<Assembly>> assemblyReferences =
-			new Lazy<HashSet<Assembly>>(() =>
+		protected static Lazy<HashSet<MetadataReference>> assemblyReferences =
+			new Lazy<HashSet<MetadataReference>>(() =>
 			{
+				void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
+				{
+					foreach (var reference in fromAssembly.GetReferencedAssemblies())
+					{
+						try
+						{
+							var assembly = Assembly.Load(reference);
+
+							if (loadedAssemblies.Add(assembly))
+							{
+								LoadDependencies(loadedAssemblies, assembly);
+							}
+						}
+						catch (FileNotFoundException) { }
+					}
+				}
+
 				var assemblies = new HashSet<Assembly>();
 
 				var trustedPlatformAssemblies =
@@ -50,15 +51,21 @@ namespace Rocks.Construction
 						assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
 					}
 
-					assemblies.Add(typeof(Exception).GetTypeInfo().Assembly);
-
-					foreach (var assembly in assemblies.ToList())
-					{
-						Compiler.LoadDependencies(assemblies, assembly);
-					}
+					assemblies.Add(typeof(Exception).Assembly);
+				}
+				else
+				{
+					assemblies.Add(typeof(object).Assembly);
+					assemblies.Add(typeof(IMock).Assembly);
+					assemblies.Add(typeof(Action<,,,,,,,,>).Assembly);
 				}
 
-				return assemblies;
+				foreach (var assembly in assemblies.ToList())
+				{
+					LoadDependencies(assemblies, assembly);
+				}
+
+				return new HashSet<MetadataReference>(assemblies.Transform());
 			});
 	}
 
@@ -80,10 +87,10 @@ namespace Rocks.Construction
 		internal void Compile()
 		{
 			var options = new CSharpCompilationOptions(
-					OutputKind.DynamicallyLinkedLibrary,
-					optimizationLevel: this.Optimization == OptimizationSetting.Release ?
-						OptimizationLevel.Release : OptimizationLevel.Debug,
-					allowUnsafe: this.AllowUnsafe);
+				OutputKind.DynamicallyLinkedLibrary,
+				optimizationLevel: this.Optimization == OptimizationSetting.Release ?
+					OptimizationLevel.Release : OptimizationLevel.Debug,
+				allowUnsafe: this.AllowUnsafe);
 
 			var compilation = CSharpCompilation.Create(this.AssemblyName,
 				options: options,
@@ -114,32 +121,12 @@ namespace Rocks.Construction
 		{
 			var references = Compiler.assemblyReferences.Value;
 
-			if (references.Count == 0)
+			foreach (var reference in this.ReferencedAssemblies.Transform())
 			{
-				var referencedAssemblies = new HashSet<Assembly>(this.ReferencedAssemblies)
-				{
-					typeof(object).GetTypeInfo().Assembly,
-					typeof(IMock).GetTypeInfo().Assembly,
-					typeof(Action<,,,,,,,,>).GetTypeInfo().Assembly
-				};
-
-				foreach (var referencedAssembly in referencedAssemblies.ToList())
-				{
-					Compiler.LoadDependencies(referencedAssemblies, referencedAssembly);
-				}
-
-				references = referencedAssemblies;
-			}
-			else
-			{
-				this.ReferencedAssemblies.ToList().ForEach(_ => references.Add(_));
+				references.Add(reference);
 			}
 
-			return references
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Cast<MetadataReference>()
-				.ToArray();
+			return references.ToArray();
 		}
 
 		protected abstract T GetAssemblyStream();

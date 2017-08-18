@@ -22,7 +22,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void FindMethodWithMethodOnBaseType()
 		{
-			var method = typeof(IMetadata).GetTypeInfo().GetMethod(nameof(IMetadata.Target));
+			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
 			var foundMethod = typeof(Metadata).FindMethod(method.MetadataToken);
 			Assert.That(foundMethod, Is.EqualTo(method));
 		}

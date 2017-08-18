@@ -73,7 +73,7 @@ namespace Rocks.Construction
 			var events = this.GetGeneratedEvents();
 
 			this.IsUnsafe |= constructors.IsUnsafe || events.IsUnsafe || methods.IsUnsafe || properties.IsUnsafe;
-			this.RequiresObsoleteSuppression |= this.BaseType.GetTypeInfo().GetCustomAttribute<ObsoleteAttribute>() != null ||
+			this.RequiresObsoleteSuppression |= this.BaseType.GetCustomAttribute<ObsoleteAttribute>() != null ||
 				constructors.RequiresObsoleteSuppression || events.RequiresObsoleteSuppression ||
 				methods.RequiresObsoleteSuppression || properties.RequiresObsoleteSuppression;
 
