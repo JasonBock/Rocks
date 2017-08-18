@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
     <Version>3.0.0</Version>

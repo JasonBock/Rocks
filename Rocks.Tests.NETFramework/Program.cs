@@ -3,7 +3,7 @@ using NUnitLite;
 using System;
 using System.Reflection;
 
-namespace Rocks.Tests.NETFrameworkTarget
+namespace Rocks.Tests.NETFramework
 {
 	class Program
 	{

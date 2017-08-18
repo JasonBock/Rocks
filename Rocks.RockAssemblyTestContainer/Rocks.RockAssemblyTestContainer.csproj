@@ -1,7 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.0.0</Version>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Rocks.RockAssemblyTestContainer</AssemblyName>
+    <RootNamespace>Rocks.RockAssemblyTestContainer</RootNamespace>
+    <Version>3.0.0</Version>
     <Copyright>Copyright © 2017</Copyright>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -12,7 +15,4 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
 </Project>

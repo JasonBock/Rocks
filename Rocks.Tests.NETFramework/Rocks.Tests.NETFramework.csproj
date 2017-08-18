@@ -3,6 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net462</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>Rocks.Tests.NETFramework</AssemblyName>
+    <RootNamespace>Rocks.Tests.NETFramework</RootNamespace>
+    <Version>3.0.0</Version>
+    <Copyright>Copyright © 2017</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
