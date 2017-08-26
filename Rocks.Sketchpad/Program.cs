@@ -1,17 +1,74 @@
-﻿using Rocks.Options;
-using Rocks.Tests;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Scripting;
+using Rocks.Options;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main(string[] args)
+		static async Task Main(string[] args)
 		{
-			//Rocks.Tests.ExpectationsTests.HandleWithCall
-			var test = new ExpectationsTests();
-			test.HandleWithCall();
+			await EvaluateExpressionAsync("Do()");
+			await EvaluateExpressionAsync("Do(");
+			await EvaluateExpressionAsync("Do(3, 4)");
+			await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
+			await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
+			await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+		}
+
+		private static async Task EvaluateExpressionAsync(string codeExpression)
+		{
+			Console.Out.WriteLine($"Code: {codeExpression}");
+			var expression = SyntaxFactory.ParseExpression(codeExpression) as InvocationExpressionSyntax;
+
+			if (!expression.ContainsDiagnostics)
+			{
+				var expressionName = expression.Expression as IdentifierNameSyntax;
+				var expressionNameValue = expressionName.TryGetInferredMemberName();
+				var expressionArguments = expression.ArgumentList.Arguments;
+
+				Console.Out.WriteLine($"Method name: {expressionNameValue}");
+				Console.Out.WriteLine($"Argument count: {expressionArguments.Count}");
+
+				if (expressionArguments.Count > 0)
+				{
+					foreach (var expressionArgument in expressionArguments)
+					{
+						switch (expressionArgument.Expression)
+						{
+							case LiteralExpressionSyntax literal:
+								var value = literal.Token.Value;
+								Console.Out.WriteLine($"{nameof(LiteralExpressionSyntax)}, value is {value}, type is {value.GetType().Name}");
+								break;
+							case InvocationExpressionSyntax invocation:
+								var result = await CSharpScript.EvaluateAsync(
+									invocation.ToString(),
+									options: ScriptOptions.Default
+										.AddReferences(typeof(object).Assembly)
+										.AddImports(typeof(object).Namespace));
+								Console.Out.WriteLine($"{nameof(InvocationExpressionSyntax)}, expression is {invocation}, result is {result}, type is {result.GetType().Name}");
+								break;
+							default:
+								Console.Out.WriteLine($"Unknown expression type: {expressionArgument.Expression.GetType().Name}");
+								break;
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (var diagnostic in expression.GetDiagnostics())
+				{
+					Console.Out.WriteLine(diagnostic.ToString());
+				}
+			}
+
+			Console.Out.WriteLine();
 		}
 
 		private static void UnicodeTest()
