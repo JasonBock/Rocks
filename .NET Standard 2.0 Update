@@ -4,10 +4,10 @@
 	
 * I don't have tests around Transform() for IEnumerableOfAssemblyExtensions.
 	
-* Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
-
 
 ADDRESSED
+
+* Have to update the docs to reflect that .NET Core differences don't exist anymore from 3.0.0 onward.
 
 * Ensure GetTypeInfo() is removed
 
