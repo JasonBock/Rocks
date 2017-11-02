@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using BenchmarkDotNet.Running;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
@@ -11,14 +12,17 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static async Task Main(string[] args)
+		static void Main(string[] args)
 		{
-			await EvaluateExpressionAsync("Do()");
-			await EvaluateExpressionAsync("Do(");
-			await EvaluateExpressionAsync("Do(3, 4)");
-			await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
-			await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
-			await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+#pragma warning disable IDE0022 // Use expression body for methods
+			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
+#pragma warning restore IDE0022 // Use expression body for methods
+										 //await EvaluateExpressionAsync("Do()");
+										 //await EvaluateExpressionAsync("Do(");
+										 //await EvaluateExpressionAsync("Do(3, 4)");
+										 //await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
+										 //await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
+										 //await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
 		}
 
 		private static async Task EvaluateExpressionAsync(string codeExpression)
