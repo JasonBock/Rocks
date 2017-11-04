@@ -14,16 +14,18 @@ namespace Rocks.Sketchpad
 	{
 		static void Main(string[] args)
 		{
-			// Use expression body for methods
-			//await EvaluateExpressionAsync("Do()");
-			//await EvaluateExpressionAsync("Do(");
-			//await EvaluateExpressionAsync("Do(3, 4)");
-			//await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
-			//await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
-			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
-			//var rock = Rock.Create<IStupid>();
-			//rock.Handle(_ => _.Foo());
-			//var chunk = rock.Make();
+#pragma warning disable IDE0022 // Use expression body for methods
+			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
+#pragma warning restore IDE0022 // Use expression body for methods
+										 //await EvaluateExpressionAsync("Do()");
+										 //await EvaluateExpressionAsync("Do(");
+										 //await EvaluateExpressionAsync("Do(3, 4)");
+										 //await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
+										 //await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
+										 //await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+										 //var rock = Rock.Create<IStupid>();
+										 //rock.Handle(_ => _.Foo());
+										 //var chunk = rock.Make();
 		}
 
 		private static void RunBenchmark() =>
