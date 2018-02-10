@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests.NETFramework</AssemblyName>
     <RootNamespace>Rocks.Tests.NETFramework</RootNamespace>
