@@ -38,23 +38,6 @@ namespace Rocks
 				setterInfo != null ? new MethodAdornments(setterInfo) : null);
 		}
 
-		// TODO, probably need to rename method so I don't get ambiguous calls :(
-		//public MethodAdornments HandleProperty<TPropertyValue>(string name, Expression<Func<TPropertyValue>> setterExpectation)
-		//{
-		//	var property = typeof(T).FindProperty(name);
-
-		//	if (property.CanRead)
-		//	{
-		//		this.Handlers[property.GetMethod.MetadataToken] = property.GetGetterHandler();
-		//	}
-
-		//	if (property.CanWrite)
-		//	{
-		//		this.Handlers[property.SetMethod.MetadataToken] = new HandlerInformation(
-		//			property.CreateDefaultSetterExpectation());
-		//	}
-		//}
-
 		public PropertyMethodAdornments Handle(string name, uint expectedCallCount)
 		{
 			var property = typeof(T).FindProperty(name);

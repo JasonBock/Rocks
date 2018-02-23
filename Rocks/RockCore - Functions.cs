@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
 using static Rocks.Extensions.MethodCallExpressionExtensions;
@@ -12,53 +13,45 @@ namespace Rocks
 		: IRock<T>
 		where T : class
 	{
-		public MethodAdornments<TResult> Handle<TResult>(Expression<Func<T, TResult>> expression)
+		private MethodAdornments HandleLambda<TResult>(LambdaExpression expression,
+			Func<ReadOnlyDictionary<string, ArgumentExpectation>, HandlerInformation<TResult>> infoGenerator)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
 			method.AddNamespaces(this.Namespaces);
 
-			var info = new HandlerInformation<TResult>(methodCall.GetArgumentExpectations());
+			var info = infoGenerator(methodCall.GetArgumentExpectations());
+
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			return new MethodAdornments<TResult>(info);
 		}
 
-		public MethodAdornments<TResult> Handle<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount)
+		private MethodAdornments<TResult> HandleLambdaWithResult<TResult>(LambdaExpression expression, 
+			Func<ReadOnlyDictionary<string, ArgumentExpectation>, HandlerInformation<TResult>> infoGenerator)
 		{
 			var methodCall = ((MethodCallExpression)expression.Body);
 			var method = methodCall.Method;
 			method.AddNamespaces(this.Namespaces);
 
-			var info = new HandlerInformation<TResult>(expectedCallCount, methodCall.GetArgumentExpectations());
+			var info = infoGenerator(methodCall.GetArgumentExpectations());
+
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
 			return new MethodAdornments<TResult>(info);
 		}
 
-		public MethodAdornments Handle<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler)
-		{
-			var methodCall = ((MethodCallExpression)expression.Body);
-			var method = methodCall.Method;
-			method.AddNamespaces(this.Namespaces);
+		public MethodAdornments<TResult> Handle<TResult>(Expression<Func<T, TResult>> expression) => 
+			this.HandleLambdaWithResult(expression, expectations => new HandlerInformation<TResult>(expectations));
 
-			var info = new HandlerInformation<TResult>(handler, methodCall.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.MetadataToken,
-				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new MethodAdornments(info);
-		}
+		public MethodAdornments<TResult> Handle<TResult>(Expression<Func<T, TResult>> expression, uint expectedCallCount) => 
+			this.HandleLambdaWithResult(expression, expectations => new HandlerInformation<TResult>(expectedCallCount, expectations));
 
-		public MethodAdornments Handle<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount)
-		{
-			var methodCall = ((MethodCallExpression)expression.Body);
-			var method = methodCall.Method;
-			method.AddNamespaces(this.Namespaces);
+		public MethodAdornments Handle<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler) => 
+			this.HandleLambda(expression, expectations => new HandlerInformation<TResult>(handler, expectations));
 
-			var info = new HandlerInformation<TResult>(handler, expectedCallCount, methodCall.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.MetadataToken,
-				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new MethodAdornments(info);
-		}
+		public MethodAdornments Handle<TResult>(Expression<Func<T, TResult>> expression, Func<TResult> handler, uint expectedCallCount) => 
+			this.HandleLambda(expression, expectations => new HandlerInformation<TResult>(handler, expectedCallCount, expectations));
 
 		public MethodAdornments Handle<T1, TResult>(Expression<Func<T, TResult>> expression, Func<T1, TResult> handler)
 		{
