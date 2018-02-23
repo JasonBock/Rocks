@@ -89,13 +89,13 @@ namespace Rocks.Tests
 		public Guid Method4(string a, ref int b)
 		{
 			this.wasMethod4DelegateCalled = true;
-			return default(Guid);
+			return default;
 		}
 
 		public Guid Method5<U>(string a, ref U b)
 		{
 			this.wasMethod5DelegateCalled = true;
-			return default(Guid);
+			return default;
 		}
 
 #pragma warning disable CS0414

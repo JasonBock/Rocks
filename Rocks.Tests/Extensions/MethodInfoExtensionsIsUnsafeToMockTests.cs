@@ -190,39 +190,39 @@ namespace Rocks.Tests.Extensions
 
 	public abstract unsafe class UnsafeMembers
 	{
-		public virtual byte MethodPublicVirtualSafeReturn() => default(byte); 
+		public virtual byte MethodPublicVirtualSafeReturn() => default; 
 		public virtual void MethodPublicVirtualSafeArgument(byte a) { }
-		public byte MethodPublicNonVirtualSafeReturn() => default(byte); 
+		public byte MethodPublicNonVirtualSafeReturn() => default; 
 		public void MethodPublicNonVirtualSafeArgument(byte a) { }
 		public abstract byte MethodPublicAbstractSafeReturn();
 		public abstract void MethodPublicAbstractSafeArgument(byte a);
-		protected virtual byte MethodProtectedVirtualSafeReturn() => default(byte); 
+		protected virtual byte MethodProtectedVirtualSafeReturn() => default; 
 		protected virtual void MethodProtectedVirtualSafeArgument(byte a) { }
-		protected byte MethodProtectedNonVirtualSafeReturn() => default(byte); 
+		protected byte MethodProtectedNonVirtualSafeReturn() => default; 
 		protected void MethodProtectedNonVirtualSafeArgument(byte a) { }
 		protected abstract byte MethodProtectedAbstractSafeReturn();
 		protected abstract void MethodProtectedAbstractSafeArgument(byte a);
-		internal virtual byte MethodInternalVirtualSafeReturn() => default(byte); 
+		internal virtual byte MethodInternalVirtualSafeReturn() => default; 
 		internal virtual void MethodInternalVirtualSafeArgument(byte a) { }
-		internal byte MethodInternalNonVirtualSafeReturn() => default(byte); 
+		internal byte MethodInternalNonVirtualSafeReturn() => default; 
 		internal void MethodInternalNonVirtualSafeArgument(byte a) { }
 		internal abstract byte MethodInternalAbstractSafeReturn();
 		internal abstract void MethodInternalAbstractSafeArgument(byte a);
-		public virtual byte* MethodPublicVirtualUnsafeReturn() => default(byte*); 
+		public virtual byte* MethodPublicVirtualUnsafeReturn() => default; 
 		public virtual void MethodPublicVirtualUnsafeArgument(byte* a) { }
-		public byte* MethodPublicNonVirtualUnsafeReturn() => default(byte*); 
+		public byte* MethodPublicNonVirtualUnsafeReturn() => default; 
 		public void MethodPublicNonVirtualUnsafeArgument(byte* a) { }
 		public abstract byte* MethodPublicAbstractUnsafeReturn();
 		public abstract void MethodPublicAbstractUnsafeArgument(byte* a);
-		protected virtual byte* MethodProtectedVirtualUnsafeReturn() => default(byte*); 
+		protected virtual byte* MethodProtectedVirtualUnsafeReturn() => default; 
 		protected virtual void MethodProtectedVirtualUnsafeArgument(byte* a) { }
-		protected byte* MethodProtectedNonVirtualUnsafeReturn() => default(byte*); 
+		protected byte* MethodProtectedNonVirtualUnsafeReturn() => default; 
 		protected void MethodProtectedNonVirtualUnsafeArgument(byte* a) { }
 		protected abstract byte* MethodProtectedAbstractUnsafeReturn();
 		protected abstract void MethodProtectedAbstractUnsafeArgument(byte* a);
-		internal virtual byte* MethodInternalVirtualUnsafeReturn() => default(byte*); 
+		internal virtual byte* MethodInternalVirtualUnsafeReturn() => default; 
 		internal virtual void MethodInternalVirtualUnsafeArgument(byte* a) { }
-		internal byte* MethodInternalNonVirtualUnsafeReturn() => default(byte*); 
+		internal byte* MethodInternalNonVirtualUnsafeReturn() => default; 
 		internal void MethodInternalNonVirtualUnsafeArgument(byte* a) { }
 		internal abstract byte* MethodInternalAbstractUnsafeReturn();
 		internal abstract void MethodInternalAbstractUnsafeArgument(byte* a);

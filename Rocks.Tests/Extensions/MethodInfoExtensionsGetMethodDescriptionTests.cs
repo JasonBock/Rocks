@@ -226,7 +226,7 @@ namespace Rocks.Tests.Extensions
 		public void TargetWithArguments(int a, string c) { }
 		public int TargetWithArgumentsAndReturnValue(int a, string c) => 0; 
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
-		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) => default(U);
+		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) => default;
 		public void TargetWithOutArgument(out int a) => a = 0;
 		public void TargetWithRefArgument(ref int a) { }
 		public void TargetWithParamsArgument(params int[] a) { }

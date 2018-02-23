@@ -75,6 +75,6 @@ namespace Rocks.Tests.Extensions
 
 	public class OtherMatchWithDifferentReturnType
 	{
-		public Guid GetString(int a) => default(Guid); 
+		public Guid GetString(int a) => default; 
 	}
 }

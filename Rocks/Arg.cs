@@ -11,11 +11,11 @@ namespace Rocks
 				throw new ArgumentNullException(nameof(evaluation));
 			}
 
-			return default(T);
+			return default;
 		}
 
-		public static T IsAny<T>() => default(T);
+		public static T IsAny<T>() => default;
 
-		public static T IsDefault<T>() => default(T);
+		public static T IsDefault<T>() => default;
 	}
 }

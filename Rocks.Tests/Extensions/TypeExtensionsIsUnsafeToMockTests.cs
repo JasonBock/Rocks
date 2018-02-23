@@ -108,7 +108,7 @@ namespace Rocks.Tests.Extensions
 
 	public unsafe class UnsafeMethodWithUnsafeReturnValue
 	{
-		public virtual byte* Target() => default(byte*); 
+		public virtual byte* Target() => default; 
 	}
 
 	public unsafe class UnsafeMethodWithUnsafeArguments
