@@ -27,29 +27,11 @@ namespace Rocks
 			return new MethodAdornments(info);
 		}
 
-		public MethodAdornments Handle(Expression<Action<T>> expression)
-		{
-			var methodCall = ((MethodCallExpression)expression.Body);
-			var method = methodCall.Method;
-			method.AddNamespaces(this.Namespaces);
+		public MethodAdornments Handle(Expression<Action<T>> expression) => 
+			this.HandleLambda(expression, expectations => new HandlerInformation(expectations));
 
-			var info = new HandlerInformation(methodCall.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.MetadataToken,
-				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new MethodAdornments(info);
-		}
-
-		public MethodAdornments Handle(Expression<Action<T>> expression, uint expectedCallCount)
-		{
-			var methodCall = ((MethodCallExpression)expression.Body);
-			var method = methodCall.Method;
-			method.AddNamespaces(this.Namespaces);
-
-			var info = new HandlerInformation(expectedCallCount, methodCall.GetArgumentExpectations());
-			this.Handlers.AddOrUpdate(method.MetadataToken,
-				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new MethodAdornments(info);
-		}
+		public MethodAdornments Handle(Expression<Action<T>> expression, uint expectedCallCount) => 
+			this.HandleLambda(expression, expectations => new HandlerInformation(expectedCallCount, expectations));
 
 		public MethodAdornments Handle(Expression<Action<T>> expression, Action handler) => 
 			this.HandleLambda(expression, expectations => new HandlerInformation(handler, expectations));
