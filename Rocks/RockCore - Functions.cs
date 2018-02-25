@@ -24,7 +24,7 @@ namespace Rocks
 
 			this.Handlers.AddOrUpdate(method.MetadataToken,
 				() => new List<HandlerInformation> { info }, _ => _.Add(info));
-			return new MethodAdornments<TResult>(info);
+			return new MethodAdornments(info);
 		}
 
 		private MethodAdornments<TResult> HandleLambdaWithResult<TResult>(LambdaExpression expression,
