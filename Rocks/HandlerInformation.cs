@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading;
 
 namespace Rocks
@@ -76,8 +77,8 @@ namespace Rocks
 			{
 				if (this.ExpectedCallCount != this.callCount)
 				{
-					verifications.Add(string.Format(HandlerInformation.ErrorExpectedCallCount,
-						this.ExpectedCallCount, this.callCount));
+					verifications.Add(string.Format(
+						HandlerInformation.ErrorExpectedCallCount, this.ExpectedCallCount, this.callCount));
 				}
 			}
 

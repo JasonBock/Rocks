@@ -36,7 +36,7 @@ namespace Rocks
 		{
 			var tType = typeof(T);
 			// Can assume only sealed typed with the right constructor passed the .Validate() test.
-			return tType.IsSealed ? new AssemblyRock<T>(options) as IRock<T> :
+			return tType.IsSealed ? new AssemblyRock<T>() as IRock<T> :
 				new InMemoryRock<T>(options, isMake) as IRock<T>;
 		}
 

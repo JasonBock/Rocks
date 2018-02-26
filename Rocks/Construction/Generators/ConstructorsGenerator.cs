@@ -8,9 +8,9 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction.Generators
 {
-	internal sealed class ConstructorsGenerator
+	internal static class ConstructorsGenerator
 	{
-		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
+		internal static GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, string constructorName)
 		{
 			var isUnsafe = false;

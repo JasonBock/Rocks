@@ -9,9 +9,9 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction.Generators
 {
-	internal sealed class PropertiesGenerator
+	internal static class PropertiesGenerator
 	{
-		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
+		internal static GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder informationBuilder,
 			bool isMake, bool hasEvents)
 		{

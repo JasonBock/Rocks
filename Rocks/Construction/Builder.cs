@@ -41,20 +41,20 @@ namespace Rocks.Construction
 		internal virtual void Build() => this.Tree = this.MakeTree();
 
 		private GenerateResults GetGeneratedEvents() =>
-			new EventsGenerator().Generate(this.BaseType, this.Namespaces,
+			EventsGenerator.Generate(this.BaseType, this.Namespaces,
 				this.NameGenerator, this.InformationBuilder);
 
 		private GenerateResults GetGeneratedConstructors() =>
-			new ConstructorsGenerator().Generate(this.BaseType,
+			ConstructorsGenerator.Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.GetTypeNameWithNoGenerics());
 
 		private GenerateResults GetGeneratedMethods(bool hasEvents) =>
-			new MethodsGenerator().Generate(this.BaseType,
+			MethodsGenerator.Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
 				this.IsMake, this.HandleRefOutMethod, hasEvents);
 
 		private GenerateResults GetGeneratedProperties(bool hasEvents) =>
-			new PropertiesGenerator().Generate(this.BaseType,
+			PropertiesGenerator.Generate(this.BaseType,
 				this.Namespaces, this.NameGenerator, this.InformationBuilder,
 				this.IsMake, hasEvents);
 

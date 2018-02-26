@@ -19,7 +19,7 @@ namespace Rocks.Tests
 			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
 			Assert.That(expectation.Expression, Is.Null, nameof(expectation.Expression));
 			Assert.That(expectation.Value, Is.EqualTo(default(int)), nameof(expectation.Value));
-			Assert.That(expectation.IsValid(1, "a"), Is.True, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(1), Is.True, nameof(expectation.IsValid));
 		}
 
 		[Test]
@@ -44,14 +44,14 @@ namespace Rocks.Tests
 		public void CreateWithInvalidEvaluation()
 		{
 			var expectation = new ArgumentExpectation<int>(_ => _ % 2 == 0);
-			Assert.That(expectation.IsValid(1, "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(1), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithValidEvaluation()
 		{
 			var expectation = new ArgumentExpectation<int>(_ => _ % 2 == 0);
-			Assert.That(expectation.IsValid(2, "a"), Is.True);
+			Assert.That(expectation.IsValid(2), Is.True);
 		}
 
 		[Test]
@@ -71,56 +71,56 @@ namespace Rocks.Tests
 		public void CreateWithNullValueAndComparedToNull()
 		{
 			var expectation = new ArgumentExpectation<string>(null as string);
-			Assert.That(expectation.IsValid(null, "a"), Is.True, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(null), Is.True, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithNullValueAndComparedToNotNull()
 		{
 			var expectation = new ArgumentExpectation<string>(null as string);
-			Assert.That(expectation.IsValid("a", "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid("a"), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithInvalidValue()
 		{
 			var expectation = new ArgumentExpectation<string>("a");
-			Assert.That(expectation.IsValid("b", "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid("b"), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithInvalidNullValue()
 		{
 			var expectation = new ArgumentExpectation<string>("a");
-			Assert.That(expectation.IsValid(null, "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(null), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithValidValue()
 		{
 			var expectation = new ArgumentExpectation<string>("a");
-			Assert.That(expectation.IsValid("a", "a"), Is.True, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid("a"), Is.True, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithInvalidArrayValueDueToDifferentArrayLengths()
 		{
 			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
-			Assert.That(expectation.IsValid(new[] { "a", "a" }, "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(new[] { "a", "a" }), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithInvalidArrayValueDueToDifferentValues()
 		{
 			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
-			Assert.That(expectation.IsValid(new[] { "b" }, "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(new[] { "b" }), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
 		public void CreateWithValidArrayValue()
 		{
 			var expectation = new ArgumentExpectation<string[]>(new[] { "a" });
-			Assert.That(expectation.IsValid(new[] { "a" }, "a"), Is.True, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid(new[] { "a" }), Is.True, nameof(expectation.IsValid));
 		}
 
 		[Test]
@@ -146,7 +146,7 @@ namespace Rocks.Tests
 		{
 			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
 			var expectation = new ArgumentExpectation<string>(expression);
-			Assert.That(expectation.IsValid("b", "a"), Is.False, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid("b"), Is.False, nameof(expectation.IsValid));
 		}
 
 		[Test]
@@ -154,7 +154,7 @@ namespace Rocks.Tests
 		{
 			var expression = Expression.Call(this.GetType().GetMethod(nameof(ArgumentExpectationOfTTests.GetValue)));
 			var expectation = new ArgumentExpectation<string>(expression);
-			Assert.That(expectation.IsValid("a", "a"), Is.True, nameof(expectation.IsValid));
+			Assert.That(expectation.IsValid("a"), Is.True, nameof(expectation.IsValid));
 		}
 
 		public static string GetValue() => "a";

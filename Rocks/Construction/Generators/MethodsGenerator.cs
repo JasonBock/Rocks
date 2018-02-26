@@ -9,9 +9,9 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Construction.Generators
 {
-	internal sealed class MethodsGenerator
+	internal static class MethodsGenerator
 	{
-		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
+		internal static GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder informationBuilder, bool isMake,
 			Action<MethodInfo, MethodInformation> handleRefOutMethod, bool hasEvents)
 		{
@@ -37,14 +37,14 @@ namespace Rocks.Construction.Generators
 					{
 						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
 						{
-							generatedMethods.Add(this.GenerateMethodWithNoRefOutParameters(
+							generatedMethods.Add(MethodsGenerator.GenerateMethodWithNoRefOutParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers,
 								methodInformation.DescriptionWithOverride, visibility,
 								method.RequiresNewImplementation, namespaces, isMake, hasEvents));
 						}
 						else
 						{
-							generatedMethods.Add(this.GenerateMethodWithRefOutOrNoParameters(
+							generatedMethods.Add(MethodsGenerator.GenerateMethodWithRefOutOrNoParameters(
 								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
 								visibility, method.RequiresNewImplementation,
 								namespaces, isMake, hasEvents));
@@ -82,7 +82,7 @@ namespace Rocks.Construction.Generators
 				requiresObsoleteSuppression, false);
 		}
 
-		private string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
+		private static string GenerateMethodWithNoRefOutParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
 			string outInitializers, string methodDescriptionWithOverride,
 			string visibility, RequiresIsNewImplementation requiresIsNewImplementation,
 			SortedSet<string> namespaces, bool isMake, bool hasEvents)
@@ -117,7 +117,7 @@ namespace Rocks.Construction.Generators
 			}
 		}
 
-		private string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
+		private static string GenerateMethodWithRefOutOrNoParameters(MethodInfo baseMethod, string delegateCast, string argumentNameList,
 			string outInitializers, string methodDescriptionWithOverride, string visibility,
 			RequiresIsNewImplementation requiresIsNewImplementation,
 			SortedSet<string> namespaces, bool isMake, bool hasEvents)

@@ -1,5 +1,4 @@
-﻿using Rocks.Options;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Rocks
@@ -8,9 +7,7 @@ namespace Rocks
 		: RockCore<T>
 		where T : class
 	{
-		private readonly RockOptions options;
-
-		internal AssemblyRock(RockOptions options) => this.options = options;
+		internal AssemblyRock() { }
 
 		public override T Make()
 		{

@@ -8,9 +8,9 @@ using static System.Reflection.CustomAttributeExtensions;
 
 namespace Rocks.Construction.Generators
 {
-	internal sealed class EventsGenerator
+	internal static class EventsGenerator
 	{
-		internal GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
+		internal static GenerateResults Generate(Type baseType, SortedSet<string> namespaces,
 			NameGenerator generator, MethodInformationBuilder builder)
 		{
 			var requiresObsoleteSuppression = false;

@@ -43,10 +43,10 @@ namespace Rocks
 				this.IsByRef |= this.RootType.IsByRef;
 			}
 
-			this.SafeName = this.GetSafeName(this.RootType);
+			this.SafeName = TypeDissector.GetSafeName(this.RootType);
 		}
 
-		private string GetSafeName(Type type)
+		private static string GetSafeName(Type type)
 		{
 			var typeName = type.Name;
 			var typeFullName = type.FullName;

@@ -32,7 +32,7 @@ namespace Rocks
 			this.Expression = System.Linq.Expressions.Expression.Lambda(expression).Compile();
 		}
 
-		public bool IsValid(T value, string parameter)
+		public bool IsValid(T value)
 		{
 			var isValid = true;
 
