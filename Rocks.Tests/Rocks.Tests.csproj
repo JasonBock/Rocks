@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <!-- For .NET Core testing, I just need the TargetFramework element -->
-    <!--<TargetFramework>netcoreapp2.0</TargetFramework>-->
+    <TargetFramework>netcoreapp2.0</TargetFramework>
     
     <!-- For .NET Framework testing, I need the TargetFramework and DebugType element -->
-    <TargetFramework>net471</TargetFramework>
-    <DebugType>Full</DebugType>
+    <!--<TargetFramework>net471</TargetFramework>
+    <DebugType>Full</DebugType>-->
 
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests</AssemblyName>
