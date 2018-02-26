@@ -12,7 +12,7 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 #pragma warning disable IDE0022 // Use expression body for methods
 			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj", "{5630AB3F-B029-4FE0-B883-37F47283AC1B}"
 EndProject
@@ -10,21 +10,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{0805F768-D4DF-486B-B13C-21BEE8C06F33}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.NETCore", "Rocks.Tests.NETCore\Rocks.Tests.NETCore.csproj", "{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.NETFramework", "Rocks.Tests.NETFramework\Rocks.Tests.NETFramework.csproj", "{E71D1FAA-F788-450A-8EDB-44231570610C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Task", "Rocks.Task\Rocks.Task.csproj", "{66D83481-D2BC-42E8-9624-C5E07AE41EFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Task.Tests", "Rocks.Task.Tests\Rocks.Task.Tests.csproj", "{1954133D-967B-4C80-9E8E-92F07568FD7B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{710CF98B-1D8E-4ED5-9A24-51E49136828A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{D040DBA6-B533-4C1F-91B2-0414D7D211E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +32,6 @@ Global
 		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF54FD92-3B7A-46DF-8AC1-D62FA9C17A77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,14 +40,6 @@ Global
 		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9BEC153-1C7B-4DC1-B050-B03AE20783D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E71D1FAA-F788-450A-8EDB-44231570610C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E71D1FAA-F788-450A-8EDB-44231570610C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E71D1FAA-F788-450A-8EDB-44231570610C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E71D1FAA-F788-450A-8EDB-44231570610C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66D83481-D2BC-42E8-9624-C5E07AE41EFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -68,6 +52,10 @@ Global
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

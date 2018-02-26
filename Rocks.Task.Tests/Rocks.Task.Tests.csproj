@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
+    <DebugType>Full</DebugType>
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Task.Tests</AssemblyName>
     <RootNamespace>Rocks.Task.Tests</RootNamespace>

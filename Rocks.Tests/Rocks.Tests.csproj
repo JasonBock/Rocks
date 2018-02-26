@@ -1,7 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <!-- For .NET Core testing, I just need the TargetFramework element -->
+    <!--<TargetFramework>netcoreapp2.0</TargetFramework>-->
+    
+    <!-- For .NET Framework testing, I need the TargetFramework and DebugType element -->
+    <TargetFramework>net471</TargetFramework>
+    <DebugType>Full</DebugType>
+
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
@@ -9,12 +15,13 @@
     <Copyright>Copyright © 2017</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.3.2" />
-    <PackageReference Include="NUnit" Version="3.8.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="NUnit" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
   </ItemGroup>
 
   <ItemGroup>
