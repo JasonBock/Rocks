@@ -56,28 +56,6 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void RoundtripWithXml()
-		{
-			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
-			rock.Handle(_ => _.Target("44"));
-
-			var chunk = rock.Make();
-			IAmSerializable newChunk = null;
-
-			var serializer = new XmlSerializer(chunk.GetType());
-
-			using (var stream = new MemoryStream())
-			{
-				serializer.Serialize(stream, chunk);
-				stream.Position = 0;
-				newChunk = serializer.Deserialize(stream) as IAmSerializable;
-			}
-
-			// Shows that the dictionary of handlers doesn't get serialized.
-			Assert.That(() => newChunk.Target("44"), Throws.TypeOf<NotImplementedException>());
-		}
-
-		[Test]
 		public void RoundtripWhenMockIsNotSerializable()
 		{
 			var rock = Rock.Create<IAmNotSerializable>();
