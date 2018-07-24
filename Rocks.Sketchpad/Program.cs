@@ -15,7 +15,7 @@ namespace Rocks.Sketchpad
 		static void Main()
 		{
 #pragma warning disable IDE0022 // Use expression body for methods
-			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
+			BenchmarkRunner.Run<GenericArgumentsTests>();
 #pragma warning restore IDE0022 // Use expression body for methods
 										 //await EvaluateExpressionAsync("Do()");
 										 //await EvaluateExpressionAsync("Do(");

@@ -12,10 +12,10 @@ namespace Rocks.Tests.Extensions
 		public void GetGenericArgumentsForTypeWithNoConstraints()
 		{
 			var namespaces = new SortedSet<string>();
-			var arguments = typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments(namespaces);
+			var (arguments, constraints) = typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments(namespaces);
 
-			Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
-			Assert.That(arguments.Constraints, Is.Empty);
+			Assert.That(arguments, Is.EqualTo("<T>"));
+			Assert.That(constraints, Is.Empty);
 			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 
@@ -23,10 +23,10 @@ namespace Rocks.Tests.Extensions
 		public void GetGenericArgumentsForTypeWithConstraints()
 		{
 			var namespaces = new SortedSet<string>();
-			var arguments = typeof(IHaveGenericsWithConstraints<>).GetGenericArguments(namespaces);
+			var (arguments, constraints) = typeof(IHaveGenericsWithConstraints<>).GetGenericArguments(namespaces);
 
-			Assert.That(arguments.Arguments, Is.EqualTo("<T>"));
-			Assert.That(arguments.Constraints, Is.EqualTo("where T : class"));
+			Assert.That(arguments, Is.EqualTo("<T>"));
+			Assert.That(constraints, Is.EqualTo("where T : class"));
 			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 
@@ -34,11 +34,11 @@ namespace Rocks.Tests.Extensions
 		public void GetGenericArgumentsForComplexGenericType()
 		{
 			var namespaces = new SortedSet<string>();
-			var arguments = typeof(HaveMethodWithComplexGenericType<>).GetMethod(
+			var (arguments, constraints) = typeof(HaveMethodWithComplexGenericType<>).GetMethod(
 				nameof(HaveMethodWithComplexGenericType<int>.Target)).ReturnType.GetGenericArguments(namespaces);
 
-			Assert.That(arguments.Arguments, Is.EqualTo("<KeyValuePair<long, TSource>>"));
-			Assert.That(arguments.Constraints, Is.Empty);
+			Assert.That(arguments, Is.EqualTo("<KeyValuePair<long, TSource>>"));
+			Assert.That(constraints, Is.Empty);
 			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 	}

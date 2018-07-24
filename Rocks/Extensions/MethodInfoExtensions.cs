@@ -155,9 +155,8 @@ namespace Rocks.Extensions
 
 			if (@this.IsGenericMethodDefinition)
 			{
-				var result = @this.GetGenericArguments(namespaces);
-				generics = result.Arguments;
-				constraints = result.Constraints.Length == 0 ? string.Empty : $" {result.Constraints}";
+				(generics, constraints) = @this.GetGenericArguments(namespaces);
+				constraints = constraints.Length == 0 ? string.Empty : $" {constraints}";
 			}
 
 			var parameters = @this.GetParameters(namespaces);

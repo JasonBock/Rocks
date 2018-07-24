@@ -13,7 +13,7 @@ namespace Rocks.Construction.Persistence
 			: base(namespaces) => this.BaseType = baseType;
 
 		protected override string GetDelegateCast(MethodInfo baseMethod) =>
-			$"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).Arguments}";
+			$"{this.GetTypeNameWithGenericsAndNoTextFormatting()}_{baseMethod.Name}{this.GetMethodIdentifier(baseMethod)}Delegate{baseMethod.GetGenericArguments(this.Namespaces).arguments}";
 
 		private string GetMethodIdentifier(MethodInfo baseMethod)
 		{

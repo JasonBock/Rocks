@@ -56,7 +56,7 @@ namespace Rocks.Extensions
 			var pointer = dissector.IsPointer ? "*" : string.Empty;
 			var array = dissector.IsArray ? "[]" : string.Empty;
 
-			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).Arguments}{pointer}{array}";
+			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).arguments}{pointer}{array}";
 		}
 
 		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator) =>
@@ -307,7 +307,7 @@ namespace Rocks.Extensions
 			 where method.ContainsDelegateConditions()
 			 select method).Any();
 
-		internal static GenericArgumentsResult GetGenericArguments(this Type @this, SortedSet<string> namespaces)
+		internal static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces)
 		{
 			var arguments = string.Empty;
 			var constraints = string.Empty;
@@ -320,11 +320,15 @@ namespace Rocks.Extensions
 				foreach (var argument in @this.GetGenericArguments())
 				{
 					genericArguments.Add($"{argument.GetFullName(namespaces)}");
-					var constraint = argument.GetConstraints(namespaces);
 
-					if (!string.IsNullOrWhiteSpace(constraint))
+					if (argument.IsGenericParameter && argument.GenericParameterAttributes != 0)
 					{
-						genericConstraints.Add(constraint);
+						var constraint = argument.GetConstraints(namespaces);
+
+						if (!string.IsNullOrWhiteSpace(constraint))
+						{
+							genericConstraints.Add(constraint);
+						}
 					}
 				}
 
@@ -335,7 +339,7 @@ namespace Rocks.Extensions
 					string.Empty : $"{string.Join(" ", genericConstraints)}";
 			}
 
-			return new GenericArgumentsResult(arguments, constraints);
+			return (arguments, constraints);
 		}
 
 		internal static string GetConstraints(this Type @this, SortedSet<string> namespaces)

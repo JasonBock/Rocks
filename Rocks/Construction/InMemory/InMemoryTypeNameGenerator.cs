@@ -10,12 +10,9 @@ namespace Rocks.Construction.InMemory
 		internal InMemoryTypeNameGenerator(SortedSet<string> namespaces)
 			: base() => this.Namespaces = namespaces;
 
-		internal override string Generate(Type baseType)
-		{
-			var name = baseType.IsGenericTypeDefinition ?
-				$"{Guid.NewGuid().ToString("N")}{baseType.GetGenericArguments(this.Namespaces).Arguments}" : Guid.NewGuid().ToString("N");
-			return $"Rock{name}";
-		}
+		internal override string Generate(Type baseType) => baseType.IsGenericTypeDefinition ?
+			$"Rock{baseType.MetadataToken}{baseType.GetGenericArguments(this.Namespaces).arguments}" :
+			$"Rock{baseType.MetadataToken}";
 
 		private SortedSet<string> Namespaces { get; }
 	}

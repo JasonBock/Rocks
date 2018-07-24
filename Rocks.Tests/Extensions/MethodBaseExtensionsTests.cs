@@ -35,10 +35,10 @@ namespace Rocks.Tests.Extensions
 		{
 			var namespaces = new SortedSet<string>();
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
-			var arguments = target.GetGenericArguments(namespaces);
+			var (arguments, constraints) = target.GetGenericArguments(namespaces);
 
-			Assert.That(arguments.Arguments, Is.EqualTo("<T, U>"), nameof(arguments.Arguments));
-			Assert.That(arguments.Constraints, Is.EqualTo("where T : new() where U : T"), nameof(arguments.Constraints));
+			Assert.That(arguments, Is.EqualTo("<T, U>"), nameof(arguments));
+			Assert.That(constraints, Is.EqualTo("where T : new() where U : T"), nameof(constraints));
 			Assert.That(namespaces.Count, Is.EqualTo(1), nameof(namespaces.Count));
 			Assert.That(namespaces.Contains(this.GetType().Namespace), nameof(namespaces.Contains), Is.True);
 		}
@@ -48,10 +48,10 @@ namespace Rocks.Tests.Extensions
 		{
 			var namespaces = new SortedSet<string>();
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
-			var arguments = target.GetGenericArguments(namespaces);
+			var (arguments, constraints) = target.GetGenericArguments(namespaces);
 
-			Assert.That(arguments.Arguments, Is.Empty, nameof(arguments.Arguments));
-			Assert.That(arguments.Constraints, Is.Empty, nameof(arguments.Constraints));
+			Assert.That(arguments, Is.Empty, nameof(arguments));
+			Assert.That(constraints, Is.Empty, nameof(constraints));
 			Assert.That(namespaces.Count, Is.EqualTo(0), nameof(namespaces.Count));
 		}
 

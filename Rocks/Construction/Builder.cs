@@ -94,7 +94,7 @@ namespace Rocks.Construction
 				this.Options.Serialization == SerializationOptions.Supported ?
 					ConstructorTemplates.GetConstructorWithNoArguments(this.GetTypeNameWithNoGenerics()) : string.Empty,
 				this.GetAdditionNamespaceCode(),
-				this.IsUnsafe, baseTypeGenericArguments.Constraints,
+				this.IsUnsafe, baseTypeGenericArguments.constraints,
 				hasEvents ? "R.IMockWithEvents" : "R.IMock",
 				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
 

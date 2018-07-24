@@ -18,7 +18,7 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var restOfName = name.Substring(4);
 
-			Assert.That(() => Guid.Parse(restOfName), Throws.Nothing);
+			Assert.That(() => int.Parse(restOfName), Is.EqualTo(typeof(IAmNotGeneric).MetadataToken));
 		}
 
 		[Test]
@@ -34,7 +34,7 @@ namespace Rocks.Tests.Construction.InMemory
 			var restOfName = name.Substring(4);
 			restOfName = restOfName.Substring(0, restOfName.Length - 3);
 
-			Assert.That(() => Guid.Parse(restOfName), Throws.Nothing);
+			Assert.That(() => int.Parse(restOfName), Is.EqualTo(typeof(IAmGeneric<>).MetadataToken));
 		}
 
 		public interface IAmNotGeneric { }

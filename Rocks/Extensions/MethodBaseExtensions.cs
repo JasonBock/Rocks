@@ -9,7 +9,7 @@ namespace Rocks.Extensions
 		internal static bool IsExtern(this MethodBase @this) =>
 			(@this.MethodImplementationFlags & MethodImplAttributes.InternalCall) != 0;
 
-		internal static GenericArgumentsResult GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
+		internal static (string arguments, string constraints) GetGenericArguments(this MethodBase @this, SortedSet<string> namespaces)
 		{
 			var arguments = string.Empty;
 			var constraints = string.Empty;
@@ -39,7 +39,7 @@ namespace Rocks.Extensions
 					string.Empty : $"{string.Join(" ", genericConstraints)}";
 			}
 
-			return new GenericArgumentsResult(arguments, constraints);
+			return (arguments, constraints);
 		}
 
 		internal static string GetArgumentNameList(this MethodBase @this) =>
@@ -53,7 +53,7 @@ namespace Rocks.Extensions
 			var hasPointerTypes = @this.GetParameters()
 				.Where(_ => new TypeDissector(_.ParameterType).IsPointer).Any();
 			var argumentlist = hasPointerTypes ? @this.GetParameters(new SortedSet<string>()) : @this.GetLiteralArgumentNameList();
-			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).Arguments}({argumentlist})";
+			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).arguments}({argumentlist})";
 		}
 
 		internal static string GetLiteralArgumentNameList(this MethodBase @this) =>
