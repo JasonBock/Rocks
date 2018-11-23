@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -7,6 +8,9 @@ namespace Rocks
 {
 	internal sealed class TypeDissector
 	{
+		private static ConcurrentDictionary<Type, TypeDissector> mapping =
+			new ConcurrentDictionary<Type, TypeDissector>();
+
 		private static readonly ImmutableDictionary<string, string> simplifiedPrimitiveNames =
 			new Dictionary<string, string>
 			{
@@ -27,7 +31,10 @@ namespace Rocks
 				{ typeof(object).Name, "object" }
 			}.ToImmutableDictionary();
 
-		internal TypeDissector(Type type)
+		internal static TypeDissector Create(Type type) => 
+			TypeDissector.mapping.GetOrAdd(type, t => new TypeDissector(type));
+
+		private TypeDissector(Type type)
 		{
 			this.Type = type;
 			this.IsArray = type.IsArray;

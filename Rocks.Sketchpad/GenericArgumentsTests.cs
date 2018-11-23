@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Rocks.Extensions;
 using System.Linq;
 using BenchmarkDotNet.Code;
-using BenchmarkDotNet.Attributes.Jobs;
 
 namespace Rocks.Sketchpad
 {

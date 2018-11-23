@@ -13,7 +13,7 @@ namespace Rocks.Construction.Persistence
 		internal override string Generate(Type baseType)
 		{
 			var name = baseType.IsGenericTypeDefinition ?
-				$"{baseType.GetFullName(this.Namespaces)}" : new TypeDissector(baseType).SafeName;
+				$"{baseType.GetFullName(this.Namespaces)}" : TypeDissector.Create(baseType).SafeName;
 			return $"Rock{name.Replace(".", string.Empty)}";
 		}
 

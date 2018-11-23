@@ -82,8 +82,8 @@ namespace Rocks.Extensions
 				where parameter.IsOut || parameterType.IsByRef ||
 				typeof(TypedReference).IsAssignableFrom(parameterType) ||
 				typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
-				new TypeDissector(parameterType).IsPointer
-					select parameter).Any() || new TypeDissector(@this.ReturnType).IsPointer;
+				TypeDissector.Create(parameterType).IsPointer
+					select parameter).Any() || TypeDissector.Create(@this.ReturnType).IsPointer;
 
 		internal static string GetOutInitializers(this MethodInfo @this) =>
 			string.Join(Environment.NewLine,
@@ -112,7 +112,7 @@ namespace Rocks.Extensions
 		internal static string GetExpectationChecks(this MethodInfo @this) =>
 			string.Join(" && ",
 				@this.GetParameters()
-				.Where(_ => !new TypeDissector(_.ParameterType).IsPointer)
+				.Where(_ => !TypeDissector.Create(_.ParameterType).IsPointer)
 				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}")));
 
 		internal static string GetMethodDescription(this MethodInfo @this) =>

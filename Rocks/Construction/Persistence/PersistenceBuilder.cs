@@ -43,7 +43,7 @@ namespace Rocks.Construction.Persistence
 		{
 			var returnType = baseMethod.ReturnType;
 			this.generatedDelegates.Add(MethodTemplates.GetAssemblyDelegate(
-				baseMethod.ReturnType == typeof(void) ? "void" : new TypeDissector(returnType).SafeName,
+				baseMethod.ReturnType == typeof(void) ? "void" : TypeDissector.Create(returnType).SafeName,
 				methodDescription.DelegateCast,
 				baseMethod.GetParameters(this.Namespaces), baseMethod.IsUnsafeToMock()));
 			this.Namespaces.Add(returnType.Namespace);

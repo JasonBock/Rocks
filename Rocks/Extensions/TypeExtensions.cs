@@ -51,7 +51,7 @@ namespace Rocks.Extensions
 
 		internal static string GetFullName(this Type @this, SortedSet<string> namespaces)
 		{
-			var dissector = new TypeDissector(@this);
+			var dissector = TypeDissector.Create(@this);
 
 			var pointer = dissector.IsPointer ? "*" : string.Empty;
 			var array = dissector.IsArray ? "[]" : string.Empty;
@@ -248,19 +248,19 @@ namespace Rocks.Extensions
 					typeof(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>)
 					.IsAssignableFrom(_.GetParameters()[0].ParameterType)).Any())
 			{
-				return ErrorMessages.GetCannotMockSealedType(new TypeDissector(@this).SafeName);
+				return ErrorMessages.GetCannotMockSealedType(TypeDissector.Create(@this).SafeName);
 			}
 
 			if (thisTypeInfo.GetCustomAttribute<ObsoleteAttribute>()?.IsError ?? false)
 			{
-				return ErrorMessages.GetCannotMockObsoleteType(new TypeDissector(@this).SafeName);
+				return ErrorMessages.GetCannotMockObsoleteType(TypeDissector.Create(@this).SafeName);
 			}
 
 			if (options == SerializationOptions.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) == null)
 			{
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(
-					new TypeDissector(@this).SafeName);
+					TypeDissector.Create(@this).SafeName);
 			}
 
 			if (thisTypeInfo.IsAbstract &&
@@ -271,13 +271,13 @@ namespace Rocks.Extensions
 			{
 				if (!thisTypeInfo.Assembly.CanBeSeenByMockAssembly(false, false, false, false, generator))
 				{
-					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(new TypeDissector(@this).SafeName);
+					return ErrorMessages.GetCannotMockTypeWithInternalAbstractMembers(TypeDissector.Create(@this).SafeName);
 				}
 			}
 
 			if (!thisTypeInfo.IsInterface && @this.GetMockableConstructors(generator).Count == 0)
 			{
-				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(new TypeDissector(@this).SafeName);
+				return ErrorMessages.GetCannotMockTypeWithNoAccessibleConstructors(TypeDissector.Create(@this).SafeName);
 			}
 
 			return string.Empty;
@@ -367,7 +367,7 @@ namespace Rocks.Extensions
 					{
 						foreach (var constraintedType in constraintedTypes.OrderBy(_ => _.IsClass ? 0 : 1))
 						{
-							constraintValues.Add(new TypeDissector(constraintedType).SafeName);
+							constraintValues.Add(TypeDissector.Create(constraintedType).SafeName);
 							namespaces.Add(constraintedType.Namespace);
 						}
 
@@ -381,7 +381,7 @@ namespace Rocks.Extensions
 						}
 					}
 
-					return $"where {new TypeDissector(@this).SafeName} : {string.Join(", ", constraintValues)}";
+					return $"where {TypeDissector.Create(@this).SafeName} : {string.Join(", ", constraintValues)}";
 				}
 			}
 			else

@@ -23,7 +23,7 @@ namespace Rocks.Extensions
 				{
 					var attributeData = argument.GetCustomAttributesData();
 					genericArguments.Add(
-						$"{attributeData.GetAttributes(false, namespaces, null)}{new TypeDissector(argument).SafeName}");
+						$"{attributeData.GetAttributes(false, namespaces, null)}{TypeDissector.Create(argument).SafeName}");
 					var constraint = argument.GetConstraints(namespaces);
 
 					if (!string.IsNullOrWhiteSpace(constraint))
@@ -51,7 +51,7 @@ namespace Rocks.Extensions
 		internal static string GetExpectationExceptionMessage(this MethodBase @this)
 		{
 			var hasPointerTypes = @this.GetParameters()
-				.Where(_ => new TypeDissector(_.ParameterType).IsPointer).Any();
+				.Where(_ => TypeDissector.Create(_.ParameterType).IsPointer).Any();
 			var argumentlist = hasPointerTypes ? @this.GetParameters(new SortedSet<string>()) : @this.GetLiteralArgumentNameList();
 			return $"{@this.Name}{@this.GetGenericArguments(new SortedSet<string>()).arguments}({argumentlist})";
 		}

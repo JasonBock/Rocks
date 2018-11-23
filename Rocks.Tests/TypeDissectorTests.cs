@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Reflection;
 
 namespace Rocks.Tests
 {
@@ -10,7 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectSimpleType()
 		{
-			var dissector = new TypeDissector(typeof(int));
+			var dissector = TypeDissector.Create(typeof(int));
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
@@ -21,7 +20,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectArrayType()
 		{
-			var dissector = new TypeDissector(typeof(int[]));
+			var dissector = TypeDissector.Create(typeof(int[]));
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
@@ -32,7 +31,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectPointerArrayType()
 		{
-			var dissector = new TypeDissector(typeof(int*[]));
+			var dissector = TypeDissector.Create(typeof(int*[]));
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
@@ -43,7 +42,7 @@ namespace Rocks.Tests
 		[Test]
 		public void DissectPointerType()
 		{
-			var dissector = new TypeDissector(typeof(int*));
+			var dissector = TypeDissector.Create(typeof(int*));
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.False, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
@@ -55,7 +54,7 @@ namespace Rocks.Tests
 		public void DissectByRefType()
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRef)).GetParameters()[0].ParameterType;
-			var dissector = new TypeDissector(type);
+			var dissector = TypeDissector.Create(type);
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
@@ -67,7 +66,7 @@ namespace Rocks.Tests
 		public void DissectByRefPointerType()
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointer)).GetParameters()[0].ParameterType;
-			var dissector = new TypeDissector(type);
+			var dissector = TypeDissector.Create(type);
 			Assert.That(dissector.IsArray, Is.False, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
@@ -79,7 +78,7 @@ namespace Rocks.Tests
 		public void DissectByRefArrayType()
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefArray)).GetParameters()[0].ParameterType;
-			var dissector = new TypeDissector(type);
+			var dissector = TypeDissector.Create(type);
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.False, nameof(dissector.IsPointer));
@@ -91,7 +90,7 @@ namespace Rocks.Tests
 		public void DissectByRefPointerArrayType()
 		{
 			var type = this.GetType().GetMethod(nameof(this.TargetWithByRefPointerArray)).GetParameters()[0].ParameterType;
-			var dissector = new TypeDissector(type);
+			var dissector = TypeDissector.Create(type);
 			Assert.That(dissector.IsArray, Is.True, nameof(dissector.IsArray));
 			Assert.That(dissector.IsByRef, Is.True, nameof(dissector.IsByRef));
 			Assert.That(dissector.IsPointer, Is.True, nameof(dissector.IsPointer));
@@ -101,154 +100,154 @@ namespace Rocks.Tests
 
 		[Test]
 		public void GetSafeName() =>
-			Assert.That(new TypeDissector(typeof(SubnestedClass.IAmSubnested)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(SubnestedClass.IAmSubnested)).SafeName,
 		Is.EqualTo("TypeDissectorTests.SubnestedClass.IAmSubnested"));
 
 		[Test]
 		public void GetSafeNameWithOpenGenerics() =>
-			Assert.That(new TypeDissector(typeof(IHaveGenerics<>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(IHaveGenerics<>)).SafeName,
 				Is.EqualTo("IHaveGenerics"));
 
 		[Test]
 		public void GetSafeNameWithClosedGenerics() =>
-			Assert.That(new TypeDissector(typeof(IHaveGenerics<string>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(IHaveGenerics<string>)).SafeName,
 				Is.EqualTo("IHaveGenerics"));
 
 		[Test]
 		public void GetSafeNameWithNestedOpenGenerics() =>
-			Assert.That(new TypeDissector(typeof(NestedGenerics.IHaveGenerics<>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(NestedGenerics.IHaveGenerics<>)).SafeName,
 				Is.EqualTo("NestedGenerics.IHaveGenerics"));
 
 		[Test]
 		public void GetSafeNameWithNestedClosedGenerics() =>
-			Assert.That(new TypeDissector(typeof(NestedGenerics.IHaveGenerics<string>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(NestedGenerics.IHaveGenerics<string>)).SafeName,
 				Is.EqualTo("NestedGenerics.IHaveGenerics"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndRefArguments() =>
-			Assert.That(new TypeDissector(typeof(RefTargetWithoutAGeneric)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(RefTargetWithoutAGeneric)).SafeName,
 				Is.EqualTo("RefTargetWithoutAGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndRefArguments() =>
-			Assert.That(new TypeDissector(typeof(RefTargetWithAGeneric<>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(RefTargetWithAGeneric<>)).SafeName,
 				Is.EqualTo("RefTargetWithAGeneric"));
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments() =>
-			Assert.That(new TypeDissector(typeof(TypeDissectorTests.RefTargetWithoutGeneric)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(TypeDissectorTests.RefTargetWithoutGeneric)).SafeName,
 				Is.EqualTo("TypeDissectorTests.RefTargetWithoutGeneric"));
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments() =>
-			Assert.That(new TypeDissector(typeof(TypeDissectorTests.RefTargetWithGeneric<Guid>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(TypeDissectorTests.RefTargetWithGeneric<Guid>)).SafeName,
 				Is.EqualTo("TypeDissectorTests.RefTargetWithGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenerics() =>
-			Assert.That(new TypeDissector(typeof(MapForNonGeneric)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForNonGeneric)).SafeName,
 				Is.EqualTo("MapForNonGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithSpecifiedGenerics() =>
-			Assert.That(new TypeDissector(typeof(MapForGeneric<Guid>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForGeneric<Guid>)).SafeName,
 				Is.EqualTo("MapForGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenerics() =>
-			Assert.That(new TypeDissector(typeof(MapForGeneric<>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForGeneric<>)).SafeName,
 				Is.EqualTo("MapForGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithNoGenericsAndNamespaces() =>
-			Assert.That(new TypeDissector(typeof(MapForNonGeneric)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForNonGeneric)).SafeName,
 				Is.EqualTo("MapForNonGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithSpecifiedGenericsAndNamespaces() =>
-			Assert.That(new TypeDissector(typeof(MapForGeneric<Guid>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForGeneric<Guid>)).SafeName,
 				Is.EqualTo("MapForGeneric"));
 
 		[Test]
 		public void GetSafeNameForDelegateWithoutSpecifiedGenericsAndNamespaces() =>
-			Assert.That(new TypeDissector(typeof(MapForGeneric<>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(MapForGeneric<>)).SafeName,
 				Is.EqualTo("MapForGeneric"));
 
 		[Test]
 		public void GetSafeNameForBoolPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(bool)).SafeName, Is.EqualTo("bool"));
+			Assert.That(TypeDissector.Create(typeof(bool)).SafeName, Is.EqualTo("bool"));
 
 		[Test]
 		public void GetSafeNameForBytePrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(byte)).SafeName, Is.EqualTo("byte"));
+			Assert.That(TypeDissector.Create(typeof(byte)).SafeName, Is.EqualTo("byte"));
 
 		[Test]
 		public void GetSafeNameForSBytePrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(sbyte)).SafeName, Is.EqualTo("sbyte"));
+			Assert.That(TypeDissector.Create(typeof(sbyte)).SafeName, Is.EqualTo("sbyte"));
 
 		[Test]
 		public void GetSafeNameForShortPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(short)).SafeName, Is.EqualTo("short"));
+			Assert.That(TypeDissector.Create(typeof(short)).SafeName, Is.EqualTo("short"));
 
 		[Test]
 		public void GetSafeNameForUShortPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(ushort)).SafeName, Is.EqualTo("ushort"));
+			Assert.That(TypeDissector.Create(typeof(ushort)).SafeName, Is.EqualTo("ushort"));
 
 		[Test]
 		public void GetSafeNameForIntPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(int)).SafeName, Is.EqualTo("int"));
+			Assert.That(TypeDissector.Create(typeof(int)).SafeName, Is.EqualTo("int"));
 
 		[Test]
 		public void GetSafeNameForUIntPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(uint)).SafeName, Is.EqualTo("uint"));
+			Assert.That(TypeDissector.Create(typeof(uint)).SafeName, Is.EqualTo("uint"));
 
 		[Test]
 		public void GetSafeNameForLongPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(long)).SafeName, Is.EqualTo("long"));
+			Assert.That(TypeDissector.Create(typeof(long)).SafeName, Is.EqualTo("long"));
 
 		[Test]
 		public void GetSafeNameForULongPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(ulong)).SafeName, Is.EqualTo("ulong"));
+			Assert.That(TypeDissector.Create(typeof(ulong)).SafeName, Is.EqualTo("ulong"));
 
 		[Test]
 		public void GetSafeNameForCharPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(char)).SafeName, Is.EqualTo("char"));
+			Assert.That(TypeDissector.Create(typeof(char)).SafeName, Is.EqualTo("char"));
 
 		[Test]
 		public void GetSafeNameForDoublePrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(double)).SafeName, Is.EqualTo("double"));
+			Assert.That(TypeDissector.Create(typeof(double)).SafeName, Is.EqualTo("double"));
 
 		[Test]
 		public void GetSafeNameForFloatPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(float)).SafeName, Is.EqualTo("float"));
+			Assert.That(TypeDissector.Create(typeof(float)).SafeName, Is.EqualTo("float"));
 
 		[Test]
 		public void GetSafeNameForDecimalPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(decimal)).SafeName, Is.EqualTo("decimal"));
+			Assert.That(TypeDissector.Create(typeof(decimal)).SafeName, Is.EqualTo("decimal"));
 
 		[Test]
 		public void GetSafeNameForStringPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(string)).SafeName, Is.EqualTo("string"));
+			Assert.That(TypeDissector.Create(typeof(string)).SafeName, Is.EqualTo("string"));
 
 		[Test]
 		public void GetSafeNameForObjectPrimitiveType() =>
-			Assert.That(new TypeDissector(typeof(object)).SafeName, Is.EqualTo("object"));
+			Assert.That(TypeDissector.Create(typeof(object)).SafeName, Is.EqualTo("object"));
 
 		[Test]
 		public void GetSafeNameForPointerType() =>
-			Assert.That(new TypeDissector(typeof(byte*)).SafeName, Is.EqualTo("byte"));
+			Assert.That(TypeDissector.Create(typeof(byte*)).SafeName, Is.EqualTo("byte"));
 
 		[Test]
 		public void GetSafeNameForArrayType() =>
-			Assert.That(new TypeDissector(typeof(byte[])).SafeName, Is.EqualTo("byte"));
+			Assert.That(TypeDissector.Create(typeof(byte[])).SafeName, Is.EqualTo("byte"));
 
 		[Test]
 		public void GetSafeNameForArrayOfPointersType() =>
-			Assert.That(new TypeDissector(typeof(byte*[])).SafeName, Is.EqualTo("byte"));
+			Assert.That(TypeDissector.Create(typeof(byte*[])).SafeName, Is.EqualTo("byte"));
 
 		[Test]
 		public void GetSafeNameWhenTypeNameCollidesWithRocksTypeName() =>
-			Assert.That(new TypeDissector(typeof(TypeExtensionsNamespace.IMock)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(TypeExtensionsNamespace.IMock)).SafeName,
 				Is.EqualTo("TypeExtensionsNamespace.IMock"));
 
 		public delegate void RefTargetWithoutGeneric(ref Guid a);
