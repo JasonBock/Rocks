@@ -4,6 +4,6 @@ namespace Rocks.Performance
 {
 	class Program
 	{
-		static void Main() => BenchmarkRunner.Run<TypeDissectorTests>();
+		static void Main() => BenchmarkRunner.Run<RocksPerformanceTests>();
 	}
 }

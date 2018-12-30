@@ -6,8 +6,8 @@ namespace Rocks
 	internal sealed class CacheKey
 		: IEquatable<CacheKey>
 	{
-		private Type type;
-		private RockOptions options;
+		private readonly Type type;
+		private readonly RockOptions options;
 
 		internal CacheKey(Type type, RockOptions options)
 		{
@@ -30,7 +30,7 @@ namespace Rocks
 				areEqual = true;
 			}
 
-			if ((object)a != null && (object)b != null)
+			if (!(a is null) && !(b is null))
 			{
 				areEqual = a.Equals(b);
 			}

@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using static Rocks.Extensions.MethodInfoExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -246,7 +245,6 @@ namespace Rocks.Tests.Extensions
 	{
 		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
 	}
-
 
 	public enum SomeValues
 	{

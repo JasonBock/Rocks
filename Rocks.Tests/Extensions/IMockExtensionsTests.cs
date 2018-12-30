@@ -94,7 +94,7 @@ namespace Rocks.Tests.Extensions
 
 	public class UsesIMockExtensions
 	{
-		private IMockExtensions mockExtensions;
+		private readonly IMockExtensions mockExtensions;
 
 		public UsesIMockExtensions(IMockExtensions mockExtensions, bool shouldAddHandler)
 		{

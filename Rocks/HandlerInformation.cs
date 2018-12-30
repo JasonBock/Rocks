@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Threading;
 
 namespace Rocks
@@ -13,7 +12,7 @@ namespace Rocks
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
 		private int callCount;
-		private List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
+		private readonly List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
 
 		internal HandlerInformation()
 			: this(null, null, new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>()))

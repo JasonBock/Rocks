@@ -14,7 +14,7 @@ namespace Rocks.Tests
 	[TestFixture]
 	public class RockAssemblyTests
 	{
-		private Assembly assembly;
+		private readonly Assembly assembly;
 
 		public RockAssemblyTests()
 		{
@@ -73,17 +73,13 @@ namespace Rocks.Tests
 		[Test]
 		public void GenerateForAssemblyThatContainsObject()
 		{
-			var stopwatch = Stopwatch.StartNew();
-
-			new RockAssembly(typeof(object).Assembly, 
+			var assembly = new RockAssembly(typeof(object).Assembly, 
 				new RockOptions(
 					level: OptimizationSetting.Debug, 
 					codeFile: CodeFileOptions.Create,
 					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 
-			stopwatch.Stop();
-
-			Assert.Pass($"Total time to generate mocks for {typeof(object).Assembly.FullName} : {stopwatch.Elapsed}");
+			Assert.That(assembly.Result.GetTypes().Length, Is.GreaterThan(0));
 		}
 
 		public Guid Method4(string a, ref int b)

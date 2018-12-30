@@ -11,7 +11,7 @@ namespace Rocks.Construction.Persistence
 		: Compiler<FileStream>
 	{
 		private string assemblyFileName;
-		private string assemblyPath;
+		private readonly string assemblyPath;
 
 		internal PersistenceCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
 			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies, string assemblyPath,

@@ -79,7 +79,7 @@ namespace Rocks.Construction
 
 			this.Namespaces.Remove(this.BaseType.Namespace);
 
-			var baseTypeGenericArguments = this.BaseType.GetGenericArguments(this.Namespaces);
+			var (_, constraints) = this.BaseType.GetGenericArguments(this.Namespaces);
 
 			var namespaces = string.Join(Environment.NewLine,
 				(from @namespace in this.Namespaces
@@ -94,7 +94,7 @@ namespace Rocks.Construction
 				this.Options.Serialization == SerializationOptions.Supported ?
 					ConstructorTemplates.GetConstructorWithNoArguments(this.GetTypeNameWithNoGenerics()) : string.Empty,
 				this.GetAdditionNamespaceCode(),
-				this.IsUnsafe, baseTypeGenericArguments.constraints,
+				this.IsUnsafe, constraints,
 				hasEvents ? "R.IMockWithEvents" : "R.IMock",
 				hasEvents ? ClassTemplates.GetRaiseImplementation() : string.Empty);
 

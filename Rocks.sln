@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB1CE37F-5C72-4057-A10C-3ACBD77FB044}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{0805F768-D4DF-486B-B13C-21BEE8C06F33}"
@@ -22,14 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Sketchpad", "Rocks.Sk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{D040DBA6-B533-4C1F-91B2-0414D7D211E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Profiling", "Rocks.Profiling\Rocks.Profiling.csproj", "{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Profiling", "Rocks.Profiling\Rocks.Profiling.csproj", "{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -77,5 +75,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B731400-9095-433E-9FEC-AC34D8308BB7}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
