@@ -5,11 +5,10 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandlerInformationOfTTests
+	public static class HandlerInformationOfTTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation<int>(expectations);
@@ -20,7 +19,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethod()
+		public static void CreateWithMethod()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
@@ -32,7 +31,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithExpectedCallCount()
+		public static void CreateWithExpectedCallCount()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation<int>(2, expectations);
@@ -43,7 +42,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethodAndExpectedCallCount()
+		public static void CreateWithMethodAndExpectedCallCount()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var method = new Action(() => { });
@@ -55,7 +54,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void SetReturnValue()
+		public static void SetReturnValue()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation<int>(expectations)

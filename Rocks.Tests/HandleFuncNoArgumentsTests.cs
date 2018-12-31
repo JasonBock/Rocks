@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandleFuncNoArgumentsTests
+	public static class HandleFuncNoArgumentsTests
 	{
 		[Test]
-		public void Make()
+		public static void Make()
 		{
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
 			rock.Handle(_ => _.ReferenceTarget());
@@ -21,7 +20,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeAndRaiseEvent()
+		public static void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
 			var referenceAdornment = rock.Handle(_ => _.ReferenceTarget());
@@ -40,7 +39,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithReturnValue()
+		public static void MakeWithReturnValue()
 		{
 			var stringReturnValue = "a";
 			var intReturnValue = 1;
@@ -59,7 +58,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithHandler()
+		public static void MakeWithHandler()
 		{
 			var stringReturnValue = "a";
 			var intReturnValue = 1;
@@ -80,7 +79,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithExpectedCallCount()
+		public static void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleFuncNoArgumentsTests>();
 			rock.Handle(_ => _.ReferenceTarget(), 2);
@@ -100,7 +99,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithExpectedCallCountAndReturnValue()
+		public static void MakeWithExpectedCallCountAndReturnValue()
 		{
 			var stringReturnValue = "a";
 			var intReturnValue = 1;
@@ -123,7 +122,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithHandlerAndExpectedCallCount()
+		public static void MakeWithHandlerAndExpectedCallCount()
 		{
 			var stringReturnValue = "a";
 			var intReturnValue = 1;

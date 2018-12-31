@@ -5,11 +5,10 @@ using System.Collections.Generic;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandlePropertyTests
+	public static class HandlePropertyTests
 	{
 		[Test]
-		public void MakeWithGetAndSetProperty()
+		public static void MakeWithGetAndSetProperty()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter));
@@ -22,7 +21,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyButOnlyExpectGetter()
+		public static void MakeWithGetAndSetPropertyButOnlyExpectGetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), () => "44");
@@ -34,7 +33,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyButOnlyExpectSetter()
+		public static void MakeWithGetAndSetPropertyButOnlyExpectSetter()
 		{
 			string value = null;
 			var rock = Rock.Create<IProperties>();
@@ -48,7 +47,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
+		public static void MakeWithGetAndSetPropertyAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter))
@@ -66,7 +65,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndEventRaisedOnSetter()
+		public static void MakeWithGetAndSetPropertyAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter))
@@ -84,7 +83,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndEventRaisedOnGetterAndSetter()
+		public static void MakeWithGetAndSetPropertyAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter))
@@ -103,7 +102,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndGetNotUsed()
+		public static void MakeWithGetAndSetPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter));
@@ -115,7 +114,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndSetNotUsed()
+		public static void MakeWithGetAndSetPropertyAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter));
@@ -127,7 +126,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCount()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCount()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
@@ -142,7 +141,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetter()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
@@ -162,7 +161,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnSetter()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnSetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
@@ -182,7 +181,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetterAndSetter()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCountAndEventRaisedOnGetterAndSetter()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2)
@@ -203,7 +202,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
@@ -217,7 +216,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetPropertyAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithGetAndSetPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperties>();
 			rock.Handle(nameof(IProperties.GetterAndSetter), 2);
@@ -231,7 +230,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandler()
+		public static void MakeWithGetHandler()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -250,7 +249,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndEventRaised()
+		public static void MakeWithGetHandlerAndEventRaised()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -265,7 +264,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndGetNotUsed()
+		public static void MakeWithGetHandlerAndGetNotUsed()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -278,7 +277,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndExpectedCallCount()
+		public static void MakeWithGetHandlerAndExpectedCallCount()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -294,7 +293,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndEventRaisedAndExpectedCallCount()
+		public static void MakeWithGetHandlerAndEventRaisedAndExpectedCallCount()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -314,7 +313,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndExpectedCallCountAndGetNotUsed()
+		public static void MakeWithGetHandlerAndExpectedCallCountAndGetNotUsed()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -327,7 +326,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetHandlerAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetHandlerAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -341,7 +340,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandler()
+		public static void MakeWithSetHandler()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -357,7 +356,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndEventRaised()
+		public static void MakeWithSetHandlerAndEventRaised()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -377,7 +376,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndSetNotUsed()
+		public static void MakeWithSetHandlerAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -391,7 +390,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndExpectedCallCount()
+		public static void MakeWithSetHandlerAndExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -408,7 +407,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndEventRaisedAndExpectedCallCount()
+		public static void MakeWithSetHandlerAndEventRaisedAndExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -429,7 +428,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -443,7 +442,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsedEnough()
+		public static void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var data = Guid.NewGuid().ToString();
 			string setValue = null;
@@ -458,7 +457,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlers()
+		public static void MakeWithGetAndSetHandlers()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -477,7 +476,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetter()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnGetter()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -500,7 +499,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnSetter()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnSetter()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -523,7 +522,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetter()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetter()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -547,7 +546,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndGetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndGetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -563,7 +562,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndSetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -579,7 +578,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndGetAndSetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndGetAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -593,7 +592,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCount()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -614,7 +613,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterExpectedCallCount()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnGetterExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -639,7 +638,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnSetterExpectedCallCount()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnSetterExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -664,7 +663,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetterExpectedCallCount()
+		public static void MakeWithGetAndSetHandlersAndEventRaisedOnGetterAndSetterExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -690,7 +689,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -707,7 +706,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -725,7 +724,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -735,24 +734,6 @@ namespace Rocks.Tests
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
 
 			var chunk = rock.Make();
-			var propertyValue = chunk.GetterAndSetter;
-			propertyValue = chunk.GetterAndSetter;
-
-			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-		}
-
-		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndSetNotUsedEnough()
-		{
-			var data = Guid.NewGuid().ToString();
-			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
-
-			var rock = Rock.Create<IProperties>();
-			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
-
-			var chunk = rock.Make();
-			chunk.GetterAndSetter = data;
 			var propertyValue = chunk.GetterAndSetter;
 			propertyValue = chunk.GetterAndSetter;
 
@@ -760,7 +741,25 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetAndSetNotUsed()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndSetNotUsedEnough()
+		{
+			var data = Guid.NewGuid().ToString();
+			var returnValue = Guid.NewGuid().ToString();
+			string setValue = null;
+
+			var rock = Rock.Create<IProperties>();
+			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
+
+			var chunk = rock.Make();
+			chunk.GetterAndSetter = data;
+			var propertyValue = chunk.GetterAndSetter;
+			propertyValue = chunk.GetterAndSetter;
+
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		}
+
+		[Test]
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -775,7 +774,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetAndSetNotUsedEnough()
+		public static void MakeWithGetAndSetHandlersAndExpectedCallCountAndGetAndSetNotUsedEnough()
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
@@ -792,7 +791,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerProperty()
+		public static void MakeWithGetAndSetIndexerProperty()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -809,7 +808,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetter()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetter()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -830,7 +829,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetter()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetter()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -851,7 +850,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetter()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetter()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -873,7 +872,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -889,7 +888,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -905,7 +904,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -924,7 +923,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndExpectedCallCount()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndExpectedCallCount()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -947,7 +946,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetterAndExpectedCallCount()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnSetterAndExpectedCallCount()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -970,7 +969,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetterAndExpectedCallCount()
+		public static void MakeWithGetAndSetIndexerPropertyAndEventRaisedOnGetterAndSetterAndExpectedCallCount()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -994,7 +993,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -1011,7 +1010,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -1029,7 +1028,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var a = 44;
 			var b = Guid.NewGuid();
@@ -1039,24 +1038,6 @@ namespace Rocks.Tests
 			rock.Handle(() => new object[] { a, b, c }, 2);
 
 			var chunk = rock.Make();
-			var propertyValue = chunk[a, b, c];
-			propertyValue = chunk[a, b, c];
-
-			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-		}
-
-		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
-		{
-			var a = 44;
-			var b = Guid.NewGuid();
-			var c = Guid.NewGuid().ToString();
-
-			var rock = Rock.Create<IProperties>();
-			rock.Handle(() => new object[] { a, b, c }, 2);
-
-			var chunk = rock.Make();
-			chunk[a, b, c] = Guid.NewGuid().ToString();
 			var propertyValue = chunk[a, b, c];
 			propertyValue = chunk[a, b, c];
 
@@ -1064,7 +1045,25 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithALotOfIndexers()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
+		{
+			var a = 44;
+			var b = Guid.NewGuid();
+			var c = Guid.NewGuid().ToString();
+
+			var rock = Rock.Create<IProperties>();
+			rock.Handle(() => new object[] { a, b, c }, 2);
+
+			var chunk = rock.Make();
+			chunk[a, b, c] = Guid.NewGuid().ToString();
+			var propertyValue = chunk[a, b, c];
+			propertyValue = chunk[a, b, c];
+
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		}
+
+		[Test]
+		public static void MakeWithALotOfIndexers()
 		{
 			var a0 = 0;
 			var a1 = 1;
@@ -1083,7 +1082,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithIndexerOnBaseType()
+		public static void MakeWithIndexerOnBaseType()
 		{
 			var rock = Rock.Create<ICustomList<int>>();
 			rock.Handle(() => 0, _ => 22);
@@ -1095,7 +1094,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeFromPropertyOnBaseType()
+		public static void MakeFromPropertyOnBaseType()
 		{
 			var value = Guid.NewGuid();
 			var rock = Rock.Create<ISubProperty>();
@@ -1108,7 +1107,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGenericReturnValue()
+		public static void MakeWithGenericReturnValue()
 		{
 			var rock = Rock.Create<IProperties<Guid>>();
 			rock.Handle(nameof(IProperties<Guid>.Target));

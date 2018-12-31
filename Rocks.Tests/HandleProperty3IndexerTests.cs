@@ -4,11 +4,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandleProperty3IndexerTests
+	public static class HandleProperty3IndexerTests
 	{
 		[Test]
-		public void MakeWithGetIndexerProperty()
+		public static void MakeWithGetIndexerProperty()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -23,7 +22,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetIndexerPropertyAndGetNotUsed()
+		public static void MakeWithGetIndexerPropertyAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle(() => 44, () => 45, () => 46, (_, __, ___) => Guid.NewGuid().ToString());
@@ -34,7 +33,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetIndexerPropertyAndExpectedCallCount()
+		public static void MakeWithGetIndexerPropertyAndExpectedCallCount()
 		{
 			var returnValue = Guid.NewGuid().ToString();
 
@@ -50,7 +49,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
+		public static void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle(() => 44, () => 45, () => 46, (_, __, ___) => Guid.NewGuid().ToString(), 2);
@@ -61,7 +60,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle(() => 44, () => 45, () => 46, (_, __, ___) => Guid.NewGuid().ToString(), 2);
@@ -73,7 +72,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetIndexerProperty()
+		public static void MakeWithSetIndexerProperty()
 		{
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
@@ -92,7 +91,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetIndexerPropertyAndSetNotUsed()
+		public static void MakeWithSetIndexerPropertyAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle<Guid, Guid, Guid, string>(() => Guid.NewGuid(), () => Guid.NewGuid(), () => Guid.NewGuid(), (i1, i2, i3, value) => { });
@@ -103,7 +102,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetIndexerPropertyAndExpectedCallCount()
+		public static void MakeWithSetIndexerPropertyAndExpectedCallCount()
 		{
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
@@ -123,7 +122,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle<Guid, Guid, Guid, string>(() => Guid.NewGuid(), () => Guid.NewGuid(), () => Guid.NewGuid(), (i1, i2, i3, value) => { }, 2);
@@ -134,7 +133,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
+		public static void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
@@ -152,7 +151,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerProperty()
+		public static void MakeWithGetAndSetIndexerProperty()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -174,7 +173,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndGetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -192,7 +191,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndSetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -209,7 +208,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCount()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -233,7 +232,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -252,7 +251,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndGetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -272,7 +271,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsed()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();
@@ -291,7 +290,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
+		public static void MakeWithGetAndSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexer2 = Guid.NewGuid().ToString();

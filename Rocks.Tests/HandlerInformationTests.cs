@@ -5,11 +5,10 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandlerInformationTests
+	public static class HandlerInformationTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var information = new HandlerInformation();
 			Assert.That(information.Method, Is.Null, nameof(information.Method));
@@ -19,7 +18,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethod()
+		public static void CreateWithMethod()
 		{
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method);
@@ -30,7 +29,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethodAndExpectations()
+		public static void CreateWithMethodAndExpectations()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
@@ -46,7 +45,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithExpectedCallCount()
+		public static void CreateWithExpectedCallCount()
 		{
 			var information = new HandlerInformation(2);
 			Assert.That(information.Method, Is.Null, nameof(information.Method));
@@ -56,7 +55,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithExpectedCallCountAndExpectations()
+		public static void CreateWithExpectedCallCountAndExpectations()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
@@ -71,7 +70,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethodAndExpectedCallCount()
+		public static void CreateWithMethodAndExpectedCallCount()
 		{
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, 2);
@@ -82,7 +81,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWithMethodAndExpectedCallCountAndExpectations()
+		public static void CreateWithMethodAndExpectedCallCountAndExpectations()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
@@ -98,7 +97,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void IncrementCallCount()
+		public static void IncrementCallCount()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(expectations);
@@ -108,7 +107,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsNotSpecified()
+		public static void VerifyWhenExpectedCallCountIsNotSpecified()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(expectations);
@@ -119,7 +118,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsNotSpecifiedAndIncrementCallCountIsNotCalled()
+		public static void VerifyWhenExpectedCallCountIsNotSpecifiedAndIncrementCallCountIsNotCalled()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(expectations);
@@ -129,7 +128,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsIncorrect()
+		public static void VerifyWhenExpectedCallCountIsIncorrect()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var information = new HandlerInformation(2, expectations);
