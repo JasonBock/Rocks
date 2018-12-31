@@ -3,11 +3,10 @@ using Rocks.Exceptions;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ExpectationsTests
+	public static class ExpectationsTests
 	{
 		[Test]
-		public void HandleWithConstant()
+		public static void HandleWithConstant()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(1));
@@ -17,7 +16,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithConstantAndInvalidValue()
+		public static void HandleWithConstantAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(1));
@@ -27,7 +26,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithIs()
+		public static void HandleWithIs()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
@@ -37,7 +36,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithIsAndInvalidValue()
+		public static void HandleWithIsAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(Arg.Is<int>(a => a % 2 == 0)));
@@ -47,7 +46,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithIsAny()
+		public static void HandleWithIsAny()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(Arg.IsAny<int>()));
@@ -57,7 +56,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithCall()
+		public static void HandleWithCall()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(ExpectationsTests.Create()));
@@ -67,7 +66,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithCallAndInvalidValue()
+		public static void HandleWithCallAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(ExpectationsTests.Create()));
@@ -77,7 +76,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithExpression()
+		public static void HandleWithExpression()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(44 + ExpectationsTests.Create()));
@@ -87,7 +86,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleWithExpressionAndInvalidValue()
+		public static void HandleWithExpressionAndInvalidValue()
 		{
 			var rock = Rock.Create<IExpectationsTests>();
 			rock.Handle(_ => _.Target(44 + ExpectationsTests.Create()));

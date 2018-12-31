@@ -5,11 +5,10 @@ using System.Text;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class GenericsTests
+	public static class GenericsTests
 	{
 		[Test]
-		public void HandleWithNoConstraints()
+		public static void HandleWithNoConstraints()
 		{
 			var expectationB = new Base();
 			var argumentA = 0;
@@ -29,7 +28,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TargetWithArgumentsAndReturnTypeUsingGeneric()
+		public static void TargetWithArgumentsAndReturnTypeUsingGeneric()
 		{
 			var rock = Rock.Create<IGenerics<int>>();
 			rock.Handle(_ => _.Target(Arg.IsAny<IEnumerable<int>>()));
@@ -41,7 +40,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TargetWithNonTypeConstrains()
+		public static void TargetWithNonTypeConstrains()
 		{
 			var expectationB = new Base();
 			var argumentA = 0;
@@ -61,7 +60,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TargetWithTypeConstraints()
+		public static void TargetWithTypeConstraints()
 		{
 			var expectationB = new Base();
 			var argumentA = 0;
@@ -81,7 +80,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TargetWithMultipleConstraints()
+		public static void TargetWithMultipleConstraints()
 		{
 			var expectationA = new StringBuilder();
 			var expectationB = new Base();

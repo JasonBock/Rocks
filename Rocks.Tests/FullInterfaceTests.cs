@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class FullInterfaceTests
+	public static class FullInterfaceTests
 	{
 		[Test]
-		public void Make()
+		public static void Make()
 		{
 			var rock = Rock.Create<IFullInterfaceTests>();
 			rock.Handle(_ => _.Target());

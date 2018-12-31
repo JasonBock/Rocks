@@ -2,16 +2,15 @@
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ErrorMessagesTests
+	public static class ErrorMessagesTests
 	{
 		[Test]
-		public void GetCannotMockSealedType() =>
+		public static void GetCannotMockSealedType() =>
 			Assert.That(ErrorMessages.GetCannotMockSealedType("a"),
 				Is.EqualTo("Cannot mock the sealed type a."));
 
 		[Test]
-		public void GetVerificationFailed() =>
+		public static void GetVerificationFailed() =>
 			Assert.That(ErrorMessages.GetVerificationFailed("a", "b", "c"),
 				Is.EqualTo("Type: a, method: b, message: c"));
 	}

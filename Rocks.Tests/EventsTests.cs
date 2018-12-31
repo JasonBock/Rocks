@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class EventsTests
+	public static class EventsTests
 	{
 		[Test]
-		public void CreateWhenTargetDoesNotHaveEvents()
+		public static void CreateWhenTargetDoesNotHaveEvents()
 		{
 			var rock = Rock.Create<IDoNotHaveEvents>();
 			var chunk = rock.Make();
@@ -15,7 +14,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWhenTargetHasEvents()
+		public static void CreateWhenTargetHasEvents()
 		{
 			var rock = Rock.Create<IHaveEvents>();
 			var chunk = rock.Make();
@@ -23,7 +22,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateWhenEventsHaveGenericEventArgs()
+		public static void CreateWhenEventsHaveGenericEventArgs()
 		{
 			var rock = Rock.Create<IHaveGenericEventArguments<ITarget>>();
 			var chunk = rock.Make();

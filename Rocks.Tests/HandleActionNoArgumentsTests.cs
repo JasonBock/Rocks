@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class HandleActionNoArgumentsTests
+	public static class HandleActionNoArgumentsTests
 	{
 		[Test]
-		public void Make()
+		public static void Make()
 		{
 			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
 			rock.Handle(_ => _.Target());
@@ -19,7 +18,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeAndRaiseEvent()
+		public static void MakeAndRaiseEvent()
 		{
 			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
 			rock.Handle(_ => _.Target())
@@ -35,7 +34,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithHandler()
+		public static void MakeWithHandler()
 		{
 			var wasCalled = false;
 
@@ -51,7 +50,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithExpectedCallCount()
+		public static void MakeWithExpectedCallCount()
 		{
 			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
 			rock.Handle(_ => _.Target(), 2);
@@ -64,7 +63,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithHandlerAndExpectedCallCount()
+		public static void MakeWithHandlerAndExpectedCallCount()
 		{
 			var wasCalled = false;
 
