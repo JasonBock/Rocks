@@ -19,17 +19,17 @@ namespace Rocks.Tests
 		[Test]
 		public void TryCreate()
 		{
-			var result = Rock.TryCreate<IRockTests>();
-			Assert.That(result.IsSuccessful, nameof(result.IsSuccessful), Is.True);
-			Assert.That(result.Result, Is.Not.Null, nameof(result.Result));
+			var (isSuccessful, result) = Rock.TryCreate<IRockTests>();
+			Assert.That(isSuccessful, Is.True, nameof(isSuccessful));
+			Assert.That(result, Is.Not.Null, nameof(result));
 		}
 
 		[Test]
 		public void TryCreateWhenTypeIsSealed()
 		{
-			var result = Rock.TryCreate<string>();
-			Assert.That(result.IsSuccessful, Is.False);
-			Assert.That(result.Result, Is.Null, nameof(result.Result));
+			var (isSuccessful, result) = Rock.TryCreate<string>();
+			Assert.That(isSuccessful, Is.False, nameof(isSuccessful));
+			Assert.That(result, Is.Null, nameof(result));
 		}
 
 		[Test]

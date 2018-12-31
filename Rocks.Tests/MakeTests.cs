@@ -41,6 +41,24 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public void TryMake()
+		{
+			var (isSuccessful, result) = Rock.TryMake<IAmForMaking>();
+
+			Assert.That(isSuccessful, Is.True, nameof(isSuccessful));
+			Assert.That(result, Is.Not.Null, nameof(result));
+		}
+
+		[Test]
+		public void TryMakeWhenTypeIsSealed()
+		{
+			var (isSuccessful, result) = Rock.TryMake<NotForMaking>();
+
+			Assert.That(isSuccessful, Is.False, nameof(isSuccessful));
+			Assert.That(result, Is.Null, nameof(result));
+		}
+
+		[Test]
 		public void EnsureMakeAlwaysUsesCache()
 		{
 			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
@@ -49,6 +67,8 @@ namespace Rocks.Tests
 			Assert.That(chunk1.GetType(), Is.EqualTo(chunk2.GetType()));
 		}
 	}
+
+	public sealed class NotForMaking { }
 
 	public interface IAmForMaking
 	{

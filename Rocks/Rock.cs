@@ -40,10 +40,10 @@ namespace Rocks
 				new InMemoryRock<T>(options, isMake) as IRock<T>;
 		}
 
-		public static CreateResult<T> TryCreate<T>()
+		public static (bool isSuccessful, IRock<T> result) TryCreate<T>()
 			where T : class => Rock.TryCreate<T>(new RockOptions());
 
-		public static CreateResult<T> TryCreate<T>(RockOptions options)
+		public static (bool isSuccessful, IRock<T> result) TryCreate<T>(RockOptions options)
 			where T : class
 		{
 			var result = default(IRock<T>);
@@ -60,7 +60,7 @@ namespace Rocks
 				isSuccessful = true;
 			}
 
-			return new CreateResult<T>(isSuccessful, result);
+			return (isSuccessful, result);
 		}
 
 		public static T Make<T>()
@@ -98,10 +98,10 @@ namespace Rocks
 			return Rock.NewRock<T>(mappedOptions, true).Make();
 		}
 
-		public static MakeResult<T> TryMake<T>()
+		public static (bool isSuccessful, T result) TryMake<T>()
 			where T : class => Rock.TryMake<T>(new RockOptions());
 
-		public static MakeResult<T> TryMake<T>(RockOptions options)
+		public static (bool isSuccessful, T result) TryMake<T>(RockOptions options)
 			where T : class
 		{
 			var mappedOptions = Rock.MapForMake(options);
@@ -119,7 +119,7 @@ namespace Rocks
 				isSuccessful = true;
 			}
 
-			return new MakeResult<T>(isSuccessful, result);
+			return (isSuccessful, result);
 		}
 
 		internal static AssemblyBinder Binder { get; } = new AssemblyBinder();
