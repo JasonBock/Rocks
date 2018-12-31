@@ -42,8 +42,8 @@ using STT = System.Threading.Tasks;
 {usingStatements}
 #pragma warning restore CS8019
 
-namespace {baseTypeNamespace}
-{{
+{(!string.IsNullOrWhiteSpace(baseTypeNamespace) ? $"namespace {baseTypeNamespace}" : string.Empty)}
+{(!string.IsNullOrWhiteSpace(baseTypeNamespace) ? "{" : string.Empty)}
 	{classAttributes}
 	public {CodeTemplates.GetIsUnsafe(isUnsafe)} sealed class {mockTypeName}
 		: {baseType}, {mockType} {baseTypeConstraints}
@@ -66,6 +66,6 @@ namespace {baseTypeNamespace}
 
 		{additionalCode}
 	}}
-}}";
+{(!string.IsNullOrWhiteSpace(baseTypeNamespace) ? "}" : string.Empty)}";
 	}
 }
