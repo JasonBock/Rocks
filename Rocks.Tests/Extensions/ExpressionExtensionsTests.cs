@@ -1,12 +1,10 @@
 ﻿using NUnit.Framework;
-using static Rocks.Extensions.ExpressionExtensions;
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
+using static Rocks.Extensions.ExpressionExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class ExpressionExtensionsTests
 	{
 		[Test]
@@ -40,7 +38,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void CreateForCallToArgIsAny()
+		public static void CreateForCallToArgIsAny()
 		{
 			Expression<Func<int>> argument = () => Arg.IsAny<int>();
 			var expectation = argument.Body.Create() as ArgumentExpectation<int>;

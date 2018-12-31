@@ -1,45 +1,43 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Reflection;
 using static Rocks.Extensions.MethodInfoExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class MethodInfoExtensionsContainsDelegateConditionsTests
+	public static class MethodInfoExtensionsContainsDelegateConditionsTests
 	{
 		[Test]
-		public void ContainsRefArguments() =>
+		public static void ContainsRefArguments() =>
 			Assert.That(typeof(IHaveMethodWithRefArgument)
 				.GetMethod(nameof(IHaveMethodWithRefArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
-		public void ContainsOutArguments() =>
+		public static void ContainsOutArguments() =>
 			Assert.That(typeof(IHaveMethodWithOutArgument)
 				.GetMethod(nameof(IHaveMethodWithOutArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
-		public void ContainsByValArguments() =>
+		public static void ContainsByValArguments() =>
 			Assert.That(typeof(IHaveMethodWithByValArgument)
 				.GetMethod(nameof(IHaveMethodWithByValArgument.Target)).ContainsDelegateConditions(), Is.False);
 
 		[Test]
-		public void ContainsPointerTypeArguments() =>
+		public static void ContainsPointerTypeArguments() =>
 			Assert.That(typeof(IHaveMethodWithPointerTypeArgument)
 				.GetMethod(nameof(IHaveMethodWithPointerTypeArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
-		public void ContainsPointerTypeReturnType() =>
+		public static void ContainsPointerTypeReturnType() =>
 			Assert.That(typeof(IHaveMethodWithPointerTypeReturnType)
 				.GetMethod(nameof(IHaveMethodWithPointerTypeReturnType.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
-		public void ContainsRuntimeArgumentHandle() =>
+		public static void ContainsRuntimeArgumentHandle() =>
 			Assert.That(typeof(IHaveMethodWithRuntimeArgumentHandleArgument)
 				.GetMethod(nameof(IHaveMethodWithRuntimeArgumentHandleArgument.Target)).ContainsDelegateConditions(), Is.True);
 
 		[Test]
-		public void ContainsTypedReference() =>
+		public static void ContainsTypedReference() =>
 			Assert.That(typeof(IHaveMethodWithTypedReferenceArgument)
 				.GetMethod(nameof(IHaveMethodWithTypedReferenceArgument.Target)).ContainsDelegateConditions(), Is.True);
 	}

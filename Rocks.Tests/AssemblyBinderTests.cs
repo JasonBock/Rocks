@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
-using System.Reflection;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
 	public sealed class AssemblyBinderTests
 	{
 		[Test]

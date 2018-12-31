@@ -1,42 +1,40 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
 using System;
-using System.Reflection;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class MethodInfoExtensionsMatchTests
+	public static class MethodInfoExtensionsMatchTests
 	{
 		[Test]
-		public void MatchWhenExact() =>
+		public static void MatchWhenExact() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithExact).GetMethod(nameof(OtherMatchWithExact.GetString))), Is.EqualTo(MethodMatch.Exact));
 
 		[Test]
-		public void MatchWhenDifferentName() =>
+		public static void MatchWhenDifferentName() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentName).GetMethod(nameof(OtherMatchWithDifferentName.GetAString))), Is.EqualTo(MethodMatch.None));
 
 		[Test]
-		public void MatchWhenDifferentArgumentCount() =>
+		public static void MatchWhenDifferentArgumentCount() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentArgumentCount).GetMethod(nameof(OtherMatchWithDifferentArgumentCount.GetString))), Is.EqualTo(MethodMatch.None));
 
 		[Test]
-		public void MatchWhenDifferentArgumentType() =>
+		public static void MatchWhenDifferentArgumentType() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentArgumentType).GetMethod(nameof(OtherMatchWithDifferentArgumentType.GetString))), Is.EqualTo(MethodMatch.None));
 
 		[Test]
-		public void MatchWhenDifferentModifier() =>
+		public static void MatchWhenDifferentModifier() =>
 			Assert.That(typeof(TargetMatch).GetMethod(
 				nameof(TargetMatch.GetString)).Match(
 					typeof(OtherMatchWithDifferentModifier).GetMethod(nameof(OtherMatchWithDifferentModifier.GetString))), 
 				Is.EqualTo(MethodMatch.None));
 
 		[Test]
-		public void MatchWhenDifferentReturnType() =>
+		public static void MatchWhenDifferentReturnType() =>
 			Assert.That(typeof(TargetMatch).GetMethod(nameof(TargetMatch.GetString)).Match(
 				typeof(OtherMatchWithDifferentReturnType).GetMethod(
 					nameof(OtherMatchWithDifferentReturnType.GetString))), 

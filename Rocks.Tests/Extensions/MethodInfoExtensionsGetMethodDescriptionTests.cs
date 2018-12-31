@@ -5,7 +5,6 @@ using static Rocks.Extensions.MethodInfoExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class MethodInfoExtensionsGetMethodDescriptionTests
 	{
 		[Test]

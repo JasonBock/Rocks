@@ -4,11 +4,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ClassTests
+	public static class ClassTests
 	{
 		[Test]
-		public void Make()
+		public static void Make()
 		{
 			var rock = Rock.Create<ClassTestsTarget>(
 				new RockOptions(
@@ -24,7 +23,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWithCustomConstructor()
+		public static void MakeWithCustomConstructor()
 		{
 			var rock = Rock.Create<ClassTestsTarget>();
 			rock.Handle(_ => _.TargetMethod());

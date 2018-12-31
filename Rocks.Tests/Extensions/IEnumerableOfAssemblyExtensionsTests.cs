@@ -6,18 +6,17 @@ using System.Reflection;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class IEnumerableOfAssemblyExtensionsTests
+	public static class IEnumerableOfAssemblyExtensionsTests
 	{
 		[Test]
-		public void Transform()
+		public static void Transform()
 		{
 			var references = new[] { typeof(Guid).Assembly }.Transform().ToList();
 			Assert.That(references.Count, Is.EqualTo(1));
 		}
 
 		[Test]
-		public void TransformWhenAssemblyIsDynamic()
+		public static void TransformWhenAssemblyIsDynamic()
 		{
 			var @dynamic = new DynamicAssembly();
 			var references = new[] { @dynamic }.Transform().ToList();
@@ -25,7 +24,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void TransformWhenAssemblyHasNoLocation()
+		public static void TransformWhenAssemblyHasNoLocation()
 		{
 			var rock = Rock.Create<IHaveNoLocation>();
 			rock.Handle(_ => _.Foo());

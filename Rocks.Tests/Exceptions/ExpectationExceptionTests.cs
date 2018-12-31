@@ -4,7 +4,6 @@ using System;
 
 namespace Rocks.Tests.Exceptions
 {
-	[TestFixture]
 	public sealed class ExpectationExceptionTests
 		: ExceptionTests<ExpectationException, Exception>
 	{

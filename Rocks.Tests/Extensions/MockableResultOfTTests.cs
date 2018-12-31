@@ -4,7 +4,6 @@ using System.Reflection;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class MockableResultOfTTests
 	{
 		[Test]

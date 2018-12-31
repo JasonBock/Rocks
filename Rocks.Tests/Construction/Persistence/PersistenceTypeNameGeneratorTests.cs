@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 namespace Rocks.Tests.Construction
 {
-	[TestFixture]
-	public sealed class PersistenceTypeNameGeneratorTests
+	public static class PersistenceTypeNameGeneratorTests
 	{
 		[Test]
-		public void GenerateWhenTypeIsGenericTypeDefinition()
+		public static void GenerateWhenTypeIsGenericTypeDefinition()
 		{
 			var generator = new PersistenceTypeNameGenerator(new SortedSet<string>());
 			Assert.That(generator.Generate(typeof(IAmNotGeneric)), 
@@ -16,7 +15,7 @@ namespace Rocks.Tests.Construction
 		}
 
 		[Test]
-		public void GenerateWhenTypeIsNotGenericTypeDefinition()
+		public static void GenerateWhenTypeIsNotGenericTypeDefinition()
 		{
 			var generator = new PersistenceTypeNameGenerator(new SortedSet<string>());
 			Assert.That(generator.Generate(typeof(IAmGeneric<>)),

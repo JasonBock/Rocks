@@ -4,7 +4,6 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
 	public sealed class CacheKeyTests
 	{
 		[Test]

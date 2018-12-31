@@ -1,12 +1,11 @@
 ﻿using NUnit.Framework;
-using static Rocks.Extensions.MethodBaseExtensions;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using static Rocks.Extensions.MethodBaseExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class MethodBaseExtensionsTests
 	{
 		[Test]

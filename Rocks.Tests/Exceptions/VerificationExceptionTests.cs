@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace Rocks.Tests.Exceptions
 {
-	[TestFixture]
 	public sealed class VerificationExceptionTests
 		: ExceptionTests<VerificationException, Exception>
 	{

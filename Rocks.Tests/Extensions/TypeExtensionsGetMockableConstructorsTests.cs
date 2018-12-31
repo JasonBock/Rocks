@@ -6,11 +6,10 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsGetMockableConstructorTests
+	public static class TypeExtensionsGetMockableConstructorTests
 	{
 		[Test]
-		public void GetMockableConstructorsFromAbstractTypeWithProtectedConstructorThatUsesProtectedInternalType()
+		public static void GetMockableConstructorsFromAbstractTypeWithProtectedConstructorThatUsesProtectedInternalType()
 		{
 			var constructors = typeof(HasConstructorWithArgumentThatUsesProtectedInternalType).GetMockableConstructors(
 				new InMemoryNameGenerator());
@@ -18,7 +17,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableConstructorsFromTypeWithObsoleteConstructors()
+		public static void GetMockableConstructorsFromTypeWithObsoleteConstructors()
 		{
 			var constructors = typeof(HasObsoleteConstructors).GetMockableConstructors(
 				new InMemoryNameGenerator());

@@ -4,11 +4,10 @@ using System;
 
 namespace Rocks.Tests.Construction.Generators
 {
-	[TestFixture]
-	public sealed class GenerateResultsTests
+	public static class GenerateResultsTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var result = Guid.NewGuid().ToString();
 			var requires = true;

@@ -6,11 +6,10 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsGetMockableEventsTests
+	public static class TypeExtensionsGetMockableEventsTests
 	{
 		[Test]
-		public void GetMockableEventsFromBaseInterface()
+		public static void GetMockableEventsFromBaseInterface()
 		{
 			var events = typeof(IMockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(1));
@@ -18,7 +17,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableEventsFromSubInterface()
+		public static void GetMockableEventsFromSubInterface()
 		{
 			var events = typeof(IMockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(2));
@@ -27,7 +26,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableEventsFromAbstractClass()
+		public static void GetMockableEventsFromAbstractClass()
 		{
 			var events = typeof(MockableEventsAbstract).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(1));
@@ -35,7 +34,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableEventsFromSubClassFromAbstract()
+		public static void GetMockableEventsFromSubClassFromAbstract()
 		{
 			var events = typeof(MockableEventsSubFromAbstract).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(1));
@@ -43,7 +42,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableEventsFromBaseClass()
+		public static void GetMockableEventsFromBaseClass()
 		{
 			var events = typeof(MockableEventsBase).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(1));
@@ -51,7 +50,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetMockableEventsFromSubClass()
+		public static void GetMockableEventsFromSubClass()
 		{
 			var events = typeof(MockableEventsSub).GetMockableEvents(new InMemoryNameGenerator());
 			Assert.That(events.Count, Is.EqualTo(1));

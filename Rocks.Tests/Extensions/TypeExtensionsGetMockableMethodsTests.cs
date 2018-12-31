@@ -7,18 +7,17 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsGetMockableMethodsTests
+	public static class TypeExtensionsGetMockableMethodsTests
 	{
 		[Test]
-		public void GetMockableMethodsWhenTypeHasProtectedInternalAbstractMethod()
+		public static void GetMockableMethodsWhenTypeHasProtectedInternalAbstractMethod()
 		{
 			var methods = typeof(HasProtectedInternalAbstractMethod).GetMockableMethods(new InMemoryNameGenerator());
 			Assert.That(methods.Where(_ => _.Value.Name == nameof(IHaveObjectMethods.Target)).Any(), Is.True);
 		}
 
 		[Test]
-		public void GetMockableMethodsWhenTypeIsInterfaceAndHasObjectMethods()
+		public static void GetMockableMethodsWhenTypeIsInterfaceAndHasObjectMethods()
 		{
 			var methods = typeof(IHaveObjectMethods).GetMockableMethods(new InMemoryNameGenerator());
 			Assert.That(methods.Count, Is.EqualTo(1));

@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class AsyncTests
+	public static class AsyncTests
 	{
 		[Test]
-		public async Task RunAsyncSynchronously()
+		public static async Task RunAsyncSynchronously()
 		{
 			var rock = Rock.Create<IAmAsync>();
 			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult<int>(44));
@@ -19,7 +18,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public async Task RunAsyncAsynchronously()
+		public static async Task RunAsyncAsynchronously()
 		{
 			var rock = Rock.Create<IAmAsync>();
 			rock.Handle(_ => _.GoAsync(),

@@ -5,11 +5,10 @@ using Rocks.RockAssemblyTestContainer;
 
 namespace Rocks.Task.Tests
 {
-	[TestFixture]
-	public sealed class RocksTaskTests
+	public static class RocksTaskTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var engineMock = Rock.Create<IBuildEngine>(
 				new RockOptions(codeFileDirectory: TestContext.CurrentContext.TestDirectory));

@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
-using System.Reflection;
 using static Rocks.Extensions.MethodInfoExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class MethodInfoExtensionsGetDelegateCastTests
 	{
 		[Test]

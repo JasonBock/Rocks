@@ -3,21 +3,20 @@ using Rocks.Templates;
 
 namespace Rocks.Tests.Templates
 {
-	[TestFixture]
-	public sealed class PropertyTemplatesTests
+	public static class PropertyTemplatesTests
 	{
 		[Test]
-		public void GetProperty() =>
+		public static void GetProperty() =>
 			Assert.That(PropertyTemplates.GetProperty("a", "b", "c", "d", "e"),
 				Is.EqualTo("d a eb { c }"));
 
 		[Test]
-		public void GetPropertyIndexer() =>
+		public static void GetPropertyIndexer() =>
 			Assert.That(PropertyTemplates.GetPropertyIndexer("a", "b", "c", "d", "e"),
 				Is.EqualTo("d a ethis[b] { c }"));
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValueAndHasEventsIsTrue() =>
+		public static void GetPropertyGetWithReferenceTypeReturnValueAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", true), Is.EqualTo(
 @"g get
 {
@@ -45,7 +44,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValueAndHasEventsIsFalse() =>
+		public static void GetPropertyGetWithReferenceTypeReturnValueAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValue(1, "b", "c", "d", "e", "f", "g", false), Is.EqualTo(
 @"g get
 {
@@ -73,7 +72,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersAndHasEventsIsTrue() =>
+		public static void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e", true), Is.EqualTo(
 @"e get
 {
@@ -94,7 +93,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersAndHasEventsIsFalse() =>
+		public static void GetPropertyGetWithReferenceTypeReturnValueAndNoIndexersAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e", false), Is.EqualTo(
 @"e get
 {
@@ -115,7 +114,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValueAndHasEventsIsTrue() =>
+		public static void GetPropertyGetWithValueTypeReturnValueAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", true), Is.EqualTo(
 @"g get
 {
@@ -143,7 +142,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValueAndHasEventsIsFalse() =>
+		public static void GetPropertyGetWithValueTypeReturnValueAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValue(1, "b", "c", "d", "e", "f", "g", false), Is.EqualTo(
 @"g get
 {
@@ -171,7 +170,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValueAndNoIndexersAndHasEventsIsTrue() =>
+		public static void GetPropertyGetWithValueTypeReturnValueAndNoIndexersAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e", true), Is.EqualTo(
 @"e get
 {
@@ -192,7 +191,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetWithValueTypeReturnValueAndNoIndexersAndHasEventsIsFalse() =>
+		public static void GetPropertyGetWithValueTypeReturnValueAndNoIndexersAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertyGetWithValueTypeReturnValueAndNoIndexers(1, "b", "c", "d", "e", false), Is.EqualTo(
 @"e get
 {
@@ -213,12 +212,12 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertyGetForMake() =>
+		public static void GetPropertyGetForMake() =>
 			Assert.That(PropertyTemplates.GetPropertyGetForMake("a", "b"), Is.EqualTo(
 @"a get => default(b);"));
 
 		[Test]
-		public void GetPropertySetAndHasEventsIsTrue() =>
+		public static void GetPropertySetAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertySet(1, "b", "c", "d", "e", "f", true), Is.EqualTo(
 @"f set
 {
@@ -255,7 +254,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertySetAndHasEventsIsFalse() =>
+		public static void GetPropertySetAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertySet(1, "b", "c", "d", "e", "f", false), Is.EqualTo(
 @"f set
 {
@@ -292,7 +291,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertySetAndNoIndexersAndHasEventsIsTrue() =>
+		public static void GetPropertySetAndNoIndexersAndHasEventsIsTrue() =>
 			Assert.That(PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d", true), Is.EqualTo(
 @"d set
 {
@@ -315,7 +314,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertySetAndNoIndexersAndHasEventsIsFalse() =>
+		public static void GetPropertySetAndNoIndexersAndHasEventsIsFalse() =>
 			Assert.That(PropertyTemplates.GetPropertySetAndNoIndexers(1, "b", "c", "d", false), Is.EqualTo(
 @"d set
 {
@@ -338,7 +337,7 @@ namespace Rocks.Tests.Templates
 }"));
 
 		[Test]
-		public void GetPropertySetForMake() =>
+		public static void GetPropertySetForMake() =>
 			Assert.That(PropertyTemplates.GetPropertySetForMake("a"),
 				Is.EqualTo("a set { }"));
 	}

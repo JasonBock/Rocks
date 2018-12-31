@@ -4,11 +4,10 @@ using static Rocks.Extensions.IDictionaryOfTKeyTValueExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class IDictionaryOfTKeyTValueExtensionsTests
+	public static class IDictionaryOfTKeyTValueExtensionsTests
 	{
 		[Test]
-		public void Add()
+		public static void Add()
 		{
 			var keyedValues = new Dictionary<string, Value>();
 			keyedValues.AddOrUpdate("a", () => new Value { Data = "b" }, null);
@@ -17,7 +16,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void Update()
+		public static void Update()
 		{
 			var keyedValues = new Dictionary<string, Value> { { "a", new Value { Data = "b" } } };
 			keyedValues.AddOrUpdate("a", null, _ => _.Data = "c");

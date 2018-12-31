@@ -4,43 +4,42 @@ using System;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsHasEventsTests
+	public static class TypeExtensionsHasEventsTests
 	{
 		[Test]
-		public void HasEventsWhenTypeIsInterfaceAndHasEvents() =>
+		public static void HasEventsWhenTypeIsInterfaceAndHasEvents() =>
 			Assert.That(typeof(IHasEvents).HasEvents(), Is.True);
 
 		[Test]
-		public void HasEventsWhenTypeIsInterfaceAndHasNoEvents() =>
+		public static void HasEventsWhenTypeIsInterfaceAndHasNoEvents() =>
 			Assert.That(typeof(IHasNoEvents).HasEvents(), Is.False);
 
 		[Test]
-		public void HasEventsWhenTypeIsClassAndHasEvents() =>
+		public static void HasEventsWhenTypeIsClassAndHasEvents() =>
 			Assert.That(typeof(HasEvents).HasEvents(), Is.True);
 
 		[Test]
-		public void HasEventsWhenTypeIsClassAndHasNoEvents() =>
+		public static void HasEventsWhenTypeIsClassAndHasNoEvents() =>
 			Assert.That(typeof(HasNoEvents).HasEvents(), Is.False);
 
 		[Test]
-		public void HasEventsWhenTypeIsSubInterfaceAndHasEvents() =>
+		public static void HasEventsWhenTypeIsSubInterfaceAndHasEvents() =>
 			Assert.That(typeof(IHasSubEvents).HasEvents(), Is.True);
 
 		[Test]
-		public void HasEventsWhenTypeIsSubInterfaceAndHasNoEvents() =>
+		public static void HasEventsWhenTypeIsSubInterfaceAndHasNoEvents() =>
 			Assert.That(typeof(IHasSubNoEvents).HasEvents(), Is.False);
 
 		[Test]
-		public void HasEventsWhenTypeIsSubClassAndHasEvents() =>
+		public static void HasEventsWhenTypeIsSubClassAndHasEvents() =>
 			Assert.That(typeof(HasSubEvents).HasEvents(), Is.True);
 
 		[Test]
-		public void HasEventsWhenTypeIsSubClassAndHasNoEvents() =>
+		public static void HasEventsWhenTypeIsSubClassAndHasNoEvents() =>
 			Assert.That(typeof(HasSubNoEvents).HasEvents(), Is.False);
 
 		[Test]
-		public void HasEventsWhenEventIsProtected() =>
+		public static void HasEventsWhenEventIsProtected() =>
 			Assert.That(typeof(HasProtectedEvents).HasEvents(), Is.True);
 	}
 

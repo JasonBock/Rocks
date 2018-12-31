@@ -1,11 +1,10 @@
 ﻿using NUnit.Framework;
-using static Rocks.Extensions.MethodCallExpressionExtensions;
 using System;
 using System.Linq.Expressions;
+using static Rocks.Extensions.MethodCallExpressionExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class MethodCallExpressionExtensionsTests
 	{
 		[Test]

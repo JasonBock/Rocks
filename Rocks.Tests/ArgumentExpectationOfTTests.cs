@@ -1,11 +1,9 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
 	public sealed class ArgumentExpectationOfTTests
 	{
 		[Test]

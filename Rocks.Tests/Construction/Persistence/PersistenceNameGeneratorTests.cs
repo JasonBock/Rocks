@@ -3,11 +3,10 @@ using Rocks.Construction.Persistence;
 
 namespace Rocks.Tests.Construction.Persistence
 {
-	[TestFixture]
-	public sealed class PersistenceNameGeneratorTests
+	public static class PersistenceNameGeneratorTests
 	{
 		[Test]
-		public void Generate()
+		public static void Generate()
 		{
 			var generator = new PersistenceNameGenerator(typeof(PersistenceNameGeneratorTests));
 			Assert.That(generator.AssemblyName, Is.EqualTo("Rocks.Tests.Rocks"));

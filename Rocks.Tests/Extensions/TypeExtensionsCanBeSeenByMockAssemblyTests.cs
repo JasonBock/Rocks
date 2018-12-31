@@ -5,7 +5,6 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class TypeExtensionsCanBeSeenByMockAssemblyTests
 	{
 		[Test]

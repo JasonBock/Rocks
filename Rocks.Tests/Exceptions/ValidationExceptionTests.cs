@@ -4,7 +4,6 @@ using System;
 
 namespace Rocks.Tests.Exceptions
 {
-	[TestFixture]
 	public sealed class ValidationExceptionTests
 		: ExceptionTests<ValidationException, Exception>
 	{

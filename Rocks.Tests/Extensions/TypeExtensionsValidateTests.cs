@@ -4,12 +4,10 @@ using Rocks.Options;
 using Rocks.Tests.Types;
 using System;
 using System.Collections.ObjectModel;
-using System.Reflection;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
 	public sealed class TypeExtensionsValidateTests
 	{
 		[Test]

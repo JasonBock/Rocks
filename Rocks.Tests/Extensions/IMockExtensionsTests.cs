@@ -1,15 +1,14 @@
 ﻿using NUnit.Framework;
-using static Rocks.Extensions.IMockExtensions;
 using System;
 using Rocks.Exceptions;
+using static Rocks.Extensions.IMockExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class IMockExtensionsTests
+	public static class IMockExtensionsTests
 	{
 		[Test]
-		public void GetVerificationFailuresWhenFailuresOccurred()
+		public static void GetVerificationFailuresWhenFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());
@@ -24,7 +23,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetVerificationFailuresWhenNoFailuresOccurred()
+		public static void GetVerificationFailuresWhenNoFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());
@@ -37,7 +36,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void Raise()
+		public static void Raise()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());
@@ -50,7 +49,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void RaiseWhenNoHandlersExist()
+		public static void RaiseWhenNoHandlersExist()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());
@@ -63,7 +62,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void VerifyWhenFailuresOccurred()
+		public static void VerifyWhenFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());
@@ -74,7 +73,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void VerifyWhenNoFailuresOccurred()
+		public static void VerifyWhenNoFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();
 			rock.Handle(_ => _.TargetMethod());

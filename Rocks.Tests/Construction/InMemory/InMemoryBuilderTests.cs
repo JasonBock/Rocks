@@ -8,11 +8,10 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Tests.Construction.InMemory
 {
-	[TestFixture]
-	public sealed class InMemoryBuilderTests
+	public static class InMemoryBuilderTests
 	{
 		[Test]
-		public void Build()
+		public static void Build()
 		{
 			var baseType = typeof(IBuilderTest);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
@@ -41,7 +40,7 @@ namespace Rocks.Tests.Construction.InMemory
 		}
 
 		[Test]
-		public void BuildWhenTypeIsObsolete()
+		public static void BuildWhenTypeIsObsolete()
 		{
 			var baseType = typeof(IAmObsolete);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
@@ -61,7 +60,7 @@ namespace Rocks.Tests.Construction.InMemory
 		}
 
 		[Test]
-		public void BuildWhenMethodIsObsolete()
+		public static void BuildWhenMethodIsObsolete()
 		{
 			var baseType = typeof(IHaveAnObsoleteMethod);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
@@ -81,7 +80,7 @@ namespace Rocks.Tests.Construction.InMemory
 		}
 
 		[Test]
-		public void BuildWhenPropertyIsObsolete()
+		public static void BuildWhenPropertyIsObsolete()
 		{
 			var baseType = typeof(IHaveAnObsoleteProperty);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
@@ -101,7 +100,7 @@ namespace Rocks.Tests.Construction.InMemory
 		}
 
 		[Test]
-		public void BuildWhenEventIsObsolete()
+		public static void BuildWhenEventIsObsolete()
 		{
 			var baseType = typeof(IHaveAnObsoleteEvent);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(

@@ -8,11 +8,10 @@ using System.Reflection;
 
 namespace Rocks.Tests.Construction.InMemory
 {
-	[TestFixture]
-	public sealed class InMemoryCompilerTests
+	public static class InMemoryCompilerTests
 	{
 		[Test]
-		public void Compile()
+		public static void Compile()
 		{
 			var baseType = typeof(IBuilderTest);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(

@@ -5,11 +5,10 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsGetGenericArgumentsTests
+	public static class TypeExtensionsGetGenericArgumentsTests
 	{
 		[Test]
-		public void GetGenericArgumentsForTypeWithNoConstraints()
+		public static void GetGenericArgumentsForTypeWithNoConstraints()
 		{
 			var namespaces = new SortedSet<string>();
 			var (arguments, constraints) = typeof(IHaveGenericsWithNoConstraints<>).GetGenericArguments(namespaces);
@@ -20,7 +19,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetGenericArgumentsForTypeWithConstraints()
+		public static void GetGenericArgumentsForTypeWithConstraints()
 		{
 			var namespaces = new SortedSet<string>();
 			var (arguments, constraints) = typeof(IHaveGenericsWithConstraints<>).GetGenericArguments(namespaces);
@@ -31,7 +30,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetGenericArgumentsForComplexGenericType()
+		public static void GetGenericArgumentsForComplexGenericType()
 		{
 			var namespaces = new SortedSet<string>();
 			var (arguments, constraints) = typeof(HaveMethodWithComplexGenericType<>).GetMethod(

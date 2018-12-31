@@ -3,11 +3,10 @@ using Rocks.Templates;
 
 namespace Rocks.Tests.Templates
 {
-	[TestFixture]
-	public sealed class ClassTemplatesTests
+	public static class ClassTemplatesTests
 	{
 		[Test]
-		public void GetClassWithObsoleteSuppression() =>
+		public static void GetClassWithObsoleteSuppression() =>
 			Assert.That(ClassTemplates.GetClassWithObsoleteSuppression("a"), Is.EqualTo(
 @"#pragma warning disable CS0618
 #pragma warning disable CS0672
@@ -16,7 +15,7 @@ a
 #pragma warning restore CS0618"));
 
 		[Test]
-		public void GetClassTemplateWhenIsUnsafeIsTrue() =>
+		public static void GetClassTemplateWhenIsUnsafeIsTrue() =>
 			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", true, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;
@@ -56,7 +55,7 @@ namespace h
 }"));
 
 		[Test]
-		public void GetClassTemplateWhenIsUnsafeIsFalse() =>
+		public static void GetClassTemplateWhenIsUnsafeIsFalse() =>
 			Assert.That(ClassTemplates.GetClass("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", false, "m", "n", "o"), Is.EqualTo(
 @"#pragma warning disable CS8019
 using R = Rocks;

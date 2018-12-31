@@ -1,15 +1,13 @@
 ﻿using NUnit.Framework;
 using Rocks.Construction.InMemory;
-using System;
 using System.Collections.Generic;
 
 namespace Rocks.Tests.Construction.InMemory
 {
-	[TestFixture]
-	public sealed class InMemoryTypeNameGeneratorTests
+	public static class InMemoryTypeNameGeneratorTests
 	{
 		[Test]
-		public void GenerateWhenTypeIsGenericTypeDefinition()
+		public static void GenerateWhenTypeIsGenericTypeDefinition()
 		{
 			var generator = new InMemoryTypeNameGenerator(new SortedSet<string>());
 			var name = generator.Generate(typeof(IAmNotGeneric));
@@ -22,7 +20,7 @@ namespace Rocks.Tests.Construction.InMemory
 		}
 
 		[Test]
-		public void GenerateWhenTypeIsNotGenericTypeDefinition()
+		public static void GenerateWhenTypeIsNotGenericTypeDefinition()
 		{
 			var generator = new InMemoryTypeNameGenerator(new SortedSet<string>());
 

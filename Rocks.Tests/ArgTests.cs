@@ -3,26 +3,25 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ArgTests
+	public static class ArgTests
 	{
 		[Test]
-		public void CallIs()
+		public static void CallIs()
 		{
 			var evaluation = new Func<string, bool>(_ => !string.IsNullOrWhiteSpace(_));
 			Assert.That(Arg.Is<string>(evaluation), Is.EqualTo(default(string)), nameof(Arg.Is));
 		}
 
 		[Test]
-		public void CallIsWithNullEvaluation() =>
+		public static void CallIsWithNullEvaluation() =>
 			Assert.That(() => Arg.Is<string>(null), Throws.TypeOf<ArgumentNullException>(), nameof(Arg.Is));
 
 		[Test]
-		public void CallIsAny() =>
+		public static void CallIsAny() =>
 			Assert.That(Arg.IsAny<string>(), Is.EqualTo(default(string)), nameof(Arg.IsAny));
 
 		[Test]
-		public void CallIsDefault() =>
+		public static void CallIsDefault() =>
 			Assert.That(Arg.IsDefault<string>(), Is.EqualTo(default(string)), nameof(Arg.IsDefault));
 	}
 }

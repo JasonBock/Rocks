@@ -7,11 +7,10 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsAddNamespacesTests
+	public static class TypeExtensionsAddNamespacesTests
 	{
 		[Test]
-		public void AddNamespacesForNonGenericType()
+		public static void AddNamespacesForNonGenericType()
 		{
 			var namespaces = new SortedSet<string>();
 			typeof(IAmNotGeneric).AddNamespaces(namespaces);
@@ -21,7 +20,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void AddNamespacesForGenericType()
+		public static void AddNamespacesForGenericType()
 		{
 			var namespaces = new SortedSet<string>();
 			typeof(IAmGeneric<IAmNotGeneric>).AddNamespaces(namespaces);
@@ -32,7 +31,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void AddNamespacesForGenericTypeHierarchy()
+		public static void AddNamespacesForGenericTypeHierarchy()
 		{
 			var namespaces = new SortedSet<string>();
 			typeof(IAmAnotherGeneric<IAmGeneric<IAmNotGeneric>>).AddNamespaces(namespaces);

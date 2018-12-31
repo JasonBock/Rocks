@@ -1,16 +1,14 @@
 ﻿using NUnit.Framework;
-using static Rocks.Extensions.ExpressionOfTExtensions;
 using System;
 using System.Linq.Expressions;
-using System.Reflection;
+using static Rocks.Extensions.ExpressionOfTExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class ExpressionOfTExtensionsTests
+	public static class ExpressionOfTExtensionsTests
 	{
 		[Test]
-		public void ParseForPropertyIndexers()
+		public static void ParseForPropertyIndexers()
 		{
 			Expression<Func<object[]>> indexers = () => new object[] { 44, ExpressionOfTExtensionsTests.GetValue(), Arg.IsAny<string>(),
 				Arg.Is<Guid>(_ => true), "44", Guid.NewGuid(), Arg.Is<string>(_ => false) };
@@ -37,7 +35,7 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void GetExpectationForSetter()
+		public static void GetExpectationForSetter()
 		{
 			Expression<Func<string>> setter = () => "44";
 

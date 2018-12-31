@@ -3,11 +3,10 @@ using Rocks.Templates;
 
 namespace Rocks.Tests.Templates
 {
-	[TestFixture]
-	public sealed class EventTemplatesTests
+	public static class EventTemplatesTests
 	{
 		[Test]
-		public void GetEvent() =>
+		public static void GetEvent() =>
 			Assert.That(EventTemplates.GetEvent("a", "b", "c"), Is.EqualTo("public a event b c;"));
 	}
 }

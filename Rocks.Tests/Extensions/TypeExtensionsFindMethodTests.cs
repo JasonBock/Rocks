@@ -1,14 +1,12 @@
 ﻿using NUnit.Framework;
-using System.Reflection;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsFindMethodTests
+	public static class TypeExtensionsFindMethodTests
 	{
 		[Test]
-		public void FindMethodWithMethodOnGivenType()
+		public static void FindMethodWithMethodOnGivenType()
 		{
 			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
 			var foundMethod = typeof(IMetadata).FindMethod(method.MetadataToken);
@@ -16,11 +14,11 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
-		public void FindMethodWhenTokenDoesNotExist() =>
+		public static void FindMethodWhenTokenDoesNotExist() =>
 			Assert.That(typeof(IMetadata).FindMethod(0), Is.Null);
 
 		[Test]
-		public void FindMethodWithMethodOnBaseType()
+		public static void FindMethodWithMethodOnBaseType()
 		{
 			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
 			var foundMethod = typeof(Metadata).FindMethod(method.MetadataToken);

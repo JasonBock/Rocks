@@ -7,23 +7,22 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsTests
+	public static class TypeExtensionsTests
 	{
 		[Test]
-		public void ContainsRefArguments() =>
+		public static void ContainsRefArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithRefArgument).ContainsRefAndOrOutParameters(), Is.True);
 
 		[Test]
-		public void ContainsOutArguments() =>
+		public static void ContainsOutArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithOutArgument).ContainsRefAndOrOutParameters(), Is.True);
 
 		[Test]
-		public void ContainsByValArguments() =>
+		public static void ContainsByValArguments() =>
 			Assert.That(typeof(IAmTypeWithMethodWithByValArgument).ContainsRefAndOrOutParameters(), Is.False);
 
 		[Test]
-		public void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()
+		public static void GetMockableMethodsFromSubInterfaceWhenBaseInterfaceHasIdenticalMethod()
 		{
 			var methods = typeof(IHaveSameMethodAsBaseInterface).GetMockableMethods(new InMemoryNameGenerator());
 			Assert.That(methods.Count, Is.EqualTo(1));

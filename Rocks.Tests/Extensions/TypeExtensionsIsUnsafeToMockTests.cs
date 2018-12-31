@@ -4,67 +4,66 @@ using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsIsUnsafeToMockTests
+	public static class TypeExtensionsIsUnsafeToMockTests
 	{
 		[Test]
-		public void IsSpanLikeForSpan() =>
+		public static void IsSpanLikeForSpan() =>
 			Assert.That(typeof(Span<char>).IsSpanLike(), Is.True);
 
 		[Test]
-		public void IsSpanLikeForReadOnlySpan() =>
+		public static void IsSpanLikeForReadOnlySpan() =>
 			Assert.That(typeof(ReadOnlySpan<char>).IsSpanLike(), Is.True);
 
 		[Test]
-		public void IsSpanLikeForNonSpanLikeType() =>
+		public static void IsSpanLikeForNonSpanLikeType() =>
 			Assert.That(typeof(Guid).IsSpanLike(), Is.False);
 
 		[Test]
-		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers() =>
+		public static void IsUnsafeToMockWithSafeInterfaceWithSafeMembers() =>
 			Assert.That(typeof(ISafeMembers).IsUnsafeToMock(), Is.False);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue() =>
+		public static void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeReturnValue() =>
 			Assert.That(typeof(IUnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments() =>
+		public static void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeMethodWithUnsafeArguments() =>
 			Assert.That(typeof(IUnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafePropertyType() =>
+		public static void IsUnsafeToMockWithUnsafeInterfaceWithUnsafePropertyType() =>
 			Assert.That(typeof(IUnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeIndexer() =>
+		public static void IsUnsafeToMockWithUnsafeInterfaceWithUnsafeIndexer() =>
 			Assert.That(typeof(IUnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithSafeInterfaceWithUnsafeEventArgs() =>
+		public static void IsUnsafeToMockWithSafeInterfaceWithUnsafeEventArgs() =>
 			Assert.That(typeof(ISafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
 
 		[Test]
-		public void IsUnsafeToMockWithSafeClassWithSafeMembers() =>
+		public static void IsUnsafeToMockWithSafeClassWithSafeMembers() =>
 			Assert.That(typeof(SafeMembers).IsUnsafeToMock(), Is.False);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue() =>
+		public static void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeReturnValue() =>
 			Assert.That(typeof(UnsafeMethodWithUnsafeReturnValue).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeArguments() =>
+		public static void IsUnsafeToMockWithUnsafeClassWithUnsafeMethodWithUnsafeArguments() =>
 			Assert.That(typeof(UnsafeMethodWithUnsafeArguments).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafePropertyType() =>
+		public static void IsUnsafeToMockWithUnsafeClassWithUnsafePropertyType() =>
 			Assert.That(typeof(UnsafePropertyWithUnsafePropertyType).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithUnsafeClassWithUnsafeIndexer() =>
+		public static void IsUnsafeToMockWithUnsafeClassWithUnsafeIndexer() =>
 			Assert.That(typeof(UnsafePropertyWithUnsafeIndexer).IsUnsafeToMock(), Is.True);
 
 		[Test]
-		public void IsUnsafeToMockWithSafeClassWithUnsafeEventArgs() =>
+		public static void IsUnsafeToMockWithSafeClassWithUnsafeEventArgs() =>
 			Assert.That(typeof(SafeEventWithUnsafeEventArgs).IsUnsafeToMock(), Is.False);
 	}
 

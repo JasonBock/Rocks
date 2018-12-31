@@ -4,11 +4,10 @@ using System.IO;
 
 namespace Rocks.Tests.Options
 {
-	[TestFixture]
-	public sealed class OptionsTests
+	public static class OptionsTests
 	{
 		[Test]
-		public void CreateWithDefaults() =>
+		public static void CreateWithDefaults() =>
 			OptionsTests.AssertOptions(new RockOptions(), 
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
@@ -16,7 +15,7 @@ namespace Rocks.Tests.Options
 				Directory.GetCurrentDirectory(), 4);
 
 		[Test]
-		public void CreateWithCodeFileDirectory() =>
+		public static void CreateWithCodeFileDirectory() =>
 			OptionsTests.AssertOptions(new RockOptions(codeFileDirectory: "directory"),
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
@@ -24,7 +23,7 @@ namespace Rocks.Tests.Options
 				"directory", 4);
 
 		[Test]
-		public void CreateWithOptimizationLevelDebug() =>
+		public static void CreateWithOptimizationLevelDebug() =>
 			OptionsTests.AssertOptions(new RockOptions(level: OptimizationSetting.Debug), 
 				OptimizationSetting.Debug, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
@@ -32,7 +31,7 @@ namespace Rocks.Tests.Options
 				Directory.GetCurrentDirectory(), 0);
 
 		[Test]
-		public void CreateWithCodeFileOptionsCreate() =>
+		public static void CreateWithCodeFileOptionsCreate() =>
 			OptionsTests.AssertOptions(new RockOptions(codeFile: CodeFileOptions.Create),
 				OptimizationSetting.Release, CodeFileOptions.Create,
 				SerializationOptions.NotSupported,
@@ -40,7 +39,7 @@ namespace Rocks.Tests.Options
 				Directory.GetCurrentDirectory(), 5);
 
 		[Test]
-		public void CreateWithSerializationOptionsSupported() =>
+		public static void CreateWithSerializationOptionsSupported() =>
 			OptionsTests.AssertOptions(new RockOptions(serialization: SerializationOptions.Supported),
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.Supported,
@@ -48,7 +47,7 @@ namespace Rocks.Tests.Options
 				Directory.GetCurrentDirectory(), 6);
 
 		[Test]
-		public void CreateWithCachingOptionsGenerateNewVersion() =>
+		public static void CreateWithCachingOptionsGenerateNewVersion() =>
 			OptionsTests.AssertOptions(new RockOptions(caching: CachingOptions.GenerateNewVersion),
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
@@ -56,7 +55,7 @@ namespace Rocks.Tests.Options
 				Directory.GetCurrentDirectory(), 12);
 
 		[Test]
-		public void CreateWithAllowWarningsYes() =>
+		public static void CreateWithAllowWarningsYes() =>
 			OptionsTests.AssertOptions(new RockOptions(allowWarnings: AllowWarnings.Yes),
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,

@@ -6,7 +6,6 @@ using System.Collections.Immutable;
 
 namespace Rocks.Tests.Exceptions
 {
-	[TestFixture]
 	public sealed class CompilationExceptionTests
 		: ExceptionTests<CompilationException, Exception>
 	{

@@ -3,11 +3,10 @@ using Rocks.Options;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class CachingTests
+	public static class CachingTests
 	{
 		[Test]
-		public void CreateTwoMocksWithCaching()
+		public static void CreateTwoMocksWithCaching()
 		{
 			var rock1 = Rock.Create<IWillBeCached>(new RockOptions(caching: CachingOptions.UseCache));
 			rock1.Handle(_ => _.Target(Arg.IsAny<string>()));
@@ -23,7 +22,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void CreateTwoMocksWithoutCaching()
+		public static void CreateTwoMocksWithoutCaching()
 		{
 			var rock1 = Rock.Create<IWillNotBeCached>(new RockOptions(caching: CachingOptions.UseCache));
 			rock1.Handle(_ => _.Target(Arg.IsAny<string>()));

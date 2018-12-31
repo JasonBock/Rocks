@@ -1,27 +1,25 @@
 ﻿using NUnit.Framework;
-using System.Reflection;
 using static Rocks.Extensions.TypeExtensions;
 
 namespace Rocks.Tests.Extensions
 {
-	[TestFixture]
-	public sealed class TypeExtensionsRequiresExplicitCastTests
+	public static class TypeExtensionsRequiresExplicitCastTests
 	{
 		[Test]
-		public void RequiresExplicitCastForReferenceType() =>
+		public static void RequiresExplicitCastForReferenceType() =>
 			Assert.That(typeof(string).RequiresExplicitCast(), Is.False);
 
 		[Test]
-		public void RequiresExplicitCastForValueType() =>
+		public static void RequiresExplicitCastForValueType() =>
 			Assert.That(typeof(int).RequiresExplicitCast(), Is.True);
 
 		[Test]
-		public void RequiresExplicitCastForGenericTypeWithReferenceConstraint() =>
+		public static void RequiresExplicitCastForGenericTypeWithReferenceConstraint() =>
 			Assert.That(typeof(IRequireCasts<,>).GetMethod(
 				nameof(IRequireCasts<string, int>.TargetWithConstraint)).ReturnType.RequiresExplicitCast(), Is.False);
 
 		[Test]
-		public void RequiresExplicitCastForGenericTypeWithNoReferenceConstraint() =>
+		public static void RequiresExplicitCastForGenericTypeWithNoReferenceConstraint() =>
 			Assert.That(typeof(IRequireCasts<,>).GetMethod(
 				nameof(IRequireCasts<string, int>.TargetWithNoConstraint)).ReturnType.RequiresExplicitCast(), Is.True);
 	}
