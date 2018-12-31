@@ -92,7 +92,7 @@ namespace Rocks.Construction
 					OptimizationLevel.Release : OptimizationLevel.Debug,
 				allowUnsafe: this.AllowUnsafe);
 
-			var compilation = CSharpCompilation.Create(this.AssemblyName,
+			var compilation = CSharpCompilation.Create(this.AssemblyName, 
 				options: options,
 				syntaxTrees: this.Trees,
 				references: this.GetReferences());

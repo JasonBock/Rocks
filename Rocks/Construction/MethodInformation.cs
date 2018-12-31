@@ -3,17 +3,14 @@
 	internal class MethodInformation
 	{
 		internal MethodInformation(bool containsDelegateConditions, string delegateCast,
-			string description, string descriptionWithOverride)
-		{
-			this.ContainsDelegateConditions = containsDelegateConditions;
-			this.DelegateCast = delegateCast;
-			this.Description = description;
-			this.DescriptionWithOverride = descriptionWithOverride;
-		}
+			string description, string descriptionWithOverride, bool isSpanLike) => 
+			(this.ContainsDelegateConditions, this.DelegateCast, this.Description, this.DescriptionWithOverride, this.IsSpanLike) =
+				(containsDelegateConditions, delegateCast, description, descriptionWithOverride, isSpanLike);
 
 		internal bool ContainsDelegateConditions { get; }
 		internal string DelegateCast { get; }
 		internal string Description { get; }
 		internal string DescriptionWithOverride { get; }
+		internal bool IsSpanLike { get; }
 	}
 }

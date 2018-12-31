@@ -4,19 +4,19 @@ using System;
 
 namespace Rocks.Tests.Construction
 {
-	[TestFixture]
-	public sealed class MethodInformationTests
+	public static class MethodInformationTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var containsDelegateConditions = true;
 			var delegateCast = Guid.NewGuid().ToString("N");
 			var description = Guid.NewGuid().ToString("N");
 			var descriptionWithOverride = Guid.NewGuid().ToString("N");
+			var isSpanLike = true;
 
 			var information = new MethodInformation(containsDelegateConditions,
-				delegateCast, description, descriptionWithOverride);
+				delegateCast, description, descriptionWithOverride, isSpanLike);
 
 			Assert.That(information.ContainsDelegateConditions, Is.EqualTo(containsDelegateConditions),
 				nameof(information.ContainsDelegateConditions));
@@ -26,6 +26,8 @@ namespace Rocks.Tests.Construction
 				nameof(information.Description));
 			Assert.That(information.DescriptionWithOverride, Is.EqualTo(descriptionWithOverride),
 				nameof(information.DescriptionWithOverride));
+			Assert.That(information.IsSpanLike, Is.EqualTo(isSpanLike),
+				nameof(information.IsSpanLike));
 		}
 	}
 }

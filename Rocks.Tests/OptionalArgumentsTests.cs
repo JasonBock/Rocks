@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
+using System;
 
 namespace Rocks.Tests
 {
@@ -48,11 +49,25 @@ namespace Rocks.Tests
 				() => rock.Handle(_ => _.TargetWithNoOptionalArguments(Arg.IsDefault<int>())),
 				Throws.TypeOf<ExpectationException>());
 		}
+
+		[Test]
+		public void MakeWhenMethodHasOptionalStructArgumentSetToDefault()
+		{
+			var g = Guid.NewGuid();
+			var rock = Rock.Create<IHaveOptionalArguments>();
+			rock.Handle(_ => _.TargetWithOptionalStructAsDefault(g));
+
+			var chunk = rock.Make();
+			chunk.TargetWithOptionalStructAsDefault(g);
+
+			rock.Verify();
+		}
 	}
 
 	public interface IHaveOptionalArguments
 	{
 		void Target(int a, string b = "b", long c = 44, bool d = false);
 		void TargetWithNoOptionalArguments(int a);
+		void TargetWithOptionalStructAsDefault(Guid g = default);
 	}
 }

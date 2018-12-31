@@ -44,7 +44,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
 		
-		internal static string GetRefOutNotImplementedMethod(string methodNameWithOverride) =>
+		internal static string GetNotImplementedMethod(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride} =>
 	throw new S.NotImplementedException();";
 

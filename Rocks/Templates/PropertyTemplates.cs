@@ -103,10 +103,10 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertyGetForMake(string visibility, string returnType) =>
-$@"{visibility} get
-{{
-	return default({returnType});
-}}";
+$@"{visibility} get => default({returnType});";
+
+		public static string GetPropertyGetForSpanLike(string visibility, string returnType) =>
+$@"{visibility} get => throw new S.NotImplementedException();";
 
 		public static string GetPropertySet(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string methodWithArgumentValues, string visibility, bool hasEvents) =>
@@ -168,6 +168,9 @@ $@"{visibility} set
 
 		public static string GetPropertySetForMake(string visibility) =>
 $@"{visibility} set {{ }}";
+
+		public static string GetPropertySetForSpanLike(string visibility) =>
+$@"{visibility} set {{ throw new S.NotImplementedException(); }}";
 
 		public static string GetNonPublicProperty(string visibility, string returnType, string name, string getSet, string explicitInterfaceName) =>
 			$"{visibility} override {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";

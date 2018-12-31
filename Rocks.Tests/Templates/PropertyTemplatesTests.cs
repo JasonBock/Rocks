@@ -215,10 +215,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public void GetPropertyGetForMake() =>
 			Assert.That(PropertyTemplates.GetPropertyGetForMake("a", "b"), Is.EqualTo(
-@"a get
-{
-	return default(b);
-}"));
+@"a get => default(b);"));
 
 		[Test]
 		public void GetPropertySetAndHasEventsIsTrue() =>

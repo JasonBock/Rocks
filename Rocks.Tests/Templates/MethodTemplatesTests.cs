@@ -52,7 +52,7 @@ namespace Rocks.Tests.Templates
 
 		[Test]
 		public void GetRefOutNotImplementedMethod() =>
-			Assert.That(MethodTemplates.GetRefOutNotImplementedMethod("a"), Is.EqualTo(
+			Assert.That(MethodTemplates.GetNotImplementedMethod("a"), Is.EqualTo(
 @"public a =>
 	throw new S.NotImplementedException();"));
 

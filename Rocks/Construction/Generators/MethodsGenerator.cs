@@ -30,34 +30,42 @@ namespace Rocks.Construction.Generators
 					var visibility = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 						string.Empty : CodeTemplates.Public;
 
-					// Either the base method contains no refs/outs, or the user specified a delegate
+					// Either the base method contains no Span<T> or ReadOnlySpan<T> 
+					// and it doesn't have refs /outs, or the user specified a delegate
 					// to use to handle that method (remember, types with methods with refs/outs are gen'd
 					// each time, and that's the only reason the handlers are passed in).
-					if (isMake || !methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
+					if(!methodInformation.IsSpanLike)
 					{
-						if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
+						if (isMake || !methodInformation.ContainsDelegateConditions || !string.IsNullOrWhiteSpace(methodInformation.DelegateCast))
 						{
-							generatedMethods.Add(MethodsGenerator.GenerateMethodWithNoRefOutParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers,
-								methodInformation.DescriptionWithOverride, visibility,
-								method.RequiresNewImplementation, namespaces, isMake, hasEvents));
+							if (!methodInformation.ContainsDelegateConditions && baseMethod.GetParameters().Length > 0)
+							{
+								generatedMethods.Add(MethodsGenerator.GenerateMethodWithNoRefOutParameters(
+									baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers,
+									methodInformation.DescriptionWithOverride, visibility,
+									method.RequiresNewImplementation, namespaces, isMake, hasEvents));
+							}
+							else
+							{
+								generatedMethods.Add(MethodsGenerator.GenerateMethodWithRefOutOrNoParameters(
+									baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
+									visibility, method.RequiresNewImplementation,
+									namespaces, isMake, hasEvents));
+
+								if (methodInformation.ContainsDelegateConditions)
+								{
+									handleRefOutMethod(baseMethod, methodInformation);
+								}
+							}
 						}
 						else
 						{
-							generatedMethods.Add(MethodsGenerator.GenerateMethodWithRefOutOrNoParameters(
-								baseMethod, methodInformation.DelegateCast, argumentNameList, outInitializers, methodInformation.DescriptionWithOverride,
-								visibility, method.RequiresNewImplementation,
-								namespaces, isMake, hasEvents));
-
-							if (methodInformation.ContainsDelegateConditions)
-							{
-								handleRefOutMethod(baseMethod, methodInformation);
-							}
+							generatedMethods.Add(MethodTemplates.GetNotImplementedMethod(methodInformation.DescriptionWithOverride));
 						}
 					}
 					else
 					{
-						generatedMethods.Add(MethodTemplates.GetRefOutNotImplementedMethod(methodInformation.DescriptionWithOverride));
+						generatedMethods.Add(MethodTemplates.GetNotImplementedMethod(methodInformation.DescriptionWithOverride));
 					}
 
 					requiresObsoleteSuppression |= baseMethod.GetCustomAttribute<ObsoleteAttribute>() != null;

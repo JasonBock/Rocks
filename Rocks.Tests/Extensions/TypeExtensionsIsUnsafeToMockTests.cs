@@ -8,6 +8,18 @@ namespace Rocks.Tests.Extensions
 	public sealed class TypeExtensionsIsUnsafeToMockTests
 	{
 		[Test]
+		public void IsSpanLikeForSpan() =>
+			Assert.That(typeof(Span<char>).IsSpanLike(), Is.True);
+
+		[Test]
+		public void IsSpanLikeForReadOnlySpan() =>
+			Assert.That(typeof(ReadOnlySpan<char>).IsSpanLike(), Is.True);
+
+		[Test]
+		public void IsSpanLikeForNonSpanLikeType() =>
+			Assert.That(typeof(Guid).IsSpanLike(), Is.False);
+
+		[Test]
 		public void IsUnsafeToMockWithSafeInterfaceWithSafeMembers() =>
 			Assert.That(typeof(ISafeMembers).IsUnsafeToMock(), Is.False);
 

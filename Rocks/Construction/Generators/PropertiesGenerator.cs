@@ -160,6 +160,10 @@ namespace Rocks.Construction.Generators
 			{
 				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility, returnType));
 			}
+			else if(getMethod.ReturnType.IsSpanLike())
+			{
+				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForSpanLike(getVisibility, returnType));
+			}
 			else
 			{
 				var getArgumentNameList = getMethod.GetArgumentNameList();
@@ -196,6 +200,10 @@ namespace Rocks.Construction.Generators
 			if (isMake)
 			{
 				propertyImplementations.Add(PropertyTemplates.GetPropertySetForMake(setVisibility));
+			}
+			else if (setMethod.GetParameters()[0].ParameterType.IsSpanLike())
+			{
+				propertyImplementations.Add(PropertyTemplates.GetPropertySetForSpanLike(setVisibility));
 			}
 			else
 			{

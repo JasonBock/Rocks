@@ -20,8 +20,10 @@ namespace Rocks.Construction
 			var delegateCast = !containsDelegateConditions ? baseMethod.GetDelegateCast() :
 				this.GetDelegateCast(baseMethod);
 
+			var isSpanLike = baseMethod.IsSpanLike();
+
 			return new MethodInformation(containsDelegateConditions, delegateCast,
-				description, descriptionWithOverride);
+				description, descriptionWithOverride, isSpanLike);
 		}
 
 		protected abstract string GetDelegateCast(MethodInfo baseMethod);

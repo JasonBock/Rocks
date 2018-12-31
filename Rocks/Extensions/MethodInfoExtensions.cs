@@ -64,6 +64,13 @@ namespace Rocks.Extensions
 			}
 		}
 
+		// TODO: This is pretty hacky, but you can't reference Span<T> or ReadOnlySpan<T> in 
+		// NS 2.0. Once NS 2.1 becomes a thing, this still needs to happen, but it won't
+		// be string comparisons.
+		internal static bool IsSpanLike(this MethodInfo @this) =>
+			(@this.ReturnType.IsSpanLike() ||
+				@this.GetParameters().Where(param => param.ParameterType.IsSpanLike()).Any());
+
 		internal static bool IsUnsafeToMock(this MethodInfo @this) =>
 			@this.IsUnsafeToMock(true);
 
@@ -73,17 +80,18 @@ namespace Rocks.Extensions
 
 			return !specialNameFlag && ((@this.IsPublic && @this.IsVirtual && !@this.IsFinal) || 
 				((@this.IsAssembly || @this.IsFamily) && @this.IsAbstract)) &&
-				(@this.ReturnType.IsPointer || @this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
+				(@this.ReturnType.IsPointer ||
+					@this.GetParameters().Where(param => param.ParameterType.IsPointer).Any());
 		}
 
 		internal static bool ContainsDelegateConditions(this MethodInfo @this) =>
 			(from parameter in @this.GetParameters()
 				let parameterType = parameter.ParameterType
 				where parameter.IsOut || parameterType.IsByRef ||
-				typeof(TypedReference).IsAssignableFrom(parameterType) ||
-				typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
-				TypeDissector.Create(parameterType).IsPointer
-					select parameter).Any() || TypeDissector.Create(@this.ReturnType).IsPointer;
+					typeof(TypedReference).IsAssignableFrom(parameterType) ||
+					typeof(RuntimeArgumentHandle).IsAssignableFrom(parameterType) ||
+					TypeDissector.Create(parameterType).IsPointer
+				select parameter).Any() || TypeDissector.Create(@this.ReturnType).IsPointer;
 
 		internal static string GetOutInitializers(this MethodInfo @this) =>
 			string.Join(Environment.NewLine,

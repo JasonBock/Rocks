@@ -66,9 +66,9 @@ namespace Rocks.Extensions
 				from parameter in @this.GetParameters()
 				let attributes = parameter.GetAttributes(namespaces)
 				let type = parameter.ParameterType
-				let optionalValue = parameter.IsOptional && parameter.HasDefaultValue ? 
-					(parameter.RawDefaultValue == null ? " = null" : 
-						(typeof(string).IsAssignableFrom(type) ? $" = \"{parameter.RawDefaultValue}\"" : 
+				let optionalValue = parameter.IsOptional && parameter.HasDefaultValue ?
+					(parameter.RawDefaultValue == null ? (type.IsValueType ? " = default" : " = null") :
+						(typeof(string).IsAssignableFrom(type) ? $" = \"{parameter.RawDefaultValue}\"" :
 						(typeof(bool).IsAssignableFrom(type) ? $" = {((bool)parameter.RawDefaultValue).GetValue()}" : $" = {parameter.RawDefaultValue}"))) : string.Empty
 				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
