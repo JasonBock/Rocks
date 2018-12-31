@@ -3,11 +3,10 @@ using Rocks.Exceptions;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class MultipleExpectationsTests
+	public static class MultipleExpectationsTests
 	{
 		[Test]
-		public void HandleMultiple()
+		public static void HandleMultiple()
 		{
 			var rock = Rock.Create<IMultiple>();
 			rock.Handle(_ => _.Target("a", 44));
@@ -23,7 +22,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleMultipleWithDifferentExpectedCallCounts()
+		public static void HandleMultipleWithDifferentExpectedCallCounts()
 		{
 			var rock = Rock.Create<IMultiple>();
 			rock.Handle(_ => _.Target("a", 44), 2);
@@ -45,7 +44,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleMultipleAndOneIsMissed()
+		public static void HandleMultipleAndOneIsMissed()
 		{
 			var rock = Rock.Create<IMultiple>();
 			rock.Handle(_ => _.Target("a", 44));
@@ -60,7 +59,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleMultipleAndCallIsIncorrect()
+		public static void HandleMultipleAndCallIsIncorrect()
 		{
 			var rock = Rock.Create<IMultiple>();
 			rock.Handle(_ => _.Target("a", 44));

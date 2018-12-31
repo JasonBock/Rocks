@@ -1,19 +1,16 @@
 ﻿using NUnit.Framework;
 using Rocks.Options;
-using System;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
 using static Rocks.Extensions.IMockExtensions;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class SerializationTests
+	public static class SerializationTests
 	{
 		[Test]
-		public void RoundtripWithExpressions()
+		public static void RoundtripWithExpressions()
 		{
 			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target(Arg.Is<string>(p => p == "44" || p == "55")));
@@ -32,7 +29,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void RoundtripWithBinary()
+		public static void RoundtripWithBinary()
 		{
 			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
 			rock.Handle(_ => _.Target("44"));
@@ -56,7 +53,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void RoundtripWhenMockIsNotSerializable()
+		public static void RoundtripWhenMockIsNotSerializable()
 		{
 			var rock = Rock.Create<IAmNotSerializable>();
 			rock.Handle(_ => _.Target("44"));

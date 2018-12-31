@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ObsoleteTests
+	public static class ObsoleteTests
 	{
 		[Test]
-		public void CreateMockWithObsoleteMemberWithIsErrorSetToTrue()
+		public static void CreateMockWithObsoleteMemberWithIsErrorSetToTrue()
 		{
 			var rock = Rock.Create<IHaveAnObsoleteMember>();
 			rock.Handle(_ => _.Method());

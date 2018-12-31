@@ -4,11 +4,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class OptionalArgumentsTests
+	public static class OptionalArgumentsTests
 	{
 		[Test]
-		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreSpecified()
+		public static void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreSpecified()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
 			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), 44L, false));
@@ -20,7 +19,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecified()
+		public static void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecified()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
 			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>(), Arg.IsDefault<bool>()));
@@ -32,7 +31,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecifiedAndDifferentValuesAreUsedAtCallSite()
+		public static void MakeWhenMethodHasOptionalArgumentsAndDefaultValuesAreNotSpecifiedAndDifferentValuesAreUsedAtCallSite()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
 			rock.Handle(_ => _.Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>(), Arg.IsDefault<bool>()));
@@ -42,7 +41,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWhenMethodHasNoOptionalArgumentsAndIsDefaultIsUsed()
+		public static void MakeWhenMethodHasNoOptionalArgumentsAndIsDefaultIsUsed()
 		{
 			var rock = Rock.Create<IHaveOptionalArguments>();
 			Assert.That(
@@ -51,7 +50,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void MakeWhenMethodHasOptionalStructArgumentSetToDefault()
+		public static void MakeWhenMethodHasOptionalStructArgumentSetToDefault()
 		{
 			var g = Guid.NewGuid();
 			var rock = Rock.Create<IHaveOptionalArguments>();

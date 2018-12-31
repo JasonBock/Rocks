@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class MethodAdornmentTests
+	public static class MethodAdornmentTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var info = new HandlerInformation();
 			var adornments = new MethodAdornments(info);
@@ -17,7 +16,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void Raises()
+		public static void Raises()
 		{
 			var args = new EventArgs();
 			var info = new HandlerInformation();

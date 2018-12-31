@@ -6,11 +6,10 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class VerificationTests
+	public static class VerificationTests
 	{
 		[Test]
-		public void TryThis()
+		public static void TryThis()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var handlers = new Dictionary<string, HandlerInformation>
@@ -26,7 +25,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void Verify()
+		public static void Verify()
 		{
 			var rock = Rock.Create<IVerification>();
 			rock.Handle(_ => _.Target());
@@ -38,7 +37,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenMethodIsNotCalled()
+		public static void VerifyWhenMethodIsNotCalled()
 		{
 			var rock = Rock.Create<IVerification>();
 			rock.Handle(_ => _.Target());
@@ -49,7 +48,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void VerifyWhenExpectedCallCountIsNotSpecifiedAndMethodIsCalledMultipleTimes()
+		public static void VerifyWhenExpectedCallCountIsNotSpecifiedAndMethodIsCalledMultipleTimes()
 		{
 			var rock = Rock.Create<IVerification>();
 			rock.Handle(_ => _.Target());
@@ -62,7 +61,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void RunWhenMethodIsCalledWithoutHandle()
+		public static void RunWhenMethodIsCalledWithoutHandle()
 		{
 			var rock = Rock.Create<IVerification>();
 			var chunk = rock.Make();

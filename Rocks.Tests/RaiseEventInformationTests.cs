@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class RaiseEventInformationTests
+	public static class RaiseEventInformationTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var args = new EventArgs();
 			var information = new RaiseEventInformation("a", args);

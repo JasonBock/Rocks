@@ -1,15 +1,13 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class MethodAdornmentsOfTResultsTests
+	public static class MethodAdornmentsOfTResultsTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var handler = new HandlerInformation<string>(expectations);
@@ -18,7 +16,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void SetReturnValue()
+		public static void SetReturnValue()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var newReturnValue = "a";

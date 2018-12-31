@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class PropertyMethodAdornmentsTests
+	public static class PropertyMethodAdornmentsTests
 	{
 		[Test]
-		public void Create()
+		public static void Create()
 		{
 			var getterInfo = new HandlerInformation();
 			var setterInfo = new HandlerInformation();

@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class NonPublicTests
+	public static class NonPublicTests
 	{
 		[Test]
-		public void GenerateWhenPublicAndNonPublicMembersExist()
+		public static void GenerateWhenPublicAndNonPublicMembersExist()
 		{
 			var rock = Rock.Create<NonPublicAndPublicMembers>();
 			var chunk = rock.Make();

@@ -3,7 +3,6 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
 	public sealed class RefAndOutTests
 	{
 		private void MyActionOutTarget(out int a) => a = 2;

@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class MakeTests
+	public static class MakeTests
 	{
 		[Test]
-		public void Make()
+		public static void Make()
 		{
 			var chunk = Rock.Make<IAmForMaking>();
 
@@ -41,7 +40,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TryMake()
+		public static void TryMake()
 		{
 			var (isSuccessful, result) = Rock.TryMake<IAmForMaking>();
 
@@ -50,7 +49,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void TryMakeWhenTypeIsSealed()
+		public static void TryMakeWhenTypeIsSealed()
 		{
 			var (isSuccessful, result) = Rock.TryMake<NotForMaking>();
 
@@ -59,7 +58,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void EnsureMakeAlwaysUsesCache()
+		public static void EnsureMakeAlwaysUsesCache()
 		{
 			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
 			var chunk2 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));

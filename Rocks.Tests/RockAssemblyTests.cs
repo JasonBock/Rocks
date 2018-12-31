@@ -5,14 +5,12 @@ using Rocks.RockAssemblyTestContainer.Contracts;
 using Rocks.RockAssemblyTestContainer.Extensions.TestAssembly.Extensions;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Reflection;
 using static Rocks.Extensions.IMockExtensions;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public class RockAssemblyTests
+	public sealed class RockAssemblyTests
 	{
 		private readonly Assembly assembly;
 

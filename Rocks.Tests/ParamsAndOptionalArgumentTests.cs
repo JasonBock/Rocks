@@ -3,11 +3,10 @@ using System;
 
 namespace Rocks.Tests
 {
-	[TestFixture]
-	public sealed class ParamsAndOptionalArgumentTests
+	public static class ParamsAndOptionalArgumentTests
 	{
 		[Test]
-		public void HandleParams()
+		public static void HandleParams()
 		{
 			var argumentA = default(int);
 			var argumentB = default(string[]);
@@ -28,7 +27,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleOptionalWithDefaultValues()
+		public static void HandleOptionalWithDefaultValues()
 		{
 			var argumentA = default(int);
 			var argumentB = default(Guid);
@@ -51,7 +50,7 @@ namespace Rocks.Tests
 		}
 
 		[Test]
-		public void HandleOptionalWithSpecifiedValues()
+		public static void HandleOptionalWithSpecifiedValues()
 		{
 			var argumentA = default(int);
 			var argumentB = default(Guid);

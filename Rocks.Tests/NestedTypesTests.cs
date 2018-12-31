@@ -2,7 +2,6 @@
 
 namespace Rocks.Tests
 {
-	[TestFixture]
 	public sealed class NestedTypesTests
 	{
 		private void Nested(ref int a) => a = 2;
