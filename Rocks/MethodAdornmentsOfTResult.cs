@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rocks
+﻿namespace Rocks
 {
 	public sealed class MethodAdornments<TResult>
 		: MethodAdornments
