@@ -28,14 +28,6 @@ namespace Rocks.Construction.Persistence
 		protected override string GetDirectoryForFile() =>
 			Path.Combine(this.Options.CodeFileDirectory, this.BaseType.Namespace.Replace(".", "\\"));
 
-		private string GetMethodIdentifier(MethodInfo baseMethod)
-		{
-			var methodCount = this.BaseType.GetMethods(ReflectionValues.PublicInstance)
-				.Where(_ => _.Name == baseMethod.Name && !_.IsSpecialName && _.IsVirtual).Count();
-
-			return methodCount > 1 ? baseMethod.MetadataToken.ToString() : string.Empty;
-		}
-
 		protected override string GetAdditionNamespaceCode() =>
 			string.Join(Environment.NewLine, this.generatedDelegates);
 
