@@ -55,34 +55,25 @@ namespace Rocks.Extensions
 		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetSetterIndexerExpectations(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
 			var expectations = @this.GetIndexerExpectations(indexers);
-			var setterExpectations = @this.CreateDefaultSetterExpectation();
-			expectations.Add(setterExpectations.Item1, setterExpectations.Item2);
+			var (name, expectation) = @this.CreateDefaultSetterExpectation();
+			expectations.Add(name, expectation);
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(expectations);
 		}
 
-		internal static ReadOnlyDictionary<string, ArgumentExpectation> GetSetterIndexerExpectations<TProperty>(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers,
-			Expression<Func<TProperty>> setterExpectation)
-		{
-			var expectations = @this.GetIndexerExpectations(indexers);
-			var setterExpectations = @this.CreateDefaultSetterExpectation();
-			expectations.Add(Values.PropertySetterArgumentName, setterExpectation.GetExpectationForSetter());
-			return new ReadOnlyDictionary<string, ArgumentExpectation>(expectations);
-		}
-
-		private static Tuple<string, ArgumentExpectation> CreateDefaultSetterExpectation(this PropertyInfo @this)
+		private static (string, ArgumentExpectation) CreateDefaultSetterExpectation(this PropertyInfo @this)
 		{
 			var expectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.PropertyType);
 			var expectation = expectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
 				Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
-			return new Tuple<string, ArgumentExpectation>(Values.PropertySetterArgumentName, expectation);
+			return (Values.PropertySetterArgumentName, expectation);
 		}
 
 		internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectationDictionary(this PropertyInfo @this)
 		{
-			var expectation = @this.CreateDefaultSetterExpectation();
+			var (name, expectation) = @this.CreateDefaultSetterExpectation();
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>
 				{
-					{ expectation.Item1, expectation.Item2 }
+					{ name, expectation }
 				});
 		}
 
