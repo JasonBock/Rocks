@@ -105,7 +105,7 @@ $@"{visibility} get
 		public static string GetPropertyGetForMake(string visibility, string returnType) =>
 $@"{visibility} get => default({returnType});";
 
-		public static string GetPropertyGetForSpanLike(string visibility, string returnType) =>
+		public static string GetPropertyGetForSpanLike(string visibility) =>
 $@"{visibility} get => throw new S.NotImplementedException();";
 
 		public static string GetPropertySet(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,

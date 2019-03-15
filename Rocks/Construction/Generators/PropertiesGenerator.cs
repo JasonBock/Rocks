@@ -162,7 +162,7 @@ namespace Rocks.Construction.Generators
 			}
 			else if(getMethod.ReturnType.IsSpanLike())
 			{
-				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForSpanLike(getVisibility, returnType));
+				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForSpanLike(getVisibility));
 			}
 			else
 			{
