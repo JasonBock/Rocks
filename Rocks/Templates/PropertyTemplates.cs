@@ -102,8 +102,8 @@ $@"{visibility} get
 	}}
 }}";
 
-		public static string GetPropertyGetForMake(string visibility, string returnType) =>
-$@"{visibility} get => default({returnType});";
+		public static string GetPropertyGetForMake(string visibility) =>
+$@"{visibility} get => default;";
 
 		public static string GetPropertyGetForSpanLike(string visibility) =>
 $@"{visibility} get => throw new S.NotImplementedException();";

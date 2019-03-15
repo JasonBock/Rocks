@@ -158,7 +158,7 @@ namespace Rocks.Construction.Generators
 
 			if (isMake)
 			{
-				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility, returnType));
+				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility));
 			}
 			else if(getMethod.ReturnType.IsSpanLike())
 			{
