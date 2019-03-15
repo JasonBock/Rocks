@@ -12,21 +12,15 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main()
-		{
-#pragma warning disable IDE0022 // Use expression body for methods
-			BenchmarkRunner.Run<GenericArgumentsTests>();
-#pragma warning restore IDE0022 // Use expression body for methods
-										 //await EvaluateExpressionAsync("Do()");
-										 //await EvaluateExpressionAsync("Do(");
-										 //await EvaluateExpressionAsync("Do(3, 4)");
-										 //await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
-										 //await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
-										 //await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
-										 //var rock = Rock.Create<IStupid>();
-										 //rock.Handle(_ => _.Foo());
-										 //var chunk = rock.Make();
-		}
+		static void Main() =>
+			//BenchmarkRunner.Run<GenericArgumentsTests>();
+			//await EvaluateExpressionAsync("Do()");
+			//await EvaluateExpressionAsync("Do(");
+			//await EvaluateExpressionAsync("Do(3, 4)");
+			//await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
+			//await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
+			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+			Demo.Demonstrate();
 
 		private static void RunBenchmark() =>
 			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();

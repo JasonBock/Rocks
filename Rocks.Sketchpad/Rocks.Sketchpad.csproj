@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp2.2;net471</TargetFrameworks>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Sketchpad</AssemblyName>
     <RootNamespace>Rocks.Sketchpad</RootNamespace>
     <Version>3.1.0</Version>
-    <Copyright>Copyright © 2017</Copyright>
+    <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
