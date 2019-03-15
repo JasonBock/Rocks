@@ -8,7 +8,7 @@ namespace Rocks
 {
 	internal sealed class TypeDissector
 	{
-		private static ConcurrentDictionary<Type, TypeDissector> mapping =
+		private static readonly ConcurrentDictionary<Type, TypeDissector> mapping =
 			new ConcurrentDictionary<Type, TypeDissector>();
 
 		private static readonly ImmutableDictionary<string, string> simplifiedPrimitiveNames =
