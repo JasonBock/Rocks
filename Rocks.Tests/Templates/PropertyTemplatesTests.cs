@@ -34,13 +34,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for f"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 
 		[Test]
@@ -62,13 +58,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for f"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 
 		[Test]
@@ -86,10 +78,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }"));
 
 		[Test]
@@ -107,10 +97,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }"));
 
 		[Test]
@@ -132,13 +120,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for f"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 
 		[Test]
@@ -160,13 +144,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for f"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 
 		[Test]
@@ -184,10 +164,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }"));
 
 		[Test]
@@ -205,10 +183,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }"));
 
 		[Test]
@@ -249,7 +225,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for e"");
 	}
 }"));
 
@@ -286,7 +262,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for e"");
 	}
 }"));
 
@@ -309,7 +285,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException(""No handlers were found."");
 	}
 }"));
 
@@ -332,7 +308,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException(""No handlers were found."");
 	}
 }"));
 

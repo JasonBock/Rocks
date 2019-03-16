@@ -45,10 +45,8 @@ $@"{visibility} get
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }}";
 
 		public static string GetPropertyGetWithValueTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName,
@@ -88,10 +86,8 @@ $@"{visibility} get
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+
+	throw new RE.ExpectationException(""No handlers were found."");
 }}";
 
 		public static string GetPropertyGetForMake(string visibility) =>
@@ -154,7 +150,7 @@ $@"{visibility} set
 	}}
 	else
 	{{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException(""No handlers were found."");
 	}}
 }}";
 
@@ -162,7 +158,7 @@ $@"{visibility} set
 $@"{visibility} set {{ }}";
 
 		public static string GetPropertySetForSpanLike(string visibility) =>
-$@"{visibility} set {{ throw new S.NotImplementedException(); }}";
+$@"{visibility} set => throw new S.NotImplementedException();";
 
 		public static string GetNonPublicProperty(string visibility, string returnType, string name, string getSet, string explicitInterfaceName) =>
 			$"{visibility} override {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";

@@ -29,7 +29,7 @@ namespace Rocks.Sketchpad
 
 		public class IFoo
 		{
-			public virtual void Bar(int a) { }
+			public virtual int Bar() => 42;
 		}
 
 		public static void HandleFoo()
@@ -37,7 +37,7 @@ namespace Rocks.Sketchpad
 			var rock = Rock.Create<IFoo>();
 			//rock.Handle(_ => _.Bar(3));
 			var chunk = rock.Make();
-			chunk.Bar(2);
+			chunk.Bar();
 			rock.Verify();
 		}
 

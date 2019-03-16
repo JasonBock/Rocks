@@ -109,7 +109,7 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 	else
 	{{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for {methodNameWithOverride.Replace("override ", string.Empty)}"");
 	}}
 }}";
 
@@ -162,7 +162,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	}}
 	else
 	{{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for {methodNameWithOverride.Replace("override ", string.Empty)}"");
 	}}
 }}";
 
@@ -207,10 +207,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 		methodHandler.IncrementCallCount();
 		return result;
 	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+
+	throw new RE.ExpectationException($""No handlers were found for {methodNameWithOverride.Replace("override ", string.Empty)}"");
 }}";
 
 		internal static string GetFunctionForMake(string outInitializers, string methodNameWithOverride, string visibility,

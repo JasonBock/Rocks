@@ -52,8 +52,7 @@ namespace Rocks.Tests.Templates
 		[Test]
 		public static void GetRefOutNotImplementedMethod() =>
 			Assert.That(MethodTemplates.GetNotImplementedMethod("a"), Is.EqualTo(
-@"public a =>
-	throw new S.NotImplementedException();"));
+@"public a => throw new S.NotImplementedException();"));
 
 		[Test]
 		public static void GetActionMethodWhenHasEventsIsTrue() =>
@@ -90,7 +89,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 }"));
 
@@ -129,7 +128,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 }"));
 
@@ -161,7 +160,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for e"");
 	}
 }"));
 
@@ -185,7 +184,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for e"");
 	}
 }"));
 
@@ -218,13 +217,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for g"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for g"");
 }"));
 
 		[Test]
@@ -248,13 +243,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for g"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for g"");
 }"));
 		[Test]
 		public static void GetFunctionForMake() =>
@@ -285,7 +276,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 }"));
 
@@ -308,7 +299,7 @@ namespace Rocks.Tests.Templates
 	}
 	else
 	{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for f"");
 	}
 }"));
 
@@ -333,13 +324,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for g"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for g"");
 }"));
 
 		[Test]
@@ -363,13 +350,9 @@ namespace Rocks.Tests.Templates
 				return result;
 			}
 		}
+	}
 
-		throw new RE.ExpectationException($""No handlers were found for g"");
-	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+	throw new RE.ExpectationException($""No handlers were found for g"");
 }"));
 
 		[Test]
@@ -389,10 +372,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 
 		[Test]
@@ -412,10 +393,8 @@ namespace Rocks.Tests.Templates
 		methodHandler.IncrementCallCount();
 		return result;
 	}
-	else
-	{
-		throw new S.NotImplementedException();
-	}
+
+	throw new RE.ExpectationException($""No handlers were found for f"");
 }"));
 	}
 }

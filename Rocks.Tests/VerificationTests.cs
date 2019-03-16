@@ -66,7 +66,7 @@ namespace Rocks.Tests
 			var rock = Rock.Create<IVerification>();
 			var chunk = rock.Make();
 
-			Assert.That(() => chunk.Target(), Throws.TypeOf<NotImplementedException>());
+			Assert.That(() => chunk.Target(), Throws.TypeOf<ExpectationException>());
 		}
 	}
 
