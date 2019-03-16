@@ -44,8 +44,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 }}";
 		
 		internal static string GetNotImplementedMethod(string methodNameWithOverride) =>
-$@"public {methodNameWithOverride} =>
-	throw new S.NotImplementedException();";
+$@"public {methodNameWithOverride} => throw new S.NotImplementedException();";
 
 		internal static string GetActionMethod(int methodHandle, string argumentNames, string expectationTemplateInstances, string delegateCast,
 			string outInitializers, string methodWithArgumentValues, string methodNameWithOverride, string visibility, bool hasEvents) =>
@@ -81,7 +80,7 @@ $@"{visibility} {methodNameWithOverride}
 	}}
 	else
 	{{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 }}";
 
@@ -140,13 +139,9 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 				return result;
 			}}
 		}}
+	}}
 
-		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
-	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+	throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 }}";
 
 		internal static string GetFunctionWithReferenceTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,
@@ -191,13 +186,9 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 				return result;
 			}}
 		}}
+	}}
 
-		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
-	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+	throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 }}";
 
 		internal static string GetFunctionWithValueTypeReturnValueAndNoArguments(int methodHandle, string argumentNames, string returnTypeName,

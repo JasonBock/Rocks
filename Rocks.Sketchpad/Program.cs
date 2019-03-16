@@ -20,10 +20,40 @@ namespace Rocks.Sketchpad
 			//await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
 			//await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
 			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
-			Demo.Demonstrate();
+			//Demo.Demonstrate();
+			//Program.HandleVirtualOnClass();
+			Program.HandleFoo();
 
 		private static void RunBenchmark() =>
 			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
+
+		public class IFoo
+		{
+			public virtual void Bar(int a) { }
+		}
+
+		public static void HandleFoo()
+		{
+			var rock = Rock.Create<IFoo>();
+			//rock.Handle(_ => _.Bar(3));
+			var chunk = rock.Make();
+			chunk.Bar(2);
+			rock.Verify();
+		}
+
+		public class Virtualized
+		{
+			public virtual void Foo() => Console.Out.WriteLine("Call me!");
+		}
+
+		private static void HandleVirtualOnClass()
+		{
+			var rock = Rock.Create<Virtualized>();
+			rock.Handle(_ => _.Foo()); 
+			var chunk = rock.Make();
+			chunk.Foo();
+			rock.Verify();
+		}
 
 		private static async Task EvaluateExpressionAsync(string codeExpression)
 		{

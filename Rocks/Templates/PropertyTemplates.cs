@@ -26,13 +26,9 @@ $@"{visibility} get
 				return result;
 			}}
 		}}
+	}}
 
-		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
-	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+	throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValueAndNoIndexers(int methodHandle, string argumentNames, string returnType,
@@ -73,13 +69,9 @@ $@"{visibility} get
 				return result;
 			}}
 		}}
+	}}
 
-		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
-	}}
-	else
-	{{
-		throw new S.NotImplementedException();
-	}}
+	throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 }}";
 
 		public static string GetPropertyGetWithValueTypeReturnValueAndNoIndexers(int methodHandle, string argumentNames, string returnType,
@@ -140,7 +132,7 @@ $@"{visibility} set
 	}}
 	else
 	{{
-		throw new S.NotImplementedException();
+		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 }}";
 
