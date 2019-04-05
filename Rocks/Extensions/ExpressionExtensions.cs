@@ -17,11 +17,12 @@ namespace Rocks.Extensions
 			switch (@this.NodeType)
 			{
 				case ExpressionType.Constant:
-					var value = (@this as ConstantExpression).Value;
-					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-						null, new[] { @this.Type }, null).Invoke(new[] { value }) as ArgumentExpectation;
+					var value = ((ConstantExpression)@this).Value;
+					return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+						ReflectionValues.PublicNonPublicInstance,
+						null, new[] { @this.Type }, null).Invoke(new[] { value });
 				case ExpressionType.Call:
-					var argumentMethodCall = (@this as MethodCallExpression);
+					var argumentMethodCall = (MethodCallExpression)@this;
 					var argumentMethod = argumentMethodCall.Method;
 					var isMethod = typeof(Arg).GetMethod(nameof(Arg.Is));
 					var isAnyMethod = typeof(Arg).GetMethod(nameof(Arg.IsAny));
@@ -29,15 +30,17 @@ namespace Rocks.Extensions
 
 					if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 					{
-						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-							null, Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
+						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+							ReflectionValues.PublicNonPublicInstance,
+							null, Type.EmptyTypes, null).Invoke(null);
 					}
 					else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 					{
 						var evaluation = argumentMethodCall.Arguments[0];
 						var genericMethodType = typeof(Func<,>).MakeGenericType(@this.Type, typeof(bool));
-						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-							null, new[] { genericMethodType }, null).Invoke(new[] { (evaluation as LambdaExpression).Compile() }) as ArgumentExpectation;
+						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+							ReflectionValues.PublicNonPublicInstance,
+							null, new[] { genericMethodType }, null).Invoke(new[] { ((LambdaExpression)evaluation).Compile() });
 					}
 					else if (argumentMethod.Name == isDefaultMethod.Name)
 					{
@@ -48,18 +51,21 @@ namespace Rocks.Extensions
 						}
 						else
 						{
-							return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-								null, new[] { @this.Type }, null).Invoke(new[] { parameter.DefaultValue }) as ArgumentExpectation;
+							return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+								ReflectionValues.PublicNonPublicInstance,
+								null, new[] { @this.Type }, null).Invoke(new[] { parameter.DefaultValue });
 						}
 					}
 					else
 					{
-						return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
+						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+							ReflectionValues.PublicNonPublicInstance,
+							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
 					}
 				default:
-					return argumentExpectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-						null, new[] { typeof(Expression) }, null).Invoke(new[] { @this }) as ArgumentExpectation;
+					return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+						ReflectionValues.PublicNonPublicInstance,
+						null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
 			}
 		}
 	}

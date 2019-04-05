@@ -63,8 +63,9 @@ namespace Rocks.Extensions
 		private static (string, ArgumentExpectation) CreateDefaultSetterExpectation(this PropertyInfo @this)
 		{
 			var expectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.PropertyType);
-			var expectation = expectationType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
-				Type.EmptyTypes, null).Invoke(null) as ArgumentExpectation;
+			var expectation = (ArgumentExpectation)expectationType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
+				Type.EmptyTypes, null).Invoke(null);
 			return (Values.PropertySetterArgumentName, expectation);
 		}
 
@@ -80,9 +81,10 @@ namespace Rocks.Extensions
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+				.Invoke(new[] { PropertyInfoExtensions.CreateEmptyExpectations() });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this) =>
@@ -91,41 +93,44 @@ namespace Rocks.Extensions
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new[] { @this.GetGetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new[] { @this.GetSetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { expectedCallCount, @this.GetGetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { expectedCallCount, @this.GetSetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+				.Invoke(new object[] { expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, uint expectedCallCount) =>
@@ -134,41 +139,46 @@ namespace Rocks.Extensions
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { handler, @this.GetGetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { handler, @this.GetSetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { handler, expectedCallCount, @this.GetGetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, ReadOnlyCollection<Expression> indexers, Delegate handler, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+					ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) }) as HandlerInformation;
+				.Invoke(new object[] { handler, expectedCallCount, @this.GetSetterIndexerExpectations(indexers) });
 		}
 
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+				.Invoke(new object[] { handler, PropertyInfoExtensions.CreateEmptyExpectations() });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler) =>
@@ -177,9 +187,10 @@ namespace Rocks.Extensions
 		internal static HandlerInformation GetGetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount)
 		{
 			var handlerType = typeof(HandlerInformation<>).MakeGenericType(@this.PropertyType);
-			return handlerType.GetConstructor(ReflectionValues.PublicNonPublicInstance, null,
+			return (HandlerInformation)handlerType.GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null,
 				new[] { typeof(Delegate), typeof(uint), typeof(ReadOnlyDictionary<string, ArgumentExpectation>) }, null)
-				.Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() }) as HandlerInformation;
+				.Invoke(new object[] { handler, expectedCallCount, PropertyInfoExtensions.CreateEmptyExpectations() });
 		}
 
 		internal static HandlerInformation GetSetterHandler(this PropertyInfo @this, Delegate handler, uint expectedCallCount) =>

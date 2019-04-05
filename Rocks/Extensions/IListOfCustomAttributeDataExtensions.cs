@@ -10,7 +10,7 @@ namespace Rocks.Extensions
 	{
 		private const string AttributeName = "Attribute";
 
-		internal static string GetAttributes(this IList<CustomAttributeData> @this, bool isReturn, SortedSet<string> namespaces, ParameterInfo parameter)
+		internal static string GetAttributes(this IList<CustomAttributeData> @this, bool isReturn, SortedSet<string> namespaces, ParameterInfo? parameter)
 		{
 			var attributes = new List<string>();
 

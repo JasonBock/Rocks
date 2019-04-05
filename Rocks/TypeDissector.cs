@@ -61,7 +61,7 @@ namespace Rocks
 			var isConflictingTypeName = typeof(TypeDissector)
 				.Assembly.GetTypes().Any(_ => _.Name == typeName);
 
-			string name = null;
+			string name;
 
 			if (isConflictingTypeName)
 			{

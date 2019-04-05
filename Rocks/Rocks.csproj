@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>8.0</LangVersion>
     <AssemblyName>Rocks</AssemblyName>
     <RootNamespace>Rocks</RootNamespace>
     <Version>3.1.0</Version>
@@ -21,8 +21,9 @@
     <PackageIconUrl>https://raw.githubusercontent.com/JasonBock/Rocks/master/Images/RocksIcon.png</PackageIconUrl>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
+    <NullableContextOptions>enable</NullableContextOptions>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.10.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.0.0" />
   </ItemGroup>
 </Project>

@@ -2,11 +2,12 @@
 
 namespace Rocks
 {
-	public static class Arg
+#nullable disable
+   public static class Arg
 	{
 		public static T Is<T>(Func<T, bool> evaluation)
 		{
-			if (evaluation == null)
+			if (evaluation is null)
 			{
 				throw new ArgumentNullException(nameof(evaluation));
 			}
@@ -18,4 +19,5 @@ namespace Rocks
 
 		public static T IsDefault<T>() => default;
 	}
+#nullable enable
 }

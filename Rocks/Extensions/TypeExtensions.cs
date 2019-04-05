@@ -63,7 +63,7 @@ namespace Rocks.Extensions
 			new ReadOnlyCollection<MockableResult<ConstructorInfo>>(
 				@this.GetConstructors(ReflectionValues.PublicNonPublicInstance)
 					.Where(_ => !_.IsPrivate &&
-						(_.GetCustomAttribute<ObsoleteAttribute>() == null || !_.GetCustomAttribute<ObsoleteAttribute>().IsError) &&
+						(_.GetCustomAttribute<ObsoleteAttribute>() is null || !_.GetCustomAttribute<ObsoleteAttribute>().IsError) &&
 						_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, false, _.IsFamily, _.IsFamilyOrAssembly, generator) &&
 						!_.GetParameters().Where(p => !p.ParameterType.CanBeSeenByMockAssembly(generator)).Any())
 					.Select(_ => new MockableResult<ConstructorInfo>(_, RequiresExplicitInterfaceImplementation.No)).ToList());
@@ -264,7 +264,7 @@ namespace Rocks.Extensions
 			}
 
 			if (options == SerializationOptions.Supported && !@this.IsInterface &&
-				@this.GetConstructor(Type.EmptyTypes) == null)
+				@this.GetConstructor(Type.EmptyTypes) is null)
 			{
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(
 					TypeDissector.Create(@this).SafeName);

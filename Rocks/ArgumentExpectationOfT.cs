@@ -23,7 +23,7 @@ namespace Rocks
 
 		internal ArgumentExpectation(Expression expression)
 		{
-			if (expression == null)
+			if (expression is null)
 			{
 				throw new ArgumentNullException(nameof(expression));
 			}

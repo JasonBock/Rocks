@@ -6,11 +6,11 @@ namespace Rocks
 	{
 		internal static bool AreEqual<T>(T value1, T value2)
 		{
-			if (value1 == null && value2 == null)
+			if (value1 is null && value2 is null)
 			{
 				return true;
 			}
-			else if (value1 != null && value2 != null)
+			else if (!(value1 is null) && !(value2 is null))
 			{
 				if (!typeof(T).IsArray)
 				{
@@ -18,8 +18,8 @@ namespace Rocks
 				}
 				else
 				{
-					var array1 = value1 as Array;
-					var array2 = value2 as Array;
+					var array1 = (value1 as Array)!;
+					var array2 = (value2 as Array)!;
 
 					if (array1.Length != array2.Length)
 					{

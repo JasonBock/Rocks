@@ -65,7 +65,7 @@ namespace Rocks
 		{
 			var verifications = new List<string>();
 
-			if (this.ExpectedCallCount == null)
+			if (this.ExpectedCallCount is null)
 			{
 				if (this.callCount < 1)
 				{

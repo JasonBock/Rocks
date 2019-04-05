@@ -9,7 +9,7 @@ namespace Rocks.Options
 			SerializationOptions serialization = SerializationOptions.NotSupported,
 			CachingOptions caching = CachingOptions.UseCache, 
 			AllowWarnings allowWarnings = AllowWarnings.No,
-			string codeFileDirectory = null)
+			string? codeFileDirectory = null)
 		{
 			this.Optimization = level;
 			this.CodeFile = codeFile;

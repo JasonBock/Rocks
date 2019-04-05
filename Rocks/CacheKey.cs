@@ -4,7 +4,7 @@ using System;
 namespace Rocks
 {
 	internal sealed class CacheKey
-		: IEquatable<CacheKey>
+		: IEquatable<CacheKey?>
 	{
 		private readonly Type type;
 		private readonly RockOptions options;
@@ -53,11 +53,11 @@ namespace Rocks
 		/// <param name="other">A <see cref="CacheKey" />.</param>
 		/// <returns><b>true</b> if <paramref name="other"/> is a <see cref="CacheKey" /> and its value 
 		/// is the same as this instance; otherwise, <b>false</b>.</returns>
-		public bool Equals(CacheKey other)
+		public bool Equals(CacheKey? other)
 		{
 			var areEqual = false;
 
-			if (other != null)
+			if (!(other is null))
 			{
 				areEqual = this.GetHashCode() == other.GetHashCode();
 			}

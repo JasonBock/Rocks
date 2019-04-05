@@ -26,8 +26,8 @@ namespace Rocks
 			var rockType = this.GetMockType(readOnlyHandlers);
 
 			var rock = Activator.CreateInstance(rockType, readOnlyHandlers);
-			this.Rocks.Add(rock as IMock);
-			return rock as T;
+			this.Rocks.Add((IMock)rock);
+			return (T)rock;
 		}
 
 		public override T Make(object[] constructorArguments)
@@ -39,8 +39,8 @@ namespace Rocks
 			arguments.AddRange(constructorArguments);
 
 			var rock = Activator.CreateInstance(rockType, arguments.ToArray(), null);
-			this.Rocks.Add(rock as IMock);
-			return rock as T;
+			this.Rocks.Add((IMock)rock);
+			return (T)rock;
 		}
 
 		private Type GetMockType(ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> readOnlyHandlers)

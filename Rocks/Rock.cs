@@ -97,10 +97,10 @@ namespace Rocks
 			return Rock.NewRock<T>(mappedOptions, true).Make();
 		}
 
-		public static (bool isSuccessful, T result) TryMake<T>()
+		public static (bool isSuccessful, T? result) TryMake<T>()
 			where T : class => Rock.TryMake<T>(new RockOptions());
 
-		public static (bool isSuccessful, T result) TryMake<T>(RockOptions options)
+		public static (bool isSuccessful, T? result) TryMake<T>(RockOptions options)
 			where T : class
 		{
 			var mappedOptions = Rock.MapForMake(options);
