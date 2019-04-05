@@ -84,7 +84,7 @@ namespace Rocks.Construction
 			this.AllowWarnings = allowWarnings;
 		}
 
-		internal void Compile()
+		internal Assembly Compile()
 		{
 			var options = new CSharpCompilationOptions(
 				OutputKind.DynamicallyLinkedLibrary,
@@ -111,10 +111,8 @@ namespace Rocks.Construction
 					throw new CompilationException(results.Diagnostics);
 				}
 
-				this.ProcessStreams(assemblyStream, pdbStream);
+				return this.ProcessStreams(assemblyStream, pdbStream);
 			}
-
-			this.Complete();
 		}
 
 		private MetadataReference[] GetReferences()
@@ -131,15 +129,13 @@ namespace Rocks.Construction
 
 		protected abstract T GetAssemblyStream();
 		protected abstract T GetPdbStream();
-		protected virtual void ProcessStreams(T assemblyStream, T pdbStream) { }
-		protected virtual void Complete() { }
+		protected abstract Assembly ProcessStreams(T assemblyStream, T pdbStream);
 
 		internal AllowWarnings AllowWarnings { get; }
 		internal string AssemblyName { get; }
 		internal OptimizationSetting Optimization { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }
 		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; }
-		internal Assembly Result { get; set; }
 		protected bool AllowUnsafe { get; private set; }
 	}
 }

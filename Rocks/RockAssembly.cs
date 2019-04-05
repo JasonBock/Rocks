@@ -46,7 +46,6 @@ namespace Rocks
 						new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 							new Dictionary<int, ReadOnlyCollection<HandlerInformation>>()),
 						new SortedSet<string>(), this.options);
-					builder.Build();
 					trees.Add(builder.Tree);
 					allowUnsafe |= builder.IsUnsafe;
 				});
@@ -58,8 +57,7 @@ namespace Rocks
 				new PersistenceNameGenerator(this.assembly).AssemblyName,
 				referencedAssemblies.AsReadOnly(),
 				this.options.CodeFileDirectory, allowUnsafe, this.options.AllowWarnings);
-			compiler.Compile();
-			return compiler.Result;
+			return compiler.Compile();
 		}
 
 		public Assembly Result { get; }

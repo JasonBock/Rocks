@@ -41,12 +41,6 @@ namespace Rocks.Tests.Extensions
 
 			var expectation = setter.GetExpectationForSetter();
 
-			Assert.That(expectation.IsAny, Is.False, nameof(expectation.IsAny));
-			Assert.That(expectation.IsEvaluation, Is.False, nameof(expectation.IsEvaluation));
-			Assert.That(expectation.IsExpression, Is.False, nameof(expectation.IsExpression));
-			Assert.That(expectation.IsValue, Is.True, nameof(expectation.IsValue));
-			Assert.That(expectation.Evaluation, Is.Null, nameof(expectation.Evaluation));
-			Assert.That(expectation.Expression, Is.Null, nameof(expectation.Expression));
 			Assert.That(expectation.Value, Is.EqualTo("44"), nameof(expectation.Value));
 		}
 

@@ -36,9 +36,8 @@ namespace Rocks.Construction
 			this.InformationBuilder = informationBuilder;
 			this.TypeName = typeNameGenerator.Generate(baseType);
 			this.IsMake = isMake;
+			this.Tree = this.MakeTree();
 		}
-
-		internal virtual void Build() => this.Tree = this.MakeTree();
 
 		private GenerateResults GetGeneratedEvents() =>
 			EventsGenerator.Generate(this.BaseType, this.Namespaces,
@@ -143,8 +142,8 @@ namespace Rocks.Construction
 		internal SortedSet<string> Namespaces { get; }
 		internal string TypeName { get; set; }
 		private bool RequiresObsoleteSuppression { get; set; }
-		protected NameGenerator NameGenerator { get; private set; }
-		internal TInformationBuilder InformationBuilder { get; private set; }
+		protected NameGenerator NameGenerator { get; }
+		internal TInformationBuilder InformationBuilder { get; }
 		internal bool IsMake { get; }
 	}
 }

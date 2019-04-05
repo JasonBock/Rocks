@@ -34,7 +34,7 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
 				{
-					{ "a", new ArgumentExpectation<int>() }
+					{ "a", new ArgumentIsAnyExpectation() }
 				});
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, expectations);
@@ -60,7 +60,7 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
 				{
-					{ "a", new ArgumentExpectation<int>() }
+					{ "a", new ArgumentIsAnyExpectation() }
 				});
 			var information = new HandlerInformation(2, expectations);
 			Assert.That(information.Method, Is.Null, nameof(information.Method));
@@ -86,7 +86,7 @@ namespace Rocks.Tests
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(
 				new Dictionary<string, ArgumentExpectation>
 				{
-					{ "a", new ArgumentExpectation<int>() }
+					{ "a", new ArgumentIsAnyExpectation() }
 				});
 			var method = new Action(() => { });
 			var information = new HandlerInformation(method, 2, expectations);

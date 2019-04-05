@@ -8,19 +8,14 @@ namespace Rocks.Extensions
 	internal static class ExpressionExtensions
 	{
 		internal static ArgumentExpectation Create(this Expression @this) =>
-			@this.Create(@this.Type, null);
+			@this.CreateConstantExpectation(@this.Type);
 
 		internal static ArgumentExpectation Create(this Expression @this, Type expectationType, ParameterInfo parameter)
 		{
-			var argumentExpectationType = typeof(ArgumentExpectation<>).MakeGenericType(expectationType);
-
 			switch (@this.NodeType)
 			{
 				case ExpressionType.Constant:
-					var value = ((ConstantExpression)@this).Value;
-					return (ArgumentExpectation)argumentExpectationType.GetConstructor(
-						ReflectionValues.PublicNonPublicInstance,
-						null, new[] { @this.Type }, null).Invoke(new[] { value });
+					return @this.CreateConstantExpectation(expectationType);
 				case ExpressionType.Call:
 					var argumentMethodCall = (MethodCallExpression)@this;
 					var argumentMethod = argumentMethodCall.Method;
@@ -30,7 +25,7 @@ namespace Rocks.Extensions
 
 					if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 					{
-						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
+						return (ArgumentExpectation)typeof(ArgumentIsAnyExpectation).GetConstructor(
 							ReflectionValues.PublicNonPublicInstance,
 							null, Type.EmptyTypes, null).Invoke(null);
 					}
@@ -38,9 +33,9 @@ namespace Rocks.Extensions
 					{
 						var evaluation = argumentMethodCall.Arguments[0];
 						var genericMethodType = typeof(Func<,>).MakeGenericType(@this.Type, typeof(bool));
-						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
-							ReflectionValues.PublicNonPublicInstance,
-							null, new[] { genericMethodType }, null).Invoke(new[] { ((LambdaExpression)evaluation).Compile() });
+						return (ArgumentExpectation)typeof(ArgumentIsEvaluationExpectation<>).MakeGenericType(expectationType)
+							.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+								null, new[] { genericMethodType }, null).Invoke(new[] { ((LambdaExpression)evaluation).Compile() });
 					}
 					else if (argumentMethod.Name == isDefaultMethod.Name)
 					{
@@ -51,22 +46,30 @@ namespace Rocks.Extensions
 						}
 						else
 						{
-							return (ArgumentExpectation)argumentExpectationType.GetConstructor(
-								ReflectionValues.PublicNonPublicInstance,
-								null, new[] { @this.Type }, null).Invoke(new[] { parameter.DefaultValue });
+							return (ArgumentExpectation)typeof(ArgumentIsValueExpectation<>).MakeGenericType(expectationType)
+								.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+									null, new[] { @this.Type }, null).Invoke(new[] { parameter.DefaultValue });
 						}
 					}
 					else
 					{
-						return (ArgumentExpectation)argumentExpectationType.GetConstructor(
-							ReflectionValues.PublicNonPublicInstance,
-							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
+						return (ArgumentExpectation)typeof(ArgumentIsExpressionExpectation<>).MakeGenericType(expectationType)
+							.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+								null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
 					}
 				default:
-					return (ArgumentExpectation)argumentExpectationType.GetConstructor(
-						ReflectionValues.PublicNonPublicInstance,
-						null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
+					return (ArgumentExpectation)typeof(ArgumentIsExpressionExpectation<>).MakeGenericType(expectationType)
+						.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
 			}
 		}
-	}
+
+		private static ArgumentExpectation CreateConstantExpectation(this Expression @this, Type expectationType)
+		{
+			var value = ((ConstantExpression)@this).Value;
+			return (ArgumentExpectation)typeof(ArgumentIsValueExpectation<>).MakeGenericType(expectationType)
+				.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+					null, new[] { @this.Type }, null).Invoke(new[] { value });
+		}
+   }
 }

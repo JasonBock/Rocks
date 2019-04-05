@@ -10,7 +10,6 @@ namespace Rocks.Construction.Persistence
 	internal sealed class PersistenceCompiler
 		: Compiler<FileStream>
 	{
-		private string assemblyFileName;
 		private readonly string assemblyPath;
 
 		internal PersistenceCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
@@ -24,10 +23,7 @@ namespace Rocks.Construction.Persistence
 		protected override FileStream GetPdbStream() =>
 			new FileStream($"{Path.Combine(this.assemblyPath, this.AssemblyName)}.pdb", FileMode.Create);
 
-		protected override void ProcessStreams(FileStream assemblyStream, FileStream pdbStream) =>
-			this.assemblyFileName = assemblyStream.Name;
-
-		protected override void Complete() =>
-			this.Result = Assembly.LoadFile(this.assemblyFileName);
+		protected override Assembly ProcessStreams(FileStream assemblyStream, FileStream pdbStream) =>
+			Assembly.LoadFile(assemblyStream.Name);
 	}
 }

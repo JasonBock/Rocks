@@ -60,16 +60,11 @@ namespace Rocks.Extensions
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(expectations);
 		}
 
-		private static (string, ArgumentExpectation) CreateDefaultSetterExpectation(this PropertyInfo @this)
-		{
-			var expectationType = typeof(ArgumentExpectation<>).MakeGenericType(@this.PropertyType);
-			var expectation = (ArgumentExpectation)expectationType.GetConstructor(
-				ReflectionValues.PublicNonPublicInstance, null,
-				Type.EmptyTypes, null).Invoke(null);
-			return (Values.PropertySetterArgumentName, expectation);
-		}
+		private static (string, ArgumentExpectation) CreateDefaultSetterExpectation(this PropertyInfo @this) => 
+			(Values.PropertySetterArgumentName, (ArgumentExpectation)typeof(ArgumentIsAnyExpectation).GetConstructor(
+				ReflectionValues.PublicNonPublicInstance, null, Type.EmptyTypes, null).Invoke(null));
 
-		internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectationDictionary(this PropertyInfo @this)
+	  internal static ReadOnlyDictionary<string, ArgumentExpectation> CreateDefaultSetterExpectationDictionary(this PropertyInfo @this)
 		{
 			var (name, expectation) = @this.CreateDefaultSetterExpectation();
 			return new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>

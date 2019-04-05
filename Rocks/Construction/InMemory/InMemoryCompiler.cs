@@ -19,7 +19,7 @@ namespace Rocks.Construction.InMemory
 
 		protected override MemoryStream GetPdbStream() => new MemoryStream();
 
-		protected override void ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream) =>
-			this.Result = Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
+		protected override Assembly ProcessStreams(MemoryStream assemblyStream, MemoryStream pdbStream) =>
+			Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
 	}
 }

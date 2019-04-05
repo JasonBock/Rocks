@@ -7,8 +7,8 @@ namespace Rocks.Extensions
 {
 	internal static class ExpressionOfTExtensions
 	{
-		internal static ArgumentExpectation<TProperty> GetExpectationForSetter<TProperty>(this Expression<Func<TProperty>> @this) =>
-			(ArgumentExpectation<TProperty>)@this.Body.Create();
+		internal static ArgumentIsValueExpectation<TProperty> GetExpectationForSetter<TProperty>(this Expression<Func<TProperty>> @this) =>
+			(ArgumentIsValueExpectation<TProperty>)@this.Body.Create();
 
 		internal static ReadOnlyCollection<Expression> ParseForPropertyIndexers(this Expression<Func<object[]>> @this)
 		{

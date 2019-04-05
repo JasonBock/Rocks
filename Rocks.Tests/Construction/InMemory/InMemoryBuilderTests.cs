@@ -20,7 +20,6 @@ namespace Rocks.Tests.Construction.InMemory
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
-			builder.Build();
 
 			Assert.That(builder.BaseType, Is.SameAs(baseType), nameof(builder.BaseType));
 			Assert.That(builder.Handlers, Is.SameAs(handlers), nameof(builder.Handlers));
@@ -49,7 +48,6 @@ namespace Rocks.Tests.Construction.InMemory
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
-			builder.Build();
 
 			var tree = builder.Tree.ToString();
 
@@ -69,7 +67,6 @@ namespace Rocks.Tests.Construction.InMemory
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
-			builder.Build();
 
 			var tree = builder.Tree.ToString();
 
@@ -89,7 +86,6 @@ namespace Rocks.Tests.Construction.InMemory
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
-			builder.Build();
 
 			var tree = builder.Tree.ToString();
 
@@ -109,7 +105,6 @@ namespace Rocks.Tests.Construction.InMemory
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);
-			builder.Build();
 
 			var tree = builder.Tree.ToString();
 
