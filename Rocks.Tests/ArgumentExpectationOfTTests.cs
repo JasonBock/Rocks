@@ -7,8 +7,11 @@ namespace Rocks.Tests
 	public sealed class ArgumentExpectationOfTTests
 	{
 		[Test]
-		public void Create() => 
-			Assert.That(() => new ArgumentIsAnyExpectation(), Throws.Nothing);
+		public void Create()
+		{
+			var expectation = new ArgumentIsAnyExpectation<int>();
+			Assert.That(expectation.IsValid(2), Is.True);
+		}
 
 		[Test]
 		public void CreateWithNullEvaluation() =>

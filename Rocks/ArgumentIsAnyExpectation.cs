@@ -3,9 +3,11 @@
 namespace Rocks
 {
    [Serializable]
-   public sealed class ArgumentIsAnyExpectation
-	   : ArgumentExpectation
+   public sealed class ArgumentIsAnyExpectation<T>
+	   : ArgumentExpectation<T>
    {
-	  internal ArgumentIsAnyExpectation() { }
+		internal ArgumentIsAnyExpectation() { }
+
+		public override bool IsValid(T value) => true;
    }
 }

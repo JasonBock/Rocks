@@ -51,7 +51,7 @@ namespace Rocks.Tests.Extensions
 			var expectations = method.GetArgumentExpectations();
 
 			Assert.That(expectations.Count, Is.EqualTo(1), nameof(expectations.Count));
-			Assert.That(() => (ArgumentIsAnyExpectation)expectations["a"], Throws.Nothing);
+			Assert.That(() => (ArgumentIsAnyExpectation<int>)expectations["a"], Throws.Nothing);
 		}
 
 		[Test]

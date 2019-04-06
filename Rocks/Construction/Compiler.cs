@@ -33,8 +33,9 @@ namespace Rocks.Construction
 							}
 						}
 						catch (FileNotFoundException) { }
+						catch (FileLoadException) { }
 					}
-				}
+			   }
 
 				var assemblies = new HashSet<Assembly>();
 
@@ -48,7 +49,10 @@ namespace Rocks.Construction
 
 					foreach (var platformAssemblyName in platformAssemblyNames)
 					{
-						assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
+						if(!string.IsNullOrWhiteSpace(platformAssemblyName))
+						{
+							assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
+						}
 					}
 
 					assemblies.Add(typeof(Exception).Assembly);

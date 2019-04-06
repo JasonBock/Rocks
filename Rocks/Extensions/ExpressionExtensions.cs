@@ -25,9 +25,9 @@ namespace Rocks.Extensions
 
 					if (argumentMethod.Name == isAnyMethod.Name && argumentMethod.DeclaringType == isAnyMethod.DeclaringType)
 					{
-						return (ArgumentExpectation)typeof(ArgumentIsAnyExpectation).GetConstructor(
-							ReflectionValues.PublicNonPublicInstance,
-							null, Type.EmptyTypes, null).Invoke(null);
+						return (ArgumentExpectation)typeof(ArgumentIsAnyExpectation<>).MakeGenericType(expectationType)
+							.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+								null, Type.EmptyTypes, null).Invoke(null);
 					}
 					else if (argumentMethod.Name == isMethod.Name && argumentMethod.DeclaringType == isMethod.DeclaringType)
 					{

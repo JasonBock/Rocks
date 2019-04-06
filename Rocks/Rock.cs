@@ -39,10 +39,10 @@ namespace Rocks
 				new InMemoryRock<T>(options, isMake) as IRock<T>;
 		}
 
-		public static (bool isSuccessful, IRock<T> result) TryCreate<T>()
+		public static (bool isSuccessful, IRock<T>? result) TryCreate<T>()
 			where T : class => Rock.TryCreate<T>(new RockOptions());
 
-		public static (bool isSuccessful, IRock<T> result) TryCreate<T>(RockOptions options)
+		public static (bool isSuccessful, IRock<T>? result) TryCreate<T>(RockOptions options)
 			where T : class
 		{
 			var result = default(IRock<T>);

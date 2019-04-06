@@ -1,24 +1,27 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Rocks.Tests
 {
-	public static class VerificationTests
+   public static class VerificationTests
 	{
 		[Test]
 		public static void TryThis()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
-			var handlers = new Dictionary<string, HandlerInformation>
+			var handlers = new Dictionary<string, HandlerInformation>()
 			{
-				{ "x", new HandlerInformation<int>(expectations) { ReturnValue = 42 } }
+				{
+					"x", new HandlerInformation<int>(expectations)
+					{
+						ReturnValue = 42
+					}
+			   }
 			};
 
 			var roHandlers = new ReadOnlyDictionary<string, HandlerInformation>(handlers);
-
 			roHandlers.TryGetValue("x", out var rvHandler);
 
 			Assert.That((rvHandler as HandlerInformation<int>).ReturnValue, Is.EqualTo(42));

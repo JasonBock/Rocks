@@ -5,7 +5,7 @@
 	{
 		private const string DefaultAssemblyName = "RockQuarry";
 
-		internal InMemoryNameGenerator() =>
-			this.AssemblyName = InMemoryNameGenerator.DefaultAssemblyName;
+		internal InMemoryNameGenerator()
+			: base(InMemoryNameGenerator.DefaultAssemblyName) { }
 	}
 }

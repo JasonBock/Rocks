@@ -18,7 +18,7 @@ namespace Rocks.Construction.InMemory
 
 			if (this.Handlers.ContainsKey(key))
 			{
-				var delegateType = this.Handlers[key][0].Method.GetType();
+				var delegateType = this.Handlers[key][0].Method!.GetType();
 
 				if (baseMethod.IsGenericMethodDefinition)
 				{

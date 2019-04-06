@@ -5,7 +5,10 @@ using System.Threading;
 
 namespace Rocks
 {
-	[Serializable]
+   // TODO: Consider making this immutable - that is,
+   // make AddRaiseEvent and IncrementCallCount return 
+	// new instances.
+   [Serializable]
 	public class HandlerInformation
 	{
 		public const string ErrorAtLeastOnceCallCount = "The method should have been called at least once.";
@@ -42,7 +45,7 @@ namespace Rocks
 			: this(null, expectedCallCount, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate method, uint? expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
+		internal HandlerInformation(Delegate? method, uint? expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 		{
 			this.Method = method;
 			this.ExpectedCallCount = expectedCallCount;
@@ -88,7 +91,7 @@ namespace Rocks
 
 		public ReadOnlyDictionary<string, ArgumentExpectation> Expectations { get; }
 		internal uint? ExpectedCallCount { get; }
-		public Delegate Method { get; }
+		public Delegate? Method { get; }
 		internal ReadOnlyCollection<RaiseEventInformation> GetRaiseEvents() => this.raiseEvents.AsReadOnly();
 	}
 }

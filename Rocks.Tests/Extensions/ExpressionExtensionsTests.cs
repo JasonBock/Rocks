@@ -29,7 +29,7 @@ namespace Rocks.Tests.Extensions
 		public static void CreateForCallToArgIsAny()
 		{
 			Expression<Func<int>> argument = () => Arg.IsAny<int>();
-			Assert.That(() => (ArgumentIsAnyExpectation)argument.Body.Create(), Throws.Nothing);
+			Assert.That(() => (ArgumentIsAnyExpectation<int>)argument.Body.Create(), Throws.Nothing);
 		}
 
 		[Test]

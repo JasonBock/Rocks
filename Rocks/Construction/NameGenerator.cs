@@ -1,9 +1,10 @@
-﻿using System;
-
-namespace Rocks.Construction
+﻿namespace Rocks.Construction
 {
 	internal abstract class NameGenerator
 	{
-		public string AssemblyName { get; protected set; }
+		protected NameGenerator(string assemblyName) => 
+			this.AssemblyName = assemblyName;
+
+		public string AssemblyName { get; }
 	}
 }

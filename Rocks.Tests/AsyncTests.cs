@@ -8,7 +8,7 @@ namespace Rocks.Tests
 		[Test]
 		public static async Task RunAsyncSynchronously()
 		{
-			var rock = Rock.Create<IAmAsync>();
+			var rock = Rock.Create<IAmAsync>(new Rocks.Options.RockOptions(level: Rocks.Options.OptimizationSetting.Debug, codeFile: Rocks.Options.CodeFileOptions.Create));
 			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult<int>(44));
 
 			var uses = new UsesAsync(rock.Make());

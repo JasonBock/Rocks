@@ -61,6 +61,7 @@ namespace Rocks.Tests
 			{
 				ReturnValue = 1
 			};
+
 			Assert.That(information.ReturnValue, Is.EqualTo(1), nameof(information.ReturnValue));
 		}
 	}
