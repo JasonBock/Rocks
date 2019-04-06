@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Options;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,13 +18,25 @@ namespace Rocks.Construction.Persistence
 			bool allowUnsafe, AllowWarnings allowWarnings)
 			: base(trees, optimization, assemblyName, referencedAssemblies, allowUnsafe, allowWarnings) => this.assemblyPath = assemblyPath;
 
-		protected override FileStream GetAssemblyStream() =>
+		private FileStream GetAssemblyStream() =>
 			new FileStream($"{Path.Combine(this.assemblyPath, this.AssemblyName)}.dll", FileMode.Create);
 
-		protected override FileStream GetPdbStream() =>
+		private FileStream GetPdbStream() =>
 			new FileStream($"{Path.Combine(this.assemblyPath, this.AssemblyName)}.pdb", FileMode.Create);
 
-		protected override Assembly ProcessStreams(FileStream assemblyStream, FileStream pdbStream) =>
-			Assembly.LoadFile(assemblyStream.Name);
-	}
+		protected override Assembly Emit(CSharpCompilation compilation)
+		{
+			string assemblyFileName;
+
+			using (FileStream assemblyStream = this.GetAssemblyStream(),
+				pdbStream = this.GetPdbStream())
+			{
+				compilation.Emit(assemblyStream,
+					pdbStream: pdbStream);
+				assemblyFileName = assemblyStream.Name;
+			}
+
+			return Assembly.LoadFile(assemblyFileName);
+		}
+   }
 }

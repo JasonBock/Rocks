@@ -100,23 +100,16 @@ namespace Rocks.Construction
 				options: options,
 				syntaxTrees: this.Trees,
 				references: this.GetReferences());
+			var diagnostics = compilation.GetDiagnostics();
 
-			using (T assemblyStream = this.GetAssemblyStream(),
-				pdbStream = this.GetPdbStream())
+			if (this.AllowWarnings == AllowWarnings.No &&
+				diagnostics.Length > 0 &&
+				diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
 			{
-				var results = compilation.Emit(assemblyStream,
-					pdbStream: pdbStream);
-
-				if (!results.Success ||
-					(this.AllowWarnings == AllowWarnings.No &&
-						results.Diagnostics.Length > 0 &&
-						results.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != results.Diagnostics.Length))
-				{
-					throw new CompilationException(results.Diagnostics);
-				}
-
-				return this.ProcessStreams(assemblyStream, pdbStream);
+				throw new CompilationException(diagnostics);
 			}
+
+			return this.Emit(compilation);
 		}
 
 		private MetadataReference[] GetReferences()
@@ -131,9 +124,7 @@ namespace Rocks.Construction
 			return references.ToArray();
 		}
 
-		protected abstract T GetAssemblyStream();
-		protected abstract T GetPdbStream();
-		protected abstract Assembly ProcessStreams(T assemblyStream, T pdbStream);
+		protected abstract Assembly Emit(CSharpCompilation compilation);
 
 		internal AllowWarnings AllowWarnings { get; }
 		internal string AssemblyName { get; }
