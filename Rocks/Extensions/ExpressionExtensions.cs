@@ -8,14 +8,17 @@ namespace Rocks.Extensions
 	internal static class ExpressionExtensions
 	{
 		internal static ArgumentExpectation Create(this Expression @this) =>
-			@this.CreateConstantExpectation(@this.Type);
+			@this.Create(@this.Type, null);
 
-		internal static ArgumentExpectation Create(this Expression @this, Type expectationType, ParameterInfo parameter)
+		internal static ArgumentExpectation Create(this Expression @this, Type expectationType, ParameterInfo? parameter)
 		{
 			switch (@this.NodeType)
 			{
 				case ExpressionType.Constant:
-					return @this.CreateConstantExpectation(expectationType);
+					var value = ((ConstantExpression)@this).Value;
+					return (ArgumentExpectation)typeof(ArgumentIsValueExpectation<>).MakeGenericType(expectationType)
+						.GetConstructor(ReflectionValues.PublicNonPublicInstance,
+							null, new[] { @this.Type }, null).Invoke(new[] { value });
 				case ExpressionType.Call:
 					var argumentMethodCall = (MethodCallExpression)@this;
 					var argumentMethod = argumentMethodCall.Method;
@@ -39,7 +42,7 @@ namespace Rocks.Extensions
 					}
 					else if (argumentMethod.Name == isDefaultMethod.Name)
 					{
-						if (!parameter.IsOptional)
+						if (!(parameter!.IsOptional))
 						{
 							throw new ExpectationException(ErrorMessages.GetCannotUseIsDefaultWithNonOptionalArguments
 								(expectationType.Name, argumentMethod.Name, parameter.Name));
@@ -62,14 +65,6 @@ namespace Rocks.Extensions
 						.GetConstructor(ReflectionValues.PublicNonPublicInstance,
 							null, new[] { typeof(Expression) }, null).Invoke(new[] { @this });
 			}
-		}
-
-		private static ArgumentExpectation CreateConstantExpectation(this Expression @this, Type expectationType)
-		{
-			var value = ((ConstantExpression)@this).Value;
-			return (ArgumentExpectation)typeof(ArgumentIsValueExpectation<>).MakeGenericType(expectationType)
-				.GetConstructor(ReflectionValues.PublicNonPublicInstance,
-					null, new[] { @this.Type }, null).Invoke(new[] { value });
 		}
    }
 }
