@@ -5,8 +5,8 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests.Types</AssemblyName>
     <RootNamespace>Rocks.Tests.Types</RootNamespace>
-    <Version>3.1.0</Version>
-    <Copyright>Copyright © 2017</Copyright>
+    <Version>4.0.0</Version>
+    <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
