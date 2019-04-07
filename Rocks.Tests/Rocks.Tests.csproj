@@ -11,7 +11,7 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
-    <Version>4.0.0</Version>
+    <Version>3.2.0</Version>
     <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
