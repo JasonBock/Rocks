@@ -108,7 +108,7 @@ namespace Rocks.Construction
 		private SyntaxTree MakeTree()
 		{
 			var @class = this.MakeCode();
-			var options = new CSharpParseOptions(languageVersion: LanguageVersion.Latest);
+			var options = new CSharpParseOptions(languageVersion: LanguageVersion.Preview);
 			SyntaxTree tree;
 
 			if (this.Options.CodeFile == CodeFileOptions.Create)

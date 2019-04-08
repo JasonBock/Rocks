@@ -107,14 +107,14 @@ namespace Rocks.Tests.Extensions
 		public void TargetWithOutArrayAttribute([Out] string[] a) { }
 		public int TargetWithInOut([In, Out] char[] buffer, int index, int count) => 0; 
 		public void TargetWithArguments(int a, string c) { }
-		public void TargetWithOptionalArguments(int a = 0, string c = "c", string d = null) { }
+		public void TargetWithOptionalArguments(int a = 0, string c = "c", string? d = null) { }
 		public void TargetWithGenerics<T, U>(T a, string b, U c) where T : new() where U : T { }
 		public void TargetWithParamsArgument(params int[] a) { }
 		public unsafe void TargetWithUnsafeArguments(byte* a) { }
 		public void TargetWithArray(byte[] a) { }
 		public unsafe void TargetWithArrayOfPointers(byte*[] a) { }
-		public void TargetWithOutArray(out byte[] a) => a = null; 
-		public unsafe void TargetWithOutArrayOfPointers(out byte*[] a) => a = null; 
+		public void TargetWithOutArray(out byte[] a) => a = Array.Empty<byte>(); 
+		public unsafe void TargetWithOutArrayOfPointers(out byte*[] a) => a = new byte*[0]; 
 	}
 
 	public class TargetUsingBase<TKey, TValue> : IBase<UsedByBase<TKey, TValue>>

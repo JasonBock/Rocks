@@ -48,6 +48,6 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveMethodWithComplexGenericType<TSource>
 	{
-		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
+		public virtual IEnumerable<KeyValuePair<long, TSource>>? Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
 	}
 }

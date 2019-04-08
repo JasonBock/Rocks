@@ -79,7 +79,7 @@ namespace Rocks.Tests
 			var indexer3 = Guid.NewGuid();
 			var indexer4 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty4Indexer>();
 			rock.Handle<Guid, Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, () => indexer4, (i1, i2, i3, i4, value) => setValue = value);
@@ -110,7 +110,7 @@ namespace Rocks.Tests
 			var indexer3 = Guid.NewGuid();
 			var indexer4 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty4Indexer>();
 			rock.Handle<Guid, Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, () => indexer4, (i1, i2, i3, i4, value) => setValue = value, 2);
@@ -142,7 +142,7 @@ namespace Rocks.Tests
 			var indexer3 = Guid.NewGuid();
 			var indexer4 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty4Indexer>();
 			rock.Handle<Guid, Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, () => indexer4, (i1, i2, i3, i4, value) => setValue = value, 2);
@@ -162,7 +162,7 @@ namespace Rocks.Tests
 			var indexer4 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty4Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, () => indexer3, () => indexer4, (_, __, ___, _____) => returnValue, (i1, i2, i3, i4, value) => setValue = value);
@@ -222,7 +222,7 @@ namespace Rocks.Tests
 			var indexer4 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty4Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, () => indexer3, () => indexer4, (_, __, ___, ____) => returnValue, (i1, i2, i3, i4, value) => setValue = value, 2);

@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <AssemblyName>Rocks.RockAssemblyTestContainer</AssemblyName>
+		<LangVersion>8.0</LangVersion>
+		<NullableContextOptions>enable</NullableContextOptions>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>Rocks.RockAssemblyTestContainer</AssemblyName>
     <RootNamespace>Rocks.RockAssemblyTestContainer</RootNamespace>
     <Version>3.2.0</Version>
     <Copyright>Copyright © 2019</Copyright>

@@ -8,8 +8,9 @@
     <!--<TargetFramework>net471</TargetFramework>
     <DebugType>Full</DebugType>-->
 
-    <LangVersion>latest</LangVersion>
-    <AssemblyName>Rocks.Tests</AssemblyName>
+    <LangVersion>8.0</LangVersion>
+		<NullableContextOptions>enable</NullableContextOptions>
+		<AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
     <Version>3.2.0</Version>
     <Copyright>Copyright © 2019</Copyright>

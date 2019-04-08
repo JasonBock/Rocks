@@ -41,7 +41,7 @@ namespace Rocks.Tests
 			var chunkType = chunk.GetType();
 			Assert.That(chunkType.Namespace, Is.EqualTo(typeof(IRockTests).Namespace), nameof(chunkType.Namespace));
 
-			var chunkAsRock = chunk as IMock;
+			var chunkAsRock = (IMock)chunk;
 			Assert.That(chunkAsRock.Handlers.Count, Is.EqualTo(1), nameof(chunkAsRock.Handlers.Count));
 		}
 
@@ -61,7 +61,7 @@ namespace Rocks.Tests
 			Assert.That(chunkType.Namespace, Is.EqualTo(typeof(IFileTests).Namespace), nameof(chunkType.Namespace));
 			Assert.That(File.Exists(Path.Combine(testDirectory, $"{chunkType.Name}.cs")), Is.True, nameof(File.Exists));
 
-			var chunkAsRock = chunk as IMock;
+			var chunkAsRock = (IMock)chunk;
 			Assert.That(chunkAsRock.Handlers.Count, Is.EqualTo(1), nameof(chunkAsRock.Handlers.Count));
 
 			chunk.Member("a", 44);
@@ -72,7 +72,7 @@ namespace Rocks.Tests
 		public static void MakeWhenTypeNameExistsInRocksAssembly()
 		{
 			var rock = Rock.Create<SomeNamespaceOtherThanRocks.IMock>();
-			var chunk = rock.Make();
+			Assert.That(() => rock.Make(), Throws.Nothing);
 		}
 
 		[Test]

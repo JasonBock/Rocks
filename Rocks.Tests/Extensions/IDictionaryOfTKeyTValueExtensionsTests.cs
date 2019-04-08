@@ -10,7 +10,7 @@ namespace Rocks.Tests.Extensions
 		public static void Add()
 		{
 			var keyedValues = new Dictionary<string, Value>();
-			keyedValues.AddOrUpdate("a", () => new Value { Data = "b" }, null);
+			keyedValues.AddOrUpdate("a", () => new Value { Data = "b" }, null!);
 
 			Assert.That(keyedValues["a"].Data, Is.EqualTo("b"));
 		}
@@ -19,7 +19,7 @@ namespace Rocks.Tests.Extensions
 		public static void Update()
 		{
 			var keyedValues = new Dictionary<string, Value> { { "a", new Value { Data = "b" } } };
-			keyedValues.AddOrUpdate("a", null, _ => _.Data = "c");
+			keyedValues.AddOrUpdate("a", null!, _ => _.Data = "c");
 
 			Assert.That(keyedValues["a"].Data, Is.EqualTo("c"));
 		}
@@ -27,6 +27,6 @@ namespace Rocks.Tests.Extensions
 
 	public class Value
 	{
-		public string Data { get; set; }
+		public string? Data { get; set; }
 	}
 }

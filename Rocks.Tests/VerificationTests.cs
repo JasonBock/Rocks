@@ -24,7 +24,7 @@ namespace Rocks.Tests
 			var roHandlers = new ReadOnlyDictionary<string, HandlerInformation>(handlers);
 			roHandlers.TryGetValue("x", out var rvHandler);
 
-			Assert.That((rvHandler as HandlerInformation<int>).ReturnValue, Is.EqualTo(42));
+			Assert.That(((HandlerInformation<int>)rvHandler).ReturnValue, Is.EqualTo(42));
 		}
 
 		[Test]

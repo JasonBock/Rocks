@@ -57,13 +57,13 @@ namespace Rocks.Tests
 
 			var handlers = rock.GetType().GetMethod("CreateReadOnlyHandlerDictionary", BindingFlags.Instance | BindingFlags.NonPublic)
 				.Invoke(rock, null) as ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>;
-			var mock = Activator.CreateInstance(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"), handlers) as Class1;
+			var mock = (Class1)Activator.CreateInstance(this.assembly.GetType($"{typeof(Class1).Namespace}.Rock{nameof(Class1)}"), handlers);
 
 			mock.Method1();
 			mock.Method4("a", ref b);
 			mock.Method5("a", ref b);
 
-			Assert.That((mock as IMock).GetVerificationFailures().Count, Is.EqualTo(0));
+			Assert.That(((IMock)mock).GetVerificationFailures().Count, Is.EqualTo(0));
 			Assert.That(this.wasMethod4DelegateCalled, Is.True);
 			Assert.That(this.wasMethod5DelegateCalled, Is.True);
 		}

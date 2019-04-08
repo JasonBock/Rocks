@@ -22,7 +22,7 @@ namespace Rocks.Tests.Exceptions
 
 		protected void CreateExceptionWithMessageTest(string message)
 		{
-			var exception = Activator.CreateInstance(typeof(T), message) as T;
+			var exception = (T)Activator.CreateInstance(typeof(T), message);
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.InnerException, Is.Null, nameof(exception.InnerException));
 		}
@@ -30,7 +30,7 @@ namespace Rocks.Tests.Exceptions
 		protected void CreateExceptionWithMessageAndInnerExceptionTest(string message)
 		{
 			var innerException = new TInner();
-			var exception = Activator.CreateInstance(typeof(T), message, innerException) as T;
+			var exception = (T)Activator.CreateInstance(typeof(T), message, innerException);
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.InnerException, Is.EqualTo(innerException), nameof(exception.InnerException));
 		}
@@ -38,7 +38,7 @@ namespace Rocks.Tests.Exceptions
 		protected void RoundtripExceptionTest(string message)
 		{
 			var exception = Activator.CreateInstance(typeof(T), message) as T;
-			T newException = null;
+			T newException;
 
 			var formatter = new BinaryFormatter();
 
@@ -46,7 +46,7 @@ namespace Rocks.Tests.Exceptions
 			{
 				formatter.Serialize(stream, exception);
 				stream.Position = 0;
-				newException = formatter.Deserialize(stream) as T;
+				newException = (T)formatter.Deserialize(stream);
 			}
 
 			Assert.That(newException, Is.Not.Null);

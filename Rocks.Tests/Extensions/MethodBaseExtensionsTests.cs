@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using static Rocks.Extensions.MethodBaseExtensions;
+using System;
 
 namespace Rocks.Tests.Extensions
 {
@@ -62,7 +63,7 @@ namespace Rocks.Tests.Extensions
 		public unsafe void TargetWithUnsafeArguments(byte* a) { }
 		public void TargetWithArray(byte[] a) { }
 		public unsafe void TargetWithArrayOfPointers(byte*[] a) { }
-		public void TargetWithOutArray(out byte[] a) => a = null; 
-		public unsafe void TargetWithOutArrayOfPointers(out byte*[] a) => a = null;
+		public void TargetWithOutArray(out byte[] a) => a = Array.Empty<byte>(); 
+		public unsafe void TargetWithOutArrayOfPointers(out byte*[] a) => a = new byte*[0];
 	}
 }

@@ -76,7 +76,7 @@ namespace Rocks.Tests
 		{
 			var indexer1 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = default;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value);
@@ -104,7 +104,7 @@ namespace Rocks.Tests
 		{
 			var indexer1 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle<Guid, string>(() => indexer1, (i1, value) => setValue = value, 2);
@@ -132,7 +132,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetIndexerPropertyAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var indexer1 = Guid.NewGuid();
-			string propertyValue = null;
+			string? propertyValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle<Guid, string>(() => indexer1, (i1, value) => propertyValue = value, 2);
@@ -149,7 +149,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
@@ -169,7 +169,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
@@ -186,7 +186,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value);
@@ -203,7 +203,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
@@ -225,7 +225,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
@@ -243,7 +243,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
@@ -262,7 +262,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);
@@ -280,7 +280,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty1Indexer>();
 			rock.Handle(() => indexer1, _ => returnValue, (i1, value) => setValue = value, 2);

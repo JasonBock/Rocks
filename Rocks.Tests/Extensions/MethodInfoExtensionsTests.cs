@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
+using System;
 using static Rocks.Extensions.MethodInfoExtensions;
 
 namespace Rocks.Tests.Extensions
@@ -19,6 +20,6 @@ namespace Rocks.Tests.Extensions
 				Is.EqualTo("a = default(int[]);"));
 
 		public void TargetWithOutArgument(out int a) => a = 0; 
-		public void TargetWithOutArrayArgument(out int[] a) => a = null; 
+		public void TargetWithOutArrayArgument(out int[] a) => a = Array.Empty<int>(); 
 	}
 }

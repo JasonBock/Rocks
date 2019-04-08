@@ -43,32 +43,32 @@ namespace Rocks.Tests.Extensions
 
 	public class TargetMatch
 	{
-		public string GetString(int a) => null; 
+		public string? GetString(int a) => null; 
 	}
 
 	public class OtherMatchWithExact
 	{
-		public string GetString(int a) => null; 
+		public string? GetString(int a) => null; 
 	}
 
 	public class OtherMatchWithDifferentArgumentCount
 	{
-		public string GetString(int a, Guid b) => null; 
+		public string? GetString(int a, Guid b) => null; 
 	}
 
 	public class OtherMatchWithDifferentName
 	{
-		public string GetAString(int a) => null;
+		public string? GetAString(int a) => null;
 	}
 
 	public class OtherMatchWithDifferentArgumentType
 	{
-		public string GetString(Guid a) => null; 
+		public string? GetString(Guid a) => null; 
 	}
 
 	public class OtherMatchWithDifferentModifier
 	{
-		public string GetString(ref int a) => null; 
+		public string? GetString(ref int a) => null; 
 	}
 
 	public class OtherMatchWithDifferentReturnType

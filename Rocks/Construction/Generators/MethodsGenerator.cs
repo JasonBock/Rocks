@@ -139,15 +139,15 @@ namespace Rocks.Construction.Generators
 				return isMake ?
 					MethodTemplates.GetFunctionForMake(outInitializers, methodDescriptionWithOverride,
 						visibility, requiresNew, returnTypeAttributes, baseMethod.ReturnType) :
-					baseMethod.ReturnType.RequiresExplicitCast() ?
-						MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes, hasEvents) :
-						MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(
-							baseMethod.MetadataToken, argumentNameList, returnTypeName,
-							delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
-							requiresNew, returnTypeAttributes, hasEvents);
+						baseMethod.ReturnType.RequiresExplicitCast() ?
+							MethodTemplates.GetFunctionWithValueTypeReturnValueAndNoArguments(
+								baseMethod.MetadataToken, argumentNameList, returnTypeName,
+								delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
+								requiresNew, returnTypeAttributes, hasEvents) :
+							MethodTemplates.GetFunctionWithReferenceTypeReturnValueAndNoArguments(
+								baseMethod.MetadataToken, argumentNameList, returnTypeName,
+								delegateCast, outInitializers, methodDescriptionWithOverride, visibility,
+								requiresNew, returnTypeAttributes, hasEvents);
 			}
 			else
 			{

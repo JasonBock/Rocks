@@ -224,11 +224,11 @@ namespace Rocks.Tests.Extensions
 		public void TargetWithArguments(int a, string c) { }
 		public int TargetWithArgumentsAndReturnValue(int a, string c) => 0; 
 		public void TargetWithGenerics<U, V>(int a, U b, string c, V d) { }
-		public U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) => default;
+		public U? TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) where U : class => default;
 		public void TargetWithOutArgument(out int a) => a = 0;
 		public void TargetWithRefArgument(ref int a) { }
 		public void TargetWithParamsArgument(params int[] a) { }
-		public void TargetWithArrayArguments(int[] a, string[] b, ref Guid[] c, out double[] d) => d = null; 
+		public void TargetWithArrayArguments(int[] a, string[] b, ref Guid[] c, out double[] d) => d = Array.Empty<double>(); 
 		public void TargetWithMultipleConstraints<U, V, W, X>(U a, V b, W c, X d) where U : class, new() where V : Source, ISource where W : struct where X : V { }
 
 		public interface ISource { }
@@ -242,7 +242,7 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveMethodWithComplexGenericReturnType<TSource>
 	{
-		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null; 
+		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null!; 
 	}
 
 	public enum SomeValues
@@ -261,7 +261,7 @@ namespace Rocks.Tests.Extensions
 
 		public SomeValues TargetEnum { get; set; }
 		public bool TargetBool { get; }
-		public string TargetString { get; set; }
+		public string? TargetString { get; set; }
 		public int TargetInt { get; set; }
 	}
 

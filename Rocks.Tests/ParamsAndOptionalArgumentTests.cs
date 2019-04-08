@@ -19,7 +19,7 @@ namespace Rocks.Tests
 			chunk.HasParams(44, "a", "b");
 
 			Assert.That(argumentA, Is.EqualTo(44), nameof(argumentA));
-			Assert.That(argumentB.Length, Is.EqualTo(2), nameof(argumentB.Length));
+			Assert.That(argumentB!.Length, Is.EqualTo(2), nameof(argumentB.Length));
 			Assert.That(argumentB[0], Is.EqualTo("a"), nameof(argumentB));
 			Assert.That(argumentB[1], Is.EqualTo("b"), nameof(argumentB));
 

@@ -35,7 +35,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();
-			IAmSerializable newChunk = null;
+			IAmSerializable newChunk;
 
 			var formatter = new BinaryFormatter()
 			{
@@ -45,11 +45,11 @@ namespace Rocks.Tests
 			{
 				formatter.Serialize(stream, chunk);
 				stream.Position = 0;
-				newChunk = formatter.Deserialize(stream) as IAmSerializable;
+				newChunk = (IAmSerializable)formatter.Deserialize(stream);
 			}
 
 			newChunk.Target("44");
-			(newChunk as IMock).Verify();
+			((IMock)newChunk).Verify();
 		}
 
 		[Test]

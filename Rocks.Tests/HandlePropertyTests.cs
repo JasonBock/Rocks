@@ -35,7 +35,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void MakeWithGetAndSetPropertyButOnlyExpectSetter()
 		{
-			string value = null;
+			string? value = null;
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), _ => value = _);
 
@@ -343,7 +343,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandler()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value);
@@ -359,7 +359,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndEventRaised()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value)
@@ -379,7 +379,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value);
@@ -393,7 +393,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
@@ -410,7 +410,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndEventRaisedAndExpectedCallCount()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2)
@@ -431,7 +431,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsed()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
@@ -445,7 +445,7 @@ namespace Rocks.Tests
 		public static void MakeWithSetHandlerAndExpectedCallCountAndSetNotUsedEnough()
 		{
 			var data = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.SetterOnly), value => setValue = value, 2);
@@ -461,7 +461,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
@@ -480,7 +480,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
@@ -503,7 +503,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
@@ -526,7 +526,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value)
@@ -550,7 +550,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
@@ -566,7 +566,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value);
@@ -596,7 +596,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -617,7 +617,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
@@ -642,7 +642,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
@@ -667,7 +667,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2)
@@ -693,7 +693,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -710,7 +710,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -728,7 +728,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -745,7 +745,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -763,7 +763,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);
@@ -778,7 +778,7 @@ namespace Rocks.Tests
 		{
 			var data = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperties>();
 			rock.Handle<string>(nameof(IProperties.GetterAndSetter), () => returnValue, value => setValue = value, 2);

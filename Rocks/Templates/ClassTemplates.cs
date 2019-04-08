@@ -2,6 +2,25 @@
 {
 	internal static class ClassTemplates
 	{
+		// Lifted from: http://code.fitness/post/2019/02/nullableattribute.html
+		// TODO: This should go away with https://github.com/dotnet/corefx/issues/36222 ... hopefully.
+		internal static string GetNullableAttribute() =>
+@"namespace System.Runtime.CompilerServices
+{
+	[AttributeUsage (AttributeTargets.Class | AttributeTargets.Event | AttributeTargets.Field |
+		AttributeTargets.GenericParameter | AttributeTargets.Module | AttributeTargets.Parameter |
+		AttributeTargets.Property | AttributeTargets.ReturnValue,
+		AllowMultiple = false)]
+	public class NullableAttribute : Attribute
+	{
+		public byte Mode { get; }
+
+		public NullableAttribute(byte mode) => this.Mode = mode;
+
+		public NullableAttribute(byte[] _) => throw new System.NotImplementedException();
+	}
+}";
+
 		internal static string GetRaiseImplementation() =>
 $@"void R.IMockWithEvents.Raise(string eventName, S.EventArgs args)
 		{{

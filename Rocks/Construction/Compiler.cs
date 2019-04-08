@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
 using Rocks.Extensions;
 using Rocks.Options;
+using Rocks.Templates;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -96,9 +97,10 @@ namespace Rocks.Construction
 					OptimizationLevel.Release : OptimizationLevel.Debug,
 				allowUnsafe: this.AllowUnsafe);
 
+			var trees = new List<SyntaxTree>(this.Trees);// { SyntaxFactory.ParseCompilationUnit(ClassTemplates.GetNullableAttribute()).SyntaxTree };
 			var compilation = CSharpCompilation.Create(this.AssemblyName, 
 				options: options,
-				syntaxTrees: this.Trees,
+				syntaxTrees: trees,
 				references: this.GetReferences());
 			var diagnostics = compilation.GetDiagnostics();
 

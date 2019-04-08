@@ -15,7 +15,7 @@ namespace Rocks.Tests.Extensions
 
 			var chunk = rock.Make();
 
-			var failures = (chunk as IMock).GetVerificationFailures();
+			var failures = ((IMock)chunk).GetVerificationFailures();
 			Assert.That(failures.Count, Is.EqualTo(1));
 			var failure = failures[0];
 			Assert.That(failure.EndsWith("method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount), Is.True);
@@ -31,7 +31,7 @@ namespace Rocks.Tests.Extensions
 			var chunk = rock.Make();
 			chunk.TargetMethod();
 
-			var failures = (chunk as IMock).GetVerificationFailures();
+			var failures = ((IMock)chunk).GetVerificationFailures();
 			Assert.That(failures.Count, Is.EqualTo(0));
 		}
 
@@ -69,7 +69,7 @@ namespace Rocks.Tests.Extensions
 
 			var chunk = rock.Make();
 
-			Assert.That(() => (chunk as IMock).Verify(), Throws.TypeOf<VerificationException>());
+			Assert.That(() => ((IMock)chunk).Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -81,7 +81,7 @@ namespace Rocks.Tests.Extensions
 			var chunk = rock.Make();
 			chunk.TargetMethod();
 
-			Assert.That(() => (chunk as IMock).Verify(), Throws.Nothing);
+			Assert.That(() => ((IMock)chunk).Verify(), Throws.Nothing);
 		}
 	}
 

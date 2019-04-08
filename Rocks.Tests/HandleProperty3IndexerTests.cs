@@ -78,7 +78,7 @@ namespace Rocks.Tests
 			var indexer2 = Guid.NewGuid();
 			var indexer3 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle<Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, (i1, i2, i3, value) => setValue = value);
@@ -108,7 +108,7 @@ namespace Rocks.Tests
 			var indexer2 = Guid.NewGuid();
 			var indexer3 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle<Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, (i1, i2, i3, value) => setValue = value, 2);
@@ -139,7 +139,7 @@ namespace Rocks.Tests
 			var indexer2 = Guid.NewGuid();
 			var indexer3 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle<Guid, Guid, Guid, string>(() => indexer1, () => indexer2, () => indexer3, (i1, i2, i3, value) => setValue = value, 2);
@@ -158,7 +158,7 @@ namespace Rocks.Tests
 			var indexer3 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, () => indexer3, (_, __, ___) => returnValue, (i1, i2, i3, value) => setValue = value);
@@ -215,7 +215,7 @@ namespace Rocks.Tests
 			var indexer3 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty3Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, () => indexer3, (_, __, ___) => returnValue, (i1, i2, i3, value) => setValue = value, 2);

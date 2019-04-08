@@ -77,7 +77,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty2Indexer>();
 			rock.Handle<Guid, Guid, string>(() => indexer1, () => indexer2, (i1, i2, value) => setValue = value);
@@ -106,7 +106,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty2Indexer>();
 			rock.Handle<Guid, Guid, string>(() => indexer1, () => indexer2, (i1, i2, value) => setValue = value, 2);
@@ -136,7 +136,7 @@ namespace Rocks.Tests
 			var indexer1 = Guid.NewGuid();
 			var indexer2 = Guid.NewGuid();
 			var indexerSetValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty2Indexer>();
 			rock.Handle<Guid, Guid, string>(() => indexer1, () => indexer2, (i1, i2, value) => setValue = value, 2);
@@ -154,7 +154,7 @@ namespace Rocks.Tests
 			var indexer2 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty2Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, (_, __) => returnValue, (i1, i2, value) => setValue = value);
@@ -208,7 +208,7 @@ namespace Rocks.Tests
 			var indexer2 = Guid.NewGuid().ToString();
 			var indexerSetValue = Guid.NewGuid().ToString();
 			var returnValue = Guid.NewGuid().ToString();
-			string setValue = null;
+			string? setValue = null;
 
 			var rock = Rock.Create<IProperty2Indexer>();
 			rock.Handle(() => indexer1, () => indexer2, (_, __) => returnValue, (i1, i2, value) => setValue = value, 2);
