@@ -16,10 +16,10 @@ namespace Rocks.Extensions
 
 			foreach (var attributeData in @this)
 			{
-				if(!(parameter != null && (parameter.IsOut && parameter.ParameterType.IsByRef &&
-					typeof(OutAttribute).IsAssignableFrom(attributeData.AttributeType)) ||
-					(typeof(ParamArrayAttribute).IsAssignableFrom(attributeData.AttributeType)) ||
-					(typeof(OptionalAttribute).IsAssignableFrom(attributeData.AttributeType))))
+				if(!attributeData.IsNullableAttribute() && !(parameter != null && 
+					parameter.IsOut && parameter.ParameterType.IsByRef && typeof(OutAttribute).IsAssignableFrom(attributeData.AttributeType) ||
+					typeof(ParamArrayAttribute).IsAssignableFrom(attributeData.AttributeType) ||
+					typeof(OptionalAttribute).IsAssignableFrom(attributeData.AttributeType)))
 				{
 					var attributeType = attributeData.AttributeType;
 					var name = TypeDissector.Create(attributeType).SafeName;
