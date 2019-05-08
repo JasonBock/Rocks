@@ -3,8 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace Rocks
 {
-#pragma warning disable CS8625
-   [Serializable]
+#pragma warning disable CS8653
+	[Serializable]
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
 	{
@@ -22,5 +22,5 @@ namespace Rocks
 
 		public T ReturnValue { get; internal set; }
    }
-#pragma warning restore CS8625
+#pragma warning restore CS8653
 }

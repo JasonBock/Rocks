@@ -96,11 +96,9 @@ namespace Rocks.Construction
 				optimizationLevel: this.Optimization == OptimizationSetting.Release ?
 					OptimizationLevel.Release : OptimizationLevel.Debug,
 				allowUnsafe: this.AllowUnsafe);
-
-			var trees = new List<SyntaxTree>(this.Trees);// { SyntaxFactory.ParseCompilationUnit(ClassTemplates.GetNullableAttribute()).SyntaxTree };
 			var compilation = CSharpCompilation.Create(this.AssemblyName, 
 				options: options,
-				syntaxTrees: trees,
+				syntaxTrees: this.Trees,
 				references: this.GetReferences());
 			var diagnostics = compilation.GetDiagnostics();
 
@@ -133,6 +131,6 @@ namespace Rocks.Construction
 		internal OptimizationSetting Optimization { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }
 		internal ReadOnlyCollection<Assembly> ReferencedAssemblies { get; }
-		protected bool AllowUnsafe { get; private set; }
+		protected bool AllowUnsafe { get; }
 	}
 }
