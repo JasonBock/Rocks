@@ -108,7 +108,7 @@ namespace Rocks.Construction
 		private SyntaxTree MakeTree()
 		{
 			var @class = this.MakeCode();
-			var options = new CSharpParseOptions(languageVersion: LanguageVersion.Preview);
+			var options = new CSharpParseOptions(languageVersion: LanguageVersion.CSharp8);
 			SyntaxTree tree;
 
 			if (this.Options.CodeFile == CodeFileOptions.Create)
@@ -120,7 +120,9 @@ namespace Rocks.Construction
 				tree = SyntaxFactory.SyntaxTree(
 					SyntaxFactory.ParseSyntaxTree(@class, options: options)
 						.GetCompilationUnitRoot().NormalizeWhitespace(),
-					path: fileName, encoding: new UTF8Encoding(false, true));
+					path: fileName, 
+					encoding: new UTF8Encoding(false, true), 
+					options: options);
 				File.WriteAllText(fileName, tree.GetText().ToString());
 			}
 			else

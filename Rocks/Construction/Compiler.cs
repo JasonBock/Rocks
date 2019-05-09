@@ -92,11 +92,12 @@ namespace Rocks.Construction
 		internal Assembly Compile()
 		{
 			var options = new CSharpCompilationOptions(
-				OutputKind.DynamicallyLinkedLibrary,
+				outputKind: OutputKind.DynamicallyLinkedLibrary,
 				optimizationLevel: this.Optimization == OptimizationSetting.Release ?
 					OptimizationLevel.Release : OptimizationLevel.Debug,
-				allowUnsafe: this.AllowUnsafe);
-			var compilation = CSharpCompilation.Create(this.AssemblyName, 
+				allowUnsafe: this.AllowUnsafe,
+				nullableContextOptions: NullableContextOptions.Enable);
+			var compilation = CSharpCompilation.Create(this.AssemblyName,
 				options: options,
 				syntaxTrees: this.Trees,
 				references: this.GetReferences());
