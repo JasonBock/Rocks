@@ -64,7 +64,7 @@ $@"{visibility} {methodNameWithOverride}
 
 				if(methodHandler.Method != null)
 				{{
-					(methodHandler.Method as {delegateCast})({argumentNames});
+					(({delegateCast})methodHandler.Method)({argumentNames});
 				}}
 
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -101,7 +101,7 @@ $@"{visibility} {methodNameWithOverride}
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
 		{{
-			(methodHandler.Method as {delegateCast})({argumentNames});
+			(({delegateCast})methodHandler.Method)({argumentNames});
 		}}
 
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -132,8 +132,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 			if({expectationTemplateInstances})
 			{{
 				var result = methodHandler.Method != null ?
-					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -154,8 +154,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+			({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+			((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -179,8 +179,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 			if({expectationTemplateInstances})
 			{{
 				var result = methodHandler.Method != null ?
-					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -201,8 +201,8 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-			(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+			({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+			((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;

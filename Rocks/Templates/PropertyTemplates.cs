@@ -19,8 +19,8 @@ $@"{visibility} get
 			if({expectationTemplateInstances})
 			{{
 				var result = methodHandler.Method != null ?
-					(methodHandler.Method as {delegateCast})({argumentNames}) as {returnTypeName} :
-					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -39,8 +39,8 @@ $@"{visibility} get
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(methodHandler.Method as {delegateCast})({argumentNames}) as {returnType} :
-			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
+			({returnType})(({delegateCast})methodHandler.Method)({argumentNames}) :
+			((R.HandlerInformation<{returnType}>)methodHandler).ReturnValue;
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -60,8 +60,8 @@ $@"{visibility} get
 			if({expectationTemplateInstances})
 			{{
 				var result = methodHandler.Method != null ?
-					({returnTypeName})(methodHandler.Method as {delegateCast})({argumentNames}) :
-					(methodHandler as R.HandlerInformation<{returnTypeName}>).ReturnValue;
+					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
+					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -80,8 +80,8 @@ $@"{visibility} get
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			({returnType})(methodHandler.Method as {delegateCast})({argumentNames}) :
-			(methodHandler as R.HandlerInformation<{returnType}>).ReturnValue;
+			({returnType})(({delegateCast})methodHandler.Method)({argumentNames}) :
+			((R.HandlerInformation<{returnType}>)methodHandler).ReturnValue;
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -112,7 +112,7 @@ $@"{visibility} set
 
 				if(methodHandler.Method != null)
 				{{
-					(methodHandler.Method as {delegateCast})({argumentNames});
+					(({delegateCast})methodHandler.Method)({argumentNames});
 				}}
 	
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -142,7 +142,7 @@ $@"{visibility} set
 
 		if(methodHandler.Method != null)
 		{{
-			(methodHandler.Method as {delegateCast})({argumentNames});
+			(({delegateCast})methodHandler.Method)({argumentNames});
 		}}
 	
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}

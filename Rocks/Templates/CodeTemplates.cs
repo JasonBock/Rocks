@@ -11,7 +11,7 @@
 			isMemberFamily || isMemberFamilyOrAssembly ? CodeTemplates.Protected : CodeTemplates.Internal;
 		
 		internal static string GetExpectation(string parameterName, string parameterTypeName) => 
-			$"(methodHandler.Expectations[\"{parameterName}\"] as R.ArgumentExpectation<{parameterTypeName}>).IsValid({parameterName})";
+			$"((R.ArgumentExpectation<{parameterTypeName}>)methodHandler.Expectations[\"{parameterName}\"]).IsValid({parameterName})";
 
 		internal static string GetIsUnsafe(bool isUnsafe) => isUnsafe ? "unsafe" : string.Empty;
 	}
