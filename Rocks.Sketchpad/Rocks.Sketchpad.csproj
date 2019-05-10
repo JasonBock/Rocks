@@ -3,21 +3,21 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
-    <!--<NullableContextOptions>enable</NullableContextOptions>-->
+    <NullableContextOptions>enable</NullableContextOptions>
     <AssemblyName>Rocks.Sketchpad</AssemblyName>
     <RootNamespace>Rocks.Sketchpad</RootNamespace>
     <Version>3.2.0</Version>
     <Copyright>Copyright © 2019</Copyright>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <!--<TreatWarningsAsErrors>True</TreatWarningsAsErrors>-->
     <TreatSpecificWarningsAsErrors />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="3.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.1.0-beta3-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.1.0-beta3-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="3.1.0-beta3-final" />
   </ItemGroup>
 
   <ItemGroup>

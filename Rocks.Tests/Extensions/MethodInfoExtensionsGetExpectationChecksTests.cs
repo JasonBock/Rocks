@@ -10,7 +10,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecks()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<int>).IsValid(a) && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<string>).IsValid(c)";
+@"((R.ArgumentExpectation<int>)methodHandler.Expectations[""a""]).IsValid(a) && ((R.ArgumentExpectation<string>)methodHandler.Expectations[""c""]).IsValid(c)";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
 			var expectations = target.GetExpectationChecks();
 			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecksWithPointerTypes()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<int>).IsValid(a) && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<string>).IsValid(c)";
+@"((R.ArgumentExpectation<int>)methodHandler.Expectations[""a""]).IsValid(a) && ((R.ArgumentExpectation<string>)methodHandler.Expectations[""c""]).IsValid(c)";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithPointers));
 			var expectations = target.GetExpectationChecks();
 			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));
@@ -30,7 +30,7 @@ namespace Rocks.Tests.Extensions
 		public void GetExpectationChecksWithGenericTypes()
 		{
 			var expectedExpectation =
-@"(methodHandler.Expectations[""a""] as R.ArgumentExpectation<IEquatable<int>>).IsValid(a) && (methodHandler.Expectations[""c""] as R.ArgumentExpectation<string>).IsValid(c)";
+@"((R.ArgumentExpectation<IEquatable<int>>)methodHandler.Expectations[""a""]).IsValid(a) && ((R.ArgumentExpectation<string>)methodHandler.Expectations[""c""]).IsValid(c)";
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
 			var expectations = target.GetExpectationChecks();
 			Assert.That(expectations, Is.EqualTo(expectedExpectation), nameof(expectations));

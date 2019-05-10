@@ -101,7 +101,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var namespaces = new SortedSet<string>();
 			Assert.That(this.GetType().GetMethod(nameof(this.TargetWithOptionalArguments)).GetParameters(namespaces),
-				Is.EqualTo("int a = 0, string c = \"c\", string d = null"));
+				Is.EqualTo("int a = 0, string c = \"c\", string? d = null"));
 		}
 
 		public void TargetWithOutArrayAttribute([Out] string[] a) { }

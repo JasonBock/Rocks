@@ -51,7 +51,7 @@ namespace Rocks.Tests.Extensions
 		public void GetDelegateCastWithGenericsAndReturnValue()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, U, string, V, U>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, U, string, V, U?>"));
 		}
 
 		public void TargetWithNoArguments() { }

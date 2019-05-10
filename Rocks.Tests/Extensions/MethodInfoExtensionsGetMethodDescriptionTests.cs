@@ -86,7 +86,7 @@ namespace Rocks.Tests.Extensions
 				.GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.That(description, Is.EqualTo("U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) where U : class"), nameof(description));
+			Assert.That(description, Is.EqualTo("U? TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) where U : class"), nameof(description));
 			Assert.That(namespaces.Count, Is.EqualTo(2), nameof(namespaces.Count));
 			Assert.That(namespaces.Contains(typeof(object).Namespace), Is.True, nameof(namespaces.Contains));
 			Assert.That(namespaces.Contains(this.GetType().Namespace), Is.True, nameof(namespaces.Contains));
@@ -99,7 +99,7 @@ namespace Rocks.Tests.Extensions
 				.GetMethod(nameof(this.TargetWithGenericsAndReturnValue)).MakeGenericMethod(typeof(string), typeof(double));
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
-			Assert.That(description, Is.EqualTo("U TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) where U : class"), nameof(description));
+			Assert.That(description, Is.EqualTo("U? TargetWithGenericsAndReturnValue<U, V>(int a, U b, string c, V d) where U : class"), nameof(description));
 			Assert.That(namespaces.Count, Is.EqualTo(2), nameof(namespaces.Count));
 			Assert.That(namespaces.Contains(typeof(object).Namespace), Is.True, nameof(namespaces.Contains));
 			Assert.That(namespaces.Contains(this.GetType().Namespace), Is.True, nameof(namespaces.Contains));

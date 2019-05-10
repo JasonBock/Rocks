@@ -6,6 +6,8 @@ namespace Rocks.Tests
 {
 	public static class MakeTests
 	{
+		public static void Do<T>(out T value) => value = default!;
+
 		[Test]
 		public static void Make()
 		{

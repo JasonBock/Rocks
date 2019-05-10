@@ -42,7 +42,7 @@ namespace Rocks.Extensions
 							var nullableCtor = attribute.ConstructorArguments[0];
 
 							// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
-							if ((byte)nullableCtor.Value == 2)
+							if (nullableCtor.Value is byte value && value == 2)
 							{
 								return true;
 							}

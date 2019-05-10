@@ -97,23 +97,25 @@ namespace Rocks.Extensions
 			string.Join(Environment.NewLine,
 				from parameter in @this.GetParameters()
 				where parameter.IsOut
-				select $"{parameter.Name} = default({parameter.ParameterType.GetFullName()});");
+				select $"{parameter.Name} = default!;");
 
 		internal static string GetDelegateCast(this MethodInfo @this)
 		{
 			var parameters = @this.GetParameters();
 			var methodKind = @this.ReturnType != typeof(void) ? "Func" : "Action";
+			var returnTypeNullableReference = @this.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
 
 			if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{@this.ReturnType.GetFullName()}>" : $"{methodKind}";
+					$"{methodKind}<{@this.ReturnType.GetFullName()}{returnTypeNullableReference}>" : $"{methodKind}";
 			}
 			else
 			{
-				var genericArgumentTypes = string.Join(", ", parameters.Select(_ => $"{_.ParameterType.GetFullName()}"));
+				var genericArgumentTypes = string.Join(", ", 
+					parameters.Select(_ => $"{_.ParameterType.GetFullName()}{(_.IsNullableReference() ? "?" : string.Empty)}"));
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetFullName()}>" : $"{methodKind}<{genericArgumentTypes}>";
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetFullName()}{returnTypeNullableReference}>" : $"{methodKind}<{genericArgumentTypes}>";
 			}
 		}
 
@@ -121,7 +123,7 @@ namespace Rocks.Extensions
 			string.Join(" && ",
 				@this.GetParameters()
 				.Where(_ => !TypeDissector.Create(_.ParameterType).IsPointer)
-				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}")));
+				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}{(_.IsNullableReference() ? "?" : string.Empty)}")));
 
 		internal static string GetMethodDescription(this MethodInfo @this) =>
 			@this.GetMethodDescription(new SortedSet<string>(), false);
@@ -154,8 +156,9 @@ namespace Rocks.Extensions
 			@this.ReturnType.AddNamespaces(namespaces);
 
 			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
+			var isReturnTypeNullableReference = @this.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
-				"void" : $"{@this.ReturnType.GetFullName(namespaces)}";
+				"void" : $"{@this.ReturnType.GetFullName(namespaces)}{isReturnTypeNullableReference}";
 
 			var methodName = @this.Name;
 			var generics = string.Empty;

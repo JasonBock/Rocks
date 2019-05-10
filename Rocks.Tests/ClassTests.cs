@@ -9,11 +9,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void Make()
 		{
-			var rock = Rock.Create<ClassTestsTarget>(
-				new RockOptions(
-					codeFile: CodeFileOptions.Create, 
-					codeFileDirectory: TestContext.CurrentContext.TestDirectory,
-					level: OptimizationSetting.Debug));
+			var rock = Rock.Create<ClassTestsTarget>();
 			rock.Handle(_ => _.TargetMethod());
 
 			var chunk = rock.Make();

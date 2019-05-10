@@ -27,8 +27,8 @@ namespace Rocks.Tests.Templates
 			if(d)
 			{
 				var result = methodHandler.Method != null ?
-					(methodHandler.Method as e)(b) as c :
-					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+					(c)((e)methodHandler.Method)(b) :
+					((R.HandlerInformation<c>)methodHandler).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
@@ -51,8 +51,8 @@ namespace Rocks.Tests.Templates
 			if(d)
 			{
 				var result = methodHandler.Method != null ?
-					(methodHandler.Method as e)(b) as c :
-					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+					(c)((e)methodHandler.Method)(b) :
+					((R.HandlerInformation<c>)methodHandler).ReturnValue;
 				
 				methodHandler.IncrementCallCount();
 				return result;
@@ -72,8 +72,8 @@ namespace Rocks.Tests.Templates
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(methodHandler.Method as d)(b) as c :
-			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+			(c)((d)methodHandler.Method)(b) :
+			((R.HandlerInformation<c>)methodHandler).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
@@ -91,8 +91,8 @@ namespace Rocks.Tests.Templates
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(methodHandler.Method as d)(b) as c :
-			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+			(c)((d)methodHandler.Method)(b) :
+			((R.HandlerInformation<c>)methodHandler).ReturnValue;
 		
 		methodHandler.IncrementCallCount();
 		return result;
@@ -113,8 +113,8 @@ namespace Rocks.Tests.Templates
 			if(d)
 			{
 				var result = methodHandler.Method != null ?
-					(c)(methodHandler.Method as e)(b) :
-					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+					(c)((e)methodHandler.Method)(b) :
+					((R.HandlerInformation<c>)methodHandler).ReturnValue;
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
@@ -137,8 +137,8 @@ namespace Rocks.Tests.Templates
 			if(d)
 			{
 				var result = methodHandler.Method != null ?
-					(c)(methodHandler.Method as e)(b) :
-					(methodHandler as R.HandlerInformation<c>).ReturnValue;
+					(c)((e)methodHandler.Method)(b) :
+					((R.HandlerInformation<c>)methodHandler).ReturnValue;
 				
 				methodHandler.IncrementCallCount();
 				return result;
@@ -158,8 +158,8 @@ namespace Rocks.Tests.Templates
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(c)(methodHandler.Method as d)(b) :
-			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+			(c)((d)methodHandler.Method)(b) :
+			((R.HandlerInformation<c>)methodHandler).ReturnValue;
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
@@ -177,8 +177,8 @@ namespace Rocks.Tests.Templates
 	{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
-			(c)(methodHandler.Method as d)(b) :
-			(methodHandler as R.HandlerInformation<c>).ReturnValue;
+			(c)((d)methodHandler.Method)(b) :
+			((R.HandlerInformation<c>)methodHandler).ReturnValue;
 		
 		methodHandler.IncrementCallCount();
 		return result;
@@ -209,7 +209,7 @@ namespace Rocks.Tests.Templates
 
 				if(methodHandler.Method != null)
 				{
-					(methodHandler.Method as d)(b);
+					((d)methodHandler.Method)(b);
 				}
 	
 				methodHandler.RaiseEvents(this);
@@ -246,7 +246,7 @@ namespace Rocks.Tests.Templates
 
 				if(methodHandler.Method != null)
 				{
-					(methodHandler.Method as d)(b);
+					((d)methodHandler.Method)(b);
 				}
 	
 				
@@ -277,7 +277,7 @@ namespace Rocks.Tests.Templates
 
 		if(methodHandler.Method != null)
 		{
-			(methodHandler.Method as c)(b);
+			((c)methodHandler.Method)(b);
 		}
 	
 		methodHandler.RaiseEvents(this);
@@ -300,7 +300,7 @@ namespace Rocks.Tests.Templates
 
 		if(methodHandler.Method != null)
 		{
-			(methodHandler.Method as c)(b);
+			((c)methodHandler.Method)(b);
 		}
 	
 		
