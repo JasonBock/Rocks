@@ -26,32 +26,5 @@ namespace Rocks.Extensions
 				@this.ParameterType.IsByRef ? "ref " :
 				ignoreParams ? string.Empty :
 				@this.GetCustomAttributes(typeof(ParamArrayAttribute), false).Length > 0 ? "params " : string.Empty;
-
-		internal static bool IsNullableReference(this ParameterInfo @this)
-		{
-			var type = @this.ParameterType;
-
-			if (!type.IsValueType)
-			{
-				foreach (var attribute in @this.GetCustomAttributesData())
-				{
-					if (attribute.IsNullableAttribute())
-					{
-						if (attribute.ConstructorArguments.Count > 0)
-						{
-							var nullableCtor = attribute.ConstructorArguments[0];
-
-							// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
-							if (nullableCtor.Value is byte value && value == 2)
-							{
-								return true;
-							}
-						}
-					}
-				}
-			}
-
-			return false;
-		}
    }
 }

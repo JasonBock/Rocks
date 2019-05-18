@@ -31,17 +31,7 @@ namespace Rocks.Sketchpad
 			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
 			//Demo.Demonstrate();
 			//Program.HandleVirtualOnClass();
-			//Program.HandleFoo();
-			Program.InvestigateNullabilityOnObject();
-
-		private static void InvestigateNullabilityOnObject()
-		{
-			var method = typeof(Program).GetMethod(nameof(D));
-			var returnParameter = method.ReturnParameter;
-
-			Console.Out.WriteLine(returnParameter.IsNullableReference());
-			Console.Out.WriteLine(returnParameter.ParameterType.IsArray);
-		}
+			Program.HandleFoo();
 
 		private static void RunBenchmark() =>
 			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
