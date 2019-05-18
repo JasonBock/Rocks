@@ -14,10 +14,16 @@ namespace Rocks.Extensions
 		private int index;
 
 		internal NullableContext(ParameterInfo parameter)
-			: this(NullableContext.GetNullableFlags(parameter), 0) { }
+		{
+			if (parameter == null) throw new ArgumentNullException(nameof(parameter));
+			(this.flags, this.index) = (NullableContext.GetNullableFlags(parameter), 0);
+		}
 
 		internal NullableContext(byte[] flags)
-			: this(flags, 0) { }
+		{
+			if (flags == null) throw new ArgumentNullException(nameof(flags));
+			(this.flags, this.index) = (flags, 0);
+		}
 
 		private NullableContext(byte[] flags, int index) =>
 			(this.flags, this.index) = (flags, index);
@@ -54,5 +60,7 @@ namespace Rocks.Extensions
 			this.index = this.flags.Length <= 1 ? 0 : this.index + 1;
 			return state;
 		}
+
+		public int Count => this.flags.Length;
 	}
 }
