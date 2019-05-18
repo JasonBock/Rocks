@@ -67,8 +67,7 @@ namespace Rocks.Extensions
 
 			if(dissector.IsArray)
 			{
-				var (arrayFlag, arrayContext) = context.GetNextState();
-				context = arrayContext;
+				var arrayFlag = context.GetNextState();
 				array = $"[]{(arrayFlag == NullableContext.Nullable ? "?" : string.Empty)}";
 			}
 			else
@@ -76,9 +75,9 @@ namespace Rocks.Extensions
 				array = string.Empty;
 			}
 
-			var (typeFlag, typeContext) = context.GetNextState();
+			var typeFlag = context.GetNextState();
 		
-			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, typeContext).arguments}{(typeFlag == NullableContext.Nullable ? "?" : string.Empty)}{pointer}{array}";
+			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, context).arguments}{(typeFlag == NullableContext.Nullable ? "?" : string.Empty)}{pointer}{array}";
 		}
 
 		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator) =>

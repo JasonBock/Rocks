@@ -11,7 +11,7 @@ namespace Rocks.Extensions
 		internal const byte Nullable = 2;
 
 		private readonly byte[] flags;
-		private readonly int index;
+		private int index;
 
 		internal NullableContext(ParameterInfo parameter)
 			: this(NullableContext.GetNullableFlags(parameter), 0) { }
@@ -34,15 +34,6 @@ namespace Rocks.Extensions
 						{
 							var nullableCtor = attribute.ConstructorArguments[0];
 
-							//if(nullableCtor.ArgumentType.IsArray)
-							//{
-							//	return ((IList<byte>)nullableCtor.Value).ToArray();
-							//}
-							//else
-							//{
-							//	return new byte[] { (byte)nullableCtor.Value };
-							//}
-
 							// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
 							return nullableCtor.ArgumentType.IsArray switch
 							{
@@ -57,8 +48,11 @@ namespace Rocks.Extensions
 			return Array.Empty<byte>();
 		}
 
-		internal (byte, NullableContext) GetNextState() =>
-			(this.flags.Length == 0 ? NullableContext.NotNullable : this.flags[this.index],
-				new NullableContext(this.flags, this.flags.Length <= 1 ? 0 : this.index + 1));
+		internal byte GetNextState()
+		{
+			var state = this.flags.Length == 0 ? NullableContext.NotNullable : this.flags[this.index];
+			this.index = this.flags.Length <= 1 ? 0 : this.index + 1;
+			return state;
+		}
 	}
 }

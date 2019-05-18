@@ -13,7 +13,7 @@ namespace Rocks.Templates
 				if (returnType.IsGenericType && typeof(Task<>).IsAssignableFrom(returnType.GetGenericTypeDefinition()))
 				{
 					var taskReturnType = returnType.GetGenericArguments()[0].GetFullName();
-					return $"STT.Task.FromResult<{taskReturnType}>(default({taskReturnType}))";
+					return $"STT.Task.FromResult<{taskReturnType}>(default!)";
 				}
 				else
 				{
@@ -22,7 +22,7 @@ namespace Rocks.Templates
 			}
 			else
 			{
-				return $"default({returnType.GetFullName()})";
+				return $"default!";
 			}
 		}
 
