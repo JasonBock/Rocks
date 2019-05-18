@@ -98,8 +98,7 @@ namespace Rocks.Construction.Generators
 			var expectationChecks = baseMethod.GetExpectationChecks();
 			var expectationExceptionMessage = baseMethod.GetExpectationExceptionMessage();
 			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
-			var returnTypeIsNullableReference = baseMethod.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
-			var returnTypeName = $"{baseMethod.ReturnType.GetFullName()}{returnTypeIsNullableReference}";
+			var returnTypeName = $"{baseMethod.ReturnType.GetFullName(baseMethod.ReturnParameter)}";
 
 			if (baseMethod.ReturnType != typeof(void))
 			{
@@ -132,8 +131,7 @@ namespace Rocks.Construction.Generators
 			SortedSet<string> namespaces, bool isMake, bool hasEvents)
 		{
 			var requiresNew = requiresIsNewImplementation == RequiresIsNewImplementation.Yes ? "new" : string.Empty;
-			var returnTypeIsNullableReference = baseMethod.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
-			var returnTypeName = $"{baseMethod.ReturnType.GetFullName(namespaces)}{returnTypeIsNullableReference}";
+			var returnTypeName = $"{baseMethod.ReturnType.GetFullName(namespaces, baseMethod.ReturnParameter)}";
 
 			if (baseMethod.ReturnType != typeof(void))
 			{

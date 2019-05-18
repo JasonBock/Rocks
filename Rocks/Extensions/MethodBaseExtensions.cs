@@ -72,7 +72,6 @@ namespace Rocks.Extensions
 						(typeof(bool).IsAssignableFrom(type) ? $" = {((bool)parameter.RawDefaultValue).GetValue()}" : $" = {parameter.RawDefaultValue}"))) : string.Empty
 				let _ = type.AddNamespaces(namespaces)
 				let modifier = parameter.GetModifier()
-				let nullableReference = parameter.IsNullableReference() ? "?" : string.Empty
-				select $"{attributes}{modifier}{type.GetFullName(namespaces)}{nullableReference} {parameter.Name}{optionalValue}");
+				select $"{attributes}{modifier}{type.GetFullName(namespaces, parameter)} {parameter.Name}{optionalValue}");
 	}
 }

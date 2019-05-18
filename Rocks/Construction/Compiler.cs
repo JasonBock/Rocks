@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Rocks.Exceptions;
 using Rocks.Extensions;
 using Rocks.Options;
-using Rocks.Templates;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +19,7 @@ namespace Rocks.Construction
 		protected static Lazy<HashSet<MetadataReference>> assemblyReferences =
 			new Lazy<HashSet<MetadataReference>>(() =>
 			{
-				void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
+				static void LoadDependencies(HashSet<Assembly> loadedAssemblies, Assembly fromAssembly)
 				{
 					foreach (var reference in fromAssembly.GetReferencedAssemblies())
 					{

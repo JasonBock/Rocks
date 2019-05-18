@@ -18,14 +18,12 @@ namespace Rocks.Construction.InMemory
 
 		protected override Assembly Emit(CSharpCompilation compilation)
 		{
-			using (MemoryStream assemblyStream = new MemoryStream(),
-				pdbStream = new MemoryStream())
-			{
-				var results = compilation.Emit(assemblyStream,
-					pdbStream: pdbStream);
+			using MemoryStream assemblyStream = new MemoryStream(), pdbStream = new MemoryStream();
+			var results = compilation.Emit(assemblyStream,
+				pdbStream: pdbStream);
 
-				return Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
-			}
+
+			return Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
 		}
    }
 }

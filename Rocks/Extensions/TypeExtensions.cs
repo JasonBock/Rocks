@@ -47,16 +47,38 @@ namespace Rocks.Extensions
 		}
 
 		internal static string GetFullName(this Type @this) =>
-			@this.GetFullName(new SortedSet<string>());
+			@this.GetFullName(new SortedSet<string>(), new NullableContext(Array.Empty<byte>()));
 
-		internal static string GetFullName(this Type @this, SortedSet<string> namespaces)
+		internal static string GetFullName(this Type @this, SortedSet<string> namespaces) =>
+			@this.GetFullName(namespaces, new NullableContext(Array.Empty<byte>()));
+
+		internal static string GetFullName(this Type @this, ParameterInfo parameter) =>
+			@this.GetFullName(new SortedSet<string>(), new NullableContext(parameter));
+
+		internal static string GetFullName(this Type @this, SortedSet<string> namespaces, ParameterInfo parameter) =>
+			@this.GetFullName(namespaces, new NullableContext(parameter));
+
+		private static string GetFullName(this Type @this, SortedSet<string> namespaces, NullableContext context)
 		{
 			var dissector = TypeDissector.Create(@this);
-
 			var pointer = dissector.IsPointer ? "*" : string.Empty;
-			var array = dissector.IsArray ? "[]" : string.Empty;
 
-			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces).arguments}{pointer}{array}";
+			string array;
+
+			if(dissector.IsArray)
+			{
+				var (arrayFlag, arrayContext) = context.GetNextState();
+				context = arrayContext;
+				array = $"[]{(arrayFlag == NullableContext.Nullable ? "?" : string.Empty)}";
+			}
+			else
+			{
+				array = string.Empty;
+			}
+
+			var (typeFlag, typeContext) = context.GetNextState();
+		
+			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, typeContext).arguments}{(typeFlag == NullableContext.Nullable ? "?" : string.Empty)}{pointer}{array}";
 		}
 
 		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator) =>
@@ -314,7 +336,10 @@ namespace Rocks.Extensions
 			 where method.ContainsDelegateConditions()
 			 select method).Any();
 
-		internal static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces)
+		internal static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces) =>
+			@this.GetGenericArguments(namespaces, new NullableContext(Array.Empty<byte>()));
+
+		private static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces, NullableContext context)
 		{
 			var arguments = string.Empty;
 			var constraints = string.Empty;
@@ -326,7 +351,7 @@ namespace Rocks.Extensions
 
 				foreach (var argument in @this.GetGenericArguments())
 				{
-					genericArguments.Add($"{argument.GetFullName(namespaces)}");
+					genericArguments.Add($"{argument.GetFullName(namespaces, context)}");
 
 					if (argument.IsGenericParameter && argument.GenericParameterAttributes != 0)
 					{

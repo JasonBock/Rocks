@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
+using Rocks.Extensions;
 using Rocks.Options;
 using System;
 using System.Text;
@@ -12,6 +13,14 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
+		public static string[] A() => Array.Empty<string>();
+
+		public static string?[] B() => Array.Empty<string>();
+
+		public static string[]? C() => Array.Empty<string>();
+
+		public static string?[]? D() => Array.Empty<string>();
+
 		static void Main() =>
 			//BenchmarkRunner.Run<GenericArgumentsTests>();
 			//await EvaluateExpressionAsync("Do()");
@@ -27,9 +36,11 @@ namespace Rocks.Sketchpad
 
 		private static void InvestigateNullabilityOnObject()
 		{
-			var type = typeof(object);
-			var method = type.GetMethod(nameof(object.ToString));
-			var returnType = method.ReturnType;
+			var method = typeof(Program).GetMethod(nameof(D));
+			var returnParameter = method.ReturnParameter;
+
+			Console.Out.WriteLine(returnParameter.IsNullableReference());
+			Console.Out.WriteLine(returnParameter.ParameterType.IsArray);
 		}
 
 		private static void RunBenchmark() =>

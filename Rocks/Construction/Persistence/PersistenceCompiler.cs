@@ -31,7 +31,7 @@ namespace Rocks.Construction.Persistence
 			using (FileStream assemblyStream = this.GetAssemblyStream(),
 				pdbStream = this.GetPdbStream())
 			{
-				compilation.Emit(assemblyStream,
+				var results = compilation.Emit(assemblyStream,
 					pdbStream: pdbStream);
 				assemblyFileName = assemblyStream.Name;
 			}

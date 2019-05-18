@@ -100,7 +100,7 @@ namespace Rocks.Tests
 		[Test]
 		public void GetSafeName() =>
 			Assert.That(TypeDissector.Create(typeof(SubnestedClass.IAmSubnested)).SafeName,
-		Is.EqualTo("TypeDissectorTests.SubnestedClass.IAmSubnested"));
+				Is.EqualTo("TypeDissectorTests.SubnestedClass.IAmSubnested"));
 
 		[Test]
 		public void GetSafeNameWithOpenGenerics() =>

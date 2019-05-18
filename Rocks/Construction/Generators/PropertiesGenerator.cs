@@ -51,6 +51,9 @@ namespace Rocks.Construction.Generators
 			PropertyInfo baseProperty, ParameterInfo[] indexers, string @override)
 		{
 			var propertyImplementations = new List<string>();
+			var parameter = property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet ?
+				baseProperty.GetGetMethod().ReturnParameter : 
+				baseProperty.GetSetMethod().GetParameters()[0];
 
 			if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
 			{
@@ -76,14 +79,14 @@ namespace Rocks.Construction.Generators
 
 				// Indexer
 				generatedProperties.Add(PropertyTemplates.GetPropertyIndexer(
-					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces)}", parameters,
+					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces, parameter)}", parameters,
 					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 			}
 			else
 			{
 				// Normal
 				generatedProperties.Add(PropertyTemplates.GetProperty(
-					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces)}", baseProperty.Name,
+					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces, parameter)}", baseProperty.Name,
 					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
 			}
 
@@ -154,7 +157,7 @@ namespace Rocks.Construction.Generators
 		{
 			var getMethod = baseProperty.GetMethod;
 			var getVisibility = getMethod.IsPublic ? string.Empty : CodeTemplates.GetVisibility(getMethod.IsFamily, getMethod.IsFamilyOrAssembly);
-			var returnType = getMethod.ReturnType.GetFullName(namespaces);
+			var returnType = $"{getMethod.ReturnType.GetFullName(namespaces, getMethod.ReturnParameter)}";
 
 			if (isMake)
 			{

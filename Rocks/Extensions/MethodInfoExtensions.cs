@@ -103,19 +103,18 @@ namespace Rocks.Extensions
 		{
 			var parameters = @this.GetParameters();
 			var methodKind = @this.ReturnType != typeof(void) ? "Func" : "Action";
-			var returnTypeNullableReference = @this.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
 
 			if (parameters.Length == 0)
 			{
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{@this.ReturnType.GetFullName()}{returnTypeNullableReference}>" : $"{methodKind}";
+					$"{methodKind}<{@this.ReturnType.GetFullName(@this.ReturnParameter)}>" : $"{methodKind}";
 			}
 			else
 			{
 				var genericArgumentTypes = string.Join(", ", 
-					parameters.Select(_ => $"{_.ParameterType.GetFullName()}{(_.IsNullableReference() ? "?" : string.Empty)}"));
+					parameters.Select(_ => $"{_.ParameterType.GetFullName(_)}"));
 				return @this.ReturnType != typeof(void) ?
-					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetFullName()}{returnTypeNullableReference}>" : $"{methodKind}<{genericArgumentTypes}>";
+					$"{methodKind}<{genericArgumentTypes}, {@this.ReturnType.GetFullName(@this.ReturnParameter)}>" : $"{methodKind}<{genericArgumentTypes}>";
 			}
 		}
 
@@ -123,7 +122,7 @@ namespace Rocks.Extensions
 			string.Join(" && ",
 				@this.GetParameters()
 				.Where(_ => !TypeDissector.Create(_.ParameterType).IsPointer)
-				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName()}{(_.IsNullableReference() ? "?" : string.Empty)}")));
+				.Select(_ => CodeTemplates.GetExpectation(_.Name, $"{_.ParameterType.GetFullName(_)}")));
 
 		internal static string GetMethodDescription(this MethodInfo @this) =>
 			@this.GetMethodDescription(new SortedSet<string>(), false);
@@ -156,9 +155,8 @@ namespace Rocks.Extensions
 			@this.ReturnType.AddNamespaces(namespaces);
 
 			var isOverride = includeOverride ? (@this.DeclaringType.IsClass ? "override " : string.Empty) : string.Empty;
-			var isReturnTypeNullableReference = @this.ReturnParameter.IsNullableReference() ? "?" : string.Empty;
 			var returnType = @this.ReturnType == typeof(void) ?
-				"void" : $"{@this.ReturnType.GetFullName(namespaces)}{isReturnTypeNullableReference}";
+				"void" : $"{@this.ReturnType.GetFullName(namespaces, @this.ReturnParameter)}";
 
 			var methodName = @this.Name;
 			var generics = string.Empty;

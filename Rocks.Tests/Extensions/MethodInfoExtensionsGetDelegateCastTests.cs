@@ -30,7 +30,7 @@ namespace Rocks.Tests.Extensions
 		public void GetDelegateCastWithComplexGenericArguments()
 		{
 			var target = this.GetType().GetMethod(nameof(this.TargetWithComplexGeneric));
-			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<int>, IGeneric<int>>"));
+			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<int>, IGeneric<int>?>"));
 		}
 
 		[Test]
