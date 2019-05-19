@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace Rocks.Tests.Extensions
@@ -75,6 +76,23 @@ namespace Rocks.Tests.Extensions
 			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 0");
 		}
 
+		[Test]
+		public static void GetContextForValueTypeWithGenerics()
+		{
+			var parameter = typeof(NullableContextTests).GetMethod(nameof(NullableContextTests.ValueTypeWithGenerics))
+				.GetParameters()[0];
+
+			var context = new NullableContext(parameter);
+
+			Assert.That(context.Count, Is.EqualTo(4), nameof(context.Count));
+			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 0");
+			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 1");
+			Assert.That(context.GetNextState(), Is.EqualTo(2), $"{nameof(context.GetNextState)} - 2");
+			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 3");
+		}
+
+		public static void ComplexType(Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>> value) { }
+
 		public static void ReferenceType(string value) { }
 
 		public static void ReferenceTypeArray(string[] values) { }
@@ -83,5 +101,6 @@ namespace Rocks.Tests.Extensions
 
 		public static void ValueTypeArray(int[] values) { }
 
+		public static void ValueTypeWithGenerics(KeyValuePair<Guid, byte[]?> value) { }
 	}
 }

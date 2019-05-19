@@ -25,28 +25,22 @@ namespace Rocks.Extensions
 			(this.flags, this.index) = (flags, 0);
 		}
 
-		private NullableContext(byte[] flags, int index) =>
-			(this.flags, this.index) = (flags, index);
-
 		private static byte[] GetNullableFlags(ParameterInfo parameter)
 		{
-			if (!parameter.ParameterType.IsValueType)
+			foreach (var attribute in parameter.GetCustomAttributesData())
 			{
-				foreach (var attribute in parameter.GetCustomAttributesData())
+				if (attribute.IsNullableAttribute())
 				{
-					if (attribute.IsNullableAttribute())
+					if (attribute.ConstructorArguments.Count > 0)
 					{
-						if (attribute.ConstructorArguments.Count > 0)
-						{
-							var nullableCtor = attribute.ConstructorArguments[0];
+						var nullableCtor = attribute.ConstructorArguments[0];
 
-							// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
-							return nullableCtor.ArgumentType.IsArray switch
-							{
-								true => ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray(),
-								_ => new byte[] { (byte)nullableCtor.Value }
-							};
-						}
+						// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
+						return nullableCtor.ArgumentType.IsArray switch
+						{
+							true => ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray(),
+							_ => new byte[] { (byte)nullableCtor.Value }
+						};
 					}
 				}
 			}

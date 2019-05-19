@@ -22,7 +22,6 @@ namespace Rocks.Construction.InMemory
 			var results = compilation.Emit(assemblyStream,
 				pdbStream: pdbStream);
 
-
 			return Assembly.Load(assemblyStream.ToArray(), pdbStream.ToArray());
 		}
    }
