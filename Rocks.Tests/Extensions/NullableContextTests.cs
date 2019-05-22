@@ -9,23 +9,20 @@ namespace Rocks.Tests.Extensions
 	public static class NullableContextTests
 	{
 		[Test]
-		public static void GetContextForFlagsThatIsNull() => 
-			Assert.That(() => new NullableContext((null as byte[])!), Throws.InstanceOf<ArgumentNullException>());
-
-		[Test]
 		public static void GetContextForParameterInfoThatIsNull() =>
 			Assert.That(() => new NullableContext((null as ParameterInfo)!), Throws.InstanceOf<ArgumentNullException>());
 
 		[Test]
-		public static void GetContextForFlags()
+		public static void GetNextStateTooManyTimes()
 		{
-			var context = new NullableContext(new byte[] { 1, 2, 2, 1 });
+			var parameter = typeof(NullableContextTests).GetMethod(nameof(NullableContextTests.ValueTypeArray))
+				.GetParameters()[0];
 
-			Assert.That(context.Count, Is.EqualTo(4), nameof(context.Count));
-			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 0");
-			Assert.That(context.GetNextState(), Is.EqualTo(2), $"{nameof(context.GetNextState)} - 1");
-			Assert.That(context.GetNextState(), Is.EqualTo(2), $"{nameof(context.GetNextState)} - 2");
-			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 3");
+			var context = new NullableContext(parameter);
+			context.GetNextState();
+			context.GetNextState();
+
+			Assert.That(() => context.GetNextState(), Throws.InstanceOf<IndexOutOfRangeException>());
 		}
 
 		[Test]

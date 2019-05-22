@@ -1,9 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Rocks.Exceptions;
 using Rocks.Options;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Rocks.Construction.Persistence
@@ -33,6 +35,15 @@ namespace Rocks.Construction.Persistence
 			{
 				var results = compilation.Emit(assemblyStream,
 					pdbStream: pdbStream);
+				var diagnostics = results.Diagnostics;
+
+				if (this.AllowWarnings == AllowWarnings.No &&
+					diagnostics.Length > 0 &&
+					diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
+				{
+					throw new CompilationException(diagnostics);
+				}
+
 				assemblyFileName = assemblyStream.Name;
 			}
 

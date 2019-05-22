@@ -47,10 +47,10 @@ namespace Rocks.Extensions
 		}
 
 		internal static string GetFullName(this Type @this) =>
-			@this.GetFullName(new SortedSet<string>(), new NullableContext(Array.Empty<byte>()));
+			@this.GetFullName(new SortedSet<string>(), new NullableContext());
 
 		internal static string GetFullName(this Type @this, SortedSet<string> namespaces) =>
-			@this.GetFullName(namespaces, new NullableContext(Array.Empty<byte>()));
+			@this.GetFullName(namespaces, new NullableContext());
 
 		internal static string GetFullName(this Type @this, ParameterInfo parameter) =>
 			@this.GetFullName(new SortedSet<string>(), new NullableContext(parameter));
@@ -336,7 +336,7 @@ namespace Rocks.Extensions
 			 select method).Any();
 
 		internal static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces) =>
-			@this.GetGenericArguments(namespaces, new NullableContext(Array.Empty<byte>()));
+			@this.GetGenericArguments(namespaces, new NullableContext());
 
 		private static (string arguments, string constraints) GetGenericArguments(this Type @this, SortedSet<string> namespaces, NullableContext context)
 		{

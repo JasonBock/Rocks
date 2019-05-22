@@ -7,6 +7,7 @@ namespace Rocks.Extensions
 {
 	internal sealed class NullableContext
 	{
+		internal const byte NeverNullable = 0;
 		internal const byte NotNullable = 1;
 		internal const byte Nullable = 2;
 
@@ -19,11 +20,8 @@ namespace Rocks.Extensions
 			(this.flags, this.index) = (NullableContext.GetNullableFlags(parameter), 0);
 		}
 
-		internal NullableContext(byte[] flags)
-		{
-			if (flags == null) throw new ArgumentNullException(nameof(flags));
-			(this.flags, this.index) = (flags, 0);
-		}
+		internal NullableContext() => 
+			(this.flags, this.index) = (Array.Empty<byte>(), 0);
 
 		private static byte[] GetNullableFlags(ParameterInfo parameter)
 		{
@@ -35,7 +33,8 @@ namespace Rocks.Extensions
 					{
 						var nullableCtor = attribute.ConstructorArguments[0];
 
-						// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
+						// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/ and
+						// https://blog.rsuter.com/the-output-of-nullable-reference-types-and-how-to-reflect-it/
 						return nullableCtor.ArgumentType.IsArray switch
 						{
 							true => ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray(),
