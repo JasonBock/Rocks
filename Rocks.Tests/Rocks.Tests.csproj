@@ -9,7 +9,7 @@
     <DebugType>Full</DebugType>-->
 
     <LangVersion>8.0</LangVersion>
-		<NullableContextOptions>enable</NullableContextOptions>
+    <Nullable>enable</Nullable>
 		<AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
     <Version>3.2.0</Version>
@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
-    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
 
