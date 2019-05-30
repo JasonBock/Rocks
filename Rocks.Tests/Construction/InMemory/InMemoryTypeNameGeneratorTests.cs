@@ -30,7 +30,7 @@ namespace Rocks.Tests.Construction.InMemory
 			Assert.That(name.EndsWith("<T>"), Is.True);
 
 			var restOfName = name.Substring(4);
-			restOfName = restOfName.Substring(0, restOfName.Length - 3);
+			restOfName = restOfName[0..^3];
 
 			Assert.That(() => int.Parse(restOfName), Is.EqualTo(typeof(IAmGeneric<>).MetadataToken));
 		}

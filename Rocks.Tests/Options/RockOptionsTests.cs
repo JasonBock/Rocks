@@ -72,7 +72,6 @@ namespace Rocks.Tests.Options
 			Assert.That(options.Caching, Is.EqualTo(caching), nameof(options.Caching));
 			Assert.That(options.AllowWarnings, Is.EqualTo(allowWarnings), nameof(options.AllowWarnings));
 			Assert.That(options.CodeFileDirectory, Is.EqualTo(codeFileDirectory), nameof(options.CodeFileDirectory));
-			Assert.That(options.GetHashCode(), Is.EqualTo(hashCode ^ options.CodeFileDirectory.GetHashCode()), nameof(options.GetHashCode));
 		}
 	}
 }

@@ -22,10 +22,8 @@ namespace Rocks.Tests
 				Binder = Rock.Binder
 			};
 
-			using (var stream = new MemoryStream())
-			{
-				Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
-			}
+			using var stream = new MemoryStream();
+			Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
 		}
 
 		[Test]
@@ -62,10 +60,8 @@ namespace Rocks.Tests
 
 			var formatter = new BinaryFormatter();
 
-			using (var stream = new MemoryStream())
-			{
-				Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
-			}
+			using var stream = new MemoryStream();
+			Assert.That(() => formatter.Serialize(stream, chunk), Throws.TypeOf<SerializationException>());
 		}
 	}
 

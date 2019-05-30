@@ -9,11 +9,8 @@ namespace Rocks
 		private readonly Type type;
 		private readonly RockOptions options;
 
-		internal CacheKey(Type type, RockOptions options)
-		{
-			this.type = type;
-			this.options = options;
-		}
+		internal CacheKey(Type type, RockOptions options) =>
+			(this.type, this.options) = (type, options);
 
 		/// <summary>
 		/// Determines whether two specified <see cref="CacheKey" /> objects have the same value. 
@@ -74,6 +71,6 @@ namespace Rocks
 		/// is the same as this instance; otherwise, <b>false</b>.</returns>
 		public override bool Equals(object obj) => this.Equals(obj as CacheKey);
 
-		public override int GetHashCode() => this.type.GetHashCode() ^ this.options.GetHashCode();
+		public override int GetHashCode() => HashCode.Combine(this.type.GetHashCode(), this.options.GetHashCode());
 	}
 }
