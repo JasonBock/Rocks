@@ -21,12 +21,12 @@ namespace Rocks.Task
 			return true;
 		}
 
-		public Assembly Result { get; private set; }
+		public Assembly? Result { get; private set; }
 
 		[Required]
-		public string AssemblyLocation { get; set; }
+		public string? AssemblyLocation { get; set; }
 
 		[Required]
-		public string CodeFileDirectory { get; set; }
+		public string? CodeFileDirectory { get; set; }
 	}
 }
