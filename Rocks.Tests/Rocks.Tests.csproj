@@ -1,26 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <!-- For .NET Core testing, I just need the TargetFramework element -->
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    
-    <!-- For .NET Framework testing, I need the TargetFramework and DebugType element -->
-    <!--<TargetFramework>net471</TargetFramework>
-    <DebugType>Full</DebugType>-->
-
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
 		<AssemblyName>Rocks.Tests</AssemblyName>
     <RootNamespace>Rocks.Tests</RootNamespace>
-    <Version>3.2.0</Version>
+    <Version>4.0.0</Version>
     <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <TreatSpecificWarningsAsErrors />
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>

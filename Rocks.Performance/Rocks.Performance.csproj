@@ -6,10 +6,9 @@
     <LangVersion>latest</LangVersion>
     <AssemblyName>Rocks.Performance</AssemblyName>
     <RootNamespace>Rocks.Performance</RootNamespace>
-    <Version>3.2.0</Version>
+    <Version>4.0.0</Version>
     <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
