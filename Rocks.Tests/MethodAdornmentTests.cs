@@ -9,7 +9,6 @@ namespace Rocks.Tests
 		public static void Create()
 		{
 			var info = new HandlerInformation();
-			var adornments = new MethodAdornments(info);
 
 			var events = info.GetRaiseEvents();
 			Assert.That(events.Count, Is.EqualTo(0), nameof(events.Count));

@@ -12,7 +12,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
 				CachingOptions.UseCache, AllowWarnings.No,
-				Directory.GetCurrentDirectory(), 4);
+				Directory.GetCurrentDirectory());
 
 		[Test]
 		public static void CreateWithCodeFileDirectory() =>
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
 				CachingOptions.UseCache, AllowWarnings.No,
-				"directory", 4);
+				"directory");
 
 		[Test]
 		public static void CreateWithOptimizationLevelDebug() =>
@@ -28,7 +28,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Debug, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
 				CachingOptions.UseCache, AllowWarnings.No,
-				Directory.GetCurrentDirectory(), 0);
+				Directory.GetCurrentDirectory());
 
 		[Test]
 		public static void CreateWithCodeFileOptionsCreate() =>
@@ -36,7 +36,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.Create,
 				SerializationOptions.NotSupported,
 				CachingOptions.UseCache, AllowWarnings.No,
-				Directory.GetCurrentDirectory(), 5);
+				Directory.GetCurrentDirectory());
 
 		[Test]
 		public static void CreateWithSerializationOptionsSupported() =>
@@ -44,7 +44,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.Supported,
 				CachingOptions.UseCache, AllowWarnings.No,
-				Directory.GetCurrentDirectory(), 6);
+				Directory.GetCurrentDirectory());
 
 		[Test]
 		public static void CreateWithCachingOptionsGenerateNewVersion() =>
@@ -52,7 +52,7 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
 				CachingOptions.GenerateNewVersion, AllowWarnings.No,
-				Directory.GetCurrentDirectory(), 12);
+				Directory.GetCurrentDirectory());
 
 		[Test]
 		public static void CreateWithAllowWarningsYes() =>
@@ -60,11 +60,11 @@ namespace Rocks.Tests.Options
 				OptimizationSetting.Release, CodeFileOptions.None,
 				SerializationOptions.NotSupported,
 				CachingOptions.UseCache, AllowWarnings.Yes,
-				Directory.GetCurrentDirectory(), 20);
+				Directory.GetCurrentDirectory());
 
 		private static void AssertOptions(RockOptions options,
 			OptimizationSetting level, CodeFileOptions codeFile, SerializationOptions serialization,
-			CachingOptions caching, AllowWarnings allowWarnings, string codeFileDirectory, int hashCode)
+			CachingOptions caching, AllowWarnings allowWarnings, string codeFileDirectory)
 		{
 			Assert.That(options.Optimization, Is.EqualTo(level), nameof(options.Optimization));
 			Assert.That(options.CodeFile, Is.EqualTo(codeFile), nameof(options.CodeFile));

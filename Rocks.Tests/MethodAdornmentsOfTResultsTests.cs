@@ -11,7 +11,6 @@ namespace Rocks.Tests
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
 			var handler = new HandlerInformation<string>(expectations);
-			var returnValue = new MethodAdornments<string>(handler);
 			Assert.That(handler.ReturnValue, Is.EqualTo(default(string)), nameof(handler.ReturnValue));
 		}
 

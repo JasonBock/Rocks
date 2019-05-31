@@ -15,7 +15,7 @@ namespace Rocks.Tests
 
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
-			var value = chunk.GetterAndSetter;
+			_ = chunk.GetterAndSetter;
 
 			rock.Verify();
 		}
@@ -134,8 +134,8 @@ namespace Rocks.Tests
 			var chunk = rock.Make();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
 			chunk.GetterAndSetter = Guid.NewGuid().ToString();
-			var value = chunk.GetterAndSetter;
-			value = chunk.GetterAndSetter;
+			_ = chunk.GetterAndSetter;
+			_ = chunk.GetterAndSetter;
 
 			rock.Verify();
 		}
@@ -1112,7 +1112,7 @@ namespace Rocks.Tests
 			var rock = Rock.Create<IProperties<Guid>>();
 			rock.Handle(nameof(IProperties<Guid>.Target));
 
-			var chunk = rock.Make();
+			Assert.That(rock.Make(), Is.Not.Null);
 		}
 	}
 

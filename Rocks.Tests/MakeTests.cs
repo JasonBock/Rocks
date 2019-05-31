@@ -33,12 +33,6 @@ namespace Rocks.Tests
 			var funcResult = chunk.TargetFuncAsync();
 			Assert.That(funcResult.IsCompleted, Is.True);
 			Assert.That(funcResult.Result, Is.EqualTo(default(int)));
-
-			chunk.TargetProperty = 44;
-			var x = chunk.TargetProperty;
-
-			chunk[44] = 44;
-			var y = chunk[44];
 		}
 
 		[Test]
