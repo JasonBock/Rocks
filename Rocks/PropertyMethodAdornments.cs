@@ -7,11 +7,8 @@ namespace Rocks
 		private readonly MethodAdornments? getter;
 		private readonly MethodAdornments? setter;
 
-		public PropertyMethodAdornments(MethodAdornments? getter, MethodAdornments? setter)
-		{
-			this.getter = getter;
-			this.setter = setter;
-		}
+		public PropertyMethodAdornments(MethodAdornments? getter, MethodAdornments? setter) =>
+			(this.getter, this.setter) = (getter, setter);
 
 		public PropertyMethodAdornments RaisesOnGetter(string eventName, EventArgs args)
 		{

@@ -2,12 +2,9 @@
 {
 	internal sealed class GenerateResults
 	{
-		internal GenerateResults(string result, bool requiresObsoleteSuppression, bool isUnsafe)
-		{
-			this.Result = result;
-			this.RequiresObsoleteSuppression = requiresObsoleteSuppression;
-			this.IsUnsafe = isUnsafe;
-		}
+		internal GenerateResults(string result, bool requiresObsoleteSuppression, bool isUnsafe) =>
+			(this.Result, this.RequiresObsoleteSuppression, this.IsUnsafe) =
+				(result, requiresObsoleteSuppression, isUnsafe);
 
 		internal bool IsUnsafe { get; }
 		internal string Result { get; }

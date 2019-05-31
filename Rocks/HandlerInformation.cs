@@ -45,12 +45,8 @@ namespace Rocks
 			: this(null, expectedCallCount, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate? method, uint? expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
-		{
-			this.Method = method;
-			this.ExpectedCallCount = expectedCallCount;
-			this.Expectations = expectations;
-		}
+		internal HandlerInformation(Delegate? method, uint? expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations) =>
+			(this.Method, this.ExpectedCallCount, this.Expectations) = (method, expectedCallCount, expectations);
 
 		internal void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
 

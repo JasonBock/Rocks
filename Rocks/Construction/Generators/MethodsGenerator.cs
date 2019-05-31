@@ -16,9 +16,10 @@ namespace Rocks.Construction.Generators
 			Action<MethodInfo, MethodInformation> handleRefOutMethod, bool hasEvents)
 		{
 			var requiresObsoleteSuppression = false;
-			var generatedMethods = new List<string>();
+			var methods = baseType.GetMockableMethods(generator);
+			var generatedMethods = new List<string>(methods.Count);
 
-			foreach (var method in baseType.GetMockableMethods(generator))
+			foreach (var method in methods)
 			{
 				var methodInformation = informationBuilder.Build(method);
 				var baseMethod = method.Value;

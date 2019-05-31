@@ -14,11 +14,8 @@ namespace Rocks
 		private readonly RockOptions options;
 		private readonly bool isMake;
 
-		internal InMemoryRock(RockOptions options, bool isMake)
-		{
-			this.options = options;
-			this.isMake = isMake;
-		}
+		internal InMemoryRock(RockOptions options, bool isMake) =>
+			(this.options, this.isMake) = (options, isMake);
 
 		public override T Make()
 		{

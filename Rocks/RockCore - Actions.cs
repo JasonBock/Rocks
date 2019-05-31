@@ -16,7 +16,7 @@ namespace Rocks
 		private MethodAdornments HandleLambda(LambdaExpression expression,
 			Func<ReadOnlyDictionary<string, ArgumentExpectation>, HandlerInformation> infoGenerator)
 		{
-			var methodCall = ((MethodCallExpression)expression.Body);
+			var methodCall = (MethodCallExpression)expression.Body;
 			var method = methodCall.Method;
 			method.AddNamespaces(this.Namespaces);
 
