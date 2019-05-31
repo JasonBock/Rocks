@@ -47,11 +47,11 @@ namespace Rocks.Extensions
 			return Array.Empty<byte>();
 		}
 
-		internal byte GetNextState()
+		internal byte GetNextFlag()
 		{
-			var state = this.flags.Length == 0 ? NullableContext.NotNullable : this.flags[this.index];
+			var flag = this.flags.Length == 0 ? NullableContext.NotNullable : this.flags[this.index];
 			this.index = this.flags.Length <= 1 ? 0 : this.index + 1;
-			return state;
+			return flag;
 		}
 
 		public int Count => this.flags.Length;

@@ -19,10 +19,10 @@ namespace Rocks.Tests.Extensions
 				.GetParameters()[0];
 
 			var context = new NullableContext(parameter);
-			context.GetNextState();
-			context.GetNextState();
+			context.GetNextFlag();
+			context.GetNextFlag();
 
-			Assert.That(() => context.GetNextState(), Throws.InstanceOf<IndexOutOfRangeException>());
+			Assert.That(() => context.GetNextFlag(), Throws.InstanceOf<IndexOutOfRangeException>());
 		}
 
 		[Test]
@@ -45,8 +45,8 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(2), nameof(context.Count));
-			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 0");
-			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 1");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 1");
 		}
 
 		[Test]
@@ -58,7 +58,7 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
-			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
-			Assert.That(context.GetNextState(), Is.EqualTo(1), $"{nameof(context.GetNextState)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -82,10 +82,10 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(4), nameof(context.Count));
-			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 0");
-			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 1");
-			Assert.That(context.GetNextState(), Is.EqualTo(2), $"{nameof(context.GetNextState)} - 2");
-			Assert.That(context.GetNextState(), Is.EqualTo(0), $"{nameof(context.GetNextState)} - 3");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 1");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(2), $"{nameof(context.GetNextFlag)} - 2");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 3");
 		}
 
 		public static void ComplexType(Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>> value) { }

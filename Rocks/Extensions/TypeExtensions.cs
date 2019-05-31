@@ -67,7 +67,7 @@ namespace Rocks.Extensions
 
 			if(dissector.IsArray)
 			{
-				var arrayFlag = context.GetNextState();
+				var arrayFlag = context.GetNextFlag();
 				array = $"[]{(arrayFlag == NullableContext.Nullable ? "?" : string.Empty)}";
 			}
 			else
@@ -75,7 +75,7 @@ namespace Rocks.Extensions
 				array = string.Empty;
 			}
 
-			var typeFlag = context.GetNextState();
+			var typeFlag = context.GetNextFlag();
 		
 			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, context).arguments}{(typeFlag == NullableContext.Nullable ? "?" : string.Empty)}{pointer}{array}";
 		}
