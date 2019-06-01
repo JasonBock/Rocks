@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
@@ -10,18 +9,15 @@
     <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="16.0.461" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Rocks.Task\Rocks.Task.csproj" />
     <ProjectReference Include="..\Rocks\Rocks.csproj" />
     <ProjectReference Include="..\Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj" />
   </ItemGroup>
-
 </Project>

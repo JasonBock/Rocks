@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -10,9 +9,7 @@
     <Copyright>Copyright © 2019</Copyright>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Rocks\Rocks.csproj" />
   </ItemGroup>
-
 </Project>
