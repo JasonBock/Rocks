@@ -11,13 +11,11 @@
     <RepositoryUrl>https://github.com/jasonbock/rocks</RepositoryUrl>
     <Authors>Jason Bock</Authors>
     <Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
-    <FileVersion>4.0.0.0</FileVersion>
     <PackageLicenseUrl>https://github.com/jasonbock/rocks/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>4.0.0</PackageVersion>
+    <PackageVersion>4.0.0-rc.1</PackageVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/JasonBock/Rocks/master/Images/RocksIcon.png</PackageIconUrl>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
