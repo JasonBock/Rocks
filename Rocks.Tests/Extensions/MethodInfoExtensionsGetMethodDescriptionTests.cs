@@ -167,7 +167,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
 			Assert.That(description, 
-				Is.EqualTo("Guid Target<[GetAttributes(True)]T>([GetAttributes(True)]T a, [GetAttributes(True)]Guid b)"), 
+				Is.EqualTo("Guid Target<[GetAttributes(true)]T>([GetAttributes(true)]T a, [GetAttributes(true)]Guid b)"), 
 				nameof(description));
 		}
 
@@ -191,7 +191,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
 			Assert.That(description, 
-				Is.EqualTo("Guid Target<[GetAttributes(True, TargetString = \"TargetString\")]T>([GetAttributes(True, TargetString = \"TargetString\")]T a, [GetAttributes(True, TargetString = \"TargetString\")]Guid b)"), 
+				Is.EqualTo("Guid Target<[GetAttributes(true, TargetString = \"TargetString\")]T>([GetAttributes(true, TargetString = \"TargetString\")]T a, [GetAttributes(true, TargetString = \"TargetString\")]Guid b)"), 
 				nameof(description));
 		}
 
@@ -203,7 +203,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
 			Assert.That(description, 
-				Is.EqualTo("Guid Target<[GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]T>([GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]T a, [GetAttributes(True, 2, TargetString = \"TargetString\", TargetInt = 3)]Guid b)"),
+				Is.EqualTo("Guid Target<[GetAttributes(true, 2, TargetString = \"TargetString\", TargetInt = 3)]T>([GetAttributes(true, 2, TargetString = \"TargetString\", TargetInt = 3)]T a, [GetAttributes(true, 2, TargetString = \"TargetString\", TargetInt = 3)]Guid b)"),
 				nameof(description));
 		}
 
@@ -215,7 +215,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
 			Assert.That(description, 
-				Is.EqualTo("Guid Target<[Mutliple, GetAttributes(True)]T>([Mutliple, GetAttributes(True)]T a, [Mutliple, GetAttributes(True)]Guid b)"), 
+				Is.EqualTo("Guid Target<[Mutliple, GetAttributes(true)]T>([Mutliple, GetAttributes(true)]T a, [Mutliple, GetAttributes(true)]Guid b)"), 
 				nameof(description));
 		}
 
