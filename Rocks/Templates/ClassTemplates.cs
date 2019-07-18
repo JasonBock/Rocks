@@ -8,7 +8,7 @@ $@"void R.IMockWithEvents.Raise(string eventName, S.EventArgs args)
 			var thisType = this.GetType();
 
 			var eventDelegate = (S.MulticastDelegate)thisType.GetField(eventName, 
-				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic).GetValue(this);
+				SR.BindingFlags.Instance | SR.BindingFlags.NonPublic)!.GetValue(this)!;
 
 			if (eventDelegate != null)
 			{{

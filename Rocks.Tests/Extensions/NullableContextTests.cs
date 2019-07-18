@@ -15,7 +15,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void GetNextStateTooManyTimes()
 		{
-			var parameter = typeof(NullableContextTests).GetMethod(nameof(NullableContextTests.ValueTypeArray))
+			var parameter = typeof(NullableContextTests).GetMethod(nameof(NullableContextTests.ValueTypeWithGenerics))
 				.GetParameters()[0];
 
 			var context = new NullableContext(parameter);
@@ -33,7 +33,8 @@ namespace Rocks.Tests.Extensions
 
 			var context = new NullableContext(parameter);
 
-			Assert.That(context.Count, Is.EqualTo(0), nameof(context.Count));
+			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -44,9 +45,8 @@ namespace Rocks.Tests.Extensions
 
 			var context = new NullableContext(parameter);
 
-			Assert.That(context.Count, Is.EqualTo(2), nameof(context.Count));
-			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
-			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 1");
+			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -58,7 +58,7 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
-			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ namespace Rocks.Tests.Extensions
 			var context = new NullableContext(parameter);
 
 			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
-			Assert.That(context.GetNextFlag(), Is.EqualTo(1), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
 		}
 
 		[Test]
@@ -81,11 +81,9 @@ namespace Rocks.Tests.Extensions
 
 			var context = new NullableContext(parameter);
 
-			Assert.That(context.Count, Is.EqualTo(4), nameof(context.Count));
-			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 0");
-			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 1");
-			Assert.That(context.GetNextFlag(), Is.EqualTo(2), $"{nameof(context.GetNextFlag)} - 2");
-			Assert.That(context.GetNextFlag(), Is.EqualTo(0), $"{nameof(context.GetNextFlag)} - 3");
+			Assert.That(context.Count, Is.EqualTo(2), nameof(context.Count));
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Oblivious), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Annotated), $"{nameof(context.GetNextFlag)} - 1");
 		}
 
 		public static void ComplexType(Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>> value) { }

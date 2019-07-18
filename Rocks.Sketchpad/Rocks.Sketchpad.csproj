@@ -12,9 +12,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.0-beta2-19272-04" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.2.0-beta2-19272-04" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="3.2.0-beta2-19272-04" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.2.0-beta4-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.2.0-beta4-final" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="3.2.0-beta4-final" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks\Rocks.csproj" />

@@ -10,5 +10,12 @@ namespace Rocks.Extensions
 			return attributeType.Name == "NullableAttribute" && 
 				attributeType.Namespace == "System.Runtime.CompilerServices";
 		}
+
+		internal static bool IsNullableContextAttribute(this CustomAttributeData @this)
+		{
+			var attributeType = @this.AttributeType;
+			return attributeType.Name == "NullableContextAttribute" &&
+				attributeType.Namespace == "System.Runtime.CompilerServices";
+		}
 	}
 }

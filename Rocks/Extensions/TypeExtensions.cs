@@ -24,12 +24,8 @@ namespace Rocks.Extensions
 		internal static string GetAttributes(this Type @this, bool isReturn, SortedSet<string> namespaces) =>
 			@this.GetCustomAttributesData().GetAttributes(isReturn, namespaces, null);
 
-		internal static bool RequiresExplicitCast(this Type @this)
-		{
-			var thisTypeInfo = @this;
-			return thisTypeInfo.IsValueType ||
-				(@this.IsGenericParameter && (thisTypeInfo.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0);
-		}
+		internal static bool RequiresExplicitCast(this Type @this) =>
+			@this.IsValueType || (@this.IsGenericParameter && (@this.GenericParameterAttributes & GenericParameterAttributes.ReferenceTypeConstraint) == 0);
 
 		internal static bool AddNamespaces(this Type @this, SortedSet<string> namespaces)
 		{
@@ -62,22 +58,13 @@ namespace Rocks.Extensions
 		{
 			var dissector = TypeDissector.Create(@this);
 			var pointer = dissector.IsPointer ? "*" : string.Empty;
+			var array = dissector.IsArray ? $"[]{(context.GetNextFlag() == NullableContext.Annotated ? "?" : string.Empty)}" : string.Empty;
+			var typeAnnotation = dissector.RootType.IsValueType ? string.Empty :
+				context.GetNextFlag() == NullableContext.Annotated ? "?" : string.Empty;
 
-			string array;
-
-			if(dissector.IsArray)
-			{
-				var arrayFlag = context.GetNextFlag();
-				array = $"[]{(arrayFlag == NullableContext.Nullable ? "?" : string.Empty)}";
-			}
-			else
-			{
-				array = string.Empty;
-			}
-
-			var typeFlag = context.GetNextFlag();
-		
-			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, context).arguments}{(typeFlag == NullableContext.Nullable ? "?" : string.Empty)}{pointer}{array}";
+			// We're discarding the "0" flag for generic value types.
+			if (dissector.RootType.IsValueType && dissector.RootType.IsGenericType) { context.GetNextFlag(); }
+			return $"{dissector.SafeName}{dissector.RootType.GetGenericArguments(namespaces, context).arguments}{typeAnnotation}{pointer}{array}";
 		}
 
 		internal static ReadOnlyCollection<MockableResult<ConstructorInfo>> GetMockableConstructors(this Type @this, NameGenerator generator) =>
@@ -91,9 +78,7 @@ namespace Rocks.Extensions
 
 		internal static ReadOnlyCollection<MethodMockableResult> GetMockableMethods(this Type @this, NameGenerator generator)
 		{
-			var thisTypeInfo = @this;
-
-			var objectMethods = thisTypeInfo.IsInterface ?
+			var objectMethods = @this.IsInterface ?
 				typeof(object).GetMethods().Where(_ => _.IsExtern() || _.IsVirtual).ToList() : new List<MethodInfo>();
 
 			var methods = new HashSet<MockableResult<MethodInfo>>(@this.GetMethods(ReflectionValues.PublicNonPublicInstance)
@@ -102,7 +87,7 @@ namespace Rocks.Extensions
 					_.DeclaringType.Assembly.CanBeSeenByMockAssembly(_.IsPublic, _.IsPrivate, _.IsFamily, _.IsFamilyOrAssembly, generator))
 				.Select(_ => new MockableResult<MethodInfo>(_, RequiresExplicitInterfaceImplementation.No)));
 
-			if (thisTypeInfo.IsInterface)
+			if (@this.IsInterface)
 			{
 				var namespaces = new SortedSet<string>();
 
@@ -128,7 +113,7 @@ namespace Rocks.Extensions
 				}
 			}
 
-			var baseStaticMethods = thisTypeInfo.IsInterface ?
+			var baseStaticMethods = @this.IsInterface ?
 				typeof(object).GetMethods().Where(_ => _.IsStatic).ToList() :
 				@this.GetMethods().Where(_ => _.IsStatic).ToList();
 

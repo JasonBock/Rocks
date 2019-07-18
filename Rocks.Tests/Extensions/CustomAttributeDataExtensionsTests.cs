@@ -33,7 +33,7 @@ namespace Rocks.Tests.Extensions
 				hasNullable |= attribute.IsNullableAttribute();
 			}
 
-			Assert.That(hasNullable, Is.True);
+			Assert.That(hasNullable, Is.False);
 		}
 
 		private static void ValueTypeParameter(int a) { }
