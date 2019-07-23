@@ -26,11 +26,11 @@ namespace Rocks
 		public (bool isSuccessful, IRock<T>? rock) TryCreate<T>()
 			where T : class
 		{
-			var tryRock = Rock.TryCreate<T>(this.Options);
+			var (isSuccessful, result) = Rock.TryCreate<T>(this.Options);
 
-			if(tryRock.isSuccessful)
+			if(isSuccessful)
 			{
-				var rock = tryRock.result!;
+				var rock = result!;
 				this.rocks.Add(rock);
 				return (true, rock);
 			}

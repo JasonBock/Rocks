@@ -239,12 +239,9 @@ namespace Rocks.Extensions
 			 select p).FirstOrDefault() ??
 			throw new PropertyNotFoundException($"Indexer on type {@this.Name} with argument types [{string.Join(", ", indexers.Select(_ => _.Name))}] was not found.");
 
-		// TODO: This is pretty hacky, but you can't reference Span<T> or ReadOnlySpan<T> in 
-		// NS 2.0. Once NS 2.1 becomes a thing, this still needs to happen, but it won't
-		// be string comparisons.
 		internal static bool IsSpanLike(this Type @this) =>
-			!string.IsNullOrWhiteSpace(@this.Namespace) && @this.Namespace == "System" &&
-			!string.IsNullOrWhiteSpace(@this.Name) && (@this.Name == "Span`1" || @this.Name == "ReadOnlySpan`1");
+			@this.IsGenericType && 
+				(typeof(Span<>).IsAssignableFrom(@this.GetGenericTypeDefinition()) || typeof(ReadOnlySpan<>).IsAssignableFrom(@this.GetGenericTypeDefinition()));
 
 		internal static bool IsUnsafeToMock(this Type @this) =>
 			@this.IsPointer ||

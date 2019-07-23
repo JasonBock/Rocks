@@ -64,9 +64,6 @@ namespace Rocks.Extensions
 			}
 		}
 
-		// TODO: This is pretty hacky, but you can't reference Span<T> or ReadOnlySpan<T> in 
-		// NS 2.0. Once NS 2.1 becomes a thing, this still needs to happen, but it won't
-		// be string comparisons.
 		internal static bool IsSpanLike(this MethodInfo @this) =>
 			(@this.ReturnType.IsSpanLike() ||
 				@this.GetParameters().Where(param => param.ParameterType.IsSpanLike()).Any());

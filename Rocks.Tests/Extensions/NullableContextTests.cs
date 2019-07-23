@@ -33,8 +33,7 @@ namespace Rocks.Tests.Extensions
 
 			var context = new NullableContext(parameter);
 
-			Assert.That(context.Count, Is.EqualTo(1), nameof(context.Count));
-			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.Count, Is.EqualTo(0), nameof(context.Count));
 		}
 
 		[Test]
@@ -84,6 +83,22 @@ namespace Rocks.Tests.Extensions
 			Assert.That(context.Count, Is.EqualTo(2), nameof(context.Count));
 			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Oblivious), $"{nameof(context.GetNextFlag)} - 0");
 			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Annotated), $"{nameof(context.GetNextFlag)} - 1");
+		}
+
+		[Test]
+		public static void GetContextForComplexType()
+		{
+			var parameter = typeof(NullableContextTests).GetMethod(nameof(NullableContextTests.ComplexType))
+				.GetParameters()[0];
+
+			var context = new NullableContext(parameter);
+
+			Assert.That(context.Count, Is.EqualTo(5), nameof(context.Count));
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 0");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Annotated), $"{nameof(context.GetNextFlag)} - 1");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.NotAnnotated), $"{nameof(context.GetNextFlag)} - 2");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Oblivious), $"{nameof(context.GetNextFlag)} - 3");
+			Assert.That(context.GetNextFlag(), Is.EqualTo(NullableContext.Annotated), $"{nameof(context.GetNextFlag)} - 4");
 		}
 
 		public static void ComplexType(Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>> value) { }

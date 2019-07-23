@@ -6,6 +6,8 @@ using System.Reflection;
 namespace Rocks.Extensions
 {
 	// https://github.com/dotnet/roslyn/blob/master/docs/features/nullable-metadata.md
+	// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/
+	// https://blog.rsuter.com/the-output-of-nullable-reference-types-and-how-to-reflect-it/
 	internal sealed class NullableContext
 	{
 		internal const byte Oblivious = 0;
@@ -17,7 +19,7 @@ namespace Rocks.Extensions
 
 		internal NullableContext(ParameterInfo parameter)
 		{
-			if (parameter == null) throw new ArgumentNullException(nameof(parameter));
+			if (parameter == null) { throw new ArgumentNullException(nameof(parameter)); }
 			(this.flags, this.index) = (NullableContext.GetNullableFlags(parameter), 0);
 		}
 
@@ -26,33 +28,30 @@ namespace Rocks.Extensions
 
 		private static byte[] GetNullableFlags(ParameterInfo parameter)
 		{
-			static byte? GetContextValue(IList<CustomAttributeData> data)
+			static byte[]? GetNullableContextValue(IList<CustomAttributeData> data)
 			{
 				foreach (var attribute in data)
 				{
 					if (attribute.IsNullableContextAttribute())
 					{
-						return (byte)attribute.ConstructorArguments[0].Value;
+						return new[] { (byte)attribute.ConstructorArguments[0].Value };
 					}
 				}
 
 				return null;
 			}
 
-			// TODO: If the parameter type is a value type that has no generic values, I think
-			// I can immediately return with an empty array.
-
-			var found = false;
+			if(parameter.ParameterType.IsValueType && !parameter.ParameterType.IsGenericType)
+			{
+				return Array.Empty<byte>();
+			}
 
 			foreach (var attribute in parameter.GetCustomAttributesData())
 			{
 				if (attribute.IsNullableAttribute())
 				{
-					found = true;
 					var nullableCtor = attribute.ConstructorArguments[0];
 
-					// https://codeblog.jonskeet.uk/2019/02/10/nullableattribute-and-c-8/ and
-					// https://blog.rsuter.com/the-output-of-nullable-reference-types-and-how-to-reflect-it/
 					return nullableCtor.ArgumentType.IsArray switch
 					{
 						true => ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray(),
@@ -61,35 +60,10 @@ namespace Rocks.Extensions
 				}
 			}
 
-			if(!found)
-			{
-				var methodContextValue = GetContextValue(parameter.Member.GetCustomAttributesData());
-
-				if(methodContextValue != null)
-				{
-					return new byte[] { methodContextValue.Value };
-				}
-				else
-				{
-					var typeContextValue = GetContextValue(parameter.Member.DeclaringType.GetCustomAttributesData());
-
-					if (typeContextValue != null)
-					{
-						return new byte[] { typeContextValue.Value };
-					}
-					else
-					{
-						var moduleContextValue = GetContextValue(parameter.Member.DeclaringType.Module.GetCustomAttributesData());
-
-						if (moduleContextValue != null)
-						{
-							return new byte[] { moduleContextValue.Value };
-						}
-					}
-				}
-			}
-
-			return Array.Empty<byte>();
+			return GetNullableContextValue(parameter.Member.GetCustomAttributesData()) ??
+				GetNullableContextValue(parameter.Member.DeclaringType.GetCustomAttributesData()) ??
+				GetNullableContextValue(parameter.Member.DeclaringType.Module.GetCustomAttributesData()) ??
+				Array.Empty<byte>();
 		}
 
 		internal byte GetNextFlag()

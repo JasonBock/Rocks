@@ -13,14 +13,6 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		public static string[] A() => Array.Empty<string>();
-
-		public static string?[] B() => Array.Empty<string>();
-
-		public static string[]? C() => Array.Empty<string>();
-
-		public static string?[]? D() => Array.Empty<string>();
-
 		static void Main() =>
 			//BenchmarkRunner.Run<GenericArgumentsTests>();
 			//await EvaluateExpressionAsync("Do()");
@@ -31,7 +23,21 @@ namespace Rocks.Sketchpad
 			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
 			//Demo.Demonstrate();
 			//Program.HandleVirtualOnClass();
-			Program.HandleFoo();
+			//Program.HandleFoo();
+			Program.SpanTypeTests();
+
+		public struct MyThing<T> { }
+
+		private static void SpanTypeTests()
+		{
+			var s = typeof(Span<byte>);
+			var g = s.GetGenericTypeDefinition();
+
+			Console.Out.WriteLine(typeof(MyThing<>).IsAssignableFrom(typeof(MyThing<byte>)));
+			Console.Out.WriteLine(typeof(Span<>).IsAssignableFrom(typeof(Span<byte>)));
+			Console.Out.WriteLine(typeof(Span<>).IsAssignableFrom(g));
+			Console.Out.WriteLine(typeof(Span<>) == typeof(Span<byte>));
+		}
 
 		private static void RunBenchmark() =>
 			BenchmarkRunner.Run<MetadataReferenceCacheBenchmark>();
