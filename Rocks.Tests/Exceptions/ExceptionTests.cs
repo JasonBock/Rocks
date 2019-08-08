@@ -22,7 +22,7 @@ namespace Rocks.Tests.Exceptions
 
 		protected void CreateExceptionWithMessageTest(string message)
 		{
-			var exception = (T)Activator.CreateInstance(typeof(T), message);
+			var exception = (T)Activator.CreateInstance(typeof(T), message)!;
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.InnerException, Is.Null, nameof(exception.InnerException));
 		}
@@ -30,7 +30,7 @@ namespace Rocks.Tests.Exceptions
 		protected void CreateExceptionWithMessageAndInnerExceptionTest(string message)
 		{
 			var innerException = new TInner();
-			var exception = (T)Activator.CreateInstance(typeof(T), message, innerException);
+			var exception = (T)Activator.CreateInstance(typeof(T), message, innerException)!;
 			Assert.That(exception.Message, Is.EqualTo(message), nameof(exception.Message));
 			Assert.That(exception.InnerException, Is.EqualTo(innerException), nameof(exception.InnerException));
 		}

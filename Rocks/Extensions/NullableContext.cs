@@ -62,7 +62,6 @@ namespace Rocks.Extensions
 
 			return GetNullableContextValue(parameter.Member.GetCustomAttributesData()) ??
 				GetNullableContextValue(parameter.Member.DeclaringType.GetCustomAttributesData()) ??
-				GetNullableContextValue(parameter.Member.DeclaringType.Module.GetCustomAttributesData()) ??
 				Array.Empty<byte>();
 		}
 

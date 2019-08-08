@@ -10,8 +10,8 @@ namespace Rocks.Tests.Extensions
 		public void DoesNullableAttributeExistForValueType()
 		{
 			var parameter = typeof(CustomAttributeDataExtensionsTests).GetMethod(
-				nameof(CustomAttributeDataExtensionsTests.ValueTypeParameter), BindingFlags.NonPublic | BindingFlags.Static)
-				.GetParameters()[0];
+				nameof(CustomAttributeDataExtensionsTests.ValueTypeParameter), 
+				BindingFlags.NonPublic | BindingFlags.Static)!.GetParameters()[0];
 			var hasNullable = false;
 			foreach(var attribute in parameter.GetCustomAttributesData())
 			{
@@ -25,8 +25,8 @@ namespace Rocks.Tests.Extensions
 		public void DoesNullableAttributeExistForReferenceType()
 		{
 			var parameter = typeof(CustomAttributeDataExtensionsTests).GetMethod(
-				nameof(CustomAttributeDataExtensionsTests.ReferenceTypeParameter), BindingFlags.NonPublic | BindingFlags.Static)
-				.GetParameters()[0];
+				nameof(CustomAttributeDataExtensionsTests.ReferenceTypeParameter), 
+				BindingFlags.NonPublic | BindingFlags.Static)!.GetParameters()[0];
 			var hasNullable = false;
 			foreach (var attribute in parameter.GetCustomAttributesData())
 			{

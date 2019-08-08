@@ -16,12 +16,12 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void RequiresExplicitCastForGenericTypeWithReferenceConstraint() =>
 			Assert.That(typeof(IRequireCasts<,>).GetMethod(
-				nameof(IRequireCasts<string, int>.TargetWithConstraint)).ReturnType.RequiresExplicitCast(), Is.False);
+				nameof(IRequireCasts<string, int>.TargetWithConstraint))!.ReturnType.RequiresExplicitCast(), Is.False);
 
 		[Test]
 		public static void RequiresExplicitCastForGenericTypeWithNoReferenceConstraint() =>
 			Assert.That(typeof(IRequireCasts<,>).GetMethod(
-				nameof(IRequireCasts<string, int>.TargetWithNoConstraint)).ReturnType.RequiresExplicitCast(), Is.True);
+				nameof(IRequireCasts<string, int>.TargetWithNoConstraint))!.ReturnType.RequiresExplicitCast(), Is.True);
 	}
 
 	public interface IRequireCasts<T, U> where T : class

@@ -62,7 +62,7 @@ namespace Rocks.Tests.Extensions
 		public void ValidateWhenTypeIsObsoleteAndErrorIsFalse()
 		{
 			var obsoleteType = this.GetType().Assembly
-				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsFalse");
+				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsFalse")!;
 			Assert.That(obsoleteType.Validate(
 				SerializationOptions.Supported,
 				new InMemoryNameGenerator()), Is.Empty);
@@ -72,7 +72,7 @@ namespace Rocks.Tests.Extensions
 		public void ValidateWhenTypeIsObsoleteAndErrorIsTrue()
 		{
 			var obsoleteType = this.GetType().Assembly
-				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsTrue");
+				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsTrue")!;
 			Assert.That(obsoleteType.Validate(
 				SerializationOptions.Supported,
 				new InMemoryNameGenerator()), Is.Not.Empty);

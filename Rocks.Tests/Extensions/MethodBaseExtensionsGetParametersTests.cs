@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParameters()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArguments)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArguments))!.GetParameters(namespaces),
 				Is.EqualTo("int a, string c"));
 		}
 
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithGenerics()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithGenerics)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithGenerics))!.GetParameters(namespaces),
 				Is.EqualTo("T a, string b, U c"));
 		}
 
@@ -28,7 +28,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithParams()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithParamsArgument)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithParamsArgument))!.GetParameters(namespaces),
 				Is.EqualTo("params int[] a"));
 		}
 
@@ -36,7 +36,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithUnsafeArgumentTypes()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithUnsafeArguments)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithUnsafeArguments))!.GetParameters(namespaces),
 				Is.EqualTo("byte* a"));
 		}
 
@@ -44,7 +44,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithArrayTypes()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArray)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArray))!.GetParameters(namespaces),
 				Is.EqualTo("byte[] a"));
 		}
 
@@ -52,7 +52,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithArrayOfPointerTypes()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArrayOfPointers)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithArrayOfPointers))!.GetParameters(namespaces),
 				Is.EqualTo("byte*[] a"));
 		}
 
@@ -60,7 +60,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithOutArray()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArray)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArray))!.GetParameters(namespaces),
 				Is.EqualTo("out byte[] a"));
 		}
 
@@ -68,7 +68,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithOutArrayOfPointers()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayOfPointers)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayOfPointers))!.GetParameters(namespaces),
 				Is.EqualTo("out byte*[] a"));
 		}
 
@@ -76,7 +76,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithInOutAttributes()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithInOut)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithInOut))!.GetParameters(namespaces),
 				Is.EqualTo("[In, Out]char[] buffer, int index, int count"));
 		}
 
@@ -84,7 +84,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithOutAttributeArray()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayAttribute)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsGetParametersTests.TargetWithOutArrayAttribute))!.GetParameters(namespaces),
 				Is.EqualTo("[Out]string[] a"));
 		}
 
@@ -92,7 +92,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithComplexGenericArguments()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(typeof(TargetUsingBase<,>).GetMethod("Target").GetParameters(namespaces),
+			Assert.That(typeof(TargetUsingBase<,>).GetMethod("Target")!.GetParameters(namespaces),
 				Is.EqualTo("UsedByBase<TKey, TValue>[] a"));
 		}
 
@@ -100,7 +100,7 @@ namespace Rocks.Tests.Extensions
 		public void GetParametersWithOptionalArguments()
 		{
 			var namespaces = new SortedSet<string>();
-			Assert.That(this.GetType().GetMethod(nameof(this.TargetWithOptionalArguments)).GetParameters(namespaces),
+			Assert.That(this.GetType().GetMethod(nameof(this.TargetWithOptionalArguments))!.GetParameters(namespaces),
 				Is.EqualTo("int a = 0, string c = \"c\", string? d = null"));
 		}
 

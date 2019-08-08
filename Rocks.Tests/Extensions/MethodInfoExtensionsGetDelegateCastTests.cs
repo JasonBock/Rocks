@@ -8,49 +8,49 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void GetDelegateCastWithNoArguments()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArguments));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArguments))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithNoArgumentsAndReturnValue()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArgumentsAndReturnValue));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithNoArgumentsAndReturnValue))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArguments()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithArguments))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<int, string>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithComplexGenericArguments()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithComplexGeneric));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithComplexGeneric))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<IGeneric<int>, IGeneric<int>?>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithArgumentsAndReturnValue()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithArgumentsAndReturnValue))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, string, int>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenerics()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithGenerics))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Action<int, U, string, V>"));
 		}
 
 		[Test]
 		public void GetDelegateCastWithGenericsAndReturnValue()
 		{
-			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue));
+			var target = this.GetType().GetMethod(nameof(this.TargetWithGenericsAndReturnValue))!;
 			Assert.That(target.GetDelegateCast(), Is.EqualTo("Func<int, U, string, V, U?>"));
 		}
 

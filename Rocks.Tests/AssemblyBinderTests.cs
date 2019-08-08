@@ -35,7 +35,7 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.That(binder.BindToType(this.GetType().Assembly.FullName, this.GetType().FullName),
+			Assert.That(binder.BindToType(this.GetType().Assembly.FullName!, this.GetType().FullName!),
 				Is.EqualTo(this.GetType()));
 		}
 
@@ -44,7 +44,7 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.That(binder.BindToType(this.GetType().Assembly.FullName, typeof(Rock).FullName), Is.Null);
+			Assert.That(binder.BindToType(this.GetType().Assembly.FullName!, typeof(Rock).FullName!), Is.Null);
 		}
 
 		[Test]
@@ -52,7 +52,7 @@ namespace Rocks.Tests
 		{
 			var binder = new AssemblyBinder();
 			binder.Assemblies.Add(this.GetType().Assembly);
-			Assert.That(binder.BindToType(typeof(Rock).Assembly.FullName, this.GetType().FullName), Is.Null);
+			Assert.That(binder.BindToType(typeof(Rock).Assembly.FullName!, this.GetType().FullName!), Is.Null);
 		}
 	}
 }

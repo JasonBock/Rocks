@@ -16,7 +16,7 @@ namespace Rocks.Tests.Construction.InMemory
 			var baseType = typeof(IBuilderTest);
 			var handlers = new ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>>(
 				new Dictionary<int, ReadOnlyCollection<HandlerInformation>>());
-			var namespaces = new SortedSet<string> { baseType.Namespace };
+			var namespaces = new SortedSet<string> { baseType.Namespace! };
 			var options = new RockOptions();
 
 			var builder = new InMemoryBuilder(baseType, handlers, namespaces, options, false);

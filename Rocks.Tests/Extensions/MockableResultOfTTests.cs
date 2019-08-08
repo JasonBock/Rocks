@@ -9,7 +9,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void Create()
 		{
-			var method = this.GetType().GetMethod(nameof(Create));
+			var method = this.GetType().GetMethod(nameof(Create))!;
 			var requires = RequiresExplicitInterfaceImplementation.Yes;
 
 			var result = new MockableResult<MethodBase>(method, requires);

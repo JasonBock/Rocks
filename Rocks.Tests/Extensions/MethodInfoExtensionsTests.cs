@@ -10,13 +10,13 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ContainsOutInitializers() =>
 			Assert.That(this.GetType().GetMethod(
-				nameof(this.TargetWithOutArgument)).GetOutInitializers(), 
+				nameof(this.TargetWithOutArgument))!.GetOutInitializers(), 
 				Is.EqualTo("a = default!;"));
 
 		[Test]
 		public void ContainsOutInitializersWhenArgumentTypeIsArray() =>
 			Assert.That(this.GetType().GetMethod(
-				nameof(this.TargetWithOutArrayArgument)).GetOutInitializers(),
+				nameof(this.TargetWithOutArrayArgument))!.GetOutInitializers(),
 				Is.EqualTo("a = default!;"));
 
 		public void TargetWithOutArgument(out int a) => a = 0; 

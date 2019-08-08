@@ -16,7 +16,7 @@ namespace Rocks.Tests.Extensions
 			typeof(IAmNotGeneric).AddNamespaces(namespaces);
 
 			Assert.That(namespaces.Count, Is.EqualTo(1));
-			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace!), Is.True);
 		}
 
 		[Test]
@@ -26,8 +26,8 @@ namespace Rocks.Tests.Extensions
 			typeof(IAmGeneric<IAmNotGeneric>).AddNamespaces(namespaces);
 
 			Assert.That(namespaces.Count, Is.EqualTo(2));
-			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace), Is.True);
-			Assert.That(namespaces.Contains(typeof(IAmGeneric<>).Namespace), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace!), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmGeneric<>).Namespace!), Is.True);
 		}
 
 		[Test]
@@ -37,9 +37,9 @@ namespace Rocks.Tests.Extensions
 			typeof(IAmAnotherGeneric<IAmGeneric<IAmNotGeneric>>).AddNamespaces(namespaces);
 
 			Assert.That(namespaces.Count, Is.EqualTo(3));
-			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace), Is.True);
-			Assert.That(namespaces.Contains(typeof(IAmGeneric<>).Namespace), Is.True);
-			Assert.That(namespaces.Contains(typeof(IAmAnotherGeneric<>).Namespace), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmNotGeneric).Namespace!), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmGeneric<>).Namespace!), Is.True);
+			Assert.That(namespaces.Contains(typeof(IAmAnotherGeneric<>).Namespace!), Is.True);
 		}
 	}
 }

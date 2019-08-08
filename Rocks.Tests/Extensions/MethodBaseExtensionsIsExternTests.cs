@@ -7,10 +7,10 @@ namespace Rocks.Tests.Extensions
 	{
 		[Test]
 		public void IsExtern() =>
-			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsIsExternTests.IsExtern)).IsExtern(), Is.False);
+			Assert.That(this.GetType().GetMethod(nameof(MethodBaseExtensionsIsExternTests.IsExtern))!.IsExtern(), Is.False);
 
 		[Test]
 		public void IsExternForGetType() =>
-			Assert.That(typeof(object).GetMethod(nameof(object.GetType)).IsExtern(), Is.True);
+			Assert.That(typeof(object).GetMethod(nameof(object.GetType))!.IsExtern(), Is.True);
 	}
 }

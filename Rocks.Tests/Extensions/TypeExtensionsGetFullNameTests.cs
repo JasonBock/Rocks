@@ -36,7 +36,7 @@ namespace Rocks.Tests.Extensions
 		public static void GetFullNameForComplexTypeParameter()
 		{
 			var parameter = TypeExtensionsGetFullNameTests.GetParameter(nameof(TypeExtensionsGetFullNameTests.ComplexType));
-			Assert.That(parameter.ParameterType.GetFullName(parameter), Is.EqualTo("Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>>"));
+			Assert.That(parameter.ParameterType.GetFullName(parameter), Is.EqualTo("Dictionary<List<string>, KeyValuePair<Guid, byte[]?>>"));
 		}
 
 		[Test]
@@ -103,9 +103,9 @@ namespace Rocks.Tests.Extensions
 		}
 
 		private static ParameterInfo GetParameter(string methodName) =>
-			typeof(TypeExtensionsGetFullNameTests).GetMethod(methodName, BindingFlags.Public | BindingFlags.Static).GetParameters()[0];
+			typeof(TypeExtensionsGetFullNameTests).GetMethod(methodName, BindingFlags.Public | BindingFlags.Static)!.GetParameters()[0];
 
-		public static void ComplexType(Dictionary<List<string>?, KeyValuePair<Guid, byte[]?>> value) { }
+		public static void ComplexType(Dictionary<List<string>, KeyValuePair<Guid, byte[]?>> value) { }
 
 		public static void ReferenceType(string value) { }
 

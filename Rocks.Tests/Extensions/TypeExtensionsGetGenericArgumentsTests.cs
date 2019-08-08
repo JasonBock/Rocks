@@ -34,7 +34,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var namespaces = new SortedSet<string>();
 			var (arguments, constraints) = typeof(HaveMethodWithComplexGenericType<>).GetMethod(
-				nameof(HaveMethodWithComplexGenericType<int>.Target)).ReturnType.GetGenericArguments(namespaces);
+				nameof(HaveMethodWithComplexGenericType<int>.Target))!.ReturnType.GetGenericArguments(namespaces);
 
 			Assert.That(arguments, Is.EqualTo("<KeyValuePair<long, TSource>>"));
 			Assert.That(constraints, Is.Empty);

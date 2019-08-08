@@ -8,7 +8,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void FindMethodWithMethodOnGivenType()
 		{
-			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
+			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target))!;
 			var foundMethod = typeof(IMetadata).FindMethod(method.MetadataToken);
 			Assert.That(foundMethod, Is.EqualTo(method));
 		}
@@ -20,7 +20,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void FindMethodWithMethodOnBaseType()
 		{
-			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target));
+			var method = typeof(IMetadata).GetMethod(nameof(IMetadata.Target))!;
 			var foundMethod = typeof(Metadata).FindMethod(method.MetadataToken);
 			Assert.That(foundMethod, Is.EqualTo(method));
 		}
