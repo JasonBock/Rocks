@@ -47,6 +47,20 @@ namespace Rocks.Extensions
 			return null;
 		}
 
+		private static byte[]? GetNullableContextValueForDeclaringType(Type type)
+		{
+			while (type != null)
+			{
+				var flags = NullableContext.GetNullableContextValue(type.GetCustomAttributesData());
+
+				if (flags != null) { return flags; }
+
+				type = type.DeclaringType;
+			}
+
+			return null;
+		}
+
 		private static (bool, byte[]?) GetNullableFlags(IList<CustomAttributeData> attributes)
 		{
 			foreach (var attribute in attributes)
@@ -71,7 +85,7 @@ namespace Rocks.Extensions
 			{
 				(true, var flags) => flags!,
 				_ => NullableContext.GetNullableContextValue(type.DeclaringMethod?.GetCustomAttributesData() ?? Array.Empty<CustomAttributeData>()) ??
-					NullableContext.GetNullableContextValue(type.DeclaringType.GetCustomAttributesData()) ??
+					NullableContext.GetNullableContextValueForDeclaringType(type.DeclaringType) ??
 					Array.Empty<byte>()
 			};
 
@@ -84,10 +98,9 @@ namespace Rocks.Extensions
 
 			return GetNullableFlags(parameter.GetCustomAttributesData()) switch
 			{
-				// TODO: May need to recursively descend on DeclaringType
 				(true, var flags) => flags!,
 				_ => NullableContext.GetNullableContextValue(parameter.Member.GetCustomAttributesData()) ??
-					NullableContext.GetNullableContextValue(parameter.Member.DeclaringType.GetCustomAttributesData()) ??
+					NullableContext.GetNullableContextValueForDeclaringType(parameter.Member.DeclaringType) ??
 					Array.Empty<byte>()
 			};
 		}

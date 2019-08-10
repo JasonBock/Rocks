@@ -15,7 +15,7 @@
     <PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>4.0.0-rc.1</PackageVersion>
+    <PackageVersion>4.0.0-rc.2</PackageVersion>
     <PackageIconUrl>https://raw.githubusercontent.com/JasonBock/Rocks/master/Images/RocksIcon.png</PackageIconUrl>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
   </PropertyGroup>
