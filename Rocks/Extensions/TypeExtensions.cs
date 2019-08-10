@@ -334,7 +334,7 @@ namespace Rocks.Extensions
 				{
 					genericArguments.Add($"{argument.GetFullName(namespaces, context)}");
 
-					if (argument.IsGenericParameter && argument.GenericParameterAttributes != 0)
+					if (argument.IsGenericParameter)
 					{
 						var constraint = argument.GetConstraints(namespaces);
 
@@ -359,19 +359,15 @@ namespace Rocks.Extensions
 		{
 			if (@this.IsGenericParameter)
 			{
+				var constraintValues = new List<string>();
+
 				var thisTypeInfo = @this;
 
 				var constraints = thisTypeInfo.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
 				var constraintedTypes = thisTypeInfo.GetGenericParameterConstraints();
 
-				if (constraints == GenericParameterAttributes.None && constraintedTypes.Length == 0)
+				if (constraints != GenericParameterAttributes.None || constraintedTypes.Length > 0)
 				{
-					return string.Empty;
-				}
-				else
-				{
-					var constraintValues = new List<string>();
-
 					if ((constraints & GenericParameterAttributes.NotNullableValueTypeConstraint) != 0)
 					{
 						constraintValues.Add("struct");
@@ -393,9 +389,20 @@ namespace Rocks.Extensions
 							constraintValues.Add("new()");
 						}
 					}
-
-					return $"where {TypeDissector.Create(@this).SafeName} : {string.Join(", ", constraintValues)}";
 				}
+
+				if(!constraintValues.Contains("struct") && !constraintValues.Contains("class"))
+				{
+					var context = new NullableContext(@this);
+
+					if (context.Count == 1 && context.GetNextFlag() == NullableContext.NotAnnotated)
+					{
+						constraintValues.Insert(0, "notnull");
+					}
+				}
+
+				return constraintValues.Count > 0 ?
+					$"where {TypeDissector.Create(@this).SafeName} : {string.Join(", ", constraintValues)}" : string.Empty;
 			}
 			else
 			{

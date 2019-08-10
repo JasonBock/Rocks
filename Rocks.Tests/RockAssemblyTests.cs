@@ -17,7 +17,7 @@ namespace Rocks.Tests
 		public RockAssemblyTests()
 		{
 			var class1Assembly = typeof(Class1).Assembly;
-			this.assembly = new RockAssembly(class1Assembly, 
+			this.assembly = new RockAssembly(class1Assembly,
 				new RockOptions(codeFileDirectory: TestContext.CurrentContext.TestDirectory)).Result;
 		}
 
@@ -41,7 +41,7 @@ namespace Rocks.Tests
 		public void GenerateMockWithHandlers()
 		{
 			var b = 44;
-			
+
 			var rock = Rock.Create<Class1>();
 			rock.Handle(_ => _.Method1());
 

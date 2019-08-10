@@ -23,30 +23,33 @@ namespace Rocks.Extensions
 			(this.flags, this.index) = (NullableContext.GetNullableFlags(parameter), 0);
 		}
 
-		internal NullableContext() => 
+		internal NullableContext(Type type)
+		{
+			if (type == null) { throw new ArgumentNullException(nameof(type)); }
+			if (!type.IsGenericParameter) { throw new NotSupportedException("Only generic parameter types are accepted."); };
+
+			(this.flags, this.index) = (NullableContext.GetNullableFlags(type), 0);
+		}
+
+		internal NullableContext() =>
 			(this.flags, this.index) = (Array.Empty<byte>(), 0);
 
-		private static byte[] GetNullableFlags(ParameterInfo parameter)
+		private static byte[]? GetNullableContextValue(IList<CustomAttributeData> data)
 		{
-			static byte[]? GetNullableContextValue(IList<CustomAttributeData> data)
+			foreach (var attribute in data)
 			{
-				foreach (var attribute in data)
+				if (attribute.IsNullableContextAttribute())
 				{
-					if (attribute.IsNullableContextAttribute())
-					{
-						return new[] { (byte)attribute.ConstructorArguments[0].Value };
-					}
+					return new[] { (byte)attribute.ConstructorArguments[0].Value };
 				}
-
-				return null;
 			}
 
-			if(parameter.ParameterType.IsValueType && !parameter.ParameterType.IsGenericType)
-			{
-				return Array.Empty<byte>();
-			}
+			return null;
+		}
 
-			foreach (var attribute in parameter.GetCustomAttributesData())
+		private static (bool, byte[]?) GetNullableFlags(IList<CustomAttributeData> attributes)
+		{
+			foreach (var attribute in attributes)
 			{
 				if (attribute.IsNullableAttribute())
 				{
@@ -54,15 +57,39 @@ namespace Rocks.Extensions
 
 					return nullableCtor.ArgumentType.IsArray switch
 					{
-						true => ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray(),
-						_ => new byte[] { (byte)nullableCtor.Value }
+						true => (true, ((IList<CustomAttributeTypedArgument>)nullableCtor.Value).Select(_ => (byte)_.Value).ToArray()),
+						_ => (true, new byte[] { (byte)nullableCtor.Value })
 					};
 				}
 			}
 
-			return GetNullableContextValue(parameter.Member.GetCustomAttributesData()) ??
-				GetNullableContextValue(parameter.Member.DeclaringType.GetCustomAttributesData()) ??
-				Array.Empty<byte>();
+			return (false, null);
+		}
+
+		private static byte[] GetNullableFlags(Type type) => 
+			GetNullableFlags(type.GetCustomAttributesData()) switch
+			{
+				(true, var flags) => flags!,
+				_ => NullableContext.GetNullableContextValue(type.DeclaringMethod?.GetCustomAttributesData() ?? Array.Empty<CustomAttributeData>()) ??
+					NullableContext.GetNullableContextValue(type.DeclaringType.GetCustomAttributesData()) ??
+					Array.Empty<byte>()
+			};
+
+		private static byte[] GetNullableFlags(ParameterInfo parameter)
+		{
+			if (parameter.ParameterType.IsValueType && !parameter.ParameterType.IsGenericType)
+			{
+				return Array.Empty<byte>();
+			}
+
+			return GetNullableFlags(parameter.GetCustomAttributesData()) switch
+			{
+				// TODO: May need to recursively descend on DeclaringType
+				(true, var flags) => flags!,
+				_ => NullableContext.GetNullableContextValue(parameter.Member.GetCustomAttributesData()) ??
+					NullableContext.GetNullableContextValue(parameter.Member.DeclaringType.GetCustomAttributesData()) ??
+					Array.Empty<byte>()
+			};
 		}
 
 		internal byte GetNextFlag()
