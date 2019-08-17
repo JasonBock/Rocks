@@ -39,12 +39,12 @@ namespace Rocks.Tests
 
 		public ClassTestsTarget(int value) => this.Value = value;
 
-		public virtual void TargetMethod() => this.TargetEvent(this, EventArgs.Empty);
+		public virtual void TargetMethod() => this.TargetEvent!(this, EventArgs.Empty);
 
 		public virtual int TargetProperty { get; set; }
 
 		public int Value { get; private set; }
 
-		public virtual event EventHandler TargetEvent;
+		public virtual event EventHandler? TargetEvent;
 	}
 }

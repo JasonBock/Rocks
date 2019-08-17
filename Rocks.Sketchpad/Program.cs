@@ -14,7 +14,7 @@ namespace Rocks.Sketchpad
 	public static class Program
 	{
 		static void Main() =>
-			//BenchmarkRunner.Run<GenericArgumentsTests>();
+			BenchmarkRunner.Run<GenericArgumentsTests>();
 			//await EvaluateExpressionAsync("Do()");
 			//await EvaluateExpressionAsync("Do(");
 			//await EvaluateExpressionAsync("Do(3, 4)");
@@ -24,7 +24,7 @@ namespace Rocks.Sketchpad
 			//Demo.Demonstrate();
 			//Program.HandleVirtualOnClass();
 			//Program.HandleFoo();
-			Program.SpanTypeTests();
+			//Program.SpanTypeTests();
 
 		public struct MyThing<T> { }
 

@@ -8,7 +8,7 @@ using BenchmarkDotNet.Code;
 namespace Rocks.Sketchpad
 {
 	[MemoryDiagnoser]
-	[ClrJob, CoreJob]
+	//[ClrJob, CoreJob]
 	public class GenericArgumentsTests
 	{
 		private SortedSet<string> namespaces;
@@ -16,9 +16,9 @@ namespace Rocks.Sketchpad
 		[GlobalSetup]
 		public void GlobalSetup() => this.namespaces = new SortedSet<string>();
 
-		public IEnumerable<IParam> Types()
+		public IEnumerable<Type> Types()
 		{
-			yield return new TypeParams(typeof(ComplexGenericType<,,,>), "ComplexGenericType<,,,>");
+			yield return typeof(ComplexGenericType<,,,>);
 		}
 
 		[ParamsSource(nameof(Types))]

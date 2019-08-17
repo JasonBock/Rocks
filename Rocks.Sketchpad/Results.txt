@@ -1,0 +1,7 @@
+﻿GenericArgumentsTests
+
+|                             Method |                 Type |      Mean |     Error |    StdDev |    Median | Ratio | RatioSD |  Gen 0 | Gen 1 | Gen 2 | Allocated |
+|----------------------------------- |--------------------- |----------:|----------:|----------:|----------:|------:|--------:|-------:|------:|------:|----------:|
+|          GetGenericArgumentsOldWay | Rocks(...),V,X] [67] | 14.995 us | 0.2998 us | 0.7241 us | 14.641 us |  2.25 |    0.08 | 1.7700 |     - |     - |   7.26 KB |
+| GetGenericArgumentsOldWayWithCheck | Rocks(...),V,X] [67] |  6.750 us | 0.1335 us | 0.2118 us |  6.659 us |  1.01 |    0.04 | 0.9155 |     - |     - |   3.76 KB |
+|          GetGenericArgumentsNewWay | Rocks(...),V,X] [67] |  6.681 us | 0.0807 us | 0.0630 us |  6.665 us |  1.00 |    0.00 | 0.8850 |     - |     - |   3.63 KB |

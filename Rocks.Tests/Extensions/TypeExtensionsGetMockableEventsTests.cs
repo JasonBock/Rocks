@@ -78,20 +78,20 @@ namespace Rocks.Tests.Extensions
 	public class MockableEventsSubFromAbstract
 		: MockableEventsAbstract
 	{
-		protected override event EventHandler AbstractClassEvent;
+		protected override event EventHandler? AbstractClassEvent;
 	}
 
 	public class MockableEventsBase
 	{
-		public event EventHandler BaseClassEvent;
-		public virtual event EventHandler BaseVirtualClassEvent;
+		public event EventHandler? BaseClassEvent;
+		public virtual event EventHandler? BaseVirtualClassEvent;
 	}
 
 	public class MockableEventsSub
 		: MockableEventsBase, IMockableEventsSub
 	{
-		public event EventHandler BaseInterfaceEvent;
-		public event EventHandler SubInterfaceEvent;
+		public event EventHandler? BaseInterfaceEvent;
+		public event EventHandler? SubInterfaceEvent;
 	}
 #pragma warning restore 67
 }

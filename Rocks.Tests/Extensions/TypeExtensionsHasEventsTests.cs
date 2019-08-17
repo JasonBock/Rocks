@@ -57,7 +57,7 @@ namespace Rocks.Tests.Extensions
 
 	public class HasEvents
 	{
-		public event EventHandler AnEvent;
+		public event EventHandler? AnEvent;
 	}
 
 	public class HasNoEvents { }
@@ -68,7 +68,7 @@ namespace Rocks.Tests.Extensions
 
 	public class HasProtectedEvents
 	{
-		protected event EventHandler AnEvent;
+		protected event EventHandler? AnEvent;
 	}
 #pragma warning restore CS0067
 }
