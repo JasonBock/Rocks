@@ -17,6 +17,8 @@ namespace Rocks
 		public static IRock<T> Create<T>(RockOptions options)
 			where T : class
 		{
+			if(options is null) { throw new ArgumentNullException(nameof(options)); }
+
 			var tType = typeof(T);
 			var message = tType.Validate(options.Serialization,
 				tType.IsSealed ? new PersistenceNameGenerator(tType) as NameGenerator :
@@ -45,6 +47,8 @@ namespace Rocks
 		public static (bool isSuccessful, IRock<T>? result) TryCreate<T>(RockOptions options)
 			where T : class
 		{
+			if (options is null) { throw new ArgumentNullException(nameof(options)); }
+
 			var result = default(IRock<T>);
 			var isSuccessful = false;
 			var tType = typeof(T);
@@ -76,13 +80,15 @@ namespace Rocks
 				level: options.Optimization, 
 				codeFile: options.CodeFile, 
 				serialization: options.Serialization,
-				caching: CachingOptions.UseCache, 
-				allowWarnings: options.AllowWarnings,
+				caching: CachingOption.UseCache, 
+				allowWarning: options.AllowWarning,
 				codeFileDirectory: options.CodeFileDirectory);
 
 		public static T Make<T>(RockOptions options)
 			where T : class
 		{
+			if (options is null) { throw new ArgumentNullException(nameof(options)); }
+
 			var mappedOptions = Rock.MapForMake(options);
 			var tType = typeof(T);
 			var message = tType.Validate(mappedOptions.Serialization,
@@ -103,6 +109,8 @@ namespace Rocks
 		public static (bool isSuccessful, T? result) TryMake<T>(RockOptions options)
 			where T : class
 		{
+			if (options is null) { throw new ArgumentNullException(nameof(options)); }
+
 			var mappedOptions = Rock.MapForMake(options);
 			var result = default(T);
 			var isSuccessful = false;

@@ -8,12 +8,12 @@ namespace Rocks.Tests
 		[Test]
 		public static void CreateTwoMocksWithCaching()
 		{
-			var rock1 = Rock.Create<IWillBeCached>(new RockOptions(caching: CachingOptions.UseCache));
+			var rock1 = Rock.Create<IWillBeCached>(new RockOptions(caching: CachingOption.UseCache));
 			rock1.Handle(_ => _.Target(Arg.IsAny<string>()));
 
 			var mock1 = rock1.Make();
 
-			var rock2 = Rock.Create<IWillBeCached>(new RockOptions(caching: CachingOptions.UseCache));
+			var rock2 = Rock.Create<IWillBeCached>(new RockOptions(caching: CachingOption.UseCache));
 			rock2.Handle(_ => _.Target(Arg.IsAny<string>()));
 
 			var mock2 = rock2.Make();
@@ -24,12 +24,12 @@ namespace Rocks.Tests
 		[Test]
 		public static void CreateTwoMocksWithoutCaching()
 		{
-			var rock1 = Rock.Create<IWillNotBeCached>(new RockOptions(caching: CachingOptions.UseCache));
+			var rock1 = Rock.Create<IWillNotBeCached>(new RockOptions(caching: CachingOption.UseCache));
 			rock1.Handle(_ => _.Target(Arg.IsAny<string>()));
 
 			var mock1 = rock1.Make();
 
-			var rock2 = Rock.Create<IWillNotBeCached>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
+			var rock2 = Rock.Create<IWillNotBeCached>(new RockOptions(caching: CachingOption.GenerateNewVersion));
 			rock2.Handle(_ => _.Target(Arg.IsAny<string>()));
 
 			var mock2 = rock2.Make();

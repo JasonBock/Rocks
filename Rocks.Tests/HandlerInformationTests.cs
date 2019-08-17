@@ -107,6 +107,33 @@ namespace Rocks.Tests
 		}
 
 		[Test]
+		public static void RaiseEvents()
+		{
+			var name = nameof(RaiseEvents);
+			var args = new EventArgs();
+
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+			var information = new HandlerInformation(expectations);
+			information.AddRaiseEvent(new RaiseEventInformation(name, args));
+
+			var mock = Rock.Create<IMockWithEvents>();
+			mock.Handle(_ => _.Raise(name, args));
+
+			information.RaiseEvents(mock.Make());
+
+			mock.Verify();
+		}
+
+		[Test]
+		public static void RaiseEventsWhenTargetIsNull()
+		{
+			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());
+			var information = new HandlerInformation(expectations);
+
+			Assert.That(() => information.RaiseEvents((null as IMockWithEvents)!), Throws.TypeOf<ArgumentNullException>());
+		}
+
+		[Test]
 		public static void VerifyWhenExpectedCallCountIsNotSpecified()
 		{
 			var expectations = new ReadOnlyDictionary<string, ArgumentExpectation>(new Dictionary<string, ArgumentExpectation>());

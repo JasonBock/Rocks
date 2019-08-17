@@ -10,9 +10,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenEqual()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.Create, allowWarning: AllowWarning.No));
 			var cacheKey2 = new CacheKey(this.GetType(),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.Create, allowWarning: AllowWarning.No));
 
 			Assert.That(cacheKey2, Is.EqualTo(cacheKey1));
 		}
@@ -21,9 +21,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenNotEqualViaDifferentOptions()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.Create, allowWarning: AllowWarning.No));
 			var cacheKey2 = new CacheKey(this.GetType(),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.None, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.None, allowWarning: AllowWarning.No));
 
 			Assert.That(cacheKey2, Is.Not.EqualTo(cacheKey1));
 		}
@@ -32,9 +32,9 @@ namespace Rocks.Tests
 		public void CompareHashCodesWhenNotEqualViaDifferentTypes()
 		{
 			var cacheKey1 = new CacheKey(this.GetType(),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.Create, allowWarning: AllowWarning.No));
 			var cacheKey2 = new CacheKey(typeof(Guid),
-				new RockOptions(OptimizationSetting.Release, CodeFileOptions.Create, allowWarnings: AllowWarnings.No));
+				new RockOptions(OptimizationSetting.Release, CodeFileOption.Create, allowWarning: AllowWarning.No));
 
 			Assert.That(cacheKey2, Is.Not.EqualTo(cacheKey1));
 		}

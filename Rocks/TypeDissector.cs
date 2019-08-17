@@ -70,7 +70,7 @@ namespace Rocks
 			else
 			{
 				name = !string.IsNullOrWhiteSpace(typeFullName) ?
-					typeFullName.Split('`')[0].Split('.').Last().Replace("+", ".") :
+					typeFullName.Split('`')[0].Split('.').Last().Replace("+", ".", StringComparison.Ordinal) :
 					typeName.Split('`')[0];
 
 				if (TypeDissector.simplifiedPrimitiveNames.ContainsKey(name))

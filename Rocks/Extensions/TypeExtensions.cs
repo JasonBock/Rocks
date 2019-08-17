@@ -249,7 +249,7 @@ namespace Rocks.Extensions
 				@this.GetProperties(ReflectionValues.PublicNonPublicInstance).Where(p => p.GetDefaultMethod().IsUnsafeToMock(false)).Any() ||
 				@this.GetEvents(ReflectionValues.PublicNonPublicInstance).Where(e => e.AddMethod.IsUnsafeToMock(false)).Any();
 
-		internal static string Validate(this Type @this, SerializationOptions options, NameGenerator generator)
+		internal static string Validate(this Type @this, SerializationOption options, NameGenerator generator)
 		{
 			var thisTypeInfo = @this;
 
@@ -266,7 +266,7 @@ namespace Rocks.Extensions
 				return ErrorMessages.GetCannotMockObsoleteType(TypeDissector.Create(@this).SafeName);
 			}
 
-			if (options == SerializationOptions.Supported && !@this.IsInterface &&
+			if (options == SerializationOption.Supported && !@this.IsInterface &&
 				@this.GetConstructor(Type.EmptyTypes) is null)
 			{
 				return ErrorMessages.GetCannotMockTypeWithSerializationRequestedAndNoPublicNoArgumentConstructor(

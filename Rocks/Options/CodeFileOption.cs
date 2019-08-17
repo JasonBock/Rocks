@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Options
 {
-	public enum CodeFileOptions
+	public enum CodeFileOption
 	{
 		None,
 		Create

@@ -9,7 +9,7 @@
 
 		public MethodAdornments<TResult> Returns(TResult returnValue)
 		{
-			((HandlerInformation<TResult>)this.handler).ReturnValue = returnValue;
+			((HandlerInformation<TResult>)this.Handler).ReturnValue = returnValue;
 			return this;
 		}
    }

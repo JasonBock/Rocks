@@ -31,7 +31,7 @@ namespace Rocks.Construction.Generators
 
 				if (propertyMethod.IsPublic)
 				{
-					var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
+					var @override = methodInformation.DescriptionWithOverride.Contains("override", StringComparison.Ordinal) ? "override " : string.Empty;
 					requiresObsoleteSuppression = PropertiesGenerator.HandlePublicProperty(
 						namespaces, isMake, hasEvents, requiresObsoleteSuppression, generatedProperties, property, baseProperty, indexers, @override);
 				}

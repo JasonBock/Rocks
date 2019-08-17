@@ -14,7 +14,7 @@ namespace Rocks.Construction.Persistence
 		{
 			var name = baseType.IsGenericTypeDefinition ?
 				$"{baseType.GetFullName(this.Namespaces)}" : TypeDissector.Create(baseType).SafeName;
-			return $"Rock{name.Replace(".", string.Empty)}";
+			return $"Rock{name.Replace(".", string.Empty, StringComparison.Ordinal)}";
 		}
 
 		private SortedSet<string> Namespaces { get; }

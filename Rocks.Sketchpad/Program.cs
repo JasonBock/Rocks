@@ -125,7 +125,7 @@ namespace Rocks.Sketchpad
 			var rock = Rock.Create<UnicodeEncoding>(
 				new RockOptions(
 					level: OptimizationSetting.Debug,
-					codeFile: CodeFileOptions.Create));
+					codeFile: CodeFileOption.Create));
 			rock.Handle(_ => _.GetHashCode()).Returns(1);
 
 			var chunk = rock.Make();

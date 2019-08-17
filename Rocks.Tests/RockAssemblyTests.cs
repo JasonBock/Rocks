@@ -74,7 +74,7 @@ namespace Rocks.Tests
 			var assembly = new RockAssembly(typeof(object).Assembly, 
 				new RockOptions(
 					level: OptimizationSetting.Debug, 
-					codeFile: CodeFileOptions.Create,
+					codeFile: CodeFileOption.Create,
 					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 
 			Assert.That(assembly.Result.GetTypes().Length, Is.GreaterThan(0));

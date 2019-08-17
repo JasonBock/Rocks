@@ -62,6 +62,10 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[Test]
+		public static void VerifyWhenGivenNull() =>
+			Assert.That(() => (null as IMock)!.Verify(), Throws.TypeOf<ArgumentNullException>());
+
+		[Test]
 		public static void VerifyWhenFailuresOccurred()
 		{
 			var rock = Rock.Create<IMockExtensions>();

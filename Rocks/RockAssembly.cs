@@ -56,7 +56,7 @@ namespace Rocks
 			var compiler = new PersistenceCompiler(trees, this.options.Optimization,
 				new PersistenceNameGenerator(this.assembly).AssemblyName,
 				referencedAssemblies.AsReadOnly(),
-				this.options.CodeFileDirectory, allowUnsafe, this.options.AllowWarnings);
+				this.options.CodeFileDirectory, allowUnsafe, this.options.AllowWarning);
 			return compiler.Compile();
 		}
 

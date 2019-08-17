@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Rocks.Exceptions;
 using Rocks.Options;
+using System;
 using System.IO;
 
 namespace Rocks.Tests
@@ -10,6 +11,10 @@ namespace Rocks.Tests
 		[Test]
 		public static void Create() =>
 			Assert.That(Rock.Create<IRockTests>(), Is.Not.Null, nameof(Rock.Create));
+
+		[Test]
+		public static void CreateWithNull() =>
+			Assert.That(() => Rock.Create<IRockTests>((null as RockOptions)!), Throws.TypeOf<ArgumentNullException>());
 
 		[Test]
 		public static void CreateWhenTypeIsSealed() =>
@@ -22,6 +27,10 @@ namespace Rocks.Tests
 			Assert.That(isSuccessful, Is.True, nameof(isSuccessful));
 			Assert.That(result, Is.Not.Null, nameof(result));
 		}
+
+		[Test]
+		public static void TryCreateWithNull() =>
+			Assert.That(() => Rock.TryCreate<IRockTests>((null as RockOptions)!), Throws.TypeOf<ArgumentNullException>());
 
 		[Test]
 		public static void TryCreateWhenTypeIsSealed()
@@ -45,6 +54,9 @@ namespace Rocks.Tests
 			Assert.That(chunkAsRock.Handlers.Count, Is.EqualTo(1), nameof(chunkAsRock.Handlers.Count));
 		}
 
+		public static void MakeWithNull() =>
+			Assert.That(() => Rock.Make<IRockTests>((null as RockOptions)!), Throws.TypeOf<ArgumentNullException>());
+
 		[Test]
 		public static void MakeWithFile()
 		{
@@ -52,7 +64,7 @@ namespace Rocks.Tests
 			var rock = Rock.Create<IFileTests>(
 				new RockOptions(
 					level: OptimizationSetting.Debug,
-					codeFile: CodeFileOptions.Create,
+					codeFile: CodeFileOption.Create,
 					codeFileDirectory: testDirectory));
 			rock.Handle(_ => _.Member("a", 44));
 
@@ -67,6 +79,17 @@ namespace Rocks.Tests
 			chunk.Member("a", 44);
 			rock.Verify();
 		}
+
+		[Test]
+		public static void TryMake()
+		{
+			var (isSuccessful, result) = Rock.TryMake<IRockTests>();
+			Assert.That(isSuccessful, Is.True, nameof(isSuccessful));
+			Assert.That(result, Is.Not.Null, nameof(result));
+		}
+
+		public static void TryMakeWithNull() =>
+			Assert.That(() => Rock.TryMake<IRockTests>((null as RockOptions)!), Throws.TypeOf<ArgumentNullException>());
 
 		[Test]
 		public static void MakeWhenTypeNameExistsInRocksAssembly()

@@ -25,7 +25,7 @@ namespace Rocks.Construction.Persistence
 		{ }
 
 		protected override string GetDirectoryForFile() =>
-			Path.Combine(this.Options.CodeFileDirectory, this.BaseType.Namespace.Replace(".", "\\"));
+			Path.Combine(this.Options.CodeFileDirectory, this.BaseType.Namespace.Replace(".", "\\", StringComparison.Ordinal));
 
 		protected override string GetAdditionNamespaceCode() =>
 			string.Join(Environment.NewLine, this.generatedDelegates);

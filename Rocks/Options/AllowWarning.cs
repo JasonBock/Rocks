@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Options
 {
-	public enum AllowWarnings
+	public enum AllowWarning
 	{
 		No, Yes
 	}

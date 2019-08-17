@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Threading;
 
 namespace Rocks
@@ -15,6 +16,7 @@ namespace Rocks
 		private const string ErrorExpectedCallCount = "The expected call count is incorrect. Expected: {0}, received: {1}.";
 
 		private int callCount;
+		[NonSerialized]
 		private readonly List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
 
 		internal HandlerInformation()
@@ -54,6 +56,8 @@ namespace Rocks
 
 		public void RaiseEvents(IMockWithEvents target)
 		{
+			if(target is null) { throw new ArgumentNullException(nameof(target)); }
+
 			foreach (var raiseEvent in this.raiseEvents)
 			{
 				target.Raise(raiseEvent.Name, raiseEvent.Args);
@@ -76,7 +80,7 @@ namespace Rocks
 				if (this.ExpectedCallCount != this.callCount)
 				{
 					verifications.Add(string.Format(
-						HandlerInformation.ErrorExpectedCallCount, this.ExpectedCallCount, this.callCount));
+						CultureInfo.CurrentCulture, HandlerInformation.ErrorExpectedCallCount, this.ExpectedCallCount, this.callCount));
 				}
 			}
 

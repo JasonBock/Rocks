@@ -11,7 +11,7 @@ namespace Rocks.Profiling
 			for(var i = 0; i < ProfileSimpleMockGenerationWithNoCaching.Iterations; i++)
 			{
 				var rock = Rock.Create<IAmSimple>(
-					new RockOptions(caching: CachingOptions.GenerateNewVersion));
+					new RockOptions(caching: CachingOption.GenerateNewVersion));
 				rock.Handle(_ => _.DoIt());
 				try
 				{

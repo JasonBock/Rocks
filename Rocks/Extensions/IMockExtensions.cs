@@ -38,6 +38,8 @@ namespace Rocks.Extensions
 
 		public static void Verify(this IMock @this)
 		{
+			if(@this is null) { throw new ArgumentNullException(nameof(@this)); }
+
 			var failures = @this.GetVerificationFailures();
 
 			if (failures.Count > 0)

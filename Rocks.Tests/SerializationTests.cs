@@ -12,7 +12,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void RoundtripWithExpressions()
 		{
-			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOption.Supported));
 			rock.Handle(_ => _.Target(Arg.Is<string>(p => p == "44" || p == "55")));
 
 			var chunk = rock.Make();
@@ -29,7 +29,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void RoundtripWithBinary()
 		{
-			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOptions.Supported));
+			var rock = Rock.Create<IAmSerializable>(new RockOptions(serialization: SerializationOption.Supported));
 			rock.Handle(_ => _.Target("44"));
 
 			var chunk = rock.Make();

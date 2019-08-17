@@ -8,7 +8,7 @@ namespace Rocks
 		internal RaiseEventInformation(string name, EventArgs args) =>
 			(this.Name, this.Args) = (name, args);
 
-		internal string Name { get; }
 		internal EventArgs Args { get; }
+		internal string Name { get; }
 	}
 }

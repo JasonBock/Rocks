@@ -27,7 +27,7 @@ namespace Rocks.Construction.Generators
 
 				var methodInformation = builder.Build(new MockableResult<MethodInfo>(
 					eventMethod, RequiresExplicitInterfaceImplementation.No));
-				var @override = methodInformation.DescriptionWithOverride.Contains("override") ? "override " : string.Empty;
+				var @override = methodInformation.DescriptionWithOverride.Contains("override", StringComparison.Ordinal) ? "override " : string.Empty;
 
 				if (eventMethod.IsPublic)
 				{

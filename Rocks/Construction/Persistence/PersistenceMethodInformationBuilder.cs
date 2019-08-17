@@ -1,6 +1,7 @@
 ﻿using Rocks.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -20,11 +21,11 @@ namespace Rocks.Construction.Persistence
 			var methodCount = this.BaseType.GetMethods(ReflectionValues.PublicInstance)
 				.Where(_ => _.Name == baseMethod.Name && !_.IsSpecialName && _.IsVirtual).Count();
 
-			return methodCount > 1 ? baseMethod.MetadataToken.ToString() : string.Empty;
+			return methodCount > 1 ? baseMethod.MetadataToken.ToString(CultureInfo.CurrentCulture) : string.Empty;
 		}
 
 		private string GetTypeNameWithGenericsAndNoTextFormatting() => 
-			$"{new PersistenceTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
+			$"{new PersistenceTypeNameGenerator(this.Namespaces).Generate(this.BaseType).Replace("<", string.Empty, StringComparison.Ordinal).Replace(">", string.Empty, StringComparison.Ordinal).Replace(", ", string.Empty, StringComparison.Ordinal)}";
 
 		internal Type BaseType { get; }
 	}

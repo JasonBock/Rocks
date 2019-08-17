@@ -3,11 +3,12 @@ using System.Collections.ObjectModel;
 
 namespace Rocks.Templates
 {
+	// All generated events will not be initialized, so they have to annotated as nullable.
 	internal static class EventTemplates
 	{
-		internal static string GetNonPublicEvent(string visibility, string eventType, string eventName) => $"{visibility} override event {eventType} {eventName};";
+		internal static string GetNonPublicEvent(string visibility, string eventType, string eventName) => $"{visibility} override event {eventType}? {eventName};";
 
-		internal static string GetEvent(string @override, string eventType, string eventName) => $"public {@override} event {eventType} {eventName};";
+		internal static string GetEvent(string @override, string eventType, string eventName) => $"public {@override} event {eventType}? {eventName};";
 
 		internal static string GetEvents(ReadOnlyCollection<string> eventList) => 
 $@"#pragma warning disable CS0067

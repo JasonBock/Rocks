@@ -17,7 +17,7 @@ namespace Rocks.Construction.Persistence
 
 		internal PersistenceCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, 
 			string assemblyName, ReadOnlyCollection<Assembly> referencedAssemblies, string assemblyPath,
-			bool allowUnsafe, AllowWarnings allowWarnings)
+			bool allowUnsafe, AllowWarning allowWarnings)
 			: base(trees, optimization, assemblyName, referencedAssemblies, allowUnsafe, allowWarnings) => this.assemblyPath = assemblyPath;
 
 		private FileStream GetAssemblyStream() =>
@@ -37,7 +37,7 @@ namespace Rocks.Construction.Persistence
 					pdbStream: pdbStream);
 				var diagnostics = results.Diagnostics;
 
-				if (this.AllowWarnings == AllowWarnings.No &&
+				if (this.AllowWarnings == AllowWarning.No &&
 					diagnostics.Length > 0 &&
 					diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
 				{

@@ -78,7 +78,7 @@ namespace Rocks.Construction
 		where T : Stream
 	{
 		protected Compiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, string assemblyName,
-			ReadOnlyCollection<Assembly> referencedAssemblies, bool allowUnsafe, AllowWarnings allowWarnings)
+			ReadOnlyCollection<Assembly> referencedAssemblies, bool allowUnsafe, AllowWarning allowWarnings)
 		{
 			this.Optimization = optimization;
 			this.AssemblyName = assemblyName;
@@ -102,7 +102,7 @@ namespace Rocks.Construction
 				references: this.GetReferences());
 			var diagnostics = compilation.GetDiagnostics();
 
-			if (this.AllowWarnings == AllowWarnings.No &&
+			if (this.AllowWarnings == AllowWarning.No &&
 				diagnostics.Length > 0 &&
 				diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
 			{
@@ -126,7 +126,7 @@ namespace Rocks.Construction
 
 		protected abstract Assembly Emit(CSharpCompilation compilation);
 
-		internal AllowWarnings AllowWarnings { get; }
+		internal AllowWarning AllowWarnings { get; }
 		internal string AssemblyName { get; }
 		internal OptimizationSetting Optimization { get; }
 		internal IEnumerable<SyntaxTree> Trees { get; }

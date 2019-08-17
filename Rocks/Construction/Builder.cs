@@ -61,7 +61,8 @@ namespace Rocks.Construction
 
 		protected string GetTypeNameWithNoGenerics() => this.TypeName.Split('<').First();
 
-		protected string GetTypeNameWithGenericsAndNoTextFormatting() => $"{this.TypeName.Replace("<", string.Empty).Replace(">", string.Empty).Replace(", ", string.Empty)}";
+		protected string GetTypeNameWithGenericsAndNoTextFormatting() => 
+			$"{this.TypeName.Replace("<", string.Empty, StringComparison.Ordinal).Replace(">", string.Empty, StringComparison.Ordinal).Replace(", ", string.Empty, StringComparison.Ordinal)}";
 
 		private string MakeCode()
 		{
@@ -88,9 +89,9 @@ namespace Rocks.Construction
 				this.TypeName, this.BaseType.GetFullName(),
 				methods.Result, properties.Result, events.Result, constructors.Result,
 				this.BaseType.Namespace,
-				this.Options.Serialization == SerializationOptions.Supported ?
+				this.Options.Serialization == SerializationOption.Supported ?
 					"[Serializable]" : string.Empty,
-				this.Options.Serialization == SerializationOptions.Supported ?
+				this.Options.Serialization == SerializationOption.Supported ?
 					ConstructorTemplates.GetConstructorWithNoArguments(this.GetTypeNameWithNoGenerics()) : string.Empty,
 				this.GetAdditionNamespaceCode(),
 				this.IsUnsafe, constraints,
@@ -111,7 +112,7 @@ namespace Rocks.Construction
 			var options = new CSharpParseOptions(languageVersion: LanguageVersion.CSharp8);
 			SyntaxTree tree;
 
-			if (this.Options.CodeFile == CodeFileOptions.Create)
+			if (this.Options.CodeFile == CodeFileOption.Create)
 			{
 				var fileDirectory = this.GetDirectoryForFile();
 				Directory.CreateDirectory(fileDirectory);

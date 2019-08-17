@@ -46,7 +46,7 @@ namespace Rocks
 			var rockType = default(Type);
 			var key = new CacheKey(tType, this.options);
 
-			if (this.options.Caching == CachingOptions.UseCache)
+			if (this.options.Caching == CachingOption.UseCache)
 			{
 				lock (Rock.CacheLock)
 				{
@@ -66,7 +66,7 @@ namespace Rocks
 							cache.Add(key, rockType);
 						}
 
-						if (this.options.Serialization == SerializationOptions.Supported)
+						if (this.options.Serialization == SerializationOption.Supported)
 						{
 							Rock.Binder.Assemblies.Add(rockType.Assembly);
 						}
@@ -78,7 +78,7 @@ namespace Rocks
 				rockType = new InMemoryMaker(tType, readOnlyHandlers, this.Namespaces,
 					this.options, this.isMake).Mock;
 
-				if (this.options.Serialization == SerializationOptions.Supported)
+				if (this.options.Serialization == SerializationOption.Supported)
 				{
 					Rock.Binder.Assemblies.Add(rockType.Assembly);
 				}

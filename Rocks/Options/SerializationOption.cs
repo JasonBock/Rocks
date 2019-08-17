@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Options
 {
-	public enum SerializationOptions
+	public enum SerializationOption
 	{
 		NotSupported,
 		Supported

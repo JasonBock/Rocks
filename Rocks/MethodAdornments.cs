@@ -4,14 +4,14 @@ namespace Rocks
 {
 	public class MethodAdornments
 	{
-		protected HandlerInformation handler;
-
-		public MethodAdornments(HandlerInformation handler) => this.handler = handler;
+		public MethodAdornments(HandlerInformation handler) => this.Handler = handler;
 
 		public MethodAdornments Raises(string eventName, EventArgs args)
 		{
-			this.handler.AddRaiseEvent(new RaiseEventInformation(eventName, args));
+			this.Handler.AddRaiseEvent(new RaiseEventInformation(eventName, args));
 			return this;
 		}
+
+		protected HandlerInformation Handler { get; }
 	}
 }

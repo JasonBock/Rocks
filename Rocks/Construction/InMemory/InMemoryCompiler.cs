@@ -14,7 +14,7 @@ namespace Rocks.Construction.InMemory
 		: Compiler<MemoryStream>
 	{
 		internal InMemoryCompiler(IEnumerable<SyntaxTree> trees, OptimizationSetting optimization, ReadOnlyCollection<Assembly> referencedAssemblies,
-			bool allowUnsafe, AllowWarnings allowWarnings)
+			bool allowUnsafe, AllowWarning allowWarnings)
 			: base(trees, optimization, new InMemoryNameGenerator().AssemblyName, referencedAssemblies, allowUnsafe, allowWarnings)
 		{ }
 
@@ -26,7 +26,7 @@ namespace Rocks.Construction.InMemory
 
 			var diagnostics = results.Diagnostics;
 
-			if (this.AllowWarnings == AllowWarnings.No &&
+			if (this.AllowWarnings == AllowWarning.No &&
 				diagnostics.Length > 0 &&
 				diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
 			{

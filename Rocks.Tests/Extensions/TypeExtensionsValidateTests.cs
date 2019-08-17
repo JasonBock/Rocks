@@ -13,49 +13,49 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public void ValidateWhenTypeIsAbstractAndHasInternalConstructor() =>
 			Assert.That(typeof(HaveInternalConstructor).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsAbstractAndHasInternalAbstractProperty() =>
 			Assert.That(typeof(HaveInternalAbstractProperty).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndDoesNotHaveHandlerConstructor() =>
 			Assert.That(typeof(DoNotHaveHandlerConstructor).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasHandlerConstructor() =>
 			Assert.That(typeof(HaveHandlerConstructor).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsSealedAndHasObjectConstructor() =>
 			Assert.That(typeof(HaveObjectConstructor).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsSupported() =>
 			Assert.That(typeof(HaveNoPublicConstructor).Validate(
-				SerializationOptions.Supported,
+				SerializationOption.Supported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsClassAndHasNoPublicNoArgumentConstructorAndSerializationIsNotSupported() =>
 			Assert.That(typeof(HaveNoPublicConstructor).Validate(
-				SerializationOptions.NotSupported,
+				SerializationOption.NotSupported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 
 		[Test]
 		public void ValidateWhenTypeIsInterfaceAndSerializationIsSupported() =>
 			Assert.That(typeof(IHaveNoPublicConstructor).Validate(
-				SerializationOptions.Supported,
+				SerializationOption.Supported,
 				new InMemoryNameGenerator()), Is.Empty);
 
 		[Test]
@@ -64,7 +64,7 @@ namespace Rocks.Tests.Extensions
 			var obsoleteType = this.GetType().Assembly
 				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsFalse")!;
 			Assert.That(obsoleteType.Validate(
-				SerializationOptions.Supported,
+				SerializationOption.Supported,
 				new InMemoryNameGenerator()), Is.Empty);
 		}
 
@@ -74,7 +74,7 @@ namespace Rocks.Tests.Extensions
 			var obsoleteType = this.GetType().Assembly
 				.GetType("Rocks.Tests.Extensions.IAmObsoleteWithErrorAsTrue")!;
 			Assert.That(obsoleteType.Validate(
-				SerializationOptions.Supported,
+				SerializationOption.Supported,
 				new InMemoryNameGenerator()), Is.Not.Empty);
 		}
 	}

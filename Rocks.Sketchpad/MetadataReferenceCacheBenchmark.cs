@@ -13,7 +13,7 @@ namespace Rocks.Sketchpad
 
 		public MetadataReferenceCacheBenchmark()
 		{
-			var options = new RockOptions(caching: CachingOptions.GenerateNewVersion);
+			var options = new RockOptions(caching: CachingOption.GenerateNewVersion);
 			this.iaRock = Rock.Create<IA>(options);
 			this.iaRock.Handle(_ => _.Foo());
 			this.ibRock = Rock.Create<IB>(options);

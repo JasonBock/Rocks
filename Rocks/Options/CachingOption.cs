@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Options
 {
-	public enum CachingOptions
+	public enum CachingOption
 	{
 		UseCache,
 		GenerateNewVersion

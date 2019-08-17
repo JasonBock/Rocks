@@ -56,8 +56,8 @@ namespace Rocks.Tests
 		[Test]
 		public static void EnsureMakeAlwaysUsesCache()
 		{
-			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
-			var chunk2 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOptions.GenerateNewVersion));
+			var chunk1 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOption.GenerateNewVersion));
+			var chunk2 = Rock.Make<IAmForMaking>(new RockOptions(caching: CachingOption.GenerateNewVersion));
 
 			Assert.That(chunk1.GetType(), Is.EqualTo(chunk2.GetType()));
 		}
