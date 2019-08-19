@@ -1,4 +1,6 @@
-﻿namespace Rocks.Templates
+﻿using System.Globalization;
+
+namespace Rocks.Templates
 {
 	public static class PropertyTemplates
 	{
@@ -12,7 +14,7 @@
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -35,7 +37,7 @@ $@"{visibility} get
 			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -53,7 +55,7 @@ $@"{visibility} get
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -76,7 +78,7 @@ $@"{visibility} get
 			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} get
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -100,7 +102,7 @@ $@"{visibility} get => throw new S.NotImplementedException();";
 			string methodWithArgumentValues, string visibility, bool hasEvents) =>
 $@"{visibility} set
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var foundMatch = false;
 
@@ -136,7 +138,7 @@ $@"{visibility} set
 			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} set
 {{
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 

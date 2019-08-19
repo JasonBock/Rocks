@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using static Rocks.Extensions.TypeExtensions;
 
@@ -52,7 +53,7 @@ $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var foundMatch = false;
 				
@@ -96,7 +97,7 @@ $@"{visibility} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
@@ -125,7 +126,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -150,7 +151,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?
@@ -172,7 +173,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		foreach(var methodHandler in methodHandlers)
 		{{
@@ -197,7 +198,7 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
-	if (this.handlers.TryGetValue({methodHandle}, out var methodHandlers))
+	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
 		var result = methodHandler.Method != null ?

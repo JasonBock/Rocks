@@ -80,7 +80,8 @@ namespace Rocks
 				if (this.ExpectedCallCount != this.callCount)
 				{
 					verifications.Add(string.Format(
-						CultureInfo.CurrentCulture, HandlerInformation.ErrorExpectedCallCount, this.ExpectedCallCount, this.callCount));
+						CultureInfo.CurrentCulture, HandlerInformation.ErrorExpectedCallCount, 
+						this.ExpectedCallCount.ToString(), this.callCount.ToString(CultureInfo.CurrentCulture)));
 				}
 			}
 
