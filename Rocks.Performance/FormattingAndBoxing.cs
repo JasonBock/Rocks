@@ -11,18 +11,26 @@ namespace Rocks.Performance
 
 		[Benchmark]
 		public string FormatStringWithNoToString() =>
-			$"The expected call count is incorrect. Expected: {this.value1}, received: {this.value2}.";
+			string.Format("The expected call count is incorrect. Expected: {0}, received: {1}.", this.value1, this.value2);
 
 		[Benchmark]
 		public string FormatStringWithToString() =>
+			string.Format("The expected call count is incorrect. Expected: {0}, received: {1}.", this.value1.ToString(), this.value2.ToString());
+
+		[Benchmark]
+		public string InterpolateStringWithNoToString() =>
+			$"The expected call count is incorrect. Expected: {this.value1}, received: {this.value2}.";
+
+		[Benchmark]
+		public string InterpolateStringWithToString() =>
 			$"The expected call count is incorrect. Expected: {this.value1.ToString("N")}, received: {this.value2.ToString("N")}.";
 
 		[Benchmark]
-		public string FormatStringWithToStringNoFormatStrings() =>
+		public string InterpolateStringWithToStringNoFormatStrings() =>
 			$"The expected call count is incorrect. Expected: {this.value1.ToString()}, received: {this.value2.ToString()}.";
 
 		[Benchmark]
-		public string FormatStringWithToStringNoFormatStringsAndCulture() =>
+		public string InterpolateStringWithToStringNoFormatStringsAndCulture() =>
 			$"The expected call count is incorrect. Expected: {this.value1.ToString(CultureInfo.CurrentCulture)}, received: {this.value2.ToString(CultureInfo.CurrentCulture)}.";
 
 		[Benchmark]

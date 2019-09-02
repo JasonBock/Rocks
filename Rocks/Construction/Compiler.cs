@@ -54,14 +54,6 @@ namespace Rocks.Construction
 							assemblies.Add(Assembly.Load(new AssemblyName(platformAssemblyName)));
 						}
 					}
-
-					assemblies.Add(typeof(Exception).Assembly);
-				}
-				else
-				{
-					assemblies.Add(typeof(object).Assembly);
-					assemblies.Add(typeof(IMock).Assembly);
-					assemblies.Add(typeof(Action<,,,,,,,,>).Assembly);
 				}
 
 				foreach (var assembly in assemblies.ToList())

@@ -13,18 +13,22 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		static void Main() =>
-			BenchmarkRunner.Run<GenericArgumentsTests>();
-			//await EvaluateExpressionAsync("Do()");
-			//await EvaluateExpressionAsync("Do(");
-			//await EvaluateExpressionAsync("Do(3, 4)");
-			//await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
-			//await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
-			//await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+		//static void Main() =>
+			//BenchmarkRunner.Run<GenericArgumentsTests>();
 			//Demo.Demonstrate();
 			//Program.HandleVirtualOnClass();
 			//Program.HandleFoo();
 			//Program.SpanTypeTests();
+
+		static async Task Main()
+		{
+			await EvaluateExpressionAsync("Do()");
+			await EvaluateExpressionAsync("Do(");
+			await EvaluateExpressionAsync("Do(3, 4)");
+			await EvaluateExpressionAsync("Do(3, \"hi\", 'c', 4)");
+			await EvaluateExpressionAsync("Do(3, Guid.NewGuid())");
+			await EvaluateExpressionAsync("Do(3, Guid.Parse(Guid.NewGuid().ToString(\"N\")))");
+		}
 
 		public struct MyThing<T> { }
 
