@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using MBU = Microsoft.Build.Utilities;
 
-namespace Rocks.Task
+namespace Rocks
 {
 	public sealed class RocksTask
 		: MBU.Task

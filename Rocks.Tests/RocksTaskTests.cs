@@ -1,9 +1,9 @@
 ﻿using Microsoft.Build.Framework;
 using NUnit.Framework;
 using Rocks.Options;
-using Rocks.RockAssemblyTestContainer;
+using Rocks.RockTaskTestContainer;
 
-namespace Rocks.Task.Tests
+namespace Rocks.Tests
 {
 	public static class RocksTaskTests
 	{
@@ -16,7 +16,7 @@ namespace Rocks.Task.Tests
 
 			var task = new RocksTask
 			{
-				AssemblyLocation = typeof(Class1).Assembly.Location,
+				AssemblyLocation = typeof(TaskTarget).Assembly.Location,
 				CodeFileDirectory = TestContext.CurrentContext.TestDirectory
 			};
 			task.BuildEngine = engineMock.Make();

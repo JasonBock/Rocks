@@ -2,7 +2,7 @@
 {
 	namespace TestAssembly.Extensions
 	{
-		public static class Class3
+		public static class CannotBeMocked
 		{
 			public static void Method1(this string @this) { }
 		}

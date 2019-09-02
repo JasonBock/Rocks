@@ -13,10 +13,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.3.0-preview-20190808-03" />
     <PackageReference Include="NUnit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.14.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj" />
+    <ProjectReference Include="..\Rocks.RockTaskTestContainer\Rocks.RockTaskTestContainer.csproj" />
     <ProjectReference Include="..\Rocks.Tests.Types\Rocks.Tests.Types.csproj" />
     <ProjectReference Include="..\Rocks\Rocks.csproj" />
   </ItemGroup>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Rocks.RockAssemblyTestContainer.Contracts
 {
-	public interface Interface1<T>
+	public interface IShouldBeMocked<T>
 	{
 		void Method1();
 		string Method2(T a);

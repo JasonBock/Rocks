@@ -2,7 +2,7 @@
 
 namespace Rocks.RockAssemblyTestContainer
 {
-	public class Class1
+	public class AssemblyTarget
 	{
 		public virtual void Method1() { }
 		public virtual string Method2(int a) => null!; 
