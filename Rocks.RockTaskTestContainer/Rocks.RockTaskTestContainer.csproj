@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.1</TargetFramework>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
