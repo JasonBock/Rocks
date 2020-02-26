@@ -3,18 +3,13 @@ using System;
 using System.Collections.Generic;
 using Rocks.Extensions;
 using System.Linq;
-using BenchmarkDotNet.Code;
 
 namespace Rocks.Sketchpad
 {
 	[MemoryDiagnoser]
-	//[ClrJob, CoreJob]
 	public class GenericArgumentsTests
 	{
-		private SortedSet<string> namespaces;
-
-		[GlobalSetup]
-		public void GlobalSetup() => this.namespaces = new SortedSet<string>();
+		private SortedSet<string> namespaces = new SortedSet<string>();
 
 		public IEnumerable<Type> Types()
 		{

@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Code;
+using BenchmarkDotNet.Jobs;
 using System;
 using System.Collections.Generic;
 using static Rocks.Extensions.TypeExtensions;
@@ -7,13 +8,10 @@ using static Rocks.Extensions.TypeExtensions;
 namespace Rocks.Sketchpad
 {
 	[MemoryDiagnoser]
-	[ClrJob, CoreJob]
+	[SimpleJob(RuntimeMoniker.Net461), SimpleJob(RuntimeMoniker.NetCoreApp31)]
 	public class TypeNameGeneratorTests
 	{
-		private SortedSet<string> namespaces;
-
-		[GlobalSetup]
-		public void GlobalSetup() => this.namespaces = new SortedSet<string>();
+		private SortedSet<string> namespaces = new SortedSet<string>();
 
 		public IEnumerable<IParam> Types()
 		{

@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-		<TargetFramework>netcoreapp3.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<Nullable>enable</Nullable>
-		<AssemblyName>Rocks.Tests.Types</AssemblyName>
+    <AssemblyName>Rocks.Tests.Types</AssemblyName>
+    <Copyright>Copyright © 2020</Copyright>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
     <RootNamespace>Rocks.Tests.Types</RootNamespace>
-    <Version>4.0.0</Version>
-    <Copyright>Copyright © 2019</Copyright>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <Version>4.1.0</Version>
   </PropertyGroup>
 </Project>
