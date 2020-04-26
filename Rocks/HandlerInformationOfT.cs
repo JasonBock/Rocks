@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Rocks
 {
-#pragma warning disable CS8653
+#pragma warning disable CS8653, CS8601
 	[Serializable]
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
@@ -11,7 +11,7 @@ namespace Rocks
 		internal HandlerInformation(ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 			: base(null, 1, expectations) => this.ReturnValue = default;
 
-	  internal HandlerInformation(Delegate? method, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
+		internal HandlerInformation(Delegate? method, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 			: base(method, 1, expectations) => this.ReturnValue = default;
 
 		internal HandlerInformation(uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
@@ -22,5 +22,5 @@ namespace Rocks
 
 		public T ReturnValue { get; internal set; }
    }
-#pragma warning restore CS8653
+#pragma warning restore CS8653, CS8061
 }

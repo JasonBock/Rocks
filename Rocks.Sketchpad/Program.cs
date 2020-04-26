@@ -13,15 +13,15 @@ namespace Rocks.Sketchpad
 {
 	public static class Program
 	{
-		//static void Main() =>
-		//BenchmarkRunner.Run<GenericArgumentsTests>();
-		//Demo.Demonstrate();
-		//Program.HandleVirtualOnClass();
-		//Program.HandleFoo();
-		//Program.SpanTypeTests();
+		static void Main() =>
+			//BenchmarkRunner.Run<GenericArgumentsTests>();
+			Demo.Demonstrate();
+			//Program.HandleVirtualOnClass();
+			//Program.HandleFoo();
+			//Program.SpanTypeTests();
 
-		static async Task Main() => 
-			await ExpressionEvaluation.RunEvaluationsAsync();
+		//static async Task Main() => 
+		//	await ExpressionEvaluation.RunEvaluationsAsync();
 
 		public struct MyThing<T> { }
 

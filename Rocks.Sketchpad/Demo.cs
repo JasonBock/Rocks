@@ -1,9 +1,13 @@
-﻿namespace Rocks.Sketchpad
+﻿using Rocks.Options;
+
+namespace Rocks.Sketchpad
 {
 	internal static class Demo
 	{
 		internal static void Demonstrate()
 		{
+			//var rock = Rock.Create<IService>(
+			//	new RockOptions(level: OptimizationSetting.Debug, codeFile: CodeFileOption.Create));
 			var rock = Rock.Create<IService>();
 			//rock.Handle(_ => _.ServiceOne());
 			rock.Handle(_ => _.ServiceTwo(3));
