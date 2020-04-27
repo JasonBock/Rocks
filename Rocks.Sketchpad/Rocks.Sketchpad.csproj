@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Rocks.Sketchpad</RootNamespace>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />

@@ -12,12 +12,12 @@
     <PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>4.1.0</PackageVersion>
+    <PackageVersion>4.1.1</PackageVersion>
     <RepositoryUrl>https://github.com/jasonbock/rocks</RepositoryUrl>
     <RootNamespace>Rocks</RootNamespace>
     <TargetFramework>netstandard2.1</TargetFramework>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CodeAnalysisRuleSet>Rocks.ruleset</CodeAnalysisRuleSet>

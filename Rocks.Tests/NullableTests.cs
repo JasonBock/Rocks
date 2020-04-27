@@ -1,9 +1,10 @@
 ﻿using NUnit.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Tests
 {
-   public static class NullableTests
-   {
+	public static class NullableTests
+	{
 		[Test]
 		public static void MockWithNullableTypes()
 		{
@@ -21,13 +22,25 @@ namespace Rocks.Tests
 
 			rock.Verify();
 		}
-   }
 
-   public interface INullable
-   {
+		[Test]
+		public static void MockWithAllowNullAttribute()
+		{
+			var rock = Rock.Create<INullable>();
+			rock.Handle(_ => _.HasAllowNullAttribute("a"));
+
+			var chunk = rock.Make();
+			chunk.HasAllowNullAttribute("a");
+			rock.Verify();
+		}
+	}
+
+	public interface INullable
+	{
 		U GoWithNullableReferenceParameter<U>(U? value) where U : class;
 		U? GoWithNullableReferenceReturn<U>(U value) where U : class;
 		U GoWithNullableValueParameter<U>(U? value) where U : struct;
 		U? GoWithNullableValueReturn<U>(U value) where U : struct;
-   }
+		void HasAllowNullAttribute([AllowNull] string a);
+	}
 }

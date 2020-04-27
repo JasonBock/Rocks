@@ -26,9 +26,11 @@ namespace Rocks.Tests.Templates
 		{
 			if(d)
 			{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					(c)((e)methodHandler.Method)(b) :
 					((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
@@ -50,9 +52,11 @@ namespace Rocks.Tests.Templates
 		{
 			if(d)
 			{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					(c)((e)methodHandler.Method)(b) :
 					((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				
 				methodHandler.IncrementCallCount();
 				return result;
@@ -71,9 +75,11 @@ namespace Rocks.Tests.Templates
 	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			(c)((d)methodHandler.Method)(b) :
 			((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
@@ -90,9 +96,11 @@ namespace Rocks.Tests.Templates
 	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			(c)((d)methodHandler.Method)(b) :
 			((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		
 		methodHandler.IncrementCallCount();
 		return result;
@@ -112,9 +120,11 @@ namespace Rocks.Tests.Templates
 		{
 			if(d)
 			{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					(c)((e)methodHandler.Method)(b) :
 					((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
 				return result;
@@ -136,9 +146,11 @@ namespace Rocks.Tests.Templates
 		{
 			if(d)
 			{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					(c)((e)methodHandler.Method)(b) :
 					((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				
 				methodHandler.IncrementCallCount();
 				return result;
@@ -157,9 +169,11 @@ namespace Rocks.Tests.Templates
 	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			(c)((d)methodHandler.Method)(b) :
 			((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
 		return result;
@@ -176,9 +190,11 @@ namespace Rocks.Tests.Templates
 	if (this.handlers.TryGetValue(1, out var methodHandlers))
 	{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			(c)((d)methodHandler.Method)(b) :
 			((R.HandlerInformation<c>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		
 		methodHandler.IncrementCallCount();
 		return result;
@@ -209,7 +225,9 @@ namespace Rocks.Tests.Templates
 
 				if(methodHandler.Method != null)
 				{
+#pragma warning disable CS8604
 					((d)methodHandler.Method)(b);
+#pragma warning restore CS8604
 				}
 	
 				methodHandler.RaiseEvents(this);
@@ -246,7 +264,9 @@ namespace Rocks.Tests.Templates
 
 				if(methodHandler.Method != null)
 				{
+#pragma warning disable CS8604
 					((d)methodHandler.Method)(b);
+#pragma warning restore CS8604
 				}
 	
 				
@@ -277,7 +297,9 @@ namespace Rocks.Tests.Templates
 
 		if(methodHandler.Method != null)
 		{
+#pragma warning disable CS8604
 			((c)methodHandler.Method)(b);
+#pragma warning restore CS8604
 		}
 	
 		methodHandler.RaiseEvents(this);
@@ -300,7 +322,9 @@ namespace Rocks.Tests.Templates
 
 		if(methodHandler.Method != null)
 		{
+#pragma warning disable CS8604
 			((c)methodHandler.Method)(b);
+#pragma warning restore CS8604
 		}
 	
 		

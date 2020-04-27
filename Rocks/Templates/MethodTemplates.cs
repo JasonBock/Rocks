@@ -43,7 +43,6 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} override {methodName}
 	
 	return {MethodTemplates.GetDefaultReturnValue(returnType)};
 }}";
-		
 		internal static string GetNotImplementedMethod(string methodNameWithOverride) =>
 $@"public {methodNameWithOverride} => throw new S.NotImplementedException();";
 
@@ -65,7 +64,9 @@ $@"{visibility} {methodNameWithOverride}
 
 				if(methodHandler.Method != null)
 				{{
+#pragma warning disable CS8604
 					(({delegateCast})methodHandler.Method)({argumentNames});
+#pragma warning restore CS8604
 				}}
 
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -102,7 +103,9 @@ $@"{visibility} {methodNameWithOverride}
 		var methodHandler = methodHandlers[0];
 		if(methodHandler.Method != null)
 		{{
+#pragma warning disable CS8604
 			(({delegateCast})methodHandler.Method)({argumentNames});
+#pragma warning restore CS8604
 		}}
 
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -132,9 +135,11 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 		{{
 			if({expectationTemplateInstances})
 			{{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -154,9 +159,11 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 			((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -179,9 +186,11 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 		{{
 			if({expectationTemplateInstances})
 			{{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -201,9 +210,11 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 			((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;

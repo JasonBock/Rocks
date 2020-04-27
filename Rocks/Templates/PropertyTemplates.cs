@@ -20,9 +20,11 @@ $@"{visibility} get
 		{{
 			if({expectationTemplateInstances})
 			{{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -40,9 +42,11 @@ $@"{visibility} get
 	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			({returnType})(({delegateCast})methodHandler.Method)({argumentNames}) :
 			((R.HandlerInformation<{returnType}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -61,9 +65,11 @@ $@"{visibility} get
 		{{
 			if({expectationTemplateInstances})
 			{{
+#pragma warning disable CS8604
 				var result = methodHandler.Method != null ?
 					({returnTypeName})(({delegateCast})methodHandler.Method)({argumentNames}) :
 					((R.HandlerInformation<{returnTypeName}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
 				return result;
@@ -81,9 +87,11 @@ $@"{visibility} get
 	if (this.handlers.TryGetValue({methodHandle.ToString(CultureInfo.CurrentCulture)}, out var methodHandlers))
 	{{
 		var methodHandler = methodHandlers[0];
+#pragma warning disable CS8604
 		var result = methodHandler.Method != null ?
 			({returnType})(({delegateCast})methodHandler.Method)({argumentNames}) :
 			((R.HandlerInformation<{returnType}>)methodHandler).ReturnValue;
+#pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
 		return result;
@@ -114,7 +122,9 @@ $@"{visibility} set
 
 				if(methodHandler.Method != null)
 				{{
+#pragma warning disable CS8604
 					(({delegateCast})methodHandler.Method)({argumentNames});
+#pragma warning restore CS8604
 				}}
 	
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
@@ -133,7 +143,6 @@ $@"{visibility} set
 		throw new RE.ExpectationException($""No handlers were found for {methodWithArgumentValues}"");
 	}}
 }}";
-
 		public static string GetPropertySetAndNoIndexers(int methodHandle, string argumentNames,
 			string delegateCast, string visibility, bool hasEvents) =>
 $@"{visibility} set
@@ -144,7 +153,9 @@ $@"{visibility} set
 
 		if(methodHandler.Method != null)
 		{{
+#pragma warning disable CS8604
 			(({delegateCast})methodHandler.Method)({argumentNames});
+#pragma warning restore CS8604
 		}}
 	
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
