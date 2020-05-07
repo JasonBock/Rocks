@@ -1,13 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Rocks.Profiling</AssemblyName>
-    <Copyright>Copyright © 2020</Copyright>
-    <LangVersion>latest</LangVersion>
     <OutputType>Exe</OutputType>
     <RootNamespace>Rocks.Profiling</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Version>4.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Rocks\Rocks.csproj" />

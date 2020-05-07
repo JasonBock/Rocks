@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		build.cmd = build.cmd
 		build.sh = build.sh
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -25,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Profiling", "Rocks.Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.RockTaskTestContainer", "Rocks.RockTaskTestContainer\Rocks.RockTaskTestContainer.csproj", "{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockTaskTestContainer", "Rocks.RockTaskTestContainer\Rocks.RockTaskTestContainer.csproj", "{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

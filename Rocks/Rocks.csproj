@@ -1,37 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Rocks</AssemblyName>
-    <Authors>Jason Bock</Authors>
-    <Copyright>Copyright © 2020</Copyright>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <PackageId>Rocks</PackageId>
     <PackageIconUrl>https://raw.githubusercontent.com/JasonBock/Rocks/master/Images/RocksIcon.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/jasonbock/rocks/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
-    <PackageReleaseNotes></PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageVersion>4.1.1</PackageVersion>
+    <PackageVersion>$(Version)</PackageVersion>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryUrl>https://github.com/jasonbock/rocks</RepositoryUrl>
     <RootNamespace>Rocks</RootNamespace>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Version>4.1.1</Version>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CodeAnalysisRuleSet>Rocks.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>Rocks.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="16.5.0" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 </Project>

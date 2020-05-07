@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks
 {
 	internal static class ObjectEquality
 	{
-		internal static bool AreEqual<T>(T value1, T value2)
+		internal static bool AreEqual<T>([AllowNull] T value1, [AllowNull] T value2)
 		{
 			if (value1 is null && value2 is null)
 			{

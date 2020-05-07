@@ -1,9 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Version>4.1.1</Version>
   </PropertyGroup>
 </Project>

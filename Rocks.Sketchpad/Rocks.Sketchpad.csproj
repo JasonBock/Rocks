@@ -2,13 +2,10 @@
   <PropertyGroup>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <AssemblyName>Rocks.Sketchpad</AssemblyName>
-    <Copyright>Copyright © 2020</Copyright>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RootNamespace>Rocks.Sketchpad</RootNamespace>
-    <Version>4.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />

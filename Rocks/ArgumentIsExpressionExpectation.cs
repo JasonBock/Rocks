@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using SLE = System.Linq.Expressions;
 
 namespace Rocks
@@ -11,7 +12,7 @@ namespace Rocks
 			this.Expression = SLE.Expression.Lambda(expression, Array.Empty<SLE.ParameterExpression>()).Compile() ??
 				throw new ArgumentNullException(nameof(expression));
 
-		public override bool IsValid(T value) =>
+		public override bool IsValid([AllowNull] T value) =>
 			ObjectEquality.AreEqual((T)this.Expression.DynamicInvoke(Array.Empty<object>()), value);
 
 		internal Delegate Expression { get; }

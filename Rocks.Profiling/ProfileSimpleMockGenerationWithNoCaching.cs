@@ -8,16 +8,12 @@ namespace Rocks.Profiling
 
 		internal static void Profile()
 		{
-			for(var i = 0; i < ProfileSimpleMockGenerationWithNoCaching.Iterations; i++)
+			for (var i = 0; i < ProfileSimpleMockGenerationWithNoCaching.Iterations; i++)
 			{
 				var rock = Rock.Create<IAmSimple>(
 					new RockOptions(caching: CachingOption.GenerateNewVersion));
 				rock.Handle(_ => _.DoIt());
-				try
-				{
-					rock.Make();
-				}
-				catch { }
+				rock.Make();
 			}
 		}
 	}

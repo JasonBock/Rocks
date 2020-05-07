@@ -12,7 +12,7 @@ namespace Rocks.Tests
 			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult<int>(44));
 
 			var uses = new UsesAsync(rock.Make());
-			Assert.That(await uses.RunGoAsync(), Is.EqualTo(44));
+			Assert.That(await uses.RunGoAsync().ConfigureAwait(false), Is.EqualTo(44));
 
 			rock.Verify();
 		}
@@ -29,7 +29,7 @@ namespace Rocks.Tests
 				});
 
 			var uses = new UsesAsync(rock.Make());
-			Assert.That(await uses.RunGoAsync(), Is.EqualTo(44));
+			Assert.That(await uses.RunGoAsync().ConfigureAwait(false), Is.EqualTo(44));
 
 			rock.Verify();
 		}
@@ -48,6 +48,6 @@ namespace Rocks.Tests
 			this.amAsync = amAsync;
 
 		public async Task<int> RunGoAsync() =>
-			await this.amAsync.GoAsync();
+			await this.amAsync.GoAsync().ConfigureAwait(false);
 	}
 }

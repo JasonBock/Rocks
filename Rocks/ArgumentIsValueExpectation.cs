@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks
 {
@@ -8,7 +9,7 @@ namespace Rocks
    {
 		internal ArgumentIsValueExpectation(T value) => this.Value = value;
 
-		public override bool IsValid(T value) => ObjectEquality.AreEqual(this.Value, value);
+		public override bool IsValid([AllowNull] T value) => ObjectEquality.AreEqual(this.Value, value);
 
 		internal T Value { get; }
    }

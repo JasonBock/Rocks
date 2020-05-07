@@ -1,0 +1,18 @@
+﻿root = false
+
+[*.cs]
+dotnet_diagnostic.CA1018.severity = suggestion
+dotnet_diagnostic.CA1034.severity = suggestion
+dotnet_diagnostic.CA1040.severity = suggestion
+dotnet_diagnostic.CA1041.severity = suggestion
+dotnet_diagnostic.CA1043.severity = suggestion
+dotnet_diagnostic.CA1044.severity = suggestion
+dotnet_diagnostic.CA1052.severity = suggestion
+dotnet_diagnostic.CA1062.severity = suggestion
+dotnet_diagnostic.CA1305.severity = suggestion
+dotnet_diagnostic.CA1307.severity = suggestion
+dotnet_diagnostic.CA1715.severity = suggestion
+dotnet_diagnostic.CA1716.severity = suggestion
+dotnet_diagnostic.CA1724.severity = suggestion
+dotnet_diagnostic.CA1801.severity = suggestion
+dotnet_diagnostic.CA1822.severity = suggestion

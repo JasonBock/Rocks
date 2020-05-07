@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Rocks.Performance</AssemblyName>
-    <Copyright>Copyright © 2020</Copyright>
-    <LangVersion>latest</LangVersion>
     <OutputType>Exe</OutputType>
     <RootNamespace>Rocks.Performance</RootNamespace>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <Version>4.1.1</Version>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove=".editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include=".editorconfig" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
   </ItemGroup>

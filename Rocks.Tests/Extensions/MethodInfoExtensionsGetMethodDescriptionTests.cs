@@ -179,7 +179,7 @@ namespace Rocks.Tests.Extensions
 			var namespaces = new SortedSet<string>();
 			var description = target.GetMethodDescription(namespaces);
 			Assert.That(description, 
-				Is.EqualTo("Guid Target<[GetAttributes((SomeValues)2)]T>([GetAttributes((SomeValues)2)]T a, [GetAttributes((SomeValues)2)]Guid b)"), 
+				Is.EqualTo("Guid Target<[GetAttributes((SomeValue)2)]T>([GetAttributes((SomeValue)2)]T a, [GetAttributes((SomeValue)2)]Guid b)"), 
 				nameof(description));
 		}
 
@@ -245,21 +245,22 @@ namespace Rocks.Tests.Extensions
 		public virtual IEnumerable<KeyValuePair<long, TSource>> Target(IEnumerable<KeyValuePair<long, TSource>> a) => null!; 
 	}
 
-	public enum SomeValues
+	public enum SomeValue
 	{
 		HereIsOne,
 		AndAnother,
 		OneMore
 	}
 
-	public sealed class GetAttributesAttribute : Attribute
+	public sealed class GetAttributesAttribute 
+		: Attribute
 	{
-		public GetAttributesAttribute(SomeValues TargetEnum) { }
+		public GetAttributesAttribute(SomeValue TargetEnum) { }
 		public GetAttributesAttribute(bool targetBool) { }
 		public GetAttributesAttribute(bool targetBool, int targetInt) { }
 		public GetAttributesAttribute(string targetString) { }
 
-		public SomeValues TargetEnum { get; set; }
+		public SomeValue TargetEnum { get; set; }
 		public bool TargetBool { get; }
 		public string? TargetString { get; set; }
 		public int TargetInt { get; set; }
@@ -284,7 +285,7 @@ namespace Rocks.Tests.Extensions
 
 	public class HaveAttributeWithEnumInConstructor
 	{
-		public Guid Target<[GetAttributes(SomeValues.OneMore)]T>([GetAttributes(SomeValues.OneMore)]T a, [GetAttributes(SomeValues.OneMore)]Guid b) => Guid.Empty; 
+		public Guid Target<[GetAttributes(SomeValue.OneMore)]T>([GetAttributes(SomeValue.OneMore)]T a, [GetAttributes(SomeValue.OneMore)]Guid b) => Guid.Empty; 
 	}
 
 	public class HaveAttributeUsingNamedArguments

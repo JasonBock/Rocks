@@ -31,5 +31,11 @@ dotnet_style_qualification_for_field = true:error
 dotnet_style_qualification_for_method = true:error
 dotnet_style_qualification_for_property = true:error
 
+# CA1030: Use events where appropriate
+dotnet_diagnostic.CA1030.severity = none
+
+# CA1303: Do not pass literals as localized parameters
+dotnet_diagnostic.CA1303.severity = none
+
 [*.xml]
 indent_style = tab

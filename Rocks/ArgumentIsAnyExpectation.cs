@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks
 {
@@ -8,6 +9,6 @@ namespace Rocks
    {
 		internal ArgumentIsAnyExpectation() { }
 
-		public override bool IsValid(T value) => true;
+		public override bool IsValid([AllowNull] T value) => true;
    }
 }
