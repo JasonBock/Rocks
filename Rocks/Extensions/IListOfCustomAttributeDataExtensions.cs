@@ -11,16 +11,17 @@ namespace Rocks.Extensions
 	{
 		private const string AttributeName = "Attribute";
 
-		internal static string GetAttributes(this IList<CustomAttributeData> @this, bool isReturn, SortedSet<string> namespaces, ParameterInfo? parameter)
+		internal static string GetAttributes(this IList<CustomAttributeData> @this, SortedSet<string> namespaces, bool isReturn = false) => 
+			@this.GetAttributes(namespaces, data => true, isReturn);
+
+		internal static string GetAttributes(this IList<CustomAttributeData> @this, SortedSet<string> namespaces,
+			Func<CustomAttributeData, bool> verify, bool isReturn = false)
 		{
 			var attributes = new List<string>();
 
 			foreach (var attributeData in @this)
 			{
-				if(!attributeData.IsNullableAttribute() && !(parameter != null && 
-					parameter.IsOut && parameter.ParameterType.IsByRef && typeof(OutAttribute).IsAssignableFrom(attributeData.AttributeType) ||
-					typeof(ParamArrayAttribute).IsAssignableFrom(attributeData.AttributeType) ||
-					typeof(OptionalAttribute).IsAssignableFrom(attributeData.AttributeType)))
+				if (!attributeData.IsNullableAttribute() && verify(attributeData))
 				{
 					var attributeType = attributeData.AttributeType;
 					var name = TypeDissector.Create(attributeType).SafeName;
@@ -36,7 +37,7 @@ namespace Rocks.Extensions
 						 let argumentType = argument.ArgumentType
 						 let namespaceAdd = namespaces.Add(argumentType.Namespace)
 						 let typeCast = argumentType.IsEnum ? $"({TypeDissector.Create(argumentType).SafeName})" : string.Empty
-						 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.Value}\"" : 
+						 let argumentValue = typeof(string).IsAssignableFrom(argumentType) ? $"\"{argument.Value}\"" :
 							typeof(bool).IsAssignableFrom(argumentType) ? argument.Value.ToString().ToLower(CultureInfo.CurrentCulture) : argument.Value
 						 select $"{typeCast}{argumentValue}").ToArray());
 					var namedArguments = !typeof(MarshalAsAttribute).IsAssignableFrom(attributeData.AttributeType) ?
@@ -58,6 +59,17 @@ namespace Rocks.Extensions
 
 			var returnTarget = isReturn ? "return: " : string.Empty;
 			return attributes.Count == 0 ? string.Empty : $"[{returnTarget}{string.Join(", ", attributes)}]";
+		}
+
+		internal static string GetAttributes(this IList<CustomAttributeData> @this, bool isReturn,
+			SortedSet<string> namespaces, ParameterInfo? parameter)
+		{
+			Func<CustomAttributeData, bool> verify = data =>
+				!(parameter != null && parameter.IsOut && parameter.ParameterType.IsByRef &&
+				typeof(OutAttribute).IsAssignableFrom(data.AttributeType) ||
+				typeof(ParamArrayAttribute).IsAssignableFrom(data.AttributeType) ||
+				typeof(OptionalAttribute).IsAssignableFrom(data.AttributeType));
+			return @this.GetAttributes(namespaces, verify, isReturn);
 		}
 	}
 }
