@@ -142,7 +142,10 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 #pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}}
 		}}
 	}}
@@ -166,7 +169,10 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 #pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}}
 	else
 	{{
@@ -193,7 +199,10 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 #pragma warning restore CS8604
 				{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}}
 		}}
 	}}
@@ -217,7 +226,10 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 #pragma warning restore CS8604
 		{(hasEvents ? "methodHandler.RaiseEvents(this);" : string.Empty)}
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}}
 
 	throw new RE.ExpectationException($""No handlers were found for {methodNameWithOverride.Replace("override ", string.Empty, StringComparison.Ordinal)}"");
@@ -229,7 +241,9 @@ $@"{returnTypeAttributes}{visibility} {requiresNew} {methodNameWithOverride}
 {{
 	{outInitializers}
 
+#pragma warning disable CS8762
 	return {MethodTemplates.GetDefaultReturnValue(returnType)};
+#pragma warning restore CS8762
 }}";
 	}
 }

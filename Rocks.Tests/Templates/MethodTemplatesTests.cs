@@ -224,7 +224,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}
 		}
 	}
@@ -252,7 +255,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 				
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}
 		}
 	}
@@ -266,7 +272,9 @@ namespace Rocks.Tests.Templates
 {
 	a
 
+#pragma warning disable CS8762
 	return default!;
+#pragma warning restore CS8762
 }"));
 
 		[Test]
@@ -286,7 +294,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}
 	else
 	{
@@ -311,7 +322,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 		
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}
 	else
 	{
@@ -339,7 +353,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 				methodHandler.RaiseEvents(this);
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}
 		}
 	}
@@ -367,7 +384,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 				
 				methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 				return result;
+#pragma warning restore CS8762
 			}
 		}
 	}
@@ -392,7 +412,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 		methodHandler.RaiseEvents(this);
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}
 
 	throw new RE.ExpectationException($""No handlers were found for f"");
@@ -415,7 +438,10 @@ namespace Rocks.Tests.Templates
 #pragma warning restore CS8604
 		
 		methodHandler.IncrementCallCount();
+
+#pragma warning disable CS8762
 		return result;
+#pragma warning restore CS8762
 	}
 
 	throw new RE.ExpectationException($""No handlers were found for f"");
