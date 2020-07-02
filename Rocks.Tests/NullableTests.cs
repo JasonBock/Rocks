@@ -9,8 +9,8 @@ namespace Rocks.Tests
 		public static void MockWithNullableTypes()
 		{
 			var rock = Rock.Create<INullable>();
-			rock.Handle(_ => _.GoWithNullableReferenceParameter<string>(Arg.IsAny<string?>()));
-			rock.Handle(_ => _.GoWithNullableReferenceReturn<string>(Arg.IsAny<string>()));
+			rock.Handle(_ => _.GoWithNullableReferenceParameter(Arg.IsAny<string?>()));
+			rock.Handle(_ => _.GoWithNullableReferenceReturn(Arg.IsAny<string>()));
 			rock.Handle(_ => _.GoWithNullableValueParameter(Arg.IsAny<int?>()));
 			rock.Handle(_ => _.GoWithNullableValueReturn(Arg.IsAny<int>()));
 

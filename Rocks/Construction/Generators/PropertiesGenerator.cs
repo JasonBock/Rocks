@@ -1,7 +1,9 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Rocks.Extensions;
 using Rocks.Templates;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using static Rocks.Extensions.PropertyInfoExtensions;
@@ -46,13 +48,13 @@ namespace Rocks.Construction.Generators
 				requiresObsoleteSuppression, false);
 		}
 
-		private static bool HandlePublicProperty(SortedSet<string> namespaces, bool isMake, bool hasEvents, 
-			bool requiresObsoleteSuppression, List<string> generatedProperties, PropertyMockableResult property, 
+		private static bool HandlePublicProperty(SortedSet<string> namespaces, bool isMake, bool hasEvents,
+			bool requiresObsoleteSuppression, List<string> generatedProperties, PropertyMockableResult property,
 			PropertyInfo baseProperty, ParameterInfo[] indexers, string @override)
 		{
 			var propertyImplementations = new List<string>();
 			var parameter = property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet ?
-				baseProperty.GetGetMethod().ReturnParameter : 
+				baseProperty.GetGetMethod().ReturnParameter :
 				baseProperty.GetSetMethod().GetParameters()[0];
 
 			if (property.Accessors == PropertyAccessors.Get || property.Accessors == PropertyAccessors.GetAndSet)
@@ -80,21 +82,38 @@ namespace Rocks.Construction.Generators
 				// Indexer
 				generatedProperties.Add(PropertyTemplates.GetPropertyIndexer(
 					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces, parameter)}", parameters,
-					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
+					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName,
+					baseProperty.GetCustomAttributesData().GetAttributes(namespaces)));
 			}
 			else
 			{
 				// Normal
+				var propertyAttributes = baseProperty.GetCustomAttributesData().ToList();
+
+				var setterMethod = baseProperty.GetSetMethod();
+
+				if (setterMethod is { })
+				{
+					var allowNullAttributeData = setterMethod.GetParameters()[0].GetCustomAttributesData()
+						.FirstOrDefault(_ => _.AttributeType == typeof(AllowNullAttribute));
+					
+					if (allowNullAttributeData is { })
+					{
+						propertyAttributes.Add(allowNullAttributeData);
+					}
+				}
+
 				generatedProperties.Add(PropertyTemplates.GetProperty(
 					$"{@override}{baseProperty.PropertyType.GetFullName(namespaces, parameter)}", baseProperty.Name,
-					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName));
+					string.Join(Environment.NewLine, propertyImplementations), visibility, explicitInterfaceName,
+					propertyAttributes.GetAttributes(namespaces)));
 			}
 
 			requiresObsoleteSuppression |= baseProperty.GetCustomAttribute<ObsoleteAttribute>() != null;
 			return requiresObsoleteSuppression;
 		}
 
-		private static bool HandleNonPrivateAbstractProperty(SortedSet<string> namespaces, bool requiresObsoleteSuppression, 
+		private static bool HandleNonPrivateAbstractProperty(SortedSet<string> namespaces, bool requiresObsoleteSuppression,
 			List<string> generatedProperties, PropertyMockableResult property, PropertyInfo baseProperty, ParameterInfo[] indexers, MethodInfo propertyMethod)
 		{
 			var propertyImplementations = new List<string>();
@@ -152,7 +171,7 @@ namespace Rocks.Construction.Generators
 			return requiresObsoleteSuppression;
 		}
 
-		private static void HandlePublicGetter(SortedSet<string> namespaces, bool isMake, bool hasEvents, 
+		private static void HandlePublicGetter(SortedSet<string> namespaces, bool isMake, bool hasEvents,
 			PropertyInfo baseProperty, List<string> propertyImplementations)
 		{
 			var getMethod = baseProperty.GetMethod;
@@ -163,7 +182,7 @@ namespace Rocks.Construction.Generators
 			{
 				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForMake(getVisibility));
 			}
-			else if(getMethod.ReturnType.IsSpanLike())
+			else if (getMethod.ReturnType.IsSpanLike())
 			{
 				propertyImplementations.Add(PropertyTemplates.GetPropertyGetForSpanLike(getVisibility));
 			}

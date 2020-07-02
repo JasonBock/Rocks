@@ -60,7 +60,7 @@ namespace Rocks.Tests
 		{
 			var a = Guid.Empty;
 			var rock = Rock.Create<IHaveRefAndOut>();
-			rock.Handle(_ => _.RefTargetWithGeneric<Guid>(ref a), 
+			rock.Handle(_ => _.RefTargetWithGeneric(ref a), 
 				new RefTargetWithGeneric<Guid>(this.MyActionRefGuidTarget));
 
 			var chunk = rock.Make();

@@ -7,13 +7,13 @@ namespace Rocks.Tests.Templates
 	{
 		[Test]
 		public static void GetProperty() =>
-			Assert.That(PropertyTemplates.GetProperty("a", "b", "c", "d", "e"),
-				Is.EqualTo("d a eb { c }"));
+			Assert.That(PropertyTemplates.GetProperty("a", "b", "c", "d", "e", "f"),
+				Is.EqualTo("fd a eb { c }"));
 
 		[Test]
 		public static void GetPropertyIndexer() =>
-			Assert.That(PropertyTemplates.GetPropertyIndexer("a", "b", "c", "d", "e"),
-				Is.EqualTo("d a ethis[b] { c }"));
+			Assert.That(PropertyTemplates.GetPropertyIndexer("a", "b", "c", "d", "e", "f"),
+				Is.EqualTo("fd a ethis[b] { c }"));
 
 		[Test]
 		public static void GetPropertyGetWithReferenceTypeReturnValueAndHasEventsIsTrue() =>

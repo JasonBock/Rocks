@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public static async Task RunAsyncSynchronously()
 		{
 			var rock = Rock.Create<IAmAsync>();
-			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult<int>(44));
+			rock.Handle(_ => _.GoAsync()).Returns(Task.FromResult(44));
 
 			var uses = new UsesAsync(rock.Make());
 			Assert.That(await uses.RunGoAsync().ConfigureAwait(false), Is.EqualTo(44));

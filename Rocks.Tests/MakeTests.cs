@@ -17,9 +17,9 @@ namespace Rocks.Tests
 			chunk.TargetAction(44);
 			chunk.TargetActionWithOut(out var outInt);
 			chunk.TargetActionWithRef(ref outInt);
-			chunk.TargetActionWithGeneric<int>(44);
-			chunk.TargetActionWithGenericAndOut<int>(out outInt);
-			chunk.TargetActionWithGenericAndRef<int>(ref outInt);
+			chunk.TargetActionWithGeneric(44);
+			chunk.TargetActionWithGenericAndOut(out outInt);
+			chunk.TargetActionWithGenericAndRef(ref outInt);
 			var actionResult = chunk.TargetActionAsync();
 			Assert.That(actionResult.IsCompleted, Is.True);
 
@@ -27,9 +27,9 @@ namespace Rocks.Tests
 			chunk.TargetFunc(44);
 			chunk.TargetFuncWithOut(out outInt);
 			chunk.TargetFuncWithRef(ref outInt);
-			chunk.TargetFuncWithGeneric<int>(44);
-			chunk.TargetFuncWithGenericAndOut<int>(out outInt);
-			chunk.TargetFuncWithGenericAndRef<int>(ref outInt);
+			chunk.TargetFuncWithGeneric(44);
+			chunk.TargetFuncWithGenericAndOut(out outInt);
+			chunk.TargetFuncWithGenericAndRef(ref outInt);
 			var funcResult = chunk.TargetFuncAsync();
 			Assert.That(funcResult.IsCompleted, Is.True);
 			Assert.That(funcResult.Result, Is.EqualTo(default(int)));

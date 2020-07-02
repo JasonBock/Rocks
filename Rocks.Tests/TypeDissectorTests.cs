@@ -134,12 +134,12 @@ namespace Rocks.Tests
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithNoGenericsAndRefArguments() =>
-			Assert.That(TypeDissector.Create(typeof(TypeDissectorTests.RefTargetWithoutGeneric)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(RefTargetWithoutGeneric)).SafeName,
 				Is.EqualTo("TypeDissectorTests.RefTargetWithoutGeneric"));
 
 		[Test]
 		public void GetSafeNameForNestedDelegateWithGenericsAndRefArguments() =>
-			Assert.That(TypeDissector.Create(typeof(TypeDissectorTests.RefTargetWithGeneric<Guid>)).SafeName,
+			Assert.That(TypeDissector.Create(typeof(RefTargetWithGeneric<Guid>)).SafeName,
 				Is.EqualTo("TypeDissectorTests.RefTargetWithGeneric"));
 
 		[Test]

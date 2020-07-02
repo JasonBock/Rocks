@@ -9,7 +9,7 @@ namespace Rocks.Tests
 		public static void CallIs()
 		{
 			var evaluation = new Func<string, bool>(_ => !string.IsNullOrWhiteSpace(_));
-			Assert.That(Arg.Is<string>(evaluation), Is.EqualTo(default(string)), nameof(Arg.Is));
+			Assert.That(Arg.Is(evaluation), Is.EqualTo(default(string)), nameof(Arg.Is));
 		}
 
 		[Test]

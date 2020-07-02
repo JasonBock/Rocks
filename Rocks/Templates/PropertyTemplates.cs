@@ -4,11 +4,13 @@ namespace Rocks.Templates
 {
 	public static class PropertyTemplates
 	{
-		public static string GetProperty(string returnType, string name, string getSet, string visibility, string explicitInterfaceName) =>
-			$"{visibility} {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";
+		public static string GetProperty(string returnType, string name, string getSet, 
+			string visibility, string explicitInterfaceName, string attributes) =>
+				$"{attributes}{visibility} {returnType} {explicitInterfaceName}{name} {{ {getSet} }}";
 
-		public static string GetPropertyIndexer(string returnType, string indexerArguments, string getSet, string visibility, string explicitInterfaceName) =>
-			$"{visibility} {returnType} {explicitInterfaceName}this[{indexerArguments}] {{ {getSet} }}";
+		public static string GetPropertyIndexer(string returnType, string indexerArguments, 
+			string getSet, string visibility, string explicitInterfaceName, string attributes) =>
+				$"{attributes}{visibility} {returnType} {explicitInterfaceName}this[{indexerArguments}] {{ {getSet} }}";
 
 		public static string GetPropertyGetWithReferenceTypeReturnValue(int methodHandle, string argumentNames, string returnTypeName,
 			string expectationTemplateInstances, string delegateCast, string methodWithArgumentValues, string visibility, bool hasEvents) =>

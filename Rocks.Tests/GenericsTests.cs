@@ -19,7 +19,7 @@ namespace Rocks.Tests
 				_ => _.TargetWithNoConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithNoConstraints<Base>(1, expectationB);
+			var result = chunk.TargetWithNoConstraints(1, expectationB);
 
 			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
@@ -51,7 +51,7 @@ namespace Rocks.Tests
 				_ => _.TargetWithNonTypeConstrains(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithNonTypeConstrains<Base>(1, expectationB);
+			var result = chunk.TargetWithNonTypeConstrains(1, expectationB);
 
 			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
@@ -71,7 +71,7 @@ namespace Rocks.Tests
 				_ => _.TargetWithTypeConstraints(1, expectationB),
 				(a, b) => { argumentA = a; argumentB = b; return new Base(); });
 			var chunk = rock.Make();
-			var result = chunk.TargetWithTypeConstraints<Base>(1, expectationB);
+			var result = chunk.TargetWithTypeConstraints(1, expectationB);
 
 			Assert.That(argumentA, Is.EqualTo(1), nameof(argumentA));
 			Assert.That(argumentB, Is.Not.Null, nameof(argumentB));
@@ -99,7 +99,7 @@ namespace Rocks.Tests
 				_ => _.TargetWithMultipleConstraints(expectationA, expectationB, expectationC, expectationD, expectationE),
 				(a, b, c, d, e) => { argumentA = a; argumentB = b; argumentC = c; argumentD = d; argumentE = e; });
 			var chunk = rock.Make();
-			chunk.TargetWithMultipleConstraints<StringBuilder, Base, InheritingFromBase, Guid, InheritingFromBase>(
+			chunk.TargetWithMultipleConstraints(
 				expectationA, expectationB, expectationC, expectationD, expectationE);
 
 			Assert.That(argumentA, Is.Not.Null, nameof(argumentA));
