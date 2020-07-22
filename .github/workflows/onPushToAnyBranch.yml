@@ -1,4 +1,4 @@
-name: BitwiseStorN Continuous Integration
+name: Rocks CI Config
 
 on:
   push:
