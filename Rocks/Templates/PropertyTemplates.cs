@@ -103,7 +103,7 @@ $@"{visibility} get
 }}";
 
 		public static string GetPropertyGetForMake(string visibility) =>
-$@"{visibility} get => default;";
+$@"{visibility} get => default!;";
 
 		public static string GetPropertyGetForSpanLike(string visibility) =>
 $@"{visibility} get => throw new S.NotImplementedException();";

@@ -9,6 +9,10 @@ namespace Rocks.Tests
 		public static void Do<T>(out T value) => value = default!;
 
 		[Test]
+		public static void MakeWithPropertyReferenceTypeReturn() => 
+			Assert.That(() => Rock.Make<IPropertyReferenceReturn>(), Throws.Nothing);
+
+		[Test]
 		public static void Make()
 		{
 			var chunk = Rock.Make<IAmForMaking>();
@@ -61,6 +65,11 @@ namespace Rocks.Tests
 
 			Assert.That(chunk1.GetType(), Is.EqualTo(chunk2.GetType()));
 		}
+	}
+
+	public interface IPropertyReferenceReturn
+	{
+		string Value { get; }
 	}
 
 	public sealed class NotForMaking { }
