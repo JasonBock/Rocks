@@ -1,4 +1,4 @@
-﻿namespace Rocks.Options
+﻿namespace Rocks
 {
 	public enum SerializationOption
 	{

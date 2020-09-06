@@ -11,8 +11,8 @@ namespace Rocks.Tests
 		[Test]
 		public static async Task FindCandidatesWhenInvocationIsRockCreate()
 		{
-			var classDeclaration = (await SyntaxFactory.ParseSyntaxTree(
-@"var setups = Rock.Create<int>()").GetRootAsync().ConfigureAwait(false)).DescendantNodes(_ => true).OfType<InvocationExpressionSyntax>().First();
+			var classDeclaration = (await SyntaxFactory.ParseSyntaxTree("var setups = Rock.Create<int>();")
+				.GetRootAsync().ConfigureAwait(false)).DescendantNodes(_ => true).OfType<InvocationExpressionSyntax>().First();
 
 			var receiver = new RockReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
@@ -20,6 +20,21 @@ namespace Rocks.Tests
 			Assert.Multiple(() =>
 			{
 				Assert.That(receiver.Candidates.Count, Is.EqualTo(1));
+			});
+		}
+
+		[Test]
+		public static async Task FindCandidatesWhenInvocationIsNotRockCreate()
+		{
+			var classDeclaration = (await SyntaxFactory.ParseSyntaxTree("var isEmpty = string.IsNullOrEmpty(\"a\");")
+				.GetRootAsync().ConfigureAwait(false)).DescendantNodes(_ => true).OfType<InvocationExpressionSyntax>().First();
+
+			var receiver = new RockReceiver();
+			receiver.OnVisitSyntaxNode(classDeclaration);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(receiver.Candidates.Count, Is.EqualTo(0));
 			});
 		}
 	}
