@@ -15,11 +15,11 @@ namespace Rocks
 			var diagnostics = ImmutableList.CreateBuilder<Diagnostic>();
 
 			// TODO:
-			// 0) Debate adding in IndentedTextWriter (possibly reading in .editorconfig whitespace choice)
-			// 1) Create mock extension methods
-			// 2) Create a "Make" returning a mock type
-			// 3) Actually create the mock itself.
-			// 4) Somehow "verify"
+			// * Debate adding in IndentedTextWriter (possibly reading in .editorconfig whitespace choice)
+			// * Create mock extension methods
+			// * Create a "Make" returning a mock type
+			// * Actually create the mock itself.
+			// * Somehow "verify"
 
 			var text = SourceText.From(
 $@"public static class ExpectationsOf{typeToMock.Name}Extensions
