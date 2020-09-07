@@ -26,12 +26,7 @@ namespace Rocks
 
 			if(this.Type.IsSealed)
 			{
-				diagnostics.Add(Diagnostic.Create(new DiagnosticDescriptor(
-					CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
-					string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDescriptor.Message, this.Type.Name),
-					DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
-					helpLinkUri: HelpUrlBuilder.Build(
-						CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title)), this.Type.Locations[0]));
+				diagnostics.Add(CannotMockSealedTypeDescriptor.Create(this.Type));
 			}
 
 			// TODO: Could we figure out if TreatWarningsAsErrors is true?
@@ -41,12 +36,7 @@ namespace Rocks
 			if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 				_.ConstructorArguments.Any(_ => _.Value is bool error && error)))
 			{
-				diagnostics.Add(Diagnostic.Create(new DiagnosticDescriptor(
-					CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title,
-					string.Format(CultureInfo.CurrentCulture, CannotMockObsoleteTypeDescriptor.Message, this.Type.Name),
-					DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
-					helpLinkUri: HelpUrlBuilder.Build(
-						CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title)), this.Type.Locations[0]));
+				diagnostics.Add(CannotMockObsoleteTypeDescriptor.Create(this.Type));
 			}
 
 			this.Diagnostics = diagnostics.ToImmutable();
