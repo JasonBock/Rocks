@@ -19,6 +19,7 @@ namespace Rocks.Tests
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
 				Assert.That(information.Methods.Length, Is.EqualTo(0));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
@@ -39,7 +40,52 @@ public class ObsoleteType { }";
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
 				Assert.That(information.Methods.Length, Is.EqualTo(0));
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(0));
+			});
+		}
+
+		[Test]
+		public static void CreateWhenTypeHasNoMockableMembers()
+		{
+			var code =
+@"public class NoMockables
+{
+	public override sealed bool Equals(object? obj) => base.Equals(obj);
+	public override sealed int GetHashCode() => base.GetHashCode();
+	public override sealed string? ToString() => base.ToString();
+}";
+
+			var information = MockInformationTests.GetInformation(code);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(0));
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(0));
+			});
+		}
+
+		[Test]
+		public static void CreateWithInterfaceMethods()
+		{
+			var code =
+@"public interface ITest
+{
+	void Foo();
+}";
+
+			var information = MockInformationTests.GetInformation(code);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(4));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});
@@ -56,9 +102,9 @@ public class ObsoleteType { }";
 				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
-			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ClassDeclarationSyntax>().Single();
+			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<TypeDeclarationSyntax>().Single();
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
-			return new MockInformation(typeSymbol, model);
+			return new MockInformation(typeSymbol, model, compilation);
 		}
 	}
 }
