@@ -31,6 +31,8 @@ namespace Rocks
 				diagnostics.Add(CannotMockSealedTypeDescriptor.Create(this.Type));
 			}
 
+			// TODO: Do we need to check if a static class was given?
+
 			// TODO: Could we figure out if TreatWarningsAsErrors is true?
 			var attributes = this.Type.GetAttributes();
 			var obsoleteAttribute = this.Model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);

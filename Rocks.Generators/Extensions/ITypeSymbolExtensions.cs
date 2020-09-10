@@ -8,11 +8,11 @@ namespace Rocks.Extensions
 	{
 		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(this ITypeSymbol self, Compilation compilation)
 		{
-			var methods = ImmutableHashSet.CreateBuilder<(IMethodSymbol, RequiresExplicitInterfaceImplementation, RequiresOverride)>();
+			var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 			var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
 			var objectMethods = objectSymbol.GetMembers()
 				.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.MethodKind == MethodKind.Ordinary &&
-					(methodSymbol.IsExtern || methodSymbol.IsVirtual)).Cast<IMethodSymbol>().ToImmutableArray();
+					(methodSymbol.IsVirtual || methodSymbol.IsStatic)).Cast<IMethodSymbol>().ToImmutableArray();
 
 			if (self.TypeKind == TypeKind.Interface)
 			{
@@ -20,35 +20,48 @@ namespace Rocks.Extensions
 					.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.MethodKind == MethodKind.Ordinary && 
 					methodSymbol.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
 				{
-					methods.Add((selfMethod, RequiresExplicitInterfaceImplementation.No,
-						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ? RequiresOverride.Yes : RequiresOverride.No));
+					methods.Add(new MethodMockableResult(selfMethod,
+						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ? 
+							RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
+						RequiresOverride.No));
 				}
 
 				foreach (var selfBaseInterface in self.AllInterfaces)
 				{
 					foreach (var selfBaseMethod in selfBaseInterface.GetMembers()
-						.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
+						.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.MethodKind == MethodKind.Ordinary && 
+						methodSymbol.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
 					{
-						methods.Add((selfBaseMethod, methods.Any(_ => _.Item1.Match(selfBaseMethod) == MethodMatch.Exact) ?
-							RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
+						methods.Add(new MethodMockableResult(selfBaseMethod,
+							methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact) ||
+								objectMethods.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact) ?
+								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
 							RequiresOverride.No));
 					}
 				}
 			}
 			else
 			{
-				foreach (var selfMethod in self.GetMembers()
-					.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.MethodKind == MethodKind.Ordinary && 
-						methodSymbol.DeclaredAccessibility == Accessibility.Public &&
-						(methodSymbol.IsAbstract || (methodSymbol.IsVirtual && !methodSymbol.IsSealed)) &&
-						methodSymbol.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
+				var targetClassSymbol = self;
+
+				while (targetClassSymbol is not null)
 				{
+					// Just need to find all abstract or non-sealed virtual methods all the way up to object
+					foreach (var targetClassSymbolMethod in targetClassSymbol.GetMembers()
+						.Where(_ => _ is IMethodSymbol methodSymbol && methodSymbol.MethodKind == MethodKind.Ordinary &&
+							methodSymbol.DeclaredAccessibility == Accessibility.Public &&
+							(methodSymbol.IsAbstract || (methodSymbol.IsVirtual && !methodSymbol.IsSealed)) &&
+							methodSymbol.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
+					{
+						methods.Add(new MethodMockableResult(targetClassSymbolMethod,
+							RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+					}
+
+					targetClassSymbol = targetClassSymbol.BaseType;
 				}
 			}
 
-			// TODO: Need to finish this out.
-			return methods.Select(_ => new MethodMockableResult(_.Item1, _.Item2, RequiresIsNewImplementation.No, _.Item3))
-				.ToImmutableArray();
+			return methods.ToImmutable();
 		}
 
 		// TODO: Finish correctly
