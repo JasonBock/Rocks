@@ -71,6 +71,27 @@ public class ObsoleteType { }";
 		}
 
 		[Test]
+		public static void CreateWithClassMethods()
+		{
+			var code =
+@"public class Test
+{
+	public virtual void Foo() { }
+}";
+
+			var information = MockInformationTests.GetInformation(code);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(4));
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(0));
+			});
+		}
+
+		[Test]
 		public static void CreateWithInterfaceMethods()
 		{
 			var code =
@@ -85,7 +106,7 @@ public class ObsoleteType { }";
 			{
 				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
 				Assert.That(information.Constructors.Length, Is.EqualTo(0));
-				Assert.That(information.Methods.Length, Is.EqualTo(4));
+				Assert.That(information.Methods.Length, Is.EqualTo(1));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});

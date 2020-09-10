@@ -89,8 +89,6 @@ namespace Rocks.Extensions
 
 			if (@this.IsInterface)
 			{
-				var namespaces = new SortedSet<string>();
-
 				foreach (var @interface in @this.GetInterfaces())
 				{
 					var interfaceMethods = @interface.GetMethods()

@@ -7,6 +7,10 @@ using System.Linq;
 
 namespace Rocks
 {
+	public interface IX
+	{
+		internal void Foo();
+	}
 	public sealed class MockInformation
 	{
 		public MockInformation(ITypeSymbol type, SemanticModel model, Compilation compilation)
