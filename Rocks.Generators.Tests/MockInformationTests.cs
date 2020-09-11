@@ -20,7 +20,7 @@ namespace Rocks.Tests
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
 				Assert.That(information.Constructors.Length, Is.EqualTo(0));
-				Assert.That(information.Methods.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});
@@ -41,7 +41,7 @@ public class ObsoleteType { }";
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
 				Assert.That(information.Constructors.Length, Is.EqualTo(0));
-				Assert.That(information.Methods.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});
