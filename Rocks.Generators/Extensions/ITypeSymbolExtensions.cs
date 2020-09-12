@@ -8,13 +8,16 @@ namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
 	{
-		internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(this ITypeSymbol self) => 
-			self.TypeKind == TypeKind.Class ?
-				self.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Constructor && _.CanBeSeenByMockAssembly()).ToImmutableArray() :
-				Array.Empty<IMethodSymbol>().ToImmutableArray();
+		internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) => 
+				self.TypeKind == TypeKind.Class ?
+					self.GetMembers().OfType<IMethodSymbol>()
+						.Where(_ => _.MethodKind == MethodKind.Constructor &&
+							ISymbolExtensions.CanBeSeenByContainingAssembly(_, containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
+					Array.Empty<IMethodSymbol>().ToImmutableArray();
 
-		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(this ITypeSymbol self, Compilation compilation)
+		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation)
 		{
 			var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 
@@ -25,7 +28,7 @@ namespace Rocks.Extensions
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && (_.IsVirtual || _.IsStatic)).ToImmutableArray();
 
 				foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByMockAssembly()))
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
 					methods.Add(new MethodMockableResult(selfMethod,
 						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ? 
@@ -38,7 +41,7 @@ namespace Rocks.Extensions
 				foreach (var selfBaseInterface in self.AllInterfaces)
 				{
 					foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
-						.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByMockAssembly()))
+						.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
 						var foundMatch = false;
 
@@ -88,7 +91,7 @@ namespace Rocks.Extensions
 					foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Ordinary &&
 							_.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
-							_.CanBeSeenByMockAssembly()).Cast<IMethodSymbol>())
+							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).Cast<IMethodSymbol>())
 					{
 						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
 						{
@@ -110,9 +113,6 @@ namespace Rocks.Extensions
 
 			return methods.ToImmutable();
 		}
-
-		// TODO: Finish correctly
-		private static bool CanBeSeenByMockAssembly(this IMethodSymbol self) => true;
 
 		private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)
 		{

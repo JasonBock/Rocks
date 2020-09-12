@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockTaskTestContainer", "Rocks.RockTaskTestContainer\Rocks.RockTaskTestContainer.csproj", "{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Generators", "Rocks.Generators\Rocks.Generators.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators", "Rocks.Generators\Rocks.Generators.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Generators.Tests", "Rocks.Generators.Tests\Rocks.Generators.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators.Tests", "Rocks.Generators.Tests\Rocks.Generators.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

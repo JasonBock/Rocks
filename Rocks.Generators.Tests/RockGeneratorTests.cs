@@ -15,7 +15,10 @@ namespace Rocks.Tests
 			var (diagnostics, output) = RockGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 
-public interface IMock { }
+public interface IMock 
+{ 
+	void Foo();
+}
 
 public static class Test
 {

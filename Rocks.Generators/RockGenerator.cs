@@ -12,22 +12,30 @@ namespace Rocks
 	public sealed class RockGenerator
 		: ISourceGenerator
 	{
-		private static (ImmutableList<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(ITypeSymbol typeToMock)
+		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
+			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, Compilation compilation)
 		{
-			var diagnostics = ImmutableList.CreateBuilder<Diagnostic>();
+			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, compilation);
 
-			// TODO:
-			// * Debate adding in IndentedTextWriter (possibly reading in .editorconfig whitespace choice)
-			// * Create mock extension methods
-			// * Create a "Make" returning a mock type
-			// * Actually create the mock itself.
-			// * Somehow "verify"
+			if(!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
+			{
+				// TODO:
+				// * Debate adding in IndentedTextWriter (possibly reading in .editorconfig whitespace choice)
+				// * Create mock extension methods
+				// * Create a "Make" returning a mock type
+				// * Actually create the mock itself.
+				// * Somehow "verify"
 
-			var text = SourceText.From(
-$@"public static class ExpectationsOf{typeToMock.Name}Extensions
+				var text = SourceText.From(
+	$@"public static class ExpectationsOf{typeToMock.Name}Extensions
 {{
 }}");
-			return (diagnostics.ToImmutableList(), $"{typeToMock.Name}_Mock.g.cs", text);
+				return (information.Diagnostics, $"{typeToMock.Name}_Mock.g.cs", text);
+			}
+			else
+			{
+				return (information.Diagnostics, null, null);
+			}
 		}
 
 		public void Execute(SourceGeneratorContext context)
@@ -48,9 +56,10 @@ $@"public static class ExpectationsOf{typeToMock.Name}Extensions
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
 						var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
-						var containingCandidateSymbol = (ITypeSymbol)model.GetDeclaredSymbol(containingCandidateType)!;
+						var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
-						var (diagnostics, name, text) = RockGenerator.GenerateMapping(typeToMock);
+						var (diagnostics, name, text) = RockGenerator.GenerateMapping(
+							typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
 
 						foreach (var diagnostic in diagnostics)
 						{
