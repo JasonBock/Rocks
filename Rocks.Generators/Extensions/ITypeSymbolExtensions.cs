@@ -1,4 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -6,15 +8,22 @@ namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
 	{
+		internal static ImmutableArray<IMethodSymbol> GetConstructors(this ITypeSymbol self) => 
+			self.TypeKind == TypeKind.Class ?
+				self.GetMembers().OfType<IMethodSymbol>()
+					.Where(_ => _.MethodKind == MethodKind.Constructor && _.CanBeSeenByMockAssembly()).ToImmutableArray() :
+				Array.Empty<IMethodSymbol>().ToImmutableArray();
+
 		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(this ITypeSymbol self, Compilation compilation)
 		{
 			var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
-			var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
-			var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
-				.Where(_ => _.MethodKind == MethodKind.Ordinary && (_.IsVirtual || _.IsStatic)).ToImmutableArray();
 
 			if (self.TypeKind == TypeKind.Interface)
 			{
+				var objectMethods = compilation.GetTypeByMetadataName(typeof(object).FullName)!
+					.GetMembers().OfType<IMethodSymbol>()
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && (_.IsVirtual || _.IsStatic)).ToImmutableArray();
+
 				foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByMockAssembly()))
 				{
@@ -24,16 +33,49 @@ namespace Rocks.Extensions
 						RequiresOverride.No));
 				}
 
+				var baseInterfaceMethodGroups = new List<List<IMethodSymbol>>();
+
 				foreach (var selfBaseInterface in self.AllInterfaces)
 				{
 					foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByMockAssembly()))
 					{
-						methods.Add(new MethodMockableResult(selfBaseMethod,
-							methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact) ||
-								objectMethods.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact) ?
+						var foundMatch = false;
+
+						foreach(var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+						{
+							if(baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+							{
+								baseInterfaceMethodGroup.Add(selfBaseMethod);
+								foundMatch = true;
+								break;
+							}
+						}
+
+						if(!foundMatch)
+						{
+							baseInterfaceMethodGroups.Add(new List<IMethodSymbol> { selfBaseMethod });
+						}
+					}
+				}
+
+				foreach(var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+				{
+					if(baseInterfaceMethodGroup.Count == 1)
+					{
+						methods.Add(new MethodMockableResult(baseInterfaceMethodGroup[0],
+							methods.Any(_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ||
+								objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ?
 								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
 							RequiresOverride.No));
+					}
+					else
+					{
+						foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
+						{
+							methods.Add(new MethodMockableResult(baseInterfaceMethod,
+								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No));
+						}
 					}
 				}
 			}

@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Rocks.Extensions;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -45,6 +47,8 @@ $@"public static class ExpectationsOf{typeToMock.Name}Extensions
 					if(rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
+						var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
+						var containingCandidateSymbol = (ITypeSymbol)model.GetDeclaredSymbol(containingCandidateType)!;
 
 						var (diagnostics, name, text) = RockGenerator.GenerateMapping(typeToMock);
 
