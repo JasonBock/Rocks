@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using System.Collections.Immutable;
 
 namespace Rocks.Extensions
 {
@@ -27,8 +26,9 @@ namespace Rocks.Extensions
 					var otherParameter = otherParameters[i];
 
 					if (!selfParameter.Type.Equals(otherParameter.Type, SymbolEqualityComparer.Default) ||
-						!IMethodSymbolExtensions.AreCustomModifiersEqual(selfParameter.CustomModifiers, otherParameter.CustomModifiers) ||
-						!IMethodSymbolExtensions.AreCustomModifiersEqual(selfParameter.RefCustomModifiers, otherParameter.RefCustomModifiers) ||
+						!(selfParameter.RefKind == otherParameter.RefKind ||
+							(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
+							(selfParameter.RefKind == RefKind.Out && otherParameter.RefKind == RefKind.Ref)) ||
 						selfParameter.IsParams != otherParameter.IsParams)
 					{
 						return MethodMatch.None;
@@ -38,24 +38,6 @@ namespace Rocks.Extensions
 				return self.ReturnType.Equals(other.ReturnType, SymbolEqualityComparer.Default) ? 
 					MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 			}
-		}
-
-		private static bool AreCustomModifiersEqual(ImmutableArray<CustomModifier> selfModifiers, ImmutableArray<CustomModifier> otherModifiers)
-		{
-			if (selfModifiers.Length != otherModifiers.Length)
-			{
-				return false;
-			}
-
-			foreach (var selfModifier in selfModifiers)
-			{
-				if (!otherModifiers.Contains(selfModifier))
-				{
-					return false;
-				}
-			}
-
-			return true;
 		}
 	}
 }
