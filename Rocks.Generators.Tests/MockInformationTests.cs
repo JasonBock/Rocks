@@ -21,8 +21,22 @@ namespace Rocks.Tests
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
-				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				var constructorMethod = information.Constructors[0];
+				Assert.That(constructorMethod.Parameters.Length, Is.EqualTo(0));
+
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
+				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
+				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
+				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});
@@ -43,8 +57,22 @@ public class {targetTypeName} {{ }}";
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
-				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				var constructorMethod = information.Constructors[0];
+				Assert.That(constructorMethod.Parameters.Length, Is.EqualTo(0));
+
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
+				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
+				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
+				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});
@@ -67,7 +95,11 @@ $@"public class {targetTypeName}
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
-				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				var constructorMethod = information.Constructors[0];
+				Assert.That(constructorMethod.Parameters.Length, Is.EqualTo(0));
+
 				Assert.That(information.Methods.Length, Is.EqualTo(0));
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
@@ -233,7 +265,50 @@ $@"public class {targetTypeName}
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				var constructorMethod = information.Constructors[0];
+				Assert.That(constructorMethod.Parameters.Length, Is.EqualTo(0));
+
+				Assert.That(information.Methods.Length, Is.EqualTo(4));
+				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
+				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
+				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var fooMethod = information.Methods.Single(_ => _.Value.Name == targetMethodName);
+				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(0));
+			});
+		}
+
+		[Test]
+		public static void CreateWithClassMethodAndConstructorWithParameters()
+		{
+			const string targetTypeName = "Test";
+			const string targetMethodName = "Foo";
+
+			var code =
+$@"public class {targetTypeName}
+{{
+	public {targetTypeName}(string a, int b) {{ }}
+	public virtual void {targetMethodName}() {{ }}
+}}";
+
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				var constructorMethod = information.Constructors[0];
+				Assert.That(constructorMethod.Parameters.Length, Is.EqualTo(2));
 
 				Assert.That(information.Methods.Length, Is.EqualTo(4));
 				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -267,7 +342,7 @@ $@"public class {targetTypeName} {{ }}";
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
 
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -288,11 +363,12 @@ $@"public class {targetTypeName} {{ }}";
 		[Test]
 		public static void CreateWithInterfaceMethods()
 		{
+			const string targetMethodName = "Foo";
 			const string targetTypeName = "ITest";
 			var code =
 $@"public interface {targetTypeName}
 {{
-	void Foo();
+	void {targetMethodName}();
 }}";
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName);
@@ -301,7 +377,12 @@ $@"public interface {targetTypeName}
 			{
 				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
 				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+
 				Assert.That(information.Methods.Length, Is.EqualTo(1));
+				var fooMethod = information.Methods.Single(_ => _.Value.Name == targetMethodName);
+				Assert.That(fooMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
 				Assert.That(information.Events.Length, Is.EqualTo(0));
 			});

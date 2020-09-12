@@ -8,7 +8,7 @@ namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
 	{
-		internal static ImmutableArray<IMethodSymbol> GetConstructors(this ITypeSymbol self) => 
+		internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(this ITypeSymbol self) => 
 			self.TypeKind == TypeKind.Class ?
 				self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Constructor && _.CanBeSeenByMockAssembly()).ToImmutableArray() :

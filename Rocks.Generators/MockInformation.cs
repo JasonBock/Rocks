@@ -22,7 +22,6 @@ namespace Rocks
 		private void Validate()
 		{
 			var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-			var constructors = ImmutableArray.CreateBuilder<IMethodSymbol>();
 			var events = ImmutableArray.CreateBuilder<IEventSymbol>();
 			var properties = ImmutableArray.CreateBuilder<IPropertySymbol>();
 
@@ -41,7 +40,7 @@ namespace Rocks
 				diagnostics.Add(CannotMockObsoleteTypeDescriptor.Create(this.Type));
 			}
 
-			this.Constructors = constructors.ToImmutable();
+			this.Constructors = this.Type.GetMockableConstructors();
 			this.Events = events.ToImmutable();
 			this.Methods = this.Type.GetMockableMethods(this.Compilation);
 			this.Properties = properties.ToImmutable();
