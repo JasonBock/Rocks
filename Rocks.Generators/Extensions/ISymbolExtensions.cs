@@ -7,7 +7,8 @@ namespace Rocks.Extensions
 		internal static bool CanBeSeenByContainingAssembly(this ISymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 		{
 			if (self.DeclaredAccessibility == Accessibility.Public ||
-				self.DeclaredAccessibility == Accessibility.Protected)
+				self.DeclaredAccessibility == Accessibility.Protected ||
+				self.DeclaredAccessibility == Accessibility.ProtectedOrInternal)
 			{
 				return true;
 			}

@@ -12,7 +12,7 @@ namespace Rocks.Extensions
 			var internalsVisibleTo = self.GetAttributes().SingleOrDefault(
 				_ => _.AttributeClass is not null && _.AttributeClass.Name == internalsVisibleToAttribute.Name &&
 					_.AttributeClass.ContainingNamespace.ToDisplayString() == internalsVisibleToAttribute.Namespace &&
-					_.AttributeClass.ContainingAssembly.Name == internalsVisibleToAttribute.Assembly.FullName);
+					_.AttributeClass.ContainingAssembly.Name == internalsVisibleToAttribute.Assembly.GetName().Name);
 
 			if(internalsVisibleTo is not null)
 			{
