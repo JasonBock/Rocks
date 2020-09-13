@@ -23,6 +23,7 @@ namespace Rocks.Extensions
 
 			if (self.TypeKind == TypeKind.Interface)
 			{
+				// TODO: I wonder if there's a way to get an object symbol without passing in the compilation.
 				var objectMethods = compilation.GetTypeByMetadataName(typeof(object).FullName)!
 					.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && (_.IsVirtual || _.IsStatic)).ToImmutableArray();
