@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
-	public static class RockReceiverTests
+	public static class RockCreateReceiverTests
 	{
 		[Test]
 		public static async Task FindCandidatesWhenInvocationIsRockCreate()
@@ -14,7 +14,7 @@ namespace Rocks.Tests
 			var classDeclaration = (await SyntaxFactory.ParseSyntaxTree("var setups = Rock.Create<int>();")
 				.GetRootAsync().ConfigureAwait(false)).DescendantNodes(_ => true).OfType<InvocationExpressionSyntax>().First();
 
-			var receiver = new RockReceiver();
+			var receiver = new RockCreateReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
 
 			Assert.Multiple(() =>
@@ -29,7 +29,7 @@ namespace Rocks.Tests
 			var classDeclaration = (await SyntaxFactory.ParseSyntaxTree("var isEmpty = string.IsNullOrEmpty(\"a\");")
 				.GetRootAsync().ConfigureAwait(false)).DescendantNodes(_ => true).OfType<InvocationExpressionSyntax>().First();
 
-			var receiver = new RockReceiver();
+			var receiver = new RockCreateReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
 
 			Assert.Multiple(() =>

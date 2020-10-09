@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rocks
 {
-	public sealed class RockReceiver
+	public sealed class RockCreateReceiver
 		: ISyntaxReceiver
 	{
 		public List<InvocationExpressionSyntax> Candidates { get; } = new List<InvocationExpressionSyntax>();

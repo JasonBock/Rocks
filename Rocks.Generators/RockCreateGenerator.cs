@@ -9,7 +9,7 @@ using System.Linq;
 namespace Rocks
 {
 	[Generator]
-	public sealed class RockGenerator
+	public sealed class RockCreateGenerator
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
@@ -19,18 +19,8 @@ namespace Rocks
 
 			if(!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
-				// TODO:
-				// * Debate adding in IndentedTextWriter (possibly reading in .editorconfig whitespace choice)
-				// * Create mock extension methods
-				// * Create a "Make" returning a mock type
-				// * Actually create the mock itself.
-				// * Somehow "verify"
-
-				var text = SourceText.From(
-	$@"public static class ExpectationsOf{typeToMock.Name}Extensions
-{{
-}}");
-				return (information.Diagnostics, $"{typeToMock.Name}_Mock.g.cs", text);
+				var builder = new RockCreateBuilder(information);
+				return (builder.Diagnostics, builder.Name, builder.Text);
 			}
 			else
 			{
@@ -40,7 +30,7 @@ namespace Rocks
 
 		public void Execute(SourceGeneratorContext context)
 		{
-			if (context.SyntaxReceiver is RockReceiver receiver)
+			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
 				var compilation = context.Compilation;
 
@@ -58,7 +48,7 @@ namespace Rocks
 						var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
 						var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
-						var (diagnostics, name, text) = RockGenerator.GenerateMapping(
+						var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
 							typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
 
 						foreach (var diagnostic in diagnostics)
@@ -75,6 +65,6 @@ namespace Rocks
 			}
 		}
 
-		public void Initialize(InitializationContext context) => context.RegisterForSyntaxNotifications(() => new RockReceiver());
+		public void Initialize(InitializationContext context) => context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 	}
 }
