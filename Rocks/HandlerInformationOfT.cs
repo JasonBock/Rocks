@@ -20,7 +20,7 @@ namespace Rocks
 		internal HandlerInformation(Delegate? method, uint expectedCallCount, ReadOnlyDictionary<string, ArgumentExpectation> expectations)
 			: base(method, expectedCallCount, expectations) => this.ReturnValue = default;
 
-		public T ReturnValue { get; internal set; }
+		public T? ReturnValue { get; internal set; }
    }
 #pragma warning restore CS8653, CS8061
 }

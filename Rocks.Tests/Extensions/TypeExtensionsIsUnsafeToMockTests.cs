@@ -113,7 +113,9 @@ namespace Rocks.Tests.Extensions
 		public virtual int TargetProperty { get; set; }
 		public virtual int this[int a] { get => 0; set { } }
 #pragma warning disable 67
+#pragma warning disable CA1070 // Do not declare event fields as virtual
 		public virtual event EventHandler? MyEvent;
+#pragma warning restore CA1070 // Do not declare event fields as virtual
 #pragma warning restore 67
 	}
 
@@ -140,7 +142,9 @@ namespace Rocks.Tests.Extensions
 	public class SafeEventWithUnsafeEventArgs
 	{
 #pragma warning disable 67
+#pragma warning disable CA1070 // Do not declare event fields as virtual
 		public virtual event EventHandler<UnsafeByteEventArgs>? Target;
+#pragma warning restore CA1070 // Do not declare event fields as virtual
 #pragma warning restore 67
 	}
 }

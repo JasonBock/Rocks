@@ -44,15 +44,16 @@ public static class Test
 				.Concat(new[] { MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location) });
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			var originalTreeCount = compilation.SyntaxTrees.Length;
+
 			var generator = new RockCreateGenerator();
 
-			var driver = new CSharpGeneratorDriver(compilation.SyntaxTrees[0].Options,
-				ImmutableArray.Create<ISourceGenerator>(generator), default!, ImmutableArray<AdditionalText>.Empty);
-			driver.RunFullGeneration(compilation, out var outputCompilation, out var diagnostics);
+			var driver = CSharpGeneratorDriver.Create(ImmutableArray.Create<ISourceGenerator>(generator));
+			driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
 			var trees = outputCompilation.SyntaxTrees.ToList();
 
-			return (diagnostics, trees.Count == 2 ? trees[^1].ToString() : string.Empty);
+			return (diagnostics, trees.Count == originalTreeCount + 1 ? trees[^1].ToString() : string.Empty);
 		}
 	}
 }

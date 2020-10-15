@@ -28,7 +28,7 @@ namespace Rocks
 			}
 		}
 
-		public void Execute(SourceGeneratorContext context)
+		public void Execute(GeneratorExecutionContext context)
 		{
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
@@ -65,6 +65,6 @@ namespace Rocks
 			}
 		}
 
-		public void Initialize(InitializationContext context) => context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
+		public void Initialize(GeneratorInitializationContext context) => context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Immutable;
+using System.Text;
 
 namespace Rocks
 {
@@ -75,7 +76,7 @@ namespace {typeToMock.Namespace}
 			var text = SourceText.From(
 $@"public static class ExpectationsOf{this.information.TypeToMock.Name}Extensions
 {{
-}}");
+}}", Encoding.UTF8);
 			return (this.information.Diagnostics, $"{this.information.TypeToMock.Name}_Mock.g.cs", text);
 		}
 

@@ -84,7 +84,9 @@ namespace Rocks.Tests.Extensions
 	public class MockableEventsBase
 	{
 		public event EventHandler? BaseClassEvent;
+#pragma warning disable CA1070 // Do not declare event fields as virtual
 		public virtual event EventHandler? BaseVirtualClassEvent;
+#pragma warning restore CA1070 // Do not declare event fields as virtual
 	}
 
 	public class MockableEventsSub
