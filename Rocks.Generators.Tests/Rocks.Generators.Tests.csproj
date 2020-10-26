@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>Rocks.Tests</AssemblyName>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>preview</LangVersion>
     <RootNamespace>Rocks.Tests</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>

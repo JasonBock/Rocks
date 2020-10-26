@@ -41,7 +41,7 @@ public static class Test
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Concat(new[] { MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location) });
+				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) });
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var originalTreeCount = compilation.SyntaxTrees.Length;
@@ -53,7 +53,7 @@ public static class Test
 
 			var trees = outputCompilation.SyntaxTrees.ToList();
 
-			return (diagnostics, trees.Count == originalTreeCount + 1 ? trees[^1].ToString() : string.Empty);
+			return (diagnostics, trees.Count == originalTreeCount + 4 ? trees[^1].ToString() : string.Empty);
 		}
 	}
 }

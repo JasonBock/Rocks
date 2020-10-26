@@ -14,9 +14,9 @@ namespace Rocks
 			if (syntaxNode is InvocationExpressionSyntax invocation &&
 				invocation.Expression is MemberAccessExpressionSyntax access &&
 				access.Expression is IdentifierNameSyntax accessIdentifier &&
-				accessIdentifier.Identifier.Text == nameof(Rock) &&
+				accessIdentifier.Identifier.Text == "Rock" &&
 				access.Name is GenericNameSyntax accessName &&
-				accessName.Identifier.Text == nameof(Rock.Create))
+				accessName.Identifier.Text == "Create")
 			{
 				this.Candidates.Add(invocation);
 			}
