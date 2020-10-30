@@ -2,11 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
-using Rocks.Embedded;
 using Rocks.Extensions;
 using System.Collections.Immutable;
 using System.Linq;
-using System.Reflection;
 
 namespace Rocks
 {
@@ -32,23 +30,17 @@ namespace Rocks
 
 		public void Execute(GeneratorExecutionContext context)
 		{
-			var (embeddedTypes, compilation) = Assembly.GetExecutingAssembly().LoadSymbols(
-				new[]
-				{
-					new EmbeddedTypeInformation("Rocks.Embedded.Rock.cs", RockConstants.RockTypeName),
-					new EmbeddedTypeInformation("Rocks.Embedded.Expectations.cs", ExpectationsConstants.ExpectationsTypeName),
-					new EmbeddedTypeInformation("Rocks.Embedded.MethodExpectations.cs", MethodExpectationsConstants.MethodExpectationsTypeName),
-				}.ToImmutableArray(), context);
-
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
+				var compilation = context.Compilation;
+
 				foreach (var candidateInvocation in receiver.Candidates)
 				{
 					var model = compilation.GetSemanticModel(candidateInvocation.SyntaxTree);
 					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
 
-					var rockCreateSymbol = embeddedTypes[RockConstants.RockTypeName]
-						.GetMembers().Single(_ => _.Name == RockConstants.RockCreateMethodName);
+					var rockCreateSymbol = compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
+						.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
 
 					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
 					{

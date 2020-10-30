@@ -53,7 +53,7 @@ public static class Test
 
 			var trees = outputCompilation.SyntaxTrees.ToList();
 
-			return (diagnostics, trees.Count == originalTreeCount + 4 ? trees[^1].ToString() : string.Empty);
+			return (diagnostics, trees.Count != originalTreeCount ? trees[^1].ToString() : string.Empty);
 		}
 	}
 }
