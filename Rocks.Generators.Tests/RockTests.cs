@@ -28,7 +28,7 @@ namespace Rocks.Tests
 		void Foo(int a);
 	}
 
-	internal static class ExpectationsForIMockable
+	internal static class ExpectationsOfIMockableExtensions
 	{
 		internal static MethodExpectations<IMockable> Methods(this Expectations<IMockable> self) =>
 			new MethodExpectations<IMockable>(self);
@@ -88,7 +88,7 @@ namespace Rocks.Tests
 		}
 	}
 
-	internal static class MethodExpectationsForIMockable
+	internal static class MethodExpectationsOfIMockableExtensions
 	{
 		internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a) =>
 			new MethodAdornments(self.Add(0, new Dictionary<string, Arg>
