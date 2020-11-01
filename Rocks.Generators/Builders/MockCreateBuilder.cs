@@ -1,4 +1,6 @@
-﻿using System.CodeDom.Compiler;
+﻿using Microsoft.CodeAnalysis;
+using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders
 {
@@ -22,7 +24,7 @@ namespace Rocks.Builders
 
 					foreach (var methodHandler in methodHandlers)
 					{
-						if (((Arg<int>)methodHandler.Expectations["a"]).IsValid(a))
+						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a))
 						{
 							foundMatch = true;
 
@@ -65,6 +67,21 @@ namespace Rocks.Builders
 
 			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
 
+			if (information.Constructors.Length > 0)
+			{
+				foreach (var constructor in information.Constructors)
+				{
+					MockConstructorBuilder.Build(writer, information.TypeToMock, constructor.Parameters);
+				}
+			}
+			else
+			{
+				MockConstructorBuilder.Build(writer, information.TypeToMock, ImmutableArray<IParameterSymbol>.Empty);
+			}
+
+			writer.WriteLine("// TODO: Put in all the member overrides...");
+
+			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

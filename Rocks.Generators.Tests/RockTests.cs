@@ -57,7 +57,7 @@ namespace Rocks.Tests
 
 					foreach (var methodHandler in methodHandlers)
 					{
-						if (((Arg<int>)methodHandler.Expectations["a"]).IsValid(a))
+						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a))
 						{
 							foundMatch = true;
 
@@ -91,9 +91,9 @@ namespace Rocks.Tests
 	internal static class MethodExpectationsOfIMockableExtensions
 	{
 		internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a) =>
-			new MethodAdornments(self.Add(0, new Dictionary<string, Arg>
+			new MethodAdornments(self.Add(0, new Dictionary<int, Arg>
 			{
-				{ "a", a }
+				{ 0, a }
 			}));
 	}
 }

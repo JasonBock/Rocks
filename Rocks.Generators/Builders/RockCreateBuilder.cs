@@ -1,7 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
+using Rocks.Builders;
+using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Text;
 
 namespace Rocks
@@ -18,8 +22,6 @@ namespace Rocks
 
 		private (ImmutableArray<Diagnostic>, string, SourceText) Build()
 		{
-			// TODO:
-			// Can we read .editorconfig to figure out the space/tab + indention
 			var usings = new SortedSet<string>
 			{
 				"using Rocks;",
@@ -31,10 +33,17 @@ namespace Rocks
 				usings.Add($"using {this.information.TypeToMock.ContainingNamespace!.ToDisplayString()};");
 			}
 
-			var text = SourceText.From(
-$@"public static class ExpectationsOf{this.information.TypeToMock.Name}Extensions
-{{
-}}", Encoding.UTF8);
+			using var writer = new StringWriter();
+			// TODO:
+			// Can we read .editorconfig to figure out the space/tab + indention
+			using var indentWriter = new IndentedTextWriter(writer, "	");
+			var memberIdentifier = 0u;
+			ExtensionsBuilder.Build(indentWriter, this.information, usings, ref memberIdentifier);
+
+			var code = string.Join(Environment.NewLine,
+				string.Join(Environment.NewLine, usings), writer.ToString());
+
+			var text = SourceText.From(writer.ToString(), Encoding.UTF8);
 			return (this.information.Diagnostics, $"{this.information.TypeToMock.Name}_Mock.g.cs", text);
 		}
 

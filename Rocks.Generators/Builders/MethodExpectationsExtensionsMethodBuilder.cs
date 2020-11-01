@@ -11,10 +11,10 @@ namespace Rocks.Builders
 	Example: If we are given a method like: Foo(int a, string b)
 
 	internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a, Arg<string> b) =>
-		new MethodAdornments(self.Add(0, new Dictionary<string, Arg>
+		new MethodAdornments(self.Add(0, new Dictionary<int, Arg>
 		{
-			{ "a", a },
-			{ "b", b },
+			{ 0, a },
+			{ 1, b },
 		}));
 	*/
 
@@ -46,17 +46,18 @@ namespace Rocks.Builders
 
 			if(method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<string, Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<int, Arg>()));");
 			}
 			else
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<string, Arg>");
+				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<int, Arg>");
 				writer.WriteLine("{");
 				writer.Indent++;
 
-				foreach(var parameter in method.Parameters)
+				for (var i = 0; i < method.Parameters.Length; i++)
 				{
-					writer.WriteLine($"{{ \"{parameter.Name}\", {parameter.Name} }},");
+					var parameter = method.Parameters[i];
+					writer.WriteLine($"{{ {i}, {parameter.Name} }},");
 				}
 
 				writer.Indent--;
