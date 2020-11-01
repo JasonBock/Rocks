@@ -1,0 +1,72 @@
+﻿using System.CodeDom.Compiler;
+
+namespace Rocks.Builders
+{
+	internal static class MockCreateBuilder
+	{
+		/*
+		private sealed class RockIMockable
+			: IMockable, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+
+			public RockIMockable(Expectations<IMockable> expectations) => 
+				this.handlers = expectations.CreateHandlers();
+
+			[MemberIdentifier(0, "Foo(int a)")]
+			public void Foo(int a)
+			{
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var foundMatch = false;
+
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((Arg<int>)methodHandler.Expectations["a"]).IsValid(a))
+						{
+							foundMatch = true;
+
+							if (methodHandler.Method != null)
+							{
+#pragma warning disable CS8604
+								((Action<int>)methodHandler.Method)(a);
+#pragma warning restore CS8604
+							}
+
+							methodHandler.IncrementCallCount();
+							break;
+						}
+					}
+
+					if (!foundMatch)
+					{
+						throw new ExpectationException($"No handlers were found for Foo({a})");
+					}
+				}
+				else
+				{
+					throw new ExpectationException($"No handlers were found for Foo({a})");
+				}
+			}
+
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+		
+		*/
+		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		{
+			writer.WriteLine($"private sealed class Rock{information.TypeToMock.Name}");
+			writer.Indent++;
+			writer.WriteLine($": {information.TypeToMock.Name}, IMock");
+			writer.Indent--;
+
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+	}
+}
