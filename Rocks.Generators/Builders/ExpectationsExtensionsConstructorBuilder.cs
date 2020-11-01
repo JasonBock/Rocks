@@ -20,22 +20,31 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock,
 			ImmutableArray<IParameterSymbol> parameters, SortedSet<string> namespaces)
 		{
-			var instanceParameters = string.Join(", ", $"this Expectations<{typeToMock.Name}> self",
-				string.Join(", ", parameters.Select(_ =>
-					{
-						if (!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+			var instanceParameters = parameters.Length == 0 ?
+				$"this Expectations<{typeToMock.Name}> self" :
+				string.Join(", ", $"this Expectations<{typeToMock.Name}> self",
+					string.Join(", ", parameters.Select(_ =>
 						{
-							namespaces.Add($"using {_.Type.ContainingNamespace!.ToDisplayString()};");
-						}
+							if (!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+							{
+								namespaces.Add($"using {_.Type.ContainingNamespace!.ToDisplayString()};");
+							}
 
-						return $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
-					})));
-			var rockInstanceParameters = string.Join(", ", $"self", string.Join(", ", parameters.Select(_ => $"{_.Name}")));
+							return $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+						})));
+			var rockInstanceParameters = parameters.Length == 0 ? "self" :
+				string.Join(", ", "self", string.Join(", ", parameters.Select(_ => $"{_.Name}")));
 
 			writer.WriteLine($"internal static {typeToMock.Name} Instance({instanceParameters})");
+			writer.WriteLine("{");
+			writer.Indent++;
+
 			writer.WriteLine($"var mock = new Rock{typeToMock.Name}({rockInstanceParameters});");
 			writer.WriteLine("self.Mocks.Add(mock);");
 			writer.WriteLine("return mock;");
+
+			writer.Indent--;
+			writer.WriteLine("}");
 		}
 	}
 }

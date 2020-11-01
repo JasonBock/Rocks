@@ -66,6 +66,7 @@ namespace Rocks.Builders
 			writer.Indent++;
 
 			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
+			writer.WriteLine();
 
 			if (information.Constructors.Length > 0)
 			{
@@ -79,7 +80,9 @@ namespace Rocks.Builders
 				MockConstructorBuilder.Build(writer, information.TypeToMock, ImmutableArray<IParameterSymbol>.Empty);
 			}
 
+			writer.WriteLine();
 			writer.WriteLine("// TODO: Put in all the member overrides...");
+			writer.WriteLine();
 
 			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
 			writer.Indent--;

@@ -19,9 +19,11 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock,
 			ImmutableArray<IParameterSymbol> parameters)
 		{
-			var instanceParameters = string.Join(", ", $"Expectations<{typeToMock.Name}> expectations",
-				string.Join(", ", 
-					parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}")));
+			var instanceParameters = parameters.Length == 0 ?
+				$"Expectations<{typeToMock.Name}> expectations" :
+				string.Join(", ", $"Expectations<{typeToMock.Name}> expectations",
+					string.Join(", ", 
+						parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}")));
 
 			if(parameters.Length > 0)
 			{

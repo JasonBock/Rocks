@@ -28,6 +28,8 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
+			// TODO: If there are methods, you need to add "Methods()"
+
 			if(information.Constructors.Length > 0)
 			{
 				foreach(var constructor in information.Constructors)
@@ -41,6 +43,8 @@ namespace Rocks.Builders
 				ExpectationsExtensionsConstructorBuilder.Build(writer, information.TypeToMock,
 					ImmutableArray<IParameterSymbol>.Empty, namespaces);
 			}
+
+			writer.WriteLine();
 
 			MockCreateBuilder.Build(writer, information);
 

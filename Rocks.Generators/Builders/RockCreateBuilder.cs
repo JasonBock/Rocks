@@ -25,7 +25,8 @@ namespace Rocks
 			var usings = new SortedSet<string>
 			{
 				"using Rocks;",
-				"using System.Collections.Generic;"
+				"using System.Collections.Generic;",
+				"using System.Collections.Immutable;"
 			};
 
 			if(!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
@@ -41,9 +42,9 @@ namespace Rocks
 			ExtensionsBuilder.Build(indentWriter, this.information, usings, ref memberIdentifier);
 
 			var code = string.Join(Environment.NewLine,
-				string.Join(Environment.NewLine, usings), writer.ToString());
+				string.Join(Environment.NewLine, usings), string.Empty, writer.ToString());
 
-			var text = SourceText.From(writer.ToString(), Encoding.UTF8);
+			var text = SourceText.From(code, Encoding.UTF8);
 			return (this.information.Diagnostics, $"{this.information.TypeToMock.Name}_Mock.g.cs", text);
 		}
 
