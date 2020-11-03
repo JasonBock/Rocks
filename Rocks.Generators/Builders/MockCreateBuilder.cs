@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Rocks.Builders
 {
@@ -81,9 +82,16 @@ namespace Rocks.Builders
 			}
 
 			writer.WriteLine();
+
+			var memberIdentifier = 0u;
+
+			foreach(var result in information.Methods)
+			{
+				MockMethodBuilder.Build(writer, result, ref memberIdentifier);
+			}
+
 			writer.WriteLine("// TODO: Put in all the member overrides...");
 			writer.WriteLine();
-
 			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
 			writer.Indent--;
 			writer.WriteLine("}");

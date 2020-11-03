@@ -12,9 +12,9 @@ namespace Rocks
 		internal MethodExpectations(Expectations<T> expectations) =>
 			this.expectations = expectations;
 
-		internal HandlerInformation Add(int memberIdentifier, Dictionary<int, Arg> arguments)
+		internal HandlerInformation Add(int memberIdentifier, List<Arg> arguments)
 		{
-			var information = new HandlerInformation(arguments.ToImmutableDictionary());
+			var information = new HandlerInformation(arguments.ToImmutableArray());
 			this.expectations.Handlers.AddOrUpdate(memberIdentifier,
 				() => new List<HandlerInformation> { information }, _ => _.Add(information));
 			return information;

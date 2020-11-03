@@ -29,7 +29,7 @@ namespace Rocks
 				"using System.Collections.Immutable;"
 			};
 
-			if(!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
+			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
 			{
 				usings.Add($"using {this.information.TypeToMock.ContainingNamespace!.ToDisplayString()};");
 			}
@@ -39,10 +39,24 @@ namespace Rocks
 			// Can we read .editorconfig to figure out the space/tab + indention
 			using var indentWriter = new IndentedTextWriter(writer, "	");
 			var memberIdentifier = 0u;
+
+			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
+			{
+				indentWriter.WriteLine($"namespace {this.information.TypeToMock.ContainingNamespace!.ToDisplayString()}");
+				indentWriter.WriteLine("{");
+				indentWriter.Indent++;
+			}
+
 			ExtensionsBuilder.Build(indentWriter, this.information, usings, ref memberIdentifier);
 
+			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
+			{
+				indentWriter.Indent--;
+				indentWriter.WriteLine("}");
+			}
+
 			var code = string.Join(Environment.NewLine,
-				string.Join(Environment.NewLine, usings), string.Empty, writer.ToString());
+			string.Join(Environment.NewLine, usings), string.Empty, writer.ToString());
 
 			var text = SourceText.From(code, Encoding.UTF8);
 			return (this.information.Diagnostics, $"{this.information.TypeToMock.Name}_Mock.g.cs", text);

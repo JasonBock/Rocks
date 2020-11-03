@@ -28,7 +28,14 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			// TODO: If there are methods, you need to add "Methods()"
+			if(information.Methods.Length > 0)
+			{
+				writer.WriteLine($"internal static MethodExpectations<{information.TypeToMock.Name}> Methods(this Expectations<{information.TypeToMock.Name}> self) =>");
+				writer.Indent++;
+				writer.WriteLine($"new MethodExpectations<{information.TypeToMock.Name}>(self);");
+				writer.Indent--;
+				writer.WriteLine();
+			}
 
 			if(information.Constructors.Length > 0)
 			{

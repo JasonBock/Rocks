@@ -91,9 +91,9 @@ namespace Rocks.Tests
 	internal static class MethodExpectationsOfIMockableExtensions
 	{
 		internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a) =>
-			new MethodAdornments(self.Add(0, new Dictionary<int, Arg>
+			new MethodAdornments(self.Add(0, new List<Arg>
 			{
-				{ 0, a }
+				{ a }
 			}));
 	}
 }

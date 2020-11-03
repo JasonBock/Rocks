@@ -8,7 +8,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void Make()
 		{
-			var rock = Rock.Create<IHandleActionNoArgumentsTests>();
+			var rock = Rock.Create<IHandleActionNoArgumentsTests>(new Rocks.Options.RockOptions(codeFile: Rocks.Options.CodeFileOption.Create));
 			rock.Handle(_ => _.Target());
 
 			var chunk = rock.Make();

@@ -47,22 +47,11 @@ namespace Rocks.Builders
 
 			if(method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<int, Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg>()));");
 			}
 			else
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new Dictionary<int, Arg>");
-				writer.WriteLine("{");
-				writer.Indent++;
-
-				for (var i = 0; i < method.Parameters.Length; i++)
-				{
-					var parameter = method.Parameters[i];
-					writer.WriteLine($"{{ {i}, {parameter.Name} }},");
-				}
-
-				writer.Indent--;
-				writer.WriteLine("}));");
+				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
 			}
 
 			writer.Indent--;

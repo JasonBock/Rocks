@@ -18,9 +18,12 @@ namespace Rocks.Tests.Builders
 			var code =
 @"using System.IO;
 
-public interface IFoo
+namespace FooStuff
 {
-	void Foo(int a, Guid b, StringWriter c);
+	public interface IFoo
+	{
+		void Foo(int a, Guid b, StringWriter c);
+	}
 }";
 			var information = RockCreateBuilderTests.GetInformation(code);
 

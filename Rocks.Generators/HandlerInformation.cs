@@ -22,18 +22,18 @@ namespace Rocks
 		private readonly List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
 
 		internal HandlerInformation()
-			: this(null, ImmutableDictionary<int, Arg>.Empty)
+			: this(null, ImmutableArray<Arg>.Empty)
 		{ }
 
 		internal HandlerInformation(Delegate method)
-			: this(method, ImmutableDictionary<int, Arg>.Empty)
+			: this(method, ImmutableArray<Arg>.Empty)
 		{ }
 
-		internal HandlerInformation(ImmutableDictionary<int, Arg> expectations)
+		internal HandlerInformation(ImmutableArray<Arg> expectations)
 			: this(null, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate? method, ImmutableDictionary<int, Arg> expectations) =>
+		internal HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations) =>
 			(this.Method, this.Expectations) = (method, expectations);
 
 		internal void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
@@ -68,7 +68,7 @@ namespace Rocks
 
 		internal int CallCount => this.callCount;
 
-		public ImmutableDictionary<int, Arg> Expectations { get; }
+		public ImmutableArray<Arg> Expectations { get; }
 		internal uint ExpectedCallCount { get; private set; } = 1;
 		public Delegate? Method { get; }
 		internal ReadOnlyCollection<RaiseEventInformation> GetRaiseEvents() => this.raiseEvents.AsReadOnly();

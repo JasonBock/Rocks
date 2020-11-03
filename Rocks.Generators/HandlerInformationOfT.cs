@@ -8,10 +8,10 @@ namespace Rocks
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
 	{
-		internal HandlerInformation(ImmutableDictionary<int, Arg> expectations)
+		internal HandlerInformation(ImmutableArray<Arg> expectations)
 			: base(null, expectations) => this.ReturnValue = default;
 
-		internal HandlerInformation(Delegate? method, ImmutableDictionary<int, Arg> expectations)
+		internal HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations)
 			: base(method, expectations) => this.ReturnValue = default;
 
 		public T? ReturnValue { get; internal set; }
