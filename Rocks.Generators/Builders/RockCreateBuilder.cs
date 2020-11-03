@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
+using Rocks.Exceptions;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -24,9 +25,10 @@ namespace Rocks
 		{
 			var usings = new SortedSet<string>
 			{
-				"using Rocks;",
-				"using System.Collections.Generic;",
-				"using System.Collections.Immutable;"
+				$"using {typeof(IMock).Namespace};",
+				$"using {typeof(ExpectationException).Namespace};",
+				$"using {typeof(List<>).Namespace};",
+				$"using {typeof(ImmutableArray).Namespace};"
 			};
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)

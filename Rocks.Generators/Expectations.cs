@@ -5,7 +5,8 @@ using System.Collections.Immutable;
 
 namespace Rocks
 {
-	public class Expectations<T> where T : class
+	public class Expectations<T> 
+		where T : class
 	{
 		public void Verify()
 		{
@@ -22,10 +23,10 @@ namespace Rocks
 			}
 		}
 
-		internal ImmutableDictionary<int, ImmutableArray<HandlerInformation>> CreateHandlers() =>
+		public ImmutableDictionary<int, ImmutableArray<HandlerInformation>> CreateHandlers() =>
 			this.Handlers.ToImmutableDictionary(kvp => kvp.Key, kvp => kvp.Value.ToImmutableArray());
 
 		internal Dictionary<int, List<HandlerInformation>> Handlers { get; } = new();
-		internal List<IMock> Mocks { get; } = new();
+		public List<IMock> Mocks { get; } = new();
 	}
 }

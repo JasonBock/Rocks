@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators", "Rocks.G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators.Tests", "Rocks.Generators.Tests\Rocks.Generators.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Generators.IntegrationTests", "Rocks.Generators.IntegrationTests\Rocks.Generators.IntegrationTests.csproj", "{EB1465BD-5400-4226-BFA3-FA59EA14DB02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

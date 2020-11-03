@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
-using System.Linq;
 
 namespace Rocks.Builders
 {

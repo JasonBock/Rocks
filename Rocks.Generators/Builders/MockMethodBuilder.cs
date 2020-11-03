@@ -171,12 +171,6 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine("var foundMatch = false;");
-			writer.WriteLine();
-			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
-			writer.WriteLine("{");
-			writer.Indent++;
-
 			if(method.Parameters.Length > 0)
 			{
 				MockMethodBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException);
@@ -185,9 +179,6 @@ namespace Rocks.Builders
 			{
 				MockMethodBuilder.BuildMethodValidationHandlerNoParameters(writer, method);
 			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
 
 			writer.Indent--;
 			writer.WriteLine("}");
