@@ -24,25 +24,24 @@ namespace Rocks.Builders
 		{
 			// TODO: This is wrong, look at what I did with constructors, parameter counts, and commas.
 			var method = result.Value;
-			var parameters = string.Join(", ", new[]
-			{
-				$"this {nameof(MethodExpectations<string>)}<{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self",
-				string.Join(", ", method.Parameters.Select(_ =>
-				{
-					if(!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+			var thisParameter = $"this {nameof(MethodExpectations<string>)}<{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
+			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
+				string.Join(", ", thisParameter,
+					string.Join(", ", method.Parameters.Select(_ =>
 					{
-						namespaces.Add($"using {_.Type.ContainingNamespace!.ToDisplayString()};");
-					}
+						if (!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+						{
+							namespaces.Add($"using {_.Type.ContainingNamespace!.ToDisplayString()};");
+						}
 
-					return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
-				}))
-			});
+						return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
+					})));
 
 			var (returnValue, newAdornments) = method.ReturnsVoid ? 
 				(nameof(MethodAdornments), $"new {nameof(MethodAdornments)}") : 
 				($"{nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>", $"new {nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>");
 
-			writer.WriteLine($"internal static {returnValue} {method.Name}({parameters}) =>");
+			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}) =>");
 			writer.Indent++;
 
 			var addReturnValue = method.ReturnsVoid ? string.Empty : $"<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>";
