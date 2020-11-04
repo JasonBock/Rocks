@@ -8,7 +8,8 @@ namespace Rocks.Tests
 		[Test]
 		public static void Make()
 		{
-			var rock = Rock.Create<IHandleFunc2ArgumentTests>();
+			var rock = Rock.Create<IHandleFunc2ArgumentTests>(
+				new Rocks.Options.RockOptions(codeFile: Rocks.Options.CodeFileOption.Create, allowWarning: Rocks.Options.AllowWarning.Yes));
 			rock.Handle(_ => _.ReferenceTarget(1, 2));
 			rock.Handle(_ => _.ValueTarget(10, 20));
 

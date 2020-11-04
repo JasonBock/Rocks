@@ -86,7 +86,16 @@ namespace Rocks.Builders
 
 			foreach(var result in information.Methods)
 			{
-				MockMethodBuilder.Build(writer, result, ref memberIdentifier);
+				if(result.Value.ReturnsVoid)
+				{
+					MockMethodVoidBuilder.Build(writer, result, ref memberIdentifier);
+				}
+				else
+				{
+					MockMethodValueBuilder.Build(writer, result, ref memberIdentifier);
+				}
+
+				memberIdentifier++;
 			}
 
 			writer.WriteLine("// TODO: Put in all the member overrides...");

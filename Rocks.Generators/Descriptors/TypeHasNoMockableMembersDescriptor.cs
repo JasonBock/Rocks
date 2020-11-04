@@ -8,7 +8,7 @@ namespace Rocks.Descriptors
 		internal static Diagnostic Create(ITypeSymbol type) =>
 			Diagnostic.Create(new DiagnosticDescriptor(
 				TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title,
-				string.Format(CultureInfo.CurrentCulture, TypeHasNoMockableMembersDescriptor.Message, type.Name),
+				string.Format(CultureInfo.CurrentCulture, TypeHasNoMockableMembersDescriptor.Message, type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
 				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
 				helpLinkUri: HelpUrlBuilder.Build(
 					TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)), type.Locations[0]);

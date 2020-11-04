@@ -3,7 +3,7 @@
    public sealed class MethodAdornments<TResult>
 	   : MethodAdornments
    {
-		internal MethodAdornments(HandlerInformation<TResult> handler)
+		public MethodAdornments(HandlerInformation<TResult> handler)
 			: base(handler)
 		{ }
 

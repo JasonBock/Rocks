@@ -26,7 +26,7 @@ namespace Rocks.Builders
 			var method = result.Value;
 			var parameters = string.Join(", ", new[]
 			{
-				$"this {nameof(MethodExpectations<string>)}<{method.ContainingType.Name}> self",
+				$"this {nameof(MethodExpectations<string>)}<{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self",
 				string.Join(", ", method.Parameters.Select(_ =>
 				{
 					if(!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
@@ -40,18 +40,20 @@ namespace Rocks.Builders
 
 			var (returnValue, newAdornments) = method.ReturnsVoid ? 
 				(nameof(MethodAdornments), $"new {nameof(MethodAdornments)}") : 
-				($"{nameof(MethodAdornments)}<{method.ReturnType.Name}>", $"new {nameof(MethodAdornments)}<{method.ReturnType.Name}>");
+				($"{nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>", $"new {nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>");
 
 			writer.WriteLine($"internal static {returnValue} {method.Name}({parameters}) =>");
 			writer.Indent++;
 
+			var addReturnValue = method.ReturnsVoid ? string.Empty : $"<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>";
+
 			if(method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({memberIdentifier}, new List<Arg>()));");
 			}
 			else
 			{
-				writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
+				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({memberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
 			}
 
 			writer.Indent--;

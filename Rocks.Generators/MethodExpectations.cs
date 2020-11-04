@@ -19,5 +19,13 @@ namespace Rocks
 				() => new List<HandlerInformation> { information }, _ => _.Add(information));
 			return information;
 		}
+
+		public HandlerInformation<TReturn> Add<TReturn>(int memberIdentifier, List<Arg> arguments)
+		{
+			var information = new HandlerInformation<TReturn>(arguments.ToImmutableArray());
+			this.expectations.Handlers.AddOrUpdate(memberIdentifier,
+				() => new List<HandlerInformation> { information }, _ => _.Add(information));
+			return information;
+		}
 	}
 }

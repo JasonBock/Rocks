@@ -13,7 +13,37 @@ namespace Rocks.Tests.Builders
 	public static class RockCreateBuilderTests
 	{
 		[Test]
-		public static void DoHappyPath()
+		public static void DoHappyPathForValue()
+		{
+			var code =
+@"using System.IO;
+
+namespace FooStuff
+{
+	public interface IFoo
+	{
+		string Bar(int a, string b);
+		void Foo(int a, string b);
+		void Baz();
+	}
+}";
+			var information = RockCreateBuilderTests.GetInformation(code);
+
+			using var writer = new StringWriter();
+			using var indentWriter = new IndentedTextWriter(writer, "	");
+			var namespaces = new SortedSet<string>();
+
+			var builder = new RockCreateBuilder(information);
+			var result = builder.Text.ToString();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(result, Is.Not.Empty);
+			});
+		}
+
+		[Test]
+		public static void DoHappyPathForVoid()
 		{
 			var code =
 @"using System.IO;
@@ -23,6 +53,7 @@ namespace FooStuff
 	public interface IFoo
 	{
 		void Foo(int a, Guid b, StringWriter c);
+		void Bar();
 	}
 }";
 			var information = RockCreateBuilderTests.GetInformation(code);
