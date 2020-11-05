@@ -60,7 +60,7 @@ namespace Rocks.Builders
 
 			// TODO: We need to detect if the entire mock has events to include "methodHandler.RaiseEvents(this);"
 			writer.WriteLine("methodHandler.IncrementCallCount();");
-			writer.WriteLine("return result;");
+			writer.WriteLine("return result!;");
 		}
 
 		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method)

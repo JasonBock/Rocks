@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Rocks
 {
@@ -18,16 +19,30 @@ namespace Rocks
 	public sealed class Arg<T>
 		: Arg
 	{
+		private enum Validation
+		{
+			None, Evaluation, Value
+		}
+
 		private readonly Predicate<T>? evaluation;
+		private readonly Validation validation;
 		private readonly T? value;
 
-		internal Arg() { }
+		internal Arg() => this.validation = Validation.None;
 
-		internal Arg(T value) => this.value = value;
+		internal Arg(T value) => 
+			(this.value, this.validation) = (value, Validation.Value);
 
-		internal Arg(Predicate<T> evaluation) => this.evaluation = evaluation;
+		internal Arg(Predicate<T> evaluation) => 
+			(this.evaluation, this.validation) = (evaluation, Validation.Evaluation);
 
 		public bool IsValid(T value) =>
-			this.value is not null ? ObjectEquality.AreEqual(value, this.value) : this.evaluation!(value);
+			this.validation switch
+			{
+				Validation.None => true,
+				Validation.Value => ObjectEquality.AreEqual(value, this.value),
+				Validation.Evaluation => this.evaluation!(value),
+				_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.evaluation}")
+			};
 	}
 }
