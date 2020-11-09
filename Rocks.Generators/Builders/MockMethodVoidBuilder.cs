@@ -99,7 +99,7 @@ namespace Rocks.Builders
 				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
 			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{methodSignature}"")]");
-			writer.WriteLine($"public {methodSignature}");
+			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

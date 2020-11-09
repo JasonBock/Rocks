@@ -36,6 +36,10 @@ namespace Rocks
 		internal Arg(Predicate<T> evaluation) => 
 			(this.evaluation, this.validation) = (evaluation, Validation.Evaluation);
 
+#pragma warning disable CA2225 // Operator overloads have named alternates
+		public static implicit operator Arg<T>(T value) => new Arg<T>(value);
+#pragma warning restore CA2225 // Operator overloads have named alternates
+
 		public bool IsValid(T value) =>
 			this.validation switch
 			{

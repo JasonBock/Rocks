@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Extensions;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -33,9 +34,11 @@ namespace Rocks
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
 				var compilation = context.Compilation;
+				var typesToMock = new HashSet<ITypeSymbol>();
 
 				foreach (var candidateInvocation in receiver.Candidates)
 				{
+					//context.CancellationToken.ThrowIfCancellationRequested();
 					var model = compilation.GetSemanticModel(candidateInvocation.SyntaxTree);
 					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
 
@@ -45,20 +48,24 @@ namespace Rocks
 					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
-						var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
-						var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
-						var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-							typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
-
-						foreach (var diagnostic in diagnostics)
+						if(typesToMock.Add(typeToMock))
 						{
-							context.ReportDiagnostic(diagnostic);
-						}
+							var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
+							var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
-						if (name is not null && text is not null)
-						{
-							context.AddSource(name, text);
+							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
+								typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
+
+							foreach (var diagnostic in diagnostics)
+							{
+								context.ReportDiagnostic(diagnostic);
+							}
+
+							if (name is not null && text is not null)
+							{
+								context.AddSource(name, text);
+							}
 						}
 					}
 				}

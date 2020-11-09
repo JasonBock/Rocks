@@ -31,7 +31,37 @@ public static class Test
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("public static class ExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class ExpectationsOfIMockExtensions"));
+			});
+		}
+
+		[Test]
+		public static void GenerateMultipleCalls()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+
+namespace MockTests
+{
+	public interface IMock 
+	{ 
+		void Foo();
+	}
+
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Create<IMock>();
+			var rock2 = Rock.Create<IMock>();
+		}
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class ExpectationsOfIMockExtensions"));
 			});
 		}
 
