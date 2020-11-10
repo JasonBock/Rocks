@@ -25,15 +25,17 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> namespaces)
 		{
-			writer.WriteLine($"internal static class ExpectationsOf{information.TypeToMock.Name}Extensions");
+			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+
+			writer.WriteLine($"internal static class ExpectationsOf{typeToMockName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
 			if(information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == Extensions.RequiresExplicitInterfaceImplementation.No))
 			{
-				writer.WriteLine($"internal static MethodExpectations<{information.TypeToMock.Name}> Methods(this Expectations<{information.TypeToMock.Name}> self) =>");
+				writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new MethodExpectations<{information.TypeToMock.Name}>(self);");
+				writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -46,7 +48,7 @@ namespace Rocks.Builders
 				var baseTypeName = containingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				var mockTypeName = mockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				var explicitMethods = $"ExplicitMethodExpectations<{baseTypeName}, {mockTypeName}>";
-				writer.WriteLine($"internal static {explicitMethods} ExplicitFor{baseTypeName}Methods(this Expectations<{mockTypeName}> self) =>");
+				writer.WriteLine($"internal static {explicitMethods} ExplicitMethodsFor{baseTypeName}(this Expectations<{mockTypeName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new {explicitMethods}(self.To<{baseTypeName}>());");
 				writer.Indent--;

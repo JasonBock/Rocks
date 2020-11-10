@@ -22,7 +22,7 @@ namespace Rocks.Builders
 		{
 			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
-				writer.WriteLine($"internal static class MethodExpectationsOf{information.TypeToMock.Name}Extensions");
+				writer.WriteLine($"internal static class MethodExpectationsOf{information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 

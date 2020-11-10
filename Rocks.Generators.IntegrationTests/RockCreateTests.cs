@@ -8,8 +8,8 @@ namespace Rocks.IntegrationTests
 		public static void CreateHappyPathForExplicitInterface()
 		{
 			var rock = Rock.Create<IC>();
-			rock.ExplicitForIAMethods().Foo();
-			rock.ExplicitForIBMethods().Foo();
+			rock.ExplicitMethodsForIA().Foo();
+			rock.ExplicitMethodsForIB().Foo();
 
 			var chunk = rock.Instance();
 			((IA)chunk).Foo();

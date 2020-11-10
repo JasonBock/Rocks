@@ -19,15 +19,16 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock,
 			ImmutableArray<IParameterSymbol> parameters)
 		{
+			var typeToMockName = typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var instanceParameters = parameters.Length == 0 ?
-				$"Expectations<{typeToMock.Name}> expectations" :
-				string.Join(", ", $"Expectations<{typeToMock.Name}> expectations",
+				$"Expectations<{typeToMockName}> expectations" :
+				string.Join(", ", $"Expectations<{typeToMockName}> expectations",
 					string.Join(", ", 
 						parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}")));
 
 			if(parameters.Length > 0)
 			{
-				writer.WriteLine($"public Rock{typeToMock.Name}({instanceParameters})");
+				writer.WriteLine($"public Rock{typeToMockName}({instanceParameters})");
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
 				writer.Indent++;
@@ -37,7 +38,7 @@ namespace Rocks.Builders
 			}
 			else
 			{
-				writer.WriteLine($"public Rock{typeToMock.Name}({instanceParameters}) =>");
+				writer.WriteLine($"public Rock{typeToMockName}({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine("this.handlers = expectations.CreateHandlers();");
 				writer.Indent--;

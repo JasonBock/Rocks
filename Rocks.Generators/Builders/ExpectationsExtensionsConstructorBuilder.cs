@@ -21,8 +21,8 @@ namespace Rocks.Builders
 			ImmutableArray<IParameterSymbol> parameters, SortedSet<string> namespaces)
 		{
 			var instanceParameters = parameters.Length == 0 ?
-				$"this Expectations<{typeToMock.Name}> self" :
-				string.Join(", ", $"this Expectations<{typeToMock.Name}> self",
+				$"this Expectations<{typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self" :
+				string.Join(", ", $"this Expectations<{typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self",
 					string.Join(", ", parameters.Select(_ =>
 						{
 							if (!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
@@ -35,11 +35,11 @@ namespace Rocks.Builders
 			var rockInstanceParameters = parameters.Length == 0 ? "self" :
 				string.Join(", ", "self", string.Join(", ", parameters.Select(_ => $"{_.Name}")));
 
-			writer.WriteLine($"internal static {typeToMock.Name} Instance({instanceParameters})");
+			writer.WriteLine($"internal static {typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} Instance({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"var mock = new Rock{typeToMock.Name}({rockInstanceParameters});");
+			writer.WriteLine($"var mock = new Rock{typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}({rockInstanceParameters});");
 			writer.WriteLine("self.Mocks.Add(mock);");
 			writer.WriteLine("return mock;");
 

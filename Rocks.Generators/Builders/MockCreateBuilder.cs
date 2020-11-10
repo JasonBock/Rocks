@@ -57,9 +57,11 @@ namespace Rocks.Builders
 		*/
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			writer.WriteLine($"private sealed class Rock{information.TypeToMock.Name}");
+			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+
+			writer.WriteLine($"private sealed class Rock{typeToMockName}");
 			writer.Indent++;
-			writer.WriteLine($": {information.TypeToMock.Name}, IMock");
+			writer.WriteLine($": {typeToMockName}, IMock");
 			writer.Indent--;
 
 			writer.WriteLine("{");
