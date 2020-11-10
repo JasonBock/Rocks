@@ -38,7 +38,7 @@ namespace Rocks
 
 				foreach (var candidateInvocation in receiver.Candidates)
 				{
-					//context.CancellationToken.ThrowIfCancellationRequested();
+					context.CancellationToken.ThrowIfCancellationRequested();
 					var model = compilation.GetSemanticModel(candidateInvocation.SyntaxTree);
 					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
 

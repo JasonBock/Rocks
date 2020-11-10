@@ -25,6 +25,7 @@ namespace Rocks
 		{
 			var usings = new SortedSet<string>
 			{
+				$"using {typeof(Action).Namespace};",
 				$"using {typeof(IMock).Namespace};",
 				$"using {typeof(ExpectationException).Namespace};",
 				$"using {typeof(List<>).Namespace};",
@@ -40,7 +41,6 @@ namespace Rocks
 			// TODO:
 			// Can we read .editorconfig to figure out the space/tab + indention
 			using var indentWriter = new IndentedTextWriter(writer, "	");
-			var memberIdentifier = 0u;
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
 			{
@@ -49,7 +49,7 @@ namespace Rocks
 				indentWriter.Indent++;
 			}
 
-			ExtensionsBuilder.Build(indentWriter, this.information, usings, ref memberIdentifier);
+			ExtensionsBuilder.Build(indentWriter, this.information, usings);
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
 			{

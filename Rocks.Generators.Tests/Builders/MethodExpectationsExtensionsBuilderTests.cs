@@ -23,13 +23,12 @@ public interface IFoo
 {
 	void Foo(int a, Guid b, StringWriter c);
 }";
-			var memberIdentifier = 0u;
 			var information = MethodExpectationsExtensionsBuilderTests.GetInformation(code);
 
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "	");
 			var namespaces = new SortedSet<string>();
-			MethodExpectationsExtensionsBuilder.Build(indentWriter, information, namespaces, ref memberIdentifier);
+			MethodExpectationsExtensionsBuilder.Build(indentWriter, information, namespaces);
 			var result = writer.ToString();
 
 			Assert.Multiple(() =>

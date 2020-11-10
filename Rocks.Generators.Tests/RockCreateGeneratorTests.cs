@@ -10,6 +10,44 @@ namespace Rocks.Tests
 	public static class RockCreateGeneratorTests
 	{
 		[Test]
+		public static void GenerateHappyPathForExplicitInterfaceImplementation()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+
+namespace EII
+{
+	public interface IA
+	{
+		void Foo();
+	}
+
+	public interface IB
+	{
+		void Foo();
+	}
+
+	public interface IC
+		: IA, IB
+	{ }
+
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Create<IC>();
+		}
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class ExpectationsOfICExtensions"));
+			});
+		}
+
+		[Test]
 		public static void GenerateHappyPath()
 		{
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(

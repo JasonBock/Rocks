@@ -20,11 +20,12 @@ namespace Rocks.Builders
 
 	internal static class MethodExpectationsExtensionsMethodBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SortedSet<string> namespaces, ref uint memberIdentifier)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SortedSet<string> namespaces)
 		{
-			// TODO: This is wrong, look at what I did with constructors, parameter counts, and commas.
 			var method = result.Value;
-			var thisParameter = $"this {nameof(MethodExpectations<string>)}<{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
+			var thisParameter = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				$"this MethodExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self" :
+				$"this ExplicitMethodExpectations<{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}, {result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 				string.Join(", ", thisParameter,
 					string.Join(", ", method.Parameters.Select(_ =>
@@ -48,11 +49,11 @@ namespace Rocks.Builders
 
 			if(method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({memberIdentifier}, new List<Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg>()));");
 			}
 			else
 			{
-				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({memberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
+				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
 			}
 
 			writer.Indent--;

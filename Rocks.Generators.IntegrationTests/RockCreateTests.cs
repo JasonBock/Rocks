@@ -1,10 +1,23 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace Rocks.IntegrationTests
 {
 	public static class RockCreateTests
 	{
+		[Test]
+		public static void CreateHappyPathForExplicitInterface()
+		{
+			var rock = Rock.Create<IC>();
+			rock.ExplicitForIAMethods().Foo();
+			rock.ExplicitForIBMethods().Foo();
+
+			var chunk = rock.Instance();
+			((IA)chunk).Foo();
+			((IB)chunk).Foo();
+
+			rock.Verify();
+		}
+
 		[Test]
 		public static void CreateHappyPathForInterface()
 		{
@@ -42,6 +55,20 @@ namespace Rocks.IntegrationTests
 			rock.Verify();
 		}
 	}
+
+	public interface IA
+	{
+		void Foo();
+	}
+
+	public interface IB
+	{
+		void Foo();
+	}
+
+	public interface IC
+		: IA, IB
+	{ }
 
 	public interface IFoo
 	{

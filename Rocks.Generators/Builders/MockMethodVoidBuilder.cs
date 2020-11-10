@@ -7,6 +7,53 @@ namespace Rocks.Builders
 {
 	internal static class MockMethodVoidBuilder
 	{
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
+		{
+			var method = result.Value;
+			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
+			var methodSignature =
+				$"void {explicitTypeName}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+			var methodException =
+				$"void {explicitTypeName}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
+			var methodDeclarationBeginning =
+				result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+					$"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}" :
+					string.Empty;
+
+			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodSignature}"")]");
+			writer.WriteLine($"{methodDeclarationBeginning}{methodSignature}");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var methodHandlers))");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			if (method.Parameters.Length > 0)
+			{
+				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException);
+			}
+			else
+			{
+				MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, method);
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine("else");
+			writer.WriteLine("{");
+			writer.Indent++;
+			writer.WriteLine($@"throw new ExpectationException({(method.ReturnsVoid ? string.Empty : "$")}""No handlers were found for {methodException})"");");
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+			writer.WriteLine();
+		}
+
 		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method)
 		{
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
@@ -88,47 +135,6 @@ namespace Rocks.Builders
 			// TODO: We need to detect if the entire mock has events to include "methodHandler.RaiseEvents(this);"
 			writer.WriteLine();
 			writer.WriteLine("methodHandler.IncrementCallCount();");
-		}
-
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult	result, ref uint memberIdentifier)
-		{
-			var method = result.Value;
-			var methodSignature =
-				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
-			var methodException =
-				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
-
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{methodSignature}"")]");
-			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			if (method.Parameters.Length > 0)
-			{
-				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException);
-			}
-			else
-			{
-				MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, method);
-			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.WriteLine("else");
-			writer.WriteLine("{");
-			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException({(method.ReturnsVoid ? string.Empty : "$")}""No handlers were found for {methodException})"");");
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-			writer.WriteLine();
 		}
 	}
 }

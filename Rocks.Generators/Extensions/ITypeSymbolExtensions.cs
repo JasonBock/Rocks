@@ -17,7 +17,8 @@ namespace Rocks.Extensions
 					Array.Empty<IMethodSymbol>().ToImmutableArray();
 
 		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
-			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation)
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation,
+			ref uint memberIdentifier)
 		{
 			var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 
@@ -31,10 +32,11 @@ namespace Rocks.Extensions
 				foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
-					methods.Add(new MethodMockableResult(selfMethod,
+					methods.Add(new MethodMockableResult(selfMethod, self,
 						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ? 
 							RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
-						RequiresOverride.No));
+						RequiresOverride.No, memberIdentifier));
+					memberIdentifier++;
 				}
 
 				var baseInterfaceMethodGroups = new List<List<IMethodSymbol>>();
@@ -67,18 +69,20 @@ namespace Rocks.Extensions
 				{
 					if(baseInterfaceMethodGroup.Count == 1)
 					{
-						methods.Add(new MethodMockableResult(baseInterfaceMethodGroup[0],
+						methods.Add(new MethodMockableResult(baseInterfaceMethodGroup[0], self,
 							methods.Any(_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ||
 								objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ?
 								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
-							RequiresOverride.No));
+							RequiresOverride.No, memberIdentifier));
+						memberIdentifier++;
 					}
 					else
 					{
 						foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
 						{
-							methods.Add(new MethodMockableResult(baseInterfaceMethod,
-								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No));
+							methods.Add(new MethodMockableResult(baseInterfaceMethod, self,
+								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
+							memberIdentifier++;
 						}
 					}
 				}
@@ -96,8 +100,9 @@ namespace Rocks.Extensions
 					{
 						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
 						{
-							methods.Add(new MethodMockableResult(hierarchyMethod,
-								RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+							methods.Add(new MethodMockableResult(hierarchyMethod, self,
+								RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+							memberIdentifier++;
 						}
 						else if(hierarchyMethod.IsOverride || (hierarchyMethod.IsVirtual && hierarchyMethod.IsSealed))
 						{

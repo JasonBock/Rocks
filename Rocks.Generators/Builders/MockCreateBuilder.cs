@@ -88,11 +88,11 @@ namespace Rocks.Builders
 			{
 				if(result.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, result, ref memberIdentifier);
+					MockMethodVoidBuilder.Build(writer, result);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, result, ref memberIdentifier);
+					MockMethodValueBuilder.Build(writer, result);
 				}
 
 				memberIdentifier++;

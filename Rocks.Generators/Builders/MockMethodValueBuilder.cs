@@ -7,21 +7,27 @@ namespace Rocks.Builders
 {
 	internal static class MockMethodValueBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, ref uint memberIdentifier)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
 		{
 			var method = result.Value;
 			var returnType = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
 			var methodSignature =
-				$"{returnType} {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+				$"{returnType} {explicitTypeName}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
 			var methodException =
 				$"{returnType} {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
+			var methodDeclarationBeginning =
+				result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+					$"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}" : 
+					string.Empty;
 
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{methodSignature}"")]");
-			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
+			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodSignature}"")]");
+			writer.WriteLine($"{methodDeclarationBeginning}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+			writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var methodHandlers))");
 			writer.WriteLine("{");
 			writer.Indent++;
 

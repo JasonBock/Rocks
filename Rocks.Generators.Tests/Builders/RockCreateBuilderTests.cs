@@ -13,6 +13,42 @@ namespace Rocks.Tests.Builders
 	public static class RockCreateBuilderTests
 	{
 		[Test]
+		public static void DoHappyPathForExplicitInterfaceImplementation()
+		{
+			var code =
+@"namespace EII
+{
+	public interface IA
+	{
+		void Foo();
+	}
+
+	public interface IB
+	{
+		void Foo();
+	}
+
+	public interface IC
+		: IA, IB
+	{ }
+}";
+
+			var information = RockCreateBuilderTests.GetInformation(code, "IC");
+
+			using var writer = new StringWriter();
+			using var indentWriter = new IndentedTextWriter(writer, "	");
+			var namespaces = new SortedSet<string>();
+
+			var builder = new RockCreateBuilder(information);
+			var result = builder.Text.ToString();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(result, Is.Not.Empty);
+			});
+		}
+
+		[Test]
 		public static void DoHappyPathForValue()
 		{
 			var code =
@@ -27,7 +63,7 @@ namespace FooStuff
 		void Baz();
 	}
 }";
-			var information = RockCreateBuilderTests.GetInformation(code);
+			var information = RockCreateBuilderTests.GetInformation(code, "IFoo");
 
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "	");
@@ -56,7 +92,7 @@ namespace FooStuff
 		void Bar();
 	}
 }";
-			var information = RockCreateBuilderTests.GetInformation(code);
+			var information = RockCreateBuilderTests.GetInformation(code, "IFoo");
 
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "	");
@@ -71,7 +107,7 @@ namespace FooStuff
 			});
 		}
 
-		private static MockInformation GetInformation(string source)
+		private static MockInformation GetInformation(string source, string typeName)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -83,7 +119,7 @@ namespace FooStuff
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-				.OfType<TypeDeclarationSyntax>().Single();
+				.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == typeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
 			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model, compilation);
 		}

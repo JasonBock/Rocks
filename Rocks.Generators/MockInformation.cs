@@ -38,9 +38,11 @@ namespace Rocks
 				diagnostics.Add(CannotMockObsoleteTypeDescriptor.Create(this.TypeToMock));
 			}
 
+			var memberIdentifier = 0u;
+
 			this.Constructors = this.TypeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
 			this.Events = events.ToImmutable();
-			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, this.Compilation);
+			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, this.Compilation, ref memberIdentifier);
 			this.Properties = properties.ToImmutable();
 
 			if(this.Events.Length == 0 && this.Methods.Length == 0 && this.Properties.Length == 0)
