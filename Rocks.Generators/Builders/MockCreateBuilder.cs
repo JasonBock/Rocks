@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace Rocks.Builders
@@ -55,13 +56,13 @@ namespace Rocks.Builders
 		}
 		
 		*/
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
 			writer.WriteLine($"private sealed class Rock{typeToMockName}");
 			writer.Indent++;
-			writer.WriteLine($": {typeToMockName}, IMock");
+			writer.WriteLine($": {typeToMockName}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 			writer.Indent--;
 
 			writer.WriteLine("{");
@@ -90,17 +91,24 @@ namespace Rocks.Builders
 			{
 				if(result.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, result);
+					MockMethodVoidBuilder.Build(writer, result, information.Events.Length > 0);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, result);
+					MockMethodValueBuilder.Build(writer, result, information.Events.Length > 0);
 				}
 
 				memberIdentifier++;
 			}
 
 			writer.WriteLine("// TODO: Put in all the member overrides...");
+
+			if(information.Events.Length > 0)
+			{
+				writer.WriteLine();
+				MockEventsBuilder.Build(writer, information.Events, usings);
+			}
+
 			writer.WriteLine();
 			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
 			writer.Indent--;

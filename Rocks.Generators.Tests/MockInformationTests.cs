@@ -156,6 +156,52 @@ $@"public class {targetTypeName}
 			});
 		}
 
+		[Test]
+		public static void CreateWhenInterfaceHasEvents()
+		{
+			const string targetTypeName = "InterfaceWithEvents";
+			var code =
+$@"using System;
+
+public interface {targetTypeName} 
+{{
+	event EventHandler TargetEvent;
+}}";
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(0));
+				Assert.That(information.Methods.Length, Is.EqualTo(0));
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(1));
+			});
+		}
+
+		[Test]
+		public static void CreateWhenClassHasEvents()
+		{
+			const string targetTypeName = "ClassWithEvents";
+			var code =
+$@"using System;
+
+public class {targetTypeName} 
+{{
+	public virtual event EventHandler TargetEvent;
+}}";
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+				Assert.That(information.Constructors.Length, Is.EqualTo(1));
+				Assert.That(information.Methods.Length, Is.EqualTo(3));
+				Assert.That(information.Properties.Length, Is.EqualTo(0));
+				Assert.That(information.Events.Length, Is.EqualTo(1));
+			});
+		}
+
 		private static MockInformation GetInformation(string source, string targetTypeName)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);

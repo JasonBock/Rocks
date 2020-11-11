@@ -1,9 +1,22 @@
 ﻿using NUnit.Framework;
+using System;
 
 namespace Rocks.IntegrationTests
 {
 	public static class RockCreateTests
 	{
+		[Test]
+		public static void CreateHappyPathForEventOnInterface()
+		{
+			var rock = Rock.Create<IHaveEvent>();
+			rock.Methods().Foo().Raises(nameof(IHaveEvent.TargetEvent), EventArgs.Empty);
+
+			var chunk = rock.Instance();
+			chunk.Foo();
+
+			rock.Verify();
+		}
+
 		[Test]
 		public static void CreateHappyPathForExplicitInterface()
 		{
@@ -54,6 +67,12 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 		}
+	}
+
+	public interface IHaveEvent
+	{
+		void Foo();
+		event EventHandler TargetEvent;
 	}
 
 	public interface IA

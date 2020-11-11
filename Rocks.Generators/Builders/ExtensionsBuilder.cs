@@ -23,7 +23,7 @@ namespace Rocks.Builders
 		// Any member extension classes ...
 		*/
 
-		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> namespaces)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
@@ -60,18 +60,18 @@ namespace Rocks.Builders
 				foreach(var constructor in information.Constructors)
 				{
 					ExpectationsExtensionsConstructorBuilder.Build(writer, information.TypeToMock,
-						constructor.Parameters, namespaces);
+						constructor.Parameters, usings);
 				}
 			}
 			else
 			{
 				ExpectationsExtensionsConstructorBuilder.Build(writer, information.TypeToMock,
-					ImmutableArray<IParameterSymbol>.Empty, namespaces);
+					ImmutableArray<IParameterSymbol>.Empty, usings);
 			}
 
 			writer.WriteLine();
 
-			MockCreateBuilder.Build(writer, information);
+			MockCreateBuilder.Build(writer, information, usings);
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -79,7 +79,7 @@ namespace Rocks.Builders
 			if (information.Methods.Length > 0)
 			{
 				writer.WriteLine();
-				MethodExpectationsExtensionsBuilder.Build(writer, information, namespaces);
+				MethodExpectationsExtensionsBuilder.Build(writer, information, usings);
 			}
 		}
 	}

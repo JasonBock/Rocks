@@ -32,10 +32,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.False);
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618", StringComparison.InvariantCulture), Is.False);
 			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.False);
 			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.False);
-			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.False);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618", StringComparison.InvariantCulture), Is.False);
 		}
 
 		[Test]
@@ -51,10 +51,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618", StringComparison.InvariantCulture), Is.True);
 			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
 			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
-			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618", StringComparison.InvariantCulture), Is.True);
 		}
 
 		[Test]
@@ -70,10 +70,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618", StringComparison.InvariantCulture), Is.True);
 			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
 			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
-			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618", StringComparison.InvariantCulture), Is.True);
 		}
 
 		[Test]
@@ -89,10 +89,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618", StringComparison.InvariantCulture), Is.True);
 			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
 			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
-			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618", StringComparison.InvariantCulture), Is.True);
 		}
 
 		[Test]
@@ -108,10 +108,10 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var tree = builder.Tree.ToString();
 
-			Assert.That(tree.StartsWith("#pragma warning disable CS0618"), Is.True);
+			Assert.That(tree.StartsWith("#pragma warning disable CS0618", StringComparison.InvariantCulture), Is.True);
 			Assert.That(tree.Contains("#pragma warning disable CS0672"), Is.True);
 			Assert.That(tree.Contains("#pragma warning restore CS0672"), Is.True);
-			Assert.That(tree.EndsWith("#pragma warning restore CS0618"), Is.True);
+			Assert.That(tree.EndsWith("#pragma warning restore CS0618", StringComparison.InvariantCulture), Is.True);
 		}
 	}
 

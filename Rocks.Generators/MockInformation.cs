@@ -20,8 +20,6 @@ namespace Rocks
 		private void Validate()
 		{
 			var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-			var events = ImmutableArray.CreateBuilder<IEventSymbol>();
-			var properties = ImmutableArray.CreateBuilder<IPropertySymbol>();
 
 			if(this.TypeToMock.IsSealed)
 			{
@@ -41,11 +39,11 @@ namespace Rocks
 			var memberIdentifier = 0u;
 
 			this.Constructors = this.TypeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
-			this.Events = events.ToImmutable();
 			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, this.Compilation, ref memberIdentifier);
-			this.Properties = properties.ToImmutable();
+			this.Properties = this.TypeToMock.GetMockableProperties(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
+			this.Events = this.TypeToMock.GetMockableEvents(this.ContainingAssemblyOfInvocationSymbol);
 
-			if(this.Events.Length == 0 && this.Methods.Length == 0 && this.Properties.Length == 0)
+			if (this.Events.Length == 0 && this.Methods.Length == 0 && this.Properties.Length == 0)
 			{
 				diagnostics.Add(TypeHasNoMockableMembersDescriptor.Create(this.TypeToMock));
 			}
@@ -65,7 +63,7 @@ namespace Rocks
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
 		public ImmutableArray<MethodMockableResult> Methods { get; private set; }
 		private SemanticModel Model { get; }
-		public ImmutableArray<IPropertySymbol> Properties { get; private set; }
+		public ImmutableArray<PropertyMockableResult> Properties { get; private set; }
 		public ITypeSymbol TypeToMock { get; }
 	}
 }

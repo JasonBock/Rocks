@@ -16,6 +16,20 @@ namespace Rocks.Extensions
 							ISymbolExtensions.CanBeSeenByContainingAssembly(_, containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
 					Array.Empty<IMethodSymbol>().ToImmutableArray();
 
+		internal static ImmutableArray<IEventSymbol> GetMockableEvents(
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+		{
+			var events = ImmutableArray.CreateBuilder<IEventSymbol>();
+
+			foreach(var selfEvent in self.GetMembers().OfType<IEventSymbol>()
+				.Where(_ => (_.IsAbstract || _.IsVirtual) && !_.IsSealed && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+			{
+				events.Add(selfEvent);
+			}
+
+			return events.ToImmutable();
+		}
+
 		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation,
 			ref uint memberIdentifier)
@@ -118,6 +132,16 @@ namespace Rocks.Extensions
 			}
 
 			return methods.ToImmutable();
+		}
+
+		internal static ImmutableArray<PropertyMockableResult> GetMockableProperties(
+#pragma warning disable CA1801 // Review unused parameters
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, ref uint memberIdentifier)
+#pragma warning restore CA1801 // Review unused parameters
+		{
+			var events = ImmutableArray.CreateBuilder<PropertyMockableResult>();
+
+			return events.ToImmutable();
 		}
 
 		private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)

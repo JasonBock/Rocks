@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Construction.InMemory;
+using System;
 using System.Collections.Generic;
 
 namespace Rocks.Tests.Construction.InMemory
@@ -12,7 +13,7 @@ namespace Rocks.Tests.Construction.InMemory
 			var generator = new InMemoryTypeNameGenerator(new SortedSet<string>());
 			var name = generator.Generate(typeof(IAmNotGeneric));
 
-			Assert.That(name.StartsWith("Rock"), Is.True);
+			Assert.That(name.StartsWith("Rock", StringComparison.InvariantCulture), Is.True);
 
 			var restOfName = name.Substring(4);
 
@@ -26,8 +27,8 @@ namespace Rocks.Tests.Construction.InMemory
 
 			var name = generator.Generate(typeof(IAmGeneric<>));
 
-			Assert.That(name.StartsWith("Rock"), Is.True);
-			Assert.That(name.EndsWith("<T>"), Is.True);
+			Assert.That(name.StartsWith("Rock", StringComparison.InvariantCulture), Is.True);
+			Assert.That(name.EndsWith("<T>", StringComparison.InvariantCulture), Is.True);
 
 			var restOfName = name.Substring(4);
 			restOfName = restOfName[0..^3];

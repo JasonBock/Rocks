@@ -7,7 +7,7 @@ namespace Rocks.Builders
 {
 	internal static class MockMethodValueBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
 			var returnType = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
@@ -33,11 +33,11 @@ namespace Rocks.Builders
 
 			if (method.Parameters.Length > 0)
 			{
-				MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method);
+				MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method, raiseEvents);
 			}
 			else
 			{
-				MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method);
+				MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents);
 			}
 
 			writer.Indent--;
@@ -50,7 +50,7 @@ namespace Rocks.Builders
 			writer.WriteLine();
 		}
 
-		private static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method)
+		private static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
@@ -64,12 +64,16 @@ namespace Rocks.Builders
 
 			writer.Indent--;
 
-			// TODO: We need to detect if the entire mock has events to include "methodHandler.RaiseEvents(this);"
+			if(raiseEvents)
+			{
+				writer.WriteLine("methodHandler.RaiseEvents(this);");
+			}
+
 			writer.WriteLine("methodHandler.IncrementCallCount();");
 			writer.WriteLine("return result!;");
 		}
 
-		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method)
+		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
 			writer.WriteLine("{");
@@ -104,7 +108,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			MockMethodValueBuilder.BuildMethodHandler(writer, method);
+			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents);
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -112,10 +116,10 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method)
+		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
-			MockMethodValueBuilder.BuildMethodHandler(writer, method);
+			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents);
 		}
 	}
 }

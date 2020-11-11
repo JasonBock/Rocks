@@ -18,8 +18,10 @@ namespace Rocks.Tests.Extensions
 			var failures = ((IMock)chunk).GetVerificationFailures();
 			Assert.That(failures.Count, Is.EqualTo(1));
 			var failure = failures[0];
-			Assert.That(failure.EndsWith("method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount), Is.True);
-			Assert.That(failure.StartsWith("Type: Rocks.Tests.Extensions.Rock"), Is.True);
+			Assert.That(failure.EndsWith(
+				"method: void TargetMethod(), message: " + HandlerInformation.ErrorAtLeastOnceCallCount, StringComparison.InvariantCulture), Is.True);
+			Assert.That(failure.StartsWith(
+				"Type: Rocks.Tests.Extensions.Rock", StringComparison.InvariantCulture), Is.True);
 		}
 
 		[Test]

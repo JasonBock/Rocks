@@ -7,7 +7,7 @@ namespace Rocks.Builders
 {
 	internal static class MockMethodVoidBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -32,11 +32,11 @@ namespace Rocks.Builders
 
 			if (method.Parameters.Length > 0)
 			{
-				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException);
+				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException, raiseEvents);
 			}
 			else
 			{
-				MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, method);
+				MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents);
 			}
 
 			writer.Indent--;
@@ -54,14 +54,14 @@ namespace Rocks.Builders
 			writer.WriteLine();
 		}
 
-		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method)
+		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
-			MockMethodVoidBuilder.BuildMethodHandler(writer, method);
+			MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
 		}
 
 		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method,
-			string methodException)
+			string methodException, bool raiseEvents)
 		{
 			writer.WriteLine("var foundMatch = false;");
 			writer.WriteLine();
@@ -99,11 +99,10 @@ namespace Rocks.Builders
 			writer.Indent++;
 			writer.WriteLine("foundMatch = true;");
 			writer.WriteLine();
-			MockMethodVoidBuilder.BuildMethodHandler(writer, method);
+			MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
 			writer.WriteLine("break;");
 			writer.Indent--;
 			writer.WriteLine("}");
-
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -117,7 +116,7 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method)
+		private static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("if (methodHandler.Method is not null)");
 			writer.WriteLine("{");
@@ -131,9 +130,13 @@ namespace Rocks.Builders
 
 			writer.Indent--;
 			writer.WriteLine("}");
-
-			// TODO: We need to detect if the entire mock has events to include "methodHandler.RaiseEvents(this);"
 			writer.WriteLine();
+
+			if (raiseEvents)
+			{
+				writer.WriteLine("methodHandler.RaiseEvents(this);");
+			}
+
 			writer.WriteLine("methodHandler.IncrementCallCount();");
 		}
 	}

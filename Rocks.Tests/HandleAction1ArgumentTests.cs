@@ -20,7 +20,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void MakeAndRaiseEvent()
 		{
-			var rock = Rock.Create<IHandleAction1ArgumentTests>();
+			var rock = Rock.Create<IHandleAction1ArgumentTests>(new Rocks.Options.RockOptions(codeFile: Rocks.Options.CodeFileOption.Create));
 			rock.Handle(_ => _.Target(1))
 				.Raises(nameof(IHandleAction1ArgumentTests.TargetEvent), EventArgs.Empty);
 
