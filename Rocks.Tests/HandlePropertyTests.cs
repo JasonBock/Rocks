@@ -25,7 +25,7 @@ namespace Rocks.Tests
 		[Test]
 		public static void MakeWithGetAndSetProperty()
 		{
-			var rock = Rock.Create<IProperties>();
+			var rock = Rock.Create<IProperties>(new Rocks.Options.RockOptions(codeFile: Rocks.Options.CodeFileOption.Create));
 			rock.Handle(nameof(IProperties.GetterAndSetter));
 
 			var chunk = rock.Make();

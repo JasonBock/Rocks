@@ -143,7 +143,7 @@ namespace Rocks.Extensions
 					foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Ordinary &&
 							_.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
-							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).Cast<IMethodSymbol>())
+							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
 						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
 						{
@@ -168,13 +168,124 @@ namespace Rocks.Extensions
 		}
 
 		internal static ImmutableArray<PropertyMockableResult> GetMockableProperties(
-#pragma warning disable CA1801 // Review unused parameters
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, ref uint memberIdentifier)
-#pragma warning restore CA1801 // Review unused parameters
 		{
-			var events = ImmutableArray.CreateBuilder<PropertyMockableResult>();
+			var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
 
-			return events.ToImmutable();
+			if (self.TypeKind == TypeKind.Interface)
+			{
+				foreach (var selfProperty in self.GetMembers().OfType<IPropertySymbol>()
+					.Where(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				{
+					var accessors = selfProperty.GetAccessors();
+					properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No,
+						accessors, memberIdentifier));
+
+					memberIdentifier++;
+
+					if (accessors == PropertyAccessor.GetAndSet)
+					{
+						memberIdentifier++;
+					}
+				}
+
+				var baseInterfacePropertyGroups = new List<List<IPropertySymbol>>();
+
+				foreach (var selfBaseInterface in self.AllInterfaces)
+				{
+					foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>()
+						.Where(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					{
+						var foundMatch = false;
+
+						foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+						{
+							if (baseInterfacePropertyGroup.Any(_ => _.Name == selfBaseProperty.Name))
+							{
+								baseInterfacePropertyGroup.Add(selfBaseProperty);
+								foundMatch = true;
+								break;
+							}
+						}
+
+						if (!foundMatch)
+						{
+							baseInterfacePropertyGroups.Add(new List<IPropertySymbol> { selfBaseProperty });
+						}
+					}
+				}
+
+				foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+				{
+					if (baseInterfacePropertyGroup.Count == 1)
+					{
+						var newProperty = baseInterfacePropertyGroup[0];
+						var accessors = newProperty.GetAccessors();
+						properties.Add(new(newProperty, self,
+							properties.Any(_ => _.Value.Name == newProperty.Name) ?
+								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
+							accessors, memberIdentifier));
+						memberIdentifier++;
+
+						if (accessors == PropertyAccessor.GetAndSet)
+						{
+							memberIdentifier++;
+						}
+					}
+					else
+					{
+						foreach (var baseInterfaceProperty in baseInterfacePropertyGroup)
+						{
+							var accessors = baseInterfaceProperty.GetAccessors();
+							properties.Add(new(baseInterfaceProperty, self,
+								RequiresExplicitInterfaceImplementation.Yes, accessors, memberIdentifier));
+							memberIdentifier++;
+
+							if (accessors == PropertyAccessor.GetAndSet)
+							{
+								memberIdentifier++;
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				var hierarchy = self.GetInheritanceHierarchy();
+
+				foreach (var hierarchyType in hierarchy)
+				{
+					foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
+						.Where(_ => _.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
+							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					{
+						if (hierarchyProperty.IsAbstract || (hierarchyProperty.IsVirtual && !hierarchyProperty.IsSealed))
+						{
+							var accessors = hierarchyProperty.GetAccessors();
+							properties.Add(new(hierarchyProperty, self,
+								RequiresExplicitInterfaceImplementation.No, accessors, memberIdentifier));
+							memberIdentifier++;
+
+							if (accessors == PropertyAccessor.GetAndSet)
+							{
+								memberIdentifier++;
+							}
+						}
+						else if (hierarchyProperty.IsOverride || (hierarchyProperty.IsVirtual && hierarchyProperty.IsSealed))
+						{
+							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name);
+
+							if (propertyToRemove is not null)
+							{
+								properties.Remove(propertyToRemove);
+							}
+						}
+					}
+				}
+			}
+
+
+			return properties.ToImmutable();
 		}
 
 		private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)
