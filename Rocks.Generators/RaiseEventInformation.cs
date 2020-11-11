@@ -3,12 +3,12 @@
 namespace Rocks
 {
 	[Serializable]
-	internal sealed class RaiseEventInformation
+	public sealed class RaiseEventInformation
 	{
-		internal RaiseEventInformation(string name, EventArgs args) =>
+		public RaiseEventInformation(string name, EventArgs args) =>
 			(this.Name, this.Args) = (name, args);
 
-		internal EventArgs Args { get; }
-		internal string Name { get; }
+		public EventArgs Args { get; }
+		public string Name { get; }
 	}
 }

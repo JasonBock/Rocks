@@ -6,8 +6,7 @@ namespace Rocks.Descriptors
 	public static class TypeHasNoAccessibleConstructorsDescriptor
 	{
 		internal static Diagnostic Create(ITypeSymbol type) =>
-			Diagnostic.Create(new DiagnosticDescriptor(
-				TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title,
+			Diagnostic.Create(new(TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title,
 				string.Format(CultureInfo.CurrentCulture, TypeHasNoAccessibleConstructorsDescriptor.Message, type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
 				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
 				helpLinkUri: HelpUrlBuilder.Build(

@@ -6,11 +6,11 @@ namespace Rocks
 	[Serializable]
 	public abstract class Arg
 	{
-		public static Arg<T> Any<T>() => new Arg<T>();
+		public static Arg<T> Any<T>() => new();
 
-		public static Arg<T> Is<T>(T value) => new Arg<T>(value);
+		public static Arg<T> Is<T>(T value) => new(value);
 
-		public static Arg<T> Validate<T>(Predicate<T> evaluation) => new Arg<T>(evaluation);
+		public static Arg<T> Validate<T>(Predicate<T> evaluation) => new(evaluation);
 
 		protected Arg() { }
 	}
@@ -30,14 +30,14 @@ namespace Rocks
 
 		internal Arg() => this.validation = Validation.None;
 
-		internal Arg(T value) => 
+		internal Arg(T value) =>
 			(this.value, this.validation) = (value, Validation.Value);
 
-		internal Arg(Predicate<T> evaluation) => 
+		internal Arg(Predicate<T> evaluation) =>
 			(this.evaluation, this.validation) = (evaluation, Validation.Evaluation);
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
-		public static implicit operator Arg<T>(T value) => new Arg<T>(value);
+		public static implicit operator Arg<T>(T value) => new(value);
 #pragma warning restore CA2225 // Operator overloads have named alternates
 
 		public bool IsValid(T value) =>

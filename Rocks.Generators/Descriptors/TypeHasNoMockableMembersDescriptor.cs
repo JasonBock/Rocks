@@ -6,8 +6,7 @@ namespace Rocks.Descriptors
 	public static class TypeHasNoMockableMembersDescriptor
 	{
 		internal static Diagnostic Create(ITypeSymbol type) =>
-			Diagnostic.Create(new DiagnosticDescriptor(
-				TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title,
+			Diagnostic.Create(new(TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title,
 				string.Format(CultureInfo.CurrentCulture, TypeHasNoMockableMembersDescriptor.Message, type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
 				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
 				helpLinkUri: HelpUrlBuilder.Build(

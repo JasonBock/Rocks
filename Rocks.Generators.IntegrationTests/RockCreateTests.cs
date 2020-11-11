@@ -9,11 +9,14 @@ namespace Rocks.IntegrationTests
 		public static void CreateHappyPathForEventOnInterface()
 		{
 			var rock = Rock.Create<IHaveEvent>();
-			rock.Methods().Foo().Raises(nameof(IHaveEvent.TargetEvent), EventArgs.Empty);
+			rock.Methods().Foo().RaisesTargetEvent(EventArgs.Empty);
 
+			var wasEventRaised = false;
 			var chunk = rock.Instance();
+			chunk.TargetEvent += (s, e) => wasEventRaised = true;
 			chunk.Foo();
 
+			Assert.That(wasEventRaised, Is.True);
 			rock.Verify();
 		}
 

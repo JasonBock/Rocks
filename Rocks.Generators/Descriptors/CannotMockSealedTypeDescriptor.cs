@@ -6,8 +6,7 @@ namespace Rocks.Descriptors
 	public static class CannotMockSealedTypeDescriptor
 	{
 		internal static Diagnostic Create(ITypeSymbol type) =>
-			Diagnostic.Create(new DiagnosticDescriptor(
-				CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
+			Diagnostic.Create(new(CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
 				string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDescriptor.Message, type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
 				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
 				helpLinkUri: HelpUrlBuilder.Build(

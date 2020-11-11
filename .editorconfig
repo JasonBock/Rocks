@@ -37,5 +37,9 @@ dotnet_diagnostic.CA1030.severity = none
 # CA1303: Do not pass literals as localized parameters
 dotnet_diagnostic.CA1303.severity = none
 
+# RS1024: Compare symbols correctly
+# Once https://github.com/dotnet/roslyn-analyzers/issues/4414 is addressed, this should be removed
+dotnet_diagnostic.RS1024.severity = none
+
 [*.xml]
 indent_style = tab

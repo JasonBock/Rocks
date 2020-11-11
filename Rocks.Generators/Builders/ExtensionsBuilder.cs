@@ -81,6 +81,12 @@ namespace Rocks.Builders
 				writer.WriteLine();
 				MethodExpectationsExtensionsBuilder.Build(writer, information, usings);
 			}
+
+			if(information.Events.Length > 0)
+			{
+				writer.WriteLine();
+				EventExpectationsExtensionsBuilder.Build(writer, information);
+			}
 		}
 	}
 }

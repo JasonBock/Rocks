@@ -43,7 +43,7 @@ namespace Rocks
 			this.Properties = this.TypeToMock.GetMockableProperties(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
 			this.Events = this.TypeToMock.GetMockableEvents(this.ContainingAssemblyOfInvocationSymbol);
 
-			if (this.Events.Length == 0 && this.Methods.Length == 0 && this.Properties.Length == 0)
+			if (this.Methods.Length == 0 && this.Properties.Length == 0)
 			{
 				diagnostics.Add(TypeHasNoMockableMembersDescriptor.Create(this.TypeToMock));
 			}
@@ -59,7 +59,7 @@ namespace Rocks
 		private Compilation Compilation { get; }
 		public ImmutableArray<IMethodSymbol> Constructors { get; private set; }
 		public IAssemblySymbol ContainingAssemblyOfInvocationSymbol { get; }
-		public ImmutableArray<IEventSymbol> Events { get; private set; }
+		public ImmutableArray<EventMockableResult> Events { get; private set; }
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
 		public ImmutableArray<MethodMockableResult> Methods { get; private set; }
 		private SemanticModel Model { get; }

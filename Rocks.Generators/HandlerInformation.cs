@@ -19,7 +19,7 @@ namespace Rocks
 		private int callCount;
 
 		[NonSerialized]
-		private readonly List<RaiseEventInformation> raiseEvents = new List<RaiseEventInformation>();
+		private readonly List<RaiseEventInformation> raiseEvents = new();
 
 		internal HandlerInformation()
 			: this(null, ImmutableArray<Arg>.Empty)
@@ -36,7 +36,7 @@ namespace Rocks
 		internal HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations) =>
 			(this.Method, this.Expectations) = (method, expectations);
 
-		internal void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
+		public void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
 
 		public void IncrementCallCount() => Interlocked.Increment(ref this.callCount);
 

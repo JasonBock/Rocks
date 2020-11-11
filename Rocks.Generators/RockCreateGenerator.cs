@@ -34,11 +34,7 @@ namespace Rocks
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
 				var compilation = context.Compilation;
-				// Once https://github.com/dotnet/roslyn-analyzers/issues/4414 is addressed, this should be changed to:
-				// var typesToMock = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
-#pragma warning disable RS1024 // Compare symbols correctly
-				var typesToMock = new HashSet<ITypeSymbol>();
-#pragma warning restore RS1024 // Compare symbols correctly
+				var typesToMock = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
 				foreach (var candidateInvocation in receiver.Candidates)
 				{

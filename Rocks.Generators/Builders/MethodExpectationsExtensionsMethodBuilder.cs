@@ -38,9 +38,10 @@ namespace Rocks.Builders
 						return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
 					})));
 
-			var (returnValue, newAdornments) = method.ReturnsVoid ? 
-				(nameof(MethodAdornments), $"new {nameof(MethodAdornments)}") : 
-				($"{nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>", $"new {nameof(MethodAdornments)}<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>");
+			var adornmentsType = method.ReturnsVoid ?
+				$"MethodAdornments<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>" :
+				$"MethodAdornments<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}, {method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>";
+			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}) =>");
 			writer.Indent++;

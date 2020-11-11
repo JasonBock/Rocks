@@ -2,23 +2,18 @@
 
 namespace Rocks
 {
-	public class MethodAdornments
+	public class MethodAdornments<T>
+		where T : class
 	{
 		public MethodAdornments(HandlerInformation handler) => 
 			this.Handler = handler;
 
-		public MethodAdornments Raises(string eventName, EventArgs args)
-		{
-			this.Handler.AddRaiseEvent(new RaiseEventInformation(eventName, args));
-			return this;
-		}
-
-		public MethodAdornments CallCount(uint expectedCallCount)
+		public MethodAdornments<T> CallCount(uint expectedCallCount)
 		{
 			this.Handler.SetExpectedCallCount(expectedCallCount);
 			return this;
 		}
 
-		protected HandlerInformation Handler { get; }
+		public HandlerInformation Handler { get; }
 	}
 }

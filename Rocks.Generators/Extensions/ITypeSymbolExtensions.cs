@@ -8,23 +8,56 @@ namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
 	{
+		private sealed class EventSymbolEqualityComparer
+			: IEqualityComparer<IEventSymbol?>
+		{
+			private static readonly Lazy<EventSymbolEqualityComparer> defaultValue = new(() => new());
+
+			private EventSymbolEqualityComparer()
+				: base() { }
+
+			public bool Equals(IEventSymbol? x, IEventSymbol? y) =>
+				(x?.Name.Equals(y?.Name) ?? false) && (x?.Type.Equals(y?.Type, SymbolEqualityComparer.Default) ?? false);
+
+			public int GetHashCode(IEventSymbol? obj) => (obj?.Name, obj?.Type).GetHashCode();
+
+			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
+		}
+
 		internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(
-			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) => 
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
 				self.TypeKind == TypeKind.Class ?
 					self.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Constructor &&
 							ISymbolExtensions.CanBeSeenByContainingAssembly(_, containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
 					Array.Empty<IMethodSymbol>().ToImmutableArray();
 
-		internal static ImmutableArray<IEventSymbol> GetMockableEvents(
+		// NOTE: They're really not "mockable"...
+		internal static ImmutableArray<EventMockableResult> GetMockableEvents(
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 		{
-			var events = ImmutableArray.CreateBuilder<IEventSymbol>();
+			var events = ImmutableArray.CreateBuilder<EventMockableResult>();
 
-			foreach(var selfEvent in self.GetMembers().OfType<IEventSymbol>()
-				.Where(_ => (_.IsAbstract || _.IsVirtual) && !_.IsSealed && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+			if (self.TypeKind == TypeKind.Interface)
 			{
-				events.Add(selfEvent);
+				var seenEvents = new HashSet<IEventSymbol>(EventSymbolEqualityComparer.Default);
+
+				foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
+					.Where(_ => !_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				{
+					if (seenEvents.Add(selfEvent))
+					{
+						events.Add(new(selfEvent, MustBeImplemented.Yes, RequiresOverride.No));
+					}
+				}
+			}
+			else
+			{
+				foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
+					.Where(_ => !_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				{
+					events.Add(new(selfEvent, selfEvent.IsAbstract ? MustBeImplemented.Yes : MustBeImplemented.No, RequiresOverride.Yes));
+				}
 			}
 
 			return events.ToImmutable();
@@ -46,8 +79,8 @@ namespace Rocks.Extensions
 				foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
-					methods.Add(new MethodMockableResult(selfMethod, self,
-						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ? 
+					methods.Add(new(selfMethod, self,
+						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ?
 							RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
 						RequiresOverride.No, memberIdentifier));
 					memberIdentifier++;
@@ -62,9 +95,9 @@ namespace Rocks.Extensions
 					{
 						var foundMatch = false;
 
-						foreach(var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+						foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 						{
-							if(baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+							if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
 							{
 								baseInterfaceMethodGroup.Add(selfBaseMethod);
 								foundMatch = true;
@@ -72,18 +105,18 @@ namespace Rocks.Extensions
 							}
 						}
 
-						if(!foundMatch)
+						if (!foundMatch)
 						{
 							baseInterfaceMethodGroups.Add(new List<IMethodSymbol> { selfBaseMethod });
 						}
 					}
 				}
 
-				foreach(var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+				foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 				{
-					if(baseInterfaceMethodGroup.Count == 1)
+					if (baseInterfaceMethodGroup.Count == 1)
 					{
-						methods.Add(new MethodMockableResult(baseInterfaceMethodGroup[0], self,
+						methods.Add(new(baseInterfaceMethodGroup[0], self,
 							methods.Any(_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ||
 								objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ?
 								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
@@ -94,7 +127,7 @@ namespace Rocks.Extensions
 					{
 						foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
 						{
-							methods.Add(new MethodMockableResult(baseInterfaceMethod, self,
+							methods.Add(new(baseInterfaceMethod, self,
 								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
 							memberIdentifier++;
 						}
@@ -105,7 +138,7 @@ namespace Rocks.Extensions
 			{
 				var hierarchy = self.GetInheritanceHierarchy();
 
-				foreach(var hierarchyType in hierarchy)
+				foreach (var hierarchyType in hierarchy)
 				{
 					foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Ordinary &&
@@ -114,15 +147,15 @@ namespace Rocks.Extensions
 					{
 						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
 						{
-							methods.Add(new MethodMockableResult(hierarchyMethod, self,
+							methods.Add(new(hierarchyMethod, self,
 								RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
 							memberIdentifier++;
 						}
-						else if(hierarchyMethod.IsOverride || (hierarchyMethod.IsVirtual && hierarchyMethod.IsSealed))
+						else if (hierarchyMethod.IsOverride || (hierarchyMethod.IsVirtual && hierarchyMethod.IsSealed))
 						{
 							var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact);
 
-							if(methodToRemove is not null)
+							if (methodToRemove is not null)
 							{
 								methods.Remove(methodToRemove);
 							}

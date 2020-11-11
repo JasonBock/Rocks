@@ -1,21 +1,26 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Collections.Immutable;using System.Linq;
+using System.Collections.Immutable;
 using System.Reflection;
 
 namespace Rocks.Builders
 {
 	internal static class MockEventsBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, ImmutableArray<IEventSymbol> events,
+		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events,
 			SortedSet<string> usings)
 		{
 			writer.WriteLine("#pragma warning disable CS0067");
 			foreach(var @event in events)
 			{
-				writer.WriteLine($"public event {@event.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Name};");
+				if(@event.MustBeImplemented == MustBeImplemented.Yes)
+				{
+					writer.WriteLine(
+						$"public {(@event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}event {@event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Value.Name};");
+				}
 			}
 			writer.WriteLine("#pragma warning restore CS0067");
 
