@@ -6,6 +6,21 @@ namespace Rocks.IntegrationTests
 	public static class RockCreateTests
 	{
 		[Test]
+		public static void CreateHappyPathForProperty()
+		{
+			var rock = Rock.Create<IHaveProperties>();
+			rock.Properties().GetData();
+			rock.Properties().SetData(3).CallCount(2);
+
+			var chunk = rock.Instance();
+			var value = chunk.Data;
+			chunk.Data = 3;
+			chunk.Data = 3;
+
+			rock.Verify();
+		}
+
+		[Test]
 		public static void CreateHappyPathForEventOnInterface()
 		{
 			var rock = Rock.Create<IHaveEvent>();
@@ -89,6 +104,11 @@ namespace Rocks.IntegrationTests
 	public interface IC
 		: IA, IB
 	{ }
+
+	public interface IHaveProperties
+	{
+		int Data { get; set; }
+	}
 
 	public interface IFoo
 	{

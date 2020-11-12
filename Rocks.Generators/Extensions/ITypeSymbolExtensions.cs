@@ -6,6 +6,11 @@ using System.Linq;
 
 namespace Rocks.Extensions
 {
+	public interface IA
+	{
+		int this[int a] { get; }
+	}
+
 	internal static class ITypeSymbolExtensions
 	{
 		private sealed class EventSymbolEqualityComparer

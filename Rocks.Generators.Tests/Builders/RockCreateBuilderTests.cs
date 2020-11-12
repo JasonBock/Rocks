@@ -13,6 +13,35 @@ namespace Rocks.Tests.Builders
 	public static class RockCreateBuilderTests
 	{
 		[Test]
+		public static void DoHappyPathForProperty()
+		{
+			var code =
+@"using System;
+
+namespace IE
+{
+	public interface IA
+	{
+		int Data { get; set; }
+	}
+}";
+
+			var information = RockCreateBuilderTests.GetInformation(code, "IA");
+
+			using var writer = new StringWriter();
+			using var indentWriter = new IndentedTextWriter(writer, "	");
+			var namespaces = new SortedSet<string>();
+
+			var builder = new RockCreateBuilder(information);
+			var result = builder.Text.ToString();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(result, Is.Not.Empty);
+			});
+		}
+
+		[Test]
 		public static void DoHappyPathForEventOnInterface()
 		{
 			var code =

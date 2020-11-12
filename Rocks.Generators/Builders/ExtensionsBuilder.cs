@@ -8,21 +8,6 @@ namespace Rocks.Builders
 {
 	internal static class ExtensionsBuilder
 	{
-		/*
-		internal static class ExpectationsOfIMockableExtensions
-		{
-			// Any member extension methods, like...
-			internal static MethodExpectations<IMockable> Methods(this Expectations<IMockable> self) =>
-				new MethodExpectations<IMockable>(self);
-
-			// Constructors ...
-
-			// Mock type ...
-		}
-
-		// Any member extension classes ...
-		*/
-
 		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
@@ -31,11 +16,23 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
-			writer.Indent++;
-			writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
-			writer.Indent--;
-			writer.WriteLine();
+			if(information.Methods.Length > 0)
+			{
+				writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
+				writer.Indent++;
+				writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
+				writer.Indent--;
+				writer.WriteLine();
+			}
+
+			if (information.Properties.Length > 0)
+			{
+				writer.WriteLine($"internal static PropertyExpectations<{typeToMockName}> Properties(this Expectations<{typeToMockName}> self) =>");
+				writer.Indent++;
+				writer.WriteLine($"new PropertyExpectations<{typeToMockName}>(self);");
+				writer.Indent--;
+				writer.WriteLine();
+			}
 
 			if (information.Constructors.Length > 0)
 			{
@@ -64,7 +61,13 @@ namespace Rocks.Builders
 				MethodExpectationsExtensionsBuilder.Build(writer, information, usings);
 			}
 
-			if(information.Events.Length > 0)
+			if (information.Properties.Length > 0)
+			{
+				writer.WriteLine();
+				PropertyExpectationsExtensionsBuilder.Build(writer, information);
+			}
+
+			if (information.Events.Length > 0)
 			{
 				writer.WriteLine();
 				EventExpectationsExtensionsBuilder.Build(writer, information);

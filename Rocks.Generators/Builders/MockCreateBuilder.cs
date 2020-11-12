@@ -7,55 +7,6 @@ namespace Rocks.Builders
 {
 	internal static class MockCreateBuilder
 	{
-		/*
-		private sealed class RockIMockable
-			: IMockable, IMock
-		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
-
-			public RockIMockable(Expectations<IMockable> expectations) => 
-				this.handlers = expectations.CreateHandlers();
-
-			[MemberIdentifier(0, "Foo(int a)")]
-			public void Foo(int a)
-			{
-				if (this.handlers.TryGetValue(0, out var methodHandlers))
-				{
-					var foundMatch = false;
-
-					foreach (var methodHandler in methodHandlers)
-					{
-						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a))
-						{
-							foundMatch = true;
-
-							if (methodHandler.Method != null)
-							{
-#pragma warning disable CS8604
-								((Action<int>)methodHandler.Method)(a);
-#pragma warning restore CS8604
-							}
-
-							methodHandler.IncrementCallCount();
-							break;
-						}
-					}
-
-					if (!foundMatch)
-					{
-						throw new ExpectationException($"No handlers were found for Foo({a})");
-					}
-				}
-				else
-				{
-					throw new ExpectationException($"No handlers were found for Foo({a})");
-				}
-			}
-
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
-		}
-		
-		*/
 		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
@@ -87,23 +38,26 @@ namespace Rocks.Builders
 
 			var memberIdentifier = 0u;
 
-			foreach(var result in information.Methods)
+			foreach(var method in information.Methods)
 			{
-				if(result.Value.ReturnsVoid)
+				if(method.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, result, information.Events.Length > 0);
+					MockMethodVoidBuilder.Build(writer, method, information.Events.Length > 0);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, result, information.Events.Length > 0);
+					MockMethodValueBuilder.Build(writer, method, information.Events.Length > 0);
 				}
 
 				memberIdentifier++;
 			}
 
-			writer.WriteLine("// TODO: Put in all the member overrides...");
+			foreach(var property in information.Properties)
+			{
+				MockPropertyBuilder.Build(writer, property, information.Events.Length > 0);
+			}
 
-			if(information.Events.Length > 0)
+			if (information.Events.Length > 0)
 			{
 				writer.WriteLine();
 				MockEventsBuilder.Build(writer, information.Events, usings);
