@@ -151,7 +151,7 @@ namespace FooStuff
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == typeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
-			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model, compilation);
+			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model);
 		}
 	}
 }

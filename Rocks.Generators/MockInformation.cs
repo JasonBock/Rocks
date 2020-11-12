@@ -10,10 +10,10 @@ namespace Rocks
 	internal sealed class MockInformation
 	{
 		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, 
-			SemanticModel model, Compilation compilation)
+			SemanticModel model)
 		{
-			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model, this.Compilation) = 
-				(typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
+			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model) = 
+				(typeToMock, containingAssemblyOfInvocationSymbol, model);
 			this.Validate();
 		}
 
@@ -39,7 +39,7 @@ namespace Rocks
 			var memberIdentifier = 0u;
 
 			this.Constructors = this.TypeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
-			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, this.Compilation, ref memberIdentifier);
+			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
 			this.Properties = this.TypeToMock.GetMockableProperties(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
 			this.Events = this.TypeToMock.GetMockableEvents(this.ContainingAssemblyOfInvocationSymbol);
 
@@ -56,7 +56,6 @@ namespace Rocks
 			this.Diagnostics = diagnostics.ToImmutable();
 		}
 
-		private Compilation Compilation { get; }
 		public ImmutableArray<IMethodSymbol> Constructors { get; private set; }
 		public IAssemblySymbol ContainingAssemblyOfInvocationSymbol { get; }
 		public ImmutableArray<EventMockableResult> Events { get; private set; }

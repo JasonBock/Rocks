@@ -24,13 +24,12 @@ $@"public interface {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(1));
 				var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
-				Assert.That(fooMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
@@ -55,16 +54,14 @@ public interface {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(2));
 				var baseMethod = methods.Single(_ => _.Value.Name == baseMethodName);
-				Assert.That(baseMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
-				Assert.That(targetMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
@@ -89,16 +86,14 @@ public interface {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(2));
 				var baseMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == baseTypeName);
-				Assert.That(baseMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 				Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
-				Assert.That(targetMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
@@ -131,19 +126,16 @@ public interface {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(3));
 				var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
-				Assert.That(baseOneMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 				Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var baseTwoMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseTwoTypeName);
-				Assert.That(baseTwoMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 				Assert.That(baseTwoMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
-				Assert.That(targetMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
@@ -162,22 +154,18 @@ $@"public class {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(4));
 				var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
-				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
-				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
-				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
-				Assert.That(fooMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			});
 		}
@@ -191,19 +179,16 @@ $@"public class {targetTypeName}
 
 			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 			var memberIdentifier = 0u;
-			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, compilation, ref memberIdentifier);
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(methods.Length, Is.EqualTo(3));
 				var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
-				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
-				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
-				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			});
 		}

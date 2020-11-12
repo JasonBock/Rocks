@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rocks
+﻿namespace Rocks
 {
 	public class MethodAdornments<T>
 		where T : class

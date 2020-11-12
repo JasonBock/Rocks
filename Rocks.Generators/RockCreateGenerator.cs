@@ -14,9 +14,9 @@ namespace Rocks
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
-			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, Compilation compilation)
+			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model)
 		{
-			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, compilation);
+			var information = new MockInformation(typeToMock, containingAssemblySymbol, model);
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
@@ -55,7 +55,7 @@ namespace Rocks
 							var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
 							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-								typeToMock, containingAssemblyOfInvocationSymbol, model, compilation);
+								typeToMock, containingAssemblyOfInvocationSymbol, model);
 
 							foreach (var diagnostic in diagnostics)
 							{

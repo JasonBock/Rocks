@@ -28,13 +28,10 @@ namespace Rocks.Tests
 
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
-				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
-				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
-				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
@@ -64,13 +61,10 @@ public class {targetTypeName} {{ }}";
 
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
-				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
-				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
-				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
@@ -142,13 +136,10 @@ $@"public class {targetTypeName}
 
 				Assert.That(information.Methods.Length, Is.EqualTo(3));
 				var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
-				Assert.That(getHashCodeMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
-				Assert.That(equalsMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 				var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
-				Assert.That(toStringMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 				Assert.That(information.Properties.Length, Is.EqualTo(0));
@@ -216,7 +207,7 @@ public class {targetTypeName}
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
-			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model, compilation);
+			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model);
 		}
 	}
 }

@@ -31,29 +31,11 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			if(information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == Extensions.RequiresExplicitInterfaceImplementation.No))
-			{
-				writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
-				writer.Indent--;
-				writer.WriteLine();
-			}
-
-			foreach(var (containingType, mockType) in information.Methods
-				.Where(_ => _.RequiresExplicitInterfaceImplementation == Extensions.RequiresExplicitInterfaceImplementation.Yes)
-				.Select(_ => (_.Value.ContainingType, _.MockType))
-				.Distinct())
-			{
-				var baseTypeName = containingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-				var mockTypeName = mockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-				var explicitMethods = $"ExplicitMethodExpectations<{baseTypeName}, {mockTypeName}>";
-				writer.WriteLine($"internal static {explicitMethods} ExplicitMethodsFor{baseTypeName}(this Expectations<{mockTypeName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new {explicitMethods}(self.To<{baseTypeName}>());");
-				writer.Indent--;
-				writer.WriteLine();
-			}
+			writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
+			writer.Indent++;
+			writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
+			writer.Indent--;
+			writer.WriteLine();
 
 			if (information.Constructors.Length > 0)
 			{

@@ -51,7 +51,7 @@ public interface IFoo
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single();
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
-			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model, compilation);
+			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model);
 		}
 	}
 }

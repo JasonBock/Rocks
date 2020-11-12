@@ -10,19 +10,13 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
 			var methodSignature =
-				$"void {explicitTypeName}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
 			var methodException =
-				$"void {explicitTypeName}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
-			var methodDeclarationBeginning =
-				result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-					$"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}" :
-					string.Empty;
+				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
 			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodSignature}"")]");
-			writer.WriteLine($"{methodDeclarationBeginning}{methodSignature}");
+			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

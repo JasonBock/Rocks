@@ -1,7 +1,7 @@
 ﻿namespace Rocks
 {
    public sealed class MethodAdornments<T, TResult>
-	   : MethodAdornments<T>
+		: MethodAdornments<T>
 		where T : class
    {
 		public MethodAdornments(HandlerInformation<TResult> handler)

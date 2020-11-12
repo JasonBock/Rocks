@@ -64,74 +64,38 @@ namespace Rocks.Extensions
 		}
 
 		internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
-			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, Compilation compilation,
+			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 			ref uint memberIdentifier)
 		{
 			var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 
 			if (self.TypeKind == TypeKind.Interface)
 			{
-				// TODO: I wonder if there's a way to get an object symbol without passing in the compilation.
-				var objectMethods = compilation.GetTypeByMetadataName(typeof(object).FullName)!
-					.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && (_.IsVirtual || _.IsStatic)).ToImmutableArray();
-
 				foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
-					methods.Add(new(selfMethod, self,
-						objectMethods.Any(_ => _.Match(selfMethod) == MethodMatch.Exact) ?
-							RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
-						RequiresOverride.No, memberIdentifier));
+					methods.Add(new(selfMethod, self, RequiresOverride.No, memberIdentifier));
 					memberIdentifier++;
 				}
 
-				var baseInterfaceMethodGroups = new List<List<IMethodSymbol>>();
+				var baseInterfaceMethods = new List<IMethodSymbol>();
 
 				foreach (var selfBaseInterface in self.AllInterfaces)
 				{
 					foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
 						.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+						if (!baseInterfaceMethods.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
 						{
-							if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
-							{
-								baseInterfaceMethodGroup.Add(selfBaseMethod);
-								foundMatch = true;
-								break;
-							}
-						}
-
-						if (!foundMatch)
-						{
-							baseInterfaceMethodGroups.Add(new List<IMethodSymbol> { selfBaseMethod });
+							baseInterfaceMethods.Add(selfBaseMethod);
 						}
 					}
 				}
 
-				foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+				foreach (var baseInterfaceMethod in baseInterfaceMethods)
 				{
-					if (baseInterfaceMethodGroup.Count == 1)
-					{
-						methods.Add(new(baseInterfaceMethodGroup[0], self,
-							methods.Any(_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ||
-								objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) == MethodMatch.Exact) ?
-								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
-							RequiresOverride.No, memberIdentifier));
-						memberIdentifier++;
-					}
-					else
-					{
-						foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
-						{
-							methods.Add(new(baseInterfaceMethod, self,
-								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
-							memberIdentifier++;
-						}
-					}
+					methods.Add(new(baseInterfaceMethod, self, RequiresOverride.No, memberIdentifier));
+					memberIdentifier++;
 				}
 			}
 			else
@@ -147,8 +111,7 @@ namespace Rocks.Extensions
 					{
 						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
 						{
-							methods.Add(new(hierarchyMethod, self,
-								RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+							methods.Add(new(hierarchyMethod, self, RequiresOverride.Yes, memberIdentifier));
 							memberIdentifier++;
 						}
 						else if (hierarchyMethod.IsOverride || (hierarchyMethod.IsVirtual && hierarchyMethod.IsSealed))
@@ -178,8 +141,7 @@ namespace Rocks.Extensions
 					.Where(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
 					var accessors = selfProperty.GetAccessors();
-					properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No,
-						accessors, memberIdentifier));
+					properties.Add(new(selfProperty, self, accessors, memberIdentifier));
 
 					memberIdentifier++;
 
@@ -189,63 +151,29 @@ namespace Rocks.Extensions
 					}
 				}
 
-				var baseInterfacePropertyGroups = new List<List<IPropertySymbol>>();
+				var baseInterfaceProperties = new List<IPropertySymbol>();
 
 				foreach (var selfBaseInterface in self.AllInterfaces)
 				{
 					foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>()
 						.Where(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+						if (!baseInterfaceProperties.Any(_ => _.Name == selfBaseProperty.Name))
 						{
-							if (baseInterfacePropertyGroup.Any(_ => _.Name == selfBaseProperty.Name))
-							{
-								baseInterfacePropertyGroup.Add(selfBaseProperty);
-								foundMatch = true;
-								break;
-							}
-						}
-
-						if (!foundMatch)
-						{
-							baseInterfacePropertyGroups.Add(new List<IPropertySymbol> { selfBaseProperty });
+							baseInterfaceProperties.Add(selfBaseProperty);
 						}
 					}
 				}
 
-				foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+				foreach (var baseInterfaceProperty in baseInterfaceProperties)
 				{
-					if (baseInterfacePropertyGroup.Count == 1)
+					var accessors = baseInterfaceProperty.GetAccessors();
+					properties.Add(new(baseInterfaceProperty, self, accessors, memberIdentifier));
+					memberIdentifier++;
+
+					if (accessors == PropertyAccessor.GetAndSet)
 					{
-						var newProperty = baseInterfacePropertyGroup[0];
-						var accessors = newProperty.GetAccessors();
-						properties.Add(new(newProperty, self,
-							properties.Any(_ => _.Value.Name == newProperty.Name) ?
-								RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No,
-							accessors, memberIdentifier));
 						memberIdentifier++;
-
-						if (accessors == PropertyAccessor.GetAndSet)
-						{
-							memberIdentifier++;
-						}
-					}
-					else
-					{
-						foreach (var baseInterfaceProperty in baseInterfacePropertyGroup)
-						{
-							var accessors = baseInterfaceProperty.GetAccessors();
-							properties.Add(new(baseInterfaceProperty, self,
-								RequiresExplicitInterfaceImplementation.Yes, accessors, memberIdentifier));
-							memberIdentifier++;
-
-							if (accessors == PropertyAccessor.GetAndSet)
-							{
-								memberIdentifier++;
-							}
-						}
 					}
 				}
 			}
@@ -262,8 +190,7 @@ namespace Rocks.Extensions
 						if (hierarchyProperty.IsAbstract || (hierarchyProperty.IsVirtual && !hierarchyProperty.IsSealed))
 						{
 							var accessors = hierarchyProperty.GetAccessors();
-							properties.Add(new(hierarchyProperty, self,
-								RequiresExplicitInterfaceImplementation.No, accessors, memberIdentifier));
+							properties.Add(new(hierarchyProperty, self, accessors, memberIdentifier));
 							memberIdentifier++;
 
 							if (accessors == PropertyAccessor.GetAndSet)

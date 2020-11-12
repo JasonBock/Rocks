@@ -24,11 +24,9 @@ namespace Rocks.IntegrationTests
 		public static void CreateHappyPathForExplicitInterface()
 		{
 			var rock = Rock.Create<IC>();
-			rock.ExplicitMethodsForIA().Foo();
-			rock.ExplicitMethodsForIB().Foo();
+			rock.Methods().Foo();
 
 			var chunk = rock.Instance();
-			((IA)chunk).Foo();
 			((IB)chunk).Foo();
 
 			rock.Verify();
