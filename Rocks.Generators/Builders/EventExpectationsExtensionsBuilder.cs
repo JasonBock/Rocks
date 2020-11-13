@@ -10,19 +10,34 @@ namespace Rocks.Builders
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
+			var isFirst = true;
+
 			if (information.Methods.Length > 0)
 			{
 				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
+				isFirst = false;
 			}
 
 			if (information.Properties.Length > 0)
 			{
 				if (information.Properties.Any(_ => !_.Value.IsIndexer))
 				{
+					if(!isFirst)
+					{
+						writer.WriteLine();
+						isFirst = false;
+					}
+
 					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
 				}
 				if (information.Properties.Any(_ => _.Value.IsIndexer))
 				{
+					if (!isFirst)
+					{
+						writer.WriteLine();
+						isFirst = false;
+					}
+
 					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
 				}
 			}

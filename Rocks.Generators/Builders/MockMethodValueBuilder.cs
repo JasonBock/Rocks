@@ -17,7 +17,7 @@ namespace Rocks.Builders
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(AttributeTargets.Parameter)} " : string.Empty)}{parameter}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
 				$"{returnType} {method.Name}({methodParameters})";

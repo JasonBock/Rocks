@@ -159,6 +159,7 @@ namespace Rocks.Builders
 				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters)}"")]");
 			}
 
+			// TODO: Need attributes on indexer and return value
 			var indexerSignature = MockIndexerBuilder.GetSignature(result.Value.Parameters);
 			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {indexerSignature}");
 			writer.WriteLine("{");
@@ -181,6 +182,7 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
+		// TODO: Need attributes on parameters
 		private static string GetSignature(ImmutableArray<IParameterSymbol> parameters) =>
 			$"this[{string.Join(", ", parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))}]";
 	}
