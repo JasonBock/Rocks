@@ -44,7 +44,7 @@ namespace Rocks.Builders
 			writer.WriteLine();
 		}
 
-		private static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
+		internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 		{
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;

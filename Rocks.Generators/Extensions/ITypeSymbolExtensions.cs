@@ -146,7 +146,7 @@ namespace Rocks.Extensions
 					.Where(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
 					var accessors = selfProperty.GetAccessors();
-					properties.Add(new(selfProperty, self, accessors, memberIdentifier));
+					properties.Add(new(selfProperty, self, RequiresOverride.No, accessors, memberIdentifier));
 
 					memberIdentifier++;
 
@@ -173,7 +173,7 @@ namespace Rocks.Extensions
 				foreach (var baseInterfaceProperty in baseInterfaceProperties)
 				{
 					var accessors = baseInterfaceProperty.GetAccessors();
-					properties.Add(new(baseInterfaceProperty, self, accessors, memberIdentifier));
+					properties.Add(new(baseInterfaceProperty, self, RequiresOverride.No, accessors, memberIdentifier));
 					memberIdentifier++;
 
 					if (accessors == PropertyAccessor.GetAndSet)
@@ -195,7 +195,7 @@ namespace Rocks.Extensions
 						if (hierarchyProperty.IsAbstract || (hierarchyProperty.IsVirtual && !hierarchyProperty.IsSealed))
 						{
 							var accessors = hierarchyProperty.GetAccessors();
-							properties.Add(new(hierarchyProperty, self, accessors, memberIdentifier));
+							properties.Add(new(hierarchyProperty, self, RequiresOverride.Yes, accessors, memberIdentifier));
 							memberIdentifier++;
 
 							if (accessors == PropertyAccessor.GetAndSet)

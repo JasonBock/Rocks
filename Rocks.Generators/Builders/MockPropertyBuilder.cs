@@ -114,7 +114,7 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
-			writer.WriteLine($"public {result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {result.Value.Name}");
+			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {result.Value.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

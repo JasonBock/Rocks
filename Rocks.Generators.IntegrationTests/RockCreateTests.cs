@@ -6,6 +6,21 @@ namespace Rocks.IntegrationTests
 	public static class RockCreateTests
 	{
 		[Test]
+		public static void CreateHappyPathForIndexer()
+		{
+			var c = Guid.NewGuid();
+			var rock = Rock.Create<IHaveIndexer>();
+			rock.Indexers().GetThis(1, "b", c);
+			rock.Indexers().SetThis(1, "b", c, 1);
+
+			var chunk = rock.Instance();
+			var value = chunk[1, "b", c];
+			chunk[1, "b", c] = 1;
+
+			rock.Verify();
+		}
+
+		[Test]
 		public static void CreateHappyPathForProperty()
 		{
 			var rock = Rock.Create<IHaveProperties>();
@@ -108,6 +123,11 @@ namespace Rocks.IntegrationTests
 	public interface IHaveProperties
 	{
 		int Data { get; set; }
+	}
+
+	public interface IHaveIndexer
+	{
+		int this[int a, string b, Guid c] { get; set; }
 	}
 
 	public interface IFoo

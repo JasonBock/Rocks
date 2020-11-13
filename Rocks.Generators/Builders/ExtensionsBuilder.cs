@@ -25,11 +25,20 @@ namespace Rocks.Builders
 				writer.WriteLine();
 			}
 
-			if (information.Properties.Length > 0)
+			if (information.Properties.Any(_ => !_.Value.IsIndexer))
 			{
 				writer.WriteLine($"internal static PropertyExpectations<{typeToMockName}> Properties(this Expectations<{typeToMockName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new PropertyExpectations<{typeToMockName}>(self);");
+				writer.Indent--;
+				writer.WriteLine();
+			}
+
+			if (information.Properties.Any(_ => _.Value.IsIndexer))
+			{
+				writer.WriteLine($"internal static IndexerExpectations<{typeToMockName}> Indexers(this Expectations<{typeToMockName}> self) =>");
+				writer.Indent++;
+				writer.WriteLine($"new IndexerExpectations<{typeToMockName}>(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}

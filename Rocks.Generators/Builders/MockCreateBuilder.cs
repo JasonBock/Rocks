@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 
 namespace Rocks.Builders
 {
@@ -52,9 +53,14 @@ namespace Rocks.Builders
 				memberIdentifier++;
 			}
 
-			foreach(var property in information.Properties)
+			foreach(var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 			{
 				MockPropertyBuilder.Build(writer, property, information.Events.Length > 0);
+			}
+
+			foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
+			{
+				MockIndexerBuilder.Build(writer, indexer, information.Events.Length > 0);
 			}
 
 			if (information.Events.Length > 0)
