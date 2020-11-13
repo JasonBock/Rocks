@@ -2,7 +2,10 @@
 
 namespace Rocks
 {
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+	// This attribute is emitted into members on the mock type
+	// so the verification call can get a meaningful stringified description
+	// of the member that failed.
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
 	public sealed class MemberIdentifierAttribute
 		: Attribute
 	{
