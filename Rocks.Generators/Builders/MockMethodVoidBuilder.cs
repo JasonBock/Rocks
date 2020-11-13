@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -10,12 +11,26 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var methodSignature =
+			var methodDescription =
 				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
+			{
+				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(AttributeTargets.Parameter)} " : string.Empty)}{parameter}";
+			}));
+			var methodSignature =
+				$"void {method.Name}({methodParameters})";
 			var methodException =
 				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
-			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodSignature}"")]");
+			var attributes = method.GetAttributes();
+
+			if (attributes.Length > 0)
+			{
+				writer.WriteLine(attributes.GetDescription());
+			}
+
+			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;

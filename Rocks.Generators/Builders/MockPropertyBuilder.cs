@@ -8,8 +8,6 @@ namespace Rocks.Builders
 	{
 		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
 		{
-			var methodSignature = $"get_{result.Value.Name}()";
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{methodSignature}"")]");
 			writer.WriteLine("get");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -39,14 +37,13 @@ namespace Rocks.Builders
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for {methodSignature})"");");
+			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for get_{result.Value.Name}())"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""set_{result.Value.Name}(value)"")]");
 			writer.WriteLine("set");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -114,6 +111,26 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
+			var attributes = result.Value.GetAttributes();
+
+			if(attributes.Length > 0)
+			{
+				writer.WriteLine(attributes.GetDescription());
+			}
+
+			var memberIdentifierAttribute = result.MemberIdentifier;
+
+			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+			{
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""get_{result.Value.Name}()"")]");
+				memberIdentifierAttribute++;
+			}
+
+			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+			{
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""set_{result.Value.Name}(value)"")]");
+			}
+
 			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {result.Value.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;

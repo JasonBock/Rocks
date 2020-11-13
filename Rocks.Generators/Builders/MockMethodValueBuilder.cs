@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -11,12 +12,33 @@ namespace Rocks.Builders
 		{
 			var method = result.Value;
 			var returnType = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var methodSignature =
+			var methodDescription =
 				$"{returnType} {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
+			{
+				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(AttributeTargets.Parameter)} " : string.Empty)}{parameter}";
+			}));
+			var methodSignature =
+				$"{returnType} {method.Name}({methodParameters})";
 			var methodException =
 				$"{returnType} {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
-			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodSignature}"")]");
+			var attributes = method.GetAttributes();
+
+			if (attributes.Length > 0)
+			{
+				writer.WriteLine(attributes.GetDescription());
+			}
+
+			var returnAttributes = method.GetReturnTypeAttributes();
+
+			if (returnAttributes.Length > 0)
+			{
+				writer.WriteLine(returnAttributes.GetDescription(AttributeTargets.ReturnValue));
+			}
+
+			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;

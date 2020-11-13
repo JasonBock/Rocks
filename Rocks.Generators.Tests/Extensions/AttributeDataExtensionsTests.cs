@@ -35,7 +35,7 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid)]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
 	void Foo();
 }");
 
@@ -54,8 +54,8 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid)]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string)]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
+	[MyTest(""b value"", 22.34, 33, 55, typeof(string))]
 	void Foo();
 }");
 
@@ -75,8 +75,8 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid)]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string)]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
+	[MyTest(""b value"", 22.34, 33, 55, typeof(string))]
 	void Foo();
 }");
 

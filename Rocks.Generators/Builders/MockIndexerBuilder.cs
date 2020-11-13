@@ -8,13 +8,12 @@ namespace Rocks.Builders
 {
 	internal static class MockIndexerBuilder
 	{
-		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string signature, bool raiseEvents)
+		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
 		{
 			var method = result.Value.GetMethod!;
 			var methodException =
 				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{signature}"")]");
 			writer.WriteLine("get");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -73,13 +72,12 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string signature, bool raiseEvents)
+		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
 		{
 			var method = result.Value.SetMethod!;
 			var methodException =
 				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifier}, ""{signature}"")]");
 			writer.WriteLine("set");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -141,8 +139,27 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
-			var indexerSignature = MockIndexerBuilder.GetSignature(result.Value.Parameters);
+			var attributes = result.Value.GetAttributes();
 
+			if (attributes.Length > 0)
+			{
+				writer.WriteLine(attributes.GetDescription());
+			}
+
+			var memberIdentifierAttribute = result.MemberIdentifier;
+
+			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+			{
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters)}"")]");
+				memberIdentifierAttribute++;
+			}
+
+			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+			{
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters)}"")]");
+			}
+
+			var indexerSignature = MockIndexerBuilder.GetSignature(result.Value.Parameters);
 			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {indexerSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -151,13 +168,13 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters), raiseEvents);
+				MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents);
 				memberIdentifier++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters), raiseEvents);
+				MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents);
 			}
 
 			writer.Indent--;

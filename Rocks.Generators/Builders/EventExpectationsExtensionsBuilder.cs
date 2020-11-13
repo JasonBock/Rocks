@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
 using System.Linq;
@@ -9,9 +10,29 @@ namespace Rocks.Builders
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			static void WriteRaisesMethod(IndentedTextWriter writer, string prefix, string typeToMockName, Extensions.EventMockableResult result, string argsType)
+			if (information.Methods.Length > 0)
 			{
-				writer.WriteLine($"internal static {prefix}Adornments <{typeToMockName}> Raises{result.Value.Name}(this {prefix}Adornments <{typeToMockName}> self, {argsType} args)");
+				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
+			}
+
+			if (information.Properties.Length > 0)
+			{
+				if (information.Properties.Any(_ => !_.Value.IsIndexer))
+				{
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
+				}
+				if (information.Properties.Any(_ => _.Value.IsIndexer))
+				{
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
+				}
+			}
+		}
+
+		private static void BuildAdornments(IndentedTextWriter writer, MockInformation information, string prefix)
+		{
+			static void BuildRaisesMethod(IndentedTextWriter writer, string extensionPrefix, string typeToMockName, EventMockableResult result, string argsType)
+			{
+				writer.WriteLine($"internal static {extensionPrefix}Adornments<{typeToMockName}> Raises{result.Value.Name}(this {extensionPrefix}Adornments<{typeToMockName}> self, {argsType} args)");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{result.Value.Name}\", args));");
@@ -21,7 +42,7 @@ namespace Rocks.Builders
 			}
 
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			writer.WriteLine($"internal static class MethodAdornmentsOf{typeToMockName}Extensions");
+			writer.WriteLine($"internal static class {prefix}AdornmentsOf{typeToMockName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -36,22 +57,7 @@ namespace Rocks.Builders
 						.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				}
 
-				if(information.Methods.Length > 0)
-				{
-					WriteRaisesMethod(writer, "Method", typeToMockName, result, argsType);
-				}
-
-				if (information.Properties.Length > 0)
-				{
-					if(!information.Properties.Any(_ => _.Value.IsIndexer))
-					{
-						WriteRaisesMethod(writer, "Property", typeToMockName, result, argsType);
-					}
-					if (information.Properties.Any(_ => _.Value.IsIndexer))
-					{
-						WriteRaisesMethod(writer, "Indexer", typeToMockName, result, argsType);
-					}
-				}
+				BuildRaisesMethod(writer, "Method", typeToMockName, result, argsType);
 			}
 
 			writer.Indent--;

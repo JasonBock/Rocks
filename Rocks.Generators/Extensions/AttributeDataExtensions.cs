@@ -17,6 +17,7 @@ namespace Rocks.Extensions
 				var arguments = self.ConstructorArguments.Select(_ => _.Value switch
 				{
 					string => $"\"{_.Value}\"",
+					bool b => $"{(b ? "true" : "false")}",
 					INamedTypeSymbol named => $"typeof({named.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)})",
 					_ => _.Value
 				});
@@ -28,7 +29,7 @@ namespace Rocks.Extensions
 		}
 
 		internal static string GetDescription(this ImmutableArray<AttributeData> self, AttributeTargets? target = null) => 
-			$"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target}: " : string.Empty)}{string.Join(", ", self.Select(_ => _.GetDescription()))}]";
+			$"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target.GetTarget()}: " : string.Empty)}{string.Join(", ", self.Select(_ => _.GetDescription()))}]";
 
 		private static string GetTarget(this AttributeTargets? target) =>
 			target switch

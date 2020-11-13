@@ -15,13 +15,21 @@ namespace Rocks.Tests
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EII
 {
 	public interface IA
 	{
-		[Obsolete(""Done."")]
-		void Foo();
+		[Obsolete(""Method Foo"")]
+		[return: MaybeNull]
+		string Foo(int a, [NotNullWhen(false)] string? value);
+
+		[AllowNull]
+		string Data { get; set; }
+
+		[Obsolete(""Event MyEvent"")]
+		event EventHandler MyEvent;
 	}
 
 	public static class Test

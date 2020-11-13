@@ -18,6 +18,13 @@ namespace Rocks.Builders
 			{
 				if(@event.MustBeImplemented == MustBeImplemented.Yes)
 				{
+					var attributes = @event.Value.GetAttributes();
+
+					if (attributes.Length > 0)
+					{
+						writer.WriteLine(attributes.GetDescription());
+					}
+
 					writer.WriteLine(
 						$"public {(@event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}event {@event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Value.Name};");
 				}
