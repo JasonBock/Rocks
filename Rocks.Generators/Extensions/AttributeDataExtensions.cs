@@ -9,19 +9,32 @@ namespace Rocks.Extensions
 	{
 		internal static string GetDescription(this AttributeData self)
 		{
-			var name = self.AttributeClass!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat).Replace("Attribute", string.Empty);
+			static string GetTypedConstantValue(TypedConstant value) =>
+				value.Kind switch
+				{
+					TypedConstantKind.Primitive => GetValue(value.Value),
+					TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)})",
+					TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
+					TypedConstantKind.Enum => $"({value.Type!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){value.Value}",
+					_ => value.Value?.ToString() ?? string.Empty
+				};
+
+			static string GetValue(object? value) =>
+				value switch
+				{
+					TypedConstant tc => GetTypedConstantValue(tc),
+					string s => $"\"{s}\"",
+					bool b => $"{(b ? "true" : "false")}",
+					_ => value?.ToString() ?? string.Empty
+				};
+
+			var name = self.AttributeClass!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
+				.Replace("Attribute", string.Empty);
 			var constructorArguments = string.Empty;
 
 			if (self.ConstructorArguments.Length > 0)
 			{
-				var arguments = self.ConstructorArguments.Select(_ => _.Value switch
-				{
-					string => $"\"{_.Value}\"",
-					bool b => $"{(b ? "true" : "false")}",
-					INamedTypeSymbol named => $"typeof({named.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)})",
-					_ => _.Value
-				});
-
+				var arguments = self.ConstructorArguments.Select(_ => GetTypedConstantValue(_));
 				constructorArguments = $"({string.Join(", ", arguments)})";
 			}
 

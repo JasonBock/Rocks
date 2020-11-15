@@ -9,21 +9,29 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
+	public enum MyValue
+	{
+		ThisOne, ThatOne, AnotherOne
+	}
+
 	[AttributeUsage(AttributeTargets.All)]
 	public sealed class MyTestAttribute
 		: Attribute
 	{
-		public MyTestAttribute(string a, double b, int c, uint d, Type e) =>
-			(this.A, this.B, this.C, this.D, this.E) =
-				(a, b, c, d, e);
+		public MyTestAttribute(string a, double b, int c, uint d, Type e, int[] f, MyValue g) =>
+			(this.A, this.B, this.C, this.D, this.E, this.F, this.G) =
+				(a, b, c, d, e, f, g);
 
 		public string A { get; }
 		public double B { get; }
 		public int C { get; }
 		public uint D { get; }
 		public Type E { get; }
+		public int[] F { get; }
+		public MyValue G { get; }
 	}
 
+	[MyTest("a", 2.0, 3, 4, typeof(string), new[] { 6, 7 }, MyValue.ThisOne)]
 	public static class AttributeDataExtensionsTests
 	{
 		[Test]
@@ -35,13 +43,13 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
 	void Foo();
 }");
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid))"));
+				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0)"));
 			});
 		}
 
@@ -54,15 +62,15 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string))]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
+	[MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
 	void Foo();
 }");
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(attributes.GetDescription(), 
-					Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid)), MyTest(""b value"", 22.34, 33, 55, typeof(string))]"));
+					Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 			});
 		}
 
@@ -75,15 +83,15 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid))]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string))]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
+	[MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
 	void Foo();
 }");
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(attributes.GetDescription(AttributeTargets.Method), 
-					Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid)), MyTest(""b value"", 22.34, 33, 55, typeof(string))]"));
+					Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 			});
 		}
 

@@ -72,6 +72,7 @@ namespace Rocks
 			}
 		}
 
-		public void Initialize(GeneratorInitializationContext context) => context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
+		public void Initialize(GeneratorInitializationContext context) => 
+			context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 	}
 }
