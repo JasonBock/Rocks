@@ -1,9 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Rocks.Exceptions;
+﻿using Rocks.Exceptions;
 using Rocks.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel;
 
 namespace Rocks
 {
@@ -30,13 +29,25 @@ namespace Rocks
 			}
 		}
 
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		/// <summary>
+		/// This method is used by Rocks and is not intented to be used by developers.
+		/// </summary>
 		public ImmutableDictionary<int, ImmutableArray<HandlerInformation>> CreateHandlers() =>
-			this.Handlers.ToImmutableDictionary(kvp => kvp.Key, kvp => kvp.Value.ToImmutableArray());
+			this.Handlers.ToImmutableDictionary(pair => pair.Key, kvp => kvp.Value.ToImmutableArray());
 
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		/// <summary>
+		/// This method is used by Rocks and is not intented to be used by developers.
+		/// </summary>
 		public Expectations<TTarget> To<TTarget>()
 			where TTarget : class => new Expectations<TTarget>(this.Handlers, this.Mocks);
 
 		internal Dictionary<int, List<HandlerInformation>> Handlers { get; } = new();
+		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+		/// <summary>
+		/// This method is used by Rocks and is not intented to be used by developers.
+		/// </summary>
 		public List<IMock> Mocks { get; } = new();
 	}
 }
