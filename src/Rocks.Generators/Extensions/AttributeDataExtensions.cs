@@ -66,15 +66,20 @@ namespace Rocks.Extensions
 
 			var name = self.AttributeClass!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
 				.Replace("Attribute", string.Empty);
-			var constructorArguments = string.Empty;
+			var argumentParts = new List<string>();
 
 			if (self.ConstructorArguments.Length > 0)
 			{
-				var arguments = self.ConstructorArguments.Select(_ => GetTypedConstantValue(_));
-				constructorArguments = $"({string.Join(", ", arguments)})";
+				argumentParts.AddRange(self.ConstructorArguments.Select(_ => GetTypedConstantValue(_)));
 			}
 
-			return $"{name}{constructorArguments}";
+			if (self.NamedArguments.Length > 0)
+			{
+				argumentParts.AddRange(self.NamedArguments.Select(_ => $"{_.Key} = {GetTypedConstantValue(_.Value)}"));
+			}
+
+			var arguments = argumentParts.Count > 0 ? $"({string.Join(", ", argumentParts)})" : string.Empty;
+			return $"{name}{arguments}";
 		}
 
 		internal static string GetDescription(this ImmutableArray<AttributeData> self, AttributeTargets? target = null) => 

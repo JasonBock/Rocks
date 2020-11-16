@@ -49,9 +49,11 @@ namespace Rocks.Tests.Extensions
 		public Type E { get; }
 		public int[] F { get; }
 		public MyValue G { get; }
+
+		public int NamedA { get; set; }
 	}
 
-	[MyTest("a", 2.0, 3, 4, typeof(string), new[] { 6, 7 }, MyValue.ThisOne)]
+	[MyTest("a", 2.0, 3, 4, typeof(string), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
 	public static class AttributeDataExtensionsTests
 	{
 		[Test]
@@ -86,13 +88,13 @@ using System;
 
 public interface IA
 {
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
 	void Foo();
 }");
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0)"));
+				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
 			});
 		}
 
