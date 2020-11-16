@@ -24,7 +24,7 @@
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\Images\RocksIcon.png" Pack="true" PackagePath="" Visible="false" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>

@@ -7,13 +7,14 @@ namespace Rocks.Descriptors
 	{
 		internal static Diagnostic Create(ITypeSymbol type) =>
 			Diagnostic.Create(new(TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title,
-				string.Format(CultureInfo.CurrentCulture, TypeHasNoMockableMembersDescriptor.Message, type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
+				string.Format(CultureInfo.CurrentCulture, TypeHasNoMockableMembersDescriptor.Message, 
+					type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
 				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
 				helpLinkUri: HelpUrlBuilder.Build(
 					TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)), type.Locations[0]);
 
-		public const string Id = "ROCK0003";
-		public const string Message = "The type {0} has no members that can be overriden.";
+		public const string Id = "ROCK3";
+		public const string Message = "The type {0} has no members that can be overriden";
 		public const string Title = "Type Has No Mockable Members";
 	}
 }
