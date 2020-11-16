@@ -6,35 +6,15 @@ using System.Linq;
 
 namespace Rocks.Builders
 {
-	/*
-	
-	Example: If we are given a method like: Foo(int a, string b)
-
-	internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a, Arg<string> b) =>
-		new MethodAdornments(self.Add(0, new Dictionary<int, Arg>
-		{
-			{ 0, a },
-			{ 1, b },
-		}));
-	*/
-
 	internal static class MethodExpectationsExtensionsMethodBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SortedSet<string> namespaces)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
 		{
 			var method = result.Value;
 			var thisParameter = $"this MethodExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 				string.Join(", ", thisParameter,
-					string.Join(", ", method.Parameters.Select(_ =>
-					{
-						if (!_.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
-						{
-							namespaces.Add($"using {_.Type.ContainingNamespace!.ToDisplayString()};");
-						}
-
-						return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
-					})));
+					string.Join(", ", method.Parameters.Select(_ => $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}")));
 
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var adornmentsType = method.ReturnsVoid ? 

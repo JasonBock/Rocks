@@ -1,9 +1,38 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
+		internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)
+		{
+			static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
+			{
+				yield return parameter.Type.ContainingNamespace;
+
+				foreach(var attributeNamespace in parameter.GetAttributes().SelectMany(_ => _.GetNamespaces()))
+				{
+					yield return attributeNamespace;
+				}
+			}
+
+			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+
+			if(!self.ReturnsVoid)
+			{
+				namespaces.Add(self.ReturnType.ContainingNamespace);
+				namespaces.AddRange(self.GetReturnTypeAttributes().SelectMany(_ => _.GetNamespaces()));
+			}
+
+			namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
+			namespaces.AddRange(self.Parameters.SelectMany(_ => GetParameterNamespaces(_)));
+
+			return namespaces.ToImmutable();
+		}
+
 		internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other)
 		{
 			if (self.Name != other.Name)

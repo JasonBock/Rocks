@@ -1,4 +1,6 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using ADETAttributes;
+using ADETTypes;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
@@ -6,6 +8,24 @@ using Rocks.Extensions;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+
+namespace ADETTypes
+{
+	public class TypeOfThis { }
+}
+
+namespace ADETAttributes
+{
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class MethodAttribute
+		: Attribute
+	{
+		public MethodAttribute(Type value) =>
+			this.Value = value;
+
+		public Type Value { get; }
+	}
+}
 
 namespace Rocks.Tests.Extensions
 {
@@ -34,6 +54,29 @@ namespace Rocks.Tests.Extensions
 	[MyTest("a", 2.0, 3, 4, typeof(string), new[] { 6, 7 }, MyValue.ThisOne)]
 	public static class AttributeDataExtensionsTests
 	{
+		[Test]
+		public static void GetNamespaces()
+		{
+			var attributes = AttributeDataExtensionsTests.GetAttributes(
+@$"using {typeof(TypeOfThis).Namespace};
+using {typeof(MethodAttribute).Namespace};
+
+public interface IA
+{{
+	[Method(typeof(TypeOfThis))]
+	void Foo();
+}}");
+
+			var namespaces = attributes[0].GetNamespaces();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(namespaces.Count, Is.EqualTo(2));
+				Assert.That(namespaces.Any(_ => _.Name == typeof(TypeOfThis).Namespace), Is.True);
+				Assert.That(namespaces.Any(_ => _.Name == typeof(MethodAttribute).Namespace), Is.True);
+			});
+		}
+
 		[Test]
 		public static void GetDescription()
 		{

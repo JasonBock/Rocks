@@ -7,6 +7,8 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Rocks
@@ -32,9 +34,10 @@ namespace Rocks
 				$"using {typeof(ImmutableArray).Namespace};"
 			};
 
-			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
+			if(this.information.Events.Length > 0)
 			{
-				usings.Add($"using {this.information.TypeToMock.ContainingNamespace!.ToDisplayString()};");
+				usings.Add($"using {typeof(EventArgs).Namespace};");
+				usings.Add($"using {typeof(BindingFlags).Namespace};");
 			}
 
 			using var writer = new StringWriter();
@@ -49,7 +52,14 @@ namespace Rocks
 				indentWriter.Indent++;
 			}
 
-			ExtensionsBuilder.Build(indentWriter, this.information, usings);
+			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+
+			ExtensionsBuilder.Build(indentWriter, this.information, namespaces);
+
+			foreach(var @namespace in namespaces.Where(_ => !_.IsGlobalNamespace))
+			{
+				usings.Add($"using {@namespace.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)};");
+			}
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
 			{

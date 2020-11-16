@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Rocks.Builders
 {
 	internal static class MockCreateBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
+		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
@@ -66,7 +65,7 @@ namespace Rocks.Builders
 			if (information.Events.Length > 0)
 			{
 				writer.WriteLine();
-				MockEventsBuilder.Build(writer, information.Events, usings);
+				MockEventsBuilder.Build(writer, information.Events);
 			}
 
 			writer.WriteLine();

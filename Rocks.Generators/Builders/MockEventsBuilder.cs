@@ -1,17 +1,13 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
-using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Reflection;
 
 namespace Rocks.Builders
 {
 	internal static class MockEventsBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events,
-			SortedSet<string> usings)
+		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events)
 		{
 			writer.WriteLine("#pragma warning disable CS0067");
 			foreach(var @event in events)
@@ -30,11 +26,7 @@ namespace Rocks.Builders
 				}
 			}
 			writer.WriteLine("#pragma warning restore CS0067");
-
 			writer.WriteLine();
-
-			usings.Add($"using {typeof(EventArgs).Namespace};");
-			usings.Add($"using {typeof(BindingFlags).Namespace};");
 
 			writer.WriteLine("void IMockWithEvents.Raise(string eventName, EventArgs args)");
 			writer.WriteLine("{");

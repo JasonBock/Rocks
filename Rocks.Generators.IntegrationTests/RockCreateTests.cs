@@ -1,10 +1,29 @@
-﻿using NUnit.Framework;
+﻿using CreatingTest.Names;
+using NUnit.Framework;
 using System;
+
+namespace CreatingTest.Names
+{
+	public class Thingee { }
+}
 
 namespace Rocks.IntegrationTests
 {
 	public static class RockCreateTests
 	{
+		[Test]
+		public static void LookAtNamespaces()
+		{
+			var rock = Rock.Create<IUseThingee>();
+			rock.Methods().UseThingee(Arg.Any<Thingee>());
+
+			var chunk = rock.Instance();
+			chunk.UseThingee(new Thingee());
+			chunk.UseThingee(new Thingee());
+
+			rock.Verify();
+		}
+
 		[Test]
 		public static void CreateHappyPathForIndexer()
 		{
@@ -98,6 +117,11 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 		}
+	}
+
+	public interface IUseThingee
+	{
+		void UseThingee(Thingee t);
 	}
 
 	public interface IHaveEvent

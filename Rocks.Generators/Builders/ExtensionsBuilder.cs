@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -8,7 +8,7 @@ namespace Rocks.Builders
 {
 	internal static class ExtensionsBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, SortedSet<string> usings)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
@@ -16,7 +16,12 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			if(information.Methods.Length > 0)
+			namespaces.AddRange(information.Methods.SelectMany(_ => _.Value.GetNamespaces()));
+			namespaces.AddRange(information.Constructors.SelectMany(_ => _.GetNamespaces()));
+			namespaces.AddRange(information.Properties.SelectMany(_ => _.Value.GetNamespaces()));
+			namespaces.AddRange(information.Events.SelectMany(_ => _.Value.GetNamespaces()));
+
+			if (information.Methods.Length > 0)
 			{
 				writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
 				writer.Indent++;
@@ -48,18 +53,18 @@ namespace Rocks.Builders
 				foreach(var constructor in information.Constructors)
 				{
 					ExpectationsExtensionsConstructorBuilder.Build(writer, information.TypeToMock,
-						constructor.Parameters, usings);
+						constructor.Parameters);
 				}
 			}
 			else
 			{
 				ExpectationsExtensionsConstructorBuilder.Build(writer, information.TypeToMock,
-					ImmutableArray<IParameterSymbol>.Empty, usings);
+					ImmutableArray<IParameterSymbol>.Empty);
 			}
 
 			writer.WriteLine();
 
-			MockCreateBuilder.Build(writer, information, usings);
+			MockCreateBuilder.Build(writer, information);
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -67,7 +72,7 @@ namespace Rocks.Builders
 			if (information.Methods.Length > 0)
 			{
 				writer.WriteLine();
-				MethodExpectationsExtensionsBuilder.Build(writer, information, usings);
+				MethodExpectationsExtensionsBuilder.Build(writer, information);
 			}
 
 			if (information.Properties.Length > 0)

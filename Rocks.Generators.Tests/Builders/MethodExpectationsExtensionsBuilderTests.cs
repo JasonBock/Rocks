@@ -5,7 +5,6 @@ using NUnit.Framework;
 using Rocks.Builders;
 using System;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -27,8 +26,7 @@ public interface IFoo
 
 			using var writer = new StringWriter();
 			using var indentWriter = new IndentedTextWriter(writer, "	");
-			var namespaces = new SortedSet<string>();
-			MethodExpectationsExtensionsBuilder.Build(indentWriter, information, namespaces);
+			MethodExpectationsExtensionsBuilder.Build(indentWriter, information);
 			var result = writer.ToString();
 
 			Assert.Multiple(() =>
