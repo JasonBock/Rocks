@@ -7,9 +7,6 @@ using System.Threading;
 
 namespace Rocks
 {
-   // TODO: Consider making this immutable - that is,
-   // make AddRaiseEvent and IncrementCallCount return 
-	// new instances.
    [Serializable]
 	public class HandlerInformation
 	{

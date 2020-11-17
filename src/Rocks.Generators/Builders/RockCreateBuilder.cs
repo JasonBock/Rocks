@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
+using Rocks.Configuration;
 using Rocks.Exceptions;
 using System;
 using System.CodeDom.Compiler;
@@ -16,10 +17,12 @@ namespace Rocks
 	internal sealed class RockCreateBuilder
 	{
 		private readonly MockInformation information;
+		private readonly ConfigurationValues configurationValues;
 
-		internal RockCreateBuilder(MockInformation information)
+		internal RockCreateBuilder(MockInformation information, ConfigurationValues configurationValues)
 		{
-			this.information = information;
+			(this.information, this.configurationValues) = 
+				(information, configurationValues);
 			(this.Diagnostics, this.Name, this.Text) = this.Build();
 		}
 
@@ -41,9 +44,8 @@ namespace Rocks
 			}
 
 			using var writer = new StringWriter();
-			// TODO:
-			// Can we read .editorconfig to figure out the space/tab + indention
-			using var indentWriter = new IndentedTextWriter(writer, "	");
+			using var indentWriter = new IndentedTextWriter(writer,
+				this.configurationValues.IndentStyle == IndentStyle.Tab ? "\t" : new string(' ', (int)this.configurationValues.IndentSize));
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)
 			{

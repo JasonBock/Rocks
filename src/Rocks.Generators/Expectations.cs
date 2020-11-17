@@ -44,6 +44,7 @@ namespace Rocks
 			where TTarget : class => new Expectations<TTarget>(this.Handlers, this.Mocks);
 
 		internal Dictionary<int, List<HandlerInformation>> Handlers { get; } = new();
+
 		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 		/// <summary>
 		/// This method is used by Rocks and is not intented to be used by developers.

@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using Rocks.Configuration;
 using Rocks.Extensions;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,13 +15,13 @@ namespace Rocks
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
-			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model)
+			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, ConfigurationValues configurationValues)
 		{
 			var information = new MockInformation(typeToMock, containingAssemblySymbol, model);
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
-				var builder = new RockCreateBuilder(information);
+				var builder = new RockCreateBuilder(information, configurationValues);
 				return (builder.Diagnostics, builder.Name, builder.Text);
 			}
 			else
@@ -40,6 +41,7 @@ namespace Rocks
 				{
 					context.CancellationToken.ThrowIfCancellationRequested();
 					var model = compilation.GetSemanticModel(candidateInvocation.SyntaxTree);
+
 					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
 
 					var rockCreateSymbol = compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
@@ -54,8 +56,9 @@ namespace Rocks
 							var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
 							var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
 
+							var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
 							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-								typeToMock, containingAssemblyOfInvocationSymbol, model);
+								typeToMock, containingAssemblyOfInvocationSymbol, model, configurationValues);
 
 							foreach (var diagnostic in diagnostics)
 							{
