@@ -1,43 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using NS.Multiple.Values;
-using NSMethod;
-using NSParameter;
-using NSReturn;
 using NUnit.Framework;
 using Rocks.Extensions;
 using System;
 using System.Linq;
-
-namespace NS.Multiple.Values
-{
-	public sealed class ParameterType { }
-}
-
-namespace NSParameter
-{
-	[AttributeUsage(AttributeTargets.Parameter)]
-	public sealed class ParameterAttribute
-		: Attribute
-	{ }
-}
-
-namespace NSMethod
-{
-	[AttributeUsage(AttributeTargets.Method)]
-	public sealed class MethodAttribute
-		: Attribute
-	{ }
-}
-
-namespace NSReturn
-{
-	[AttributeUsage(AttributeTargets.ReturnValue)]
-	public sealed class ReturnAttribute
-		: Attribute
-	{ }
-}
 
 namespace Rocks.Tests.Extensions
 {
@@ -46,12 +13,46 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void GetNamespaces()
 		{
+			var methodAttributeNamespace = "NSMethod";
+			var parameterTypeNamespace = "NS.Multiple.Values";
+			var parameterAttributeNamespace = "NSParameter";
+			var returnAttribute = "NSReturn";
+
 			var code =
 $@"using System;
-using {typeof(MethodAttribute).Namespace};
-using {typeof(ReturnAttribute).Namespace};
-using {typeof(ParameterType).Namespace};
-using {typeof(ParameterAttribute).Namespace};
+using {methodAttributeNamespace};
+using {returnAttribute};
+using {parameterTypeNamespace};
+using {parameterAttributeNamespace};
+
+namespace {parameterTypeNamespace}
+{{
+	public sealed class ParameterType {{ }}
+}}
+
+namespace {parameterAttributeNamespace}
+{{
+	[AttributeUsage(AttributeTargets.Parameter)]
+	public sealed class ParameterAttribute
+		: Attribute
+	{{ }}
+}}
+
+namespace {methodAttributeNamespace}
+{{
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class MethodAttribute
+		: Attribute
+	{{ }}
+}}
+
+namespace {returnAttribute}
+{{
+	[AttributeUsage(AttributeTargets.ReturnValue)]
+	public sealed class ReturnAttribute
+		: Attribute
+	{{ }}
+}}
 
 public class NamespaceClass
 {{
@@ -67,10 +68,10 @@ public class NamespaceClass
 
 				Assert.That(namespaces.Count, Is.EqualTo(5));
 				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(string).Namespace), Is.True);
-				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(MethodAttribute).Namespace), Is.True);
-				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(ReturnAttribute).Namespace), Is.True);
-				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(ParameterType).Namespace), Is.True);
-				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(ParameterAttribute).Namespace), Is.True);
+				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == methodAttributeNamespace), Is.True);
+				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == returnAttribute), Is.True);
+				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == parameterTypeNamespace), Is.True);
+				Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == parameterAttributeNamespace), Is.True);
 			});
 		}
 

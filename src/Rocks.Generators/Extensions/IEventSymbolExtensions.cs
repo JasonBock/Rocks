@@ -10,8 +10,8 @@ namespace Rocks.Extensions
 		{
 			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
-			namespaces.Add(self.Type.ContainingNamespace);
-			namespaces.AddRange(self.Type.GetAttributes().SelectMany(_ => _.GetNamespaces()));
+			namespaces.AddRange(self.Type.GetNamespaces());
+			namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
 
 			return namespaces.ToImmutable();
 		}

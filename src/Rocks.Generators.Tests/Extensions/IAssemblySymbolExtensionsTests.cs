@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
-	public static class IAssemblySymbolExtensionsExposesInternalsToTests
+	public static class IAssemblySymbolExtensionsTests
 	{
 		[Test]
 		public static void CheckExposureWhenSourceAssemblyHasInternalsVisibleToWithTargetAssemblyName()

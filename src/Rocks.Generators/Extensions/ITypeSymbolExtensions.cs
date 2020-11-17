@@ -29,6 +29,20 @@ namespace Rocks.Extensions
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
 		}
 
+		internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this ITypeSymbol self)
+		{
+			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+
+			namespaces.Add(self.ContainingNamespace);
+
+			if(self is INamedTypeSymbol namedSelf)
+			{
+				namespaces.AddRange(namedSelf.TypeArguments.SelectMany(_ => _.GetNamespaces()));
+			}
+
+			return namespaces.ToImmutable();
+		}
+
 		internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
 				self.TypeKind == TypeKind.Class ?

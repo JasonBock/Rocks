@@ -53,7 +53,6 @@ namespace Rocks.Tests.Extensions
 		public int NamedA { get; set; }
 	}
 
-	[MyTest("a", 2.0, 3, 4, typeof(string), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
 	public static class AttributeDataExtensionsTests
 	{
 		[Test]
@@ -99,7 +98,7 @@ public interface IA
 		}
 
 		[Test]
-		public static void GetDescriptionForArray()
+		public static void GetDescriptionForArrayOfAttributes()
 		{
 			var attributes = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;

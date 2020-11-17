@@ -11,7 +11,10 @@ namespace Rocks.Extensions
 		{
 			static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
 			{
-				yield return parameter.Type.ContainingNamespace;
+				foreach(var parameterTypeNamespaces in parameter.Type.GetNamespaces())
+				{
+					yield return parameterTypeNamespaces;
+				}
 
 				foreach (var attributeNamespace in parameter.GetAttributes().SelectMany(_ => _.GetNamespaces()))
 				{
@@ -22,7 +25,7 @@ namespace Rocks.Extensions
 			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
 			namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
-			namespaces.Add(self.Type.ContainingNamespace);
+			namespaces.AddRange(self.Type.GetNamespaces());
 
 			if (self.IsIndexer)
 			{
