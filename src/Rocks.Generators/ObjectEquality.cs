@@ -10,7 +10,7 @@ namespace Rocks
 			{
 				return true;
 			}
-			else if (!(value1 is null) && !(value2 is null))
+			else if (value1 is not null && value2 is not null)
 			{
 				if (!typeof(T).IsArray)
 				{
