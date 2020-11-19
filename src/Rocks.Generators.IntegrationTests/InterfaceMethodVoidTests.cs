@@ -13,7 +13,7 @@ namespace Rocks.IntegrationTests
 	public static class InterfaceMethodVoidTests
 	{
 		[Test]
-		public static void VerifyWithNoParameters()
+		public static void MockWithNoParameters()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().NoParameters();
@@ -25,7 +25,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersMultipleCalls()
+		public static void MockWithNoParametersMultipleCalls()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -38,7 +38,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersMultipleCallsNotMet()
+		public static void MockWithNoParametersMultipleCallsNotMet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -53,7 +53,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersAndCallback()
+		public static void MockWithNoParametersAndCallback()
 		{
 			var wasCallbackInvoked = false;
 
@@ -71,7 +71,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersNoExpectationSet()
+		public static void MockWithNoParametersNoExpectationSet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 
@@ -84,7 +84,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersExpectationsNotMet()
+		public static void MockWithNoParametersExpectationsNotMet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().NoParameters();
@@ -98,7 +98,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithOneParameter()
+		public static void MockWithOneParameter()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().OneParameter(3);
@@ -110,7 +110,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterWithCallback()
+		public static void MockWithOneParameterWithCallback()
 		{
 			var aValue = 0;
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
@@ -128,7 +128,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterArgExpectationNotMet()
+		public static void MockWithOneParameterArgExpectationNotMet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().OneParameter(3);
@@ -142,7 +142,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithMultipleParameters()
+		public static void MockWithMultipleParameters()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");
@@ -154,7 +154,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithMultipleParametersWithCallback()
+		public static void MockWithMultipleParametersWithCallback()
 		{
 			var aValue = 0;
 			var bValue = string.Empty;
@@ -174,7 +174,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithMultipleParametersArgExpectationNotMet()
+		public static void MockWithMultipleParametersArgExpectationNotMet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");
