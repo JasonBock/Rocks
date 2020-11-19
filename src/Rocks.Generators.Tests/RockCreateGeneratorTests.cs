@@ -14,6 +14,7 @@ namespace Rocks.Tests
 		{
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
+using System;
 
 namespace MockTests
 {

@@ -25,14 +25,48 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersAndCallback()
+		public static void VerifyWithNoParametersMultipleCalls()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
-			rock.Methods().NoParameters();
+			rock.Methods().NoParameters().CallCount(2);
+
+			var chunk = rock.Instance();
+			chunk.NoParameters();
+			chunk.NoParameters();
+
+			rock.Verify();
+		}
+
+		[Test]
+		public static void VerifyWithNoParametersMultipleCallsNotMet()
+		{
+			var rock = Rock.Create<IInterfaceMethodVoidTests>();
+			rock.Methods().NoParameters().CallCount(2);
 
 			var chunk = rock.Instance();
 			chunk.NoParameters();
 
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+			});
+		}
+
+		[Test]
+		public static void VerifyWithNoParametersAndCallback()
+		{
+			var wasCallbackInvoked = false;
+
+			var rock = Rock.Create<IInterfaceMethodVoidTests>();
+			rock.Methods().NoParameters().Callback(() => wasCallbackInvoked = true);
+
+			var chunk = rock.Instance();
+			chunk.NoParameters();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(wasCallbackInvoked, Is.True);
+			});
 			rock.Verify();
 		}
 
@@ -64,60 +98,37 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void VerifyWithNoParametersMultipleCalls()
-		{
-			var rock = Rock.Create<IInterfaceMethodVoidTests>();
-			rock.Methods().NoParameters().CallCount(2);
-
-			var chunk = rock.Instance();
-			chunk.NoParameters();
-			chunk.NoParameters();
-
-			rock.Verify();
-		}
-
-		[Test]
-		public static void VerifyWithNoParametersMultipleCallsExpectationsNotMet()
-		{
-			var rock = Rock.Create<IInterfaceMethodVoidTests>();
-			rock.Methods().NoParameters().CallCount(2);
-
-			var chunk = rock.Instance();
-			chunk.NoParameters();
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-			});
-		}
-
-		[Test]
 		public static void VerifyWithOneParameter()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().OneParameter(3);
 
 			var chunk = rock.Instance();
-			chunk.NoParameters();
+			chunk.OneParameter(3);
 
 			rock.Verify();
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterNoExpectationSet()
+		public static void VerifyWithOneParameterWithCallback()
 		{
+			var aValue = 0;
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
+			rock.Methods().OneParameter(3).Callback(a => aValue = a);
 
 			var chunk = rock.Instance();
+			chunk.OneParameter(3);
+
+			rock.Verify();
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(() => chunk.OneParameter(3), Throws.TypeOf<ExpectationException>());
+				Assert.That(aValue, Is.EqualTo(3));
 			});
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterExpectationsNotMet()
+		public static void VerifyWithOneParameterArgExpectationNotMet()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
 			rock.Methods().OneParameter(3);
@@ -126,35 +137,53 @@ namespace Rocks.IntegrationTests
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+				Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
 			});
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterMultipleCalls()
+		public static void VerifyWithMultipleParameters()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
-			rock.Methods().OneParameter(3).CallCount(2);
+			rock.Methods().MultipleParameters(3, "b");
 
 			var chunk = rock.Instance();
-			chunk.OneParameter(3);
-			chunk.OneParameter(3);
+			chunk.MultipleParameters(3, "b");
 
 			rock.Verify();
 		}
 
 		[Test]
-		public static void VerifyWithOneParameterMultipleCallsExpectationsNotMet()
+		public static void VerifyWithMultipleParametersWithCallback()
 		{
+			var aValue = 0;
+			var bValue = string.Empty;
 			var rock = Rock.Create<IInterfaceMethodVoidTests>();
-			rock.Methods().OneParameter(3).CallCount(2);
+			rock.Methods().MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
 
 			var chunk = rock.Instance();
-			chunk.OneParameter(3);
+			chunk.MultipleParameters(3, "b");
+
+			rock.Verify();
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+				Assert.That(aValue, Is.EqualTo(3));
+				Assert.That(bValue, Is.EqualTo("b"));
+			});
+		}
+
+		[Test]
+		public static void VerifyWithMultipleParametersArgExpectationNotMet()
+		{
+			var rock = Rock.Create<IInterfaceMethodVoidTests>();
+			rock.Methods().MultipleParameters(3, "b");
+
+			var chunk = rock.Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
 			});
 		}
 	}
