@@ -9,7 +9,7 @@ namespace Rocks.Descriptors
 			Diagnostic.Create(new(CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
 				string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDescriptor.Message, 
 					type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
-				DescriptorConstants.Usage, DiagnosticSeverity.Info, true,
+				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
 					CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title)), type.Locations[0]);
 

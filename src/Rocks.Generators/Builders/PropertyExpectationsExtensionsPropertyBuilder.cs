@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders
 {
@@ -12,7 +13,7 @@ namespace Rocks.Builders
 			var propertyReturnValue = property.GetMethod!.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var thisParameter = $"this PropertyExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {propertyReturnValue}>";
+			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(ImmutableArray<IParameterSymbol>.Empty, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} Get{property.Name}({thisParameter}) =>");
@@ -28,7 +29,7 @@ namespace Rocks.Builders
 			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var thisParameter = $"this PropertyExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}>";
+			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} Set{property.Name}({thisParameter}, Arg<{propertyParameterValue}> value) =>");

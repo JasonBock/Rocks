@@ -81,7 +81,7 @@ namespace Rocks.Tests.Extensions
 
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single();
-			return (ITypeSymbol)model.GetDeclaredSymbol(typeSyntax)!;
+			return model.GetDeclaredSymbol(typeSyntax)!;
 		}
 	}
 }

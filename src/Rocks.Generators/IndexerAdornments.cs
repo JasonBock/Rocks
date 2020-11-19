@@ -1,17 +1,51 @@
-﻿namespace Rocks
+﻿using System;
+
+namespace Rocks
 {
-	public class IndexerAdornments<T>
+	public abstract class IndexerAdornments<T>
 		where T : class
 	{
-		public IndexerAdornments(HandlerInformation handler) => 
+		protected IndexerAdornments(HandlerInformation handler) =>
 			this.Handler = handler;
 
-		public IndexerAdornments<T> CallCount(uint expectedCallCount)
+		public HandlerInformation Handler { get; }
+	}
+
+	public class IndexerAdornments<T, TCallback>
+		: IndexerAdornments<T>
+		where T : class
+		where TCallback : Delegate
+	{
+		public IndexerAdornments(HandlerInformation handler)
+			: base(handler)
+		{ }
+
+		public IndexerAdornments<T, TCallback> CallCount(uint expectedCallCount)
 		{
 			this.Handler.SetExpectedCallCount(expectedCallCount);
 			return this;
 		}
 
-		public HandlerInformation Handler { get; }
+		public IndexerAdornments<T, TCallback> Callback(TCallback callback)
+		{
+			this.Handler.SetCallback(callback);
+			return this;
+		}
+	}
+
+	public sealed class IndexerAdornments<T, TCallback, TResult>
+		: IndexerAdornments<T, TCallback>
+		where T : class
+		where TCallback : Delegate
+	{
+		public IndexerAdornments(HandlerInformation<TResult> handler)
+			: base(handler)
+		{ }
+
+		public IndexerAdornments<T, TCallback, TResult> Returns(TResult returnValue)
+		{
+			((HandlerInformation<TResult>)this.Handler).ReturnValue = returnValue;
+			return this;
+		}
 	}
 }

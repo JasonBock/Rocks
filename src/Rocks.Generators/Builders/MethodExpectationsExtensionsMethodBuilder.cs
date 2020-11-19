@@ -1,7 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Rocks.Builders
@@ -17,9 +16,11 @@ namespace Rocks.Builders
 					string.Join(", ", method.Parameters.Select(_ => $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}")));
 
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)));
+
 			var adornmentsType = method.ReturnsVoid ? 
-				$"MethodAdornments<{mockTypeName}>" :
-				$"MethodAdornments<{mockTypeName}, {method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>";
+				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(method.Parameters)}>" :
+				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(method.Parameters, method.ReturnType)}, {method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}) =>");

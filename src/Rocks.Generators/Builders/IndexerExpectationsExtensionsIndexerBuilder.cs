@@ -13,7 +13,7 @@ namespace Rocks.Builders
 			var propertyReturnValue = property.GetMethod!.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var thisParameter = $"this IndexerExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {propertyReturnValue}>";
+			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var instanceParameters = string.Join(", ", thisParameter,
@@ -35,7 +35,7 @@ namespace Rocks.Builders
 			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var thisParameter = $"this IndexerExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var adornmentsType = $"IndexerAdornments<{mockTypeName}>";
+			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters)}> ";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var instanceParameters = string.Join(", ", thisParameter,

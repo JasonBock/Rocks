@@ -47,6 +47,10 @@ namespace Rocks
 			}
 		}
 
+		internal void SetCallback<TCallback>(TCallback callback)
+			where TCallback : Delegate => 
+				this.Method = callback;
+
 		internal void SetExpectedCallCount(uint expectedCallCount) => this.ExpectedCallCount = expectedCallCount;
 
 		internal IReadOnlyList<string> Verify()
@@ -67,7 +71,7 @@ namespace Rocks
 
 		public ImmutableArray<Arg> Expectations { get; }
 		internal uint ExpectedCallCount { get; private set; } = 1;
-		public Delegate? Method { get; }
+		public Delegate? Method { get; private set; }
 		internal ReadOnlyCollection<RaiseEventInformation> GetRaiseEvents() => this.raiseEvents.AsReadOnly();
 	}
 }
