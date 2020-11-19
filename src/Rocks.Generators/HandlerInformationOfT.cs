@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 
 namespace Rocks
 {
-#pragma warning disable CS8653, CS8601
 	[Serializable]
 	public sealed class HandlerInformation<T>
 		: HandlerInformation
@@ -16,5 +15,4 @@ namespace Rocks
 
 		public T? ReturnValue { get; internal set; }
    }
-#pragma warning restore CS8653, CS8061
 }

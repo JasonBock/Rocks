@@ -2,6 +2,7 @@
 using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Rocks.Builders
@@ -45,9 +46,29 @@ namespace Rocks.Builders
 
 		private static void BuildAdornments(IndentedTextWriter writer, MockInformation information, string prefix)
 		{
-			static void BuildRaisesMethod(IndentedTextWriter writer, string extensionPrefix, string typeToMockName, EventMockableResult result, string argsType)
+			static void BuildRaisesMethod(IndentedTextWriter writer, string extensionPrefix, string typeToMockName, EventMockableResult result, 
+				string argsType, bool hasReturn)
 			{
-				writer.WriteLine($"internal static {extensionPrefix}Adornments<{typeToMockName}> Raises{result.Value.Name}(this {extensionPrefix}Adornments<{typeToMockName}> self, {argsType} args)");
+				const string callbackName = "TCallback";
+				const string returnName = "TReturn";
+
+				var adornmentsTypes = new List<string> { typeToMockName, callbackName };
+				var raisesTypes = new List<string> { callbackName };
+
+				if(hasReturn)
+				{
+					adornmentsTypes.Add(returnName);
+					raisesTypes.Add(returnName);
+				}
+
+				var adornments = string.Join(", ", adornmentsTypes);
+				var raises = string.Join(", ", raisesTypes);
+
+				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
+				writer.Indent++;
+				writer.WriteLine($"where {callbackName} : Delegate");
+				writer.Indent--;
+
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{result.Value.Name}\", args));");
@@ -57,6 +78,7 @@ namespace Rocks.Builders
 			}
 
 			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+
 			writer.WriteLine($"internal static class {prefix}AdornmentsOf{typeToMockName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -72,7 +94,17 @@ namespace Rocks.Builders
 						.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				}
 
-				BuildRaisesMethod(writer, "Method", typeToMockName, result, argsType);
+				if (information.Methods.Any(_ => !_.Value.ReturnsVoid) ||
+					information.Properties.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
+				{
+					BuildRaisesMethod(writer, prefix, typeToMockName, result, argsType, true);
+				}
+
+				if (information.Methods.Any(_ => _.Value.ReturnsVoid) ||
+					information.Properties.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
+				{
+					BuildRaisesMethod(writer, prefix, typeToMockName, result, argsType, false);
+				}
 			}
 
 			writer.Indent--;

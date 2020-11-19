@@ -11,11 +11,28 @@ using System.Threading.Tasks;
 
 namespace Rocks.Sketchpad
 {
+	public class BaseType<TCallback>
+		where TCallback : Delegate
+	{
+		public int Value { get; set; }
+	}
+
+	public static class BaseTypeExtensions
+	{
+		public static BaseType<TCallback> DoSomething<TCallback>(this BaseType<TCallback> self)
+			where TCallback : Delegate
+		{
+			self.Value++;
+			return self;
+		}
+	}
+
 	public static class Program
 	{
 		static void Main() =>
+			Program.TestExtensions();
 			//BenchmarkRunner.Run<GenericArgumentsTests>();
-			Demo.Demonstrate();
+			//Demo.Demonstrate();
 			//Program.HandleVirtualOnClass();
 			//Program.HandleFoo();
 			//Program.SpanTypeTests();
@@ -24,6 +41,13 @@ namespace Rocks.Sketchpad
 		//	await ExpressionEvaluation.RunEvaluationsAsync();
 
 		public struct MyThing<T> { }
+
+		private static void TestExtensions()
+		{
+			var b = new BaseType<Func<int>>();
+			var c = b.DoSomething();
+			Console.Out.WriteLine(c.Value);
+		}
 
 		private static void SpanTypeTests()
 		{

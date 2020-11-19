@@ -2,23 +2,13 @@
 
 namespace Rocks
 {
-	public abstract class IndexerAdornments<T>
-		where T : class
-	{
-		protected IndexerAdornments(HandlerInformation handler) =>
-			this.Handler = handler;
-
-		public HandlerInformation Handler { get; }
-	}
-
 	public class IndexerAdornments<T, TCallback>
-		: IndexerAdornments<T>
+		: IAdornments<HandlerInformation>
 		where T : class
 		where TCallback : Delegate
 	{
-		public IndexerAdornments(HandlerInformation handler)
-			: base(handler)
-		{ }
+		public IndexerAdornments(HandlerInformation handler) =>
+			this.Handler = handler;
 
 		public IndexerAdornments<T, TCallback> CallCount(uint expectedCallCount)
 		{
@@ -31,21 +21,36 @@ namespace Rocks
 			this.Handler.SetCallback(callback);
 			return this;
 		}
+
+		public HandlerInformation Handler { get; }
 	}
 
 	public sealed class IndexerAdornments<T, TCallback, TResult>
-		: IndexerAdornments<T, TCallback>
+		: IAdornments<HandlerInformation<TResult>>
 		where T : class
 		where TCallback : Delegate
 	{
-		public IndexerAdornments(HandlerInformation<TResult> handler)
-			: base(handler)
-		{ }
+		public IndexerAdornments(HandlerInformation<TResult> handler) =>
+			this.Handler = handler;
+
+		public IndexerAdornments<T, TCallback, TResult> CallCount(uint expectedCallCount)
+		{
+			this.Handler.SetExpectedCallCount(expectedCallCount);
+			return this;
+		}
+
+		public IndexerAdornments<T, TCallback, TResult> Callback(TCallback callback)
+		{
+			this.Handler.SetCallback(callback);
+			return this;
+		}
 
 		public IndexerAdornments<T, TCallback, TResult> Returns(TResult returnValue)
 		{
-			((HandlerInformation<TResult>)this.Handler).ReturnValue = returnValue;
+			this.Handler.ReturnValue = returnValue;
 			return this;
 		}
+
+		public HandlerInformation<TResult> Handler { get; }
 	}
 }
