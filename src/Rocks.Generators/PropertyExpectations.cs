@@ -1,6 +1,6 @@
 ﻿namespace Rocks
 {
-	public sealed class PropertyExpectations<T>
+	public class PropertyExpectations<T>
 		: ExpectationsWrapper<T>
 		where T : class
 	{

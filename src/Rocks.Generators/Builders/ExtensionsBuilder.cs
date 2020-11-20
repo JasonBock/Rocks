@@ -37,6 +37,26 @@ namespace Rocks.Builders
 				writer.WriteLine($"new PropertyExpectations<{typeToMockName}>(self);");
 				writer.Indent--;
 				writer.WriteLine();
+
+				if (information.Properties.Any(_ => !_.Value.IsIndexer && 
+					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
+				{
+					writer.WriteLine($"internal static PropertyGetterExpectations<{typeToMockName}> Getters(this PropertyExpectations<{typeToMockName}> self) =>");
+					writer.Indent++;
+					writer.WriteLine($"new PropertyGetterExpectations<{typeToMockName}>(self.Expectations);");
+					writer.Indent--;
+					writer.WriteLine();
+				}
+
+				if (information.Properties.Any(_ => !_.Value.IsIndexer &&
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				{
+					writer.WriteLine($"internal static PropertySetterExpectations<{typeToMockName}> Setters(this PropertyExpectations<{typeToMockName}> self) =>");
+					writer.Indent++;
+					writer.WriteLine($"new PropertySetterExpectations<{typeToMockName}>(self.Expectations);");
+					writer.Indent--;
+					writer.WriteLine();
+				}
 			}
 
 			if (information.Properties.Any(_ => _.Value.IsIndexer))
@@ -46,6 +66,26 @@ namespace Rocks.Builders
 				writer.WriteLine($"new IndexerExpectations<{typeToMockName}>(self);");
 				writer.Indent--;
 				writer.WriteLine();
+
+				if (information.Properties.Any(_ => _.Value.IsIndexer &&
+					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
+				{
+					writer.WriteLine($"internal static IndexerGetterExpectations<{typeToMockName}> Getters(this IndexerExpectations<{typeToMockName}> self) =>");
+					writer.Indent++;
+					writer.WriteLine($"new IndexerGetterExpectations<{typeToMockName}>(self.Expectations);");
+					writer.Indent--;
+					writer.WriteLine();
+				}
+
+				if (information.Properties.Any(_ => _.Value.IsIndexer &&
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				{
+					writer.WriteLine($"internal static IndexerSetterExpectations<{typeToMockName}> Setters(this IndexerExpectations<{typeToMockName}> self) =>");
+					writer.Indent++;
+					writer.WriteLine($"new IndexerSetterExpectations<{typeToMockName}>(self.Expectations);");
+					writer.Indent--;
+					writer.WriteLine();
+				}
 			}
 
 			if (information.Constructors.Length > 0)

@@ -101,7 +101,7 @@ namespace Rocks.Builders
 				}
 
 				if (information.Methods.Any(_ => _.Value.ReturnsVoid) ||
-					information.Properties.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
+					information.Properties.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 				{
 					BuildRaisesMethod(writer, prefix, typeToMockName, result, argsType, false);
 				}

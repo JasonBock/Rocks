@@ -10,9 +10,9 @@ namespace Rocks.Builders
 		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
 		{
 			var property = result.Value;
-			var propertyReturnValue = property.GetMethod!.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var thisParameter = $"this IndexerExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
+			var propertyReturnValue = property.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var thisParameter = $"this IndexerGetterExpectations<{mockTypeName}> self";
 			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -22,7 +22,7 @@ namespace Rocks.Builders
 					return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
 				})));
 
-			writer.WriteLine($"internal static {returnValue} GetThis({instanceParameters}) =>");
+			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 			writer.Indent++;
 
 			writer.WriteLine($"{newAdornments}(self.Add<{propertyReturnValue}>({memberIdentifier}, new List<Arg> {{ {string.Join(", ", property.GetMethod!.Parameters.Select(_ => _.Name))} }}));");
@@ -32,10 +32,9 @@ namespace Rocks.Builders
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
 		{
 			var property = result.Value;
-			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var thisParameter = $"this IndexerExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
 			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters)}> ";
+			var thisParameter = $"this IndexerSetterExpectations<{mockTypeName}> self";
+			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var instanceParameters = string.Join(", ", thisParameter,
@@ -44,25 +43,28 @@ namespace Rocks.Builders
 					return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
 				})));
 
-			writer.WriteLine($"internal static {returnValue} SetThis({instanceParameters}) =>");
+			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 			writer.Indent++;
 
 			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {string.Join(", ", property.SetMethod!.Parameters.Select(_ => _.Name))} }}));");
 			writer.Indent--;
 		}
 
-		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result)
+		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
 		{
 			var memberIdentifier = result.MemberIdentifier;
 
-			if(result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+			if(accessor == PropertyAccessor.Get)
 			{
 				IndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, result, memberIdentifier);
-				memberIdentifier++;
 			}
-
-			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+			else
 			{
+				if (result.Accessors == PropertyAccessor.GetAndSet)
+				{
+					memberIdentifier++;
+				}
+
 				IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier);
 			}
 		}

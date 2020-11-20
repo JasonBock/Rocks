@@ -7,15 +7,13 @@ namespace Rocks
 	public abstract class ExpectationsWrapper<T>
 		where T : class
 	{
-		private readonly Expectations<T> expectations;
-
 		protected ExpectationsWrapper(Expectations<T> expectations) =>
-			this.expectations = expectations;
+			this.Expectations = expectations;
 
 		public HandlerInformation Add(int memberIdentifier, List<Arg> arguments)
 		{
 			var information = new HandlerInformation(arguments.ToImmutableArray());
-			this.expectations.Handlers.AddOrUpdate(memberIdentifier,
+			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,
 				() => new List<HandlerInformation> { information }, _ => _.Add(information));
 			return information;
 		}
@@ -23,9 +21,11 @@ namespace Rocks
 		public HandlerInformation<TReturn> Add<TReturn>(int memberIdentifier, List<Arg> arguments)
 		{
 			var information = new HandlerInformation<TReturn>(arguments.ToImmutableArray());
-			this.expectations.Handlers.AddOrUpdate(memberIdentifier,
+			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,
 				() => new List<HandlerInformation> { information }, _ => _.Add(information));
 			return information;
 		}
+
+		public Expectations<T> Expectations { get; }
 	}
 }

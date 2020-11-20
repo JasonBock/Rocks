@@ -20,7 +20,10 @@ namespace MockTests
 {
 	public interface IMock 
 	{ 
-		void Foo();
+		int this[int a] { set; }
+		int this[int a, string b] { set; }
+
+		event EventHandler MyEvent;
 	}
 
 	public static class Test

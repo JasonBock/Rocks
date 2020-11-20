@@ -1,0 +1,247 @@
+﻿using NUnit.Framework;
+using System;
+
+namespace Rocks.IntegrationTests
+{
+	public interface IInterfaceIndexerGetterSetterTests
+	{
+		int this[int a] { get; set; }
+		int this[int a, string b] { get; set; }
+	}
+
+	public interface IInterfaceIndexerGetterTests
+	{
+		int this[int a] { get; }
+		int this[int a, string b] { get; }
+
+		event EventHandler MyEvent;
+	}
+
+	public interface IInterfaceIndexerSetterTests
+	{
+#pragma warning disable CA1044 // Properties should not be write only
+		int this[int a] { set; }
+		int this[int a, string b] { set; }
+#pragma warning restore CA1044 // Properties should not be write only
+
+		event EventHandler MyEvent;
+	}
+
+	public static class InterfaceIndexerTests
+	{
+		[Test]
+		public static void MockWithOneParameterGetterAndSetter()
+		{
+			var rock = Rock.Create<IInterfaceIndexerGetterSetterTests>();
+			rock.Indexers().Getters().This(3);
+			rock.Indexers().Setters().This(3, 4);
+
+			var chunk = rock.Instance();
+			var value = chunk[3];
+			chunk[3] = 4;
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterGetter()
+		{
+			var rock = Rock.Create<IInterfaceIndexerGetterTests>();
+			rock.Indexers().Getters().This(3);
+
+			var chunk = rock.Instance();
+			var value = chunk[3];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterGetterRaiseEvent()
+		{
+			var rock = Rock.Create<IInterfaceIndexerGetterTests>();
+			rock.Indexers().Getters().This(3).RaisesMyEvent(EventArgs.Empty);
+
+			var wasEventRaised = false;
+			var chunk = rock.Instance();
+			chunk.MyEvent += (s, e) => wasEventRaised = true;
+			var value = chunk[3];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(wasEventRaised, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterGetterCallback()
+		{
+			var wasCallbackInvoked = false;
+			var rock = Rock.Create<IInterfaceIndexerGetterTests>();
+			rock.Indexers().Getters().This(3).Callback(_ =>
+			{
+				wasCallbackInvoked = true;
+				return _;
+			});
+
+			var chunk = rock.Instance();
+			var value = chunk[3];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(3));
+				Assert.That(wasCallbackInvoked, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterGetterRaiseEventWithCallback()
+		{
+			var wasCallbackInvoked = false;
+			var rock = Rock.Create<IInterfaceIndexerGetterTests>();
+			rock.Indexers().Getters().This(3).RaisesMyEvent(EventArgs.Empty)
+				.Callback(_ =>
+				{
+					wasCallbackInvoked = true;
+					return _;
+				});
+
+			var wasEventRaised = false;
+			var chunk = rock.Instance();
+			chunk.MyEvent += (s, e) => wasEventRaised = true;
+			var value = chunk[3];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(3));
+				Assert.That(wasEventRaised, Is.True);
+				Assert.That(wasCallbackInvoked, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterGetterMultipleCalls()
+		{
+			var rock = Rock.Create<IInterfaceIndexerGetterTests>();
+			rock.Indexers().Getters().This(3).CallCount(2);
+
+			var chunk = rock.Instance();
+			var value = chunk[3];
+			value = chunk[3];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterSetter()
+		{
+			var rock = Rock.Create<IInterfaceIndexerSetterTests>();
+			rock.Indexers().Setters().This(3, 4);
+
+			var chunk = rock.Instance();
+			chunk[3] = 4;
+
+			rock.Verify();
+		}
+
+		[Test]
+		public static void MockWithOneParameterSetterRaiseEvent()
+		{
+			var rock = Rock.Create<IInterfaceIndexerSetterTests>();
+			rock.Indexers().Setters().This(3, 4).RaisesMyEvent(EventArgs.Empty);
+
+			var wasEventRaised = false;
+			var chunk = rock.Instance();
+			chunk.MyEvent += (s, e) => wasEventRaised = true;
+			chunk[3] = 4;
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(wasEventRaised, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterSetterCallback()
+		{
+			var wasCallbackInvoked = false;
+			var rock = Rock.Create<IInterfaceIndexerSetterTests>();
+			rock.Indexers().Setters().This(3, 4).Callback((a, value) =>
+			{
+				wasCallbackInvoked = true;
+			});
+
+			var chunk = rock.Instance();
+			chunk[3] = 4;
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(wasCallbackInvoked, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterSetterRaiseEventWithCallback()
+		{
+			var wasCallbackInvoked = false;
+			var rock = Rock.Create<IInterfaceIndexerSetterTests>();
+			rock.Indexers().Setters().This(3, 4).RaisesMyEvent(EventArgs.Empty)
+				.Callback(_ =>
+				{
+					wasCallbackInvoked = true;
+					return _;
+				});
+
+			var wasEventRaised = false;
+			var chunk = rock.Instance();
+			chunk.MyEvent += (s, e) => wasEventRaised = true;
+			chunk[3] = 4;
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(wasEventRaised, Is.True);
+				Assert.That(wasCallbackInvoked, Is.True);
+			});
+		}
+
+		[Test]
+		public static void MockWithOneParameterSetterMultipleCalls()
+		{
+			var rock = Rock.Create<IInterfaceIndexerSetterTests>();
+			rock.Indexers().Setters().This(3, 4).CallCount(2);
+
+			var chunk = rock.Instance();
+			chunk[3] = 4;
+			chunk[3] = 4;
+
+			rock.Verify();
+		}
+	}
+}

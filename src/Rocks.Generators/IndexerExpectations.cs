@@ -1,6 +1,6 @@
 ﻿namespace Rocks
 {
-	public sealed class IndexerExpectations<T>
+	public class IndexerExpectations<T>
 		: ExpectationsWrapper<T>
 		where T : class
 	{
