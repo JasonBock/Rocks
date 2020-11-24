@@ -43,7 +43,7 @@ namespace Rocks
 
 			foreach (var raiseEvent in this.raiseEvents)
 			{
-				target.Raise(raiseEvent.Name, raiseEvent.Args);
+				target.Raise(raiseEvent.FieldName, raiseEvent.Args);
 			}
 		}
 

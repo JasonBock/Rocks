@@ -27,6 +27,8 @@ namespace Rocks.Extensions
 			return failures.AsReadOnly();
 		}
 
+		// TODO: Why is this on "object"? Seems wrong. The call to Raise()
+		// won't occur unless the mock object implements IMockWithEvents
 		public static void Raise(this object @this, string eventName, EventArgs args)
 		{
 			if (@this is IMockWithEvents mock)

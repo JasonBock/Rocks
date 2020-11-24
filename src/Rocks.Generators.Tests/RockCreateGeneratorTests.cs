@@ -21,14 +21,16 @@ namespace MockTests
 	public interface IA
 	{
 		void Foo();
-		int Bar(string a);
+		int Bar { get; }
+		string this[Guid a] { get; }
 		event EventHandler MyEvent;
 	}
 
 	public interface IB
 	{
 		void Foo();
-		int Bar(string a);
+		int Bar { get; }
+		string this[Guid a] { get; }
 		event EventHandler MyEvent;
 	}
 
@@ -42,7 +44,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>(ExplicitlyImplementMembers.Yes);
+			var rock = Rock.Create<IMock>();
 		}
 	}
 }");

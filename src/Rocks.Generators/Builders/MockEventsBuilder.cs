@@ -7,9 +7,34 @@ namespace Rocks.Builders
 {
 	internal static class MockEventsBuilder
 	{
+		private static void BuildImplementation(IndentedTextWriter writer, EventMockableResult @event)
+		{
+			var isOverride = @event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
+
+			writer.WriteLine(
+				$"public {isOverride}event {@event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Value.Name};");
+		}
+
+		private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
+		{
+			var eventType = @event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var name = $"{@event.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.{@event.Value.Name}";
+			var fieldName = $"{@event.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}_{@event.Value.Name}";
+
+			writer.WriteLine($"private {eventType}? {fieldName};");
+			writer.WriteLine($"event {eventType}? {name}");
+			writer.WriteLine("{");
+			writer.Indent++;
+			writer.WriteLine($"add => this.{fieldName} += value;");
+			writer.WriteLine($"remove => this.{fieldName} -= value;");
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+
 		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events)
 		{
 			writer.WriteLine("#pragma warning disable CS0067");
+			
 			foreach(var @event in events)
 			{
 				if(@event.MustBeImplemented == MustBeImplemented.Yes)
@@ -21,19 +46,28 @@ namespace Rocks.Builders
 						writer.WriteLine(attributes.GetDescription());
 					}
 
-					writer.WriteLine(
-						$"public {(@event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}event {@event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Value.Name};");
+					if(@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+					{
+						MockEventsBuilder.BuildImplementation(writer, @event);
+					}
+					else
+					{
+						MockEventsBuilder.BuildExplicitImplementation(writer, @event);
+					}
+
+					writer.WriteLine();
 				}
 			}
+
 			writer.WriteLine("#pragma warning restore CS0067");
 			writer.WriteLine();
 
-			writer.WriteLine("void IMockWithEvents.Raise(string eventName, EventArgs args)");
+			writer.WriteLine("void IMockWithEvents.Raise(string fieldName, EventArgs args)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
 			writer.WriteLine("var thisType = this.GetType();");
-			writer.WriteLine("var eventDelegate = (MulticastDelegate)thisType.GetField(eventName, ");
+			writer.WriteLine("var eventDelegate = (MulticastDelegate)thisType.GetField(fieldName, ");
 			writer.Indent++;
 			writer.WriteLine("BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(this)!;");
 			writer.Indent--;

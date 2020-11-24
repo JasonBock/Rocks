@@ -24,6 +24,7 @@ namespace Rocks.Builders
 			MockMethodExtensionsBuilder.Build(writer, information);
 			MockPropertyExtensionsBuilder.Build(writer, information);
 			MockConstructorExtensionsBuilder.Build(writer, information);
+			MockCreateBuilder.Build(writer, information);
 
 			writer.Indent--;
 			writer.WriteLine("}");

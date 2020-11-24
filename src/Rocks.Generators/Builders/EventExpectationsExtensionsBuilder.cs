@@ -54,15 +54,21 @@ namespace Rocks.Builders
 
 				var adornments = string.Join(", ", adornmentsTypes);
 				var raises = string.Join(", ", raisesTypes);
+				var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
+					$"On{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}";
 
-				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
+				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
 				writer.Indent++;
 				writer.WriteLine($"where {callbackName} : Delegate");
 				writer.Indent--;
 
 				writer.WriteLine("{");
 				writer.Indent++;
-				writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{result.Value.Name}\", args));");
+
+				var fieldName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? result.Value.Name :
+					$"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}_{result.Value.Name}";
+
+				writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{fieldName}\", args));");
 				writer.WriteLine($"return self;");
 				writer.Indent--;
 				writer.WriteLine("}");

@@ -23,44 +23,6 @@ namespace Rocks.IntegrationTests
 		: IExplicitInterfaceImplementationTestsOne, IExplicitInterfaceImplementationTestsTwo
 	{ }
 
-	public class X : IExplicitInterfaceImplementationTests
-	{
-		public int this[int x]
-		{
-			get => 0;
-			set { }
-		}
-
-		public int B { get; set; }
-
-		public event EventHandler? C;
-
-		public void A() { }
-		//void IExplicitInterfaceImplementationTestsOne.A() => throw new NotImplementedException();
-		//void IExplicitInterfaceImplementationTestsTwo.A() => throw new NotImplementedException();
-	}
-
-	public interface IA
-	{
-		void Foo();
-	}
-
-	public interface IB
-	{
-		void Foo();
-	}
-
-	public interface IC
-		: IA, IB
-	{ }
-
-	public class C : IC
-	{
-		void IA.Foo() { }
-
-		void IB.Foo() { }
-	}
-
 	public static class ExplicitInterfaceImplementationTests
 	{
 		[Test]
