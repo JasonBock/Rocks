@@ -18,19 +18,31 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock 
-	{ 
-		int this[int a] { set; }
-		int this[int a, string b] { set; }
-
+	public interface IA
+	{
+		void Foo();
+		int Bar(string a);
 		event EventHandler MyEvent;
+	}
+
+	public interface IB
+	{
+		void Foo();
+		int Bar(string a);
+		event EventHandler MyEvent;
+	}
+
+	public interface IMock 
+		: IA, IB
+	{ 
+		void Quux();
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<IMock>(ExplicitlyImplementMembers.Yes);
 		}
 	}
 }");

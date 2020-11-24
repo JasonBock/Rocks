@@ -11,42 +11,33 @@ namespace Rocks.Builders
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			var isFirst = true;
-
-			if (information.Methods.Length > 0)
+			if (information.Events.Length > 0)
 			{
-				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
-				isFirst = false;
-			}
-
-			if (information.Properties.Length > 0)
-			{
-				if (information.Properties.Any(_ => !_.Value.IsIndexer))
+				if (information.Methods.Length > 0)
 				{
-					if(!isFirst)
-					{
-						writer.WriteLine();
-						isFirst = false;
-					}
-
-					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
+					writer.WriteLine();
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
 				}
-				if (information.Properties.Any(_ => _.Value.IsIndexer))
+
+				if (information.Properties.Length > 0)
 				{
-					if (!isFirst)
+					if (information.Properties.Any(_ => !_.Value.IsIndexer))
 					{
 						writer.WriteLine();
-						isFirst = false;
+						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
 					}
-
-					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
+					if (information.Properties.Any(_ => _.Value.IsIndexer))
+					{
+						writer.WriteLine();
+						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
+					}
 				}
 			}
 		}
 
 		private static void BuildAdornments(IndentedTextWriter writer, MockInformation information, string prefix)
 		{
-			static void BuildRaisesMethod(IndentedTextWriter writer, string extensionPrefix, string typeToMockName, EventMockableResult result, 
+			static void BuildRaisesMethod(IndentedTextWriter writer, string extensionPrefix, string typeToMockName, EventMockableResult result,
 				string argsType, bool hasReturn)
 			{
 				const string callbackName = "TCallback";
@@ -55,7 +46,7 @@ namespace Rocks.Builders
 				var adornmentsTypes = new List<string> { typeToMockName, callbackName };
 				var raisesTypes = new List<string> { callbackName };
 
-				if(hasReturn)
+				if (hasReturn)
 				{
 					adornmentsTypes.Add(returnName);
 					raisesTypes.Add(returnName);

@@ -5,28 +5,21 @@ using System.Linq;
 
 namespace Rocks.Builders
 {
-	internal static class MethodExpectationsExtensionsBuilder
+	internal static class MockMethodExtensionsBuilder
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			if (information.Methods.Length > 0)
+			if(information.Methods.Length > 0)
 			{
-				writer.WriteLine();
-				var typeToMock = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+				var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
 				if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
-					writer.WriteLine($"internal static class MethodExpectationsOf{typeToMock}Extensions");
-					writer.WriteLine("{");
+					writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
 					writer.Indent++;
-
-					foreach (var result in information.Methods.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
-					{
-						MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
-					}
-
+					writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
 					writer.Indent--;
-					writer.WriteLine("}");
+					writer.WriteLine();
 				}
 
 				if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
@@ -36,17 +29,11 @@ namespace Rocks.Builders
 						.GroupBy(_ => _.Value.ContainingType))
 					{
 						var containingTypeName = typeGroup.Key.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-						writer.WriteLine($"internal static class ExplicitMethodExpectationsOf{typeToMock}For{containingTypeName}Extensions");
-						writer.WriteLine("{");
+						writer.WriteLine($"internal static ExplicitMethodExpectations<{typeToMockName}, {containingTypeName }> ExplicitMethodsFor{containingTypeName}(this Expectations<{typeToMockName}> self) =>");
 						writer.Indent++;
-
-						foreach (var result in typeGroup)
-						{
-							MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
-						}
-
+						writer.WriteLine($"new ExplicitMethodExpectations<{typeToMockName}, {containingTypeName}> (self);");
 						writer.Indent--;
-						writer.WriteLine("}");
+						writer.WriteLine();
 					}
 				}
 			}

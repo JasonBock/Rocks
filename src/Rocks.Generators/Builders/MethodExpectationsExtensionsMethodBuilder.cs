@@ -10,12 +10,16 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
 		{
 			var method = result.Value;
-			var thisParameter = $"this MethodExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self";
+			var isExplicitImplementation = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
+			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var containingTypeName = method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			
+			var thisParameter = isExplicitImplementation ?
+				$"this ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> self" :
+				$"this MethodExpectations<{mockTypeName}> self";
 			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 				string.Join(", ", thisParameter,
 					string.Join(", ", method.Parameters.Select(_ => $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}")));
-
-			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)));
 
 			var adornmentsType = method.ReturnsVoid ? 

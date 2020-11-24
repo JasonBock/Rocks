@@ -15,7 +15,8 @@ namespace Rocks
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
-			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, ConfigurationValues configurationValues)
+			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, 
+			ConfigurationValues configurationValues)
 		{
 			var information = new MockInformation(typeToMock, containingAssemblySymbol, model);
 

@@ -8,11 +8,11 @@ namespace Rocks.Builders
 {
 	internal static class MockIndexerBuilder
 	{
-		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
+		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			var method = result.Value.GetMethod!;
 			var methodException =
-				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("get");
 			writer.WriteLine("{");
@@ -72,11 +72,11 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
+		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			var method = result.Value.SetMethod!;
 			var methodException =
-				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("set");
 			writer.WriteLine("{");
@@ -140,6 +140,8 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
 			var attributes = result.Value.GetAttributes();
+			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
 
 			if (attributes.Length > 0)
 			{
@@ -150,17 +152,21 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters)}"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters)}"")]");
 			}
 
-			var indexerSignature = MockIndexerBuilder.GetSignature(result.Value.Parameters);
-			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {indexerSignature}");
+			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				"public " : string.Empty;
+			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
+			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.Parameters)}";
+
+			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {indexerSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -168,13 +174,13 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents);
+				MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 				memberIdentifier++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents);
+				MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			}
 
 			writer.Indent--;

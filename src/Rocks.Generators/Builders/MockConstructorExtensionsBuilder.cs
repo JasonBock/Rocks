@@ -5,10 +5,26 @@ using System.Linq;
 
 namespace Rocks.Builders
 {
-	internal static class ExpectationsExtensionsConstructorBuilder
+	internal static class MockConstructorExtensionsBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock,
-			ImmutableArray<IParameterSymbol> parameters)
+		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		{
+			if (information.Constructors.Length > 0)
+			{
+				foreach (var constructor in information.Constructors)
+				{
+					MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+						constructor.Parameters);
+				}
+			}
+			else
+			{
+				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+					ImmutableArray<IParameterSymbol>.Empty);
+			}
+		}
+
+		private static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock, ImmutableArray<IParameterSymbol> parameters)
 		{
 			var instanceParameters = parameters.Length == 0 ?
 				$"this Expectations<{typeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> self" :

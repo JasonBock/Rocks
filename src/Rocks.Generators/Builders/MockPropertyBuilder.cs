@@ -6,7 +6,7 @@ namespace Rocks.Builders
 {
 	internal static class MockPropertyBuilder
 	{
-		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
+		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			writer.WriteLine("get");
 			writer.WriteLine("{");
@@ -37,12 +37,12 @@ namespace Rocks.Builders
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for get_{result.Value.Name}())"");");
+			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for {explicitTypeName}get_{result.Value.Name}())"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 
-		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents)
+		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			writer.WriteLine("set");
 			writer.WriteLine("{");
@@ -76,7 +76,7 @@ namespace Rocks.Builders
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for set_{result.Value.Name}({{value}})"");");
+			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{result.Value.Name}({{value}})"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -101,7 +101,7 @@ namespace Rocks.Builders
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for set_{result.Value.Name}({{value}})"");");
+			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{result.Value.Name}({{value}})"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -119,19 +119,25 @@ namespace Rocks.Builders
 			}
 
 			var memberIdentifierAttribute = result.MemberIdentifier;
+			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""get_{result.Value.Name}()"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}get_{result.Value.Name}()"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""set_{result.Value.Name}(value)"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}set_{result.Value.Name}(value)"")]");
 			}
 
-			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {result.Value.Name}");
+			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				"public " : string.Empty;
+			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
+
+			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}{result.Value.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -139,13 +145,13 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents);
+				MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 				memberIdentifier++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents);
+				MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			}
 
 			writer.Indent--;

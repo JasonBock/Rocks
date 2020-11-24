@@ -9,8 +9,7 @@ namespace Rocks
 {
 	internal sealed class MockInformation
 	{
-		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, 
-			SemanticModel model)
+		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, SemanticModel model)
 		{
 			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model) = 
 				(typeToMock, containingAssemblyOfInvocationSymbol, model);
@@ -27,6 +26,7 @@ namespace Rocks
 			}
 
 			// TODO: Could we figure out if TreatWarningsAsErrors is true?
+			// Maybe the same way we figure out the .editorconfig settings...
 			var attributes = this.TypeToMock.GetAttributes();
 			var obsoleteAttribute = this.Model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
 
@@ -39,9 +39,12 @@ namespace Rocks
 			var memberIdentifier = 0u;
 
 			this.Constructors = this.TypeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
-			this.Methods = this.TypeToMock.GetMockableMethods(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
-			this.Properties = this.TypeToMock.GetMockableProperties(this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
-			this.Events = this.TypeToMock.GetMockableEvents(this.ContainingAssemblyOfInvocationSymbol);
+			this.Methods = this.TypeToMock.GetMockableMethods(
+				this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
+			this.Properties = this.TypeToMock.GetMockableProperties(
+				this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
+			this.Events = this.TypeToMock.GetMockableEvents(
+				this.ContainingAssemblyOfInvocationSymbol);
 
 			if (this.Methods.Length == 0 && this.Properties.Length == 0)
 			{

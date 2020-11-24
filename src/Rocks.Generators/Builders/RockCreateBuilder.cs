@@ -56,9 +56,10 @@ namespace Rocks
 
 			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
-			ExtensionsBuilder.Build(indentWriter, this.information, namespaces);
+			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces);
+			MockCreateBuilder.Build(indentWriter, this.information);
 
-			foreach(var @namespace in namespaces.Where(_ => !_.IsGlobalNamespace))
+			foreach (var @namespace in namespaces.Where(_ => !_.IsGlobalNamespace))
 			{
 				usings.Add($"using {@namespace.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)};");
 			}

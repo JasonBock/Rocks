@@ -10,17 +10,21 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var methodDescription =
-				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"))})";
+			var parametersDescription = string.Join(", ", 
+				method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"));
+			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
+				$"{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}." : string.Empty;
+			var methodDescription = $"void {explicitTypeNameDescription}{method.Name}({parametersDescription})";
+
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
-				$"void {method.Name}({methodParameters})";
+				$"void {explicitTypeNameDescription}{method.Name}({methodParameters})";
 			var methodException =
-				$"void {method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
+				$"void {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
 			var attributes = method.GetAttributes();
 
@@ -30,7 +34,9 @@ namespace Rocks.Builders
 			}
 
 			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
-			writer.WriteLine($"public {(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
+			var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				"public " : string.Empty;
+			writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

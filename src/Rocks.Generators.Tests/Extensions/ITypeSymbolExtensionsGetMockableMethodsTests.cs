@@ -66,6 +66,9 @@ public interface {targetTypeName}
 			});
 		}
 
+		// TODO: This is incorrect.
+		// First, the inheriting interface should declare the method as "new void Bar()"
+		// Second, the number of methods should be 1, not 2
 		[Test]
 		public static void GetMockableMethodsWhenInterfaceHasBaseInterfaceWithMatchingMethod()
 		{
@@ -79,7 +82,7 @@ $@"public interface {baseTypeName}
 }}
 
 public interface {targetTypeName} 
-	: Base
+	: {baseTypeName}
 {{ 
 	void {targetMethodName}();
 }}";
@@ -97,7 +100,10 @@ public interface {targetTypeName}
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
-
+		
+		// TODO: This is incorrect.
+		// There should be 2 methods found, Bar() and Foo(), not 3.
+		// Neither requires overrides or explicit interface implementation
 		[Test]
 		public static void GetMockableMethodsWhenInterfaceHasBaseInterfacesWithMatchingMethods()
 		{
@@ -130,13 +136,55 @@ public interface {targetTypeName}
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(methods.Length, Is.EqualTo(3));
+				Assert.That(methods.Length, Is.EqualTo(2));
 				var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 				Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var baseTwoMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseTwoTypeName);
 				Assert.That(baseTwoMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+			});
+		}
+
+		// TODO: This is incorrect.
+		// There should be 2 methods found, Bar() and Foo(), not 3.
+		// Neither requires overrides or explicit interface implementation
+		[Test]
+		public static void GetMockableMethodsWhenInterfaceHasExplicitInterfaceImplementation()
+		{
+			const string baseOneTypeName = "BaseOne";
+			const string baseTwoTypeName = "BaseTwo";
+			const string baseMethodName = "Foo";
+			const string targetTypeName = "Target";
+
+			var code =
+$@"public interface {baseOneTypeName}
+{{
+	void {baseMethodName}();
+}}
+
+public interface {baseTwoTypeName}
+{{
+	void {baseMethodName}();
+}}
+
+public interface {targetTypeName} 
+	: {baseOneTypeName}, {baseTwoTypeName}
+{{ }}";
+
+			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+			var memberIdentifier = 0u;
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(methods.Length, Is.EqualTo(2));
+				var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
+				Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(baseOneMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
+				var baseTwoMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseTwoTypeName);
+				Assert.That(baseTwoMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(baseTwoMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 			});
 		}
 

@@ -37,16 +37,17 @@ namespace Rocks.Builders
 			writer.WriteLine();
 
 			var memberIdentifier = 0u;
+			var raiseEvents = information.Events.Length > 0;
 
-			foreach(var method in information.Methods)
+			foreach (var method in information.Methods)
 			{
 				if(method.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, method, information.Events.Length > 0);
+					MockMethodVoidBuilder.Build(writer, method, raiseEvents);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, method, information.Events.Length > 0);
+					MockMethodValueBuilder.Build(writer, method, raiseEvents);
 				}
 
 				memberIdentifier++;
@@ -54,12 +55,12 @@ namespace Rocks.Builders
 
 			foreach(var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 			{
-				MockPropertyBuilder.Build(writer, property, information.Events.Length > 0);
+				MockPropertyBuilder.Build(writer, property, raiseEvents);
 			}
 
 			foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
 			{
-				MockIndexerBuilder.Build(writer, indexer, information.Events.Length > 0);
+				MockIndexerBuilder.Build(writer, indexer, raiseEvents);
 			}
 
 			if (information.Events.Length > 0)

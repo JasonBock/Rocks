@@ -4,11 +4,14 @@ namespace Rocks.Extensions
 {
 	public sealed class EventMockableResult
 	{
-		public EventMockableResult(IEventSymbol value, MustBeImplemented mustBeImplemented, RequiresOverride requiresOverride) =>
-			(this.Value, this.RequiresOverride, this.MustBeImplemented) =
-				(value, requiresOverride, mustBeImplemented);
+		public EventMockableResult(IEventSymbol value,
+			RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
+			MustBeImplemented mustBeImplemented, RequiresOverride requiresOverride) =>
+			(this.Value, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MustBeImplemented) =
+				(value, requiresExplicitInterfaceImplementation, requiresOverride, mustBeImplemented);
 
 		public MustBeImplemented MustBeImplemented { get; }
+		public RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
 		public RequiresOverride RequiresOverride { get; }
 		public IEventSymbol Value { get; }
 	}
