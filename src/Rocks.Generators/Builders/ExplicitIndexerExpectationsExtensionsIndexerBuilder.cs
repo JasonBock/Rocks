@@ -10,8 +10,8 @@ namespace Rocks.Builders
 		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 		{
 			var property = result.Value;
-			var propertyReturnValue = property.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var propertyReturnValue = property.Type.GetName();
+			var mockTypeName = result.MockType.GetName();
 			var thisParameter = $"this ExplicitIndexerGetterExpectations<{mockTypeName}, {containingTypeName }> self";
 			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
@@ -19,7 +19,7 @@ namespace Rocks.Builders
 			var instanceParameters = string.Join(", ", thisParameter,
 				string.Join(", ", property.GetMethod!.Parameters.Select(_ =>
 				{
-					return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
+					return $"Arg<{_.Type.GetName()}> {_.Name}";
 				})));
 
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
@@ -32,7 +32,7 @@ namespace Rocks.Builders
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 		{
 			var property = result.Value;
-			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var mockTypeName = result.MockType.GetName();
 			var thisParameter = $"this ExplicitIndexerSetterExpectations<{mockTypeName}, {containingTypeName}> self";
 			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
@@ -40,7 +40,7 @@ namespace Rocks.Builders
 			var instanceParameters = string.Join(", ", thisParameter,
 				string.Join(", ", property.SetMethod!.Parameters.Select(_ =>
 				{
-					return $"Arg<{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}> {_.Name}";
+					return $"Arg<{_.Type.GetName()}> {_.Name}";
 				})));
 
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");

@@ -11,14 +11,14 @@ namespace Rocks.Builders
 		{
 			var method = result.Value;
 			var parametersDescription = string.Join(", ", 
-				method.Parameters.Select(_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"));
+				method.Parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-				$"{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}." : string.Empty;
+				$"{method.ContainingType.GetName(GenericsOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"void {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+				var parameter = $"{_.Type.GetName()} {_.Name}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
@@ -90,7 +90,7 @@ namespace Rocks.Builders
 				if(i == 0)
 				{
 					writer.WriteLine(
-						$"if (((Arg<{parameter.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((Arg<{parameter.Type.GetName()}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -100,7 +100,7 @@ namespace Rocks.Builders
 					}
 
 					writer.WriteLine(
-						$"((Arg<{parameter.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((Arg<{parameter.Type.GetName()}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -137,7 +137,7 @@ namespace Rocks.Builders
 			writer.Indent++;
 
 			var methodCast = method.Parameters.Length == 0 ? "(Action)" :
-				$"(Action<{string.Join(", ", method.Parameters.Select(_ => _.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)))}>)";
+				$"(Action<{string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()))}>)";
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ => _.Name));
 			writer.WriteLine($"({methodCast}methodHandler.Method)({methodArguments});");

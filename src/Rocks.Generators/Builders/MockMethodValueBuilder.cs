@@ -11,16 +11,16 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var returnType = method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var returnType = method.ReturnType.GetName();
 			var parametersDescription = string.Join(", ", method.Parameters.Select(
-				_ => $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}"));
+				_ => $"{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-				$"{method.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}." : string.Empty;
+				$"{method.ContainingType.GetName(GenericsOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 			
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+				var parameter = $"{_.Type.GetName()} {_.Name}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
@@ -77,12 +77,12 @@ namespace Rocks.Builders
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
 
-			var methodCast = method.Parameters.Length == 0 ? $"(Func<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)" :
-				$"(Func<{string.Join(", ", method.Parameters.Select(_ => _.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)).Concat(new [] { method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) }))}>)";
+			var methodCast = method.Parameters.Length == 0 ? $"(Func<{method.ReturnType.GetName()}>)" :
+				$"(Func<{string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()).Concat(new [] { method.ReturnType.GetName() }))}>)";
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ => _.Name));
 			writer.WriteLine($"({methodCast}methodHandler.Method)({methodArguments}) :");
-			writer.WriteLine($"((HandlerInformation<{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler).ReturnValue;");
+			writer.WriteLine($"((HandlerInformation<{method.ReturnType.GetName()}>)methodHandler).ReturnValue;");
 
 			writer.Indent--;
 
@@ -108,7 +108,7 @@ namespace Rocks.Builders
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((Arg<{parameter.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((Arg<{parameter.Type.GetName()}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -118,7 +118,7 @@ namespace Rocks.Builders
 					}
 
 					writer.WriteLine(
-						$"((Arg<{parameter.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((Arg<{parameter.Type.GetName()}>)methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{

@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.Collections.Immutable;
 using System.Linq;
 
@@ -10,15 +11,15 @@ namespace Rocks.Builders
 		{
 			if(parameters.Length > 0)
 			{
-				var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)));
+				var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetName()));
 				return returnType is not null ?
-					$"Func<{parameterTypes}, {returnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>" : 
+					$"Func<{parameterTypes}, {returnType.GetName()}>" : 
 					$"Action<{parameterTypes}>";
 			}
 			else
 			{
 				return returnType is not null ?
-					$"Func<{returnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>" :
+					$"Func<{returnType.GetName()}>" :
 					$"Action";
 			}
 		}

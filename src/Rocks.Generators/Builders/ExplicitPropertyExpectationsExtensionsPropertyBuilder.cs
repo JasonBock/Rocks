@@ -10,9 +10,9 @@ namespace Rocks.Builders
 		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 		{
 			var property = result.Value;
-			var propertyReturnValue = property.GetMethod!.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var thisParameter = $"this ExplicitPropertyGetterExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}, {containingTypeName}> self";
-			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
+			var thisParameter = $"this ExplicitPropertyGetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
+			var mockTypeName = result.MockType.GetName();
 			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(ImmutableArray<IParameterSymbol>.Empty, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -26,9 +26,9 @@ namespace Rocks.Builders
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 		{
 			var property = result.Value;
-			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var thisParameter = $"this ExplicitPropertySetterExpectations<{result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}, {containingTypeName}> self";
-			var mockTypeName = result.MockType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
+			var thisParameter = $"this ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
+			var mockTypeName = result.MockType.GetName();
 			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 

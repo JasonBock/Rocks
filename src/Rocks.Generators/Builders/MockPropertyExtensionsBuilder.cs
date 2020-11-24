@@ -11,8 +11,7 @@ namespace Rocks.Builders
 		{
 			if (information.Properties.Length > 0)
 			{
-				var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-
+				var typeToMockName = information.TypeToMock.GetName();
 				MockPropertyExtensionsBuilder.BuildProperties(writer, information, typeToMockName);
 				MockPropertyExtensionsBuilder.BuildIndexers(writer, information, typeToMockName);
 			}
@@ -54,7 +53,7 @@ namespace Rocks.Builders
 					_.Value.IsIndexer)
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+				var containingTypeName = typeGroup.Key.GetName();
 				writer.WriteLine($"internal static ExplicitIndexerExpectations<{typeToMockName}, {containingTypeName}> ExplicitIndexersFor{containingTypeName}(this Expectations<{typeToMockName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new ExplicitIndexerExpectations<{typeToMockName}, {containingTypeName}>(self);");
@@ -117,7 +116,7 @@ namespace Rocks.Builders
 					!_.Value.IsIndexer)
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+				var containingTypeName = typeGroup.Key.GetName();
 				writer.WriteLine($"internal static ExplicitPropertyExpectations<{typeToMockName}, {containingTypeName}> ExplicitPropertiesFor{containingTypeName}(this Expectations<{typeToMockName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new ExplicitPropertyExpectations<{typeToMockName}, {containingTypeName}>(self);");

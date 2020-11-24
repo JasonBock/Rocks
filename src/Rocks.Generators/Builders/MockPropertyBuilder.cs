@@ -19,9 +19,9 @@ namespace Rocks.Builders
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
-			var methodCast = $"(Func<{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)";
+			var methodCast = $"(Func<{result.Value.Type.GetName()}>)";
 			writer.WriteLine($"({methodCast}methodHandler.Method)() :");
-			writer.WriteLine($"((HandlerInformation<{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler).ReturnValue;");
+			writer.WriteLine($"((HandlerInformation<{result.Value.Type.GetName()}>)methodHandler).ReturnValue;");
 			writer.Indent--;
 
 			if (raiseEvents)
@@ -57,7 +57,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (((Arg<{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Expectations[0]).IsValid(value))");
+			writer.WriteLine($"if (((Arg<{result.Value.Type.GetName()}>)methodHandler.Expectations[0]).IsValid(value))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -67,7 +67,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"((Action<{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}>)methodHandler.Method)(value);");
+			writer.WriteLine($"((Action<{result.Value.Type.GetName()}>)methodHandler.Method)(value);");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -120,7 +120,7 @@ namespace Rocks.Builders
 
 			var memberIdentifierAttribute = result.MemberIdentifier;
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
+				string.Empty : $"{result.Value.ContainingType.GetName(GenericsOption.NoGenerics)}.";
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
@@ -137,7 +137,7 @@ namespace Rocks.Builders
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
-			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}{result.Value.Name}");
+			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.GetName()} {explicitTypeName}{result.Value.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

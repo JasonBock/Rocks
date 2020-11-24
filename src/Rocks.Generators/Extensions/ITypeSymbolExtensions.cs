@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rocks.Extensions
 {
-	internal static class ITypeSymbolExtensions
+	internal static partial class ITypeSymbolExtensions
 	{
 		private sealed class EventSymbolEqualityComparer
 			: IEqualityComparer<IEventSymbol?>
@@ -22,6 +22,34 @@ namespace Rocks.Extensions
 			public int GetHashCode(IEventSymbol? obj) => (obj?.Name, obj?.Type).GetHashCode();
 
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
+		}
+
+		internal static string GetName(this ITypeSymbol self, GenericsOption options = GenericsOption.IncludeGenerics)
+		{
+			static string GetNameWithFlattenGenerics(INamedTypeSymbol flattenedName, GenericsOption flattenedOptions)
+			{
+				if(flattenedName.TypeParameters.Length == 0)
+				{
+					return flattenedName.Name;
+				}
+				else
+				{
+					return $"{flattenedName.Name}Of{string.Join("_", flattenedName.TypeParameters.Select(_ => _.GetName(flattenedOptions)))}";
+				}
+			}
+
+			if(options == GenericsOption.IncludeGenerics)
+			{
+				return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			}
+			else if(options == GenericsOption.FlattenGenerics && self is INamedTypeSymbol namedSelf)
+			{
+				return GetNameWithFlattenGenerics(namedSelf, options);
+			}
+			else
+			{
+				return self.Name;
+			}
 		}
 
 		internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this ITypeSymbol self)

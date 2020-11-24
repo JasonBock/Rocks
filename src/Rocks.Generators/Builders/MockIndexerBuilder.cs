@@ -141,7 +141,7 @@ namespace Rocks.Builders
 		{
 			var attributes = result.Value.GetAttributes();
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.";
+				string.Empty : $"{result.Value.ContainingType.GetName(GenericsOption.NoGenerics)}.";
 
 			if (attributes.Length > 0)
 			{
@@ -166,7 +166,7 @@ namespace Rocks.Builders
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.Parameters)}";
 
-			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {indexerSignature}");
+			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.GetName()} {indexerSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -191,7 +191,7 @@ namespace Rocks.Builders
 		{
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
-				var parameter = $"{_.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {_.Name}";
+				var parameter = $"{_.Type.GetName()} {_.Name}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			

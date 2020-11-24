@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
 using Rocks.Configuration;
 using Rocks.Exceptions;
+using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -73,7 +74,7 @@ namespace Rocks
 				string.Join(Environment.NewLine, usings), string.Empty, "#nullable enable", writer.ToString());
 
 			var text = SourceText.From(code, Encoding.UTF8);
-			return (this.information.Diagnostics, $"{this.information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}_Mock.g.cs", text);
+			return (this.information.Diagnostics, $"{this.information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}_Mock.g.cs", text);
 		}
 
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }

@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -12,14 +11,14 @@ namespace Rocks.Builders
 			var isOverride = @event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
 			writer.WriteLine(
-				$"public {isOverride}event {@event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}? {@event.Value.Name};");
+				$"public {isOverride}event {@event.Value.Type.GetName()}? {@event.Value.Name};");
 		}
 
 		private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
 		{
-			var eventType = @event.Value.Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-			var name = $"{@event.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}.{@event.Value.Name}";
-			var fieldName = $"{@event.Value.ContainingType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}_{@event.Value.Name}";
+			var eventType = @event.Value.Type.GetName();
+			var name = $"{@event.Value.ContainingType.GetName(GenericsOption.FlattenGenerics)}.{@event.Value.Name}";
+			var fieldName = $"{@event.Value.ContainingType.GetName(GenericsOption.FlattenGenerics)}_{@event.Value.Name}";
 
 			writer.WriteLine($"private {eventType}? {fieldName};");
 			writer.WriteLine($"event {eventType}? {name}");

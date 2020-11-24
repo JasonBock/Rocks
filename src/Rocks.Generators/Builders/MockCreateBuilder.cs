@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.Linq;
@@ -9,11 +10,9 @@ namespace Rocks.Builders
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			var typeToMockName = information.TypeToMock.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
-
-			writer.WriteLine($"private sealed class Rock{typeToMockName}");
+			writer.WriteLine($"private sealed class Rock{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}");
 			writer.Indent++;
-			writer.WriteLine($": {typeToMockName}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
+			writer.WriteLine($": {information.TypeToMock.GetName(GenericsOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 			writer.Indent--;
 
 			writer.WriteLine("{");
