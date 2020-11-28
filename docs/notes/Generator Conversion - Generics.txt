@@ -1,0 +1,52 @@
+OK, generics...
+
+Let's say I took the types that exist from the current suite of tests:
+
+	public interface IGenerics
+	{
+		U TargetWithNoConstraints<U>(int a, U b);
+		U TargetWithNonTypeConstrains<U>(int a, U b) where U : class, new();
+		U TargetWithTypeConstraints<U>(int a, U b) where U : Base;
+		void TargetWithMultipleConstraints<U, V, W, X, Y>(U a, V b, W c, X d, Y e) where U : class, new() where V : Base where W : IBase where X : struct where Y : W;
+	}
+
+	public interface IGenerics<T>
+	{
+		IEnumerable<T> Target(IEnumerable<T> a);
+	}
+	
+What does the resulting mock type look like? Note that we don't care about constraints on the type, because:
+
+public interface IGenerics<T>
+	where T : class { }
+	
+You'd specify T to declare what the mock type is:
+
+var rock = Rock.Create<IGenerics<string>>();
+
+
+
+{TODO}
+
+What would I generate for the extension methods?
+
+
+* DONE - Make sure the gen'd type name is "IGenericsOfstring", NOT "IGenericsOfT". IOW, all generic type parameters must be resolved...I think. So the resulting generic would look like this:
+
+private sealed class RockIGenericsOfstring : IGenerics<string>
+
+and any method, field, etc. types that were based on T should be set to string. I'm not doing that, so that has to be fixed. Well, I am doing it for the properties and fields, but not the class name (RockIGenericsOfT), or the constructor name, or in the Instance() extension methods.
+
+* If "Rock.Create<IMock<T>>" was given, that wouldn't work. The given type must be completely closed.
+
+* When I do this:
+
+if ((Arg<T1>)methodHandler.Expectations[0]).IsValid(value1) &&
+
+it has to be a "safe" cast: 
+
+if (methodHandler.Expectations[0] as Arg<T1>)?.IsValid(value1) ?? false
+
+Same thing with delegate casts
+
+* Method descriptors and exception descriptions need to include the generic arguments

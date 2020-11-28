@@ -1,0 +1,118 @@
+When generating the methods
+
+DONE - Do what I'm currently doing for the ".Methods()" extensions and implementing on the mock class for methods that do NOT need explicit interface implementation
+
+DONE - For methods that do need EII, group them by ContainingType. Foreach group, generate a ".ExplicitMethodsFor{TypeToMock}", which will return a 
+
+namespace Rocks
+{
+	public sealed class MethodExpectations<T, TContainingType>
+		: ExpectationsWrapper<T>
+		where T : class, TContainingType
+	{
+		public MethodExpectations(Expectations<T> expectations)
+			: base(expectations) { }
+	}
+}
+
+In other words, T has to derive from TContainingType (just enforcing that rule)
+
+DONE - Then create the ExplicitMethodExpectationsOf{TypeToMock}For{TContainingType}Extensions
+
+For the mock itself, mostly just have to not make it "public" and put {TContainingType}.{MethodName} in the mock.
+
+STOP THE PRESSES
+
+You don't need to do explicit interface implementation. I think the problem I really had was that I wasn't getting the events right if they were on base interface types, similar to what I was doing with properties and methods. So, back everything out.
+
+But wait...
+
+Maybe instead on "Rock.Create<ITarget>();", I give an option to do this:
+
+"Rock.Create<ITarget>(ImplementInterfaceMembersExplicitlyWhenNeeded.Yes);"
+
+By default, this would be "No". But if you REALLY wanted to have explicit implementations, then the members would be gathered that way. I'd have to change how properties and events would be implemented as well. But this is the right way IMO.
+
+So, here's the plan:
+
+	
+OK, NO ARGUMENT
+
+Consider this:
+
+public interface IA
+{
+	void Foo();
+}
+
+public interface IB
+{
+	void Foo();
+}
+
+public interface IC : IA, IB { }
+
+public static void UseIC(IC ic)
+{
+	if (ic is null)
+	{
+		throw new System.ArgumentNullException(nameof(ic));
+	} 
+	((IA)ic).Foo();
+}
+
+You HAVE to do a cast here. So there's no ambiguity here. I need to do it as explicit implementations.
+
+* DONE - First, fix how I'm finding events.
+* DONE (removed) - Next, see if I can, through the generator, determine the optional value. If I can, then continue. Otherwise, back out explicit interface implementation entirely.
+	* DONE (removed) - candidateInvocation.ArgumentList.Arguments.Count == 1
+	* DONE (removed) - Enum.Parse(typeof(ImplementInterfaceMembersExplicitlyWhenNeeded), "Yes")
+* DONE - Next, change how I find and implement methods, properties and events to do them explicitly if desired.
+	* DONE - Find methods both ways
+	* DONE - Find properties both ways
+	* DONE - Find events both ways
+	* DONE - Implement methods both ways
+	* DONE - Implement properties both ways
+	* DONE - Implement events both ways
+
+For events....it may be interesting, because they have to be explicitly implemented on the class, but events are raised via the adornments. "Raise{EventName}". I may need to do "Raise{EventName}For{InterfaceName}", and add another parameter to AddRaiseEvent that takes the interface name (or type?). Then, in methods, properties and indexers that are explicitly implemented that will raise events would need to pass that other value in. I'll need to play with how you find the event if it's explicitly implemented.
+
+Note that explicit events are implemented this way:
+
+public interface IA
+{
+	event EventHandler MyEvent;
+}
+
+public interface IB
+{
+	event EventHandler MyEvent;
+}
+
+public interface IC
+	: IA, IB
+{
+	event EventHandler CEvent;
+}
+
+public class C : IC
+{
+	private EventHandler? IA_MyEvent;
+	private EventHandler? IB_MyEvent;
+
+	public event EventHandler? CEvent;
+
+	event EventHandler? IA.MyEvent
+	{
+		add => this.IA_MyEvent += value;
+		remove => this.IA_MyEvent -= value;
+	}
+
+	event EventHandler? IB.MyEvent
+	{
+		add => this.IB_MyEvent += value;
+		remove => this.IB_MyEvent -= value;
+	}
+}
+
+To "find" them in IMockWithEvents.Raise(), I'll need to follow that convention where the type name is passed in and combined with the name of the event, and assume that's the name of the field.

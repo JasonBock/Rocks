@@ -1,0 +1,747 @@
+* Create embedded types
+* Create .IntegrationTests project that references like an analyzer
+* Mock an interface with one simple methods
+* Add more combinations/cases/etc.
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	CS0518	Predefined type 'System.Runtime.CompilerServices.IsExternalInit' is not defined or imported	Rocks.Generators	C:\Users\jason\source\repos\Rocks\Rocks.Generators\Extensions\AssemblyExtensions.cs	10	Active
+
+Severity	Code	Description	Project	File	Line	Suppression State
+Error	NU5048	The 'PackageIconUrl'/'iconUrl' element is deprecated. Consider using the 'PackageIcon'/'icon' element instead. Learn more at https://aka.ms/deprecateIconUrl	Rocks.Generators	C:\Program Files\dotnet\sdk\5.0.100-rc.2.20479.15\Sdks\NuGet.Build.Tasks.Pack\build\NuGet.Build.Tasks.Pack.targets	207	
+
+OK, start simple. Let's say I want to mock this:
+
+namespace MockableNamespace
+{
+	public interface IMockable
+	{
+		void Foo(int a);
+	}
+}
+
+First, I need this:
+
+namespace MockableNamespace
+{
+	internal static class ExpectationsForIMockable
+	{
+		internal static MethodExpectations<IMockable> Methods(this Expectations<IMockable> self) =>
+			new MethodExpectations<IMockable>(self);
+			
+		internal static IMockable Instance(this Expectations<IMockable> self) =>
+			new RockIMockable(self);
+		
+		private sealed class RockIMockable
+			: IMockable, IMock
+		{
+			private readonly ReadOnlyDictionary<int, ReadOnlyCollection<HandlerInformation>> handlers;
+
+			// Implement constructors...
+			public RockIMockable(Expectations<IMockable> expectations)
+			{
+				this.handlers = expectations.CreateHandlers();
+			}
+
+			public void Foo(int a)
+			{
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var foundMatch = false;
+
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((Arg<int>)methodHandler.Expectations["a"]).IsValid(a))
+						{
+							foundMatch = true;
+							
+							if (methodHandler.Method != null)
+							{
+	#pragma warning disable CS8604
+								((Action<int>)methodHandler.Method)(a);
+	#pragma warning restore CS8604
+							}
+
+							methodHandler.IncrementCallCount();
+							break;
+						}
+					}
+
+					if (!foundMatch)
+					{
+						throw new ExpectationException($"No handlers were found for Foo({a})");
+					}
+				}
+				else
+				{
+					throw new ExpectationException($"No handlers were found for Foo({a})");
+				}
+			}	
+		}		
+	}
+
+	internal static class MethodExpectationsForIMockable
+	{
+		internal static MethodAdornments Foo(this MethodExpectations<IMockable> self, Arg<int> a)
+		{
+			self.Add(0, new Dictionary<string,  Arg>
+			{
+				{ "a", a }
+			});
+			
+			return new MethodAdornments(self);
+		}
+	}	
+}
+
+Arg<T> is a "combination" of the original Arg and ArgumentExpectation. Arg was only used for expressions, so that's no longer needed.
+
+Someone could call it like this:
+
+rock.Foo(Arg<int>.Is(3)); // This is saying the value must be 3, it would call "new Arg(3)"
+rock.Foo(Arg<int>.Any()); // This would be a "I don't care what the value is", it would call "new Arg<int>()"
+rock.Foo(Arg<int>.Validate(_ => _ > 2 && _ < 20)); // This would be Func<T, bool> evaluation, or maybe use Predicate<T>, it would call "new Arg<Predicate<int>>(_ => _ > 2 && _ < 20)"
+
+public abstract class Arg 
+{ 
+	protected Arg() { }
+}
+
+public sealed class Arg<T>
+	: Arg
+{
+	private readonly Predicate<T>? evaluation;
+	private readonly T? value;
+
+	private Arg() { }
+	
+	private Arg(T value) => this.value = value;
+	
+	private Arg(Predicate<T> evaluation) => this.evaluation = evaluation;
+
+	public static Arg<T> Any() => new Arg();
+
+	public static Arg<T> Is(T value) => new Arg(value);
+
+	public static Arg<T> Validate(Predicate<T> evaluation) => new Arg(evaluation);
+	
+	public bool IsValid(int value) =>
+		this.value is not null ? value == this.value : this.evaluation(value);
+}
+
+
+public interface IMockableExtensions
+{
+	public static MethodAdornments Foo(this Expectations self, Arg<int> a) ...
+}
+
+
+internal static class MethodExpectationsOfIMethodExpectationsExtensionsBuilderExtensions
+{
+	internal static MethodAdornments IMethodExpectationsExtensionsBuilder.Foo(int)(this MethodExpectations<IMethodExpectationsExtensionsBuilder> self, Arg<Int32> a) =>
+		new MethodAdornments(self.Add(0, new Dictionary<string, Arg>
+		{
+			{ "a", a },
+		}));
+}
+
+* Name of method should just be "Foo", not "IMethodExpectationsExtensionsBuilder.Foo(int)"
+* I'd like it to be "int", not "Int32"
+
+* We don't have the "Method()" thing anymore
+
+using Rocks;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.IO;
+
+internal static class ExpectationsOfIFooExtensions
+{
+
+	internal static IFoo Instance(this Expectations<IFoo> self)
+	{
+		var mock = new RockIFoo(self);
+		self.Mocks.Add(mock);
+		return mock;
+	}
+	
+	private sealed class RockIFoo
+		: IFoo, IMock
+	{
+		private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+		
+		public IFoo(Expectations<IFoo> expectations) =>
+			this.handlers = expectations.CreateHandlers();
+		
+		// TODO: Put in all the member overrides...
+		
+		ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+	}
+}
+
+internal static class MethodExpectationsOfIFooExtensions
+{
+	internal static MethodAdornments Foo(this MethodExpectations<IFoo> self, Arg<int> a, Arg<Guid> b, Arg<StringWriter> c) =>
+		new MethodAdornments(self.Add(0, new Dictionary<int, Arg>
+		{
+			{ 0, a },
+			{ 1, b },
+			{ 2, c },
+		}));
+}
+
+* Finish the first pass of the mock
+* Create an integration test project and see if the gen'd code actually works.
+	
+using FooStuff;
+using Rocks;
+using Rocks.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.IO;
+
+namespace FooStuff
+{
+	internal static class ExpectationsOfIFooExtensions
+	{
+		internal static MethodExpectations<IFoo> Methods(this Expectations<IFoo> self) =>
+			new MethodExpectations<IFoo>(self);
+		
+		internal static IFoo Instance(this Expectations<IFoo> self)
+		{
+			var mock = new RockIFoo(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockIFoo
+			: IFoo, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockIFoo(Expectations<IFoo> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, "void Foo(int a, Guid b, StringWriter c)")]
+			public void Foo(int a, Guid b, StringWriter c)
+			{
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var foundMatch = false;
+					
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a) &&
+							((Arg<Guid>)methodHandler.Expectations[1]).IsValid(b) &&
+							((Arg<StringWriter>)methodHandler.Expectations[2]).IsValid(c))
+						{
+							foundMatch = true;
+							
+							if (methodHandler.Method is not null)
+							{
+								((Action<Int32, Guid, StringWriter>)methodHandler.Method)(a, b, c);
+							}
+							
+							methodHandler.IncrementCallCount();
+							break;
+						}
+					}
+					if (!foundMatch)
+					{
+						throw new ExpectationException($"No handlers were found for void Foo({a}, {b}, {c}))");
+					}
+				}
+				else
+				{
+					throw new ExpectationException($"No handlers were found for void Foo({a}, {b}, {c}))");
+				}
+			}
+			
+			[MemberIdentifier(1, "void Bar()")]
+			public void Bar()
+			{
+				if (this.handlers.TryGetValue(1, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException($"No handlers were found for void Bar())");
+				}
+			}
+			
+			// TODO: Put in all the member overrides...
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfIFooExtensions
+	{
+		internal static MethodAdornments Foo(this MethodExpectations<IFoo> self, Arg<int> a, Arg<Guid> b, Arg<StringWriter> c) =>
+			new MethodAdornments(self.Add(0, new List<Arg> { a, b, c }));
+		internal static MethodAdornments Bar(this MethodExpectations<IFoo> self, ) =>
+			new MethodAdornments(self.Add(1, new List<Arg>()));
+	}
+}
+
+
+
+SUCCESS!!
+
+Now functions...
+
+using Rocks.Exceptions;
+using Rocks.IntegrationTests;
+using Rocks;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System;
+
+namespace Rocks.IntegrationTests
+{
+	internal static class ExpectationsOfIFooExtensions
+	{
+		internal static MethodExpectations<IFoo> Methods(this Expectations<IFoo> self) =>
+			new MethodExpectations<IFoo>(self);
+		
+		internal static IFoo Instance(this Expectations<IFoo> self)
+		{
+			var mock = new RockIFoo(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockIFoo
+			: IFoo, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockIFoo(Expectations<IFoo> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, "string Bar(int a, string b)")]
+			public string Bar(int a, string b)
+			{
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a) &&
+							((Arg<string>)methodHandler.Expectations[1]).IsValid(b))
+						{
+							var result = methodHandler.Method is not null ?
+								((Func<int, string, string>)methodHandler.Method)(a, b) :
+								((HandlerInformation<string>)methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result;
+						}
+					}
+				}
+				
+				throw new ExpectationException($"No handlers were found for string Bar({a}, {b}))");
+			}
+			
+			[MemberIdentifier(1, "void Foo(int a, string b)")]
+			public void Foo(int a, string b)
+			{
+				if (this.handlers.TryGetValue(1, out var methodHandlers))
+				{
+					var foundMatch = false;
+					
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((Arg<int>)methodHandler.Expectations[0]).IsValid(a) &&
+							((Arg<string>)methodHandler.Expectations[1]).IsValid(b))
+						{
+							foundMatch = true;
+							
+							if (methodHandler.Method is not null)
+							{
+								((Action<int, string>)methodHandler.Method)(a, b);
+							}
+							
+							methodHandler.IncrementCallCount();
+							break;
+						}
+					}
+					
+					if (!foundMatch)
+					{
+						throw new ExpectationException($"No handlers were found for void Foo({a}, {b}))");
+					}
+				}
+				else
+				{
+					throw new ExpectationException("No handlers were found for void Foo({a}, {b}))");
+				}
+			}
+			
+			[MemberIdentifier(2, "void Baz()")]
+			public void Baz()
+			{
+				if (this.handlers.TryGetValue(2, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException("No handlers were found for void Baz())");
+				}
+			}
+			
+			// TODO: Put in all the member overrides...
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfIFooExtensions
+	{
+		internal static MethodAdornments<string> Bar(this MethodExpectations<IFoo> self, Arg<int> a, Arg<string> b) =>
+			new MethodAdornments<string>(self.Add<string>(0, new List<Arg> { a, b }));
+		internal static MethodAdornments Foo(this MethodExpectations<IFoo> self, Arg<int> a, Arg<string> b) =>
+			new MethodAdornments(self.Add(1, new List<Arg> { a, b }));
+		internal static MethodAdornments Baz(this MethodExpectations<IFoo> self) =>
+			new MethodAdornments(self.Add(2, new List<Arg>()));
+	}
+}
+
+
+BTW in case I'm looking for the gen-d code...
+C:\Users\jason\AppData\Local\Temp\VisualStudioSourceGeneratedDocuments\8d8a9937-c3ea-4812-9e99-1a5cd80b64b6\Rocks\Rocks.RockCreateGenerator
+
+or...
+
+C:\Users\jason\AppData\Local\Temp\.vsdbgsrc\3112fb7a25fab8aae75dd6322da13865b7168159\IFoo_Mock.g.cs
+
+Next steps:
+* DONE - Handle functions (i.e. return values)
+* DONE - Split MockMethodBuilder into two classes, one to handle void, one to handle return value
+* DONE (Use the first) - Type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat) vs Type.Name?
+* DONE - Need to address nullable values
+* DONE - I think if I have two places in code where I do "Rock.Create<IFoo>()", it's getting "confused".
+* DONE - Use class type for mock target
+	* DONE - I need to add "override" to the implementation definitions
+* DONE - Add support for watching/honoring cancellation token in mock creation
+* DONE - Really dive into Arg have conversions for values and Func<T, bool>
+* DONE - Use case where interface requires explicit implementation
+* DONE - Need to change information.TypeToMock.Name to use ToDisplayString(...)
+* DONE - Does the memberIdentifier have to be by ref all the time?
+* DONE - Handle events (IMockWithEvents)
+	* DONE - Discover what events can be mocked
+	* DONE - Put in the "RaiseEvents" call
+	* DONE - Change the interface from IMock to IMockWithEvents when events exist
+	* DONE - Explicitly implement Raise on the mock
+	* DONE - If there are no other members other than events, that's a failure.
+	* DONE - What about explicit interface implementation here? Two base interfaces with the same event
+	* DONE - Could I create an event enumeration on the fly that restricts you to the events that you could possibly raise?
+* DONE - I do NOT need to do explicit interface implementation! If I have this:
+
+	public interface IA
+	{
+		void Foo();
+	}
+
+	public interface IB
+	{
+		void Foo();
+	}
+
+	public interface IC
+		: IA, IB
+	{ }
+
+	public class Thing
+		: IC
+	{
+		public void Foo() { }
+	}
+
+That's valid. Same thing if I inherit from IA and IB from Thing. This is the same for properties and indexers.
+
+Get rid of everything related to generating explicit implementations.
+
+* DONE - Handle properties and indexers
+	* DONE - Need "Properties" => PropertyExpectations<T>
+	* DONE - Generate PropertyExpectationsOfTExtensions, "GetXYZ" and "SetXYZ" for PropertyExpectations<T>, returns PropertyMethodAdornments<T> or <T, TResult>
+	* DONE - Need PropertyMethodAdornments, "RaisesMyEvent"
+	* DONE - Need "Indexers" => IndexerExpectations<T>
+	* DONE - Generate IndexerExpectationsOfTExtensions, "GetThis" and "SetThis" for IndexerExpectations<T>, returns IndexerMethodAdornments<T> or <T, TResult>
+	* DONE - Need IndexerMethodAdornments, "RaisesMyEvent"
+	* DONE - Overrides!
+* DONE - Why do I have the [MemberIdentifier] attribute again? Not sure what the point of that is.
+* DONE - MethodAdornmentsOfIAExtensions, contains all the event adornments for methods and properties, but not indexers. Probably should be renamed to ... RaiseHandlersOf{Type}Extensions? Or gen x static classes separately? Also getting a space in the "adornments" name and the generic parameters.
+* DONE - Put attributes on the parameters, return values, methods, properties, and types (essentially all members)
+	* DONE - .Values - is this for arrays?
+	* DONE - strings, put "" around it. What about other primitive types? e.g. unsigned int => "u" at the end?
+* DONE - Put BrowserEditable on APIs (like CreateHandlers(), .Mocks, and To<>(), for example)
+* DONE - Create extension methods for symbols to get a SortedSet<Namespace>, and then I can use that to easily combine them all
+	* DONE - AttributeData
+	* DONE - IMethodSymbol
+	* DONE - IPropertySymbol
+	* DONE - IEventSymbol
+	* DONE - Add namespaces to "using {ns};" for the gen'd code.
+* DONE - Don't need to add the namespace in the using, like "namespace IE" has "using IE;"
+* DONE - Make a "docs" and "src" folder, put the docs in "docs", update HelpUriBuilder, and finish docs for the errors.
+* DONE - Need to handle named arguments for attributes
+* DONE - Address all TODOs. (There are two left now that deal with .editorconfig, which I doubt I'll be able to do anything with)
+* DONE - Don't always add to namespace set if you know you've already captured the namespace somewhere else in the builders.
+* DONE - See if AnalyzerOptions on the generator context gives me the .editorconfig value
+* DONE - Instead of ".Properties().GetGetData()", should I do ".Properties().Getters().GetData()"? That seems cleaner.
+* Start shoring up tests. Unit for things that aren't doing generation, and integration to ensure the generation works as expected.
+	* Unit
+		* Mockable results
+		* DONE - MemberIdentifierAttribute
+		* DONE - Negative MockInformation tests and positive member ones
+		* DONE - Rock.Create, one negative test for diagnostics, and one positive for no diagnostics and new code content
+		* DONE - Descriptor
+	* Integration
+		* General
+			* Having multiple "Rock.Create<>" calls in a method targeting the same type
+			* Do negative verifications with Arg
+		* Interfaces
+			* Method
+				* DONE - with void
+					* DONE - no parameters
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - multiple calls expectation not met
+					* DONE - no parameters with callback
+					* DONE - no parameters expectations not set
+					* DONE - no parameters expectations not met
+					* DONE - one parameter
+					* DONE - one parameter with callback
+					* DONE - one parameters arg expectations not met
+					* DONE - multiple parameters
+					* DONE - multiple parameters with callback
+				* DONE - with void and events
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - raise event with callback (parameter count is irrelevant)
+					* DONE - multiple calls with raise event (parameter count is irrelevant)
+					* DONE - multiple calls with raise event with callback (parameter count is irrelevant)
+				* DONE - with return
+					* DONE - no parameters
+					* DONE - no parameters with return set
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - multiple calls expectation not met
+					* DONE - no parameters with callback
+					* DONE - no parameters expectations not set
+					* DONE - no parameters expectations not met
+					* DONE - one parameter
+					* DONE - one parameter with return set
+					* DONE - one parameter with callback
+					* DONE - one parameters arg expectations not met
+					* DONE - multiple parameters
+					* DONE - multiple parameters with return set
+					* DONE - multiple parameters with callback
+				* DONE - with return and events
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - raise event with callback (parameter count is irrelevant)
+					* DONE - multiple calls with raise event (parameter count is irrelevant)
+					* DONE - multiple calls with raise event with callback (parameter count is irrelevant)
+			* DONE - Property
+				* DONE - with getter and setter
+				* DONE - with getter only (parameter count is irrelevant)
+					* DONE - raise event 
+					* DONE - callback
+					* DONE - raise event with callback
+					* DONE - multiple calls 
+				* DONE - with setter only (parameter count is irrelevant)
+					* DONE - raise event 
+					* DONE - callback
+					* DONE - raise event with callback
+					* DONE - multiple calls 
+			* DONE - Indexer
+				* DONE - with one key
+					* DONE - with getter and setter
+					* DONE - with getter only
+						* DONE - raise event 
+						* DONE - callback 
+						* DONE - raise event with callback 
+						* DONE - multiple calls 
+					* DONE - with setter only
+						* DONE - raise event 
+						* DONE - callback 
+						* DONE - raise event with callback 
+						* DONE - multiple calls 
+				* DONE - with multiple keys
+					* DONE - with getter and setter
+					* DONE - with getter only
+						* DONE - raise event 
+						* DONE - callback 
+						* DONE - raise event with callback 
+						* DONE - multiple calls 
+					* DONE - with setter only
+						* DONE - raise event 
+						* DONE - callback 
+						* DONE - raise event with callback 
+						* DONE - multiple calls 
+			* DONE - Explicit interface implementation
+				* DONE - Method
+				* DONE - Property
+				* DONE - Indexer
+				* DONE - Event
+			* Generics
+				* Method 
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter
+				* Property
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+				* Indexer
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+				* Event
+		* Class
+			* Method
+				* with void
+					* no parameters
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+					* one parameter
+					* multiple parameters
+				* with void and events
+					* no parameters
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+					* one parameter
+					* multiple parameters
+				* with return
+					* no parameters
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+					* one parameter
+					* multiple parameters
+				* with return and events
+					* no parameters
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+					* one parameter
+					* multiple parameters
+			* Constructor
+				* with multiple parameters
+			* Property
+				* with getter and setter
+				* with getter only
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+				* with setter only
+					* raise event (parameter count is irrelevant)
+					* multiple calls (parameter count is irrelevant)
+			* Indexer
+				* with one key
+					* with getter and setter
+					* with getter only
+						* raise event (parameter count is irrelevant)
+						* multiple calls (parameter count is irrelevant)
+					* with setter only
+						* raise event (parameter count is irrelevant)
+						* multiple calls (parameter count is irrelevant)
+				* with multiple keys
+					* with getter and setter
+					* with getter only
+						* raise event (parameter count is irrelevant)
+						* multiple calls (parameter count is irrelevant)
+					* with setter only
+						* raise event (parameter count is irrelevant)
+						* multiple calls (parameter count is irrelevant)
+			* Generics
+				* Method 
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter
+				* Property
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+				* Indexer
+					* with parameter 
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+					* with return value
+						* using generic type (e.g. List<string>)
+						* based on generic type parameter
+						* based on generic method type parameter (?)
+				* Event
+
+* Get rid of ".ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)" and use the right overload of ".GetName()"
+* Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
+* Change where the cast is being done to .Method (e.g. ((Func<int>)methodHandler.Method) ) to using DelegateBuilder.
+* Ensure all Assert.That have meaningful messages
+* Callback has to be called before RaisesXYZ. Does it have to be that way?
+* Update NuGet packages
+* Add a project that references the Debug NuGet package, similar to do what I did with InlineMapping
+* This is still done in the mock type: "private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;". It doesn't need to be a dictionary; it can be "ImmutableArray<ImmutableArray<HandlerInformation>>"
+* Problem with NuGet package. Throws an ArgumentNullException "Value cannot be null"
+* Redo test that finds all mockable types from the assembly that contains "object", generates code like this:
+
+Group all types by namespace
+
+namespace TargetTypeNamespace
+{
+	public static class {GUID}
+	{
+		public static void Create()
+		{
+			var _ = Rock.Create<TargetType>();
+			var _ = Rock.Create<IAnotherOne>();
+			... and so on
+		}
+	}
+}
+
+and ensure that the assembly can compile and emit
+
+Make RC2 for 5.0.0
+
+* Create makes (mocks with no expectations)
+* Consider using target-type new in generated code (e.g. "new(...)") where appropriate
+* Other member scenarios
+	* Handle ref/out values in calls
+	* Async methods, need to ensure that works correctly
+	* Optional parameters, that has to work
+	* params parameters, ugh!, but they have to work
+	* "esoteric" types, like Span<>, pointers, etc., have to find a way to make them work.
+* Do perf analysis on generator creation and determine if more fine-grained calls to "context.CancellationToken" are needed.

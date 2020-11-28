@@ -20,7 +20,9 @@ namespace MockTests
 {
 	public interface IMock<T>
 	{
-		void Foo();
+		void Foo(T value);
+		T Data { get; }
+		void Foo<T1, T2>(T1 value1, T value2, T2 value3) { }
 	}
 
 	public static class Test

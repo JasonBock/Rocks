@@ -57,7 +57,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (((Arg<{result.Value.Type.GetName()}>)methodHandler.Expectations[0]).IsValid(value))");
+			writer.WriteLine($"if ((methodHandler.Expectations[0] as Arg<{result.Value.Type.GetName()}>)?.IsValid(value) ?? false)");
 			writer.WriteLine("{");
 			writer.Indent++;
 

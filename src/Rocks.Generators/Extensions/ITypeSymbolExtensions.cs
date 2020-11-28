@@ -28,13 +28,13 @@ namespace Rocks.Extensions
 		{
 			static string GetNameWithFlattenGenerics(INamedTypeSymbol flattenedName, GenericsOption flattenedOptions)
 			{
-				if(flattenedName.TypeParameters.Length == 0)
+				if(flattenedName.TypeArguments.Length == 0)
 				{
-					return flattenedName.Name;
+					return flattenedName.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				}
 				else
 				{
-					return $"{flattenedName.Name}Of{string.Join("_", flattenedName.TypeParameters.Select(_ => _.GetName(flattenedOptions)))}";
+					return $"{flattenedName.Name}Of{string.Join("_", flattenedName.TypeArguments.Select(_ => _.GetName(flattenedOptions)))}";
 				}
 			}
 
