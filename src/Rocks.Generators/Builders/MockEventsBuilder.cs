@@ -17,8 +17,8 @@ namespace Rocks.Builders
 		private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
 		{
 			var eventType = @event.Value.Type.GetName();
-			var name = $"{@event.Value.ContainingType.GetName(GenericsOption.FlattenGenerics)}.{@event.Value.Name}";
-			var fieldName = $"{@event.Value.ContainingType.GetName(GenericsOption.FlattenGenerics)}_{@event.Value.Name}";
+			var name = $"{@event.Value.ContainingType.GetName(TypeNameOption.FlattenGenerics)}.{@event.Value.Name}";
+			var fieldName = $"{@event.Value.ContainingType.GetName(TypeNameOption.FlattenGenerics)}_{@event.Value.Name}";
 
 			writer.WriteLine($"private {eventType}? {fieldName};");
 			writer.WriteLine($"event {eventType}? {name}");

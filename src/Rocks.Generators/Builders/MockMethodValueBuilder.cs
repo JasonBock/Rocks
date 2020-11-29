@@ -15,7 +15,7 @@ namespace Rocks.Builders
 			var parametersDescription = string.Join(", ", method.Parameters.Select(
 				_ => $"{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-				$"{method.ContainingType.GetName(GenericsOption.NoGenerics)}." : string.Empty;
+				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 			
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -24,9 +24,9 @@ namespace Rocks.Builders
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
-				$"{returnType} {explicitTypeNameDescription}{method.Name}({methodParameters})";
+				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
 			var methodException =
-				$"{returnType} {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
+				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 
 			var attributes = method.GetAttributes();
 
@@ -46,6 +46,21 @@ namespace Rocks.Builders
 			var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
 			writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
+
+			var constraints = method.GetConstraints();
+
+			if(constraints.Length > 0)
+			{
+				writer.Indent++;
+
+				foreach(var constraint in constraints)
+				{
+					writer.WriteLine(constraint);
+				}
+
+				writer.Indent--;
+			}
+
 			writer.WriteLine("{");
 			writer.Indent++;
 

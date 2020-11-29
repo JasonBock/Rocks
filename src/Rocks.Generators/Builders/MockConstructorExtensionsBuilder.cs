@@ -34,11 +34,11 @@ namespace Rocks.Builders
 			var rockInstanceParameters = parameters.Length == 0 ? "self" :
 				string.Join(", ", "self", string.Join(", ", parameters.Select(_ => $"{_.Name}")));
 
-			writer.WriteLine($"internal static {typeToMock.GetName(GenericsOption.IncludeGenerics)} Instance({instanceParameters})");
+			writer.WriteLine($"internal static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"var mock = new Rock{typeToMock.GetName(GenericsOption.FlattenGenerics)}({rockInstanceParameters});");
+			writer.WriteLine($"var mock = new Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}({rockInstanceParameters});");
 			writer.WriteLine("self.Mocks.Add(mock);");
 			writer.WriteLine("return mock;");
 

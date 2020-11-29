@@ -111,7 +111,8 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
-			var attributes = result.Value.GetAttributes();
+			var property = result.Value;
+			var attributes = property.GetAttributes();
 
 			if(attributes.Length > 0)
 			{
@@ -120,24 +121,24 @@ namespace Rocks.Builders
 
 			var memberIdentifierAttribute = result.MemberIdentifier;
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.GetName(GenericsOption.NoGenerics)}.";
+				string.Empty : $"{property.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}get_{result.Value.Name}()"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}get_{property.Name}()"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}set_{result.Value.Name}(value)"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}set_{property.Name}(value)"")]");
 			}
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
-			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.GetName()} {explicitTypeName}{result.Value.Name}");
+			writer.WriteLine($"{visibility}{isOverriden}{property.Type.GetName()} {explicitTypeName}{property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

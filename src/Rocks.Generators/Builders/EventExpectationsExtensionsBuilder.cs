@@ -55,7 +55,7 @@ namespace Rocks.Builders
 				var adornments = string.Join(", ", adornmentsTypes);
 				var raises = string.Join(", ", raisesTypes);
 				var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
-					$"On{result.Value.ContainingType.GetName(GenericsOption.FlattenGenerics)}";
+					$"On{result.Value.ContainingType.GetName(TypeNameOption.FlattenGenerics)}";
 
 				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
 				writer.Indent++;
@@ -66,7 +66,7 @@ namespace Rocks.Builders
 				writer.Indent++;
 
 				var fieldName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? result.Value.Name :
-					$"{result.Value.ContainingType.GetName(GenericsOption.NoGenerics)}_{result.Value.Name}";
+					$"{result.Value.ContainingType.GetName(TypeNameOption.NoGenerics)}_{result.Value.Name}";
 
 				writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{fieldName}\", args));");
 				writer.WriteLine($"return self;");
@@ -74,7 +74,7 @@ namespace Rocks.Builders
 				writer.WriteLine("}");
 			}
 
-			var typeToMockName = information.TypeToMock.GetName(GenericsOption.FlattenGenerics);
+			var typeToMockName = information.TypeToMock.GetName(TypeNameOption.FlattenGenerics);
 
 			writer.WriteLine($"internal static class {prefix}AdornmentsOf{typeToMockName}Extensions");
 			writer.WriteLine("{");

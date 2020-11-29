@@ -37,9 +37,7 @@ private sealed class RockIGenericsOfstring : IGenerics<string>
 
 and any method, field, etc. types that were based on T should be set to string. I'm not doing that, so that has to be fixed. Well, I am doing it for the properties and fields, but not the class name (RockIGenericsOfT), or the constructor name, or in the Instance() extension methods.
 
-* If "Rock.Create<IMock<T>>" was given, that wouldn't work. The given type must be completely closed.
-
-* When I do this:
+* DONE - When I do this:
 
 if ((Arg<T1>)methodHandler.Expectations[0]).IsValid(value1) &&
 
@@ -47,6 +45,6 @@ it has to be a "safe" cast:
 
 if (methodHandler.Expectations[0] as Arg<T1>)?.IsValid(value1) ?? false
 
-Same thing with delegate casts
+* DONE - Gotta get constaints generated
 
-* Method descriptors and exception descriptions need to include the generic arguments
+* DONE - Method descriptors and exception descriptions need to include the generic arguments

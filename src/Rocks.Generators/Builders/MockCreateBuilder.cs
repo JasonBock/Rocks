@@ -10,9 +10,10 @@ namespace Rocks.Builders
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			writer.WriteLine($"private sealed class Rock{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}");
+			var typeToMock = information.TypeToMock;
+			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}");
 			writer.Indent++;
-			writer.WriteLine($": {information.TypeToMock.GetName(GenericsOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
+			writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 			writer.Indent--;
 
 			writer.WriteLine("{");
@@ -25,12 +26,12 @@ namespace Rocks.Builders
 			{
 				foreach (var constructor in information.Constructors)
 				{
-					MockConstructorBuilder.Build(writer, information.TypeToMock, constructor.Parameters);
+					MockConstructorBuilder.Build(writer, typeToMock, constructor.Parameters);
 				}
 			}
 			else
 			{
-				MockConstructorBuilder.Build(writer, information.TypeToMock, ImmutableArray<IParameterSymbol>.Empty);
+				MockConstructorBuilder.Build(writer, typeToMock, ImmutableArray<IParameterSymbol>.Empty);
 			}
 
 			writer.WriteLine();
@@ -40,7 +41,7 @@ namespace Rocks.Builders
 
 			foreach (var method in information.Methods)
 			{
-				if(method.Value.ReturnsVoid)
+				if (method.Value.ReturnsVoid)
 				{
 					MockMethodVoidBuilder.Build(writer, method, raiseEvents);
 				}
@@ -52,7 +53,7 @@ namespace Rocks.Builders
 				memberIdentifier++;
 			}
 
-			foreach(var property in information.Properties.Where(_ => !_.Value.IsIndexer))
+			foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 			{
 				MockPropertyBuilder.Build(writer, property, raiseEvents);
 			}

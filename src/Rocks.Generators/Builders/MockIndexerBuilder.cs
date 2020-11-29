@@ -141,7 +141,7 @@ namespace Rocks.Builders
 		{
 			var attributes = result.Value.GetAttributes();
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.GetName(GenericsOption.NoGenerics)}.";
+				string.Empty : $"{result.Value.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
 
 			if (attributes.Length > 0)
 			{

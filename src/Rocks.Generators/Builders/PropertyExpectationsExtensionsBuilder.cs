@@ -34,8 +34,8 @@ namespace Rocks.Builders
 					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.GetName(GenericsOption.FlattenGenerics);
-				writer.WriteLine($"internal static class ExplicitIndexerGetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}For{containingTypeName}Extensions");
+				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.FlattenGenerics);
+				writer.WriteLine($"internal static class ExplicitIndexerGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}For{containingTypeName}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -53,8 +53,8 @@ namespace Rocks.Builders
 					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.GetName(GenericsOption.FlattenGenerics);
-				writer.WriteLine($"internal static class ExplicitIndexerSetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}For{containingTypeName}Extensions");
+				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.FlattenGenerics);
+				writer.WriteLine($"internal static class ExplicitIndexerSetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}For{containingTypeName}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -74,7 +74,7 @@ namespace Rocks.Builders
 			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class IndexerGetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}Extensions");
+				writer.WriteLine($"internal static class IndexerGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -92,7 +92,7 @@ namespace Rocks.Builders
 			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class IndexerSetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}Extensions");
+				writer.WriteLine($"internal static class IndexerSetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -115,8 +115,8 @@ namespace Rocks.Builders
 					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.GetName(GenericsOption.FlattenGenerics);
-				writer.WriteLine($"internal static class ExplicitPropertyGetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}For{containingTypeName}Extensions");
+				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.FlattenGenerics);
+				writer.WriteLine($"internal static class ExplicitPropertyGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}For{containingTypeName}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -134,8 +134,8 @@ namespace Rocks.Builders
 					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 				.GroupBy(_ => _.Value.ContainingType))
 			{
-				var containingTypeName = typeGroup.Key.GetName(GenericsOption.FlattenGenerics);
-				writer.WriteLine($"internal static class ExplicitPropertySetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}For{containingTypeName}Extensions");
+				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.FlattenGenerics);
+				writer.WriteLine($"internal static class ExplicitPropertySetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}For{containingTypeName}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -154,7 +154,7 @@ namespace Rocks.Builders
 			if (information.Properties.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class PropertyGetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}Extensions");
+				writer.WriteLine($"internal static class PropertyGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -172,7 +172,7 @@ namespace Rocks.Builders
 			if (information.Properties.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class PropertySetterExpectationsOf{information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}Extensions");
+				writer.WriteLine($"internal static class PropertySetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 

@@ -24,9 +24,9 @@ namespace Rocks.Extensions
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
 		}
 
-		internal static string GetName(this ITypeSymbol self, GenericsOption options = GenericsOption.IncludeGenerics)
+		internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 		{
-			static string GetNameWithFlattenGenerics(INamedTypeSymbol flattenedName, GenericsOption flattenedOptions)
+			static string GetNameWithFlattenGenerics(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)
 			{
 				if(flattenedName.TypeArguments.Length == 0)
 				{
@@ -38,11 +38,11 @@ namespace Rocks.Extensions
 				}
 			}
 
-			if(options == GenericsOption.IncludeGenerics)
+			if(options == TypeNameOption.IncludeGenerics)
 			{
 				return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			}
-			else if(options == GenericsOption.FlattenGenerics && self is INamedTypeSymbol namedSelf)
+			else if(options == TypeNameOption.FlattenGenerics && self is INamedTypeSymbol namedSelf)
 			{
 				return GetNameWithFlattenGenerics(namedSelf, options);
 			}

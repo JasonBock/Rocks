@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Extensions
 {
-	public enum GenericsOption
+	public enum TypeNameOption
 	{
 		NoGenerics, 
 		IncludeGenerics, 

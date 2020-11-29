@@ -18,16 +18,18 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock
+	public interface IMock<U>
+		where U : struct
 	{
-		void Foo<T>(T value) where T : class;
+		void Foo<T>(T value, U structValue) where T : class;
 	}
 
-	public static class Test
+	public static class Test<Q>
+		where Q : struct
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<IMock<int>>();
 		}
 	}
 }");

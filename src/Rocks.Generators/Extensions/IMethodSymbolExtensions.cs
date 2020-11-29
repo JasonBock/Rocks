@@ -7,6 +7,34 @@ namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
+		internal static string GetName(this IMethodSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
+		{
+			var generics = options == TypeNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
+				$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetName()))}>" : string.Empty;
+
+			return $"{self.Name}{generics}";
+		}
+
+		internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self)
+		{
+			var constraints = new List<string>();
+
+			if (self.TypeParameters.Length > 0)
+			{
+				for (var i = 0; i < self.TypeParameters.Length; i++)
+				{
+					var typeParameter = self.TypeParameters[i];
+
+					if (typeParameter.Equals(self.TypeArguments[i]))
+					{
+						constraints.Add(typeParameter.GetConstraints());
+					}
+				}
+			}
+
+			return constraints.ToImmutableArray();
+		}
+
 		internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)
 		{
 			static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)

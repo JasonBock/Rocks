@@ -59,7 +59,7 @@ namespace Rocks
 
 			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces);
 
-			foreach (var @namespace in namespaces.Where(_ => !_.IsGlobalNamespace))
+			foreach (var @namespace in namespaces.Where(_ => _ is not null && !_.IsGlobalNamespace))
 			{
 				usings.Add($"using {@namespace.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)};");
 			}
@@ -74,7 +74,7 @@ namespace Rocks
 				string.Join(Environment.NewLine, usings), string.Empty, "#nullable enable", writer.ToString());
 
 			var text = SourceText.From(code, Encoding.UTF8);
-			return (this.information.Diagnostics, $"{this.information.TypeToMock.GetName(GenericsOption.FlattenGenerics)}_Mock.g.cs", text);
+			return (this.information.Diagnostics, $"{this.information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}_Mock.g.cs", text);
 		}
 
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }

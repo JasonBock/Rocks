@@ -10,13 +10,13 @@ namespace Rocks.Tests.Extensions
 {
 	public static class ITypeSymbolExtensionsGetName
 	{
-		[TestCase("public class Target { }", GenericsOption.NoGenerics, "Target")]
-		[TestCase("public class Target<T, T2, TSomething> { }", GenericsOption.NoGenerics, "Target")]
-		[TestCase("public class Target { }", GenericsOption.IncludeGenerics, "Target")]
-		[TestCase("public class Target<T, T2, TSomething> { }", GenericsOption.IncludeGenerics, "Target<T, T2, TSomething>")]
-		[TestCase("public class Target { }", GenericsOption.FlattenGenerics, "Target")]
-		[TestCase("public class Target<T, T2, TSomething> : Base", GenericsOption.FlattenGenerics, "TargetOfT_T2_TSomething")]
-		public static void GetName(string code, GenericsOption option, string expectedName)
+		[TestCase("public class Target { }", TypeNameOption.NoGenerics, "Target")]
+		[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.NoGenerics, "Target")]
+		[TestCase("public class Target { }", TypeNameOption.IncludeGenerics, "Target")]
+		[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.IncludeGenerics, "Target<T, T2, TSomething>")]
+		[TestCase("public class Target { }", TypeNameOption.FlattenGenerics, "Target")]
+		[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.FlattenGenerics, "TargetOfT_T2_TSomething")]
+		public static void GetName(string code, TypeNameOption option, string expectedName)
 		{
 			var typeSymbol = ITypeSymbolExtensionsGetName.GetTypeSymbol(code);
 			var name = typeSymbol.GetName(option);
@@ -28,24 +28,24 @@ namespace Rocks.Tests.Extensions
 		}
 
 		[TestCase("public class Base { } public class Target { Base Data { get; } }",
-			GenericsOption.NoGenerics, "Base")]
+			TypeNameOption.NoGenerics, "Base")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target { Base<int, string, Guid> Data { get; } }",
-			GenericsOption.NoGenerics, "Base")]
+			TypeNameOption.NoGenerics, "Base")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target<T, TSomething> { Base<T, string, TSomething> Data { get; } }",
-			GenericsOption.NoGenerics, "Base")]
+			TypeNameOption.NoGenerics, "Base")]
 		[TestCase("public class Base { } public class Target { Base Data { get; } }",
-			GenericsOption.IncludeGenerics, "Base")]
+			TypeNameOption.IncludeGenerics, "Base")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target { Base<int, string, Guid> Data { get; } }",
-			GenericsOption.IncludeGenerics, "Base<int, string, Guid>")]
+			TypeNameOption.IncludeGenerics, "Base<int, string, Guid>")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target<T, TSomething> { Base<T, string, TSomething> Data { get; } }",
-			GenericsOption.IncludeGenerics, "Base<T, string, TSomething>")]
+			TypeNameOption.IncludeGenerics, "Base<T, string, TSomething>")]
 		[TestCase("public class Base { } public class Target { Base Data { get; } }",
-			GenericsOption.FlattenGenerics, "Base")]
+			TypeNameOption.FlattenGenerics, "Base")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target { Base<int, string, Guid> Data { get; } }",
-			GenericsOption.FlattenGenerics, "BaseOfint_string_Guid")]
+			TypeNameOption.FlattenGenerics, "BaseOfint_string_Guid")]
 		[TestCase("public class Base<T, T2, TSomething> { } public class Target<T, TSomething> { Base<T, string, TSomething> Data { get; } }",
-			GenericsOption.FlattenGenerics, "BaseOfT_string_TSomething")]
-		public static void GetNameFromDeclaredType(string code, GenericsOption option, string expectedName)
+			TypeNameOption.FlattenGenerics, "BaseOfT_string_TSomething")]
+		public static void GetNameFromDeclaredType(string code, TypeNameOption option, string expectedName)
 		{
 			var parameterSymbol = ITypeSymbolExtensionsGetName.GetDeclaredTypeSymbol(code);
 			var name = parameterSymbol.Type.GetName(option);
