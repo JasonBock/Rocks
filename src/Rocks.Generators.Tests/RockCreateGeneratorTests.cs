@@ -18,18 +18,16 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock<T>
+	public interface IMock
 	{
-		void Foo(T value);
-		T Data { get; }
-		void Foo<T1, T2>(T1 value1, T value2, T2 value3) { }
+		void Foo<T>(T value) where T : class;
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock<int>>();
+			var rock = Rock.Create<IMock>();
 		}
 	}
 }");
