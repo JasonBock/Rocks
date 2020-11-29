@@ -43,6 +43,26 @@ public class {targetTypeName} {{ }}";
 		}
 
 		[Test]
+		public static void CreateWhenTypeIsOpenGeneric()
+		{
+			const string targetTypeName = "IGeneric";
+			var code =
+$@"public interface IBase<T1, T2> 
+{{
+	void Foo(T1 a, T2 b);
+}}
+
+public interface IGeneric<T1> : IBase<T1, string> {{ }}";
+
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericsDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
 		public static void CreateWhenClassHasNoMockableMembers()
 		{
 			const string targetTypeName = "NoMockables";

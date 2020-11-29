@@ -16,6 +16,22 @@ namespace Rocks
 			this.Validate();
 		}
 
+		private static bool HasOpenGenerics(INamedTypeSymbol type)
+		{ 
+			if(type.TypeArguments.Length > 0)
+			{
+				for(var i = 0; i < type.TypeArguments.Length; i++)
+				{
+					if(type.TypeArguments[i].Equals(type.TypeParameters[i]))
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
 		private void Validate()
 		{
 			var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
@@ -23,6 +39,12 @@ namespace Rocks
 			if(this.TypeToMock.IsSealed)
 			{
 				diagnostics.Add(CannotMockSealedTypeDescriptor.Create(this.TypeToMock));
+			}
+
+			if(this.TypeToMock is INamedTypeSymbol namedType &&
+				MockInformation.HasOpenGenerics(namedType))
+			{
+				diagnostics.Add(CannotSpecifyTypeWithOpenGenericsDescriptor.Create(this.TypeToMock));
 			}
 
 			// TODO: Could we figure out if TreatWarningsAsErrors is true?
