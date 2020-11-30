@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceGenericProperty<T>
+	public abstract class AbstractClassGenericProperty<T>
 	{
-		List<string> Values { get; }
-		T Data { get; }
+		public abstract List<string> Values { get; }
+		public abstract T Data { get; }
 	}
 
-	public static class InterfaceGenericPropertyTests
+	public static class AbstractClassGenericPropertyTests
 	{
 		[Test]
 		public static void MockUsingGenericType()
 		{
 			var returnValue = new List<string>();
-			var rock = Rock.Create<IInterfaceGenericProperty<int>>();
+			var rock = Rock.Create<AbstractClassGenericProperty<int>>();
 			rock.Properties().Getters().Values().Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -33,7 +33,7 @@ namespace Rocks.IntegrationTests
 		public static void MockUsingGenericTypeParameter()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericProperty<int>>();
+			var rock = Rock.Create<AbstractClassGenericProperty<int>>();
 			rock.Properties().Getters().Data().Returns(returnValue);
 
 			var chunk = rock.Instance();

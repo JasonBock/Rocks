@@ -3,20 +3,20 @@ using System.Collections.Generic;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceGenericIndexer<T>
+	public abstract class AbstractClassGenericIndexer<T>
 	{
-		List<string> this[int a] { get; }
-		int this[int a, T b] { get; }
-		T this[string a] { get; }
+		public abstract List<string> this[int a] { get; }
+		public abstract int this[int a, T b] { get; }
+		public abstract T this[string a] { get; }
 	}
 
-	public static class InterfaceGenericIndexerTests
+	public static class AbstractClassGenericIndexerTests
 	{
 		[Test]
 		public static void MockUsingGenericType()
 		{
 			var returnValue = new List<string>();
-			var rock = Rock.Create<IInterfaceGenericIndexer<int>>();
+			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
 			rock.Indexers().Getters().This(4).Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -34,7 +34,7 @@ namespace Rocks.IntegrationTests
 		public static void MockUsingGenericTypeParameter()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericIndexer<int>>();
+			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
 			rock.Indexers().Getters().This(4, 5).Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -52,7 +52,7 @@ namespace Rocks.IntegrationTests
 		public static void MockUsingGenericTypeParameterAsReturn()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericIndexer<int>>();
+			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
 			rock.Indexers().Getters().This("b").Returns(returnValue);
 
 			var chunk = rock.Instance();

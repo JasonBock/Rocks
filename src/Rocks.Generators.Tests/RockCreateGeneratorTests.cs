@@ -18,21 +18,18 @@ using System;
 
 namespace MockTests
 {
-	public sealed class MyEventArgs
-		: EventArgs
-	{ }
-
-	public interface IMock<T>
+	public abstract class AbstractMethodVoidTests
 	{
-		void Foo();
-		event EventHandler<T> MyEvent;
+		public abstract void NoParameters();
+		public abstract void OneParameter(int a);
+		public abstract void MultipleParameters(int a, string b);
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock<MyEventArgs>>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 		}
 	}
 }");

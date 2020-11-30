@@ -3,7 +3,7 @@ using System;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IExplicitInterfaceImplementationTestsOne
+	public interface IExplicitInterfaceImplementationOne
 	{
 		void A();
 		int B { get; set; }
@@ -11,7 +11,7 @@ namespace Rocks.IntegrationTests
 		event EventHandler C;
 	}
 
-	public interface IExplicitInterfaceImplementationTestsTwo
+	public interface IExplicitInterfaceImplementationTwo
 	{
 		void A();
 		int B { get; set; }
@@ -19,8 +19,8 @@ namespace Rocks.IntegrationTests
 		event EventHandler C;
 	}
 
-	public interface IExplicitInterfaceImplementationTests
-		: IExplicitInterfaceImplementationTestsOne, IExplicitInterfaceImplementationTestsTwo
+	public interface IExplicitInterfaceImplementation
+		: IExplicitInterfaceImplementationOne, IExplicitInterfaceImplementationTwo
 	{ }
 
 	public static class ExplicitInterfaceImplementationTests
@@ -28,13 +28,13 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockMethod()
 		{
-			var rock = Rock.Create<IExplicitInterfaceImplementationTests>();
-			rock.ExplicitMethodsForIExplicitInterfaceImplementationTestsOne().A();
-			rock.ExplicitMethodsForIExplicitInterfaceImplementationTestsTwo().A();
+			var rock = Rock.Create<IExplicitInterfaceImplementation>();
+			rock.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
+			rock.ExplicitMethodsForIExplicitInterfaceImplementationTwo().A();
 
 			var chunk = rock.Instance();
-			((IExplicitInterfaceImplementationTestsOne)chunk).A();
-			((IExplicitInterfaceImplementationTestsTwo)chunk).A();
+			((IExplicitInterfaceImplementationOne)chunk).A();
+			((IExplicitInterfaceImplementationTwo)chunk).A();
 
 			rock.Verify();
 		}
@@ -42,17 +42,17 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockProperty()
 		{
-			var rock = Rock.Create<IExplicitInterfaceImplementationTests>();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTestsOne().Getters().B();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTestsOne().Setters().B(Arg.Any<int>());
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTestsTwo().Getters().B();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTestsTwo().Setters().B(Arg.Any<int>());
+			var rock = Rock.Create<IExplicitInterfaceImplementation>();
+			rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
+			rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Setters().B(Arg.Any<int>());
+			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().B();
+			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Setters().B(Arg.Any<int>());
 
 			var chunk = rock.Instance();
-			var oneValue = ((IExplicitInterfaceImplementationTestsOne)chunk).B;
-			((IExplicitInterfaceImplementationTestsOne)chunk).B = oneValue;
-			var twoValue = ((IExplicitInterfaceImplementationTestsTwo)chunk).B;
-			((IExplicitInterfaceImplementationTestsTwo)chunk).B = twoValue;
+			var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
+			((IExplicitInterfaceImplementationOne)chunk).B = oneValue;
+			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
+			((IExplicitInterfaceImplementationTwo)chunk).B = twoValue;
 
 			rock.Verify();
 		}
@@ -60,17 +60,17 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockIndexer()
 		{
-			var rock = Rock.Create<IExplicitInterfaceImplementationTests>();
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTestsOne().Getters().This(Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTestsOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTestsTwo().Getters().This(Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTestsTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
+			var rock = Rock.Create<IExplicitInterfaceImplementation>();
+			rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
+			rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
+			rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Getters().This(Arg.Any<int>());
+			rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
 
 			var chunk = rock.Instance();
-			var oneValue = ((IExplicitInterfaceImplementationTestsOne)chunk)[3];
-			((IExplicitInterfaceImplementationTestsOne)chunk)[3] = oneValue;
-			var twoValue = ((IExplicitInterfaceImplementationTestsTwo)chunk)[3];
-			((IExplicitInterfaceImplementationTestsTwo)chunk)[3] = twoValue;
+			var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
+			((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue;
+			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
+			((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue;
 
 			rock.Verify();
 		}

@@ -3,7 +3,7 @@ using System;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceMethodReturnWithEventsTests
+	public interface IInterfaceMethodReturnWithEvents
 	{
 		int NoParameters();
 		event EventHandler MyEvent;
@@ -14,7 +14,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockRaiseEvent()
 		{
-			var rock = Rock.Create<IInterfaceMethodReturnWithEventsTests>();
+			var rock = Rock.Create<IInterfaceMethodReturnWithEvents>();
 			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -35,7 +35,7 @@ namespace Rocks.IntegrationTests
 		public static void MockRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceMethodReturnWithEventsTests>();
+			var rock = Rock.Create<IInterfaceMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
 				.Callback(() =>
 				{
@@ -62,7 +62,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockRaiseEventWithMultipleCalls()
 		{
-			var rock = Rock.Create<IInterfaceMethodReturnWithEventsTests>();
+			var rock = Rock.Create<IInterfaceMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
 				.RaisesMyEvent(EventArgs.Empty);
@@ -87,7 +87,7 @@ namespace Rocks.IntegrationTests
 		public static void MockRaiseEventWithMultipleCallsWithCallback()
 		{
 			var callbackInvokedCount = 0;
-			var rock = Rock.Create<IInterfaceMethodReturnWithEventsTests>();
+			var rock = Rock.Create<IInterfaceMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
 				.Callback(() =>

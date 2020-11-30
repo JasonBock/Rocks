@@ -3,18 +3,18 @@ using System;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceMethodVoidWithEvents
+	public abstract class AbstractClassMethodVoidWithEvents
 	{
-		void NoParameters();
-		event EventHandler MyEvent;
+		public abstract void NoParameters();
+		public abstract event EventHandler MyEvent;
 	}
 
-	public static class InterfaceMethodVoidWithEventsTests
+	public static class AbstractClassMethodVoidWithEventsTests
 	{
 		[Test]
 		public static void MockEvent()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodVoidWithEvents>();
 			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -34,7 +34,7 @@ namespace Rocks.IntegrationTests
 		public static void MockEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodVoidWithEvents>();
 			rock.Methods().NoParameters()
 				.Callback(() => wasCallbackInvoked = true)
 				.RaisesMyEvent(EventArgs.Empty);
@@ -56,7 +56,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockEventWithMultipleCalls()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodVoidWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
 				.RaisesMyEvent(EventArgs.Empty);
@@ -79,7 +79,7 @@ namespace Rocks.IntegrationTests
 		public static void MockEventWithMultipleCallsWithCallback()
 		{
 			var callbackInvokedCount = 0;
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodVoidWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
 				.Callback(() => callbackInvokedCount++)

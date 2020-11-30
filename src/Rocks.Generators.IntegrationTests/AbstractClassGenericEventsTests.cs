@@ -4,24 +4,24 @@ using System.Collections.Generic;
 
 namespace Rocks.IntegrationTests
 {
-	public sealed class InterfaceEventArgs
+	public sealed class AbstractClassEventArgs
 		: EventArgs
 	{ }
 
-	public interface IInterfaceGenericEvents<T>
+	public abstract class AbstractClassGenericEvents<T>
 	{
-		void Foo();
-		event EventHandler<T> MyEvent;
+		public abstract void Foo();
+		public abstract event EventHandler<T> MyEvent;
 	}
 
-	public static class InterfaceGenericEventsTests
+	public static class AbstractClassGenericEventsTests
 	{
 		[Test]
 		public static void MockUsingGenericType()
 		{
 			var returnValue = new List<string>();
-			var rock = Rock.Create<IInterfaceGenericEvents<InterfaceEventArgs>>();
-			rock.Methods().Foo().RaisesMyEvent(new InterfaceEventArgs());
+			var rock = Rock.Create<AbstractClassGenericEvents<AbstractClassEventArgs>>();
+			rock.Methods().Foo().RaisesMyEvent(new AbstractClassEventArgs());
 
 			var wasEventRaised = false;
 			var chunk = rock.Instance();

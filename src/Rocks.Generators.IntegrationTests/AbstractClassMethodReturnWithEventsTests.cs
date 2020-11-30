@@ -3,46 +3,51 @@ using System;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceMethodVoidWithEvents
+	public abstract class AbstractClassMethodReturnWithEvents
 	{
-		void NoParameters();
-		event EventHandler MyEvent;
+		public abstract int NoParameters();
+		public abstract event EventHandler MyEvent;
 	}
 
-	public static class InterfaceMethodVoidWithEventsTests
+	public static class AbstractClassMethodReturnWithEventsTests
 	{
 		[Test]
-		public static void MockEvent()
+		public static void MockRaiseEvent()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
 
 			var wasEventRaised = false;
 			var chunk = rock.Instance();
 			chunk.MyEvent += (s, e) => wasEventRaised = true;
-			chunk.NoParameters();
+			var value = chunk.NoParameters();
 
 			rock.Verify();
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(wasEventRaised, Is.True);
+				Assert.That(value, Is.EqualTo(default(int)));
 			});
 		}
 
 		[Test]
-		public static void MockEventWithCallback()
+		public static void MockRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
-				.Callback(() => wasCallbackInvoked = true)
+				.Callback(() =>
+				{
+					wasCallbackInvoked = true;
+					return 3;
+				})
 				.RaisesMyEvent(EventArgs.Empty);
 
 			var wasEventRaised = false;
 			var chunk = rock.Instance();
 			chunk.MyEvent += (s, e) => wasEventRaised = true;
-			chunk.NoParameters();
+			var value = chunk.NoParameters();
 
 			rock.Verify();
 
@@ -50,13 +55,14 @@ namespace Rocks.IntegrationTests
 			{
 				Assert.That(wasEventRaised, Is.True);
 				Assert.That(wasCallbackInvoked, Is.True);
+				Assert.That(value, Is.EqualTo(3));
 			});
 		}
 
 		[Test]
-		public static void MockEventWithMultipleCalls()
+		public static void MockRaiseEventWithMultipleCalls()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
 				.RaisesMyEvent(EventArgs.Empty);
@@ -64,32 +70,38 @@ namespace Rocks.IntegrationTests
 			var eventRaisedCount = 0;
 			var chunk = rock.Instance();
 			chunk.MyEvent += (s, e) => eventRaisedCount++;
-			chunk.NoParameters();
-			chunk.NoParameters();
+			var valueOne = chunk.NoParameters();
+			var valueTwo = chunk.NoParameters();
 
 			rock.Verify();
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(eventRaisedCount, Is.EqualTo(2));
+				Assert.That(valueOne, Is.EqualTo(default(int)));
+				Assert.That(valueTwo, Is.EqualTo(default(int)));
 			});
 		}
 
 		[Test]
-		public static void MockEventWithMultipleCallsWithCallback()
+		public static void MockRaiseEventWithMultipleCallsWithCallback()
 		{
 			var callbackInvokedCount = 0;
-			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
+			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
 				.CallCount(2)
-				.Callback(() => callbackInvokedCount++)
+				.Callback(() =>
+				{
+					callbackInvokedCount++;
+					return 3;
+				})
 				.RaisesMyEvent(EventArgs.Empty);
 
 			var eventRaisedCount = 0;
 			var chunk = rock.Instance();
 			chunk.MyEvent += (s, e) => eventRaisedCount++;
-			chunk.NoParameters();
-			chunk.NoParameters();
+			var valueOne = chunk.NoParameters();
+			var valueTwo = chunk.NoParameters();
 
 			rock.Verify();
 
@@ -97,6 +109,8 @@ namespace Rocks.IntegrationTests
 			{
 				Assert.That(eventRaisedCount, Is.EqualTo(2));
 				Assert.That(callbackInvokedCount, Is.EqualTo(2));
+				Assert.That(valueOne, Is.EqualTo(3));
+				Assert.That(valueTwo, Is.EqualTo(3));
 			});
 		}
 	}

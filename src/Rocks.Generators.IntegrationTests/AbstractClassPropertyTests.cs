@@ -3,23 +3,23 @@ using System;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceProperty
+	public abstract class AbstractClassProperty
 	{
-		int GetData { get; }
-		int GetAndSetData { get; set; }
+		public abstract int GetData { get; }
+		public abstract int GetAndSetData { get; set; }
 #pragma warning disable CA1044 // Properties should not be write only
-		int SetData { set; }
+		public abstract int SetData { set; }
 #pragma warning restore CA1044 // Properties should not be write only
 
-		event EventHandler MyEvent;
+		public abstract event EventHandler MyEvent;
 	}
 
-	public static class InterfacePropertyTests
+	public static class AbstractClassPropertyTests
 	{
 		[Test]
 		public static void MockGet()
 		{
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Getters().GetData();
 
 			var chunk = rock.Instance();
@@ -36,7 +36,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockGetWithRaiseEvent()
 		{
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Getters().GetData().RaisesMyEvent(EventArgs.Empty);
 
 			var wasEventRaised = false;
@@ -57,7 +57,7 @@ namespace Rocks.IntegrationTests
 		public static void MockGetWithCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Getters().GetData().Callback(() =>
 			{
 				wasCallbackInvoked = true;
@@ -80,7 +80,7 @@ namespace Rocks.IntegrationTests
 		public static void MockGetWithRaiseEventAndCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Getters().GetData().Callback(() =>
 			{
 				wasCallbackInvoked = true;
@@ -105,7 +105,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockSet()
 		{
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>());
 
 			var chunk = rock.Instance();
@@ -117,7 +117,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockSetWithRaiseEvent()
 		{
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>())
 				.RaisesMyEvent(EventArgs.Empty);
 
@@ -138,7 +138,7 @@ namespace Rocks.IntegrationTests
 		public static void MockSetWithCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>())
 				.Callback(_ => wasCallbackInvoked = true);
 
@@ -157,7 +157,7 @@ namespace Rocks.IntegrationTests
 		public static void MockSetWithRaiseEventAndCallback()
 		{
 			var wasCallbackInvoked = false;
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>())
 				.RaisesMyEvent(EventArgs.Empty)
 				.Callback(_ => wasCallbackInvoked = true);
@@ -179,7 +179,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockGetAndSet()
 		{
-			var rock = Rock.Create<IInterfaceProperty>();
+			var rock = Rock.Create<AbstractClassProperty>();
 			rock.Properties().Getters().GetAndSetData();
 			rock.Properties().Setters().GetAndSetData(Arg.Any<int>());
 

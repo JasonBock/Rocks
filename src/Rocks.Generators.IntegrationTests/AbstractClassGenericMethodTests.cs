@@ -5,22 +5,22 @@ using System.Collections.Generic;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceGenericMethodTests<T>
+	public abstract class AbstractClassGenericMethod<T>
 	{
-		void Foo(List<string> values);
-		void Quux(T value);
-		void Bar<TParam>(TParam value);
-		List<string> FooReturn();
-		T QuuxReturn();
-		TReturn BarReturn<TReturn>();
+		public abstract void Foo(List<string> values);
+		public abstract void Quux(T value);
+		public abstract void Bar<TParam>(TParam value);
+		public abstract List<string> FooReturn();
+		public abstract T QuuxReturn();
+		public abstract TReturn BarReturn<TReturn>();
 	}
 
-	public static class InterfaceGenericMethodTests
+	public static class AbstractClassGenericMethodTests
 	{
 		[Test]
 		public static void MockUsingGenericType()
 		{
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().Foo(Arg.Any<List<string>>());
 
 			var chunk = rock.Instance();
@@ -32,7 +32,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithGenericTypeParameter()
 		{
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().Quux(Arg.Any<int>());
 
 			var chunk = rock.Instance();
@@ -44,7 +44,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithGenericParameterType()
 		{
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().Bar(Arg.Any<int>());
 
 			var chunk = rock.Instance();
@@ -56,7 +56,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithGenericParameterTypeThatDoesNotMatch()
 		{
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().Bar(Arg.Any<int>());
 
 			var chunk = rock.Instance();
@@ -71,7 +71,7 @@ namespace Rocks.IntegrationTests
 		public static void MockUsingGenericTypeAsReturn()
 		{
 			var returnValue = new List<string>();
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().FooReturn().Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -89,7 +89,7 @@ namespace Rocks.IntegrationTests
 		public static void MockWithGenericTypeParameterAsReturn()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().QuuxReturn().Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -107,7 +107,7 @@ namespace Rocks.IntegrationTests
 		public static void MockWithGenericParameterTypeAsReturn()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().BarReturn<int>().Returns(returnValue);
 
 			var chunk = rock.Instance();
@@ -125,7 +125,7 @@ namespace Rocks.IntegrationTests
 		public static void MockWithGenericParameterTypeAsReturnThatDoesNotMatch()
 		{
 			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericMethodTests<int>>();
+			var rock = Rock.Create<AbstractClassGenericMethod<int>>();
 			rock.Methods().BarReturn<int>().Returns(returnValue);
 
 			var chunk = rock.Instance();

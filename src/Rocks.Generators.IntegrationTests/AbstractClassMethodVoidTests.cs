@@ -3,19 +3,19 @@ using Rocks.Exceptions;
 
 namespace Rocks.IntegrationTests
 {
-	public interface IInterfaceMethodVoid
+	public abstract class AbstractMethodVoidTests
 	{
-		void NoParameters();
-		void OneParameter(int a);
-		void MultipleParameters(int a, string b);
+		public abstract void NoParameters();
+		public abstract void OneParameter(int a);
+		public abstract void MultipleParameters(int a, string b);
 	}
 
-	public static class InterfaceMethodVoidTests
+	public static class AbstractClassMethodVoidTests
 	{
 		[Test]
 		public static void MockWithNoParameters()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters();
 
 			var chunk = rock.Instance();
@@ -27,7 +27,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithNoParametersMultipleCalls()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
 
 			var chunk = rock.Instance();
@@ -40,7 +40,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithNoParametersMultipleCallsNotMet()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
 
 			var chunk = rock.Instance();
@@ -57,7 +57,7 @@ namespace Rocks.IntegrationTests
 		{
 			var wasCallbackInvoked = false;
 
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters().Callback(() => wasCallbackInvoked = true);
 
 			var chunk = rock.Instance();
@@ -73,7 +73,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithNoParametersNoExpectationSet()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 
 			var chunk = rock.Instance();
 
@@ -86,7 +86,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithNoParametersExpectationsNotMet()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters();
 
 			var chunk = rock.Instance();
@@ -100,7 +100,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithOneParameter()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().OneParameter(3);
 
 			var chunk = rock.Instance();
@@ -113,7 +113,7 @@ namespace Rocks.IntegrationTests
 		public static void MockWithOneParameterWithCallback()
 		{
 			var aValue = 0;
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().OneParameter(3).Callback(a => aValue = a);
 
 			var chunk = rock.Instance();
@@ -130,7 +130,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithOneParameterArgExpectationNotMet()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().OneParameter(3);
 
 			var chunk = rock.Instance();
@@ -144,7 +144,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithMultipleParameters()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");
 
 			var chunk = rock.Instance();
@@ -158,7 +158,7 @@ namespace Rocks.IntegrationTests
 		{
 			var aValue = 0;
 			var bValue = string.Empty;
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
 
 			var chunk = rock.Instance();
@@ -176,7 +176,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithMultipleParametersArgExpectationNotMet()
 		{
-			var rock = Rock.Create<IInterfaceMethodVoid>();
+			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");
 
 			var chunk = rock.Instance();
