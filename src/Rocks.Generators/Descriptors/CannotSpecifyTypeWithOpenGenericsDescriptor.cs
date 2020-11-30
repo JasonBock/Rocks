@@ -16,6 +16,6 @@ namespace Rocks.Descriptors
 
 		public const string Id = "ROCK5";
 		public const string Message = "The type {0} has an open generic value and cannot be mocked";
-		public const string Title = "Cannot Mock Open Generic Types";
+		public const string Title = "Cannot Specify Type With Open Generics";
 	}
 }

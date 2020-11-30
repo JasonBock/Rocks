@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -27,7 +26,7 @@ namespace Rocks.Builders
 				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(method.Parameters, method.ReturnType)}, {method.ReturnType.GetName()}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}) =>");
+			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
 			writer.Indent++;
 
 			var addReturnValue = method.ReturnsVoid ? string.Empty : $"<{method.ReturnType.GetName()}>";

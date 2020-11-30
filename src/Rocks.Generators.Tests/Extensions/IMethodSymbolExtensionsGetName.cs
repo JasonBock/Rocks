@@ -12,7 +12,7 @@ namespace Rocks.Tests.Extensions
 	{
 		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.NoGenerics, "Foo")]
 		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.IncludeGenerics, "Foo<T>")]
-		public static void GetName(string code, TypeNameOption option, string expectedName)
+		public static void GetName(string code, MethodNameOption option, string expectedName)
 		{
 			var typeSymbol = IMethodSymbolExtensionsGetName.GetMethodSymbol(code);
 			var name = typeSymbol.GetName(option);

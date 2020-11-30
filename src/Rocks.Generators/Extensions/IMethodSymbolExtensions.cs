@@ -7,11 +7,10 @@ namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
-		internal static string GetName(this IMethodSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
+		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics)
 		{
-			var generics = options == TypeNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
+			var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
 				$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetName()))}>" : string.Empty;
-
 			return $"{self.Name}{generics}";
 		}
 

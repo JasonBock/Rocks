@@ -502,6 +502,8 @@ Get rid of everything related to generating explicit implementations.
 * DONE - Don't always add to namespace set if you know you've already captured the namespace somewhere else in the builders.
 * DONE - See if AnalyzerOptions on the generator context gives me the .editorconfig value
 * DONE - Instead of ".Properties().GetGetData()", should I do ".Properties().Getters().GetData()"? That seems cleaner.
+* DONE - Callback has to be called before RaisesXYZ. Does it have to be that way?
+* DONE - If I define the typeToMock as something like "IMock<T>" and then I do "Rock.Create<IMock>", that's just wrong code. Need to make sure we don't generate anything if there are issues with the code (check diagnostics?)
 * Start shoring up tests. Unit for things that aren't doing generation, and integration to ensure the generation works as expected.
 	* Unit
 		* Mockable results
@@ -596,34 +598,32 @@ Get rid of everything related to generating explicit implementations.
 				* DONE - Event
 			* Generics
 				* Method 
-					* with parameter 
+					* DONE - with parameter 
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
 						* based on generic method type parameter
+						* based on generic method type parameter that does not match
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
 						* based on generic method type parameter
+						* based on generic method type parameter that does not match
 				* Property
 					* with parameter 
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 				* Indexer
 					* with parameter 
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 				* Event
-		* Class
+		* Class (should I do these 2 ways, one as abstract, one as virtual?)
 			* Method
 				* with void
 					* no parameters
@@ -682,35 +682,34 @@ Get rid of everything related to generating explicit implementations.
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
 						* based on generic method type parameter
+						* based on generic method type parameter that does not match
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
 						* based on generic method type parameter
+						* based on generic method type parameter that does not match
 				* Property
 					* with parameter 
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 				* Indexer
 					* with parameter 
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 					* with return value
 						* using generic type (e.g. List<string>)
 						* based on generic type parameter
-						* based on generic method type parameter (?)
 				* Event
 
+* Need to add the generic parameters to the extension methods
 * Get rid of ".ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)" and use the right overload of ".GetName()"
+* Similarly, look for where ".Name" is used for IMethodSymbol, and change it to ".GetName()"
 * Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
 * Change where the cast is being done to .Method (e.g. ((Func<int>)methodHandler.Method) ) to using DelegateBuilder.
 * Ensure all Assert.That have meaningful messages
-* Callback has to be called before RaisesXYZ. Does it have to be that way?
 * Update NuGet packages
 * Add a project that references the Debug NuGet package, similar to do what I did with InlineMapping
 * This is still done in the mock type: "private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;". It doesn't need to be a dictionary; it can be "ImmutableArray<ImmutableArray<HandlerInformation>>"
@@ -733,6 +732,7 @@ namespace TargetTypeNamespace
 }
 
 and ensure that the assembly can compile and emit
+
 
 Make RC2 for 5.0.0
 
