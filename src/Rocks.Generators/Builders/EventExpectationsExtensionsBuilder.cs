@@ -74,11 +74,11 @@ namespace Rocks.Builders
 				writer.WriteLine("}");
 			}
 
-			var typeToMockName = information.TypeToMock.GetName(TypeNameOption.FlattenGenerics);
-
-			writer.WriteLine($"internal static class {prefix}AdornmentsOf{typeToMockName}Extensions");
+			writer.WriteLine($"internal static class {prefix}AdornmentsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
+
+			var typeToMockName = information.TypeToMock.GetName();
 
 			foreach (var result in information.Events)
 			{

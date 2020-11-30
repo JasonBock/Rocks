@@ -599,29 +599,21 @@ Get rid of everything related to generating explicit implementations.
 			* Generics
 				* Method 
 					* DONE - with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-						* based on generic method type parameter
-						* based on generic method type parameter that does not match
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-						* based on generic method type parameter
-						* based on generic method type parameter that does not match
-				* Property
-					* with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+						* DONE - based on generic method type parameter
+						* DONE - based on generic method type parameter that does not match
+					* DONE - with return value
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+						* DONE - based on generic method type parameter
+						* DONE - based on generic method type parameter that does not match
+				* DONE - Property
+					* DONE - using generic type (e.g. List<string>)
+					* DONE - based on generic type parameter
 				* Indexer
-					* with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
+					* using generic type (e.g. List<string>)
+					* based on generic type parameter
 				* Event
 		* Class (should I do these 2 ways, one as abstract, one as virtual?)
 			* Method

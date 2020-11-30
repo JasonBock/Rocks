@@ -18,18 +18,21 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock<U>
-		where U : struct
+	public sealed class MyEventArgs
+		: EventArgs
+	{ }
+
+	public interface IMock<T>
 	{
-		void Foo<T>(T value, U structValue) where T : class;
+		void Foo();
+		event EventHandler<T> MyEvent;
 	}
 
-	public static class Test<Q>
-		where Q : struct
+	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock<int>>();
+			var rock = Rock.Create<IMock<MyEventArgs>>();
 		}
 	}
 }");
