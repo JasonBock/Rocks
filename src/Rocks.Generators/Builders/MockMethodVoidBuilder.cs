@@ -151,11 +151,10 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var methodCast = method.Parameters.Length == 0 ? "(Action)" :
-				$"(Action<{string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()))}>)";
+			var methodCast = DelegateBuilder.Build(method.Parameters);
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ => _.Name));
-			writer.WriteLine($"({methodCast}methodHandler.Method)({methodArguments});");
+			writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments});");
 
 			writer.Indent--;
 			writer.WriteLine("}");

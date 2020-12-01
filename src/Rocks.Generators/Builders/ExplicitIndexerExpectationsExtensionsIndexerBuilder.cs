@@ -13,7 +13,7 @@ namespace Rocks.Builders
 			var propertyReturnValue = property.Type.GetName();
 			var mockTypeName = result.MockType.GetName();
 			var thisParameter = $"this ExplicitIndexerGetterExpectations<{mockTypeName}, {containingTypeName }> self";
-			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.Parameters, property.Type)}, {propertyReturnValue}>";
+			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.Build(property.Parameters, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var instanceParameters = string.Join(", ", thisParameter,
@@ -34,7 +34,7 @@ namespace Rocks.Builders
 			var property = result.Value;
 			var mockTypeName = result.MockType.GetName();
 			var thisParameter = $"this ExplicitIndexerSetterExpectations<{mockTypeName}, {containingTypeName}> self";
-			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
+			var adornmentsType = $"IndexerAdornments<{mockTypeName}, {DelegateBuilder.Build(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var instanceParameters = string.Join(", ", thisParameter,

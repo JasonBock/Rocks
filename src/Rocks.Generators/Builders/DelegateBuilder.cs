@@ -7,7 +7,7 @@ namespace Rocks.Builders
 {
 	internal static class DelegateBuilder
 	{
-		internal static string GetDelegate(ImmutableArray<IParameterSymbol> parameters, ITypeSymbol? returnType = null)
+		internal static string Build(ImmutableArray<IParameterSymbol> parameters, ITypeSymbol? returnType = null)
 		{
 			if(parameters.Length > 0)
 			{

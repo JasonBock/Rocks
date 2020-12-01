@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders
 {
@@ -19,8 +20,8 @@ namespace Rocks.Builders
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
-			var methodCast = $"(Func<{result.Value.Type.GetName()}>)";
-			writer.WriteLine($"({methodCast}methodHandler.Method)() :");
+			var methodCast = DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, result.Value.Type);
+			writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
 			writer.WriteLine($"((HandlerInformation<{result.Value.Type.GetName()}>)methodHandler).ReturnValue;");
 			writer.Indent--;
 
@@ -67,7 +68,8 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"((Action<{result.Value.Type.GetName()}>)methodHandler.Method)(value);");
+			var methodCast = DelegateBuilder.Build(result.Value.SetMethod!.Parameters);
+			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
 
 			writer.Indent--;
 			writer.WriteLine("}");

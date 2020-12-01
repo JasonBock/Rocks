@@ -22,8 +22,8 @@ namespace Rocks.Builders
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
 
 			var adornmentsType = method.ReturnsVoid ? 
-				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(method.Parameters)}>" :
-				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(method.Parameters, method.ReturnType)}, {method.ReturnType.GetName()}>";
+				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.Build(method.Parameters)}>" :
+				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.Build(method.Parameters, method.ReturnType)}, {method.ReturnType.GetName()}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");

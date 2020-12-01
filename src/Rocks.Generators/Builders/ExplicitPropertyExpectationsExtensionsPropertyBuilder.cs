@@ -13,7 +13,7 @@ namespace Rocks.Builders
 			var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
 			var thisParameter = $"this ExplicitPropertyGetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
 			var mockTypeName = result.MockType.GetName();
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(ImmutableArray<IParameterSymbol>.Empty, property.Type)}, {propertyReturnValue}>";
+			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type)}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
@@ -29,7 +29,7 @@ namespace Rocks.Builders
 			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
 			var thisParameter = $"this ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
 			var mockTypeName = result.MockType.GetName();
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.GetDelegate(property.SetMethod!.Parameters)}>";
+			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.Build(property.SetMethod!.Parameters)}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, Arg<{propertyParameterValue}> value) =>");

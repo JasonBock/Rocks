@@ -92,11 +92,10 @@ namespace Rocks.Builders
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
 
-			var methodCast = method.Parameters.Length == 0 ? $"(Func<{method.ReturnType.GetName()}>)" :
-				$"(Func<{string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()).Concat(new [] { method.ReturnType.GetName() }))}>)";
+			var methodCast = DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ => _.Name));
-			writer.WriteLine($"({methodCast}methodHandler.Method)({methodArguments}) :");
+			writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
 			writer.WriteLine($"((HandlerInformation<{method.ReturnType.GetName()}>)methodHandler).ReturnValue;");
 
 			writer.Indent--;
