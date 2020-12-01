@@ -93,17 +93,12 @@ public interface {targetTypeName}
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(methods.Length, Is.EqualTo(2));
-				var baseMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == baseTypeName);
-				Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(methods.Length, Is.EqualTo(1));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			});
 		}
 		
-		// TODO: This is incorrect.
-		// There should be 2 methods found, Bar() and Foo(), not 3.
-		// Neither requires overrides or explicit interface implementation
 		[Test]
 		public static void GetMockableMethodsWhenInterfaceHasBaseInterfacesWithMatchingMethods()
 		{
@@ -136,13 +131,16 @@ public interface {targetTypeName}
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(methods.Length, Is.EqualTo(2));
+				Assert.That(methods.Length, Is.EqualTo(3));
 				var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 				Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(baseOneMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 				var baseTwoMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseTwoTypeName);
 				Assert.That(baseTwoMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(baseTwoMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 				var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 				Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+				Assert.That(targetMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			});
 		}
 

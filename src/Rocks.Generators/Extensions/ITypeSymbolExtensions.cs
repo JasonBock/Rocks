@@ -74,7 +74,6 @@ namespace Rocks.Extensions
 							ISymbolExtensions.CanBeSeenByContainingAssembly(_, containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
 					Array.Empty<IMethodSymbol>().ToImmutableArray();
 
-		// NOTE: They're really not "mockable"...
 		internal static ImmutableArray<EventMockableResult> GetMockableEvents(
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 		{
@@ -85,7 +84,7 @@ namespace Rocks.Extensions
 				foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
 					.Where(_ => !_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
-					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, MustBeImplemented.Yes, RequiresOverride.No));
+					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No));
 				}
 
 				var baseInterfaceEventsGroups = new List<List<IEventSymbol>>();
@@ -122,14 +121,14 @@ namespace Rocks.Extensions
 					if (baseInterfaceEventGroup.Count == 1)
 					{
 						events.Add(new(baseInterfaceEventGroup[0], 
-							RequiresExplicitInterfaceImplementation.No, MustBeImplemented.Yes, RequiresOverride.No));
+							RequiresExplicitInterfaceImplementation.No, RequiresOverride.No));
 					}
 					else
 					{
 						foreach (var baseInterfaceEvent in baseInterfaceEventGroup)
 						{
 							events.Add(new(baseInterfaceEvent,
-								RequiresExplicitInterfaceImplementation.Yes, MustBeImplemented.Yes, RequiresOverride.No));
+								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No));
 						}
 					}
 				}
@@ -137,10 +136,9 @@ namespace Rocks.Extensions
 			else
 			{
 				foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
-					.Where(_ => !_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => !_.IsStatic && (_.IsAbstract || _.IsVirtual) && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
-					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No,
-						selfEvent.IsAbstract ? MustBeImplemented.Yes : MustBeImplemented.No, RequiresOverride.Yes));
+					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
 				}
 			}
 

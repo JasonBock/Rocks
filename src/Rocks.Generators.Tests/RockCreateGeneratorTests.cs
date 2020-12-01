@@ -18,18 +18,16 @@ using System;
 
 namespace MockTests
 {
-	public abstract class AbstractMethodVoidTests
+	public interface IMock
 	{
-		public abstract void NoParameters();
-		public abstract void OneParameter(int a);
-		public abstract void MultipleParameters(int a, string b);
+		void Foo();
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<AbstractMethodVoidTests>();
+			var rock = Rock.Create<IMock>();
 		}
 	}
 }");

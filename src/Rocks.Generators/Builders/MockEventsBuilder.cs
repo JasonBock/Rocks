@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -9,9 +10,10 @@ namespace Rocks.Builders
 		private static void BuildImplementation(IndentedTextWriter writer, EventMockableResult @event)
 		{
 			var isOverride = @event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
+			var declareNullable = @event.Value.Type.NullableAnnotation == NullableAnnotation.Annotated ? string.Empty : "?";
 
 			writer.WriteLine(
-				$"public {isOverride}event {@event.Value.Type.GetName()}? {@event.Value.Name};");
+				$"public {isOverride}event {@event.Value.Type.GetName()}{declareNullable} {@event.Value.Name};");
 		}
 
 		private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
@@ -36,25 +38,20 @@ namespace Rocks.Builders
 			
 			foreach(var @event in events)
 			{
-				if(@event.MustBeImplemented == MustBeImplemented.Yes)
+				var attributes = @event.Value.GetAttributes();
+
+				if (attributes.Length > 0)
 				{
-					var attributes = @event.Value.GetAttributes();
+					writer.WriteLine(attributes.GetDescription());
+				}
 
-					if (attributes.Length > 0)
-					{
-						writer.WriteLine(attributes.GetDescription());
-					}
-
-					if(@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
-					{
-						MockEventsBuilder.BuildImplementation(writer, @event);
-					}
-					else
-					{
-						MockEventsBuilder.BuildExplicitImplementation(writer, @event);
-					}
-
-					writer.WriteLine();
+				if(@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+				{
+					MockEventsBuilder.BuildImplementation(writer, @event);
+				}
+				else
+				{
+					MockEventsBuilder.BuildExplicitImplementation(writer, @event);
 				}
 			}
 
