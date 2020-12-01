@@ -12,6 +12,8 @@ using System.Linq;
 namespace ADETTypes
 {
 	public class TypeOfThis { }
+
+	public class OpenGeneric<T1, T2> { }
 }
 
 namespace ADETAttributes
@@ -94,6 +96,25 @@ public interface IA
 			Assert.Multiple(() =>
 			{
 				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
+			});
+		}
+
+		[Test]
+		public static void GetDescriptionWithOpenGeneric()
+		{
+			var attributes = AttributeDataExtensionsTests.GetAttributes(
+@"using Rocks.Tests.Extensions;
+using System;
+
+public interface IA
+{
+	[MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<,>), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
+	void Foo();
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
 			});
 		}
 

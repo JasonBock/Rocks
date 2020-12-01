@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
-	public static class ITypeSymbolExtensionsGetName
+	public static class ITypeSymbolExtensionsGetNameTests
 	{
 		[TestCase("public class Target { }", TypeNameOption.NoGenerics, "Target")]
 		[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.NoGenerics, "Target")]
@@ -18,7 +18,7 @@ namespace Rocks.Tests.Extensions
 		[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.FlattenGenerics, "TargetOfT_T2_TSomething")]
 		public static void GetName(string code, TypeNameOption option, string expectedName)
 		{
-			var typeSymbol = ITypeSymbolExtensionsGetName.GetTypeSymbol(code);
+			var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
 			var name = typeSymbol.GetName(option);
 
 			Assert.Multiple(() =>
@@ -47,7 +47,7 @@ namespace Rocks.Tests.Extensions
 			TypeNameOption.FlattenGenerics, "BaseOfT_string_TSomething")]
 		public static void GetNameFromDeclaredType(string code, TypeNameOption option, string expectedName)
 		{
-			var parameterSymbol = ITypeSymbolExtensionsGetName.GetDeclaredTypeSymbol(code);
+			var parameterSymbol = ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbol(code);
 			var name = parameterSymbol.Type.GetName(option);
 
 			Assert.Multiple(() =>

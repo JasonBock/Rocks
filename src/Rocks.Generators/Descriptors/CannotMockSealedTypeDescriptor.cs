@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.Globalization;
 
 namespace Rocks.Descriptors
@@ -8,7 +9,7 @@ namespace Rocks.Descriptors
 		internal static Diagnostic Create(ITypeSymbol type) =>
 			Diagnostic.Create(new(CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
 				string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDescriptor.Message, 
-					type.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)),
+					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
 					CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title)), type.Locations[0]);

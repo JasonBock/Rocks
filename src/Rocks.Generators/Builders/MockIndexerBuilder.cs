@@ -12,7 +12,7 @@ namespace Rocks.Builders
 		{
 			var method = result.Value.GetMethod!;
 			var methodException =
-				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+				$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("get");
 			writer.WriteLine("{");
@@ -76,7 +76,7 @@ namespace Rocks.Builders
 		{
 			var method = result.Value.SetMethod!;
 			var methodException =
-				$"{method.ReturnType.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+				$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("set");
 			writer.WriteLine("{");

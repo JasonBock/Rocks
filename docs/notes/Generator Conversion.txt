@@ -779,11 +779,12 @@ Get rid of everything related to generating explicit implementations.
 						* DONE - based on generic type parameter
 				* DONE - Event
 				
-* Method identifiers need type parameters (see ClassGenericMethodTests)
+* DONE - Method identifiers need type parameters (see ClassGenericMethodTests)
 * If I have this in a class: "public virtual TReturn? BarReturn<TReturn>() => default;", the mock must not return a nullable type.
 * If I added this to an abstract class, "public abstract event EventHandler? MyEvent;" (note the nullable type), I get an error, something about "add" and "remove" methods.	
-* Get rid of ".ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)" and use the right overload of ".GetName()"
+* DONE - Get rid of ".ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)" and use the right overload of ".GetName()"
 * Similarly, look for where ".Name" is used for IMethodSymbol, and change it to ".GetName()"
+* Similarly, create a ".GetName()" extension for INamespaceSymbol, default to "Full", option of "OnlyCurrent" (add docs), and replace ".ToDisplayString()" for namespaces.
 * Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
 * Change where the cast is being done to .Method (e.g. ((Func<int>)methodHandler.Method) ) to using DelegateBuilder.
 * Ensure all Assert.That have meaningful messages

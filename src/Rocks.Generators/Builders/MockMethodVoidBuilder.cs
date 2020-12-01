@@ -14,7 +14,7 @@ namespace Rocks.Builders
 				method.Parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
-			var methodDescription = $"void {explicitTypeNameDescription}{method.Name}({parametersDescription})";
+			var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
 
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{

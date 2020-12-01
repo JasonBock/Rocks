@@ -49,9 +49,9 @@ namespace Rocks.Extensions
 				value.Kind switch
 				{
 					TypedConstantKind.Primitive => GetValue(value.Value),
-					TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)})",
+					TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetName()})",
 					TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
-					TypedConstantKind.Enum => $"({value.Type!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){value.Value}",
+					TypedConstantKind.Enum => $"({value.Type!.GetName()}){value.Value}",
 					_ => value.Value?.ToString() ?? string.Empty
 				};
 
@@ -64,8 +64,7 @@ namespace Rocks.Extensions
 					_ => value?.ToString() ?? string.Empty
 				};
 
-			var name = self.AttributeClass!.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)
-				.Replace("Attribute", string.Empty);
+			var name = self.AttributeClass!.GetName().Replace("Attribute", string.Empty);
 			var argumentParts = new List<string>();
 
 			if (self.ConstructorArguments.Length > 0)

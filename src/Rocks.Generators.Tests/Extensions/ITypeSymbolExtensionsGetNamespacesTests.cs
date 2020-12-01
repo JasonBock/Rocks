@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
-	public static class ITypeSymbolExtensionsGetNamespaces
+	public static class ITypeSymbolExtensionsGetNamespacesTests
 	{
 		[Test]
 		public static void GetNamespacesForNonGenericType()
@@ -19,7 +19,7 @@ $@"namespace {@namespace}
 {{
 	public class Target {{ }}
 }}";
-			var typeSymbol = ITypeSymbolExtensionsGetNamespaces.GetTypeSymbol(code, "Target");
+			var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, "Target");
 			var namespaces = typeSymbol.GetNamespaces();
 
 			Assert.Multiple(() =>
@@ -66,7 +66,7 @@ namespace {@namespace}
 		public OuterType<MiddleType<InnerType>> {theField} {{ get; }}
 	}}
 }}";
-			var typeSymbol = ITypeSymbolExtensionsGetNamespaces.GetTypeSymbol(code, targetType);
+			var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, targetType);
 			var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 			var namespaces = propertySymbol!.Type.GetNamespaces();
 
