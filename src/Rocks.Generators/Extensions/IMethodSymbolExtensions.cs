@@ -7,6 +7,27 @@ namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
+		internal static bool RequiresDefaultConstraint(this IMethodSymbol self)
+		{
+			if(self.TypeParameters.Length == 0)
+			{
+				return false;
+			}
+			else
+			{
+				foreach(var typeParameter in self.TypeParameters)
+				{
+					if(self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
+						(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
+					{
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
+
 		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics)
 		{
 			var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?

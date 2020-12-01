@@ -8,18 +8,22 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
-	public static class IMethodSymbolExtensionsGetName
+	public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	{
-		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.NoGenerics, "Foo")]
-		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.IncludeGenerics, "Foo<T>")]
-		public static void GetName(string code, MethodNameOption option, string expectedName)
+		[TestCase("public class Target { public void Foo() { } }", false)]
+		[TestCase("public class Target { public void Foo<T>() { } }", false)]
+		[TestCase("public class Target { public void Foo<T>(T a) { } }", false)]
+		[TestCase("public class Target { public void Foo<T>(T? a) { } }", true)]
+		[TestCase("public class Target { public T Foo<T>() => default!; }", false)]
+		[TestCase("public class Target { public T? Foo<T>() => default!; }", true)]
+		public static void RequiresDefaultConstraint(string code, bool expectedValue)
 		{
-			var methodSymbol = IMethodSymbolExtensionsGetName.GetMethodSymbol(code);
-			var name = methodSymbol.GetName(option);
+			var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
+			var requiresDefaultConstraint = methodSymbol.RequiresDefaultConstraint();
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(name, Is.EqualTo(expectedName));
+				Assert.That(requiresDefaultConstraint, Is.EqualTo(expectedValue));
 			});
 		}
 

@@ -23,6 +23,7 @@ namespace Rocks.Builders
 				var parameter = $"{_.Type.GetName()} {_.Name}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
+
 			var methodSignature =
 				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
 			var methodException =

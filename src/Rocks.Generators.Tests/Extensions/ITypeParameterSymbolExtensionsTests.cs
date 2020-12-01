@@ -15,12 +15,13 @@ namespace Rocks.Tests.Extensions
 		[TestCase("public class Base { } public class Target<T> where T : Base? { }", "where T : Base?")]
 		[TestCase("public class Target<T, U> where T : U { }", "where T : U")]
 		[TestCase("public class Target<T> where T : class { }", "where T : class")]
+		[TestCase("public class Target<T> where T : class, new() { }", "where T : class, new()")]
 		[TestCase("public class Target<T> where T : class? { }", "where T : class?")]
 		[TestCase("public class Target<T> where T : new() { }", "where T : new()")]
 		[TestCase("public class Target<T> where T : notnull { }", "where T : notnull")]
 		[TestCase("public class Target<T> where T : unmanaged { }", "where T : unmanaged, struct")]
 		[TestCase("public class Target<T> where T : struct { }", "where T : struct")]
-		public static void GetConstraintsWhenParameterHasNoConstraints(string code, string expectedConstraints)
+		public static void GetConstraints(string code, string expectedConstraints)
 		{
 			var constraints = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code).GetConstraints();
 
