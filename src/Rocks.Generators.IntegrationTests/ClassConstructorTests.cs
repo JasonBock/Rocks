@@ -2,25 +2,25 @@
 
 namespace Rocks.IntegrationTests
 {
-	public abstract class AbstractClassConstructor
+	public class ClassConstructor
 	{
-		protected AbstractClassConstructor(string stringData) => 
+		protected ClassConstructor(string stringData) => 
 			this.StringData = stringData;
-		public AbstractClassConstructor(int intData) => 
+		public ClassConstructor(int intData) => 
 			this.IntData = intData;
-		
-		public abstract int NoParameters();
+
+		public virtual int NoParameters() => default;
 
 		public int IntData { get;  }
 		public string? StringData { get; }
 	}
 
-	public static class AbstractClassConstructorTests
+	public static class ClassConstructorTests
 	{
 		[Test]
 		public static void MockWithNoParametersAndPublicConstructor()
 		{
-			var rock = Rock.Create<AbstractClassConstructor>();
+			var rock = Rock.Create<ClassConstructor>();
 			rock.Methods().NoParameters();
 
 			var chunk = rock.Instance(3);
@@ -38,7 +38,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockWithNoParametersAndProtectedConstructor()
 		{
-			var rock = Rock.Create<AbstractClassConstructor>();
+			var rock = Rock.Create<ClassConstructor>();
 			rock.Methods().NoParameters();
 
 			var chunk = rock.Instance("b");
