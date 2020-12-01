@@ -504,17 +504,19 @@ Get rid of everything related to generating explicit implementations.
 * DONE - Instead of ".Properties().GetGetData()", should I do ".Properties().Getters().GetData()"? That seems cleaner.
 * DONE - Callback has to be called before RaisesXYZ. Does it have to be that way?
 * DONE - If I define the typeToMock as something like "IMock<T>" and then I do "Rock.Create<IMock>", that's just wrong code. Need to make sure we don't generate anything if there are issues with the code (check diagnostics?)
-* Start shoring up tests. Unit for things that aren't doing generation, and integration to ensure the generation works as expected.
-	* Unit
-		* Mockable results
+* DONE - Need to add the generic parameters to the extension methods
+* DONE - Getting errors with class tests that are using events.
+* DONE - Start shoring up tests. Unit for things that aren't doing generation, and integration to ensure the generation works as expected.
+	* DONE - Unit
+		* DONE - Mockable results
 		* DONE - MemberIdentifierAttribute
 		* DONE - Negative MockInformation tests and positive member ones
 		* DONE - Rock.Create, one negative test for diagnostics, and one positive for no diagnostics and new code content
 		* DONE - Descriptor
-	* Integration
-		* General
-			* Having multiple "Rock.Create<>" calls in a method targeting the same type
-			* Do negative verifications with Arg
+	* DONE - Integration
+		* DONE - General
+			* DONE - Having multiple "Rock.Create<>" calls in a method targeting the same type
+			* DONE - Do negative verifications with Arg
 		* DONE - Interfaces
 			* DONE - Method
 				* DONE - with void
@@ -615,7 +617,7 @@ Get rid of everything related to generating explicit implementations.
 					* DONE - using generic type (e.g. List<string>)
 					* DONE - based on generic type parameter
 				* DONE - Event
-		* Abstract Class
+		* DONE - Abstract Class
 			* DONE - Method
 				* DONE - with void
 					* DONE - no parameters
@@ -669,7 +671,7 @@ Get rid of everything related to generating explicit implementations.
 					* DONE - with setter only
 						* DONE - raise event (parameter count is irrelevant)
 						* DONE - multiple calls (parameter count is irrelevant)
-			* Generics
+			* DONE - Generics
 				* DONE - Method 
 					* DONE - with parameter 
 						* DONE - using generic type (e.g. List<string>)
@@ -695,90 +697,91 @@ Get rid of everything related to generating explicit implementations.
 					* DONE - with return value
 						* DONE - using generic type (e.g. List<string>)
 						* DONE - based on generic type parameter
-				* Event
-		* Non-Abstract Class
-			* Method
-				* with void
-					* no parameters
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-					* one parameter
-					* multiple parameters
-				* with void and events
-					* no parameters
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-					* one parameter
-					* multiple parameters
-				* with return
-					* no parameters
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-					* one parameter
-					* multiple parameters
-				* with return and events
-					* no parameters
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-					* one parameter
-					* multiple parameters
-			* Constructor
-				* with multiple parameters
-			* Property
-				* with getter and setter
-				* with getter only
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-				* with setter only
-					* raise event (parameter count is irrelevant)
-					* multiple calls (parameter count is irrelevant)
-			* Indexer
-				* with one key
-					* with getter and setter
-					* with getter only
-						* raise event (parameter count is irrelevant)
-						* multiple calls (parameter count is irrelevant)
-					* with setter only
-						* raise event (parameter count is irrelevant)
-						* multiple calls (parameter count is irrelevant)
-				* with multiple keys
-					* with getter and setter
-					* with getter only
-						* raise event (parameter count is irrelevant)
-						* multiple calls (parameter count is irrelevant)
-					* with setter only
-						* raise event (parameter count is irrelevant)
-						* multiple calls (parameter count is irrelevant)
-			* Generics
-				* Method 
-					* with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-						* based on generic method type parameter
-						* based on generic method type parameter that does not match
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-						* based on generic method type parameter
-						* based on generic method type parameter that does not match
-				* Property
-					* with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-				* Indexer
-					* with parameter 
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-					* with return value
-						* using generic type (e.g. List<string>)
-						* based on generic type parameter
-				* Event
-			
+				* DONE - Event
+		* DONE - Non-Abstract Class
+			* DONE - Method
+				* DONE - with void
+					* DONE - no parameters
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - one parameter
+					* DONE - multiple parameters
+				* DONE - with void and events
+					* DONE - no parameters
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - one parameter
+					* DONE - multiple parameters
+				* DONE - with return
+					* DONE - no parameters
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - one parameter
+					* DONE - multiple parameters
+				* DONE - with return and events
+					* DONE - no parameters
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - one parameter
+					* DONE - multiple parameters
+			* DONE - Constructor
+				* DONE - with multiple parameters
+			* DONE - Property
+				* DONE - with getter and setter
+				* DONE - with getter only
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+				* DONE - with setter only
+					* DONE - raise event (parameter count is irrelevant)
+					* DONE - multiple calls (parameter count is irrelevant)
+			* DONE - Indexer
+				* DONE - with one key
+					* DONE - with getter and setter
+					* DONE - with getter only
+						* DONE - raise event (parameter count is irrelevant)
+						* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - with setter only
+						* DONE - raise event (parameter count is irrelevant)
+						* DONE - multiple calls (parameter count is irrelevant)
+				* DONE - with multiple keys
+					* DONE - with getter and setter
+					* DONE - with getter only
+						* DONE - raise event (parameter count is irrelevant)
+						* DONE - multiple calls (parameter count is irrelevant)
+					* DONE - with setter only
+						* DONE - raise event (parameter count is irrelevant)
+						* DONE - multiple calls (parameter count is irrelevant)
+			* DONE - Generics
+				* DONE - Method 
+					* DONE - with parameter 
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+						* DONE - based on generic method type parameter
+						* DONE - based on generic method type parameter that does not match
+					* DONE - with return value
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+						* DONE - based on generic method type parameter
+						* DONE - based on generic method type parameter that does not match
+				* DONE - Property
+					* DONE - with parameter 
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+					* DONE - with return value
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+				* DONE - Indexer
+					* DONE - with parameter 
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+					* DONE - with return value
+						* DONE - using generic type (e.g. List<string>)
+						* DONE - based on generic type parameter
+				* DONE - Event
+				
+* Method identifiers need type parameters (see ClassGenericMethodTests)
+* If I have this in a class: "public virtual TReturn? BarReturn<TReturn>() => default;", the mock must not return a nullable type.
 * If I added this to an abstract class, "public abstract event EventHandler? MyEvent;" (note the nullable type), I get an error, something about "add" and "remove" methods.	
-* Need to add the generic parameters to the extension methods
 * Get rid of ".ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)" and use the right overload of ".GetName()"
 * Similarly, look for where ".Name" is used for IMethodSymbol, and change it to ".GetName()"
 * Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
@@ -810,6 +813,7 @@ and ensure that the assembly can compile and emit
 
 Make RC2 for 5.0.0
 
+* Make a note in docs that while "RaiseXYZ" is supported, it's discouraged because of this: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-raise-base-class-events-in-derived-classes
 * Create makes (mocks with no expectations)
 * Consider using target-type new in generated code (e.g. "new(...)") where appropriate
 * Other member scenarios
