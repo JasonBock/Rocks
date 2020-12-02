@@ -40,6 +40,30 @@ namespace MockTests
 		}
 
 		[Test]
+		public static void GenerateWhenInvocationExistsInTopLevelStatements()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+using System;
+
+var rock = Rock.Create<IMock>();
+
+namespace MockTests
+{
+	public interface IMock
+	{
+		void Foo();
+	}
+}", OutputKind.ConsoleApplication);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class ExpectationsOfIMockExtensions"));
+			});
+		}
+
+		[Test]
 		public static void GenerateWhenTargetTypeIsInvalid()
 		{
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
@@ -65,7 +89,7 @@ namespace MockTests
 			});
 		}
 
-		private static (ImmutableArray<Diagnostic>, string) GetGeneratedOutput(string source)
+		private static (ImmutableArray<Diagnostic>, string) GetGeneratedOutput(string source, OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -73,7 +97,7 @@ namespace MockTests
 				.Select(_ => MetadataReference.CreateFromFile(_.Location))
 				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) });
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+				references, new CSharpCompilationOptions(outputKind));
 			var originalTreeCount = compilation.SyntaxTrees.Length;
 
 			var generator = new RockCreateGenerator();

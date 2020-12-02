@@ -4,9 +4,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Configuration;
 using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Rocks
 {
@@ -54,12 +56,9 @@ namespace Rocks
 
 						if(typesToMock.Add(typeToMock))
 						{
-							var containingCandidateType = candidateInvocation.FindParent<TypeDeclarationSyntax>();
-							var containingAssemblyOfInvocationSymbol = (model.GetDeclaredSymbol(containingCandidateType)!).ContainingAssembly;
-
 							var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
 							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-								typeToMock, containingAssemblyOfInvocationSymbol, model, configurationValues);
+								typeToMock, compilation.Assembly, model, configurationValues);
 
 							foreach (var diagnostic in diagnostics)
 							{

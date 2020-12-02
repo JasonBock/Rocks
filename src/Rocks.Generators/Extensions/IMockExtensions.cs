@@ -37,11 +37,11 @@ namespace Rocks.Extensions
 			}
 		}
 
-		public static void Verify(this IMock @this)
+		public static void Verify(this IMock self)
 		{
-			if(@this is null) { throw new ArgumentNullException(nameof(@this)); }
+			if(self is null) { throw new ArgumentNullException(nameof(self)); }
 
-			var failures = @this.GetVerificationFailures();
+			var failures = self.GetVerificationFailures();
 
 			if (failures.Count > 0)
 			{
