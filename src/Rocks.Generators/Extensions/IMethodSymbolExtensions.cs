@@ -7,25 +7,31 @@ namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
-		internal static bool RequiresDefaultConstraint(this IMethodSymbol self)
+		/// <summary>
+		/// This is needed because if a method has a generic parameter that is used 
+		/// either with a method parameter or the return value and declares the type to be nullable,
+		/// the override must create a <code>where T : default</code> constraint.
+		/// Otherwise, CS0508 and CS0453 will occur.
+		/// </summary>
+		/// <param name="self">The target method.</param>
+		/// <returns>A list of default constraints.</returns>
+		internal static ImmutableArray<string> GetDefaultConstraints(this IMethodSymbol self)
 		{
-			if(self.TypeParameters.Length == 0)
-			{
-				return false;
-			}
-			else
+			var builder = ImmutableArray.CreateBuilder<string>();
+
+			if(self.TypeParameters.Length > 0)
 			{
 				foreach(var typeParameter in self.TypeParameters)
 				{
 					if(self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
 						(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
 					{
-						return true;
+						builder.Add($"where {typeParameter.GetName()} : default");
 					}
 				}
-
-				return false;
 			}
+
+			return builder.ToImmutable();
 		}
 
 		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics)

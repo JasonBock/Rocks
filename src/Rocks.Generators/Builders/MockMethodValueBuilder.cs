@@ -50,6 +50,12 @@ namespace Rocks.Builders
 
 			var constraints = method.GetConstraints();
 
+			if(result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
+				result.RequiresOverride == RequiresOverride.Yes)
+			{
+				constraints = constraints.AddRange(method.GetDefaultConstraints());
+			}
+
 			if(constraints.Length > 0)
 			{
 				writer.Indent++;

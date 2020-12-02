@@ -4,26 +4,33 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Extensions;
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
 	public static class IMethodSymbolExtensionsRequiresDefaultConstraintTests
 	{
-		[TestCase("public class Target { public void Foo() { } }", false)]
-		[TestCase("public class Target { public void Foo<T>() { } }", false)]
-		[TestCase("public class Target { public void Foo<T>(T a) { } }", false)]
-		[TestCase("public class Target { public void Foo<T>(T? a) { } }", true)]
-		[TestCase("public class Target { public T Foo<T>() => default!; }", false)]
-		[TestCase("public class Target { public T? Foo<T>() => default!; }", true)]
-		public static void RequiresDefaultConstraint(string code, bool expectedValue)
+		private static IEnumerable<TestCaseData> GetDefaultConstraints()
+		{
+			yield return new TestCaseData("public class Target { public void Foo() { } }", ImmutableArray<string>.Empty);
+			yield return new TestCaseData("public class Target { public void Foo<T>() { } }", ImmutableArray<string>.Empty);
+			yield return new TestCaseData("public class Target { public void Foo<T>(T a) { } }", ImmutableArray<string>.Empty);
+			yield return new TestCaseData("public class Target { public void Foo<T>(T? a) { } }", new[] { "where T : default" }.ToImmutableArray());
+			yield return new TestCaseData("public class Target { public T Foo<T>() => default!; }", ImmutableArray<string>.Empty);
+			yield return new TestCaseData("public class Target { public T? Foo<T>() => default!; }", new[] { "where T : default" }.ToImmutableArray());
+		}
+
+		[TestCaseSource(nameof(GetDefaultConstraints))]
+		public static void RequiresDefaultConstraint(string code, ImmutableArray<string> expectedValue)
 		{
 			var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
-			var requiresDefaultConstraint = methodSymbol.RequiresDefaultConstraint();
+			var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(requiresDefaultConstraint, Is.EqualTo(expectedValue));
+				Assert.That(requiresDefaultConstraints, Is.EquivalentTo(expectedValue));
 			});
 		}
 

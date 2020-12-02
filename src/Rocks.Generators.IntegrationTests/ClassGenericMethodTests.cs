@@ -13,6 +13,7 @@ namespace Rocks.IntegrationTests
 		public virtual List<string>? FooReturn() => default;
 		public virtual T? QuuxReturn() => default;
 		public virtual TReturn BarReturn<TReturn>() => default!;
+		public virtual TData? NullableValues<TData>(TData? data) => default!;
 	}
 
 	public static class ClassGenericMethodTests
@@ -133,6 +134,24 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(() => chunk.BarReturn<string>(), Throws.TypeOf<InvalidCastException>());
+			});
+		}
+
+		[Test]
+		public static void MockWithNullableGenericParameterTypes()
+		{
+			var returnValue = "c";
+			var rock = Rock.Create<ClassGenericMethod<int>>();
+			rock.Methods().NullableValues<string>("b").Returns(returnValue);
+
+			var chunk = rock.Instance();
+			var value = chunk.NullableValues("b");
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(returnValue));
 			});
 		}
 	}
