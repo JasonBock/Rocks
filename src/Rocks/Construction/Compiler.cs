@@ -98,7 +98,7 @@ namespace Rocks.Construction
 				diagnostics.Length > 0 &&
 				diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Hidden).ToArray().Length != diagnostics.Length)
 			{
-				throw new CompilationException(diagnostics);
+				//throw new CompilationException(diagnostics);
 			}
 
 			return this.Emit(compilation);

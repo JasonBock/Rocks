@@ -12,7 +12,8 @@ namespace Rocks.Descriptors
 					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					CannotSpecifyTypeWithOpenGenericsDescriptor.Id, CannotSpecifyTypeWithOpenGenericsDescriptor.Title)), type.Locations[0]);
+					CannotSpecifyTypeWithOpenGenericsDescriptor.Id, CannotSpecifyTypeWithOpenGenericsDescriptor.Title)),
+				type.Locations.Length > 0 ? type.Locations[0] : null);
 
 		public const string Id = "ROCK5";
 		public const string Message = "The type {0} has an open generic value and cannot be mocked";

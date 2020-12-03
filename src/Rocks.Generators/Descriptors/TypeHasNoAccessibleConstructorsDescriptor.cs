@@ -12,7 +12,8 @@ namespace Rocks.Descriptors
 					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title)), type.Locations[0]);
+					TypeHasNoAccessibleConstructorsDescriptor.Id, TypeHasNoAccessibleConstructorsDescriptor.Title)),
+				type.Locations.Length > 0 ? type.Locations[0] : null);
 
 		public const string Id = "ROCK4";
 		public const string Message = "The type {0} has no constructors that are accessible";

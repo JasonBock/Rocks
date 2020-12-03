@@ -12,7 +12,8 @@ namespace Rocks.Descriptors
 					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title)), type.Locations[0]);
+					CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title)),
+				type.Locations.Length > 0 ? type.Locations[0] : null);
 
 		public const string Id = "ROCK2";
 		public const string Message = "The type {0} is obsolete and cannot be mocked";

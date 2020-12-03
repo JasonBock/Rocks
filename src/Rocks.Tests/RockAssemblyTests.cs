@@ -75,6 +75,7 @@ namespace Rocks.Tests
 				new RockOptions(
 					level: OptimizationSetting.Debug, 
 					codeFile: CodeFileOption.Create,
+					allowWarning: AllowWarning.Yes,
 					codeFileDirectory: TestContext.CurrentContext.TestDirectory));
 
 			Assert.That(assembly.Result.GetTypes().Length, Is.GreaterThan(0));

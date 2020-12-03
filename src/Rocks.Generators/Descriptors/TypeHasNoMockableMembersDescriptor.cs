@@ -12,7 +12,8 @@ namespace Rocks.Descriptors
 					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)), type.Locations[0]);
+					TypeHasNoMockableMembersDescriptor.Id, TypeHasNoMockableMembersDescriptor.Title)),
+				type.Locations.Length > 0 ? type.Locations[0] : null);
 
 		public const string Id = "ROCK3";
 		public const string Message = "The type {0} has no members that can be overriden";

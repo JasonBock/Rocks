@@ -11,6 +11,92 @@ namespace Rocks.Tests.Extensions
 	public static class ITypeSymbolExtensionsGetMockableMethodsTests
 	{
 		[Test]
+		public static void GetMockableMethodsWithNewAbstractMethodWithOverride()
+		{
+			const string targetMethodName = "GetData";
+			const string targetTypeName = "Test";
+
+			var code =
+$@"public abstract class CoreClass
+{{
+	public virtual int {targetMethodName}() => 3;
+}}
+
+public abstract class BaseClass
+	: CoreClass
+{{
+	public new abstract int {targetMethodName}();
+}}
+
+public class {targetTypeName}
+	: BaseClass
+{{
+	public override int {targetMethodName}() => 3;
+}}";
+
+			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+			var memberIdentifier = 0u;
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(methods.Length, Is.EqualTo(4));
+				var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
+				Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(dataMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			});
+		}
+
+		[Test]
+		public static void GetMockableMethodsWithMultipleAbstractMethodsWithOverride()
+		{
+			const string targetMethodName = "Data";
+			const string targetTypeName = "Test";
+
+			var code =
+$@"public abstract class CoreClass
+{{
+	public abstract int {targetMethodName}();
+}}
+
+public abstract class BaseClass
+	: CoreClass
+{{
+	public override int {targetMethodName}() => 3;
+}}
+
+public class {targetTypeName}
+	: BaseClass
+{{
+	public override int {targetMethodName}() => base.{targetMethodName}();
+}}";
+
+			var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+			var memberIdentifier = 0u;
+			var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, ref memberIdentifier);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(methods.Length, Is.EqualTo(4));
+				var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+				Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+				Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+				Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+				var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
+				Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
+				Assert.That(dataMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			});
+		}
+
+		[Test]
 		public static void GetMockableMethodsWithInterfaceMethods()
 		{
 			const string targetMethodName = "Foo";
@@ -144,9 +230,6 @@ public interface {targetTypeName}
 			});
 		}
 
-		// TODO: This is incorrect.
-		// There should be 2 methods found, Bar() and Foo(), not 3.
-		// Neither requires overrides or explicit interface implementation
 		[Test]
 		public static void GetMockableMethodsWhenInterfaceHasExplicitInterfaceImplementation()
 		{

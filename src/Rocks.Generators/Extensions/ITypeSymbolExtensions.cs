@@ -218,18 +218,20 @@ namespace Rocks.Extensions
 							_.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
 							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
-						if (hierarchyMethod.IsAbstract || (hierarchyMethod.IsVirtual && !hierarchyMethod.IsSealed))
+						if (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual)
 						{
-							methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
-							memberIdentifier++;
-						}
-						else if (hierarchyMethod.IsOverride || (hierarchyMethod.IsVirtual && hierarchyMethod.IsSealed))
-						{
-							var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact);
+							var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact &&
+								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
 							if (methodToRemove is not null)
 							{
 								methods.Remove(methodToRemove);
+							}
+
+							if(!hierarchyMethod.IsSealed)
+							{
+								methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+								memberIdentifier++;
 							}
 						}
 					}
@@ -242,6 +244,27 @@ namespace Rocks.Extensions
 		internal static ImmutableArray<PropertyMockableResult> GetMockableProperties(
 			this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, ref uint memberIdentifier)
 		{
+			static bool AreParametersEqual(IPropertySymbol property1, IPropertySymbol property2)
+			{
+				if (property1.Parameters.Length == property2.Parameters.Length)
+				{
+					for (var i = 0; i < property1.Parameters.Length; i++)
+					{
+						var property1Parameter = property1.Parameters[i];
+						var property2Parameter = property2.Parameters[i];
+
+						if (!property1Parameter.Type.Equals(property2Parameter.Type))
+						{
+							return false;
+						}
+					}
+
+					return true;
+				}
+
+				return false;
+			}
+
 			var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
 
 			if (self.TypeKind == TypeKind.Interface)
@@ -330,24 +353,27 @@ namespace Rocks.Extensions
 						.Where(_ => _.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
 							_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 					{
-						if (hierarchyProperty.IsAbstract || (hierarchyProperty.IsVirtual && !hierarchyProperty.IsSealed))
+						if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
 						{
-							var accessors = hierarchyProperty.GetAccessors();
-							properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
-							memberIdentifier++;
-
-							if (accessors == PropertyAccessor.GetAndSet)
-							{
-								memberIdentifier++;
-							}
-						}
-						else if (hierarchyProperty.IsOverride || (hierarchyProperty.IsVirtual && hierarchyProperty.IsSealed))
-						{
-							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name);
-
+							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
+								!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
+								AreParametersEqual(_.Value, hierarchyProperty));
+	
 							if (propertyToRemove is not null)
 							{
 								properties.Remove(propertyToRemove);
+							}
+
+							if(!hierarchyProperty.IsSealed)
+							{
+								var accessors = hierarchyProperty.GetAccessors();
+								properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
+								memberIdentifier++;
+
+								if (accessors == PropertyAccessor.GetAndSet)
+								{
+									memberIdentifier++;
+								}
 							}
 						}
 					}
