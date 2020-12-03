@@ -12,6 +12,32 @@ namespace Rocks.Tests
 	public static class MockInformationTests
 	{
 		[Test]
+		public static void CreateWhenClassIsEnum()
+		{
+			const string targetTypeName = "EnumType";
+			var code = $"public enum {targetTypeName} {{ }}";
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
+		public static void CreateWhenClassIsValueType()
+		{
+			const string targetTypeName = "StructType";
+			var code = $"public struct {targetTypeName} {{ }}";
+			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
 		public static void CreateWhenClassIsSealed()
 		{
 			const string targetTypeName = "SealedType";
@@ -319,7 +345,7 @@ public class {targetTypeName}
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-				.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
+				.OfType<BaseTypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
 			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model);
 		}

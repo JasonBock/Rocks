@@ -792,7 +792,7 @@ Get rid of everything related to generating explicit implementations.
 
 Note: https://docs.microsoft.com/en-us/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders
 
-Make RC2 for 5.0.0
+* DONE - Make RC2 for 5.0.0
 
 
 * Redo test that finds all mockable types from the assembly that contains "object", generates code like this:
@@ -813,6 +813,7 @@ namespace TargetTypeNamespace
 }
 
 and ensure that the assembly can compile and emit* Ensure all Assert.That have meaningful messages
+* I might have an issue where something is [Obsolete("a")] but doesn't set IsError. Can I find TreatWarningsAsErrors? If I can't find that as a constuctor argument, but TWAE = true, then it's an error from MockInformation.
 * Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
 * Make a note in docs that while "RaiseXYZ" is supported, it's discouraged because of this: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-raise-base-class-events-in-derived-classes
 * Create makes (mocks with no expectations)

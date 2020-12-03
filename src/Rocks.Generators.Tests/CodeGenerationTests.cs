@@ -3,71 +3,83 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using System;
+using System.CodeDom.Compiler;
+using System.Collections.Concurrent;
+using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
-	public interface IShouldBeMockable
-	{
-		void Foo();
-	}
-
-#pragma warning disable CA1040 // Avoid empty interfaces
-	public interface IShouldNotBeMockable { }
-#pragma warning restore CA1040 // Avoid empty interfaces
-
 	public static class CodeGenerationTests
 	{
 		[Test]
-		[Ignore("Work in progress...")]
 		public static void GenerateForBaseClassLibrary()
 		{
-			// Here's the intent. I want find all the types that are "contained" with the same assembly
-			// that System.Object exists in. For those that CAN be mocked, generate code like this:
-			// 
-			// using TargetObject.Namespace;
-			// 
-			// public static class GenerateCode
-			// {
-			//   public static void Go()
-			//   {
-			//     var r0 = Rock.Create<TargetObject>();
-			//   }
-			// }
-			//
-			// That's it. Just a bunch of "Rock.Create<>" calls, and then throw the generator at it.
-			// It shouldn't fail.
-			//
-			// Now, there's a hiccup here. MockInformation works with a ITypeSymbol, not a Type.
-			// So, one thought (though this would be sloooooow), is to have a method that takes a Type,
-			// throws it into code (somehow), like:
-			//
-			// TargetObject o = default;
-			//
-			// Get the ITypeSymbol for that, and use MockInformation to see if it's worthy. If it is,
-			// it becomes a candidate for the GenerateCode.Go() method.
+			var types = new ConcurrentBag<Type>();
+			Parallel.ForEach(typeof(object).Assembly.GetTypes()
+				.Where(_ => _.IsPublic && !_.IsSealed && !_.IsGenericTypeDefinition &&
+					!_.IsGenericType), _ =>
+					{
+						if (_.IsValidTarget())
+						{
+							types.Add(_);
+						}
+					});
 
-			var types = typeof(object).Assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed && !_.IsGenericTypeDefinition && !_.IsGenericType);
-			var typeCount = types.ToArray().Length;
-			var validCount = 0;
+			var discoveredTypes = types.ToArray();
 
-			foreach(var type in types)
-			{
-				if(type.IsValidTarget())
+			var code = CodeGenerationTests.GetCode(types, discoveredTypes);
+			var syntaxTree = CSharpSyntaxTree.ParseText(code);
+			var references = AppDomain.CurrentDomain.GetAssemblies()
+				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+				.Select(_ => MetadataReference.CreateFromFile(_.Location))
+				.Concat(new[]
 				{
-					validCount++;
-				}
-			}
+					MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+					MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				});
+			var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+				references, new(OutputKind.DynamicallyLinkedLibrary));
 
-			var shouldBeMockable = typeof(IShouldBeMockable);
-			var shouldNotBeMockable = typeof(IShouldNotBeMockable);
+			var generator = new RockCreateGenerator();
+			var driver = CSharpGeneratorDriver.Create(ImmutableArray.Create<ISourceGenerator>(generator));
+			driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(shouldBeMockable.IsValidTarget(), Is.True);
-				Assert.That(shouldNotBeMockable.IsValidTarget(), Is.False);
+				Assert.That(diagnostics.Any(
+					_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 			});
+		}
+
+		private static string GetCode(ConcurrentBag<Type> types, Type[] discoveredTypes)
+		{
+			using var writer = new StringWriter();
+			using var indentWriter = new IndentedTextWriter(writer, "\t");
+			indentWriter.WriteLine("using Rocks;");
+			indentWriter.WriteLine();
+			indentWriter.WriteLine("public static class GenerateCode");
+			indentWriter.WriteLine("{");
+			indentWriter.Indent++;
+
+			indentWriter.WriteLine("public static void Go()");
+			indentWriter.WriteLine("{");
+			indentWriter.Indent++;
+
+			for (var i = 0; i < types.Count; i++)
+			{
+				indentWriter.WriteLine($"var r{i} = Rock.Create<{discoveredTypes[i].FullName}>();");
+			}
+
+			indentWriter.Indent--;
+			indentWriter.WriteLine("}");
+
+			indentWriter.Indent--;
+			indentWriter.WriteLine("}");
+
+			return writer.ToString();
 		}
 
 		private static bool IsValidTarget(this Type self)
@@ -85,9 +97,7 @@ namespace Rocks.Tests
 
 			var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<PropertyDeclarationSyntax>().Single();
-
 			var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
-
 			var information = new MockInformation(symbol!, compilation.Assembly, model);
 
 			return !information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
