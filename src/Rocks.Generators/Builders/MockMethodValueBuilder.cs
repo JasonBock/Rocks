@@ -20,7 +20,8 @@ namespace Rocks.Builders
 			
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var parameter = $"{_.Type.GetName()} {_.Name}";
+				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
+				var parameter = $"{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 

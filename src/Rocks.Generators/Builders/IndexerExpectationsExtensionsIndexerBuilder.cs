@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -25,7 +24,9 @@ namespace Rocks.Builders
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 			writer.Indent++;
 
-			writer.WriteLine($"{newAdornments}(self.Add<{propertyReturnValue}>({memberIdentifier}, new List<Arg> {{ {string.Join(", ", property.GetMethod!.Parameters.Select(_ => _.Name))} }}));");
+			var parameters = string.Join(", ", property.GetMethod!.Parameters.Select(
+				_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
+			writer.WriteLine($"{newAdornments}(self.Add<{propertyReturnValue}>({memberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			writer.Indent--;
 		}
 
@@ -46,7 +47,9 @@ namespace Rocks.Builders
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 			writer.Indent++;
 
-			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {string.Join(", ", property.SetMethod!.Parameters.Select(_ => _.Name))} }}));");
+			var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
+				_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
+			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			writer.Indent--;
 		}
 

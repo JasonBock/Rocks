@@ -22,9 +22,10 @@ namespace MockTests
 	public interface IMock
 	{
 		void Foo(int a, string b = ""b"", double c = 3.2);
+		int this[int a, string b = ""b""] { get; }
 	}
 
-	public static class Test
+		public static class Test
 	{
 		public static void Generate()
 		{

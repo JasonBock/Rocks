@@ -37,7 +37,9 @@ namespace Rocks.Builders
 			}
 			else
 			{
-				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {string.Join(", ", method.Parameters.Select(_ => _.Name))} }}));");
+				var parameters = string.Join(", ", method.Parameters.Select(
+					_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
+				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			}
 
 			writer.Indent--;

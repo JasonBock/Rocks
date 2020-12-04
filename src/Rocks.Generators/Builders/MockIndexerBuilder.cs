@@ -152,19 +152,19 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters, false)}"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters, false)}"")]");
 			}
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
-			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.Parameters)}";
+			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.Parameters, true)}";
 
 			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.GetName()} {indexerSignature}");
 			writer.WriteLine("{");
@@ -187,11 +187,13 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static string GetSignature(ImmutableArray<IParameterSymbol> parameters)
+		private static string GetSignature(ImmutableArray<IParameterSymbol> parameters, bool includeOptionalParameterValues)
 		{
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
-				var parameter = $"{_.Type.GetName()} {_.Name}";
+				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ? 
+					$" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
+				var parameter = $"{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			
