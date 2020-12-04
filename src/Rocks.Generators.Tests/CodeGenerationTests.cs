@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
@@ -15,10 +16,9 @@ namespace Rocks.Tests
 {
 	public static class CodeGenerationTests
 	{
-		// Add this back in when I can figure out how to "safely" create generic types in this test - 
-		//[TestCase(typeof(object))]
-		//[TestCase(typeof(Dictionary<,>))]
-		//[TestCase(typeof(ImmutableArray))]
+		[TestCase(typeof(object))]
+		[TestCase(typeof(Dictionary<,>))]
+		[TestCase(typeof(ImmutableArray))]
 		public static void GenerateForBaseClassLibrary(Type targetType)
 		{
 			if (targetType is null)
@@ -117,13 +117,14 @@ namespace Rocks.Tests
 		/// </summary>
 		private static string GetTypeDefinition(this Type self)
 		{
-			if(self.GenericTypeArguments.Length > 0)
+			if(self.IsGenericTypeDefinition)
 			{
-				var genericArguments = new string[self.GenericTypeArguments.Length];
+				var selfGenericArguments = self.GetGenericArguments();
+				var genericArguments = new string[selfGenericArguments.Length];
 
-				for(var i = 0; i < self.GenericTypeArguments.Length; i++)
+				for(var i = 0; i < selfGenericArguments.Length; i++)
 				{
-					var argument = self.GenericTypeArguments[0];
+					var argument = selfGenericArguments[0];
 					var argumentAttributes = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
 
 					if(argumentAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
@@ -140,7 +141,7 @@ namespace Rocks.Tests
 					}
 				}
 
-				return $"{self.FullName}<{string.Join(", ", genericArguments)}>";
+				return $"{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
 			}
 			else
 			{
