@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Configuration;
 using Rocks.Descriptors;
 using Rocks.Extensions;
 using System;
@@ -61,6 +62,24 @@ $@"using System;
 public class {targetTypeName} {{ }}";
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
+		public static void CreateWhenTypeIsObsoleteAndErrorIsNotSetAndTreatWarningsAsErrorsAsTrue()
+		{
+			const string targetTypeName = "ObsoleteType";
+			var code =
+$@"using System;
+
+[Obsolete(""a"")]
+public class {targetTypeName} {{ }}";
+
+			var information = MockInformationTests.GetInformation(code, targetTypeName, true);
 
 			Assert.Multiple(() =>
 			{
@@ -333,7 +352,7 @@ public class {targetTypeName}
 				Assert.That(information.Events.Length, Is.EqualTo(1));
 			});
 		}
-		private static MockInformation GetInformation(string source, string targetTypeName)
+		private static MockInformation GetInformation(string source, string targetTypeName, bool treatWarningsAsErrors = false)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -347,7 +366,8 @@ public class {targetTypeName}
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<BaseTypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
-			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model);
+			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model,
+				new ConfigurationValues(IndentStyle.Tab, 3, treatWarningsAsErrors));
 		}
 	}
 }

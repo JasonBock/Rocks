@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Configuration;
 using Rocks.Descriptors;
 using Rocks.Extensions;
 using System;
@@ -9,10 +10,11 @@ namespace Rocks
 {
 	internal sealed class MockInformation
 	{
-		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, SemanticModel model)
+		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, 
+			SemanticModel model, ConfigurationValues configurationValues)
 		{
-			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model) = 
-				(typeToMock, containingAssemblyOfInvocationSymbol, model);
+			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model, this.ConfigurationValues) = 
+				(typeToMock, containingAssemblyOfInvocationSymbol, model, configurationValues);
 			this.Validate();
 		}
 
@@ -47,13 +49,11 @@ namespace Rocks
 				diagnostics.Add(CannotSpecifyTypeWithOpenGenericsDescriptor.Create(this.TypeToMock));
 			}
 
-			// TODO: Could we figure out if TreatWarningsAsErrors is true?
-			// Maybe the same way we figure out the .editorconfig settings...
 			var attributes = this.TypeToMock.GetAttributes();
 			var obsoleteAttribute = this.Model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
 
 			if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-				_.ConstructorArguments.Any(_ => _.Value is bool error && error)))
+				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors)))
 			{
 				diagnostics.Add(CannotMockObsoleteTypeDescriptor.Create(this.TypeToMock));
 			}
@@ -81,6 +81,7 @@ namespace Rocks
 			this.Diagnostics = diagnostics.ToImmutable();
 		}
 
+		public ConfigurationValues ConfigurationValues { get; }
 		public ImmutableArray<IMethodSymbol> Constructors { get; private set; }
 		public IAssemblySymbol ContainingAssemblyOfInvocationSymbol { get; }
 		public ImmutableArray<EventMockableResult> Events { get; private set; }

@@ -16,7 +16,7 @@ namespace Rocks
 			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, 
 			ConfigurationValues configurationValues)
 		{
-			var information = new MockInformation(typeToMock, containingAssemblySymbol, model);
+			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, configurationValues);
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
