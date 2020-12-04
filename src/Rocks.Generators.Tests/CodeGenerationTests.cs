@@ -8,19 +8,27 @@ using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
 	public static class CodeGenerationTests
 	{
-		[Test]
-		public static void GenerateForBaseClassLibrary()
+		// Add this back in when I can figure out how to "safely" create generic types in this test - 
+		//[TestCase(typeof(object))]
+		//[TestCase(typeof(Dictionary<,>))]
+		//[TestCase(typeof(ImmutableArray))]
+		public static void GenerateForBaseClassLibrary(Type targetType)
 		{
+			if (targetType is null)
+			{
+				throw new ArgumentNullException(nameof(targetType));
+			}
+
 			var types = new ConcurrentBag<Type>();
-			Parallel.ForEach(typeof(object).Assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed && !_.IsGenericTypeDefinition &&
-					!_.IsGenericType), _ =>
+			Parallel.ForEach(targetType.Assembly.GetTypes()
+				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
 					{
 						if (_.IsValidTarget())
 						{
@@ -37,7 +45,7 @@ namespace Rocks.Tests
 				.Select(_ => MetadataReference.CreateFromFile(_.Location))
 				.Concat(new[]
 				{
-					MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+					MetadataReference.CreateFromFile(targetType.Assembly.Location),
 					MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
 				});
 			var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
@@ -49,6 +57,7 @@ namespace Rocks.Tests
 
 			Assert.Multiple(() =>
 			{
+				Assert.That(discoveredTypes.Length, Is.GreaterThan(0));
 				Assert.That(diagnostics.Any(
 					_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 			});
@@ -70,7 +79,7 @@ namespace Rocks.Tests
 
 			for (var i = 0; i < types.Count; i++)
 			{
-				indentWriter.WriteLine($"var r{i} = Rock.Create<{discoveredTypes[i].FullName}>();");
+				indentWriter.WriteLine($"var r{i} = Rock.Create<{discoveredTypes[i].GetTypeDefinition()}>();");
 			}
 
 			indentWriter.Indent--;
@@ -84,8 +93,7 @@ namespace Rocks.Tests
 
 		private static bool IsValidTarget(this Type self)
 		{
-			// TODO: What about generic parameters? Oh god, structs, classes, etc. how do I generate those?
-			var code = $"using {self.Namespace}; public class Foo {{ public {self.Name} Data {{ get; }} }}";
+			var code = $"public class Foo {{ public {self.GetTypeDefinition()} Data {{ get; }} }}";
 			var syntaxTree = CSharpSyntaxTree.ParseText(code);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -101,6 +109,43 @@ namespace Rocks.Tests
 			var information = new MockInformation(symbol!, compilation.Assembly, model);
 
 			return !information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
+		}
+
+		/// <summary>
+		/// This isn't complete. There may be constraints that won't be satisfied with this.
+		/// I'll tackle them as they come.
+		/// </summary>
+		private static string GetTypeDefinition(this Type self)
+		{
+			if(self.GenericTypeArguments.Length > 0)
+			{
+				var genericArguments = new string[self.GenericTypeArguments.Length];
+
+				for(var i = 0; i < self.GenericTypeArguments.Length; i++)
+				{
+					var argument = self.GenericTypeArguments[0];
+					var argumentAttributes = argument.GenericParameterAttributes & GenericParameterAttributes.SpecialConstraintMask;
+
+					if(argumentAttributes.HasFlag(GenericParameterAttributes.NotNullableValueTypeConstraint))
+					{
+						genericArguments[i] = "int";
+					}
+					else if (argumentAttributes.HasFlag(GenericParameterAttributes.ReferenceTypeConstraint))
+					{
+						genericArguments[i] = "object";
+					}
+					else
+					{
+						genericArguments[i] = "object";
+					}
+				}
+
+				return $"{self.FullName}<{string.Join(", ", genericArguments)}>";
+			}
+			else
+			{
+				return self.FullName!;
+			}
 		}
 	}
 }

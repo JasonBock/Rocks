@@ -15,12 +15,13 @@ namespace Rocks.Tests
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 using System;
+using System.Threading.Tasks;
 
 namespace MockTests
 {
 	public interface IMock
 	{
-		void Foo();
+		void Foo(int a, string b = ""b"", double c = 3.2);
 	}
 
 	public static class Test
