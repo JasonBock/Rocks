@@ -13,7 +13,7 @@ namespace Rocks.Builders
 			var method = result.Value;
 			var returnType = method.ReturnType.GetName();
 			var parametersDescription = string.Join(", ", method.Parameters.Select(
-				_ => $"{_.Type.GetName()} {_.Name}"));
+				_ => $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
@@ -21,7 +21,7 @@ namespace Rocks.Builders
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var parameter = $"{_.Type.GetName()} {_.Name}{defaultValue}";
+				var parameter = $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 

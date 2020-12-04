@@ -10,8 +10,8 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var parametersDescription = string.Join(", ", 
-				method.Parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
+			var parametersDescription = string.Join(", ", method.Parameters.Select(
+				_ => $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}"));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
@@ -19,7 +19,7 @@ namespace Rocks.Builders
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var parameter = $"{_.Type.GetName()} {_.Name}{defaultValue}";
+				var parameter = $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =

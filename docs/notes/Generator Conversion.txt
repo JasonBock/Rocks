@@ -814,17 +814,20 @@ namespace TargetTypeNamespace
 
 and ensure that the assembly can compile and emit
 * DONE - Nope, can't do this, because we need to throw an exception if something wasn't found. Change methods with parameters and no return value to do "return;" when match is found. Will make things slightly easier. Look for "foundMatch"
-* Generalize the GenerateCode test to allow types from other assemblies (e.g. System.Collections.Immutable) to be tested as well.
+* DONE - Generalize the GenerateCode test to allow types from other assemblies (e.g. System.Collections.Immutable) to be tested as well.
 * Ensure all Assert.That have meaningful messages
+* Need to get CodeGenerationTests back into play.
 * I might have an issue where something is [Obsolete("a")] but doesn't set IsError. Can I find TreatWarningsAsErrors? If I can't find that as a constuctor argument, but TWAE = true, then it's an error from MockInformation.
 * Make a note in docs that while "RaiseXYZ" is supported, it's discouraged because of this: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-raise-base-class-events-in-derived-classes
 * Create makes (mocks with no expectations)
 * Consider using target-type new in generated code (e.g. "new(...)") where appropriate
 * Other member scenarios
 	* Handle ref/out values in calls
-	* Async methods, need to ensure that works correctly
-	* Optional parameters, that has to work
-	* params parameters, ugh!, but they have to work
+	* DONE - Async methods, need to ensure that works correctly
+	* DONE - Optional parameters, that has to work
+		* DONE - For methods and indexers, need to emit the default value for an optional argument
+		* DONE - To specify the expectation, I currently do "Arg.IsDefault()", but I don't think this will work in this case...unless I emit the extension method to do something like "Arg<int> b = 3"
+	* DONE - params parameters, ugh!, but they have to work
 	* "esoteric" types, like Span<>, pointers, etc., have to find a way to make them work.
 * Delete all the current Rocks projects, and rename what's there to get rid of ".Generators"
 * Do perf analysis on generator creation and determine if more fine-grained calls to "context.CancellationToken" are needed.
