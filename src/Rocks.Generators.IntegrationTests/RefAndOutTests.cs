@@ -31,6 +31,62 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
+		public static void MockMemberWithOutParameterAndCallback()
+		{
+			static void OutArgumentCallback(out int a) => a = 4;
+
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.Methods().OutArgument(3).Callback(OutArgumentCallback);
+
+			var chunk = rock.Instance();
+			chunk.OutArgument(out var value);
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(4));
+			});
+		}
+
+		[Test]
+		public static void MockMemberWithOutParameterAndGenerics()
+		{
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.Methods().OutArgumentsWithGenerics<int, string>(3, "b");
+
+			var chunk = rock.Instance();
+			chunk.OutArgumentsWithGenerics<int, string>(3, out var value);
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.Null);
+			});
+		}
+
+		[Test]
+		public static void MockMemberWithOutParameterAndGenericsAndCallback()
+		{
+			static void OutArgumentsWithGenericsCallback(int a, out string b) =>
+				b = a.ToString(CultureInfo.CurrentCulture);
+
+			var rock = Rock.Create<IHaveRefAndOut>();
+			rock.Methods().OutArgumentsWithGenerics<int, string>(3, "b").Callback(OutArgumentsWithGenericsCallback);
+
+			var chunk = rock.Instance();
+			chunk.OutArgumentsWithGenerics<int, string>(3, out var value);
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo("3"));
+			});
+		}
+
+		[Test]
 		public static void MockMemberWithRefParameter()
 		{
 			var rock = Rock.Create<IHaveRefAndOut>();
