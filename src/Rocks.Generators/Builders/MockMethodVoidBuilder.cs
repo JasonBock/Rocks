@@ -10,8 +10,11 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var parametersDescription = string.Join(", ", method.Parameters.Select(
-				_ => $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}"));
+			var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
+			{
+				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
+			}));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
@@ -19,7 +22,8 @@ namespace Rocks.Builders
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var parameter = $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
@@ -61,6 +65,11 @@ namespace Rocks.Builders
 
 			writer.WriteLine("{");
 			writer.Indent++;
+
+			foreach (var outParameter in method.Parameters.Where(_ => _.RefKind == RefKind.Out))
+			{
+				writer.WriteLine($"{outParameter.Name} = default!;");
+			}
 
 			writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var methodHandlers))");
 			writer.WriteLine("{");
@@ -158,9 +167,12 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var methodCast = DelegateBuilder.Build(method.Parameters);
+			var methodCast = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
+				method.GetName(extendedName: "Callback") :
+				DelegateBuilder.Build(method.Parameters);
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
-				string.Join(", ", method.Parameters.Select(_ => _.Name));
+				string.Join(", ", method.Parameters.Select(
+					_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
 			writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments});");
 
 			writer.Indent--;

@@ -12,19 +12,22 @@ namespace Rocks.Builders
 		{
 			var method = result.Value;
 			var returnType = method.ReturnType.GetName();
-			var parametersDescription = string.Join(", ", method.Parameters.Select(
-				_ => $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}"));
+			var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
+			{
+				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
+			}));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 				$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
 			var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
-			
+
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var parameter = $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
-
 			var methodSignature =
 				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
 			var methodException =
@@ -72,6 +75,11 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
+			foreach(var outParameter in method.Parameters.Where(_ => _.RefKind == RefKind.Out))
+			{
+				writer.WriteLine($"{outParameter.Name} = default!;");
+			}
+
 			writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var methodHandlers))");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -100,9 +108,12 @@ namespace Rocks.Builders
 			writer.WriteLine("var result = methodHandler.Method is not null ?");
 			writer.Indent++;
 
-			var methodCast = DelegateBuilder.Build(method.Parameters, method.ReturnType);
+			var methodCast = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
+				method.GetName(extendedName: "Callback") :
+				DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
-				string.Join(", ", method.Parameters.Select(_ => _.Name));
+				string.Join(", ", method.Parameters.Select(
+					_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref": "out")} {_.Name}" : _.Name));
 			writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
 			writer.WriteLine($"((HandlerInformation<{method.ReturnType.GetName()}>)methodHandler).ReturnValue;");
 

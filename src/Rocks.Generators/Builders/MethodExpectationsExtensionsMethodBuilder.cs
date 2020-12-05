@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -21,9 +22,12 @@ namespace Rocks.Builders
 					string.Join(", ", method.Parameters.Select(_ => $"Arg<{_.Type.GetName()}> {_.Name}")));
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
 
+			var delegateTypeName = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
+				method.GetName(extendedName: "Callback") :
+				method.ReturnsVoid ? DelegateBuilder.Build(method.Parameters) : DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var adornmentsType = method.ReturnsVoid ? 
-				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.Build(method.Parameters)}>" :
-				$"MethodAdornments<{mockTypeName}, {DelegateBuilder.Build(method.Parameters, method.ReturnType)}, {method.ReturnType.GetName()}>";
+				$"MethodAdornments<{mockTypeName}, {delegateTypeName}>" :
+				$"MethodAdornments<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
@@ -38,7 +42,8 @@ namespace Rocks.Builders
 			else
 			{
 				var parameters = string.Join(", ", method.Parameters.Select(
-					_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
+					_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : 
+						_.RefKind == RefKind.Out ? $"Arg.Any<{_.Type.GetName()}>()" : _.Name));
 				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			}
 

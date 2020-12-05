@@ -34,11 +34,11 @@ namespace Rocks.Extensions
 			return builder.ToImmutable();
 		}
 
-		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics)
+		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
 		{
 			var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
 				$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetName()))}>" : string.Empty;
-			return $"{self.Name}{generics}";
+			return $"{self.Name}{extendedName}{generics}";
 		}
 
 		internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self)
@@ -58,7 +58,7 @@ namespace Rocks.Extensions
 				}
 			}
 
-			return constraints.ToImmutableArray();
+			return constraints.Where(_ => !string.IsNullOrWhiteSpace(_)).ToImmutableArray();
 		}
 
 		internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IMethodSymbol self)

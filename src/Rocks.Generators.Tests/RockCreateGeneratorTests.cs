@@ -21,8 +21,11 @@ namespace MockTests
 {
 	public interface IMock
 	{
-		void Foo(int a, params string[] b);
-		int this[int a, params string[] b] { get; }
+		void Foo(int a);
+		void RefArgument(ref int a);
+		void RefArgumentsWithGenerics<T1, T2>(T1 a, ref T2 b);
+		void OutArgument(out int a);
+		void OutArgumentsWithGenerics<T1, T2>(T1 a, out T2 b);
 	}
 
 	public static class Test
