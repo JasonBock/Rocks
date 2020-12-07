@@ -11,8 +11,33 @@ namespace Rocks.IntegrationTests
 		void OutArgumentsWithGenerics<T1, T2>(T1 a, out T2 b);
 	}
 
-	public static class RefAndOutTests
+	public interface IHaveIn
 	{
+		void InArgument(in int a);
+		int this[in int a] { get; }
+	}
+
+	public static class MethodMemberTests
+	{
+		[Test]
+		public static void MockMembersWithInParameters()
+		{
+			var rock = Rock.Create<IHaveIn>();
+			rock.Methods().InArgument(3);
+			rock.Indexers().Getters().This(4).Returns(5);
+
+			var chunk = rock.Instance();
+			chunk.InArgument(3);
+			var value = chunk[4];
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(5));
+			});
+		}
+
 		[Test]
 		public static void MockMemberWithOutParameter()
 		{

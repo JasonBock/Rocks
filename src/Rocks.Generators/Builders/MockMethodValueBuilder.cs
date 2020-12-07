@@ -14,7 +14,13 @@ namespace Rocks.Builders
 			var returnType = method.ReturnType.GetName();
 			var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
 			}));
 			var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
@@ -24,7 +30,13 @@ namespace Rocks.Builders
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));

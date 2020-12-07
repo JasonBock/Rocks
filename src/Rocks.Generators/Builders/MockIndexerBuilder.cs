@@ -193,7 +193,12 @@ namespace Rocks.Builders
 			{
 				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ? 
 					$" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
-				var parameter = $"{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+				var direction = _.RefKind switch
+				{
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			
