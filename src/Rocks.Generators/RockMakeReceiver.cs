@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rocks
 {
-	public sealed class RockCreateReceiver
+	public sealed class RockMakeReceiver
 		: ISyntaxReceiver
 	{
 		public List<InvocationExpressionSyntax> Candidates { get; } = new List<InvocationExpressionSyntax>();
@@ -16,7 +16,7 @@ namespace Rocks
 				access.Expression is IdentifierNameSyntax accessIdentifier &&
 				accessIdentifier.Identifier.Text == nameof(Rock) &&
 				access.Name is GenericNameSyntax accessName &&
-				accessName.Identifier.Text == nameof(Rock.Create))
+				accessName.Identifier.Text == nameof(Rock.Make))
 			{
 				this.Candidates.Add(invocation);
 			}

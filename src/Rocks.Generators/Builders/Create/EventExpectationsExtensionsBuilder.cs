@@ -5,7 +5,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class EventExpectationsExtensionsBuilder
 	{

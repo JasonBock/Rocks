@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace Rocks.Tests
 {
-	public static class RockCreateGeneratorTests
+	public static class RockMakeGeneratorTests
 	{
 		[Test]
 		public static void GenerateWhenTargetTypeIsValid()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 using System;
 
@@ -20,19 +20,15 @@ namespace MockTests
 {
 	public interface IMock
 	{
-		ref int MethodRefReturn();
-		ref int PropertyRefReturn { get; }
-		ref int this[int a] { get; }
-		ref readonly int MethodRefReadonlyReturn();
-		ref readonly int PropertyRefReadonlyReturn { get; }
-		ref readonly int this[string a] { get; }
+		void Foo();
+		event EventHandler MyEvent;
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Make<IMock>();
 		}
 	}
 }");
@@ -40,18 +36,18 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
 			});
 		}
 
 		[Test]
 		public static void GenerateWhenInvocationExistsInTopLevelStatements()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 using System;
 
-var rock = Rock.Create<IMock>();
+var rock = Rock.Make<IMock>();
 
 namespace MockTests
 {
@@ -64,14 +60,14 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
 			});
 		}
 
 		[Test]
 		public static void GenerateWhenTargetTypeIsInvalid()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 
 namespace MockTests
@@ -82,7 +78,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Make<IMock>();
 		}
 	}
 }");
@@ -97,7 +93,7 @@ namespace MockTests
 		[Test]
 		public static void GenerateWhenTargetTypeHasDiagnostics()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 
 namespace MockTests
@@ -112,7 +108,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Make<IMock>();
 		}
 	}
 }");
@@ -127,7 +123,7 @@ namespace MockTests
 		[Test]
 		public static void GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnostics()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
 @"using Rocks;
 
 namespace MockTests
@@ -141,7 +137,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Make<IMock>();
 		}
 // Note the missing closing brace
 	}");
@@ -149,7 +145,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
 			});
 		}
 
@@ -159,12 +155,12 @@ namespace MockTests
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) });
+				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockMakeGenerator).Assembly.Location) });
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 				references, new CSharpCompilationOptions(outputKind));
 			var originalTreeCount = compilation.SyntaxTrees.Length;
 
-			var generator = new RockCreateGenerator();
+			var generator = new RockMakeGenerator();
 
 			var driver = CSharpGeneratorDriver.Create(ImmutableArray.Create<ISourceGenerator>(generator));
 			driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);

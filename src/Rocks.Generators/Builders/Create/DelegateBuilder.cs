@@ -3,7 +3,7 @@ using Rocks.Extensions;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class DelegateBuilder
 	{

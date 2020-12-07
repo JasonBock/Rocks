@@ -826,7 +826,7 @@ and ensure that the assembly can compile and emit
 	* DONE - params parameters, ugh!, but they have to work
 * DONE - "in" parameters. They only require me to put "in" on the parameter. Since I never change the value in the mock, we're good.
 * DONE - Ref returns, is that "RefReadonly"? Should attempt to support that. Name the field "rr{memberIndentifier}". Also, members with ref returns need to assign the callback return or ReturnValue to the field before it returns.
-* DONE - (This didn't work. While you're building code, I'm guessing code is in error because the gen'd code isn't there yet, so...not sure how to figure out which errors are specific to the "Rock.Create/Make<>()" call itself.) Don't do any generation if there are existing diagnostics with the type to mock.
+* DONE - Don't do any generation if there are existing diagnostics with the type to mock.
 * Create makes (mocks with no expectations)
 
 * Make RC3 for 5.0.0

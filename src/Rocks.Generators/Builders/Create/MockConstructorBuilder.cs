@@ -4,7 +4,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class MockConstructorBuilder
 	{

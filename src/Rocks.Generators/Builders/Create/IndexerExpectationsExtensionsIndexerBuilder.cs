@@ -2,7 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Linq;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class IndexerExpectationsExtensionsIndexerBuilder
 	{

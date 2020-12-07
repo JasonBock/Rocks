@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using Rocks.Builders.Create;
+using Rocks.Builders.Make;
 using Rocks.Configuration;
 using Rocks.Extensions;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 namespace Rocks
 {
 	[Generator]
-	public sealed class RockCreateGenerator
+	public sealed class RockMakeGenerator
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
@@ -22,7 +22,7 @@ namespace Rocks
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
-				var builder = new RockCreateBuilder(information, configurationValues);
+				var builder = new RockMakeBuilder(information, configurationValues);
 				return (builder.Diagnostics, builder.Name, builder.Text);
 			}
 			else
@@ -33,7 +33,7 @@ namespace Rocks
 
 		public void Execute(GeneratorExecutionContext context)
 		{
-			if (context.SyntaxReceiver is RockCreateReceiver receiver)
+			if (context.SyntaxReceiver is RockMakeReceiver receiver)
 			{
 				var compilation = context.Compilation;
 
@@ -47,7 +47,7 @@ namespace Rocks
 					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
 
 					var rockCreateSymbol = compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
-						.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
+						.GetMembers().Single(_ => _.Name == nameof(Rock.Make));
 
 					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
 					{
@@ -58,7 +58,7 @@ namespace Rocks
 							if (typesToMock.Add(typeToMock))
 							{
 								var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
-								var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
+								var (diagnostics, name, text) = RockMakeGenerator.GenerateMapping(
 									typeToMock, compilation.Assembly, model, configurationValues);
 
 								foreach (var diagnostic in diagnostics)
@@ -78,6 +78,6 @@ namespace Rocks
 		}
 
 		public void Initialize(GeneratorInitializationContext context) =>
-			context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
+			context.RegisterForSyntaxNotifications(() => new RockMakeReceiver());
 	}
 }

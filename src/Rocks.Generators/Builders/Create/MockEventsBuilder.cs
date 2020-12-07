@@ -3,7 +3,7 @@ using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class MockEventsBuilder
 	{

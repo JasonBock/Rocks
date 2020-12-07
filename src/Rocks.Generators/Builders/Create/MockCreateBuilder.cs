@@ -4,7 +4,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Rocks.Builders
+namespace Rocks.Builders.Create
 {
 	internal static class MockCreateBuilder
 	{
@@ -37,7 +37,6 @@ namespace Rocks.Builders
 
 			writer.WriteLine();
 
-			var memberIdentifier = 0u;
 			var raiseEvents = information.Events.Length > 0;
 
 			foreach (var method in information.Methods)
@@ -50,8 +49,6 @@ namespace Rocks.Builders
 				{
 					MockMethodValueBuilder.Build(writer, method, raiseEvents);
 				}
-
-				memberIdentifier++;
 			}
 
 			foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
