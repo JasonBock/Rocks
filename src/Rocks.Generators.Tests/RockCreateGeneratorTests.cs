@@ -18,7 +18,7 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock
+	public interface ITest
 	{
 		ref int MethodRefReturn();
 		ref int PropertyRefReturn { get; }
@@ -32,7 +32,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<ITest>();
 		}
 	}
 }");
@@ -40,7 +40,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
 			});
 		}
 
@@ -51,11 +51,11 @@ namespace MockTests
 @"using Rocks;
 using System;
 
-var rock = Rock.Create<IMock>();
+var rock = Rock.Create<ITest>();
 
 namespace MockTests
 {
-	public interface IMock
+	public interface ITest
 	{
 		void Foo();
 	}
@@ -64,7 +64,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
 			});
 		}
 
@@ -76,13 +76,13 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock { }
+	public interface ITest { }
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<ITest>();
 		}
 	}
 }");
@@ -102,7 +102,7 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock 
+	public interface ITest 
 	{ 
 		// Note the missing semicolon
 		void Foo()
@@ -112,7 +112,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<ITest>();
 		}
 	}
 }");
@@ -132,7 +132,7 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock 
+	public interface ITest 
 	{ 
 		void Foo();
 	}
@@ -141,7 +141,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<IMock>();
+			var rock = Rock.Create<ITest>();
 		}
 // Note the missing closing brace
 	}");
@@ -149,7 +149,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
 			});
 		}
 

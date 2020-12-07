@@ -20,7 +20,16 @@ namespace Rocks.Tests
 		[TestCase(typeof(object))]
 		[TestCase(typeof(Dictionary<,>))]
 		[TestCase(typeof(ImmutableArray))]
-		public static void GenerateForBaseClassLibrary(Type targetType)
+		public static void GenerateCreatesForBaseClassLibrary(Type targetType) => 
+			CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockCreateGenerator());
+
+		[TestCase(typeof(object))]
+		[TestCase(typeof(Dictionary<,>))]
+		[TestCase(typeof(ImmutableArray))]
+		public static void GenerateMakesForBaseClassLibrary(Type targetType) =>
+			CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockMakeGenerator());
+
+		private static void GenerateForBaseClassLibrary(Type targetType, ISourceGenerator generator)
 		{
 			if (targetType is null)
 			{
@@ -30,12 +39,12 @@ namespace Rocks.Tests
 			var types = new ConcurrentBag<Type>();
 			Parallel.ForEach(targetType.Assembly.GetTypes()
 				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+				{
+					if (_.IsValidTarget())
 					{
-						if (_.IsValidTarget())
-						{
-							types.Add(_);
-						}
-					});
+						types.Add(_);
+					}
+				});
 
 			var discoveredTypes = types.ToArray();
 
@@ -52,7 +61,6 @@ namespace Rocks.Tests
 			var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
 				references, new(OutputKind.DynamicallyLinkedLibrary));
 
-			var generator = new RockCreateGenerator();
 			var driver = CSharpGeneratorDriver.Create(ImmutableArray.Create<ISourceGenerator>(generator));
 			driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 

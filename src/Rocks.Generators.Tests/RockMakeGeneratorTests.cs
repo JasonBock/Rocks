@@ -18,17 +18,24 @@ using System;
 
 namespace MockTests
 {
-	public interface IMock
+	public abstract class AbstractClassConstructor
 	{
-		void Foo();
-		event EventHandler MyEvent;
+		protected AbstractClassConstructor(string stringData) => 
+			this.StringData = stringData;
+		public AbstractClassConstructor(int intData) => 
+			this.IntData = intData;
+		
+		public abstract int NoParameters();
+
+		public int IntData { get;  }
+		public string? StringData { get; }
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<IMock>();
+			var rock = Rock.Make<AbstractClassConstructor>();
 		}
 	}
 }");
@@ -47,11 +54,11 @@ namespace MockTests
 @"using Rocks;
 using System;
 
-var rock = Rock.Make<IMock>();
+var rock = Rock.Make<ITest>();
 
 namespace MockTests
 {
-	public interface IMock
+	public interface ITest
 	{
 		void Foo();
 	}
@@ -72,13 +79,13 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock { }
+	public interface ITest { }
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<IMock>();
+			var rock = Rock.Make<ITest>();
 		}
 	}
 }");
@@ -98,7 +105,7 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock 
+	public interface ITest 
 	{ 
 		// Note the missing semicolon
 		void Foo()
@@ -108,7 +115,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<IMock>();
+			var rock = Rock.Make<ITest>();
 		}
 	}
 }");
@@ -128,7 +135,7 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface IMock 
+	public interface ITest 
 	{ 
 		void Foo();
 	}
@@ -137,7 +144,7 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<IMock>();
+			var rock = Rock.Make<ITest>();
 		}
 // Note the missing closing brace
 	}");
