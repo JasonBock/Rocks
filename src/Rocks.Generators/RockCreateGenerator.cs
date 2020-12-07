@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Configuration;
+using Rocks.Descriptors;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Rocks
 		: ISourceGenerator
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
-			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model, 
+			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
 			ConfigurationValues configurationValues)
 		{
 			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, configurationValues);
@@ -34,6 +35,7 @@ namespace Rocks
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
 				var compilation = context.Compilation;
+
 				var typesToMock = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
 				foreach (var candidateInvocation in receiver.Candidates)
@@ -50,7 +52,7 @@ namespace Rocks
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
 
-						if(typesToMock.Add(typeToMock))
+						if (typesToMock.Add(typeToMock))
 						{
 							var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
 							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
@@ -71,7 +73,7 @@ namespace Rocks
 			}
 		}
 
-		public void Initialize(GeneratorInitializationContext context) => 
+		public void Initialize(GeneratorInitializationContext context) =>
 			context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 	}
 }
