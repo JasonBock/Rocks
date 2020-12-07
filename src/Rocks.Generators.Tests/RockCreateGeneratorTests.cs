@@ -94,6 +94,65 @@ namespace MockTests
 			});
 		}
 
+		[Test]
+		public static void GenerateWhenTargetTypeHasDiagnostics()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+
+namespace MockTests
+{
+	public interface IMock 
+	{ 
+		// Note the missing semicolon
+		void Foo()
+	}
+
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Create<IMock>();
+		}
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Is.EqualTo(string.Empty));
+			});
+		}
+
+		[Test]
+		public static void GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnostics()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+
+namespace MockTests
+{
+	public interface IMock 
+	{ 
+		void Foo();
+	}
+
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Create<IMock>();
+		}
+// Note the missing closing brace
+	}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class ExpectationsOfIMockExtensions"));
+			});
+		}
+
 		private static (ImmutableArray<Diagnostic>, string) GetGeneratedOutput(string source, OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);

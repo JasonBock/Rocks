@@ -52,25 +52,41 @@ namespace Rocks
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
 
-						if (typesToMock.Add(typeToMock))
+						if (!RockCreateGenerator.ContainsDiagnostics(typeToMock))
 						{
-							var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
-							var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-								typeToMock, compilation.Assembly, model, configurationValues);
-
-							foreach (var diagnostic in diagnostics)
+							if (typesToMock.Add(typeToMock))
 							{
-								context.ReportDiagnostic(diagnostic);
-							}
+								var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
+								var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
+									typeToMock, compilation.Assembly, model, configurationValues);
 
-							if (name is not null && text is not null)
-							{
-								context.AddSource(name, text);
+								foreach (var diagnostic in diagnostics)
+								{
+									context.ReportDiagnostic(diagnostic);
+								}
+
+								if (name is not null && text is not null)
+								{
+									context.AddSource(name, text);
+								}
 							}
 						}
 					}
 				}
 			}
+		}
+
+		private static bool ContainsDiagnostics(ITypeSymbol typeToMock)
+		{
+			foreach (var declaringTypeToMockSyntax in typeToMock.DeclaringSyntaxReferences)
+			{
+				if (declaringTypeToMockSyntax.GetSyntax().GetDiagnostics().Any(_ => _.Severity == DiagnosticSeverity.Error))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public void Initialize(GeneratorInitializationContext context) =>
