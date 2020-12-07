@@ -12,7 +12,7 @@ namespace Rocks.IntegrationTests
 	public static class AbstractClassGenericPropertyTests
 	{
 		[Test]
-		public static void MockUsingGenericType()
+		public static void CreateUsingGenericType()
 		{
 			var returnValue = new List<string>();
 			var rock = Rock.Create<AbstractClassGenericProperty<int>>();
@@ -30,7 +30,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockUsingGenericTypeParameter()
+		public static void MakeUsingGenericType()
+		{
+			var chunk = Rock.Make<AbstractClassGenericProperty<int>>().Instance();
+			var value = chunk.Values;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(List<string>)));
+			});
+		}
+
+		[Test]
+		public static void CreateUsingGenericTypeParameter()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<AbstractClassGenericProperty<int>>();
@@ -44,6 +56,18 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(returnValue));
+			});
+		}
+
+		[Test]
+		public static void MakeUsingGenericTypeParameter()
+		{
+			var chunk = Rock.Make<AbstractClassGenericProperty<int>>().Instance();
+			var value = chunk.Data;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
 			});
 		}
 	}

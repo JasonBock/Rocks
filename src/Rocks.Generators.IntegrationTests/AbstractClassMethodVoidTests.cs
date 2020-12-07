@@ -13,7 +13,7 @@ namespace Rocks.IntegrationTests
 	public static class AbstractClassMethodVoidTests
 	{
 		[Test]
-		public static void MockWithNoParameters()
+		public static void CreateWithNoParameters()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters();
@@ -25,7 +25,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersMultipleCalls()
+		public static void MakeWithNoParameters()
+		{
+			var chunk = Rock.Make<AbstractMethodVoidTests>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.NoParameters(), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithNoParametersMultipleCalls()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -38,7 +49,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersMultipleCallsNotMet()
+		public static void CreateWithNoParametersMultipleCallsNotMet()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -53,7 +64,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersAndCallback()
+		public static void CreateWithNoParametersAndCallback()
 		{
 			var wasCallbackInvoked = false;
 
@@ -71,7 +82,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersNoExpectationSet()
+		public static void CreateWithNoParametersNoExpectationSet()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 
@@ -84,7 +95,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersExpectationsNotMet()
+		public static void CreateWithNoParametersExpectationsNotMet()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().NoParameters();
@@ -98,7 +109,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameter()
+		public static void CreateWithOneParameter()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().OneParameter(3);
@@ -110,7 +121,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterWithCallback()
+		public static void MakeWithOneParameter()
+		{
+			var chunk = Rock.Make<AbstractMethodVoidTests>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.OneParameter(3), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithOneParameterWithCallback()
 		{
 			var aValue = 0;
 			var rock = Rock.Create<AbstractMethodVoidTests>();
@@ -128,7 +150,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterArgExpectationNotMet()
+		public static void CreateWithOneParameterArgExpectationNotMet()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().OneParameter(3);
@@ -142,7 +164,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParameters()
+		public static void CreateWithMultipleParameters()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");
@@ -154,7 +176,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersWithCallback()
+		public static void MakeWithMultipleParameters()
+		{
+			var chunk = Rock.Make<AbstractMethodVoidTests>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.MultipleParameters(3, "b"), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithMultipleParametersWithCallback()
 		{
 			var aValue = 0;
 			var bValue = string.Empty;
@@ -174,7 +207,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersArgExpectationNotMet()
+		public static void CreateWithMultipleParametersArgExpectationNotMet()
 		{
 			var rock = Rock.Create<AbstractMethodVoidTests>();
 			rock.Methods().MultipleParameters(3, "b");

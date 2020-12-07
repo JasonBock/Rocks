@@ -13,7 +13,7 @@ namespace Rocks.IntegrationTests
 	public static class AbstractClassGenericIndexerTests
 	{
 		[Test]
-		public static void MockUsingGenericType()
+		public static void CreateUsingGenericType()
 		{
 			var returnValue = new List<string>();
 			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
@@ -31,7 +31,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockUsingGenericTypeParameter()
+		public static void MakeUsingGenericType()
+		{
+			var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+			var value = chunk[4];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(List<string>)));
+			});
+		}
+
+		[Test]
+		public static void CreateUsingGenericTypeParameter()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
@@ -49,7 +61,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockUsingGenericTypeParameterAsReturn()
+		public static void MakeUsingGenericTypeParameter()
+		{
+			var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+			var value = chunk[4, 5];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateUsingGenericTypeParameterAsReturn()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
@@ -63,6 +87,18 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(returnValue));
+			});
+		}
+
+		[Test]
+		public static void MakeUsingGenericTypeParameterAsReturn()
+		{
+			var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+			var value = chunk["b"];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
 			});
 		}
 	}

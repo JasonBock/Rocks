@@ -17,7 +17,7 @@ namespace Rocks.IntegrationTests
 	public static class AbstractClassGenericEventsTests
 	{
 		[Test]
-		public static void MockUsingGenericType()
+		public static void CreateUsingGenericType()
 		{
 			var returnValue = new List<string>();
 			var rock = Rock.Create<AbstractClassGenericEvents<AbstractClassEventArgs>>();
@@ -34,6 +34,13 @@ namespace Rocks.IntegrationTests
 			{
 				Assert.That(wasEventRaised, Is.True);
 			});
+		}
+
+		[Test]
+		public static void MakeUsingGenericType()
+		{
+			var chunk = Rock.Make<AbstractClassGenericEvents<AbstractClassEventArgs>>().Instance();
+			chunk.Foo();
 		}
 	}
 }
