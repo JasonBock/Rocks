@@ -20,8 +20,12 @@ namespace MockTests
 {
 	public interface IMock
 	{
-		void InArgument(in int a);
-		int this[in int a] { get; }
+		ref int MethodRefReturn();
+		ref int PropertyRefReturn { get; }
+		ref int this[int a] { get; }
+		ref readonly int MethodRefReadonlyReturn();
+		ref readonly int PropertyRefReadonlyReturn { get; }
+		ref readonly int this[string a] { get; }
 	}
 
 	public static class Test

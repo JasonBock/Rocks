@@ -55,7 +55,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents);
+			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, result.MemberIdentifier);
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -139,9 +139,10 @@ namespace Rocks.Builders
 
 		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
 		{
-			var attributes = result.Value.GetAttributes();
+			var indexer = result.Value;
+			var attributes = indexer.GetAttributes();
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-				string.Empty : $"{result.Value.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
+				string.Empty : $"{indexer.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
 
 			if (attributes.Length > 0)
 			{
@@ -152,21 +153,22 @@ namespace Rocks.Builders
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.GetMethod!.Parameters, false)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false)}"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.SetMethod!.Parameters, false)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false)}"")]");
 			}
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
-			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(result.Value.Parameters, true)}";
+			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true)}";
 
-			writer.WriteLine($"{visibility}{isOverriden}{result.Value.Type.GetName()} {indexerSignature}");
+			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
+			writer.WriteLine($"{visibility}{isOverriden}{returnByRef}{indexer.Type.GetName()} {indexerSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

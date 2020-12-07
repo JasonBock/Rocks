@@ -11,6 +11,16 @@ namespace Rocks.IntegrationTests
 		void OutArgumentsWithGenerics<T1, T2>(T1 a, out T2 b);
 	}
 
+	public interface IHaveRefReturn
+	{
+		ref int MethodRefReturn();
+		ref int PropertyRefReturn { get; }
+		ref int this[int a] { get; }
+		ref readonly int MethodRefReadonlyReturn();
+		ref readonly int PropertyRefReadonlyReturn { get; }
+		ref readonly int this[string a] { get; }
+	}
+
 	public interface IHaveIn
 	{
 		void InArgument(in int a);
@@ -19,6 +29,84 @@ namespace Rocks.IntegrationTests
 
 	public static class MethodMemberTests
 	{
+		[Test]
+		public static void MockMethodWithRefReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Methods().MethodRefReturn().Returns(3);
+
+			var chunk = rock.Instance();
+			ref var value = ref chunk.MethodRefReturn();
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(3));
+		}
+
+		[Test]
+		public static void MockPropertyWithRefReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Properties().Getters().PropertyRefReturn().Returns(3);
+
+			var chunk = rock.Instance();
+			ref var value = ref chunk.PropertyRefReturn;
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(3));
+		}
+
+		[Test]
+		public static void MockIndexerWithRefReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Indexers().Getters().This(3).Returns(4);
+
+			var chunk = rock.Instance();
+			ref var value = ref chunk[3];
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(4));
+		}
+
+		[Test]
+		public static void MockMethodWithRefReadonlyReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Methods().MethodRefReadonlyReturn().Returns(3);
+
+			var chunk = rock.Instance();
+			var value = chunk.MethodRefReadonlyReturn();
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(3));
+		}
+
+		[Test]
+		public static void MockPropertyWithRefReadonlyReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Properties().Getters().PropertyRefReadonlyReturn().Returns(3);
+
+			var chunk = rock.Instance();
+			var value = chunk.PropertyRefReadonlyReturn;
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(3));
+		}
+
+		[Test]
+		public static void MockIndexerWithRefReadonlyReturn()
+		{
+			var rock = Rock.Create<IHaveRefReturn>();
+			rock.Indexers().Getters().This("b").Returns(4);
+
+			var chunk = rock.Instance();
+			var value = chunk["b"];
+
+			rock.Verify();
+			Assert.That(value, Is.EqualTo(4));
+		}
+
 		[Test]
 		public static void MockMembersWithInParameters()
 		{
@@ -160,7 +248,7 @@ namespace Rocks.IntegrationTests
 		[Test]
 		public static void MockMemberWithRefParameterAndGenericsAndCallback()
 		{
-			static void RefArgumentsWithGenericsCallback(int a, ref string b) => 
+			static void RefArgumentsWithGenericsCallback(int a, ref string b) =>
 				b = a.ToString(CultureInfo.CurrentCulture);
 
 			var rock = Rock.Create<IHaveRefAndOut>();

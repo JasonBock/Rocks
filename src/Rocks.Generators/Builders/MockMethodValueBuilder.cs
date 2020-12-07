@@ -11,7 +11,8 @@ namespace Rocks.Builders
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
 		{
 			var method = result.Value;
-			var returnType = method.ReturnType.GetName();
+			var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
+			var returnType = $"{returnByRef}{method.ReturnType.GetName()}";
 			var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
@@ -98,11 +99,11 @@ namespace Rocks.Builders
 
 			if (method.Parameters.Length > 0)
 			{
-				MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method, raiseEvents);
+				MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method, raiseEvents, result.MemberIdentifier);
 			}
 			else
 			{
-				MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents);
+				MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents, result.MemberIdentifier);
 			}
 
 			writer.Indent--;
@@ -115,9 +116,17 @@ namespace Rocks.Builders
 			writer.WriteLine();
 		}
 
-		internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
+		internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIndentifier)
 		{
-			writer.WriteLine("var result = methodHandler.Method is not null ?");
+			if(method.ReturnsByRef || method.ReturnsByRefReadonly)
+			{
+				writer.WriteLine($"this.rr{memberIndentifier} = methodHandler.Method is not null ?");
+			}
+			else
+			{
+				writer.WriteLine("var result = methodHandler.Method is not null ?");
+			}
+
 			writer.Indent++;
 
 			var methodCast = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
@@ -137,10 +146,18 @@ namespace Rocks.Builders
 			}
 
 			writer.WriteLine("methodHandler.IncrementCallCount();");
-			writer.WriteLine("return result!;");
+
+			if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+			{
+				writer.WriteLine($"return ref this.rr{memberIndentifier};");
+			}
+			else
+			{
+				writer.WriteLine("return result!;");
+			}
 		}
 
-		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
+		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
 		{
 			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
 			writer.WriteLine("{");
@@ -175,7 +192,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents);
+			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -183,10 +200,10 @@ namespace Rocks.Builders
 			writer.WriteLine("}");
 		}
 
-		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
+		private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
 		{
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
-			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents);
+			MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
 		}
 	}
 }

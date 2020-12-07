@@ -18,11 +18,21 @@ namespace Rocks.Builders
 			writer.Indent++;
 
 			writer.WriteLine("var methodHandler = methodHandlers[0];");
-			writer.WriteLine("var result = methodHandler.Method is not null ?");
+
+			var property = result.Value;
+			if (property.ReturnsByRef || property.ReturnsByRefReadonly)
+			{
+				writer.WriteLine($"this.rr{result.MemberIdentifier} = methodHandler.Method is not null ?");
+			}
+			else
+			{
+				writer.WriteLine("var result = methodHandler.Method is not null ?");
+			}
+
 			writer.Indent++;
-			var methodCast = DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, result.Value.Type);
+			var methodCast = DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 			writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
-			writer.WriteLine($"((HandlerInformation<{result.Value.Type.GetName()}>)methodHandler).ReturnValue;");
+			writer.WriteLine($"((HandlerInformation<{property.Type.GetName()}>)methodHandler).ReturnValue;");
 			writer.Indent--;
 
 			if (raiseEvents)
@@ -31,14 +41,22 @@ namespace Rocks.Builders
 			}
 
 			writer.WriteLine("methodHandler.IncrementCallCount();");
-			writer.WriteLine("return result!;");
+
+			if (property.ReturnsByRef || property.ReturnsByRefReadonly)
+			{
+				writer.WriteLine($"return ref this.rr{result.MemberIdentifier};");
+			}
+			else
+			{
+				writer.WriteLine("return result!;");
+			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for {explicitTypeName}get_{result.Value.Name}())"");");
+			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for {explicitTypeName}get_{property.Name}())"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -140,7 +158,8 @@ namespace Rocks.Builders
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
-			writer.WriteLine($"{visibility}{isOverriden}{property.Type.GetName()} {explicitTypeName}{property.Name}");
+			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
+			writer.WriteLine($"{visibility}{isOverriden}{returnByRef}{property.Type.GetName()} {explicitTypeName}{property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

@@ -19,6 +19,7 @@ namespace Rocks.Builders
 			writer.WriteLine("{");
 			writer.Indent++;
 
+			MockCreateBuilder.BuildRefReturnFields(writer, information);
 			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
 			writer.WriteLine();
 
@@ -73,6 +74,19 @@ namespace Rocks.Builders
 			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
 			writer.Indent--;
 			writer.WriteLine("}");
+		}
+
+		private static void BuildRefReturnFields(IndentedTextWriter writer, MockInformation information)
+		{
+			foreach(var method in information.Methods.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+			{
+				writer.WriteLine($"private {method.Value.ReturnType.GetName()} rr{method.MemberIdentifier};");
+			}
+
+			foreach (var property in information.Properties.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+			{
+				writer.WriteLine($"private {property.Value.Type.GetName()} rr{property.MemberIdentifier};");
+			}
 		}
 	}
 }
