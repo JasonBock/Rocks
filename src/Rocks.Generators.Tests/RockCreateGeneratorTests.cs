@@ -20,12 +20,7 @@ namespace MockTests
 {
 	public interface ITest
 	{
-		ref int MethodRefReturn();
-		ref int PropertyRefReturn { get; }
-		ref int this[int a] { get; }
-		ref readonly int MethodRefReadonlyReturn();
-		ref readonly int PropertyRefReadonlyReturn { get; }
-		ref readonly int this[string a] { get; }
+		void Foo();
 	}
 
 	public static class Test
@@ -48,7 +43,8 @@ namespace MockTests
 		public static void GenerateWhenInvocationExistsInTopLevelStatements()
 		{
 			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
-@"using Rocks;
+@"using MockTests;
+using Rocks;
 using System;
 
 var rock = Rock.Create<ITest>();

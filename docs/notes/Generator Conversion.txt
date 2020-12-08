@@ -422,11 +422,8 @@ namespace Rocks.IntegrationTests
 
 
 BTW in case I'm looking for the gen-d code...
-C:\Users\jason\AppData\Local\Temp\VisualStudioSourceGeneratedDocuments\8d8a9937-c3ea-4812-9e99-1a5cd80b64b6\Rocks\Rocks.RockCreateGenerator
 
-or...
-
-C:\Users\jason\AppData\Local\Temp\.vsdbgsrc\3112fb7a25fab8aae75dd6322da13865b7168159\IFoo_Mock.g.cs
+C:\Users\jason\AppData\Local\Temp\VisualStudioSourceGeneratedDocuments
 
 Next steps:
 * DONE - Handle functions (i.e. return values)

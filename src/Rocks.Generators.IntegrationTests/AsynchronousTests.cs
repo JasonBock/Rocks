@@ -12,7 +12,7 @@ namespace Rocks.IntegrationTests
 	public static class AsynchronousTests
 	{
 		[Test]
-		public static async Task MockAsynchronousMethods()
+		public static async Task CreateAsynchronousMethods()
 		{
 			const int returnValue = 3;
 			var rock = Rock.Create<IAmAsynchronous>();
@@ -28,6 +28,20 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(returnValue));
+			});
+		}
+
+		[Test]
+		[Ignore("Need to return Task.CompletedTask or Task.FromResult")]
+		public static async Task MakeAsynchronousMethods()
+		{
+			var chunk = Rock.Make<IAmAsynchronous>().Instance();
+			await chunk.FooAsync().ConfigureAwait(false);
+			var value = await chunk.FooReturnAsync().ConfigureAwait(false);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
 			});
 		}
 	}

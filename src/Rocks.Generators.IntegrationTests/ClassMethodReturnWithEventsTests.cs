@@ -17,7 +17,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassMethodReturnWithEventsTests
 	{
 		[Test]
-		public static void MockRaiseEvent()
+		public static void CreateRaiseEvent()
 		{
 			var rock = Rock.Create<ClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
@@ -37,7 +37,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockRaiseEventWithCallback()
+		public static void CreateRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassMethodReturnWithEvents>();
@@ -65,7 +65,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockRaiseEventWithMultipleCalls()
+		public static void CreateRaiseEventWithMultipleCalls()
 		{
 			var rock = Rock.Create<ClassMethodReturnWithEvents>();
 			rock.Methods().NoParameters()
@@ -89,7 +89,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockRaiseEventWithMultipleCallsWithCallback()
+		public static void CreateRaiseEventWithMultipleCallsWithCallback()
 		{
 			var callbackInvokedCount = 0;
 			var rock = Rock.Create<ClassMethodReturnWithEvents>();

@@ -18,7 +18,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassConstructorTests
 	{
 		[Test]
-		public static void MockWithNoParametersAndPublicConstructor()
+		public static void CreateWithNoParametersAndPublicConstructor()
 		{
 			var rock = Rock.Create<ClassConstructor>();
 			rock.Methods().NoParameters();
@@ -36,7 +36,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersAndProtectedConstructor()
+		public static void MakeWithNoParametersAndPublicConstructor()
+		{
+			var chunk = Rock.Make<ClassConstructor>().Instance(3);
+			var value = chunk.NoParameters();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithNoParametersAndProtectedConstructor()
 		{
 			var rock = Rock.Create<ClassConstructor>();
 			rock.Methods().NoParameters();
@@ -50,6 +62,18 @@ namespace Rocks.IntegrationTests
 			{
 				Assert.That(chunk.IntData, Is.EqualTo(default(int)));
 				Assert.That(chunk.StringData, Is.EqualTo("b"));
+			});
+		}
+
+		[Test]
+		public static void MakeWithNoParametersAndProtectedConstructor()
+		{
+			var chunk = Rock.Make<ClassConstructor>().Instance("b");
+			var value = chunk.NoParameters();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
 			});
 		}
 	}

@@ -21,7 +21,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassGenericEventsTests
 	{
 		[Test]
-		public static void MockUsingGenericType()
+		public static void CreateUsingGenericType()
 		{
 			var returnValue = new List<string>();
 			var rock = Rock.Create<ClassGenericEvents<ClassEventArgs>>();

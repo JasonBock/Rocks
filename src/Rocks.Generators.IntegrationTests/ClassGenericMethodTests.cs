@@ -19,7 +19,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassGenericMethodTests
 	{
 		[Test]
-		public static void MockUsingGenericType()
+		public static void CreateUsingGenericType()
 		{
 			var rock = Rock.Create<ClassGenericMethod<int>>();
 			rock.Methods().Foo(Arg.Any<List<string>>());
@@ -31,7 +31,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericTypeParameter()
+		public static void MakeUsingGenericType()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.Foo(new List<string>()), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericTypeParameter()
 		{
 			var rock = Rock.Create<ClassGenericMethod<int>>();
 			rock.Methods().Quux(Arg.Any<int>());
@@ -43,7 +54,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericParameterType()
+		public static void MakeWithGenericTypeParameter()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.Quux(3), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericParameterType()
 		{
 			var rock = Rock.Create<ClassGenericMethod<int>>();
 			rock.Methods().Bar(Arg.Any<int>());
@@ -55,7 +77,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericParameterTypeThatDoesNotMatch()
+		public static void MakeWithGenericParameterType()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.Bar(3), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericParameterTypeThatDoesNotMatch()
 		{
 			var rock = Rock.Create<ClassGenericMethod<int>>();
 			rock.Methods().Bar(Arg.Any<int>());
@@ -69,7 +102,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockUsingGenericTypeAsReturn()
+		public static void CreateUsingGenericTypeAsReturn()
 		{
 			var returnValue = new List<string>();
 			var rock = Rock.Create<ClassGenericMethod<int>>();
@@ -87,7 +120,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericTypeParameterAsReturn()
+		public static void MakeUsingGenericTypeAsReturn()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			var value = chunk.FooReturn();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.SameAs(default(List<string>)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericTypeParameterAsReturn()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<ClassGenericMethod<int>>();
@@ -105,7 +150,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericParameterTypeAsReturn()
+		public static void MakeWithGenericTypeParameterAsReturn()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			var value = chunk.QuuxReturn();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericParameterTypeAsReturn()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<ClassGenericMethod<int>>();
@@ -123,7 +180,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithGenericParameterTypeAsReturnThatDoesNotMatch()
+		public static void MakeWithGenericParameterTypeAsReturn()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			var value = chunk.BarReturn<int>();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithGenericParameterTypeAsReturnThatDoesNotMatch()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<ClassGenericMethod<int>>();
@@ -138,7 +207,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNullableGenericParameterTypes()
+		public static void CreateWithNullableGenericParameterTypes()
 		{
 			var returnValue = "c";
 			var rock = Rock.Create<ClassGenericMethod<int>>();
@@ -152,6 +221,18 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(returnValue));
+			});
+		}
+
+		[Test]
+		public static void MakeWithNullableGenericParameterTypes()
+		{
+			var chunk = Rock.Make<ClassGenericMethod<int>>().Instance();
+			var value = chunk.NullableValues("b");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(string)));
 			});
 		}
 	}

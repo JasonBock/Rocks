@@ -18,24 +18,16 @@ using System;
 
 namespace MockTests
 {
-	public abstract class AbstractClassConstructor
+	public interface ITest
 	{
-		protected AbstractClassConstructor(string stringData) => 
-			this.StringData = stringData;
-		public AbstractClassConstructor(int intData) => 
-			this.IntData = intData;
-		
-		public abstract int NoParameters();
-
-		public int IntData { get;  }
-		public string? StringData { get; }
+		void Foo();
 	}
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<AbstractClassConstructor>();
+			var rock = Rock.Make<ITest>();
 		}
 	}
 }");
@@ -43,7 +35,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfITestExtensions"));
 			});
 		}
 
@@ -51,7 +43,8 @@ namespace MockTests
 		public static void GenerateWhenInvocationExistsInTopLevelStatements()
 		{
 			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
-@"using Rocks;
+@"using MockTests;
+using Rocks;
 using System;
 
 var rock = Rock.Make<ITest>();
@@ -67,7 +60,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfITestExtensions"));
 			});
 		}
 
@@ -152,7 +145,7 @@ namespace MockTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfIMockExtensions"));
+				Assert.That(output, Does.Contain("internal static class MakeExpectationsOfITestExtensions"));
 			});
 		}
 

@@ -13,7 +13,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassMethodReturnTests
 	{
 		[Test]
-		public static void MockWithNoParameters()
+		public static void CreateWithNoParameters()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters();
@@ -30,7 +30,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersWithReturn()
+		public static void MakeWithNoParameters()
+		{
+			var chunk = Rock.Make<ClassMethodReturn>().Instance();
+			var value = chunk.NoParameters();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithNoParametersWithReturn()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters().Returns(3);
@@ -47,7 +59,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersMultipleCalls()
+		public static void CreateWithNoParametersMultipleCalls()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -60,7 +72,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersMultipleCallsNotMet()
+		public static void CreateWithNoParametersMultipleCallsNotMet()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters().CallCount(2);
@@ -75,7 +87,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersAndCallback()
+		public static void CreateWithNoParametersAndCallback()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters().Callback(() => 3);
@@ -92,7 +104,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersNoExpectationSet()
+		public static void CreateWithNoParametersNoExpectationSet()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 
@@ -105,7 +117,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithNoParametersExpectationsNotMet()
+		public static void CreateWithNoParametersExpectationsNotMet()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().NoParameters();
@@ -119,7 +131,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameter()
+		public static void CreateWithOneParameter()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().OneParameter(3);
@@ -136,7 +148,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterWithReturn()
+		public static void MakeWithOneParameter()
+		{
+			var chunk = Rock.Make<ClassMethodReturn>().Instance();
+			var value = chunk.OneParameter(3);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithOneParameterWithReturn()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().OneParameter(3).Returns(3);
@@ -153,7 +177,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterWithCallback()
+		public static void CreateWithOneParameterWithCallback()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().OneParameter(3).Callback(_ => 3);
@@ -170,7 +194,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterArgExpectationNotMet()
+		public static void CreateWithOneParameterArgExpectationNotMet()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().OneParameter(3);
@@ -184,7 +208,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParameters()
+		public static void CreateWithMultipleParameters()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().MultipleParameters(3, "b");
@@ -201,7 +225,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersWithReturn()
+		public static void MakeWithMultipleParameters()
+		{
+			var chunk = Rock.Make<ClassMethodReturn>().Instance();
+			var value = chunk.MultipleParameters(3, "b");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithMultipleParametersWithReturn()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().MultipleParameters(3, "b").Returns(3);
@@ -218,7 +254,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersWithCallback()
+		public static void CreateWithMultipleParametersWithCallback()
 		{
 			var aValue = 0;
 			var bValue = string.Empty;
@@ -243,7 +279,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersArgExpectationNotMet()
+		public static void CreateWithMultipleParametersArgExpectationNotMet()
 		{
 			var rock = Rock.Create<ClassMethodReturn>();
 			rock.Methods().MultipleParameters(3, "b");

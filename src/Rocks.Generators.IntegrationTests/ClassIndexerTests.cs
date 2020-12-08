@@ -38,7 +38,7 @@ namespace Rocks.IntegrationTests
 	public static class ClassIndexerTests
 	{
 		[Test]
-		public static void MockWithOneParameterGetterAndSetter()
+		public static void CreateWithOneParameterGetterAndSetter()
 		{
 			var rock = Rock.Create<ClassIndexerGetterSetter>();
 			rock.Indexers().Getters().This(3);
@@ -57,7 +57,20 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterGetter()
+		public static void MakeWithOneParameterGetterAndSetter()
+		{
+			var chunk = Rock.Make<ClassIndexerGetterSetter>().Instance();
+			var value = chunk[3];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk[3] = 4, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithOneParameterGetter()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3);
@@ -74,7 +87,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterGetterRaiseEvent()
+		public static void MakeWithOneParameterGetter()
+		{
+			var chunk = Rock.Make<ClassIndexerGetter>().Instance();
+			var value = chunk[3];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithOneParameterGetterRaiseEvent()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3).RaisesMyEvent(EventArgs.Empty);
@@ -94,7 +119,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterGetterCallback()
+		public static void CreateWithOneParameterGetterCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerGetter>();
@@ -117,7 +142,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterGetterRaiseEventWithCallback()
+		public static void CreateWithOneParameterGetterRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerGetter>();
@@ -144,7 +169,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterGetterMultipleCalls()
+		public static void CreateWithOneParameterGetterMultipleCalls()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3).CallCount(2);
@@ -162,7 +187,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterSetter()
+		public static void CreateWithOneParameterSetter()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, 4);
@@ -174,7 +199,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterSetterRaiseEvent()
+		public static void MakeWithOneParameterSetter()
+		{
+			var chunk = Rock.Make<ClassIndexerSetter>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk[3] = 4, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithOneParameterSetterRaiseEvent()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, 4).RaisesMyEvent(EventArgs.Empty);
@@ -193,7 +229,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterSetterCallback()
+		public static void CreateWithOneParameterSetterCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerSetter>();
@@ -211,7 +247,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterSetterRaiseEventWithCallback()
+		public static void CreateWithOneParameterSetterRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerSetter>();
@@ -233,7 +269,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithOneParameterSetterMultipleCalls()
+		public static void CreateWithOneParameterSetterMultipleCalls()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, 4).CallCount(2);
@@ -246,7 +282,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetterAndSetter()
+		public static void CreateWithMultipleParametersGetterAndSetter()
 		{
 			var rock = Rock.Create<ClassIndexerGetterSetter>();
 			rock.Indexers().Getters().This(3, "b");
@@ -265,7 +301,20 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetter()
+		public static void MakeWithMultipleParametersGetterAndSetter()
+		{
+			var chunk = Rock.Make<ClassIndexerGetterSetter>().Instance();
+			var value = chunk[3, "b"];
+			
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk[3, "b"] = 4, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithMultipleParametersGetter()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3, "b");
@@ -282,7 +331,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetterRaiseEvent()
+		public static void MakeWithMultipleParametersGetter()
+		{
+			var chunk = Rock.Make<ClassIndexerGetter>().Instance();
+			var value = chunk[3, "b"];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateWithMultipleParametersGetterRaiseEvent()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3, "b").RaisesMyEvent(EventArgs.Empty);
@@ -302,7 +363,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetterCallback()
+		public static void CreateWithMultipleParametersGetterCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerGetter>();
@@ -325,7 +386,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetterRaiseEventWithCallback()
+		public static void CreateWithMultipleParametersGetterRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerGetter>();
@@ -352,7 +413,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersGetterMultipleCalls()
+		public static void CreateWithMultipleParametersGetterMultipleCalls()
 		{
 			var rock = Rock.Create<ClassIndexerGetter>();
 			rock.Indexers().Getters().This(3, "b").CallCount(2);
@@ -370,7 +431,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersSetter()
+		public static void CreateWithMultipleParametersSetter()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, "b", 4);
@@ -382,7 +443,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersSetterRaiseEvent()
+		public static void MakeWithMultipleParametersSetter()
+		{
+			var chunk = Rock.Make<ClassIndexerSetter>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk[3, "b"] = 4, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateWithMultipleParametersSetterRaiseEvent()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, "b", 4).RaisesMyEvent(EventArgs.Empty);
@@ -401,7 +473,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersSetterCallback()
+		public static void CreateWithMultipleParametersSetterCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerSetter>();
@@ -419,7 +491,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersSetterRaiseEventWithCallback()
+		public static void CreateWithMultipleParametersSetterRaiseEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<ClassIndexerSetter>();
@@ -441,7 +513,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockWithMultipleParametersSetterMultipleCalls()
+		public static void CreateWithMultipleParametersSetterMultipleCalls()
 		{
 			var rock = Rock.Create<ClassIndexerSetter>();
 			rock.Indexers().Setters().This(3, "b", 4).CallCount(2);
