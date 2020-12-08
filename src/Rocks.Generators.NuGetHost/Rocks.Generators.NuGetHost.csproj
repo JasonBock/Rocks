@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Rocks" Version="5.0.0-rc2" />
+    <!-- Note: https://docs.microsoft.com/en-us/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders -->
+    <PackageReference Include="Rocks" Version="5.0.0-rc3" />
   </ItemGroup>
 </Project>

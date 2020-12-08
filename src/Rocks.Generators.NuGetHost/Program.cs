@@ -10,7 +10,12 @@ chunk.Foo();
 
 rock.Verify();
 
-Console.Out.WriteLine("Success!");
+Console.Out.WriteLine("Create Success!");
+
+var makeChunk = Rock.Make<IMockTest>().Instance();
+makeChunk.Foo();
+
+Console.Out.WriteLine("Make Success!");
 
 namespace RocksTest
 {

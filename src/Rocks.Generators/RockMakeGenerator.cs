@@ -3,10 +3,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders.Make;
 using Rocks.Configuration;
+using Rocks.Descriptors;
 using Rocks.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Rocks
 {
@@ -31,7 +34,26 @@ namespace Rocks
 			}
 		}
 
+		/// <summary>
+		/// I'm following the lead I got from StrongInject, though this 
+		/// was recently taken out there. It's because of this: https://github.com/dotnet/roslyn/pull/46804
+		/// I'm getting an exception and I'm getting no information in VS, so I have to keep this in
+		/// until I <b>know</b> that full exception information will be shown.
+		/// </summary>
 		public void Execute(GeneratorExecutionContext context)
+		{
+			try
+			{
+				this.PrivateExecute(context);
+			}
+			catch(Exception e)
+			{
+				context.ReportDiagnostic(UnexpectedExceptionDescriptor.Create(e));
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.NoInlining)]
+		private void PrivateExecute(GeneratorExecutionContext context)
 		{
 			if (context.SyntaxReceiver is RockMakeReceiver receiver)
 			{
