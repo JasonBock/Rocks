@@ -2,13 +2,16 @@
 using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rocks.Builders.Make
 {
 	internal static class MockMethodValueBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SemanticModel model,
+			ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
 			var method = result.Value;
 			var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
@@ -89,17 +92,48 @@ namespace Rocks.Builders.Make
 				writer.WriteLine($"{outParameter.Name} = default!;");
 			}
 
-			if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+			var taskType = model.Compilation.GetTypeByMetadataName(typeof(Task).FullName);
+			var taskOfTType = model.Compilation.GetTypeByMetadataName(typeof(Task<>).FullName);
+			var valueTaskType = model.Compilation.GetTypeByMetadataName(typeof(ValueTask).FullName);
+			var valueTaskOfTType = model.Compilation.GetTypeByMetadataName(typeof(ValueTask<>).FullName);
+
+			if(method.ReturnType.Equals(taskType))
 			{
-				writer.WriteLine($"return ref this.rr{result.MemberIdentifier};");
+				namespaces.Add(taskType.ContainingNamespace);
+				writer.WriteLine($"return Task.CompletedTask;");
+			}
+			else if(method.ReturnType.Equals(valueTaskType))
+			{
+				namespaces.Add(valueTaskType.ContainingNamespace);
+				writer.WriteLine($"return new ValueTask();");
+			}
+			else if(method.ReturnType.OriginalDefinition.Equals(taskOfTType))
+			{
+				namespaces.Add(taskOfTType.ContainingNamespace);
+				writer.WriteLine($"return Task.FromResult(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
+			}
+			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
+			{
+				namespaces.Add(valueTaskOfTType.ContainingNamespace);
+				var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
+				writer.WriteLine($"return new ValueTask<{typeArgument.GetName()}>(default({typeArgument.GetName()}));");
 			}
 			else
 			{
-				writer.WriteLine("return default!;");
+				if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+				{
+					writer.WriteLine($"return ref this.rr{result.MemberIdentifier};");
+				}
+				else
+				{
+					writer.WriteLine("return default!;");
+				}
 			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
+
+		private static ValueTask MyValueTaskAsync() => new ValueTask();
 	}
 }

@@ -87,7 +87,7 @@ namespace Rocks
 		public ImmutableArray<EventMockableResult> Events { get; private set; }
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
 		public ImmutableArray<MethodMockableResult> Methods { get; private set; }
-		private SemanticModel Model { get; }
+		public SemanticModel Model { get; }
 		public ImmutableArray<PropertyMockableResult> Properties { get; private set; }
 		public ITypeSymbol TypeToMock { get; }
 	}

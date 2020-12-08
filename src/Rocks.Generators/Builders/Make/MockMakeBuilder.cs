@@ -8,7 +8,7 @@ namespace Rocks.Builders.Make
 {
 	internal static class MockMakeBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
 			var typeToMock = information.TypeToMock;
 			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}");
@@ -36,7 +36,7 @@ namespace Rocks.Builders.Make
 			writer.WriteLine();
 
 			var memberIdentifier = 0u;
-
+			
 			foreach (var method in information.Methods)
 			{
 				if (method.Value.ReturnsVoid)
@@ -45,7 +45,7 @@ namespace Rocks.Builders.Make
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, method);
+					MockMethodValueBuilder.Build(writer, method, information.Model, namespaces);
 				}
 
 				memberIdentifier++;
