@@ -26,7 +26,7 @@ namespace Rocks.IntegrationTests
 	public static class ExplicitInterfaceImplementationTests
 	{
 		[Test]
-		public static void MockMethod()
+		public static void CreateMethod()
 		{
 			var rock = Rock.Create<IExplicitInterfaceImplementation>();
 			rock.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
@@ -40,7 +40,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockProperty()
+		public static void MakeMethod()
+		{
+			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).A(), Throws.Nothing);
+				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).A(), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateProperty()
 		{
 			var rock = Rock.Create<IExplicitInterfaceImplementation>();
 			rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
@@ -58,7 +70,23 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockIndexer()
+		public static void MakeProperty()
+		{
+			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+			var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
+			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(oneValue, Is.EqualTo(default(int)));
+				Assert.That(twoValue, Is.EqualTo(default(int)));
+				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).B = oneValue, Throws.Nothing);
+				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).B = twoValue, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateIndexer()
 		{
 			var rock = Rock.Create<IExplicitInterfaceImplementation>();
 			rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
@@ -73,6 +101,22 @@ namespace Rocks.IntegrationTests
 			((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue;
 
 			rock.Verify();
+		}
+
+		[Test]
+		public static void MakeIndexer()
+		{
+			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+			var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
+			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(oneValue, Is.EqualTo(default(int)));
+				Assert.That(twoValue, Is.EqualTo(default(int)));
+				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue, Throws.Nothing);
+				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue, Throws.Nothing);
+			});
 		}
 	}
 }

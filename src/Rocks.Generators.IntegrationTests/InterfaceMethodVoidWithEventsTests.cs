@@ -12,7 +12,7 @@ namespace Rocks.IntegrationTests
 	public static class InterfaceMethodVoidWithEventsTests
 	{
 		[Test]
-		public static void MockEvent()
+		public static void CreateEvent()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
 			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
@@ -31,7 +31,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockEventWithCallback()
+		public static void CreateEventWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
@@ -54,7 +54,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockEventWithMultipleCalls()
+		public static void CreateEventWithMultipleCalls()
 		{
 			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();
 			rock.Methods().NoParameters()
@@ -76,7 +76,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockEventWithMultipleCallsWithCallback()
+		public static void CreateEventWithMultipleCallsWithCallback()
 		{
 			var callbackInvokedCount = 0;
 			var rock = Rock.Create<IInterfaceMethodVoidWithEvents>();

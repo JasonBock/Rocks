@@ -17,7 +17,7 @@ namespace Rocks.IntegrationTests
 	public static class InterfacePropertyTests
 	{
 		[Test]
-		public static void MockGet()
+		public static void CreateGet()
 		{
 			var rock = Rock.Create<IInterfaceProperty>();
 			rock.Properties().Getters().GetData();
@@ -34,7 +34,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockGetWithRaiseEvent()
+		public static void MakeGet()
+		{
+			var chunk = Rock.Make<IInterfaceProperty>().Instance();
+			var value = chunk.GetData;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateGetWithRaiseEvent()
 		{
 			var rock = Rock.Create<IInterfaceProperty>();
 			rock.Properties().Getters().GetData().RaisesMyEvent(EventArgs.Empty);
@@ -54,7 +66,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockGetWithCallback()
+		public static void CreateGetWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<IInterfaceProperty>();
@@ -77,7 +89,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockGetWithRaiseEventAndCallback()
+		public static void CreateGetWithRaiseEventAndCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<IInterfaceProperty>();
@@ -103,7 +115,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockSet()
+		public static void CreateSet()
 		{
 			var rock = Rock.Create<IInterfaceProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>());
@@ -115,7 +127,18 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockSetWithRaiseEvent()
+		public static void MakeSet()
+		{
+			var chunk = Rock.Make<IInterfaceProperty>().Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.SetData = 1, Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateSetWithRaiseEvent()
 		{
 			var rock = Rock.Create<IInterfaceProperty>();
 			rock.Properties().Setters().SetData(Arg.Any<int>())
@@ -135,7 +158,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockSetWithCallback()
+		public static void CreateSetWithCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<IInterfaceProperty>();
@@ -154,7 +177,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockSetWithRaiseEventAndCallback()
+		public static void CreateSetWithRaiseEventAndCallback()
 		{
 			var wasCallbackInvoked = false;
 			var rock = Rock.Create<IInterfaceProperty>();
@@ -177,7 +200,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockGetAndSet()
+		public static void CreateGetAndSet()
 		{
 			var rock = Rock.Create<IInterfaceProperty>();
 			rock.Properties().Getters().GetAndSetData();
@@ -192,6 +215,19 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void MakeGetAndSet()
+		{
+			var chunk = Rock.Make<IInterfaceProperty>().Instance();
+			var value = chunk.GetAndSetData;
+			
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk.GetAndSetData = value, Throws.Nothing);
 			});
 		}
 	}
