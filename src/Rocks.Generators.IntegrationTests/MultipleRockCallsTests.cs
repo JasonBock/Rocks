@@ -7,14 +7,14 @@ namespace Rocks.IntegrationTests
 		void Foo();
 	}
 
+	/// <summary>
+	/// These tests exists because at one point in development,
+	/// the generator would happily create multiple versions of the mock
+	/// which would cause an error because the hint names were the same,
+	/// and I want to prevent a regression of that ever happening.
+	/// </summary>
 	public static class MultipleRockCallsTests
 	{
-		/// <summary>
-		/// This test exists because at one point in development,
-		/// the generator would happily create multiple versions of the mock
-		/// which would cause an error because the hint names were the same,
-		/// and I want to prevent a regression of that ever happening.
-		/// </summary>
 		[Test]
 		public static void CreateMocks()
 		{
@@ -32,6 +32,13 @@ namespace Rocks.IntegrationTests
 
 			rock1.Verify();
 			rock2.Verify();
+		}
+
+		[Test]
+		public static void MakeMocks()
+		{
+			Rock.Make<IMultipleRockCalls>().Instance().Foo();
+			Rock.Make<IMultipleRockCalls>().Instance().Foo();
 		}
 	}
 }

@@ -32,7 +32,14 @@ namespace Rocks.Builders.Make
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine("get => default!;");
+				if (indexer.ReturnsByRef || indexer.ReturnsByRefReadonly)
+				{
+					writer.WriteLine($"get => ref this.rr{result.MemberIdentifier};");
+				}
+				else
+				{
+					writer.WriteLine("get => default!;");
+				}
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)

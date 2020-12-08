@@ -11,7 +11,7 @@ namespace Rocks.IntegrationTests
 	public static class OptionalArgumentsTests
 	{
 		[Test]
-		public static void MockMembersWithOptionalArgumentsSpecified()
+		public static void CreateMembersWithOptionalArgumentsSpecified()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<IHaveOptionalArguments>();
@@ -31,7 +31,20 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMembersWithOptionalArgumentsNotSpecified()
+		public static void MakeMembersWithOptionalArguments()
+		{
+			var chunk = Rock.Make<IHaveOptionalArguments>().Instance();
+			var value = chunk[1];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk.Foo(1), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateMembersWithOptionalArgumentsNotSpecified()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<IHaveOptionalArguments>();

@@ -12,7 +12,7 @@ namespace Rocks.IntegrationTests
 	public static class ParamsTests
 	{
 		[Test]
-		public static void MockMembersWithParamsArgumentsSpecified()
+		public static void CreateMembersWithParamsArgumentsSpecified()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<IHaveParams>();
@@ -32,7 +32,20 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMembersWithParamsArgumentsNotSpecified()
+		public static void MakeMembersWithParamsArgumentsSpecified()
+		{
+			var chunk = Rock.Make<IHaveParams>().Instance();
+			var value = chunk[1, "b"];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk.Foo(1, "b"), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateMembersWithParamsArgumentsNotSpecified()
 		{
 			var returnValue = 3;
 			var rock = Rock.Create<IHaveParams>();
@@ -48,6 +61,19 @@ namespace Rocks.IntegrationTests
 			Assert.Multiple(() =>
 			{
 				Assert.That(value, Is.EqualTo(returnValue));
+			});
+		}
+
+		[Test]
+		public static void MakeMembersWithParamsArgumentsNotSpecified()
+		{
+			var chunk = Rock.Make<IHaveParams>().Instance();
+			var value = chunk[1];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk.Foo(1), Throws.Nothing);
 			});
 		}
 	}

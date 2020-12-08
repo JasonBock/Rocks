@@ -30,7 +30,7 @@ namespace Rocks.IntegrationTests
 	public static class MethodMemberTests
 	{
 		[Test]
-		public static void MockMethodWithRefReturn()
+		public static void CreateMethodWithRefReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Methods().MethodRefReturn().Returns(3);
@@ -43,7 +43,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockPropertyWithRefReturn()
+		public static void MakeMethodWithRefReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			ref var value = ref chunk.MethodRefReturn();
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreatePropertyWithRefReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Properties().Getters().PropertyRefReturn().Returns(3);
@@ -56,7 +65,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockIndexerWithRefReturn()
+		public static void MakePropertyWithRefReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			ref var value = ref chunk.PropertyRefReturn;
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreateIndexerWithRefReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Indexers().Getters().This(3).Returns(4);
@@ -69,7 +87,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMethodWithRefReadonlyReturn()
+		public static void MakeIndexerWithRefReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			ref var value = ref chunk[3];
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreateMethodWithRefReadonlyReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Methods().MethodRefReadonlyReturn().Returns(3);
@@ -82,7 +109,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockPropertyWithRefReadonlyReturn()
+		public static void MakeMethodWithRefReadonlyReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			var value = chunk.MethodRefReadonlyReturn();
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreatePropertyWithRefReadonlyReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Properties().Getters().PropertyRefReadonlyReturn().Returns(3);
@@ -95,7 +131,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockIndexerWithRefReadonlyReturn()
+		public static void MakePropertyWithRefReadonlyReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			var value = chunk.PropertyRefReadonlyReturn;
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreateIndexerWithRefReadonlyReturn()
 		{
 			var rock = Rock.Create<IHaveRefReturn>();
 			rock.Indexers().Getters().This("b").Returns(4);
@@ -108,7 +153,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMembersWithInParameters()
+		public static void MakeIndexerWithRefReadonlyReturn()
+		{
+			var chunk = Rock.Make<IHaveRefReturn>().Instance();
+			var value = chunk["b"];
+
+			Assert.That(value, Is.EqualTo(default(int)));
+		}
+
+		[Test]
+		public static void CreateMembersWithInParameters()
 		{
 			var rock = Rock.Create<IHaveIn>();
 			rock.Methods().InArgument(3);
@@ -127,7 +181,20 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithOutParameter()
+		public static void MakeMembersWithInParameters()
+		{
+			var chunk = Rock.Make<IHaveIn>().Instance();
+			var value = chunk[4];
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+				Assert.That(() => chunk.InArgument(3), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateMemberWithOutParameter()
 		{
 			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Methods().OutArgument(3);
@@ -144,7 +211,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithOutParameterAndCallback()
+		public static void MakeMemberWithOutParameter()
+		{
+			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
+			chunk.OutArgument(out var value);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(int)));
+			});
+		}
+
+		[Test]
+		public static void CreateMemberWithOutParameterAndCallback()
 		{
 			static void OutArgumentCallback(out int a) => a = 4;
 
@@ -163,7 +242,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithOutParameterAndGenerics()
+		public static void CreateMemberWithOutParameterAndGenerics()
 		{
 			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Methods().OutArgumentsWithGenerics<int, string>(3, "b");
@@ -180,7 +259,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithOutParameterAndGenericsAndCallback()
+		public static void MakeMemberWithOutParameterAndGenerics()
+		{
+			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
+			chunk.OutArgumentsWithGenerics<int, string>(3, out var value);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(default(string)));
+			});
+		}
+
+		[Test]
+		public static void CreateMemberWithOutParameterAndGenericsAndCallback()
 		{
 			static void OutArgumentsWithGenericsCallback(int a, out string b) =>
 				b = a.ToString(CultureInfo.CurrentCulture);
@@ -200,7 +291,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithRefParameter()
+		public static void CreateMemberWithRefParameter()
 		{
 			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Methods().RefArgument(3);
@@ -213,7 +304,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithRefParameterAndCallback()
+		public static void MakeMemberWithRefParameter()
+		{
+			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
+			var value = 3;
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.RefArgument(ref value), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateMemberWithRefParameterAndCallback()
 		{
 			static void RefArgumentCallback(ref int a) => a = 4;
 
@@ -233,7 +336,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithRefParameterAndGenerics()
+		public static void CreateMemberWithRefParameterAndGenerics()
 		{
 			var rock = Rock.Create<IHaveRefAndOut>();
 			rock.Methods().RefArgumentsWithGenerics<int, string>(3, "b");
@@ -246,7 +349,19 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MockMemberWithRefParameterAndGenericsAndCallback()
+		public static void MakeMemberWithRefParameterAndGenerics()
+		{
+			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
+			var value = "b";
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.RefArgumentsWithGenerics(3, ref value), Throws.Nothing);
+			});
+		}
+
+		[Test]
+		public static void CreateMemberWithRefParameterAndGenericsAndCallback()
 		{
 			static void RefArgumentsWithGenericsCallback(int a, ref string b) =>
 				b = a.ToString(CultureInfo.CurrentCulture);
