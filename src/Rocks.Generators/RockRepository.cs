@@ -8,12 +8,11 @@ namespace Rocks
 	{
 		private readonly List<IExpectations> rocks = new List<IExpectations>();
 
-		public Expectations<T> Manage<T>(Func<Expectations<T>> creator)
+		public Expectations<T> Add<T>(Expectations<T> expectations)
 			where T : class
 		{
-			var rock = creator();
-			this.rocks.Add(rock);
-			return rock;
+			this.rocks.Add(expectations);
+			return expectations;
 		}
 
 		public void Dispose()
