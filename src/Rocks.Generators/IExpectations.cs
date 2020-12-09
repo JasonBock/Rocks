@@ -6,7 +6,13 @@ using System.ComponentModel;
 
 namespace Rocks
 {
+	public interface IExpectations
+	{
+		void Verify();
+	}
+
 	public class Expectations<T> 
+		: IExpectations
 		where T : class
 	{
 		internal Expectations() { }
