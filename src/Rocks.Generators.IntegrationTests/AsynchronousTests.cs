@@ -39,6 +39,29 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
+		public static async Task CreateAsynchronousMethodsWithAsyncCallback()
+		{
+			var rock = Rock.Create<IAmAsynchronous>();
+			rock.Methods().FooAsync().Callback(async () => await Task.Delay(10));
+			rock.Methods().FooReturnAsync().Callback(async () =>
+			{
+				await Task.Delay(10);
+				return 3;
+			});
+
+			var chunk = rock.Instance();
+			await chunk.FooAsync().ConfigureAwait(false);
+			var value = await chunk.FooReturnAsync().ConfigureAwait(false);
+
+			rock.Verify();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(value, Is.EqualTo(3));
+			});
+		}
+
+		[Test]
 		public static async Task MakeAsynchronousMethods()
 		{
 			var chunk = Rock.Make<IAmAsynchronous>().Instance();
