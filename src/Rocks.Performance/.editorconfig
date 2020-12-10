@@ -1,5 +1,0 @@
-﻿root = false
-
-[*.cs]
-dotnet_diagnostic.CA1305.severity = suggestion
-dotnet_diagnostic.CA1822.severity = suggestion

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj", "{5630AB3F-B029-4FE0-B883-37F47283AC1B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AB1CE37F-5C72-4057-A10C-3ACBD77FB044}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -16,20 +14,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		nuget.config = nuget.config
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.Types", "Rocks.Tests.Types\Rocks.Tests.Types.csproj", "{0805F768-D4DF-486B-B13C-21BEE8C06F33}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockAssemblyTestContainer", "Rocks.RockAssemblyTestContainer\Rocks.RockAssemblyTestContainer.csproj", "{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Sketchpad", "Rocks.Sketchpad\Rocks.Sketchpad.csproj", "{710CF98B-1D8E-4ED5-9A24-51E49136828A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{D040DBA6-B533-4C1F-91B2-0414D7D211E7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Profiling", "Rocks.Profiling\Rocks.Profiling.csproj", "{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.RockTaskTestContainer", "Rocks.RockTaskTestContainer\Rocks.RockTaskTestContainer.csproj", "{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators", "Rocks.Generators\Rocks.Generators.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
 EndProject
@@ -48,38 +32,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5630AB3F-B029-4FE0-B883-37F47283AC1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0805F768-D4DF-486B-B13C-21BEE8C06F33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0A078FC-BFB9-44BB-B55C-CC8AC0C128C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{710CF98B-1D8E-4ED5-9A24-51E49136828A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D040DBA6-B533-4C1F-91B2-0414D7D211E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0A02C04-DA46-42DC-A1C7-421A4D4FFB2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D04EA4A-4AD0-44B7-B623-6408B4DD8762}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F2BBB7E-BA59-424B-89DE-2FC40BCEABC3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
