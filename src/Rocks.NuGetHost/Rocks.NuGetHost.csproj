@@ -5,6 +5,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- Note: https://docs.microsoft.com/en-us/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders -->
-    <PackageReference Include="Rocks" Version="5.0.0-rc3" />
+    <PackageReference Include="Rocks" Version="5.0.0" />
   </ItemGroup>
 </Project>
