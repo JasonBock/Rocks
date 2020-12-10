@@ -40,7 +40,6 @@ namespace Rocks.Tests.Extensions
 			{
 				Assert.That(methodDeclaration.FindParent<VariableDeclarationSyntax>(), Is.Null);
 			});
-
 		}
 
 		private static MethodDeclarationSyntax GetMethodDeclaration(string source)

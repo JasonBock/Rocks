@@ -152,9 +152,6 @@ public interface {targetTypeName}
 			});
 		}
 
-		// TODO: This is incorrect.
-		// First, the inheriting interface should declare the method as "new void Bar()"
-		// Second, the number of methods should be 1, not 2
 		[Test]
 		public static void GetMockableMethodsWhenInterfaceHasBaseInterfaceWithMatchingMethod()
 		{

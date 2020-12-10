@@ -788,6 +788,7 @@ Get rid of everything related to generating explicit implementations.
 * DONE - Problem with NuGet package. Throws an ArgumentNullException "Value cannot be null"
 
 Note: https://docs.microsoft.com/en-us/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders
+Specifically: Windows: %userprofile%\.nuget\packages
 
 * DONE - Make RC2 for 5.0.0
 
@@ -824,18 +825,25 @@ and ensure that the assembly can compile and emit
 * DONE - "in" parameters. They only require me to put "in" on the parameter. Since I never change the value in the mock, we're good.
 * DONE - Ref returns, is that "RefReadonly"? Should attempt to support that. Name the field "rr{memberIndentifier}". Also, members with ref returns need to assign the callback return or ReturnValue to the field before it returns.
 * DONE - Don't do any generation if there are existing diagnostics with the type to mock.
-* Create makes (mocks with no expectations)
+* DONE - Create makes (mocks with no expectations)
 
-* Make RC3 for 5.0.0
+* DONE - Make RC3 for 5.0.0
 
-* Ensure all Assert.That have meaningful messages
-* Make a note in docs that while "RaiseXYZ" is supported, it's discouraged because of this: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-raise-base-class-events-in-derived-classes
-* Consider using target-type new in generated code (e.g. "new(...)") where appropriate
+* DONE - Do one more quick run-through of existing Rocks features to ensure everything is supported
+	* DONE - RockRepository
+* DONE - Need to get the NuGet package back to support source linking
+* DONE - Ensure all documentation exists for every descriptor
+* DONE - Update the wiki. Make a note in docs that while "RaiseXYZ" is supported, it's discouraged because of this: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/how-to-raise-base-class-events-in-derived-classes
+* DONE - Add an ArgTests in IntegrationTests, just to verify all variations work as expected.
+* DONE - See if using an async/await lambda in for the Callback() will still work.
+* DONE - Consider using target-type new in generated code (e.g. "new(...)") where appropriate
+* DONE - Ensure all Assert.That have meaningful messages (where appropriate)
 * Delete all the current Rocks projects, and rename what's there to get rid of ".Generators"
 * Do perf analysis on generator creation and determine if more fine-grained calls to "context.CancellationToken" are needed.
 
 * RELEASE 5.0.0
 
+* Remove the Quickstart wiki entry and use the Quickstart.md in the docs folder. Update the readme to reflect this.
 * "Esoteric" types, like Span<>, pointers, etc., have to find a way to make them work.
 * The "Type Problem". If there are two types with the same name but different namespaces, what havoc could that cause?
 	* The same hint name

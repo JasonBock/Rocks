@@ -118,8 +118,6 @@ public class {targetTypeName}
 			});
 		}
 
-		// TODO: Add far more tests...
-
 		private static (ITypeSymbol, Compilation) GetTypeSymbol(string source, string targetTypeName)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
