@@ -21,7 +21,7 @@ namespace MockTests
 {
 	public interface ITest
 	{
-		ValueTask<int> Foo();
+		void Foo();
 	}
 
 	public static class Test

@@ -17,7 +17,7 @@ namespace Rocks.Builders.Create
 				{
 					writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
 					writer.Indent++;
-					writer.WriteLine($"new MethodExpectations<{typeToMockName}>(self);");
+					writer.WriteLine($"new(self);");
 					writer.Indent--;
 					writer.WriteLine();
 				}
@@ -31,7 +31,7 @@ namespace Rocks.Builders.Create
 						var containingTypeName = typeGroup.Key.GetName();
 						writer.WriteLine($"internal static ExplicitMethodExpectations<{typeToMockName}, {containingTypeName}> ExplicitMethodsFor{containingTypeName}(this Expectations<{typeToMockName}> self) =>");
 						writer.Indent++;
-						writer.WriteLine($"new ExplicitMethodExpectations<{typeToMockName}, {containingTypeName}> (self);");
+						writer.WriteLine($"new(self);");
 						writer.Indent--;
 						writer.WriteLine();
 					}

@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Linq;
 
