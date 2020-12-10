@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators", "Rocks.Generators\Rocks.Generators.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators.Tests", "Rocks.Generators.Tests\Rocks.Generators.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators.IntegrationTests", "Rocks.Generators.IntegrationTests\Rocks.Generators.IntegrationTests.csproj", "{EB1465BD-5400-4226-BFA3-FA59EA14DB02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.IntegrationTests", "Rocks.IntegrationTests\Rocks.IntegrationTests.csproj", "{EB1465BD-5400-4226-BFA3-FA59EA14DB02}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Generators.NuGetHost", "Rocks.Generators.NuGetHost\Rocks.Generators.NuGetHost.csproj", "{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.NuGetHost", "Rocks.NuGetHost\Rocks.NuGetHost.csproj", "{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
 	EndProjectSection

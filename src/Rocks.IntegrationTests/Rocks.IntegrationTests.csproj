@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyName>Rocks.Tests</AssemblyName>
-    <RootNamespace>Rocks.Tests</RootNamespace>
+    <AssemblyName>Rocks.IntegrationTests</AssemblyName>
+    <RootNamespace>Rocks.IntegrationTests</RootNamespace>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rocks.Generators\Rocks.Generators.csproj" />
+    <ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
