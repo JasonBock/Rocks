@@ -46,7 +46,7 @@ namespace Rocks
 			if(this.TypeToMock is INamedTypeSymbol namedType &&
 				MockInformation.HasOpenGenerics(namedType))
 			{
-				diagnostics.Add(CannotSpecifyTypeWithOpenGenericsDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDescriptor.Create(this.TypeToMock));
 			}
 
 			var attributes = this.TypeToMock.GetAttributes();

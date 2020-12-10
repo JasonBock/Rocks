@@ -1,4 +1,4 @@
-# Cannot Mock Sealed Types
+# Cannot Mock Obsolete Types
 If the given type is marked as being obsolete, a mock cannot be created.
 ```
 [Obsolete]

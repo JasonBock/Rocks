@@ -103,7 +103,7 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericsDescriptor.Id), Is.True);
+				Assert.That(information.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericParametersDescriptor.Id), Is.True);
 			});
 		}
 

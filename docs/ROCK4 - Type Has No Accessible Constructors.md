@@ -1,4 +1,4 @@
-# Type Has No Mockable Members
+# Type Has No Accessible Constructors
 If the given type is a class that has no accessible constructors, a mock cannot be created.
 ```
 public class TypeToMock 

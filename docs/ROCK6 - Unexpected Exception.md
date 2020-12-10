@@ -1,0 +1,2 @@
+# Unexpected Exception
+This will occur if something in the source generation process throws an exception unexpectedly. What should happen in IDEs and compilers is that all of the exception information is given. [This PR](https://github.com/dotnet/roslyn/pull/46804) should fix the issue, but it's unclear to me that it has made its way through the pipeline. Once it's clear that tools are doing the "right thing", this diagnostic will be removed.

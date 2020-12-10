@@ -1,19 +1,22 @@
 ﻿using Microsoft.CodeAnalysis;
-using System;
+using Rocks.Extensions;
+using System.Globalization;
 
 namespace Rocks.Descriptors
 {
-	public static class UnexpectedExceptionDescriptor
+	public static class CannotMockObsoleteTypeDescriptor
 	{
-		internal static Diagnostic Create(Exception e) =>
-			Diagnostic.Create(new(UnexpectedExceptionDescriptor.Id, UnexpectedExceptionDescriptor.Title,
-				e.ToString().Replace(Environment.NewLine, " : "),
+		internal static Diagnostic Create(ITypeSymbol type) =>
+			Diagnostic.Create(new(CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title,
+				string.Format(CultureInfo.CurrentCulture, CannotMockObsoleteTypeDescriptor.Message,
+					type.GetName()),
 				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					UnexpectedExceptionDescriptor.Id, UnexpectedExceptionDescriptor.Title)), null);
+					CannotMockObsoleteTypeDescriptor.Id, CannotMockObsoleteTypeDescriptor.Title)),
+				type.Locations.Length > 0 ? type.Locations[0] : null);
 
-		public const string Id = "ROCK6";
-		public const string Message = "An unexpected exception has occurred";
-		public const string Title = "Unexpected Exception";
+		public const string Id = "ROCK2";
+		public const string Message = "The type {0} is obsolete and cannot be mocked";
+		public const string Title = "Cannot Mock Obsolete Types";
 	}
 }

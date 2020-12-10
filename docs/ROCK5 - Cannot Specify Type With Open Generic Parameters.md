@@ -1,4 +1,4 @@
-# Cannot Specify Type With Open Generics
+# Cannot Specify Type With Open Generic Parameters
 If the given type has open generic parameters, a mock cannot be created.
 ```
 public interface IMock<T> { ... }
