@@ -839,14 +839,7 @@ and ensure that the assembly can compile and emit
 * DONE - Consider using target-type new in generated code (e.g. "new(...)") where appropriate
 * DONE - Ensure all Assert.That have meaningful messages (where appropriate)
 * DONE - Delete all the current Rocks projects, and rename what's there to get rid of ".Generators"
-* Do perf analysis on generator creation and determine if more fine-grained calls to "context.CancellationToken" are needed.
 
-* Make, test and RELEASE 5.0.0
+* DONE - Make, test and RELEASE 5.0.0
 
-* Remove the Quickstart wiki entry and use the Quickstart.md in the docs folder. Update the readme to reflect this.
-* "Esoteric" types, like Span<>, pointers, etc., have to find a way to make them work.
-* The "Type Problem". If there are two types with the same name but different namespaces, what havoc could that cause?
-	* The same hint name
-	* If two types are used within the one mock type with this issue - e.g. two properties typed as "MyType" but that type comes from two different definitions
-How do I keep things unambiguous?
-* "Neatness" of the code. Space things out "nicely". It's not to speed things up, just aestetics.
+* DONE - Remove the Quickstart wiki entry and use the Quickstart.md in the docs folder. Update the readme to reflect this.
