@@ -463,6 +463,25 @@ public void MyTestMethod()
 
 Before 5.0.0, the repository worked by calling `repository.Create<MyTypeToMock>()`. However, the source generation has to happen within the assembly that needs the mock. Therefore, the call to `Rock.Create()` can't exist within `RockRepository` itself. The "workaround" is just to call `Rock.Create()` and pass the result into `Add()`. Internally, the repository will add that return value to a list and then passes that back as the return value. This list is used in its `Dispose()` implementation to verify all the mocks.
 
+## `dynamic` Types
+
+It's not a common thing to see `dynamic` used, but Rocks supports it just fine:
+
+```
+public interface IHaveDynamic
+{
+  void Foo(dynamic d);
+}
+
+var dynamicRock = Rock.Create<IHaveDynamic>();
+dynamicRock.Methods().Foo(Arg.Is<dynamic>("b"));
+
+var dynamicChunk = dynamicRock.Instance();
+dynamicChunk.Foo("b");
+
+dynamicRock.Verify();
+```
+
 ## "Special" Types
 
 Rocks can't mock methods with certain types, such as pointer types and `Span<T>`. So if you have an interface like this:
