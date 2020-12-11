@@ -494,7 +494,7 @@ public unsafe interface IHaveReturnPointers
 }
 ```
 
-It won't work. However, even though this is a rare situation, there are plans to add support for these types in a future version of Rocks.
+It won't work. However, even though this is a rare situation, there are plans to add support for these types in a future version of Rocks. You can track the issue [here](https://github.com/JasonBock/Rocks/issues/107).
 
 # Conclusion
 
