@@ -51,7 +51,7 @@ namespace Rocks
 				ValidationState.Value => ObjectEquality.AreEqual(value, this.value),
 				ValidationState.Evaluation => this.evaluation!(value),
 				ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the DefaultValue state."),
-				_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.evaluation}")
+				_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 			};
 
 		public Arg<T> Transform(T value) =>
