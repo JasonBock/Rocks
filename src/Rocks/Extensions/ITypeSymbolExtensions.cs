@@ -7,7 +7,7 @@ using System.Linq;
 namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
-	{
+	{ 
 		private sealed class EventSymbolEqualityComparer
 			: IEqualityComparer<IEventSymbol?>
 		{
@@ -23,6 +23,9 @@ namespace Rocks.Extensions
 
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
 		}
+
+		internal static bool IsEsoteric(this ITypeSymbol self) =>
+			self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType || self.IsRefLikeType;
 
 		internal static bool ContainsDiagnostics(this ITypeSymbol self)
 		{
