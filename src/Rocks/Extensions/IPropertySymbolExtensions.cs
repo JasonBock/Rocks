@@ -35,6 +35,9 @@ namespace Rocks.Extensions
 			return namespaces.ToImmutable();
 		}
 
+		internal static bool IsUnsafe(this IPropertySymbol self) =>
+			self.IsIndexer ? (self.Parameters.Any(_ => _.Type.IsPointer()) || self.Type.IsPointer()) : self.Type.IsPointer();
+
 		internal static PropertyAccessor GetAccessors(this IPropertySymbol self) =>
 			self.GetMethod is not null && self.SetMethod is not null ?
 				PropertyAccessor.GetAndSet : (self.SetMethod is null ? PropertyAccessor.Get : PropertyAccessor.Set);
