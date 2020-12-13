@@ -20,7 +20,7 @@ namespace Rocks.Builders.Create
 
 			if(parameters.Length > 0)
 			{
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}({instanceParameters})");
+				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
 				writer.Indent++;
@@ -30,7 +30,7 @@ namespace Rocks.Builders.Create
 			}
 			else
 			{
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}({instanceParameters}) =>");
+				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine("this.handlers = expectations.CreateHandlers();");
 				writer.Indent--;

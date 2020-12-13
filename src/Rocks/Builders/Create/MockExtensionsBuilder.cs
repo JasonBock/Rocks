@@ -12,7 +12,7 @@ namespace Rocks.Builders.Create
 		{
 			MockDelegateBuilder.Build(writer, information);
 
-			writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
+			writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 

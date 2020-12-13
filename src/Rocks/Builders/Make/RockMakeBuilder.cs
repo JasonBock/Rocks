@@ -73,7 +73,7 @@ namespace Rocks.Builders.Make
 				string.Join(Environment.NewLine, usings), string.Empty, "#nullable enable", writer.ToString());
 
 			var text = SourceText.From(code, Encoding.UTF8);
-			return (this.information.Diagnostics, $"{this.information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}_Rock_Make.g.cs", text);
+			return (this.information.Diagnostics, $"{this.information.TypeToMock.GetName(TypeNameOption.Flatten)}_Rock_Make.g.cs", text);
 		}
 
 		public ImmutableArray<Diagnostic> Diagnostics { get; private set; }

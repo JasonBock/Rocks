@@ -10,7 +10,7 @@ namespace Rocks.Builders.Make
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
-			writer.WriteLine($"internal static class MakeExpectationsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
+			writer.WriteLine($"internal static class MakeExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 

@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
 			var typeToMock = information.TypeToMock;
-			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}");
+			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");
 			writer.Indent++;
 			writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 			writer.Indent--;

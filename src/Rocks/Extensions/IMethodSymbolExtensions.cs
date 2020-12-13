@@ -34,6 +34,9 @@ namespace Rocks.Extensions
 			return builder.ToImmutable();
 		}
 
+		internal static bool IsUnsafe(this IMethodSymbol self) =>
+			self.Parameters.Any(_ => _.Type.IsPointer()) || (!self.ReturnsVoid && self.ReturnType.IsPointer());
+
 		internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
 		{
 			var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?

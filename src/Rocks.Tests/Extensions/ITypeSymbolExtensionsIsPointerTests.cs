@@ -8,22 +8,19 @@ using System.Linq;
 
 namespace Rocks.Tests.Extensions
 {
-	public static class IMethodSymbolExtensionsGetName
+	public static class ITypeSymbolExtensionsIsPointerTests
 	{
-		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.NoGenerics, "Foo")]
-		[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.IncludeGenerics, "Foo<T>")]
-		public static void GetName(string code, MethodNameOption option, string expectedName)
-		{
-			var methodSymbol = IMethodSymbolExtensionsGetName.GetMethodSymbol(code);
-			var name = methodSymbol.GetName(option);
-
+		[TestCase("public class Target { public void Foo(string a) { } }", false)]
+		[TestCase("public class Target { public unsafe void Foo(int* a) { } }", true)]
+		[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", true)]
+		[TestCase("using System; public class Target { public void Foo(Span<int> a) { } }", false)]
+		public static void IsPointer(string code, bool expectedResult) => 
 			Assert.Multiple(() =>
 			{
-				Assert.That(name, Is.EqualTo(expectedName));
+				Assert.That(ITypeSymbolExtensionsIsPointerTests.GetTypeSymbol(code).IsPointer(), Is.EqualTo(expectedResult));
 			});
-		}
 
-		private static IMethodSymbol GetMethodSymbol(string source)
+		private static ITypeSymbol GetTypeSymbol(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -34,8 +31,8 @@ namespace Rocks.Tests.Extensions
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
 			var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-				.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
-			return model.GetDeclaredSymbol(methodSyntax)!;
+				.OfType<MethodDeclarationSyntax>().Single();
+			return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type;
 		}
 	}
 }

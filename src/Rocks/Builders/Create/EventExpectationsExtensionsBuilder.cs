@@ -55,7 +55,7 @@ namespace Rocks.Builders.Create
 				var adornments = string.Join(", ", adornmentsTypes);
 				var raises = string.Join(", ", raisesTypes);
 				var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
-					$"On{result.Value.ContainingType.GetName(TypeNameOption.FlattenGenerics)}";
+					$"On{result.Value.ContainingType.GetName(TypeNameOption.Flatten)}";
 
 				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
 				writer.Indent++;
@@ -74,7 +74,7 @@ namespace Rocks.Builders.Create
 				writer.WriteLine("}");
 			}
 
-			writer.WriteLine($"internal static class {prefix}AdornmentsOf{information.TypeToMock.GetName(TypeNameOption.FlattenGenerics)}Extensions");
+			writer.WriteLine($"internal static class {prefix}AdornmentsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 

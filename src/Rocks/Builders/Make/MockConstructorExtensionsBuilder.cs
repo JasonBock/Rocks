@@ -35,7 +35,7 @@ namespace Rocks.Builders.Make
 
 			writer.WriteLine($"internal static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters}) =>");
 			writer.Indent++;
-			writer.WriteLine($"new Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}({rockInstanceParameters});");
+			writer.WriteLine($"new Rock{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
 			writer.Indent--;
 		}
 	}

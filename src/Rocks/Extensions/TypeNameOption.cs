@@ -4,6 +4,6 @@
 	{
 		NoGenerics, 
 		IncludeGenerics, 
-		FlattenGenerics
+		Flatten
 	}
 }

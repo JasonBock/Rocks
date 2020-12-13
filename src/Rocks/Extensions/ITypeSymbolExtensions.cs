@@ -24,8 +24,10 @@ namespace Rocks.Extensions
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
 		}
 
-		internal static bool IsEsoteric(this ITypeSymbol self) =>
-			self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType || self.IsRefLikeType;
+		internal static bool IsPointer(this ITypeSymbol self) =>
+			self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType;
+
+		internal static bool IsEsoteric(this ITypeSymbol self) => self.IsPointer() || self.IsRefLikeType;
 
 		internal static bool ContainsDiagnostics(this ITypeSymbol self)
 		{
@@ -42,7 +44,7 @@ namespace Rocks.Extensions
 
 		internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 		{
-			static string GetNameWithFlattenGenerics(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)
+			static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)
 			{
 				if(flattenedName.TypeArguments.Length == 0)
 				{
@@ -58,13 +60,32 @@ namespace Rocks.Extensions
 			{
 				return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			}
-			else if(options == TypeNameOption.FlattenGenerics && self is INamedTypeSymbol namedSelf)
+			else if(options == TypeNameOption.Flatten)
 			{
-				return GetNameWithFlattenGenerics(namedSelf, options);
+				if(self.Kind == SymbolKind.PointerType)
+				{
+					return self.ToDisplayString().Replace("*", "Pointer");
+				}
+				else if (self.Kind == SymbolKind.FunctionPointerType)
+				{
+					// delegate* unmanaged[Stdcall, SuppressGCTransition] <int, int>;
+					return self.ToDisplayString().Replace("*", "Pointer").Replace(" ", "_")
+						.Replace("[", "_").Replace(",", "_").Replace("]", "_")
+						.Replace("<", "Of").Replace(">", string.Empty);
+				}
+				else if (self is INamedTypeSymbol namedSelf)
+				{
+					return GetFlattenedName(namedSelf, options);
+				}
+				else
+				{
+					return self.Name;
+				}
 			}
 			else
 			{
-				return self.Name;
+				return self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType ?
+					self.ToDisplayString() : self.Name;
 			}
 		}
 

@@ -38,7 +38,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"var mock = new Rock{typeToMock.GetName(TypeNameOption.FlattenGenerics)}({rockInstanceParameters});");
+			writer.WriteLine($"var mock = new Rock{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
 			writer.WriteLine("self.Mocks.Add(mock);");
 			writer.WriteLine("return mock;");
 

@@ -12,7 +12,7 @@ namespace Rocks.Builders.Create
 			if (information.Methods.Length > 0)
 			{
 				writer.WriteLine();
-				var typeToMock = information.TypeToMock.GetName(TypeNameOption.FlattenGenerics);
+				var typeToMock = information.TypeToMock.GetName(TypeNameOption.Flatten);
 
 				if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
@@ -35,7 +35,7 @@ namespace Rocks.Builders.Create
 						.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 						.GroupBy(_ => _.Value.ContainingType))
 					{
-						var containingTypeName = typeGroup.Key.GetName(TypeNameOption.FlattenGenerics);
+						var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
 						writer.WriteLine($"internal static class ExplicitMethodExpectationsOf{typeToMock}For{containingTypeName}Extensions");
 						writer.WriteLine("{");
 						writer.Indent++;
