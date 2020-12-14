@@ -11,6 +11,7 @@ namespace Rocks.Builders.Create
 		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
 			MockDelegateBuilder.Build(writer, information);
+			MockArgTypeBuilder.Build(writer, information);
 
 			writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");

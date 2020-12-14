@@ -3,11 +3,6 @@ using System.ComponentModel;
 
 namespace Rocks
 {
-	internal enum ValidationState
-	{
-		None, Evaluation, Value, DefaultValue
-	}
-
 	[Serializable]
 	public abstract class Arg
 	{
