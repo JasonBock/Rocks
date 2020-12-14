@@ -22,11 +22,12 @@ namespace Rocks.Builders.Make
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
+			var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true)}";
 
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"{visibility}{isOverriden}{returnByRef}{indexer.Type.GetName()} {indexerSignature}");
+			writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetName()} {indexerSignature}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

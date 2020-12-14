@@ -41,8 +41,9 @@ namespace Rocks.Builders.Create
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
+			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 			var methodSignature =
-				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
+				$"{isUnsafe}{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
 			var methodException =
 				$"{returnType} {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
 

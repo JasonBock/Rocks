@@ -20,10 +20,11 @@ namespace Rocks.Builders.Make
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
+			var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
 			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"{visibility}{isOverriden}{returnByRef}{property.Type.GetName()} {explicitTypeName}{property.Name}");
+			writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetName()} {explicitTypeName}{property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
