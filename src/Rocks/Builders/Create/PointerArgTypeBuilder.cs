@@ -8,13 +8,19 @@ namespace Rocks.Builders.Create
 {
 	internal static class PointerArgTypeBuilder
 	{
+		internal static string GetProjectedName(ITypeSymbol type) =>
+			$"ArgFor{type.GetName(TypeNameOption.Flatten)}";
+
+		internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
+			$"ArgFor{type.GetName(TypeNameOption.Flatten)}Evaluation";
+
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
 		{
-			var validationDelegateName = $"{type.GetName(TypeNameOption.Flatten)}Evaluation";
-			var argName = $"ArgOf{type.GetName(TypeNameOption.Flatten)}";
+			var validationDelegateName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
+			var argName = PointerArgTypeBuilder.GetProjectedName(type);
 			var typeName = type.GetName();
 
-			writer.WriteLine($"public static unsafe delegate {validationDelegateName}({typeName} value);");
+			writer.WriteLine($"public unsafe delegate {typeName} {validationDelegateName}({typeName} value);");
 			writer.WriteLine();
 			writer.WriteLine("[Serializable]");
 			writer.WriteLine($"public sealed class {argName}");
@@ -26,11 +32,11 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine($"private readonly {validationDelegateName}? evaluation;");
 			writer.WriteLine($"private unsafe readonly {typeName} value;");
-			writer.WriteLine("private readonly ValidationState validation;");
+			writer.WriteLine($"private readonly {nameof(ValidationState)} validation;");
 			writer.WriteLine();
-			writer.WriteLine($"internal {argName}() => this.validation = ValidationState.None;");
+			writer.WriteLine($"internal {argName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
 			writer.WriteLine();
-			writer.WriteLine($"internal {argName}(ValidationState state) => this.validation = state;");
+			writer.WriteLine($"internal {argName}({nameof(ValidationState)} state) => this.validation = state;");
 			writer.WriteLine();
 			writer.WriteLine($"internal unsafe {argName}({typeName} value)");
 			writer.WriteLine("{");

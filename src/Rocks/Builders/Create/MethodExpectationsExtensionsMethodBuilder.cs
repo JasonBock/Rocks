@@ -19,7 +19,17 @@ namespace Rocks.Builders.Create
 				$"this MethodExpectations<{mockTypeName}> self";
 			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 				string.Join(", ", thisParameter,
-					string.Join(", ", method.Parameters.Select(_ => $"Arg<{_.Type.GetName()}> {_.Name}")));
+					string.Join(", ", method.Parameters.Select(_ =>
+					{
+						if(_.Type.IsEsoteric())
+						{
+							return $"ArgOf{_.Type.GetName(TypeNameOption.Flatten)} {_.Name}";
+						}
+						else
+						{
+							return $"Arg<{_.Type.GetName()}> {_.Name}";
+						}
+					})));
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
 
 			var delegateTypeName = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
@@ -41,9 +51,21 @@ namespace Rocks.Builders.Create
 			}
 			else
 			{
-				var parameters = string.Join(", ", method.Parameters.Select(
-					_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : 
-						_.RefKind == RefKind.Out ? $"Arg.Any<{_.Type.GetName()}>()" : _.Name));
+				var parameters = string.Join(", ", method.Parameters.Select(_ =>
+					{
+						if (_.HasExplicitDefaultValue)
+						{
+							return $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})";
+						}
+						else if (_.RefKind == RefKind.Out)
+						{
+							return $"Arg.Any<{_.Type.GetName()}>()";
+						}
+						else 
+						{ 
+							return _.Name;
+						}
+					}));
 				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			}
 
