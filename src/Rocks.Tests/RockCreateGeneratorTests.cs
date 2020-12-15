@@ -20,12 +20,18 @@ namespace MockTests
 {
 	public interface ITest
 	{
+		/*
 		unsafe int* Foo(int* value);
 		unsafe delegate*<int, void> FooMethod(delegate*<int, void> value);
 		unsafe int* Data { get; set; }
 		unsafe delegate*<int, void> DataMethod { get; set; }
 		unsafe int* this[int* value] { get; set; }
 		unsafe delegate*<int, void> this[delegate*<int, void> value] { get; set; }
+		*/
+		void RefArgument(ref int a);
+		void RefArgumentsWithGenerics<T1, T2>(T1 a, ref T2 b);
+		void OutArgument(out int a);
+		void OutArgumentsWithGenerics<T1, T2>(T1 a, out T2 b);
 	}
 
 	public static class Test

@@ -47,10 +47,10 @@ namespace Rocks.Builders.Create
 				BuildHandlerInformationType(writer, handlerType);
 			}
 
-			foreach (var adornmentType in adornmentTypes)
+			foreach (var (type, adornment) in adornmentTypes)
 			{
-				BuildAdornmentInformationType(writer, adornmentType.type, adornmentType.adornment);
-				BuildAddExtensionMethod(writer, adornmentType.type, adornmentType.adornment);
+				BuildAdornmentInformationType(writer, type, adornment);
+				BuildAddExtensionMethod(writer, type, adornment);
 			}
 		}
 

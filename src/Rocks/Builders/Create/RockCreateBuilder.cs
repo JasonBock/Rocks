@@ -56,7 +56,7 @@ namespace Rocks.Builders.Create
 
 			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
-			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces);
+			MockBuilder.Build(indentWriter, this.information, namespaces);
 
 			foreach (var @namespace in namespaces.Where(_ => _ is not null && !_.IsGlobalNamespace))
 			{

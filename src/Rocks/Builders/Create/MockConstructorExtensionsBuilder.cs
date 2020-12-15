@@ -31,10 +31,15 @@ namespace Rocks.Builders.Create
 				$"this Expectations<{typeToMock.GetName()}> self" :
 				string.Join(", ", $"this Expectations<{typeToMock.GetName()}> self",
 					string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
+			var isUnsafe = false;
 			var rockInstanceParameters = parameters.Length == 0 ? "self" :
-				string.Join(", ", "self", string.Join(", ", parameters.Select(_ => $"{_.Name}")));
+				string.Join(", ", "self", string.Join(", ", parameters.Select(_ =>
+				{
+					isUnsafe |= _.Type.IsPointer();
+					return $"{_.Name}";
+				})));
 
-			writer.WriteLine($"internal static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters})");
+			writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
 

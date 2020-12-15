@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rocks.Builders.Create
 {
-	internal static class MockExtensionsBuilder
+	internal static class MockBuilder
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
 		{
@@ -24,6 +24,7 @@ namespace Rocks.Builders.Create
 			MockMethodExtensionsBuilder.Build(writer, information);
 			MockPropertyExtensionsBuilder.Build(writer, information);
 			MockConstructorExtensionsBuilder.Build(writer, information);
+
 			writer.WriteLine();
 			MockCreateBuilder.Build(writer, information);
 

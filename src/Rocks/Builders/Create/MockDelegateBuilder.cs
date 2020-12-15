@@ -75,15 +75,15 @@ namespace Rocks.Builders.Create
 			if (information.Methods.Length > 0)
 			{
 				var methods = information.Methods
-					.Where(_ => _.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
-						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer() &&
+					.Where(_ => (_.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
+						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer()) &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value);
 				BuildDelegates(writer, methods);
 
 				var explicitMethodGroups = information.Methods
-					.Where(_ => _.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
-						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer() &&
+					.Where(_ => (_.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
+						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer()) &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType);
 
