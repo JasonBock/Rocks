@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rocks.Builders.Create
 {
-	internal static class MockCreateBuilder
+	internal static class MockTypeBuilder
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
@@ -19,7 +19,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			MockCreateBuilder.BuildRefReturnFields(writer, information);
+			MockTypeBuilder.BuildRefReturnFields(writer, information);
 			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
 			writer.WriteLine();
 

@@ -8,8 +8,8 @@ namespace Rocks.Builders.Create
 {
 	internal static partial class MockProjectedTypesAdornmentsBuilder
 	{
-		internal static string GetProjectedAdornmentName(ITypeSymbol type, AdornmentType adornment) => 
-			$"{adornment}AdornmentsFor{type.GetName(TypeNameOption.Flatten)}";
+		internal static string GetProjectedAdornmentName(ITypeSymbol type, AdornmentType adornment, bool isExplicit) => 
+			$"{(isExplicit ? "Explicit" : string.Empty)}{adornment}AdornmentsFor{type.GetName(TypeNameOption.Flatten)}";
 
 		internal static string GetProjectedHandlerInformationName(ITypeSymbol type) =>
 			$"HandlerInformationFor{type.GetName(TypeNameOption.Flatten)}";
@@ -19,7 +19,7 @@ namespace Rocks.Builders.Create
 
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			var adornmentTypes = new HashSet<(ITypeSymbol type, AdornmentType adornment)>();
+			var adornmentTypes = new HashSet<(ITypeSymbol type, AdornmentType adornment, bool isExplicit)>();
 
 			foreach(var methodResult in information.Methods)
 			{
@@ -27,7 +27,8 @@ namespace Rocks.Builders.Create
 
 				if(!method.ReturnsVoid && method.ReturnType.IsEsoteric())
 				{
-					adornmentTypes.Add((method.ReturnType, AdornmentType.Method));
+					adornmentTypes.Add((method.ReturnType, AdornmentType.Method, 
+						methodResult.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes));
 				}
 			}
 
@@ -38,7 +39,8 @@ namespace Rocks.Builders.Create
 				if((propertyResult.Accessors == PropertyAccessor.Get || propertyResult.Accessors == PropertyAccessor.GetAndSet) &&
 					property.Type.IsEsoteric())
 				{
-					adornmentTypes.Add((property.Type, property.IsIndexer ? AdornmentType.Indexer : AdornmentType.Property));
+					adornmentTypes.Add((property.Type, property.IsIndexer ? AdornmentType.Indexer : AdornmentType.Property,
+						propertyResult.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes));
 				}
 			}
 
@@ -47,9 +49,9 @@ namespace Rocks.Builders.Create
 				BuildHandlerInformationType(writer, handlerType);
 			}
 
-			foreach (var (type, adornment) in adornmentTypes)
+			foreach (var (type, adornment, isExplicit) in adornmentTypes)
 			{
-				BuildAdornmentInformationType(writer, type, adornment);
+				BuildAdornmentInformationType(writer, type, adornment, isExplicit);
 				BuildAddExtensionMethod(writer, type, adornment);
 			}
 		}
@@ -107,9 +109,9 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("}");
 		}
 
-		private static void BuildAdornmentInformationType(IndentedTextWriter writer, ITypeSymbol type, AdornmentType adornment)
+		private static void BuildAdornmentInformationType(IndentedTextWriter writer, ITypeSymbol type, AdornmentType adornment, bool isExplicit)
 		{
-			var adornmentName = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment);
+			var adornmentName = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit);
 			var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 
 			writer.WriteLine($"public sealed class {adornmentName}<T, TCallback>");
@@ -142,6 +144,16 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.Handler.SetCallback(callback);");
+			writer.WriteLine("return this;");
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine();
+
+			writer.WriteLine($"public {adornmentName}<T, TCallback> Returns({type.GetName()} returnValue)");
+			writer.WriteLine("{");
+			writer.Indent++;
+			writer.WriteLine("this.Handler.ReturnValue = returnValue;");
 			writer.WriteLine("return this;");
 			writer.Indent--;
 			writer.WriteLine("}");

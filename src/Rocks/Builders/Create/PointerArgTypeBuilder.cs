@@ -20,7 +20,7 @@ namespace Rocks.Builders.Create
 			var argName = PointerArgTypeBuilder.GetProjectedName(type);
 			var typeName = type.GetName();
 
-			writer.WriteLine($"public unsafe delegate {typeName} {validationDelegateName}({typeName} value);");
+			writer.WriteLine($"public unsafe delegate bool {validationDelegateName}({typeName} value);");
 			writer.WriteLine();
 			writer.WriteLine("[Serializable]");
 			writer.WriteLine($"public sealed class {argName}");

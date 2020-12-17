@@ -20,7 +20,8 @@ namespace Rocks.Builders.Create
 
 			if(parameters.Length > 0)
 			{
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
+				var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
+				writer.WriteLine($"public {isUnsafe}Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
 				writer.Indent++;

@@ -23,7 +23,9 @@ namespace Rocks.Builders.Create
 					{
 						if(_.Type.IsEsoteric())
 						{
-							return $"ArgOf{_.Type.GetName(TypeNameOption.Flatten)} {_.Name}";
+							var argName = _.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(_.Type) :
+								RefLikeArgTypeBuilder.GetProjectedName(_.Type);
+							return $"{argName} {_.Name}";
 						}
 						else
 						{
@@ -32,12 +34,14 @@ namespace Rocks.Builders.Create
 					})));
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
 
-			var delegateTypeName = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
-				method.GetName(extendedName: "Callback") :
-				method.ReturnsVoid ? DelegateBuilder.Build(method.Parameters) : DelegateBuilder.Build(method.Parameters, method.ReturnType);
+			var delegateTypeName = method.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
+					method.ReturnsVoid ? DelegateBuilder.Build(method.Parameters) : DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var adornmentsType = method.ReturnsVoid ? 
 				$"MethodAdornments<{mockTypeName}, {delegateTypeName}>" :
-				$"MethodAdornments<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
+				method.ReturnType.IsEsoteric() ? 
+					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {delegateTypeName}>" :
+					$"MethodAdornments<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
@@ -45,9 +49,13 @@ namespace Rocks.Builders.Create
 
 			var addReturnValue = method.ReturnsVoid ? string.Empty : $"<{method.ReturnType.GetName()}>";
 
-			if(method.Parameters.Length == 0)
+			var addMethod = method.ReturnsVoid ? "Add" :
+				method.ReturnType.IsEsoteric() ? 
+				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : $"Add<{method.ReturnType.GetName()}>";
+
+			if (method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<Arg>()));");
 			}
 			else
 			{
@@ -66,7 +74,7 @@ namespace Rocks.Builders.Create
 							return _.Name;
 						}
 					}));
-				writer.WriteLine($"{newAdornments}(self.Add{addReturnValue}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
+				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
 			}
 
 			writer.Indent--;

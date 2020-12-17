@@ -130,11 +130,14 @@ namespace Rocks.Builders.Create
 			for (var i = 0; i < method.Parameters.Length; i++)
 			{
 				var parameter = method.Parameters[i];
+				var argType = parameter.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
+					parameter.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
+					$"Arg<{parameter.Type.GetName()}>";
 
-				if(i == 0)
+				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -144,7 +147,7 @@ namespace Rocks.Builders.Create
 					}
 
 					writer.WriteLine(
-						$"((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -180,8 +183,8 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var methodCast = method.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out) ?
-				method.GetName(extendedName: "Callback") :
+			var methodCast = method.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
 				DelegateBuilder.Build(method.Parameters);
 			var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(

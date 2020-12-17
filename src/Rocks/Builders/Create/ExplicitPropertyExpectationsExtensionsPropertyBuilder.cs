@@ -13,13 +13,22 @@ namespace Rocks.Builders.Create
 			var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
 			var thisParameter = $"this ExplicitPropertyGetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
 			var mockTypeName = result.MockType.GetName();
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type)}, {propertyReturnValue}>";
+
+			var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
+				DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
+			var adornmentsType = property.Type.IsEsoteric() ?
+				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
+				$"PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
 			writer.Indent++;
 
-			writer.WriteLine($"{newAdornments}(self.Add<{propertyReturnValue}>({memberIdentifier}, new List<Arg>()));");
+			var addMethod = property.Type.IsEsoteric() ?
+				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
+
+			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<Arg>()));");
 			writer.Indent--;
 		}
 
@@ -29,7 +38,13 @@ namespace Rocks.Builders.Create
 			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
 			var thisParameter = $"this ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
 			var mockTypeName = result.MockType.GetName();
-			var adornmentsType = $"PropertyAdornments<{mockTypeName}, {DelegateBuilder.Build(property.SetMethod!.Parameters)}>";
+
+			var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+				DelegateBuilder.Build(property.SetMethod!.Parameters);
+			var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
+				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
+				$"PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, Arg<{propertyParameterValue}> value) =>");

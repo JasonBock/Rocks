@@ -30,9 +30,16 @@ namespace Rocks.Builders.Create
 			}
 
 			writer.Indent++;
-			var methodCast = DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
+
+			var methodCast = property.GetMethod!.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
+				DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
+			var handlerName = property.Type.IsEsoteric() ?
+				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
+				$"HandlerInformation<{property.Type.GetName()}>";
+
 			writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
-			writer.WriteLine($"((HandlerInformation<{property.Type.GetName()}>)methodHandler).ReturnValue;");
+			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
 			writer.Indent--;
 
 			if (raiseEvents)
@@ -63,6 +70,8 @@ namespace Rocks.Builders.Create
 
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
+			var property = result.Value;
+
 			writer.WriteLine("set");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -76,7 +85,11 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if ((methodHandler.Expectations[0] as Arg<{result.Value.Type.GetName()}>)?.IsValid(value) ?? false)");
+			var argType = property.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(property.Type) :
+				property.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
+				$"Arg<{property.Type.GetName()}>";
+
+			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -86,7 +99,10 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var methodCast = DelegateBuilder.Build(result.Value.SetMethod!.Parameters);
+			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+				DelegateBuilder.Build(property.SetMethod!.Parameters);
+
 			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
 
 			writer.Indent--;
@@ -96,7 +112,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{result.Value.Name}({{value}})"");");
+			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{property.Name}({{value}})"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -121,7 +137,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{result.Value.Name}({{value}})"");");
+			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{property.Name}({{value}})"");");
 			writer.Indent--;
 			writer.WriteLine("}");
 

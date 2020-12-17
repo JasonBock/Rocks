@@ -68,7 +68,6 @@ namespace Rocks.Builders.Create
 			}
 		}
 
-
 		private static void BuildIndexers(IndentedTextWriter writer, MockInformation information)
 		{
 			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&

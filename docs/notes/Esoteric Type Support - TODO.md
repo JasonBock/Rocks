@@ -50,16 +50,23 @@ They could probably inherit from the "Type<T, TCallback>" types. The only way to
 Which I believe will work. But again, this is only for members that return values.
 
 
+DONE - Need to make sure the "Instance()" methods are marked as unsafe if they take pointer types.
+
+
 Any of the methods/indexers/properties that have parameters with "esoteric" types needs to use projected types in the extension methods, and specify the callback type to the generated delegate value. If it needs to return a value, it needs to use the name of the projected type. Also, the "AddFor{type}" extension method needs to be used for members that return an esoteric type
 
+Need to make sure that the adornment name has "Explicit" for explicit implementations.
 
-The cast to call IsValid() on the parameter needs to be on the projected Arg type.
+* DONE - MethodExpectationsExtensionsBuilder.Build
+* DONE - PropertyExpectationsExtensionsBuilder.Build
+	* DONE - Properties
+	* DONE - Explicit Properties
+* PropertyExpectationsExtensionsBuilder.Build
+	* DONE - Properties
+	* Explicit Properties
 
 
-The cast to call the callback needs to be the generated callback delegate
-
-
-Anything that puts the value into the string for an exception...can't use the value. So, instead of $"..., {a}, ...", it would be $"..., a, ...". Side note, the generated exception string doesn't seem to be completely correct all the time right now, need to review that.
-
-
-Need to make sure the "Instance()" methods are marked as unsafe if they take pointer types.
+MockCreateBuilder.Build
+* DONE - The cast to call IsValid() on the parameter needs to be on the projected Arg type.
+* DONE - The cast to call the callback needs to be the generated callback delegate
+* Anything that puts the value into the string for an exception...can't use the value. So, instead of $"..., {a}, ...", it would be $"..., a, ...". Side note, the generated exception string doesn't seem to be completely correct all the time right now, need to review that.

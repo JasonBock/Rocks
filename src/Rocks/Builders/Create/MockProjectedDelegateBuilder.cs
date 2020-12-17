@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace Rocks.Builders.Create
 {
-	internal static class MockDelegateBuilder
+	internal static class MockProjectedDelegateBuilder
 	{
-		internal static string GetDelegateName(IMethodSymbol method) =>
+		internal static string GetProjectedDelegateName(IMethodSymbol method) =>
 			method.GetName(extendedName: "Callback");
 
-		internal static string GetDelegateDefinition(IMethodSymbol method)
+		internal static string GetProjectedDelegate(IMethodSymbol method)
 		{
 			var returnType = method.ReturnType.GetName();
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -21,13 +21,13 @@ namespace Rocks.Builders.Create
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
-			return $"public {isUnsafe}delegate {returnType} {MockDelegateBuilder.GetDelegateName(method)}({methodParameters});";
+			return $"public {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}({methodParameters});";
 		}
 
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
 			static void BuildDelegate(IndentedTextWriter writer, IMethodSymbol method) => 
-				writer.WriteLine(MockDelegateBuilder.GetDelegateDefinition(method));
+				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
 
 			static void BuildDelegates(IndentedTextWriter writer, IEnumerable<IMethodSymbol> methods)
 			{
@@ -40,19 +40,19 @@ namespace Rocks.Builders.Create
 			static void BuildProperties(IndentedTextWriter writer, MockInformation information)
 			{
 				var getPropertyMethods = information.Properties
-					.Where(_ => _.Value.GetMethod is not null && _.Value.Type.IsPointer() &&
+					.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value.GetMethod!);
 				BuildDelegates(writer, getPropertyMethods);
 
 				var setPropertyMethods = information.Properties
-					.Where(_ => _.Value.SetMethod is not null && _.Value.Type.IsPointer() &&
+					.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value.SetMethod!);
 				BuildDelegates(writer, setPropertyMethods);
 
 				var explicitGetPropertyMethodGroups = information.Properties
-					.Where(_ => _.Value.GetMethod is not null && _.Value.Type.IsPointer() &&
+					.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType);
 
@@ -62,7 +62,7 @@ namespace Rocks.Builders.Create
 				}
 
 				var explicitSetPropertyMethodGroups = information.Properties
-					.Where(_ => _.Value.SetMethod is not null && _.Value.Type.IsPointer() &&
+					.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType);
 
@@ -75,15 +75,13 @@ namespace Rocks.Builders.Create
 			if (information.Methods.Length > 0)
 			{
 				var methods = information.Methods
-					.Where(_ => (_.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
-						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer()) &&
+					.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value);
 				BuildDelegates(writer, methods);
 
 				var explicitMethodGroups = information.Methods
-					.Where(_ => (_.Value.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsPointer()) ||
-						!_.Value.ReturnsVoid && _.Value.ReturnType.IsPointer()) &&
+					.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType);
 

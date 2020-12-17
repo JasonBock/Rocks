@@ -8,13 +8,19 @@ namespace Rocks.Builders.Create
 {
 	internal static class RefLikeArgTypeBuilder
 	{
+		internal static string GetProjectedName(ITypeSymbol type) =>
+			$"ArgFor{type.GetName(TypeNameOption.Flatten)}";
+
+		internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
+			$"ArgFor{type.GetName(TypeNameOption.Flatten)}Evaluation";
+
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
 		{
-			var validationDelegateName = $"{type.GetName(TypeNameOption.Flatten)}Evaluation";
-			var argName = $"ArgOf{type.GetName(TypeNameOption.Flatten)}";
+			var validationDelegateName = RefLikeArgTypeBuilder.GetProjectedName(type);
+			var argName = RefLikeArgTypeBuilder.GetProjectedName(type);
 			var typeName = type.GetName();
 
-			writer.WriteLine($"public unsafe delegate {typeName} {validationDelegateName}({typeName} value);");
+			writer.WriteLine($"public delegate {typeName} {validationDelegateName}({typeName} value);");
 			writer.WriteLine();
 			writer.WriteLine("[Serializable]");
 			writer.WriteLine($"public sealed class {argName}");
@@ -25,7 +31,7 @@ namespace Rocks.Builders.Create
 			writer.Indent++;
 
 			writer.WriteLine($"private readonly {validationDelegateName}? evaluation;");
-			writer.WriteLine($"private unsafe readonly {typeName} value;");
+			writer.WriteLine($"private readonly {typeName} value;");
 			writer.WriteLine("private readonly ValidationState validation;");
 			writer.WriteLine();
 			writer.WriteLine($"internal {argName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
@@ -41,7 +47,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("}");
 			writer.WriteLine();
 
-			writer.WriteLine($"public unsafe bool IsValid({typeName} value) =>");
+			writer.WriteLine($"public bool IsValid({typeName} value) =>");
 			writer.Indent++;
 			writer.WriteLine("this.validation switch");
 			writer.WriteLine("{");

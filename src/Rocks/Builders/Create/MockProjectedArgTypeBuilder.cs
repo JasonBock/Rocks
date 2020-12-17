@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create
 {
-	internal static class MockArgTypeBuilder
+	internal static class MockProjectedArgTypeBuilder
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{

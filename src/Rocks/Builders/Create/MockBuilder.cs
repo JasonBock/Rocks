@@ -26,7 +26,7 @@ namespace Rocks.Builders.Create
 			MockConstructorExtensionsBuilder.Build(writer, information);
 
 			writer.WriteLine();
-			MockCreateBuilder.Build(writer, information);
+			MockTypeBuilder.Build(writer, information);
 
 			writer.Indent--;
 			writer.WriteLine("}");

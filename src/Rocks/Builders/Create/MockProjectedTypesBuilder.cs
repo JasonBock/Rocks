@@ -9,8 +9,8 @@ namespace Rocks.Builders.Create
 	{
 		internal static void Build(IndentedTextWriter writer, MockInformation information)
 		{
-			MockDelegateBuilder.Build(writer, information);
-			MockArgTypeBuilder.Build(writer, information);
+			MockProjectedDelegateBuilder.Build(writer, information);
+			MockProjectedArgTypeBuilder.Build(writer, information);
 			MockProjectedTypesAdornmentsBuilder.Build(writer, information);
 		}
 	}

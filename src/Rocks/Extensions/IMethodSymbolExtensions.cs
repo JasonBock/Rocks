@@ -7,6 +7,10 @@ namespace Rocks.Extensions
 {
 	internal static class IMethodSymbolExtensions
 	{
+		internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
+			self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsEsoteric()) ||
+				!self.ReturnsVoid && self.ReturnType.IsEsoteric();
+
 		/// <summary>
 		/// This is needed because if a method has a generic parameter that is used 
 		/// either with a method parameter or the return value and declares the type to be nullable,
@@ -19,11 +23,11 @@ namespace Rocks.Extensions
 		{
 			var builder = ImmutableArray.CreateBuilder<string>();
 
-			if(self.TypeParameters.Length > 0)
+			if (self.TypeParameters.Length > 0)
 			{
-				foreach(var typeParameter in self.TypeParameters)
+				foreach (var typeParameter in self.TypeParameters)
 				{
-					if(self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
+					if (self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
 						(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
 					{
 						builder.Add($"where {typeParameter.GetName()} : default");
@@ -68,7 +72,7 @@ namespace Rocks.Extensions
 		{
 			static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
 			{
-				foreach(var parameterTypeNamespace in parameter.Type.GetNamespaces())
+				foreach (var parameterTypeNamespace in parameter.Type.GetNamespaces())
 				{
 					yield return parameterTypeNamespace;
 				}
@@ -81,7 +85,7 @@ namespace Rocks.Extensions
 
 			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
-			if(!self.ReturnsVoid)
+			if (!self.ReturnsVoid)
 			{
 				namespaces.AddRange(self.ReturnType.GetNamespaces());
 				namespaces.AddRange(self.GetReturnTypeAttributes().SelectMany(_ => _.GetNamespaces()));
@@ -124,7 +128,7 @@ namespace Rocks.Extensions
 					}
 				}
 
-				return self.ReturnType.Equals(other.ReturnType, SymbolEqualityComparer.Default) ? 
+				return self.ReturnType.Equals(other.ReturnType, SymbolEqualityComparer.Default) ?
 					MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 			}
 		}
