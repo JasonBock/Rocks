@@ -12,7 +12,7 @@ namespace Rocks.Builders.Create
 			$"ArgFor{type.GetName(TypeNameOption.Flatten)}";
 
 		internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
-			$"ArgFor{type.GetName(TypeNameOption.Flatten)}Evaluation";
+			$"ArgEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
 
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
 		{

@@ -8,19 +8,23 @@ namespace Rocks.Builders.Create
 {
 	internal static class RefLikeArgTypeBuilder
 	{
+		internal static string GetProjectedConstructorName(ITypeSymbol type) =>
+			$"ArgFor{type.GetName(TypeNameOption.NoGenerics)}";
+
 		internal static string GetProjectedName(ITypeSymbol type) =>
-			$"ArgFor{type.GetName(TypeNameOption.Flatten)}";
+			$"ArgFor{type.GetName()}";
 
 		internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
-			$"ArgFor{type.GetName(TypeNameOption.Flatten)}Evaluation";
+			$"ArgEvaluationFor{type.GetName()}";
 
 		internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
 		{
-			var validationDelegateName = RefLikeArgTypeBuilder.GetProjectedName(type);
+			var validationDelegateName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
 			var argName = RefLikeArgTypeBuilder.GetProjectedName(type);
+			var argConstructorName = RefLikeArgTypeBuilder.GetProjectedConstructorName(type);
 			var typeName = type.GetName();
 
-			writer.WriteLine($"public delegate {typeName} {validationDelegateName}({typeName} value);");
+			writer.WriteLine($"public delegate bool {validationDelegateName}({typeName} value);");
 			writer.WriteLine();
 			writer.WriteLine("[Serializable]");
 			writer.WriteLine($"public sealed class {argName}");
@@ -34,11 +38,11 @@ namespace Rocks.Builders.Create
 			writer.WriteLine($"private readonly {typeName} value;");
 			writer.WriteLine("private readonly ValidationState validation;");
 			writer.WriteLine();
-			writer.WriteLine($"internal {argName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
+			writer.WriteLine($"internal {argConstructorName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
 			writer.WriteLine();
-			writer.WriteLine($"internal {argName}({nameof(ValidationState)} state) => this.validation = state;");
+			writer.WriteLine($"internal {argConstructorName}({nameof(ValidationState)} state) => this.validation = state;");
 			writer.WriteLine();
-			writer.WriteLine($"internal {argName}({validationDelegateName} evaluation)");
+			writer.WriteLine($"internal {argConstructorName}({validationDelegateName} evaluation)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.evaluation = evaluation;");

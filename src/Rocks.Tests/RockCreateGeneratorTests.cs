@@ -20,7 +20,7 @@ namespace MockTests
 {
 	public interface ITest
 	{
-		void FooSpan(Span<int> data);
+		void FooGenericSpan<T>(Span<T> data);
 		/*
 		unsafe void Foo(int* value);
 		unsafe int* Foo(int* value);
@@ -30,6 +30,9 @@ namespace MockTests
 		unsafe int* this[int* value] { get; set; }
 		unsafe delegate*<int, void> this[delegate*<int, void> value] { get; set; }
 		void FooSpan(Span<int> data);
+		void FooGenericSpan<T>(Span<T> data);
+		Span<int> DataSpan { get; set; }
+		Span<int> this[Span<int> value, int index] { get; set; }
 		*/
 	}
 
