@@ -17,7 +17,7 @@ namespace Rocks.Builders.Create
 		internal static string GetProjectedAddExtensionMethodName(ITypeSymbol type) => 
 			$"AddFor{type.GetName(TypeNameOption.Flatten)}";
 
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
 		{
 			var adornmentTypes = new HashSet<(ITypeSymbol type, AdornmentType adornment, bool isExplicit)>();
 
@@ -53,7 +53,7 @@ namespace Rocks.Builders.Create
 					BuildHandlerInformationType(writer, handlerType);
 				}
 
-				BuildAddExtensionMethod(writer, information.TypeToMock, types);
+				BuildAddExtensionMethod(writer, information.TypeToMock, types, namespaces);
 
 				foreach (var (type, adornment, isExplicit) in adornmentTypes)
 				{
@@ -62,7 +62,8 @@ namespace Rocks.Builders.Create
 			}
 		}
 
-		private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol typeToMock, IEnumerable<ITypeSymbol> types)
+		private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol typeToMock, IEnumerable<ITypeSymbol> types,
+			NamespaceGatherer namespaces)
 		{
 			writer.WriteLine($"internal static class ExpectationsWrapperExtensions");
 			writer.WriteLine("{");
@@ -90,6 +91,8 @@ namespace Rocks.Builders.Create
 
 			writer.Indent--;
 			writer.WriteLine("}");
+
+			namespaces.Add(typeof(IDictionaryOfTKeyTValueExtensions));
 		}
 
 		private static void BuildHandlerInformationType(IndentedTextWriter writer, ITypeSymbol type)

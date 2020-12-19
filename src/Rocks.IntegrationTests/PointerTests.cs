@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using Rocks.Exceptions;
 
 namespace Rocks.IntegrationTests
 {
@@ -8,13 +9,40 @@ namespace Rocks.IntegrationTests
 		int* PointerReturn();
 	}
 
-	public static class PointerTests
+	public unsafe static class PointerTests
 	{
 		[Test]
 		public static void CreateWithParameterNoReturn()
 		{
-			//var rock = Rock.Create<IHavePointers>();
-			//rock.Methods()
+			var value = 10;
+			var pValue = &value;
+
+			var rock = Rock.Create<IHavePointers>();
+			rock.Methods().PointerParameter(new ArgForintPointer(pValue));
+
+			var chunk = rock.Instance();
+			chunk.PointerParameter(pValue);
+
+			rock.Verify();
+		}
+
+		[Test]
+		public static void CreateWithParameterNoReturnExpectationsNotMet()
+		{
+			var value = 10;
+			var pValue = &value;
+			var otherValue = 10;
+			var pOtherValue = &otherValue;
+
+			var rock = Rock.Create<IHavePointers>();
+			rock.Methods().PointerParameter(new ArgForintPointer(pValue));
+
+			var chunk = rock.Instance();
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(() => chunk.PointerParameter(pOtherValue), Throws.TypeOf<ExpectationException>());
+			});
 		}
 
 		[Test]

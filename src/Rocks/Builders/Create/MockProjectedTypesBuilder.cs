@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create
 		{
 			MockProjectedDelegateBuilder.Build(writer, information);
 			MockProjectedArgTypeBuilder.Build(writer, information, namespaces);
-			MockProjectedTypesAdornmentsBuilder.Build(writer, information);
+			MockProjectedTypesAdornmentsBuilder.Build(writer, information, namespaces);
 		}
 	}
 }
