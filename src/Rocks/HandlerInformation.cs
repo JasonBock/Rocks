@@ -18,19 +18,19 @@ namespace Rocks
 		[NonSerialized]
 		private readonly List<RaiseEventInformation> raiseEvents = new();
 
-		internal HandlerInformation()
+		public HandlerInformation()
 			: this(null, ImmutableArray<Arg>.Empty)
 		{ }
 
-		internal HandlerInformation(Delegate method)
+		public HandlerInformation(Delegate method)
 			: this(method, ImmutableArray<Arg>.Empty)
 		{ }
 
-		internal HandlerInformation(ImmutableArray<Arg> expectations)
+		public HandlerInformation(ImmutableArray<Arg> expectations)
 			: this(null, expectations)
 		{ }
 
-		internal HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations) =>
+		public HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations) =>
 			(this.Method, this.Expectations) = (method, expectations);
 
 		public void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
@@ -47,11 +47,11 @@ namespace Rocks
 			}
 		}
 
-		internal void SetCallback<TCallback>(TCallback callback)
+		public void SetCallback<TCallback>(TCallback callback)
 			where TCallback : Delegate => 
 				this.Method = callback;
 
-		internal void SetExpectedCallCount(uint expectedCallCount) => this.ExpectedCallCount = expectedCallCount;
+		public void SetExpectedCallCount(uint expectedCallCount) => this.ExpectedCallCount = expectedCallCount;
 
 		internal IReadOnlyList<string> Verify()
 		{

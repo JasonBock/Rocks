@@ -1,16 +1,14 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace Rocks.Builders.Create
 {
 	internal static class MockBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
 		{
-			MockProjectedTypesBuilder.Build(writer, information);
+			MockProjectedTypesBuilder.Build(writer, information, namespaces);
 
 			writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");

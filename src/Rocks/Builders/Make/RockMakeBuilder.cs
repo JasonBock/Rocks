@@ -54,13 +54,13 @@ namespace Rocks.Builders.Make
 				indentWriter.Indent++;
 			}
 
-			var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
+			var namespaces = new NamespaceGatherer();
 
 			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces);
 
-			foreach (var @namespace in namespaces.Where(_ => _ is not null && !_.IsGlobalNamespace))
+			foreach (var @namespace in namespaces.Values.Where(_ => _ is not null && !string.IsNullOrWhiteSpace(_)))
 			{
-				usings.Add($"using {@namespace.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)};");
+				usings.Add($"using {@namespace};");
 			}
 
 			if (!this.information.TypeToMock.ContainingNamespace?.IsGlobalNamespace ?? false)

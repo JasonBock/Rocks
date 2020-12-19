@@ -21,7 +21,7 @@ namespace Rocks.Builders.Create
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
 			}));
 			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
-			return $"public {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}({methodParameters});";
+			return $"internal {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}({methodParameters});";
 		}
 
 		internal static void Build(IndentedTextWriter writer, MockInformation information)

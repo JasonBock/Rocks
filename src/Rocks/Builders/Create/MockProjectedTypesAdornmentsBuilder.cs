@@ -44,34 +44,49 @@ namespace Rocks.Builders.Create
 				}
 			}
 
-			foreach(var handlerType in adornmentTypes.Select(_ => _.type).Distinct())
-			{
-				BuildHandlerInformationType(writer, handlerType);
-			}
+			var types = adornmentTypes.Select(_ => _.type).ToList();
 
-			foreach (var (type, adornment, isExplicit) in adornmentTypes)
+			if(types.Count > 0)
 			{
-				BuildAdornmentInformationType(writer, type, adornment, isExplicit);
-				BuildAddExtensionMethod(writer, type, adornment);
+				foreach (var handlerType in types.Distinct())
+				{
+					BuildHandlerInformationType(writer, handlerType);
+				}
+
+				BuildAddExtensionMethod(writer, information.TypeToMock, types);
+
+				foreach (var (type, adornment, isExplicit) in adornmentTypes)
+				{
+					BuildAdornmentInformationType(writer, type, adornment, isExplicit);
+				}
 			}
 		}
 
-		private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol type, AdornmentType adornment)
+		private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol typeToMock, IEnumerable<ITypeSymbol> types)
 		{
-			var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
-			var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
-			var expectationsName = $"{adornment}Expectations<T>";
-
-			writer.WriteLine($"internal static {handlerType} {methodName}(this {expectationsName} self, int memberIdentifier, List<Arg> arguments)");
+			writer.WriteLine($"internal static class ExpectationsWrapperExtensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
-			writer.WriteLine("this.Expectations.Handlers.AddOrUpdate(memberIdentifier,");
-			writer.Indent++;
-			writer.WriteLine("() => new List<HandlerInformation> { information }, _ => _.Add(information));");
-			writer.Indent--;
-			writer.WriteLine("return information;");
+			foreach(var type in types)
+			{
+				var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
+				var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
+
+				writer.WriteLine($"internal static {handlerType} {methodName}(this ExpectationsWrapper<{typeToMock.GetName()}> self, int memberIdentifier, List<Arg> arguments)");
+				writer.WriteLine("{");
+				writer.Indent++;
+
+				writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
+				writer.WriteLine("self.Expectations.Handlers.AddOrUpdate(memberIdentifier,");
+				writer.Indent++;
+				writer.WriteLine("() => new List<HandlerInformation> { information }, _ => _.Add(information));");
+				writer.Indent--;
+				writer.WriteLine("return information;");
+
+				writer.Indent--;
+				writer.WriteLine("}");
+			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -80,9 +95,10 @@ namespace Rocks.Builders.Create
 		private static void BuildHandlerInformationType(IndentedTextWriter writer, ITypeSymbol type)
 		{
 			var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
+			var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
 
 			writer.WriteLine("[Serializable]");
-			writer.WriteLine($"public sealed class {handlerName}");
+			writer.WriteLine($"internal {isUnsafe}sealed class {handlerName}");
 			writer.Indent++;
 			writer.WriteLine(": HandlerInformation");
 			writer.Indent--;
@@ -102,8 +118,7 @@ namespace Rocks.Builders.Create
 			writer.Indent--;
 
 			writer.WriteLine();
-			var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{type.GetName()} ReturnValue {{ get; internal set; }}");
+			writer.WriteLine($"internal {type.GetName()} ReturnValue {{ get; set; }}");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -114,7 +129,7 @@ namespace Rocks.Builders.Create
 			var adornmentName = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit);
 			var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 
-			writer.WriteLine($"public sealed class {adornmentName}<T, TCallback>");
+			writer.WriteLine($"internal sealed class {adornmentName}<T, TCallback>");
 			writer.Indent++;
 			writer.WriteLine($": IAdornments<{handlerName}>");
 			writer.WriteLine("where T : class");
@@ -124,13 +139,13 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"public {adornmentName}({handlerName} handler) =>");
+			writer.WriteLine($"internal {adornmentName}({handlerName} handler) =>");
 			writer.Indent++;
 			writer.WriteLine("this.Handler = handler;");
 			writer.Indent--;
 
 			writer.WriteLine();
-			writer.WriteLine($"public {adornmentName}<T, TCallback> CallCount(uint expectedCallCount)");
+			writer.WriteLine($"internal {adornmentName}<T, TCallback> CallCount(uint expectedCallCount)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.Handler.SetExpectedCallCount(expectedCallCount);");
@@ -140,7 +155,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($"public {adornmentName}<T, TCallback> Callback(TCallback callback)");
+			writer.WriteLine($"internal {adornmentName}<T, TCallback> Callback(TCallback callback)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.Handler.SetCallback(callback);");
@@ -150,7 +165,8 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($"public {adornmentName}<T, TCallback> Returns({type.GetName()} returnValue)");
+			var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
+			writer.WriteLine($"internal {isUnsafe}{adornmentName}<T, TCallback> Returns({type.GetName()} returnValue)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.Handler.ReturnValue = returnValue;");

@@ -1,6 +1,6 @@
 ﻿namespace Rocks
 {
-	internal enum ValidationState
+	public enum ValidationState
 	{
 		None, Evaluation, Value, DefaultValue
 	}

@@ -8,7 +8,7 @@ namespace Rocks.Builders.Make
 {
 	internal static class MockMakeBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
 		{
 			var typeToMock = information.TypeToMock;
 			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");

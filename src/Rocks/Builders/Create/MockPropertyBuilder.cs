@@ -63,7 +63,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException(""No handlers were found for {explicitTypeName}get_{property.Name}())"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}get_{property.Name}())\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -112,7 +112,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{property.Name}({{value}})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -137,7 +137,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {explicitTypeName}set_{property.Name}({{value}})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 

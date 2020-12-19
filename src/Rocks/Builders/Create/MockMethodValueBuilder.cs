@@ -110,7 +110,7 @@ namespace Rocks.Builders.Create
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
-			writer.WriteLine($@"throw new ExpectationException({(method.ReturnsVoid ? string.Empty : "$")}""No handlers were found for {methodException})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
 
 			writer.Indent--;
 			writer.WriteLine("}");

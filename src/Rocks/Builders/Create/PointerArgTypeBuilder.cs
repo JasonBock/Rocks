@@ -61,7 +61,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.None)} => true,");
-			writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.Value)} => a == this.value,");
+			writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.Value)} => value == this.value,");
 			writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.Evaluation)} => this.evaluation!(value),");
 			writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.DefaultValue)} => throw new {nameof(NotSupportedException)}(\"Cannot validate an argument value in the {nameof(ValidationState.DefaultValue)} state.\"),");
 			writer.WriteLine($"_ => throw new {nameof(InvalidEnumArgumentException)}($\"Invalid value for validation: {{this.validation}}\")");

@@ -2,7 +2,6 @@
 using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace Rocks.Builders.Make
 	internal static class MockMethodValueBuilder
 	{
 		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SemanticModel model,
-			ImmutableHashSet<INamespaceSymbol>.Builder namespaces)
+			NamespaceGatherer namespaces)
 		{
 			var method = result.Value;
 			var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;

@@ -7,10 +7,10 @@ namespace Rocks.Builders.Create
 	// other types are gen'd to support "esoteric" types.
 	internal static class MockProjectedTypesBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
 		{
 			MockProjectedDelegateBuilder.Build(writer, information);
-			MockProjectedArgTypeBuilder.Build(writer, information);
+			MockProjectedArgTypeBuilder.Build(writer, information, namespaces);
 			MockProjectedTypesAdornmentsBuilder.Build(writer, information);
 		}
 	}

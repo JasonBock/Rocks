@@ -6,7 +6,6 @@ using Rocks.Configuration;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
@@ -18,14 +17,14 @@ namespace Rocks.Tests
 	public static class CodeGenerationTests
 	{
 		[TestCase(typeof(object))]
-		[TestCase(typeof(Dictionary<,>))]
-		[TestCase(typeof(ImmutableArray))]
+		//[TestCase(typeof(Dictionary<,>))]
+		//[TestCase(typeof(ImmutableArray))]
 		public static void GenerateCreatesForBaseClassLibrary(Type targetType) => 
 			CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockCreateGenerator());
 
 		[TestCase(typeof(object))]
-		[TestCase(typeof(Dictionary<,>))]
-		[TestCase(typeof(ImmutableArray))]
+		//[TestCase(typeof(Dictionary<,>))]
+		//[TestCase(typeof(ImmutableArray))]
 		public static void GenerateMakesForBaseClassLibrary(Type targetType) =>
 			CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockMakeGenerator());
 

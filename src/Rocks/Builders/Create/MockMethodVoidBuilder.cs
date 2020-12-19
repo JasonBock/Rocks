@@ -90,7 +90,7 @@ namespace Rocks.Builders.Create
 
 			if (method.Parameters.Length > 0)
 			{
-				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodException, raiseEvents);
+				MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodSignature, raiseEvents);
 			}
 			else
 			{
@@ -103,7 +103,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException({(method.ReturnsVoid ? string.Empty : "$")}""No handlers were found for {methodException})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")})\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -119,7 +119,7 @@ namespace Rocks.Builders.Create
 		}
 
 		private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method,
-			string methodException, bool raiseEvents)
+			string methodSignature, bool raiseEvents)
 		{
 			writer.WriteLine("var foundMatch = false;");
 			writer.WriteLine();
@@ -172,7 +172,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {methodException})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")})\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

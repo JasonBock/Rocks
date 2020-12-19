@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create
 		private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			var method = result.Value.GetMethod!;
-			var methodException =
+			var methodSignature =
 				$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("get");
@@ -67,7 +67,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {methodException})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature})\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -75,7 +75,7 @@ namespace Rocks.Builders.Create
 		private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 		{
 			var method = result.Value.SetMethod!;
-			var methodException =
+			var methodSignature =
 				$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
 			writer.WriteLine("set");
@@ -132,7 +132,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($@"throw new ExpectationException($""No handlers were found for {methodException})"");");
+			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature})\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
