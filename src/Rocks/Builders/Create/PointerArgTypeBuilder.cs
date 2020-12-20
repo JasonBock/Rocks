@@ -59,9 +59,12 @@ namespace Rocks.Builders.Create
 			writer.WriteLine();
 			writer.WriteLine($"public static {argName} Validate({validationDelegateName} evaluation) => new(evaluation);");
 
-			writer.WriteLine();
-			writer.WriteLine($"public static implicit operator {argName}({typeName} value) => new(value);");
-			writer.WriteLine();
+			if(type.Kind != SymbolKind.FunctionPointerType)
+			{
+				writer.WriteLine();
+				writer.WriteLine($"public static implicit operator {argName}({typeName} value) => new(value);");
+				writer.WriteLine();
+			}
 
 			writer.WriteLine($"public bool IsValid({typeName} value) =>");
 			writer.Indent++;
