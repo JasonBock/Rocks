@@ -26,6 +26,14 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
+		public static void MakeWithSpanOfInt()
+		{
+			var chunk = Rock.Make<IHaveSpan>().Instance();
+			var buffer = new int[] { 3 };
+			chunk.Foo(new Span<int>(buffer));
+		}
+
+		[Test]
 		public static void CreateWithSpanOfIntAndValidation()
 		{
 			static bool FooEvaluation(Span<int> value) => 
@@ -54,6 +62,14 @@ namespace Rocks.IntegrationTests
 			chunk.Bar(new Span<int>(buffer));
 
 			rock.Verify();
+		}
+
+		[Test]
+		public static void MakeWithSpanOfT()
+		{
+			var chunk = Rock.Make<IHaveSpan>().Instance();
+			var buffer = new int[] { 3 };
+			chunk.Bar(new Span<int>(buffer));
 		}
 
 		[Test]

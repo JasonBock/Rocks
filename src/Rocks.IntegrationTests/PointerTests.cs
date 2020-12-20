@@ -29,6 +29,16 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
+		public static void MakeWithPointerParameterNoReturn()
+		{
+			var value = 10;
+			var pValue = &value;
+
+			var chunk = Rock.Make<IHavePointers>().Instance();
+			chunk.PointerParameter(pValue);
+		}
+
+		[Test]
 		public static void CreateWithPointerParameterNoReturnUsingImplicitConversion()
 		{
 			var value = 10;
@@ -92,6 +102,10 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 		}
+
+		[Test]
+		public static void MakeWithPointerReturn() => 
+			Rock.Make<IHavePointers>().Instance().PointerReturn();
 
 		[Test]
 		public static void CreateWithPointerReturnWithCallback()
