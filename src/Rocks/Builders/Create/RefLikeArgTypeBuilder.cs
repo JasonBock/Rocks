@@ -29,7 +29,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("[Serializable]");
 			writer.WriteLine($"public sealed class {argName}");
 			writer.Indent++;
-			writer.WriteLine(": Arg");
+			writer.WriteLine($": {nameof(Argument)}");
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;

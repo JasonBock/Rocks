@@ -87,7 +87,7 @@ namespace Rocks.Builders.Create
 
 			var argType = property.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(property.Type) :
 				property.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
-				$"Arg<{property.Type.GetName()}>";
+				$"{nameof(Argument)}<{property.Type.GetName()}>";
 
 			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
 			writer.WriteLine("{");

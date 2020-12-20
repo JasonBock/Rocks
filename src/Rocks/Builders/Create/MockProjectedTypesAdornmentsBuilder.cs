@@ -74,7 +74,7 @@ namespace Rocks.Builders.Create
 				var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 				var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
 
-				writer.WriteLine($"internal static {handlerType} {methodName}(this ExpectationsWrapper<{typeToMock.GetName()}> self, int memberIdentifier, List<Arg> arguments)");
+				writer.WriteLine($"internal static {handlerType} {methodName}(this ExpectationsWrapper<{typeToMock.GetName()}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -108,14 +108,14 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"internal {handlerName}(ImmutableArray<Arg> expectations)");
+			writer.WriteLine($"internal {handlerName}(ImmutableArray<{nameof(Argument)}> expectations)");
 			writer.Indent++;
 			writer.WriteLine(": base(null, expectations) => this.ReturnValue = default;");
 			writer.Indent--;
 
 			writer.WriteLine();
 
-			writer.WriteLine($"internal {handlerName}(Delegate? method, ImmutableArray<Arg> expectations)");
+			writer.WriteLine($"internal {handlerName}(Delegate? method, ImmutableArray<{nameof(Argument)}> expectations)");
 			writer.Indent++;
 			writer.WriteLine(": base(method, expectations) => this.ReturnValue = default;");
 			writer.Indent--;

@@ -172,7 +172,7 @@ namespace Rocks.Builders.Create
 				var parameter = method.Parameters[i];
 				var argType = parameter.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
 					parameter.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
-					$"Arg<{parameter.Type.GetName()}>";
+					$"{nameof(Argument)}<{parameter.Type.GetName()}>";
 
 				if (i == 0)
 				{

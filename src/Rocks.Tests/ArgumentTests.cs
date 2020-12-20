@@ -3,7 +3,7 @@ using System;
 
 namespace Rocks.Tests
 {
-	public static class ArgTests
+	public static class ArgumentTests
 	{
 		[Test]
 		public static void CreateViaAny()

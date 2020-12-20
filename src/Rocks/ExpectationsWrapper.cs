@@ -10,7 +10,7 @@ namespace Rocks
 		protected ExpectationsWrapper(Expectations<T> expectations) =>
 			this.Expectations = expectations;
 
-		public HandlerInformation Add(int memberIdentifier, List<Arg> arguments)
+		public HandlerInformation Add(int memberIdentifier, List<Argument> arguments)
 		{
 			var information = new HandlerInformation(arguments.ToImmutableArray());
 			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,
@@ -18,7 +18,7 @@ namespace Rocks
 			return information;
 		}
 
-		public HandlerInformation<TReturn> Add<TReturn>(int memberIdentifier, List<Arg> arguments)
+		public HandlerInformation<TReturn> Add<TReturn>(int memberIdentifier, List<Argument> arguments)
 		{
 			var information = new HandlerInformation<TReturn>(arguments.ToImmutableArray());
 			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,

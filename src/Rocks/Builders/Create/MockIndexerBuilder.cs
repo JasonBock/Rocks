@@ -33,7 +33,7 @@ namespace Rocks.Builders.Create
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((methodHandler.Expectations[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -43,7 +43,7 @@ namespace Rocks.Builders.Create
 					}
 
 					writer.WriteLine(
-						$"((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((methodHandler.Expectations[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -97,7 +97,7 @@ namespace Rocks.Builders.Create
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((methodHandler.Expectations[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -107,7 +107,7 @@ namespace Rocks.Builders.Create
 					}
 
 					writer.WriteLine(
-						$"((methodHandler.Expectations[{i}] as Arg<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((methodHandler.Expectations[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{

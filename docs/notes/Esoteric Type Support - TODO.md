@@ -61,12 +61,59 @@ Need to make sure that the adornment name has "Explicit" for explicit implementa
 * DONE - PropertyExpectationsExtensionsBuilder.Build
 	* DONE - Properties
 	* DONE - Explicit Properties
-* PropertyExpectationsExtensionsBuilder.Build
+* DONE - PropertyExpectationsExtensionsBuilder.Build
 	* DONE - Properties
-	* Explicit Properties
+	* DONE - Explicit Properties
+
+DONE - Projecting the Arg type needs to include open generics for Span<T> if it exists. Then need to "fill" that hole when necessary.
 
 
-MockCreateBuilder.Build
+DONE - The AddFor{type} needs to be in a class. I could do this:
+
+internal partial static class MethodExpectationsOfIHavePointersExtensions
+
+Both for the AddFor{type} method AND where this extension type is being made.
+
+
+DONE - "ValidationState.Value => a == this.value," - it's not "a", the name of the parameter is "value"
+
+
+"throw new InvalidEnumArgumentException" - the namespace isn't there
+
+
+DONE - In ExpectationsWrapperExtensions, "this.Expectations.Handlers.AddOrUpdate", believe it should be "self.Handlers.AddOrUpdate"
+
+
+
+DONE - Anything that puts the value into the string for an exception...can't use the value. So, instead of $"..., {a}, ...", it would be $"..., a, ...". Side note, the generated exception string doesn't seem to be completely correct all the time right now, need to review that.
+
+
+
+DONE - The HandlerInformationFor{type} class should be unsafe.
+
+
+
+DONE - All of the generated and projected types should be "internal"
+
+
+DONE - MockCreateBuilder.Build
 * DONE - The cast to call IsValid() on the parameter needs to be on the projected Arg type.
 * DONE - The cast to call the callback needs to be the generated callback delegate
-* Anything that puts the value into the string for an exception...can't use the value. So, instead of $"..., {a}, ...", it would be $"..., a, ...". Side note, the generated exception string doesn't seem to be completely correct all the time right now, need to review that.
+
+
+"Rock.Make<IHavePointers>()" - needs to work as well.
+
+
+Look at putting the static methods on Arg either on Arg<T>, or another type (Param?, Argument?). Then projected types could make their own static factory methods and be more consistent.
+
+Or....just get rid of the static methods altogether? Remember, "new(_ => _ == 3)" is a thing.
+
+Should generate the implicit conversion method in the projected Argument types.
+
+
+
+Add tests for INamespaceSymbolExtensions and NamespaceGatherer
+
+Future Issues: 
+Use nameof() in code generation as much as possible for type name
+Create "advanced" architecture/design doc

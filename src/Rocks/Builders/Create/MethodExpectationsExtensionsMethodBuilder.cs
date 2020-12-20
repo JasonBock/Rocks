@@ -29,7 +29,7 @@ namespace Rocks.Builders.Create
 						}
 						else
 						{
-							return $"Arg<{_.Type.GetName()}> {_.Name}";
+							return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
 						}
 					})));
 			var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
@@ -55,7 +55,7 @@ namespace Rocks.Builders.Create
 
 			if (method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<Arg>()));");
+				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>()));");
 			}
 			else
 			{
@@ -74,7 +74,7 @@ namespace Rocks.Builders.Create
 							return _.Name;
 						}
 					}));
-				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<Arg> {{ {parameters} }}));");
+				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
 			}
 
 			writer.Indent--;

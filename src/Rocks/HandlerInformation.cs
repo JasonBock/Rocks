@@ -19,18 +19,18 @@ namespace Rocks
 		private readonly List<RaiseEventInformation> raiseEvents = new();
 
 		public HandlerInformation()
-			: this(null, ImmutableArray<Arg>.Empty)
+			: this(null, ImmutableArray<Argument>.Empty)
 		{ }
 
 		public HandlerInformation(Delegate method)
-			: this(method, ImmutableArray<Arg>.Empty)
+			: this(method, ImmutableArray<Argument>.Empty)
 		{ }
 
-		public HandlerInformation(ImmutableArray<Arg> expectations)
+		public HandlerInformation(ImmutableArray<Argument> expectations)
 			: this(null, expectations)
 		{ }
 
-		public HandlerInformation(Delegate? method, ImmutableArray<Arg> expectations) =>
+		public HandlerInformation(Delegate? method, ImmutableArray<Argument> expectations) =>
 			(this.Method, this.Expectations) = (method, expectations);
 
 		public void AddRaiseEvent(RaiseEventInformation raiseEvent) => this.raiseEvents.Add(raiseEvent);
@@ -69,7 +69,7 @@ namespace Rocks
 
 		internal int CallCount => this.callCount;
 
-		public ImmutableArray<Arg> Expectations { get; }
+		public ImmutableArray<Argument> Expectations { get; }
 		internal uint ExpectedCallCount { get; private set; } = 1;
 		public Delegate? Method { get; private set; }
 		internal ReadOnlyCollection<RaiseEventInformation> GetRaiseEvents() => this.raiseEvents.AsReadOnly();

@@ -24,7 +24,7 @@ namespace Rocks.Builders.Create
 			var instanceParameters = string.Join(", ", thisParameter,
 				string.Join(", ", property.GetMethod!.Parameters.Select(_ =>
 				{
-					return $"Arg<{_.Type.GetName()}> {_.Name}";
+					return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
 				})));
 
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
@@ -34,7 +34,7 @@ namespace Rocks.Builders.Create
 				_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
 			var addMethod = property.Type.IsEsoteric() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<Arg> {{ {parameters} }}));");
+			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
 			writer.Indent--;
 		}
 
@@ -55,7 +55,7 @@ namespace Rocks.Builders.Create
 			var instanceParameters = string.Join(", ", thisParameter,
 				string.Join(", ", property.SetMethod!.Parameters.Select(_ =>
 				{
-					return $"Arg<{_.Type.GetName()}> {_.Name}";
+					return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
 				})));
 
 			writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
@@ -63,7 +63,7 @@ namespace Rocks.Builders.Create
 
 			var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
 				_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})" : _.Name));
-			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ {parameters} }}));");
+			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
 			writer.Indent--;
 		}
 

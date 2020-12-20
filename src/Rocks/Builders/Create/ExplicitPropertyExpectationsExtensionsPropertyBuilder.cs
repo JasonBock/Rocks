@@ -28,7 +28,7 @@ namespace Rocks.Builders.Create
 			var addMethod = property.Type.IsEsoteric() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
 
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<Arg>()));");
+			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>()));");
 			writer.Indent--;
 		}
 
@@ -47,10 +47,10 @@ namespace Rocks.Builders.Create
 				$"PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, Arg<{propertyParameterValue}> value) =>");
+			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, {nameof(Argument)}<{propertyParameterValue}> value) =>");
 			writer.Indent++;
 
-			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<Arg> {{ value }}));");
+			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}> {{ value }}));");
 			writer.Indent--;
 		}
 
