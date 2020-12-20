@@ -24,6 +24,22 @@ namespace Rocks.Extensions
 			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
 		}
 
+		internal static bool IsOpenGeneric(this ITypeSymbol self)
+		{
+			if(self is INamedTypeSymbol namedType)
+			{
+				for(var i = 0; i < namedType.TypeParameters.Length; i++)
+				{
+					if(namedType.TypeArguments[i].Name == namedType.TypeParameters[i].Name)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
 		internal static bool IsPointer(this ITypeSymbol self) =>
 			self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType;
 

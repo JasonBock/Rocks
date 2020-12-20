@@ -20,7 +20,8 @@ namespace MockTests
 {
 	public interface ITest
 	{
-		unsafe void Foo(int* value);
+		void Foo(Span<int> values);
+		void Bar<T>(Span<T> values);
 		/*
 		unsafe void Foo(int* value);
 		unsafe int* Foo(int* value);

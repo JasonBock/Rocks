@@ -34,9 +34,9 @@ namespace Rocks.Builders.Create
 			writer.WriteLine($"private readonly {typeName} value;");
 			writer.WriteLine($"private readonly {nameof(ValidationState)} validation;");
 			writer.WriteLine();
-			writer.WriteLine($"private {argName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
+			writer.WriteLine($"internal {argName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
 			writer.WriteLine();
-			writer.WriteLine($"private {argName}({typeName} value)");
+			writer.WriteLine($"internal {argName}({typeName} value)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.value = value;");
@@ -44,7 +44,7 @@ namespace Rocks.Builders.Create
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
-			writer.WriteLine($"private {argName}({validationDelegateName} evaluation)");
+			writer.WriteLine($"internal {argName}({validationDelegateName} evaluation)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine("this.evaluation = evaluation;");
@@ -52,12 +52,6 @@ namespace Rocks.Builders.Create
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
-
-			writer.WriteLine($"public static {argName} Any() => new();");
-			writer.WriteLine();
-			writer.WriteLine($"public static {argName} Is({typeName} value) => new(value);");
-			writer.WriteLine();
-			writer.WriteLine($"public static {argName} Validate({validationDelegateName} evaluation) => new(evaluation);");
 
 			if(type.Kind != SymbolKind.FunctionPointerType)
 			{

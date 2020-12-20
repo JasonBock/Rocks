@@ -20,7 +20,7 @@ namespace Rocks.IntegrationTests
 			var pValue = &value;
 
 			var rock = Rock.Create<IHavePointers>();
-			rock.Methods().PointerParameter(ArgumentForintPointer.Is(pValue));
+			rock.Methods().PointerParameter(new(pValue));
 
 			var chunk = rock.Instance();
 			chunk.PointerParameter(pValue);
@@ -125,7 +125,7 @@ namespace Rocks.IntegrationTests
 			static void DelegatePointerParameterDelegate(int a) { }
 
 			var rock = Rock.Create<IHavePointers>();
-			rock.Methods().DelegatePointerParameter(ArgumentFordelegatePointerOfint__void.Is(&DelegatePointerParameterDelegate));
+			rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
 
 			var chunk = rock.Instance();
 			chunk.DelegatePointerParameter(&DelegatePointerParameterDelegate);
@@ -140,7 +140,7 @@ namespace Rocks.IntegrationTests
 			static void OtherDelegatePointerParameterDelegate(int a) { }
 
 			var rock = Rock.Create<IHavePointers>();
-			rock.Methods().DelegatePointerParameter(ArgumentFordelegatePointerOfint__void.Is(&DelegatePointerParameterDelegate));
+			rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
 
 			var chunk = rock.Instance();
 
@@ -161,7 +161,7 @@ namespace Rocks.IntegrationTests
 			var pValue = &value;
 
 			var rock = Rock.Create<IHavePointers>();
-			rock.Methods().DelegatePointerParameter(ArgumentFordelegatePointerOfint__void.Is(&DelegatePointerParameterDelegate))
+			rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate))
 				.Callback(DelegatePointerParameterCallback);
 
 			var chunk = rock.Instance();
