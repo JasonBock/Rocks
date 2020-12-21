@@ -7,7 +7,7 @@ unsafe
 	var value = 10;
 
 	var rock = Rock.Create<IHavePointers>();
-	rock.Methods().PointerParameter(new()).Callback(PointerParameterCallback);
+	rock.Methods().PointerParameter(new()).Callback(_ => *_ = 20);
 
 	var chunk = rock.Instance();
 	chunk.PointerParameter(&value);
@@ -16,8 +16,6 @@ unsafe
 
 	Console.Out.WriteLine($"Create Success! {nameof(value)} is {value}");
 }
-
-unsafe static void PointerParameterCallback(int* callbackValue) => *callbackValue = 20;
 
 namespace RocksTest
 {

@@ -484,17 +484,30 @@ dynamicRock.Verify();
 
 ## "Special" Types
 
-Rocks can't mock methods with certain types, such as pointer types and `Span<T>`. So if you have an interface like this:
+Rocks can mock members with certain kinds of types, such as pointer types and ref structs like `Span<T>`. So if you have an interface like this:
 
 ```
-public unsafe interface IHaveReturnPointers
+public unsafe interface IHavePointers
 {
-  void TakeAPointerBecauseReasons(int* ptrToSomething);
-  int* ReturnAPointerBecauseReasons();
+  void PointerParameter(int* value);
 }
 ```
 
-It won't work. However, even though this is a rare situation, there are plans to add support for these types in a future version of Rocks. You can track the issue [here](https://github.com/JasonBock/Rocks/issues/107).
+You can mock it like this:
+
+```
+var value = 10;
+
+var rock = Rock.Create<IHavePointers>();
+rock.Methods().PointerParameter(new()).Callback(_ => *_ = 20);
+
+var chunk = rock.Instance();
+chunk.PointerParameter(&value);
+
+rock.Verify();
+```
+
+Note that `value` would be equal to 20 after `PointerParameter()` is called.
 
 # Conclusion
 
