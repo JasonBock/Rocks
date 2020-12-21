@@ -2,25 +2,27 @@
 using RocksTest;
 using System;
 
-var rock = Rock.Create<IMockTest>();
-rock.Methods().Foo();
+unsafe
+{
+	var value = 10;
 
-var chunk = rock.Instance();
-chunk.Foo();
+	var rock = Rock.Create<IHavePointers>();
+	rock.Methods().PointerParameter(new()).Callback(PointerParameterCallback);
 
-rock.Verify();
+	var chunk = rock.Instance();
+	chunk.PointerParameter(&value);
 
-Console.Out.WriteLine("Create Success!");
+	rock.Verify();
 
-var makeChunk = Rock.Make<IMockTest>().Instance();
-makeChunk.Foo();
+	Console.Out.WriteLine($"Create Success! {nameof(value)} is {value}");
+}
 
-Console.Out.WriteLine("Make Success!");
+unsafe static void PointerParameterCallback(int* callbackValue) => *callbackValue = 20;
 
 namespace RocksTest
 {
-	public interface IMockTest
+	public unsafe interface IHavePointers
 	{
-		void Foo();
+		void PointerParameter(int* value);
 	}
 }
