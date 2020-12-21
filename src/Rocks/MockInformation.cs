@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders;
 using Rocks.Configuration;
 using Rocks.Descriptors;
 using Rocks.Extensions;
@@ -11,11 +12,11 @@ namespace Rocks
 	internal sealed class MockInformation
 	{
 		public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol, 
-			SemanticModel model, ConfigurationValues configurationValues)
+			SemanticModel model, ConfigurationValues configurationValues, BuildType buildType)
 		{
 			(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model, this.ConfigurationValues) = 
 				(typeToMock, containingAssemblyOfInvocationSymbol, model, configurationValues);
-			this.Validate();
+			this.Validate(buildType);
 		}
 
 		private static bool HasOpenGenerics(INamedTypeSymbol type)
@@ -34,7 +35,7 @@ namespace Rocks
 			return false;
 		}
 
-		private void Validate()
+		private void Validate(BuildType buildType)
 		{
 			var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
@@ -68,7 +69,7 @@ namespace Rocks
 			this.Events = this.TypeToMock.GetMockableEvents(
 				this.ContainingAssemblyOfInvocationSymbol);
 
-			if (this.Methods.Length == 0 && this.Properties.Length == 0)
+			if (buildType == BuildType.Create && this.Methods.Length == 0 && this.Properties.Length == 0)
 			{
 				diagnostics.Add(TypeHasNoMockableMembersDescriptor.Create(this.TypeToMock));
 			}

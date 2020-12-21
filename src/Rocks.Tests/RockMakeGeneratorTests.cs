@@ -78,13 +78,13 @@ namespace MockTests
 
 namespace MockTests
 {
-	public interface ITest { }
+	public sealed class InvalidTarget { }
 
 	public static class Test
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Make<ITest>();
+			var rock = Rock.Make<InvalidTarget>();
 		}
 	}
 }");

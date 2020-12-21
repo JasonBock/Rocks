@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Builders;
 using Rocks.Configuration;
 using System;
 using System.CodeDom.Compiler;
@@ -114,7 +115,8 @@ namespace Rocks.Tests
 			var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<PropertyDeclarationSyntax>().Single();
 			var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
-			var information = new MockInformation(symbol!, compilation.Assembly, model, new ConfigurationValues(IndentStyle.Tab, 3, true));
+			var information = new MockInformation(symbol!, compilation.Assembly, model, 
+				new ConfigurationValues(IndentStyle.Tab, 3, true), BuildType.Create);
 
 			return !information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 		}

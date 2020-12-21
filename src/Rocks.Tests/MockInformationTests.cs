@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Builders;
 using Rocks.Configuration;
 using Rocks.Descriptors;
 using Rocks.Extensions;
@@ -17,7 +18,7 @@ namespace Rocks.Tests
 		{
 			const string targetTypeName = "EnumType";
 			var code = $"public enum {targetTypeName} {{ }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -30,7 +31,7 @@ namespace Rocks.Tests
 		{
 			const string targetTypeName = "StructType";
 			var code = $"public struct {targetTypeName} {{ }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -43,7 +44,7 @@ namespace Rocks.Tests
 		{
 			const string targetTypeName = "SealedType";
 			var code = $"public sealed class {targetTypeName} {{ }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -61,7 +62,7 @@ $@"using System;
 [Obsolete(""a"", true)]
 public class {targetTypeName} {{ }}";
 
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -79,7 +80,7 @@ $@"using System;
 [Obsolete(""a"")]
 public class {targetTypeName} {{ }}";
 
-			var information = MockInformationTests.GetInformation(code, targetTypeName, true);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, true);
 
 			Assert.Multiple(() =>
 			{
@@ -99,7 +100,7 @@ $@"public interface IBase<T1, T2>
 
 public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -119,11 +120,31 @@ $@"public class {targetTypeName}
 	public override sealed string? ToString() => base.ToString();
 }}";
 
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
+		public static void CreateWhenClassHasNoMockableMembersAndBuildTypeIsMake()
+		{
+			const string targetTypeName = "NoMockables";
+			var code =
+$@"public class {targetTypeName}
+{{
+	public override sealed bool Equals(object? obj) => base.Equals(obj);
+	public override sealed int GetHashCode() => base.GetHashCode();
+	public override sealed string? ToString() => base.ToString();
+}}";
+
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Make);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
 			});
 		}
 
@@ -133,11 +154,25 @@ $@"public class {targetTypeName}
 			const string targetTypeName = "NoMockables";
 			var code = $"public interface {targetTypeName} {{ }}";
 
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
 				Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
+			});
+		}
+
+		[Test]
+		public static void CreateWhenInterfaceHasNoMockableMembersAndBuildTypeIsMake()
+		{
+			const string targetTypeName = "NoMockables";
+			var code = $"public interface {targetTypeName} {{ }}";
+
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Make);
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
 			});
 		}
 
@@ -150,7 +185,7 @@ $@"public class {targetTypeName}
 {{
 	private {targetTypeName}() {{ }}
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -169,7 +204,7 @@ public interface {targetTypeName}
 {{
 	void Foo();
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -192,7 +227,7 @@ public interface {targetTypeName}
 {{
 	string Data {{ get; set; }}
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -216,7 +251,7 @@ public interface {targetTypeName}
 	void Foo();
 	event EventHandler TargetEvent;
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -241,7 +276,7 @@ public class {targetTypeName}
 {{
 	public virtual void {fooMethodName}() {{ }}
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -272,7 +307,7 @@ public class {targetTypeName}
 {{
 	public virtual string Data {{ get; set; }}
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -302,7 +337,7 @@ public class {targetTypeName}
 {{
 	public virtual event EventHandler TargetEvent;
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -335,7 +370,7 @@ public class {targetTypeName}
 
 	public virtual event EventHandler TargetEvent;
 }}";
-			var information = MockInformationTests.GetInformation(code, targetTypeName);
+			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 			Assert.Multiple(() =>
 			{
@@ -352,7 +387,8 @@ public class {targetTypeName}
 				Assert.That(information.Events.Length, Is.EqualTo(1));
 			});
 		}
-		private static MockInformation GetInformation(string source, string targetTypeName, bool treatWarningsAsErrors = false)
+		private static MockInformation GetInformation(string source, string targetTypeName, 
+			BuildType buildType, bool treatWarningsAsErrors = false)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -367,7 +403,7 @@ public class {targetTypeName}
 				.OfType<BaseTypeDeclarationSyntax>().Single(_ => _.Identifier.Text == targetTypeName);
 			var typeSymbol = model.GetDeclaredSymbol(typeSyntax)!;
 			return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model,
-				new ConfigurationValues(IndentStyle.Tab, 3, treatWarningsAsErrors));
+				new ConfigurationValues(IndentStyle.Tab, 3, treatWarningsAsErrors), buildType);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
+using Rocks.Builders;
 using Rocks.Builders.Create;
 using Rocks.Configuration;
 using Rocks.Descriptors;
@@ -21,7 +22,8 @@ namespace Rocks
 			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
 			ConfigurationValues configurationValues)
 		{
-			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, configurationValues);
+			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, 
+				configurationValues, BuildType.Create);
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
@@ -44,7 +46,7 @@ namespace Rocks
 		{
 			try
 			{
-				this.PrivateExecute(context);
+				RockCreateGenerator.PrivateExecute(context);
 			}
 			catch (Exception e)
 			{
@@ -53,7 +55,7 @@ namespace Rocks
 		}
 
 		[MethodImpl(MethodImplOptions.NoInlining)]
-		private void PrivateExecute(GeneratorExecutionContext context)
+		private static void PrivateExecute(GeneratorExecutionContext context)
 		{
 			if (context.SyntaxReceiver is RockCreateReceiver receiver)
 			{
