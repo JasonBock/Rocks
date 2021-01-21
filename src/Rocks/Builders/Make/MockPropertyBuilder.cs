@@ -1,18 +1,20 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Make
 {
 	internal static class MockPropertyBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result)
+		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result,
+			Compilation compilation)
 		{
 			var property = result.Value;
 			var attributes = property.GetAttributes();
 
 			if(attributes.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription());
+				writer.WriteLine(attributes.GetDescription(compilation));
 			}
 
 			var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?

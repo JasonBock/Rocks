@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Rocks.Tests.Targets\Rocks.Tests.Targets.csproj" />
     <ProjectReference Include="..\Rocks\Rocks.csproj" />
   </ItemGroup>
   <ItemGroup>

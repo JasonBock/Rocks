@@ -20,14 +20,14 @@ namespace Rocks
 	{
 		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
 			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
-			ConfigurationValues configurationValues)
+			ConfigurationValues configurationValues, Compilation compilation)
 		{
 			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, 
 				configurationValues, BuildType.Create);
 
 			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
 			{
-				var builder = new RockCreateBuilder(information, configurationValues);
+				var builder = new RockCreateBuilder(information, configurationValues, compilation);
 				return (builder.Diagnostics, builder.Name, builder.Text);
 			}
 			else
@@ -83,7 +83,7 @@ namespace Rocks
 							{
 								var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
 								var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-									typeToMock, compilation.Assembly, model, configurationValues);
+									typeToMock, compilation.Assembly, model, configurationValues, compilation);
 
 								foreach (var diagnostic in diagnostics)
 								{

@@ -60,7 +60,7 @@ namespace Rocks.Tests.Extensions
 		[Test]
 		public static void GetNamespaces()
 		{
-			var attributes = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 @$"using {typeof(TypeOfThis).Namespace};
 using {typeof(MethodAttribute).Namespace};
 
@@ -83,7 +83,7 @@ public interface IA
 		[Test]
 		public static void GetDescription()
 		{
-			var attributes = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -102,7 +102,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionWithOpenGeneric()
 		{
-			var attributes = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -121,7 +121,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionForArrayOfAttributes()
 		{
-			var attributes = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -134,7 +134,7 @@ public interface IA
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(attributes.GetDescription(), 
+				Assert.That(attributes.GetDescription(compilation), 
 					Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 			});
 		}
@@ -142,7 +142,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionForArrayWithTarget()
 		{
-			var attributes = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -155,12 +155,12 @@ public interface IA
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(attributes.GetDescription(AttributeTargets.Method), 
+				Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), 
 					Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 			});
 		}
 
-		private static ImmutableArray<AttributeData> GetAttributes(string source)
+		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
 			var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -174,7 +174,7 @@ public interface IA
 				.OfType<MethodDeclarationSyntax>().Single();
 			var methodSymbol = model.GetDeclaredSymbol(methodSyntax)!;
 
-			return methodSymbol.GetAttributes();
+			return (methodSymbol.GetAttributes(), compilation);
 		}
 	}
 }

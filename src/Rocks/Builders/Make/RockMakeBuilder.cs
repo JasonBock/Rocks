@@ -16,13 +16,14 @@ namespace Rocks.Builders.Make
 {
 	internal sealed class RockMakeBuilder
 	{
+		private readonly Compilation compilation;
 		private readonly MockInformation information;
 		private readonly ConfigurationValues configurationValues;
 
-		internal RockMakeBuilder(MockInformation information, ConfigurationValues configurationValues)
+		internal RockMakeBuilder(MockInformation information, ConfigurationValues configurationValues, Compilation compilation)
 		{
-			(this.information, this.configurationValues) = 
-				(information, configurationValues);
+			(this.information, this.configurationValues, this.compilation) = 
+				(information, configurationValues, compilation);
 			(this.Diagnostics, this.Name, this.Text) = this.Build();
 		}
 
@@ -56,7 +57,7 @@ namespace Rocks.Builders.Make
 
 			var namespaces = new NamespaceGatherer();
 
-			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces);
+			MockExtensionsBuilder.Build(indentWriter, this.information, namespaces, this.compilation);
 
 			foreach (var @namespace in namespaces.Values.Where(_ => _ is not null && !string.IsNullOrWhiteSpace(_)))
 			{

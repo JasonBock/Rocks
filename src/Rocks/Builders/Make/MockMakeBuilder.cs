@@ -8,7 +8,8 @@ namespace Rocks.Builders.Make
 {
 	internal static class MockMakeBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces,
+			Compilation compilation)
 		{
 			var typeToMock = information.TypeToMock;
 			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");
@@ -41,11 +42,11 @@ namespace Rocks.Builders.Make
 			{
 				if (method.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, method);
+					MockMethodVoidBuilder.Build(writer, method, compilation);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, method, information.Model, namespaces);
+					MockMethodValueBuilder.Build(writer, method, information.Model, namespaces, compilation);
 				}
 
 				memberIdentifier++;
@@ -53,18 +54,18 @@ namespace Rocks.Builders.Make
 
 			foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 			{
-				MockPropertyBuilder.Build(writer, property);
+				MockPropertyBuilder.Build(writer, property, compilation);
 			}
 
 			foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
 			{
-				MockIndexerBuilder.Build(writer, indexer);
+				MockIndexerBuilder.Build(writer, indexer, compilation);
 			}
 
 			if (information.Events.Length > 0)
 			{
 				writer.WriteLine();
-				MockEventsBuilder.Build(writer, information.Events);
+				MockEventsBuilder.Build(writer, information.Events, compilation);
 			}
 
 			writer.Indent--;

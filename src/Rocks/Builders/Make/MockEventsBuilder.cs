@@ -32,7 +32,8 @@ namespace Rocks.Builders.Make
 			writer.WriteLine("}");
 		}
 
-		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events)
+		internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events,
+			Compilation compilation)
 		{
 			writer.WriteLine("#pragma warning disable CS0067");
 			
@@ -42,7 +43,7 @@ namespace Rocks.Builders.Make
 
 				if (attributes.Length > 0)
 				{
-					writer.WriteLine(attributes.GetDescription());
+					writer.WriteLine(attributes.GetDescription(compilation));
 				}
 
 				if(@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using NUnit.Framework;
+using Rocks.Tests.Targets;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -9,6 +10,34 @@ namespace Rocks.Tests
 {
 	public static class RockCreateGeneratorTests
 	{
+		[Test]
+		public static void GenerateWhenTargetTypeContainsCompilerGeneratedMembers()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+using Rocks.Tests.Targets;
+using System;
+
+namespace MockTests
+{
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Create<IContainNullableReferences>();
+		}
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output.Length, Is.GreaterThan(0));
+				Assert.That(output, Does.Not.Contain("[Nullable"));
+				Assert.That(output, Does.Not.Contain("[NullableContext"));
+			});
+		}
+
 		[Test]
 		public static void GenerateWhenTargetTypeIsValid()
 		{
@@ -169,7 +198,8 @@ namespace MockTests
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) });
+				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) })
+				.Concat(new[] { MetadataReference.CreateFromFile(typeof(IContainNullableReferences).Assembly.Location) });
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 				references, new CSharpCompilationOptions(outputKind));
 			var originalTreeCount = compilation.SyntaxTrees.Length;

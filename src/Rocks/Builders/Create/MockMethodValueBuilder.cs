@@ -8,7 +8,8 @@ namespace Rocks.Builders.Create
 {
 	internal static class MockMethodValueBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents,
+			Compilation compilation)
 		{
 			var method = result.Value;
 			var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
@@ -39,7 +40,7 @@ namespace Rocks.Builders.Create
 					_ => string.Empty
 				};
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 			var methodSignature =
@@ -51,14 +52,14 @@ namespace Rocks.Builders.Create
 
 			if (attributes.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription());
+				writer.WriteLine(attributes.GetDescription(compilation));
 			}
 
 			var returnAttributes = method.GetReturnTypeAttributes();
 
 			if (returnAttributes.Length > 0)
 			{
-				writer.WriteLine(returnAttributes.GetDescription(AttributeTargets.ReturnValue));
+				writer.WriteLine(returnAttributes.GetDescription(compilation, AttributeTargets.ReturnValue));
 			}
 
 			writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");

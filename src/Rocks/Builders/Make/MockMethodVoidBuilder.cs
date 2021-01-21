@@ -7,7 +7,8 @@ namespace Rocks.Builders.Make
 {
 	internal static class MockMethodVoidBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
+		internal static void Build(IndentedTextWriter writer, MethodMockableResult result,
+			Compilation compilation)
 		{
 			var method = result.Value;
 			var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
@@ -35,7 +36,7 @@ namespace Rocks.Builders.Make
 					_ => string.Empty
 				};
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 			var methodSignature =
 				$"void {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
@@ -44,7 +45,7 @@ namespace Rocks.Builders.Make
 
 			if (attributes.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription());
+				writer.WriteLine(attributes.GetDescription(compilation));
 			}
 
 			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;

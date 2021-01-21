@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create
 {
 	internal static class MockTypeBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 		{
 			var typeToMock = information.TypeToMock;
 			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");
@@ -43,28 +43,28 @@ namespace Rocks.Builders.Create
 			{
 				if (method.Value.ReturnsVoid)
 				{
-					MockMethodVoidBuilder.Build(writer, method, raiseEvents);
+					MockMethodVoidBuilder.Build(writer, method, raiseEvents, compilation);
 				}
 				else
 				{
-					MockMethodValueBuilder.Build(writer, method, raiseEvents);
+					MockMethodValueBuilder.Build(writer, method, raiseEvents, compilation);
 				}
 			}
 
 			foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 			{
-				MockPropertyBuilder.Build(writer, property, raiseEvents);
+				MockPropertyBuilder.Build(writer, property, raiseEvents, compilation);
 			}
 
 			foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
 			{
-				MockIndexerBuilder.Build(writer, indexer, raiseEvents);
+				MockIndexerBuilder.Build(writer, indexer, raiseEvents, compilation);
 			}
 
 			if (information.Events.Length > 0)
 			{
 				writer.WriteLine();
-				MockEventsBuilder.Build(writer, information.Events);
+				MockEventsBuilder.Build(writer, information.Events, compilation);
 			}
 
 			writer.WriteLine();

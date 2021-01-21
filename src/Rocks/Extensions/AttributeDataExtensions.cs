@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Rocks.Extensions
 {
@@ -81,8 +82,24 @@ namespace Rocks.Extensions
 			return $"{name}{arguments}";
 		}
 
-		internal static string GetDescription(this ImmutableArray<AttributeData> self, AttributeTargets? target = null) => 
-			$"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target.GetTarget()}: " : string.Empty)}{string.Join(", ", self.Select(_ => _.GetDescription()))}]";
+		internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, AttributeTargets? target = null)
+		{
+			// We can't emit attributes that are compiler-generated
+			var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
+
+			var attributes = self.Where(
+				_ => _.AttributeClass is not null && !_.AttributeClass.GetAttributes().Any(
+					_ => _.AttributeClass is not null && _.AttributeClass.Equals(compilerGeneratedAttribute))).ToImmutableArray();
+
+			if(attributes.Length == 0)
+			{
+				return string.Empty;
+			}
+			else
+			{
+				return $"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target.GetTarget()}: " : string.Empty)}{string.Join(", ", attributes.Select(_ => _.GetDescription()))}]";
+			}
+		}
 
 		private static string GetTarget(this AttributeTargets? target) =>
 			target switch

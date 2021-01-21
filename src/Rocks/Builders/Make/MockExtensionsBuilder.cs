@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Linq;
 
@@ -6,7 +7,8 @@ namespace Rocks.Builders.Make
 {
 	internal static class MockExtensionsBuilder
 	{
-		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces, 
+			Compilation compilation)
 		{
 			writer.WriteLine($"internal static class MakeExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
 			writer.WriteLine("{");
@@ -19,7 +21,7 @@ namespace Rocks.Builders.Make
 
 			MockConstructorExtensionsBuilder.Build(writer, information);
 			writer.WriteLine();
-			MockMakeBuilder.Build(writer, information, namespaces);
+			MockMakeBuilder.Build(writer, information, namespaces, compilation);
 
 			writer.Indent--;
 			writer.WriteLine("}");

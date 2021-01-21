@@ -11,45 +11,45 @@ namespace Rocks.Builders.Create
 		internal static string GetProjectedDelegateName(IMethodSymbol method) =>
 			method.GetName(extendedName: "Callback");
 
-		internal static string GetProjectedDelegate(IMethodSymbol method)
+		internal static string GetProjectedDelegate(IMethodSymbol method, Compilation compilation)
 		{
 			var returnType = method.ReturnType.GetName();
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 			var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 			return $"internal {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}({methodParameters});";
 		}
 
-		internal static void Build(IndentedTextWriter writer, MockInformation information)
+		internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 		{
-			static void BuildDelegate(IndentedTextWriter writer, IMethodSymbol method) => 
-				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+			static void BuildDelegate(IndentedTextWriter writer, IMethodSymbol method, Compilation compilation) => 
+				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method, compilation));
 
-			static void BuildDelegates(IndentedTextWriter writer, IEnumerable<IMethodSymbol> methods)
+			static void BuildDelegates(IndentedTextWriter writer, IEnumerable<IMethodSymbol> methods, Compilation compilation)
 			{
 				foreach (var method in methods)
 				{
-					BuildDelegate(writer, method);
+					BuildDelegate(writer, method, compilation);
 				}
 			}
 
-			static void BuildProperties(IndentedTextWriter writer, MockInformation information)
+			static void BuildProperties(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 			{
 				var getPropertyMethods = information.Properties
 					.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value.GetMethod!);
-				BuildDelegates(writer, getPropertyMethods);
+				BuildDelegates(writer, getPropertyMethods, compilation);
 
 				var setPropertyMethods = information.Properties
 					.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value.SetMethod!);
-				BuildDelegates(writer, setPropertyMethods);
+				BuildDelegates(writer, setPropertyMethods, compilation);
 
 				var explicitGetPropertyMethodGroups = information.Properties
 					.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
@@ -58,7 +58,7 @@ namespace Rocks.Builders.Create
 
 				foreach (var explicitGetPropertyMethodGroup in explicitGetPropertyMethodGroups)
 				{
-					BuildDelegate(writer, explicitGetPropertyMethodGroup.First().Value.GetMethod!);
+					BuildDelegate(writer, explicitGetPropertyMethodGroup.First().Value.GetMethod!, compilation);
 				}
 
 				var explicitSetPropertyMethodGroups = information.Properties
@@ -68,7 +68,7 @@ namespace Rocks.Builders.Create
 
 				foreach (var explicitSetPropertyMethodGroup in explicitSetPropertyMethodGroups)
 				{
-					BuildDelegate(writer, explicitSetPropertyMethodGroup.First().Value.SetMethod!);
+					BuildDelegate(writer, explicitSetPropertyMethodGroup.First().Value.SetMethod!, compilation);
 				}
 			}
 
@@ -78,7 +78,7 @@ namespace Rocks.Builders.Create
 					.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
 						_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					.Select(_ => _.Value);
-				BuildDelegates(writer, methods);
+				BuildDelegates(writer, methods, compilation);
 
 				var explicitMethodGroups = information.Methods
 					.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
@@ -87,13 +87,13 @@ namespace Rocks.Builders.Create
 
 				foreach (var explicitMethodGroup in explicitMethodGroups)
 				{
-					BuildDelegate(writer, explicitMethodGroup.First().Value);
+					BuildDelegate(writer, explicitMethodGroup.First().Value, compilation);
 				}
 			}
 
 			if (information.Properties.Length > 0)
 			{
-				BuildProperties(writer, information);
+				BuildProperties(writer, information, compilation);
 			}
 		}
 	}

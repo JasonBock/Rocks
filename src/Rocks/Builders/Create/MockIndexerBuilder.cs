@@ -137,7 +137,8 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("}");
 		}
 
-		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
+		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents,
+			Compilation compilation)
 		{
 			var indexer = result.Value;
 			var attributes = indexer.GetAttributes();
@@ -146,27 +147,27 @@ namespace Rocks.Builders.Create
 
 			if (attributes.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription());
+				writer.WriteLine(attributes.GetDescription(compilation));
 			}
 
 			var memberIdentifierAttribute = result.MemberIdentifier;
 
 			if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false, compilation)}"")]");
 				memberIdentifierAttribute++;
 			}
 
 			if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false)}"")]");
+				writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false, compilation)}"")]");
 			}
 
 			var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				"public " : string.Empty;
 			var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 			var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
-			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true)}";
+			var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
 
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
 			writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetName()} {indexerSignature}");
@@ -190,7 +191,8 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("}");
 		}
 
-		private static string GetSignature(ImmutableArray<IParameterSymbol> parameters, bool includeOptionalParameterValues)
+		private static string GetSignature(ImmutableArray<IParameterSymbol> parameters, bool includeOptionalParameterValues, 
+			Compilation compilation)
 		{
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
@@ -202,7 +204,7 @@ namespace Rocks.Builders.Create
 					_ => string.Empty
 				};
 				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription()} " : string.Empty)}{parameter}";
+				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 			
 			return $"this[{string.Join(", ", methodParameters)}]";

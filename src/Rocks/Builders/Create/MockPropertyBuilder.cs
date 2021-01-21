@@ -145,14 +145,15 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("}");
 		}
 
-		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents)
+		internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents,
+			Compilation compilation)
 		{
 			var property = result.Value;
 			var attributes = property.GetAttributes();
 
 			if(attributes.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription());
+				writer.WriteLine(attributes.GetDescription(compilation));
 			}
 
 			var memberIdentifierAttribute = result.MemberIdentifier;
