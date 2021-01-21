@@ -116,7 +116,7 @@ namespace Rocks.Builders.Make
 			{
 				namespaces.Add(valueTaskOfTType.ContainingNamespace);
 				var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
-				writer.WriteLine($"return new ValueTask<{typeArgument.GetName()}>(default({typeArgument.GetName()}));");
+				writer.WriteLine($"return new ValueTask<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
 			}
 			else
 			{

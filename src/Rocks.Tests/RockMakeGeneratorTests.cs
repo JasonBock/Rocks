@@ -10,6 +10,38 @@ namespace Rocks.Tests
 	public static class RockMakeGeneratorTests
 	{
 		[Test]
+		public static void GenerateWhenValueTaskOfTIsReturned()
+		{
+			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+using System;
+using System.Threading.Tasks;
+
+namespace MockTests
+{
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Make<ITest>();
+		}
+	}
+
+	public interface ITest
+	{
+		ValueTask<T> Foo<T>();
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output.Length, Is.GreaterThan(0));
+				Assert.That(output, Does.Contain("return new ValueTask<T>(default(T)!);"));
+			});
+		}
+
+		[Test]
 		public static void GenerateWhenTargetTypeIsValid()
 		{
 			var (diagnostics, output) = RockMakeGeneratorTests.GetGeneratedOutput(
