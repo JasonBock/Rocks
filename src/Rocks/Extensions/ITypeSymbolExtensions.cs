@@ -7,23 +7,7 @@ using System.Linq;
 namespace Rocks.Extensions
 {
 	internal static class ITypeSymbolExtensions
-	{ 
-		private sealed class EventSymbolEqualityComparer
-			: IEqualityComparer<IEventSymbol?>
-		{
-			private static readonly Lazy<EventSymbolEqualityComparer> defaultValue = new(() => new());
-
-			private EventSymbolEqualityComparer()
-				: base() { }
-
-			public bool Equals(IEventSymbol? x, IEventSymbol? y) =>
-				(x?.Name.Equals(y?.Name) ?? false) && (x?.Type.Equals(y?.Type, SymbolEqualityComparer.Default) ?? false);
-
-			public int GetHashCode(IEventSymbol? obj) => (obj?.Name, obj?.Type).GetHashCode();
-
-			public static EventSymbolEqualityComparer Default { get; } = EventSymbolEqualityComparer.defaultValue.Value;
-		}
-
+	{
 		internal static bool IsOpenGeneric(this ITypeSymbol self)
 		{
 			if(self is INamedTypeSymbol namedType)
