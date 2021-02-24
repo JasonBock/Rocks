@@ -72,8 +72,11 @@ namespace Rocks
 
 					var rockCreateSymbol = compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
 						.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
+					var rockRepositoryCreateSymbol = compilation.GetTypeByMetadataName(typeof(RockRepository).FullName)!
+						.GetMembers().Single(_ => _.Name == nameof(RockRepository.Create));
 
-					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
+					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default) ||
+						rockRepositoryCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
 					{
 						var typeToMock = invocationSymbol.TypeArguments[0];
 

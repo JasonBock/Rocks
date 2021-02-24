@@ -20,6 +20,11 @@ using System;
 
 namespace MockTests
 {
+	public interface IContainNullableReferences
+	{
+		string? DoSomething(string? a, string b) => string.Empty;
+	}
+	
 	public static class Test
 	{
 		public static void Generate()
@@ -71,6 +76,37 @@ namespace MockTests
 		public static void Generate()
 		{
 			var rock = Rock.Create<ITest>();
+		}
+	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
+			});
+		}
+
+		[Test]
+		public static void GenerateWhenTargetTypeIsValidForRockRepository()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+using System;
+
+namespace MockTests
+{
+	public interface ITest
+	{
+		void Foo();
+	}
+
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var repository = new RockRepository();
+			var rock = repository.Create<ITest>();
 		}
 	}
 }");

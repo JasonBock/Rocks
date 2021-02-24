@@ -8,9 +8,10 @@ namespace Rocks
 	{
 		private readonly List<IExpectations> rocks = new List<IExpectations>();
 
-		public Expectations<T> Add<T>(Expectations<T> expectations)
+		public Expectations<T> Create<T>()
 			where T : class
 		{
+			var expectations = new Expectations<T>();
 			this.rocks.Add(expectations);
 			return expectations;
 		}

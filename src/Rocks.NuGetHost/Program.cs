@@ -2,25 +2,31 @@
 using RocksTest;
 using System;
 
-unsafe
-{
-	var value = 10;
+using var repository = new RockRepository();
 
-	var rock = Rock.Create<IHavePointers>();
-	rock.Methods().PointerParameter(new()).Callback(_ => *_ = 20);
+var firstRock = repository.Create<IFirstRepository>();
+firstRock.Methods().Foo();
 
-	var chunk = rock.Instance();
-	chunk.PointerParameter(&value);
+var secondRock = repository.Create<ISecondRepository>();
+secondRock.Methods().Bar();
 
-	rock.Verify();
+var firstChunk = firstRock.Instance();
+firstChunk.Foo();
 
-	Console.Out.WriteLine($"Create Success! {nameof(value)} is {value}");
-}
+var secondChunk = secondRock.Instance();
+secondChunk.Bar();
+
+Console.Out.WriteLine("Success!");
 
 namespace RocksTest
 {
-	public unsafe interface IHavePointers
+	public interface IFirstRepository
 	{
-		void PointerParameter(int* value);
+		void Foo();
+	}
+
+	public interface ISecondRepository
+	{
+		void Bar();
 	}
 }

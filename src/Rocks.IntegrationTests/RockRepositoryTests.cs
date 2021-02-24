@@ -20,10 +20,10 @@ namespace Rocks.IntegrationTests
 		{
 			using var repository = new RockRepository();
 
-			var firstRock = repository.Add(Rock.Create<IFirstRepository>());
+			var firstRock = repository.Create<IFirstRepository>();
 			firstRock.Methods().Foo();
 
-			var secondRock = repository.Add(Rock.Create<ISecondRepository>());
+			var secondRock = repository.Create<ISecondRepository>();
 			secondRock.Methods().Bar();
 
 			var firstChunk = firstRock.Instance();
@@ -41,7 +41,7 @@ namespace Rocks.IntegrationTests
 				{
 					using var repository = new RockRepository();
 
-					var rock = repository.Add(Rock.Create<IFirstRepository>());
+					var rock = repository.Create<IFirstRepository>();
 					rock.Methods().Foo();
 
 					var chunk = rock.Instance();

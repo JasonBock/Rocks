@@ -11,14 +11,20 @@ namespace Rocks
 
 		public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
 		{
+			var repo = new RockRepository();
+			repo.Create<ISyntaxReceiver>();
+
 			if (syntaxNode is InvocationExpressionSyntax invocation &&
 				invocation.Expression is MemberAccessExpressionSyntax access &&
 				access.Expression is IdentifierNameSyntax accessIdentifier &&
-				accessIdentifier.Identifier.Text == nameof(Rock) &&
-				access.Name is GenericNameSyntax accessName &&
-				accessName.Identifier.Text == nameof(Rock.Create))
+				access.Name is GenericNameSyntax accessName)
 			{
-				this.Candidates.Add(invocation);
+				if ((accessIdentifier.Identifier.Text == nameof(Rock) &&
+					accessName.Identifier.Text == nameof(Rock.Create)) ||
+					(accessName.Identifier.Text == nameof(RockRepository.Create)))
+				{
+					this.Candidates.Add(invocation);
+				}
 			}
 		}
 	}
