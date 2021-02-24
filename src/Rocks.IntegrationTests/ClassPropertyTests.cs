@@ -31,10 +31,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -43,10 +40,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassProperty>().Instance();
 			var value = chunk.GetData;
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -135,10 +129,7 @@ namespace Rocks.IntegrationTests
 		{
 			var chunk = Rock.Make<ClassProperty>().Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.SetData = 1, Throws.Nothing);
-			});		
+			Assert.That(() => chunk.SetData = 1, Throws.Nothing);		
 		}
 
 		[Test]
@@ -155,10 +146,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasEventRaised, Is.True);
-			});
+			Assert.That(wasEventRaised, Is.True);
 		}
 
 		[Test]
@@ -174,10 +162,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasCallbackInvoked, Is.True);
-			});
+			Assert.That(wasCallbackInvoked, Is.True);
 		}
 
 		[Test]
@@ -216,10 +201,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]

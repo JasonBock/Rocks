@@ -39,10 +39,7 @@ namespace Rocks.Tests.Extensions
 			var targetCompilation = CSharpCompilation.Create("TargetAssembly", new SyntaxTree[] { targetSyntaxTree },
 				targetReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.True);
-			});
+			Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.True);
 		}
 
 		[Test]
@@ -75,10 +72,7 @@ namespace Rocks.Tests.Extensions
 			var targetCompilation = CSharpCompilation.Create("TargetAssembly", new SyntaxTree[] { targetSyntaxTree },
 				targetReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.False);
-			});
+			Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.False);
 		}
 
 		[Test]
@@ -106,10 +100,7 @@ namespace Rocks.Tests.Extensions
 			var targetCompilation = CSharpCompilation.Create("TargetAssembly", new SyntaxTree[] { targetSyntaxTree },
 				targetReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.False);
-			});
+			Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.False);
 		}
 	}
 }

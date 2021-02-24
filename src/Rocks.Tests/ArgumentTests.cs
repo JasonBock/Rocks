@@ -10,10 +10,7 @@ namespace Rocks.Tests
 		{
 			var arg = Arg.Any<int>();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(arg.IsValid(33), Is.True);
-			});
+			Assert.That(arg.IsValid(33), Is.True);
 		}
 
 		[Test]
@@ -45,10 +42,7 @@ namespace Rocks.Tests
 		{
 			var arg = Arg.IsDefault<int>();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => arg.IsValid(2), Throws.TypeOf<NotSupportedException>());
-			});
+			Assert.That(() => arg.IsValid(2), Throws.TypeOf<NotSupportedException>());
 		}
 
 		[Test]

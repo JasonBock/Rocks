@@ -34,10 +34,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasEventRaised, Is.True);
-			});
+			Assert.That(wasEventRaised, Is.True);
 		}
 	}
 }

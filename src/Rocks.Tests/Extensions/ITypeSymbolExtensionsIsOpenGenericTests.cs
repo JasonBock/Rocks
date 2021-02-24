@@ -17,10 +17,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var typeSymbol = ITypeSymbolExtensionsIsOpenGenericTests.GetTypeSymbol(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(typeSymbol.IsOpenGeneric(), Is.EqualTo(expectedValue));
-			});
+			Assert.That(typeSymbol.IsOpenGeneric(), Is.EqualTo(expectedValue));
 		}
 
 		private static ITypeSymbol GetTypeSymbol(string source)

@@ -29,11 +29,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
-					Is.EqualTo(MethodMatch.Exact));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.Exact));
 		}
 
 		[Test]
@@ -50,11 +47,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.Exact));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.Exact));
 		}
 
 		[Test]
@@ -71,11 +65,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a, params object[] b) {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.Exact));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.Exact));
 		}
 
 		[Test]
@@ -92,11 +83,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.Exact));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.Exact));
 		}
 
 		[Test]
@@ -113,11 +101,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.Exact));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.Exact));
 		}
 
 		[Test]
@@ -134,11 +119,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public string {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
 		}
 
 		[Test]
@@ -155,11 +137,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodTwo}() {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodTwo),
-					Is.EqualTo(MethodMatch.None));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodTwo), 
+				Is.EqualTo(MethodMatch.None));
 		}
 
 		[Test]
@@ -176,11 +155,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.None));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.None));
 		}
 
 		[Test]
@@ -197,11 +173,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(string a) {{ }}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.None));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.None));
 		}
 
 		[Test]
@@ -221,11 +194,8 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	}}
 }}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
-					Is.EqualTo(MethodMatch.None));
-			});
+			Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne), 
+				Is.EqualTo(MethodMatch.None));
 		}
 
 		private static MethodMatch MatchMethods(string source, string methodOneName, string methodTwoName)

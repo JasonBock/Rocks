@@ -18,23 +18,14 @@ namespace Rocks.Tests.Extensions
 	{
 		[Test]
 		public static void GetMemberDescription() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(typeof(Identifiers).GetMemberDescription(1), Is.EqualTo("Foo"));
-			});
+			Assert.That(typeof(Identifiers).GetMemberDescription(1), Is.EqualTo("Foo"));
 
 		[Test]
 		public static void GetMemberDescriptionWhenIdentifierIsNotFound() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(typeof(Identifiers).GetMemberDescription(2), Is.Null);
-			});
+			Assert.That(typeof(Identifiers).GetMemberDescription(2), Is.Null);
 
 		[Test]
 		public static void GetMemberDescriptionWhenAttributesDoNotExist() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(typeof(NoIdentifiers).GetMemberDescription(1), Is.Null);
-			});
+			Assert.That(typeof(NoIdentifiers).GetMemberDescription(1), Is.Null);
 	}
 }

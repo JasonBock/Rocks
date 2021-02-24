@@ -15,10 +15,7 @@ namespace Rocks.Tests.Extensions
 		[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", true)]
 		[TestCase("using System; public class Target { public void Foo(Span<int> a) { } }", false)]
 		public static void IsPointer(string code, bool expectedResult) => 
-			Assert.Multiple(() =>
-			{
-				Assert.That(ITypeSymbolExtensionsIsPointerTests.GetTypeSymbol(code).IsPointer(), Is.EqualTo(expectedResult));
-			});
+			Assert.That(ITypeSymbolExtensionsIsPointerTests.GetTypeSymbol(code).IsPointer(), Is.EqualTo(expectedResult));
 
 		private static ITypeSymbol GetTypeSymbol(string source)
 		{

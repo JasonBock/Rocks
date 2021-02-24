@@ -20,10 +20,7 @@ namespace Rocks.Tests.Extensions
 }";
 			var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
-			});
+			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
 		}
 
 		[Test]
@@ -36,10 +33,7 @@ namespace Rocks.Tests.Extensions
 }";
 			var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
-			});
+			Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
 		}
 
 		[Test]

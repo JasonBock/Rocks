@@ -35,17 +35,14 @@ namespace Rocks.IntegrationTests
 
 		[Test]
 		public static void UseRepositoryWhenExpectationIsNotMet() =>
-			Assert.Multiple(() =>
+			Assert.That(() =>
 			{
-				Assert.That(() =>
-				{
-					using var repository = new RockRepository();
+				using var repository = new RockRepository();
 
-					var rock = repository.Create<IFirstRepository>();
-					rock.Methods().Foo();
+				var rock = repository.Create<IFirstRepository>();
+				rock.Methods().Foo();
 
-					var chunk = rock.Instance();
-				}, Throws.TypeOf<VerificationException>());
-			});
+				var chunk = rock.Instance();
+			}, Throws.TypeOf<VerificationException>());
 	}
 }

@@ -23,10 +23,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.SameAs(returnValue));
-			});
+			Assert.That(value, Is.SameAs(returnValue));
 		}
 
 		[Test]
@@ -35,10 +32,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassGenericProperty<int>>().Instance();
 			var value = chunk.Values;
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.SameAs(default(List<string>)));
-			});
+			Assert.That(value, Is.SameAs(default(List<string>)));
 		}
 
 		[Test]
@@ -53,10 +47,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -65,10 +56,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassGenericProperty<int>>().Instance();
 			var value = chunk.Data;
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 	}
 }

@@ -25,10 +25,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -58,10 +55,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]

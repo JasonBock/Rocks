@@ -17,10 +17,7 @@ namespace Rocks.Tests
 			var receiver = new RockCreateReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(receiver.Candidates.Count, Is.EqualTo(1));
-			});
+			Assert.That(receiver.Candidates.Count, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -32,10 +29,7 @@ namespace Rocks.Tests
 			var receiver = new RockCreateReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(receiver.Candidates.Count, Is.EqualTo(1));
-			});
+			Assert.That(receiver.Candidates.Count, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -47,10 +41,7 @@ namespace Rocks.Tests
 			var receiver = new RockCreateReceiver();
 			receiver.OnVisitSyntaxNode(classDeclaration);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(receiver.Candidates.Count, Is.EqualTo(0));
-			});
+			Assert.That(receiver.Candidates.Count, Is.EqualTo(0));
 		}
 	}
 }

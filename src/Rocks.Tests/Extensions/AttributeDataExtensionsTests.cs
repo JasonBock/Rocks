@@ -93,10 +93,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
-			});
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
 		}
 
 		[Test]
@@ -112,10 +109,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
-			});
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
 		}
 
 		[Test]
@@ -132,11 +126,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(attributes.GetDescription(compilation), 
-					Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
-			});
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 		}
 
 		[Test]
@@ -153,11 +143,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), 
-					Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
-			});
+			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
 		}
 
 		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)

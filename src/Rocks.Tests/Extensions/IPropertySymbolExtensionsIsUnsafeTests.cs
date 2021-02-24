@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Extensions;
 using System;
@@ -19,10 +18,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var propertySymbol = IPropertySymbolExtensionsIsUnsafeTests.GetPropertySymbol(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(propertySymbol.IsUnsafe(), Is.EqualTo(expectedValue));
-			});
+			Assert.That(propertySymbol.IsUnsafe(), Is.EqualTo(expectedValue));
 		}
 
 		private static IPropertySymbol GetPropertySymbol(string source)

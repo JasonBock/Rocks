@@ -19,10 +19,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var methodSymbol = IMethodSymbolExtensionsIsUnsafeTests.GetMethodSymbol(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(methodSymbol.IsUnsafe(), Is.EqualTo(expectedValue));
-			});
+			Assert.That(methodSymbol.IsUnsafe(), Is.EqualTo(expectedValue));
 		}
 
 		private static IMethodSymbol GetMethodSymbol(string source)

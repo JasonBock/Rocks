@@ -14,11 +14,8 @@ namespace Rocks.Tests.Extensions
 		[TestCase("public class Target { public unsafe void Foo(int* a) { } }", true)]
 		[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", true)]
 		[TestCase("using System; public class Target { public void Foo(Span<int> a) { } }", true)]
-		public static void IsEsoteric(string code, bool expectedResult) => 
-			Assert.Multiple(() =>
-			{
-				Assert.That(ITypeSymbolExtensionsIsEsotericTests.GetTypeSymbol(code).IsEsoteric(), Is.EqualTo(expectedResult));
-			});
+		public static void IsEsoteric(string code, bool expectedResult) =>
+			Assert.That(ITypeSymbolExtensionsIsEsotericTests.GetTypeSymbol(code).IsEsoteric(), Is.EqualTo(expectedResult));
 
 		private static ITypeSymbol GetTypeSymbol(string source)
 		{

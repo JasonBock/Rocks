@@ -23,10 +23,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -35,10 +32,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassMethodReturn>().Instance();
 			var value = chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -52,10 +46,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -80,10 +71,7 @@ namespace Rocks.IntegrationTests
 			var chunk = rock.Instance();
 			chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-			});
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -97,10 +85,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -110,10 +95,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -124,10 +106,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-			});
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -141,10 +120,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -153,10 +129,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassMethodReturn>().Instance();
 			var value = chunk.OneParameter(3);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -170,10 +143,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -187,10 +157,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -201,10 +168,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -218,10 +182,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -230,10 +191,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<ClassMethodReturn>().Instance();
 			var value = chunk.MultipleParameters(3, "b");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -247,10 +205,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -286,10 +241,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
 		}
 	}
 }

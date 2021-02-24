@@ -17,10 +17,7 @@ namespace Rocks.Tests.Extensions
 			var methodSymbol = IMethodSymbolExtensionsGetNameTests.GetMethodSymbol(code);
 			var name = methodSymbol.GetName(option);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(name, Is.EqualTo(expectedName));
-			});
+			Assert.That(name, Is.EqualTo(expectedName));
 		}
 
 		private static IMethodSymbol GetMethodSymbol(string source)

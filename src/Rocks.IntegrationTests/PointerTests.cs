@@ -66,10 +66,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.PointerParameter(pOtherValue), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.PointerParameter(pOtherValue), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -104,7 +101,7 @@ namespace Rocks.IntegrationTests
 		}
 
 		[Test]
-		public static void MakeWithPointerReturn() => 
+		public static void MakeWithPointerReturn() =>
 			Rock.Make<IHavePointers>().Instance().PointerReturn();
 
 		[Test]
@@ -158,10 +155,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.DelegatePointerParameter(&OtherDelegatePointerParameterDelegate), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.DelegatePointerParameter(&OtherDelegatePointerParameterDelegate), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]

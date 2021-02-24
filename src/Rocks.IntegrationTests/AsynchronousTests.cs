@@ -55,10 +55,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(3));
-			});
+			Assert.That(value, Is.EqualTo(3));
 		}
 
 		[Test]

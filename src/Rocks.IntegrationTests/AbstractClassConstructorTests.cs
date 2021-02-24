@@ -41,10 +41,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassConstructor>().Instance(3);
 			var value = chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -71,10 +68,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassConstructor>().Instance("b");
 			var value = chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 	}
 }

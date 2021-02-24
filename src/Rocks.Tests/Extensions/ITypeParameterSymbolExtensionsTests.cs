@@ -25,10 +25,7 @@ namespace Rocks.Tests.Extensions
 		{
 			var constraints = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code).GetConstraints();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(constraints, Is.EqualTo(expectedConstraints));
-			});
+			Assert.That(constraints, Is.EqualTo(expectedConstraints));
 		}
 
 		private static ITypeParameterSymbol GetTypeParameterSymbol(string source)

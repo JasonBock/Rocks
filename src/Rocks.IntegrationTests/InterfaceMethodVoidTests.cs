@@ -29,10 +29,7 @@ namespace Rocks.IntegrationTests
 		{
 			var chunk = Rock.Make<IInterfaceMethodVoid>().Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.NoParameters(), Throws.Nothing);
-			});
+			Assert.That(() => chunk.NoParameters(), Throws.Nothing);
 		}
 
 		[Test]
@@ -57,10 +54,7 @@ namespace Rocks.IntegrationTests
 			var chunk = rock.Instance();
 			chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-			});
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -74,10 +68,7 @@ namespace Rocks.IntegrationTests
 			var chunk = rock.Instance();
 			chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasCallbackInvoked, Is.True);
-			});
+			Assert.That(wasCallbackInvoked, Is.True);
 			rock.Verify();
 		}
 
@@ -88,10 +79,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -102,10 +90,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
-			});
+			Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
 		}
 
 		[Test]
@@ -125,10 +110,7 @@ namespace Rocks.IntegrationTests
 		{
 			var chunk = Rock.Make<IInterfaceMethodVoid>().Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.OneParameter(3), Throws.Nothing);
-			});
+			Assert.That(() => chunk.OneParameter(3), Throws.Nothing);
 		}
 
 		[Test]
@@ -143,10 +125,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(aValue, Is.EqualTo(3));
-			});
+			Assert.That(aValue, Is.EqualTo(3));
 		}
 
 		[Test]
@@ -157,10 +136,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -180,10 +156,7 @@ namespace Rocks.IntegrationTests
 		{
 			var chunk = Rock.Make<IInterfaceMethodVoid>().Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.MultipleParameters(3, "b"), Throws.Nothing);
-			});
+			Assert.That(() => chunk.MultipleParameters(3, "b"), Throws.Nothing);
 		}
 
 		[Test]
@@ -214,10 +187,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
 		}
 	}
 }

@@ -42,10 +42,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -55,10 +52,7 @@ namespace Rocks.IntegrationTests
 			var value = chunk[3];
 			chunk[3] = 4;
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -72,10 +66,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -84,10 +75,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassIndexerGetter>().Instance();
 			var value = chunk[3];
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -172,10 +160,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -194,11 +179,8 @@ namespace Rocks.IntegrationTests
 		public static void MakeWithOneParameterSetter()
 		{
 			var chunk = Rock.Make<AbstractClassIndexerSetter>().Instance();
-			
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk[3] = 4, Throws.Nothing);
-			});
+
+			Assert.That(() => chunk[3] = 4, Throws.Nothing);
 		}
 
 		[Test]
@@ -214,10 +196,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasEventRaised, Is.True);
-			});
+			Assert.That(wasEventRaised, Is.True);
 		}
 
 		[Test]
@@ -232,10 +211,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasCallbackInvoked, Is.True);
-			});
+			Assert.That(wasCallbackInvoked, Is.True);
 		}
 
 		[Test]
@@ -286,10 +262,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -316,10 +289,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -328,10 +298,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassIndexerGetter>().Instance();
 			var value = chunk[3, "b"];
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -416,10 +383,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -439,10 +403,7 @@ namespace Rocks.IntegrationTests
 		{
 			var chunk = Rock.Make<AbstractClassIndexerSetter>().Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk[3, "b"] = 4, Throws.Nothing);
-			});
+			Assert.That(() => chunk[3, "b"] = 4, Throws.Nothing);
 		}
 
 		[Test]
@@ -458,10 +419,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasEventRaised, Is.True);
-			});
+			Assert.That(wasEventRaised, Is.True);
 		}
 
 		[Test]
@@ -476,10 +434,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasCallbackInvoked, Is.True);
-			});
+			Assert.That(wasCallbackInvoked, Is.True);
 		}
 
 		[Test]

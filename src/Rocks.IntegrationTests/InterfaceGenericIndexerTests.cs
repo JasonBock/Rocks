@@ -24,10 +24,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.SameAs(returnValue));
-			});
+			Assert.That(value, Is.SameAs(returnValue));
 		}
 
 		[Test]
@@ -36,10 +33,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<IInterfaceGenericIndexer<int>>().Instance();
 			var value = chunk[4];
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(List<string>)));
-			});
+			Assert.That(value, Is.EqualTo(default(List<string>)));
 		}
 
 		[Test]
@@ -54,10 +48,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -66,10 +57,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<IInterfaceGenericIndexer<int>>().Instance();
 			var value = chunk[4, 5];
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -84,10 +72,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -96,10 +81,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<IInterfaceGenericIndexer<int>>().Instance();
 			var value = chunk["b"];
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 	}
 }

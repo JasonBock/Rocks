@@ -67,7 +67,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 		}
-		
+
 		[Test]
 		public static void MakeWithGenericParameterType()
 		{
@@ -83,10 +83,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.Bar("3"), Throws.TypeOf<ExpectationException>());
-			});
+			Assert.That(() => chunk.Bar("3"), Throws.TypeOf<ExpectationException>());
 		}
 
 		[Test]
@@ -101,10 +98,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.SameAs(returnValue));
-			});
+			Assert.That(value, Is.SameAs(returnValue));
 		}
 
 		[Test]
@@ -113,10 +107,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
 			var value = chunk.FooReturn();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(List<string>)));
-			});
+			Assert.That(value, Is.EqualTo(default(List<string>)));
 		}
 
 		[Test]
@@ -131,22 +122,16 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
-		
+
 		[Test]
 		public static void MakeWithGenericTypeParameterAsReturn()
 		{
 			var chunk = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
 			var value = chunk.QuuxReturn();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -161,10 +146,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -173,10 +155,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
 			var value = chunk.BarReturn<int>();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -188,10 +167,7 @@ namespace Rocks.IntegrationTests
 
 			var chunk = rock.Instance();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => chunk.BarReturn<string>(), Throws.TypeOf<InvalidCastException>());
-			});
+			Assert.That(() => chunk.BarReturn<string>(), Throws.TypeOf<InvalidCastException>());
 		}
 
 		[Test]
@@ -206,10 +182,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-			});
+			Assert.That(value, Is.EqualTo(returnValue));
 		}
 
 		[Test]
@@ -218,10 +191,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
 			var value = chunk.NullableValues("b");
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(string?)));
-			});
+			Assert.That(value, Is.EqualTo(default(string?)));
 		}
 	}
 }

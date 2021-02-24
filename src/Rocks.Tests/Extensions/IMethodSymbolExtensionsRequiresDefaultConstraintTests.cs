@@ -28,10 +28,7 @@ namespace Rocks.Tests.Extensions
 			var methodSymbol = IMethodSymbolExtensionsRequiresDefaultConstraintTests.GetMethodSymbol(code);
 			var requiresDefaultConstraints = methodSymbol.GetDefaultConstraints();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(requiresDefaultConstraints, Is.EquivalentTo(expectedValue));
-			});
+			Assert.That(requiresDefaultConstraints, Is.EquivalentTo(expectedValue));
 		}
 
 		private static IMethodSymbol GetMethodSymbol(string source)

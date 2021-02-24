@@ -174,10 +174,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(5));
-			});
+			Assert.That(value, Is.EqualTo(5));
 		}
 
 		[Test]
@@ -204,10 +201,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(0));
-			});
+			Assert.That(value, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -216,10 +210,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
 			chunk.OutArgument(out var value);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
+			Assert.That(value, Is.EqualTo(default(int)));
 		}
 
 		[Test]
@@ -235,10 +226,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(4));
-			});
+			Assert.That(value, Is.EqualTo(4));
 		}
 
 		[Test]
@@ -264,10 +252,7 @@ namespace Rocks.IntegrationTests
 			var chunk = Rock.Make<IHaveRefAndOut>().Instance();
 			chunk.OutArgumentsWithGenerics<int, string>(3, out var value);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(string)));
-			});
+			Assert.That(value, Is.EqualTo(default(string)));
 		}
 
 		[Test]
@@ -284,10 +269,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo("3"));
-			});
+			Assert.That(value, Is.EqualTo("3"));
 		}
 
 		[Test]
@@ -329,10 +311,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(4));
-			});
+			Assert.That(value, Is.EqualTo(4));
 		}
 
 		[Test]
@@ -375,10 +354,7 @@ namespace Rocks.IntegrationTests
 
 			rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo("3"));
-			});
+			Assert.That(value, Is.EqualTo("3"));
 		}
 	}
 }

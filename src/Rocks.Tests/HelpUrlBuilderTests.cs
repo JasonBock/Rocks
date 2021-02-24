@@ -6,10 +6,7 @@ namespace Rocks.Tests
 	{
 		[Test]
 		public static void Create() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(HelpUrlBuilder.Build("a", "b"),
-					Is.EqualTo("https://github.com/JasonBock/Rocks/tree/master/docs/a-b.md"));
-			});
+			Assert.That(HelpUrlBuilder.Build("a", "b"),
+				Is.EqualTo("https://github.com/JasonBock/Rocks/tree/main/docs/a-b.md"));
 	}
 }

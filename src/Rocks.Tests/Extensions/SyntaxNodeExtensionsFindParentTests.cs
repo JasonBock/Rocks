@@ -20,10 +20,7 @@ namespace Rocks.Tests.Extensions
 }";
 			var methodDeclaration = SyntaxNodeExtensionsFindParentTests.GetMethodDeclaration(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(methodDeclaration.FindParent<TypeDeclarationSyntax>(), Is.Not.Null);
-			});
+			Assert.That(methodDeclaration.FindParent<TypeDeclarationSyntax>(), Is.Not.Null);
 		}
 
 		[Test]
@@ -36,10 +33,7 @@ namespace Rocks.Tests.Extensions
 }";
 			var methodDeclaration = SyntaxNodeExtensionsFindParentTests.GetMethodDeclaration(code);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(methodDeclaration.FindParent<VariableDeclarationSyntax>(), Is.Null);
-			});
+			Assert.That(methodDeclaration.FindParent<VariableDeclarationSyntax>(), Is.Null);
 		}
 
 		private static MethodDeclarationSyntax GetMethodDeclaration(string source)

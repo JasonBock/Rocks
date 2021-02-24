@@ -24,10 +24,7 @@ namespace Rocks.Tests.Extensions
 			var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
 			var name = typeSymbol.GetName(option);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(name, Is.EqualTo(expectedName));
-			});
+			Assert.That(name, Is.EqualTo(expectedName));
 		}
 
 		[TestCase("public class Target { }", TypeNameOption.NoGenerics, "Target")]
@@ -41,10 +38,7 @@ namespace Rocks.Tests.Extensions
 			var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
 			var name = typeSymbol.GetName(option);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(name, Is.EqualTo(expectedName));
-			});
+			Assert.That(name, Is.EqualTo(expectedName));
 		}
 
 		[TestCase("public class Base { } public class Target { Base Data { get; } }",
@@ -70,10 +64,7 @@ namespace Rocks.Tests.Extensions
 			var parameterSymbol = ITypeSymbolExtensionsGetNameTests.GetDeclaredTypeSymbol(code);
 			var name = parameterSymbol.Type.GetName(option);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(name, Is.EqualTo(expectedName));
-			});
+			Assert.That(name, Is.EqualTo(expectedName));
 		}
 
 		private static IPropertySymbol GetDeclaredTypeSymbol(string source)

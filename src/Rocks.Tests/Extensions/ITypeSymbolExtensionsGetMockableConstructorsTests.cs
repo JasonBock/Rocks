@@ -21,10 +21,7 @@ namespace Rocks.Tests.Extensions
 			var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 			var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(constructors.Length, Is.EqualTo(1));
-			});
+			Assert.That(constructors.Length, Is.EqualTo(1));
 		}
 
 		[Test]
@@ -50,10 +47,7 @@ namespace Rocks.Tests.Extensions
 
 			var constructors = typeSymbol.GetMockableConstructors(containingCompilation.Assembly);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(constructors.Length, Is.EqualTo(0));
-			});
+			Assert.That(constructors.Length, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -63,10 +57,7 @@ namespace Rocks.Tests.Extensions
 			var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 			var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly);
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(constructors.Length, Is.EqualTo(0));
-			});
+			Assert.That(constructors.Length, Is.EqualTo(0));
 		}
 
 		private static ITypeSymbol GetTypeSymbol(string source)

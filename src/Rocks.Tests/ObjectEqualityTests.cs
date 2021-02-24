@@ -6,51 +6,30 @@ namespace Rocks.Tests
 	{
 		[Test]
 		public static void AreEqualWhenBothAreNull() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual<string?>(null, null), Is.True);
-			});
+			Assert.That(ObjectEquality.AreEqual<string?>(null, null), Is.True);
 
 		[Test]
 		public static void AreEqualWhenValue1IsNull() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual(null as string, "a"), Is.False);
-			});
+			Assert.That(ObjectEquality.AreEqual(null as string, "a"), Is.False);
 
 		[Test]
 		public static void AreEqualWhenValue2IsNull() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual("a", null as string), Is.False);
-			});
+			Assert.That(ObjectEquality.AreEqual("a", null as string), Is.False);
 
 		[Test]
 		public static void AreEqualWhenValuesAreNotArrays() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual("a", "a"), Is.True);
-			});
+			Assert.That(ObjectEquality.AreEqual("a", "a"), Is.True);
 
 		[Test]
 		public static void AreEqualWhenValuesAreArrayWithDifferentLengths() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "a", "b" }), Is.False);
-			});
+			Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "a", "b" }), Is.False);
 
 		[Test]
 		public static void AreEqualWhenValuesAreArrayWithSameLengthsAndDifferentValues() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "b" }), Is.False);
-			});
+			Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "b" }), Is.False);
 
 		[Test]
 		public static void AreEqualWhenValuesAreArrayWithSameLengthsAndValues() =>
-			Assert.Multiple(() =>
-			{
-				Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "a" }), Is.True);
-			});
+			Assert.That(ObjectEquality.AreEqual(new[] { "a" }, new[] { "a" }), Is.True);
 	}
 }
