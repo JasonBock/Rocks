@@ -13,14 +13,14 @@ namespace Rocks.Builders.Create
 			{
 				var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetName()));
 				return returnType is not null ?
-					$"Func<{parameterTypes}, {returnType.GetName()}>" : 
-					$"Action<{parameterTypes}>";
+					$"{WellKnownNames.Func}<{parameterTypes}, {returnType.GetName()}>" : 
+					$"{WellKnownNames.Action}<{parameterTypes}>";
 			}
 			else
 			{
 				return returnType is not null ?
-					$"Func<{returnType.GetName()}>" :
-					$"Action";
+					$"{WellKnownNames.Func}<{returnType.GetName()}>" :
+					WellKnownNames.Action;
 			}
 		}
 	}

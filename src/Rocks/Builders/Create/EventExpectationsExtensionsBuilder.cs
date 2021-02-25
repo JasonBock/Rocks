@@ -16,7 +16,7 @@ namespace Rocks.Builders.Create
 				if (information.Methods.Length > 0)
 				{
 					writer.WriteLine();
-					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Method);
 				}
 
 				if (information.Properties.Length > 0)
@@ -24,12 +24,12 @@ namespace Rocks.Builders.Create
 					if (information.Properties.Any(_ => !_.Value.IsIndexer))
 					{
 						writer.WriteLine();
-						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
+						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Property);
 					}
 					if (information.Properties.Any(_ => _.Value.IsIndexer))
 					{
 						writer.WriteLine();
-						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
+						EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Indexer);
 					}
 				}
 			}
@@ -57,9 +57,9 @@ namespace Rocks.Builders.Create
 				var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
 					$"On{result.Value.ContainingType.GetName(TypeNameOption.Flatten)}";
 
-				writer.WriteLine($"internal static {extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
+				writer.WriteLine($"internal static {extensionPrefix}{WellKnownNames.Adornments}<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}{WellKnownNames.Adornments}<{adornments}> self, {argsType} args)");
 				writer.Indent++;
-				writer.WriteLine($"where {callbackName} : Delegate");
+				writer.WriteLine($"where {callbackName} : {nameof(Delegate)}");
 				writer.Indent--;
 
 				writer.WriteLine("{");
@@ -74,7 +74,7 @@ namespace Rocks.Builders.Create
 				writer.WriteLine("}");
 			}
 
-			writer.WriteLine($"internal static class {prefix}AdornmentsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+			writer.WriteLine($"internal static class {prefix}{WellKnownNames.Adornments}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

@@ -15,8 +15,8 @@ namespace Rocks.Builders.Create
 			var containingTypeName = method.ContainingType.GetName();
 			
 			var thisParameter = isExplicitImplementation ?
-				$"this ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> self" :
-				$"this MethodExpectations<{mockTypeName}> self";
+				$"this {WellKnownNames.Explicit}{WellKnownNames.Method}{WellKnownNames.Expectations}<{mockTypeName}, {containingTypeName}> self" :
+				$"this {WellKnownNames.Method}{WellKnownNames.Expectations}<{mockTypeName}> self";
 			var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 				string.Join(", ", thisParameter,
 					string.Join(", ", method.Parameters.Select(_ =>
@@ -38,10 +38,10 @@ namespace Rocks.Builders.Create
 				MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
 					method.ReturnsVoid ? DelegateBuilder.Build(method.Parameters) : DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var adornmentsType = method.ReturnsVoid ? 
-				$"MethodAdornments<{mockTypeName}, {delegateTypeName}>" :
+				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>" :
 				method.ReturnType.IsEsoteric() ? 
 					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {delegateTypeName}>" :
-					$"MethodAdornments<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
+					$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
@@ -63,7 +63,7 @@ namespace Rocks.Builders.Create
 					{
 						if (_.HasExplicitDefaultValue)
 						{
-							return $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue()})";
+							return $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue()})";
 						}
 						else if (_.RefKind == RefKind.Out)
 						{

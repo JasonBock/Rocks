@@ -18,8 +18,8 @@ namespace Rocks.Builders
 		public void Add(Type type) =>
 			this.builder.Add(type.Namespace);
 
-		public void AddRange(IEnumerable<INamespaceSymbol> namespaces)
-			=> this.builder.AddRange(namespaces.Select(_ => _.GetName()));
+		public void AddRange(IEnumerable<INamespaceSymbol> namespaces) => 
+			this.builder.AddRange(namespaces.Select(_ => _.GetName()));
 
 		public ImmutableHashSet<string> Values => this.builder.ToImmutable();
 	}
