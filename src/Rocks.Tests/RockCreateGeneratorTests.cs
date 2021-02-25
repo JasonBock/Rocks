@@ -54,21 +54,7 @@ namespace MockTests
 {
 	public interface ITest
 	{
-		void Foo(Span<int> values);
-		void Bar<T>(Span<T> values);
-		/*
-		unsafe void Foo(int* value);
-		unsafe int* Foo(int* value);
-		unsafe delegate*<int, void> FooMethod(delegate*<int, void> value);
-		unsafe int* Data { get; set; }
-		unsafe delegate*<int, void> DataMethod { get; set; }
-		unsafe int* this[int* value] { get; set; }
-		unsafe delegate*<int, void> this[delegate*<int, void> value] { get; set; }
-		void FooSpan(Span<int> data);
-		void FooGenericSpan<T>(Span<T> data);
-		Span<int> DataSpan { get; set; }
-		Span<int> this[Span<int> value, int index] { get; set; }
-		*/
+		void Foo();
 	}
 
 	public static class Test
@@ -78,6 +64,27 @@ namespace MockTests
 			var rock = Rock.Create<ITest>();
 		}
 	}
+}");
+
+			Assert.Multiple(() =>
+			{
+				Assert.That(diagnostics.Length, Is.EqualTo(0));
+				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
+			});
+		}
+
+		[Test]
+		public static void GenerateWhenTargetTypeIsInGlobalNamespace()
+		{
+			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+@"using Rocks;
+using System;
+
+var rock = Rock.Create<ITest>();
+
+public interface ITest
+{
+	void Foo();
 }");
 
 			Assert.Multiple(() =>

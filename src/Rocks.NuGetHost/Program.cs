@@ -1,32 +1,14 @@
 ﻿using Rocks;
-using RocksTest;
-using System;
 
-using var repository = new RockRepository();
+var rock = Rock.Create<ITest>();
+rock.Methods().Foo();
 
-var firstRock = repository.Create<IFirstRepository>();
-firstRock.Methods().Foo();
+var chunk = rock.Instance();
+chunk.Foo();
 
-var secondRock = repository.Create<ISecondRepository>();
-secondRock.Methods().Bar();
+rock.Verify();
 
-var firstChunk = firstRock.Instance();
-firstChunk.Foo();
-
-var secondChunk = secondRock.Instance();
-secondChunk.Bar();
-
-Console.Out.WriteLine("Success!");
-
-namespace RocksTest
+public interface ITest
 {
-	public interface IFirstRepository
-	{
-		void Foo();
-	}
-
-	public interface ISecondRepository
-	{
-		void Bar();
-	}
+	void Foo();
 }
