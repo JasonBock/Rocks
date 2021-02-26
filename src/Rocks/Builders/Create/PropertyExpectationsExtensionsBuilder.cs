@@ -35,7 +35,7 @@ namespace Rocks.Builders.Create
 				.GroupBy(_ => _.Value.ContainingType))
 			{
 				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-				writer.WriteLine($"internal static class ExplicitIndexerGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Getter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -54,7 +54,7 @@ namespace Rocks.Builders.Create
 				.GroupBy(_ => _.Value.ContainingType))
 			{
 				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-				writer.WriteLine($"internal static class ExplicitIndexerSetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -73,7 +73,7 @@ namespace Rocks.Builders.Create
 			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class IndexerGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Indexer}{WellKnownNames.Getter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -91,7 +91,7 @@ namespace Rocks.Builders.Create
 			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class IndexerSetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -115,7 +115,7 @@ namespace Rocks.Builders.Create
 				.GroupBy(_ => _.Value.ContainingType))
 			{
 				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-				writer.WriteLine($"internal static class ExplicitPropertyGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -134,7 +134,7 @@ namespace Rocks.Builders.Create
 				.GroupBy(_ => _.Value.ContainingType))
 			{
 				var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-				writer.WriteLine($"internal static class ExplicitPropertySetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}For{containingTypeName}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -153,7 +153,7 @@ namespace Rocks.Builders.Create
 			if (information.Properties.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class PropertyGetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -171,7 +171,7 @@ namespace Rocks.Builders.Create
 			if (information.Properties.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				writer.WriteLine($"internal static class PropertySetterExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+				writer.WriteLine($"internal static class {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 				writer.WriteLine("{");
 				writer.Indent++;
 

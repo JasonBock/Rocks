@@ -16,7 +16,7 @@ namespace Rocks.Builders.Make
 			if(parameters.Length > 0)
 			{
 				var instanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
+				writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))})");
 				writer.Indent--;
@@ -24,7 +24,7 @@ namespace Rocks.Builders.Make
 			}
 			else
 			{
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}() {{ }}");
+				writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}() {{ }}");
 			}
 		}
 	}

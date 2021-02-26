@@ -12,7 +12,7 @@ namespace Rocks.Builders.Make
 			Compilation compilation)
 		{
 			var typeToMock = information.TypeToMock;
-			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");
+			writer.WriteLine($"private sealed class {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
 			writer.Indent++;
 			writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}");
 			writer.Indent--;

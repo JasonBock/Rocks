@@ -12,13 +12,13 @@ namespace Rocks.Builders.Create
 			var property = result.Value;
 			var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
 			var mockTypeName = result.MockType.GetName();
-			var thisParameter = $"this PropertyGetterExpectations<{mockTypeName}> self";
+			var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{mockTypeName}> self";
 			var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
 				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
 				DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 			var adornmentsType = property.GetMethod!.RequiresProjectedDelegate() ?
 				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
-				$"PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
+				$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
@@ -36,13 +36,13 @@ namespace Rocks.Builders.Create
 			var property = result.Value;
 			var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
 			var mockTypeName = result.MockType.GetName();
-			var thisParameter = $"this PropertySetterExpectations<{mockTypeName}> self";
+			var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{mockTypeName}> self";
 			var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 			var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
 				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
-				$"PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
+				$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, {nameof(Argument)}<{propertyParameterValue}> value) =>");

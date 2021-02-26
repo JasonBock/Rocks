@@ -100,23 +100,23 @@ namespace Rocks.Builders.Make
 			if(method.ReturnType.Equals(taskType))
 			{
 				namespaces.Add(taskType.ContainingNamespace);
-				writer.WriteLine($"return Task.CompletedTask;");
+				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.CompletedTask)};");
 			}
 			else if(method.ReturnType.Equals(valueTaskType))
 			{
 				namespaces.Add(valueTaskType.ContainingNamespace);
-				writer.WriteLine($"return new ValueTask();");
+				writer.WriteLine($"return new {nameof(ValueTask)}();");
 			}
 			else if(method.ReturnType.OriginalDefinition.Equals(taskOfTType))
 			{
 				namespaces.Add(taskOfTType.ContainingNamespace);
-				writer.WriteLine($"return Task.FromResult(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
+				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
 			{
 				namespaces.Add(valueTaskOfTType.ContainingNamespace);
 				var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
-				writer.WriteLine($"return new ValueTask<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
+				writer.WriteLine($"return new {nameof(ValueTask)}<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
 			}
 			else
 			{
