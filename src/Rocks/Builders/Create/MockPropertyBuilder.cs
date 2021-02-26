@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -36,7 +37,7 @@ namespace Rocks.Builders.Create
 				DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 			var handlerName = property.Type.IsEsoteric() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
-				$"HandlerInformation<{property.Type.GetName()}>";
+				$"{nameof(HandlerInformation)}<{property.Type.GetName()}>";
 
 			writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
 			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
@@ -44,10 +45,10 @@ namespace Rocks.Builders.Create
 
 			if (raiseEvents)
 			{
-				writer.WriteLine("methodHandler.RaiseEvents(this);");
+				writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
 			}
 
-			writer.WriteLine("methodHandler.IncrementCallCount();");
+			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
 
 			if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 			{
@@ -63,7 +64,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}get_{property.Name}())\");");
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}get_{property.Name}())\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -112,17 +113,17 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
 			writer.WriteLine();
 			if (raiseEvents)
 			{
-				writer.WriteLine("methodHandler.RaiseEvents(this);");
+				writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
 			}
 
-			writer.WriteLine("methodHandler.IncrementCallCount();");
+			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
 			writer.WriteLine("break;");
 
 			writer.Indent--;
@@ -137,7 +138,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 

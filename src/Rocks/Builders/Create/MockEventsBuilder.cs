@@ -1,7 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
+using System.Reflection;
 
 namespace Rocks.Builders.Create
 {
@@ -59,21 +61,21 @@ namespace Rocks.Builders.Create
 			writer.WriteLine("#pragma warning restore CS0067");
 			writer.WriteLine();
 
-			writer.WriteLine("void IMockWithEvents.Raise(string fieldName, EventArgs args)");
+			writer.WriteLine($"void {nameof(IMockWithEvents)}.{nameof(IMockWithEvents.Raise)}(string fieldName, EventArgs args)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
 			writer.WriteLine("var thisType = this.GetType();");
-			writer.WriteLine("var eventDelegate = (MulticastDelegate)thisType.GetField(fieldName, ");
+			writer.WriteLine($"var eventDelegate = ({nameof(MulticastDelegate)})thisType.GetField(fieldName, ");
 			writer.Indent++;
-			writer.WriteLine("BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(this)!;");
+			writer.WriteLine($"{nameof(BindingFlags)}.{nameof(BindingFlags.Instance)} | {nameof(BindingFlags)}.{nameof(BindingFlags.NonPublic)})!.GetValue(this)!;");
 			writer.Indent--;
 			writer.WriteLine();
 			writer.WriteLine("if (eventDelegate is not null)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine("foreach (var handler in eventDelegate.GetInvocationList())");
+			writer.WriteLine($"foreach (var handler in eventDelegate.{nameof(Delegate.GetInvocationList)}())");
 			writer.WriteLine("{");
 			writer.Indent++;
 

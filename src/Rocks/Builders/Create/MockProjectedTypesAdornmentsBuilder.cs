@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace Rocks.Builders.Create
 	internal static partial class MockProjectedTypesAdornmentsBuilder
 	{
 		internal static string GetProjectedAdornmentName(ITypeSymbol type, AdornmentType adornment, bool isExplicit) => 
-			$"{(isExplicit ? "Explicit" : string.Empty)}{adornment}AdornmentsFor{type.GetName(TypeNameOption.Flatten)}";
+			$"{(isExplicit ? WellKnownNames.Explicit : string.Empty)}{adornment}{WellKnownNames.Adornments}For{type.GetName(TypeNameOption.Flatten)}";
 
 		internal static string GetProjectedHandlerInformationName(ITypeSymbol type) =>
-			$"HandlerInformationFor{type.GetName(TypeNameOption.Flatten)}";
+			$"{nameof(HandlerInformation)}For{type.GetName(TypeNameOption.Flatten)}";
 
 		internal static string GetProjectedAddExtensionMethodName(ITypeSymbol type) => 
 			$"AddFor{type.GetName(TypeNameOption.Flatten)}";
@@ -65,7 +66,7 @@ namespace Rocks.Builders.Create
 		private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol typeToMock, IEnumerable<ITypeSymbol> types,
 			NamespaceGatherer namespaces)
 		{
-			writer.WriteLine($"internal static class ExpectationsWrapperExtensions");
+			writer.WriteLine($"internal static class {WellKnownNames.Expectations}{WellKnownNames.Wrapper}{WellKnownNames.Extensions}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -74,12 +75,12 @@ namespace Rocks.Builders.Create
 				var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 				var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
 
-				writer.WriteLine($"internal static {handlerType} {methodName}(this ExpectationsWrapper<{typeToMock.GetName()}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
+				writer.WriteLine($"internal static {handlerType} {methodName}(this {WellKnownNames.Expectations}{WellKnownNames.Wrapper}<{typeToMock.GetName()}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
 				writer.WriteLine("{");
 				writer.Indent++;
 
 				writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
-				writer.WriteLine("self.Expectations.Handlers.AddOrUpdate(memberIdentifier,");
+				writer.WriteLine($"self.{WellKnownNames.Expectations}.Handlers.AddOrUpdate(memberIdentifier,");
 				writer.Indent++;
 				writer.WriteLine("() => new List<HandlerInformation> { information }, _ => _.Add(information));");
 				writer.Indent--;
@@ -115,7 +116,7 @@ namespace Rocks.Builders.Create
 
 			writer.WriteLine();
 
-			writer.WriteLine($"internal {handlerName}(Delegate? method, ImmutableArray<{nameof(Argument)}> expectations)");
+			writer.WriteLine($"internal {handlerName}({nameof(Delegate)}? method, ImmutableArray<{nameof(Argument)}> expectations)");
 			writer.Indent++;
 			writer.WriteLine(": base(method, expectations) => this.ReturnValue = default;");
 			writer.Indent--;
@@ -151,7 +152,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine($"internal {adornmentName}<T, TCallback> CallCount(uint expectedCallCount)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine("this.Handler.SetExpectedCallCount(expectedCallCount);");
+			writer.WriteLine($"this.Handler.{nameof(HandlerInformation.SetExpectedCallCount)}(expectedCallCount);");
 			writer.WriteLine("return this;");
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -161,7 +162,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine($"internal {adornmentName}<T, TCallback> Callback(TCallback callback)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine("this.Handler.SetCallback(callback);");
+			writer.WriteLine($"this.Handler.{nameof(HandlerInformation.SetCallback)}(callback);");
 			writer.WriteLine("return this;");
 			writer.Indent--;
 			writer.WriteLine("}");

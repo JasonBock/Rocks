@@ -12,7 +12,7 @@ namespace Rocks.Builders.Create
 		{
 			MockProjectedTypesBuilder.Build(writer, information, namespaces, compilation);
 
-			writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock.GetName(TypeNameOption.Flatten)}Extensions");
+			writer.WriteLine($"internal static class {WellKnownNames.Create}{WellKnownNames.Expectations}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

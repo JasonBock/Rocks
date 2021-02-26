@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
@@ -111,7 +112,7 @@ namespace Rocks.Builders.Create
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
-			writer.WriteLine($"throw new ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -139,7 +140,7 @@ namespace Rocks.Builders.Create
 					_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref": "out")} {_.Name}" : _.Name));
 			var handlerName = method.ReturnType.IsEsoteric() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType) :
-				$"HandlerInformation<{method.ReturnType.GetName()}>";
+				$"{nameof(HandlerInformation)}<{method.ReturnType.GetName()}>";
 			writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
 			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
 
@@ -147,10 +148,10 @@ namespace Rocks.Builders.Create
 
 			if(raiseEvents)
 			{
-				writer.WriteLine("methodHandler.RaiseEvents(this);");
+				writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
 			}
 
-			writer.WriteLine("methodHandler.IncrementCallCount();");
+			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
 
 			if (method.ReturnsByRef || method.ReturnsByRefReadonly)
 			{
@@ -178,7 +179,7 @@ namespace Rocks.Builders.Create
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -188,7 +189,7 @@ namespace Rocks.Builders.Create
 					}
 
 					writer.WriteLine(
-						$"((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{

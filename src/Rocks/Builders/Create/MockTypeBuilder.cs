@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create
 		internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 		{
 			var typeToMock = information.TypeToMock;
-			writer.WriteLine($"private sealed class Rock{typeToMock.GetName(TypeNameOption.Flatten)}");
+			writer.WriteLine($"private sealed class {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
 			writer.Indent++;
 			writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 			writer.Indent--;
@@ -20,7 +20,7 @@ namespace Rocks.Builders.Create
 			writer.Indent++;
 
 			MockTypeBuilder.BuildRefReturnFields(writer, information);
-			writer.WriteLine("private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;");
+			writer.WriteLine($"private readonly {nameof(ImmutableDictionary)}<int, {nameof(ImmutableArray)}<{nameof(HandlerInformation)}>> handlers;");
 			writer.WriteLine();
 
 			if (information.Constructors.Length > 0)
@@ -68,7 +68,7 @@ namespace Rocks.Builders.Create
 			}
 
 			writer.WriteLine();
-			writer.WriteLine("ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;");
+			writer.WriteLine($"{nameof(ImmutableDictionary)}<int, {nameof(ImmutableArray)}<{nameof(HandlerInformation)}>> {nameof(IMock)}.{nameof(IMock.Handlers)} => this.handlers;");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

@@ -13,15 +13,15 @@ namespace Rocks.Builders.Create
 		{
 			var typeToMockName = typeToMock.GetName();
 			var instanceParameters = parameters.Length == 0 ?
-				$"Expectations<{typeToMockName}> expectations" :
-				string.Join(", ", $"Expectations<{typeToMockName}> expectations",
+				$"{WellKnownNames.Expectations}<{typeToMockName}> expectations" :
+				string.Join(", ", $"{WellKnownNames.Expectations}<{typeToMockName}> expectations",
 					string.Join(", ", 
 						parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
 
 			if(parameters.Length > 0)
 			{
 				var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
-				writer.WriteLine($"public {isUnsafe}Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
+				writer.WriteLine($"public {isUnsafe}{nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
 				writer.Indent++;
@@ -31,7 +31,7 @@ namespace Rocks.Builders.Create
 			}
 			else
 			{
-				writer.WriteLine($"public Rock{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters}) =>");
+				writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine("this.handlers = expectations.CreateHandlers();");
 				writer.Indent--;

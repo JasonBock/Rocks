@@ -15,7 +15,7 @@ namespace Rocks.Builders.Create
 
 				if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
-					writer.WriteLine($"internal static MethodExpectations<{typeToMockName}> Methods(this Expectations<{typeToMockName}> self) =>");
+					writer.WriteLine($"internal static {WellKnownNames.Method}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Methods}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 					writer.Indent++;
 					writer.WriteLine($"new(self);");
 					writer.Indent--;
@@ -29,7 +29,7 @@ namespace Rocks.Builders.Create
 						.GroupBy(_ => _.Value.ContainingType))
 					{
 						var containingTypeName = typeGroup.Key.GetName();
-						writer.WriteLine($"internal static ExplicitMethodExpectations<{typeToMockName}, {containingTypeName}> ExplicitMethodsFor{containingTypeName}(this Expectations<{typeToMockName}> self) =>");
+						writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Method}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Methods}For{containingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 						writer.Indent++;
 						writer.WriteLine($"new(self);");
 						writer.Indent--;

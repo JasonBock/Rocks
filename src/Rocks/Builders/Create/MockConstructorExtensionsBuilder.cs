@@ -28,8 +28,8 @@ namespace Rocks.Builders.Create
 		private static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock, ImmutableArray<IParameterSymbol> parameters)
 		{
 			var instanceParameters = parameters.Length == 0 ?
-				$"this Expectations<{typeToMock.GetName()}> self" :
-				string.Join(", ", $"this Expectations<{typeToMock.GetName()}> self",
+				$"this {WellKnownNames.Expectations}<{typeToMock.GetName()}> self" :
+				string.Join(", ", $"this {WellKnownNames.Expectations}<{typeToMock.GetName()}> self",
 					string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
 			var isUnsafe = false;
 			var rockInstanceParameters = parameters.Length == 0 ? "self" :
@@ -39,11 +39,11 @@ namespace Rocks.Builders.Create
 					return $"{_.Name}";
 				})));
 
-			writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters})");
+			writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} {WellKnownNames.Instance}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"var mock = new Rock{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
+			writer.WriteLine($"var mock = new {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
 			writer.WriteLine("self.Mocks.Add(mock);");
 			writer.WriteLine("return mock;");
 
