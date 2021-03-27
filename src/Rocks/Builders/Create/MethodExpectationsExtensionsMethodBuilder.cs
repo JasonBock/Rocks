@@ -63,7 +63,7 @@ namespace Rocks.Builders.Create
 					{
 						if (_.HasExplicitDefaultValue)
 						{
-							return $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue()})";
+							return $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})";
 						}
 						else if (_.RefKind == RefKind.Out)
 						{

@@ -9,7 +9,8 @@ namespace Rocks.Tests.Extensions
 		[TestCase(true, "true")]
 		[TestCase(false, "false")]
 		[TestCase(null, "null")]
-		public static void GetDefaultValue(object value, string expectedResult) => 
-			Assert.That(value.GetDefaultValue(), Is.EqualTo(expectedResult));
+		[TestCase(null, "default", true)]
+		public static void GetDefaultValue(object value, string expectedResult, bool isValueType = false) => 
+			Assert.That(value.GetDefaultValue(isValueType), Is.EqualTo(expectedResult));
 	}
 }

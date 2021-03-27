@@ -58,7 +58,7 @@ namespace Rocks.Builders.Make
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
 				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ? 
-					$" = {_.ExplicitDefaultValue.GetDefaultValue()}" : string.Empty;
+					$" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.In => "in ",

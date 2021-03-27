@@ -8,8 +8,27 @@ namespace Rocks.IntegrationTests
 		int this[int a, string b = "b"] { get; }
 	}
 
+	public interface IHaveOptionalStructDefaultArgument
+	{
+		void Foo(OptionalDefault value = default);
+	}
+
+	public struct OptionalDefault { }
+
 	public static class OptionalArgumentsTests
 	{
+		[Test]
+		public static void CreateMembersWithOptionalDefaultStructArgument()
+		{
+			var rock = Rock.Create<IHaveOptionalStructDefaultArgument>();
+			rock.Methods().Foo(Arg.IsDefault<OptionalDefault>());
+
+			var chunk = rock.Instance();
+			chunk.Foo();
+
+			rock.Verify();
+		}
+
 		[Test]
 		public static void CreateMembersWithOptionalArgumentsSpecified()
 		{
