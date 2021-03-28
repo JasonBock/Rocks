@@ -1,4 +1,4 @@
-﻿namespace Rocks
+﻿namespace Rocks.Expectations
 {
 	public class IndexerExpectations<T>
 		: ExpectationsWrapper<T>

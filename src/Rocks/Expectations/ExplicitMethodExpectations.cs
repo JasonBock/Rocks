@@ -1,4 +1,4 @@
-﻿namespace Rocks
+﻿namespace Rocks.Expectations
 {
 	public sealed class ExplicitMethodExpectations<T, TContainingType>
 		: ExpectationsWrapper<T>

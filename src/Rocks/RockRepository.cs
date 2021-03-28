@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rocks.Expectations;
+using System;
 using System.Collections.Generic;
 
 namespace Rocks
@@ -6,7 +7,7 @@ namespace Rocks
 	public sealed class RockRepository
 		: IDisposable
 	{
-		private readonly List<IExpectations> rocks = new List<IExpectations>();
+		private readonly List<IExpectations> rocks = new();
 
 		public Expectations<T> Create<T>()
 			where T : class

@@ -4,13 +4,8 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel;
 
-namespace Rocks
+namespace Rocks.Expectations
 {
-	public interface IExpectations
-	{
-		void Verify();
-	}
-
 	public class Expectations<T> 
 		: IExpectations
 		where T : class
@@ -47,7 +42,7 @@ namespace Rocks
 		/// This method is used by Rocks and is not intented to be used by developers.
 		/// </summary>
 		public Expectations<TTarget> To<TTarget>()
-			where TTarget : class => new Expectations<TTarget>(this.Handlers, this.Mocks);
+			where TTarget : class => new(this.Handlers, this.Mocks);
 
 		[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 		/// <summary>

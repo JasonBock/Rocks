@@ -1,4 +1,4 @@
-﻿namespace Rocks
+﻿namespace Rocks.Expectations
 {
 	public sealed class ExplicitIndexerSetterExpectations<T, TContainingType>
 		: ExpectationsWrapper<T>

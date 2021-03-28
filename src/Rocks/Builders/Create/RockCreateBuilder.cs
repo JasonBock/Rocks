@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Configuration;
 using Rocks.Exceptions;
+using Rocks.Expectations;
 using Rocks.Extensions;
 using System;
 using System.CodeDom.Compiler;
@@ -35,7 +36,8 @@ namespace Rocks.Builders.Create
 				$"using {typeof(IMock).Namespace};",
 				$"using {typeof(ExpectationException).Namespace};",
 				$"using {typeof(List<>).Namespace};",
-				$"using {typeof(ImmutableArray).Namespace};"
+				$"using {typeof(ImmutableArray).Namespace};",
+				$"using {typeof(IExpectations).Namespace};",
 			};
 
 			if(this.information.Events.Length > 0)

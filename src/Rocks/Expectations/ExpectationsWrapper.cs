@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace Rocks
+namespace Rocks.Expectations
 {
 	public abstract class ExpectationsWrapper<T>
 		where T : class
