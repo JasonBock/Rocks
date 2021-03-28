@@ -1,29 +1,44 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Rocks.Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Rocks
 {
 	public sealed class RockCreateReceiver
-		: ISyntaxReceiver
+		: ISyntaxContextReceiver
 	{
-		public List<InvocationExpressionSyntax> Candidates { get; } = new List<InvocationExpressionSyntax>();
+		public Dictionary<ITypeSymbol, SyntaxNode> Targets { get; } = new(SymbolEqualityComparer.Default);
 
-		public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
+		public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
 		{
-			var repo = new RockRepository();
-			repo.Create<ISyntaxReceiver>();
+			var node = context.Node;
+			var model = context.SemanticModel;
 
-			if (syntaxNode is InvocationExpressionSyntax invocation &&
-				invocation.Expression is MemberAccessExpressionSyntax access &&
-				access.Expression is IdentifierNameSyntax accessIdentifier &&
-				access.Name is GenericNameSyntax accessName)
+			if (node is InvocationExpressionSyntax)
 			{
-				if ((accessIdentifier.Identifier.Text == nameof(Rock) &&
-					accessName.Identifier.Text == nameof(Rock.Create)) ||
-					(accessName.Identifier.Text == nameof(RockRepository.Create)))
+				var rockCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
+					.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
+				var rockRepositoryCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(RockRepository).FullName)!
+					.GetMembers().Single(_ => _.Name == nameof(RockRepository.Create));
+				var nodeSymbol = model.GetSymbolInfo(node);
+
+				var invocationSymbol = nodeSymbol.Symbol is IMethodSymbol symbol ? symbol :
+					nodeSymbol.CandidateSymbols.Length > 0 ? (IMethodSymbol)nodeSymbol.CandidateSymbols[0] : null;
+
+				if (invocationSymbol is not null)
 				{
-					this.Candidates.Add(invocation);
+					if (SymbolEqualityComparer.Default.Equals(rockCreateSymbol, invocationSymbol.ConstructedFrom) ||
+						SymbolEqualityComparer.Default.Equals(rockRepositoryCreateSymbol, invocationSymbol.ConstructedFrom))
+					{
+						var typeToMock = invocationSymbol.TypeArguments[0];
+
+						if (!typeToMock.ContainsDiagnostics() && !this.Targets.ContainsKey(typeToMock))
+						{
+							this.Targets.Add(typeToMock, node);
+						}
+					}
 				}
 			}
 		}

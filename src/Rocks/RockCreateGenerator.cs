@@ -1,13 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
 using Rocks.Builders.Create;
 using Rocks.Configuration;
 using Rocks.Descriptors;
-using Rocks.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -57,48 +54,26 @@ namespace Rocks
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static void PrivateExecute(GeneratorExecutionContext context)
 		{
-			if (context.SyntaxReceiver is RockCreateReceiver receiver)
+			if (context.SyntaxContextReceiver is RockCreateReceiver receiver &&
+				receiver.Targets.Count > 0)
 			{
 				var compilation = context.Compilation;
 
-				var typesToMock = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
-
-				foreach (var candidateInvocation in receiver.Candidates)
+				foreach (var targetPair in receiver.Targets)
 				{
-					context.CancellationToken.ThrowIfCancellationRequested();
-					var model = compilation.GetSemanticModel(candidateInvocation.SyntaxTree);
+					var model = compilation.GetSemanticModel(targetPair.Value.SyntaxTree);
+					var configurationValues = new ConfigurationValues(context, targetPair.Value.SyntaxTree);
+					var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
+						targetPair.Key, compilation.Assembly, model, configurationValues, compilation);
 
-					var invocationSymbol = (IMethodSymbol)model.GetSymbolInfo(candidateInvocation).Symbol!;
-
-					var rockCreateSymbol = compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
-						.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
-					var rockRepositoryCreateSymbol = compilation.GetTypeByMetadataName(typeof(RockRepository).FullName)!
-						.GetMembers().Single(_ => _.Name == nameof(RockRepository.Create));
-
-					if (rockCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default) ||
-						rockRepositoryCreateSymbol.Equals(invocationSymbol.ConstructedFrom, SymbolEqualityComparer.Default))
+					foreach (var diagnostic in diagnostics)
 					{
-						var typeToMock = invocationSymbol.TypeArguments[0];
+						context.ReportDiagnostic(diagnostic);
+					}
 
-						if (!typeToMock.ContainsDiagnostics())
-						{
-							if (typesToMock.Add(typeToMock))
-							{
-								var configurationValues = new ConfigurationValues(context, candidateInvocation.SyntaxTree);
-								var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-									typeToMock, compilation.Assembly, model, configurationValues, compilation);
-
-								foreach (var diagnostic in diagnostics)
-								{
-									context.ReportDiagnostic(diagnostic);
-								}
-
-								if (name is not null && text is not null)
-								{
-									context.AddSource(name, text);
-								}
-							}
-						}
+					if (name is not null && text is not null)
+					{
+						context.AddSource(name, text);
 					}
 				}
 			}
