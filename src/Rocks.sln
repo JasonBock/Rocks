@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.targets = Directory.Build.targets
 		LICENSE = LICENSE
 		nuget.config = nuget.config
-		README.md = README.md
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj", "{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}"
@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.NuGetHost", "Rocks.Nu
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Tests.Targets", "Rocks.Tests.Targets\Rocks.Tests.Targets.csproj", "{0DE83F12-692C-4E6E-A39A-FE9D63C49029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests.Targets", "Rocks.Tests.Targets\Rocks.Tests.Targets.csproj", "{0DE83F12-692C-4E6E-A39A-FE9D63C49029}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
