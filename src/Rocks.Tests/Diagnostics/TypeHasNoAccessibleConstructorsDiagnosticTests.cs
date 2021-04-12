@@ -2,14 +2,14 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Rocks.Tests.Descriptors
+namespace Rocks.Tests.Diagnostics
 {
-	public static class CannotMockSealedTypeDescriptorTests
+	public static class TypeHasNoAccessibleConstructorsDiagnosticTests
 	{
 		[Test]
 		public static void Create()
@@ -25,13 +25,13 @@ namespace Rocks.Tests.Descriptors
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single();
 			
-			var descriptor = CannotMockSealedTypeDescriptor.Create(model.GetDeclaredSymbol(typeSyntax)!);
+			var descriptor = TypeHasNoAccessibleConstructorsDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X is sealed and cannot be mocked"));
-				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSealedTypeDescriptor.Title));
-				Assert.That(descriptor.Id, Is.EqualTo(CannotMockSealedTypeDescriptor.Id));
+				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no constructors that are accessible"));
+				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDiagnostic.Title));
+				Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDiagnostic.Id));
 				Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 			});
 		}

@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Builders;
 using Rocks.Configuration;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using Rocks.Extensions;
 using System;
 using System.Collections.Immutable;
@@ -41,13 +41,13 @@ namespace Rocks
 
 			if(this.TypeToMock.IsSealed)
 			{
-				diagnostics.Add(CannotMockSealedTypeDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(this.TypeToMock));
 			}
 
 			if(this.TypeToMock is INamedTypeSymbol namedType &&
 				MockInformation.HasOpenGenerics(namedType))
 			{
-				diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(this.TypeToMock));
 			}
 
 			var attributes = this.TypeToMock.GetAttributes();
@@ -56,7 +56,7 @@ namespace Rocks
 			if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors)))
 			{
-				diagnostics.Add(CannotMockObsoleteTypeDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(this.TypeToMock));
 			}
 
 			var memberIdentifier = 0u;
@@ -71,12 +71,12 @@ namespace Rocks
 
 			if (buildType == BuildType.Create && this.Methods.Length == 0 && this.Properties.Length == 0)
 			{
-				diagnostics.Add(TypeHasNoMockableMembersDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(this.TypeToMock));
 			}
 
 			if(this.TypeToMock.TypeKind == TypeKind.Class && this.Constructors.Length == 0)
 			{
-				diagnostics.Add(TypeHasNoAccessibleConstructorsDescriptor.Create(this.TypeToMock));
+				diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(this.TypeToMock));
 			}
 
 			this.Diagnostics = diagnostics.ToImmutable();

@@ -2,17 +2,17 @@
 using Rocks.Extensions;
 using System.Globalization;
 
-namespace Rocks.Descriptors
+namespace Rocks.Diagnostics
 {
-	public static class CannotMockSealedTypeDescriptor
+	public static class CannotMockSealedTypeDiagnostic
 	{
 		internal static Diagnostic Create(ITypeSymbol type) =>
-			Diagnostic.Create(new(CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title,
-				string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDescriptor.Message, 
+			Diagnostic.Create(new(CannotMockSealedTypeDiagnostic.Id, CannotMockSealedTypeDiagnostic.Title,
+				string.Format(CultureInfo.CurrentCulture, CannotMockSealedTypeDiagnostic.Message, 
 					type.GetName()),
-				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
+				DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					CannotMockSealedTypeDescriptor.Id, CannotMockSealedTypeDescriptor.Title)),
+					CannotMockSealedTypeDiagnostic.Id, CannotMockSealedTypeDiagnostic.Title)),
 				type.Locations.Length > 0 ? type.Locations[0] : null);
 
 		public const string Id = "ROCK1";

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Builders;
 using Rocks.Configuration;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using Rocks.Extensions;
 using System;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace Rocks.Tests
 			var code = $"public enum {targetTypeName} {{ }}";
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -30,7 +30,7 @@ namespace Rocks.Tests
 			var code = $"public struct {targetTypeName} {{ }}";
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -40,7 +40,7 @@ namespace Rocks.Tests
 			var code = $"public sealed class {targetTypeName} {{ }}";
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ public class {targetTypeName} {{ }}";
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -70,7 +70,7 @@ public class {targetTypeName} {{ }}";
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, true);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -87,7 +87,7 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericParametersDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -104,7 +104,7 @@ $@"public class {targetTypeName}
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -135,7 +135,7 @@ $@"public class {targetTypeName}
 
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDiagnostic.Id), Is.True);
 		}
 
 		[Test]
@@ -163,7 +163,7 @@ $@"public class {targetTypeName}
 }}";
 			var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
-			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoAccessibleConstructorsDescriptor.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasNoAccessibleConstructorsDiagnostic.Id), Is.True);
 		}
 
 		[Test]

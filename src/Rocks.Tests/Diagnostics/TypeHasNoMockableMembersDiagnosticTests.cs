@@ -2,14 +2,14 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Rocks.Tests.Descriptors
+namespace Rocks.Tests.Diagnostics
 {
-	public static class TypeHasNoAccessibleConstructorsDescriptorTests
+	public static class TypeHasNoMockableMembersDiagnosticTests
 	{
 		[Test]
 		public static void Create()
@@ -25,13 +25,13 @@ namespace Rocks.Tests.Descriptors
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single();
 			
-			var descriptor = TypeHasNoAccessibleConstructorsDescriptor.Create(model.GetDeclaredSymbol(typeSyntax)!);
+			var descriptor = TypeHasNoMockableMembersDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no constructors that are accessible"));
-				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Title));
-				Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDescriptor.Id));
+				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no members that can be overriden"));
+				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Title));
+				Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Id));
 				Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 			});
 		}

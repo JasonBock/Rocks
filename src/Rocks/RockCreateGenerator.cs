@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
 using Rocks.Builders.Create;
 using Rocks.Configuration;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
@@ -47,7 +47,7 @@ namespace Rocks
 			}
 			catch (Exception e)
 			{
-				context.ReportDiagnostic(UnexpectedExceptionDescriptor.Create(e));
+				context.ReportDiagnostic(UnexpectedExceptionDiagnostic.Create(e));
 			}
 		}
 

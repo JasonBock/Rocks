@@ -1,16 +1,16 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 
-namespace Rocks.Descriptors
+namespace Rocks.Diagnostics
 {
-	public static class UnexpectedExceptionDescriptor
+	public static class UnexpectedExceptionDiagnostic
 	{
 		internal static Diagnostic Create(Exception e) =>
-			Diagnostic.Create(new(UnexpectedExceptionDescriptor.Id, UnexpectedExceptionDescriptor.Title,
+			Diagnostic.Create(new(UnexpectedExceptionDiagnostic.Id, UnexpectedExceptionDiagnostic.Title,
 				e.ToString().Replace(Environment.NewLine, " : "),
-				DescriptorConstants.Usage, DiagnosticSeverity.Error, true,
+				DiagnosticConstants.Usage, DiagnosticSeverity.Error, true,
 				helpLinkUri: HelpUrlBuilder.Build(
-					UnexpectedExceptionDescriptor.Id, UnexpectedExceptionDescriptor.Title)), null);
+					UnexpectedExceptionDiagnostic.Id, UnexpectedExceptionDiagnostic.Title)), null);
 
 		public const string Id = "ROCK6";
 		public const string Message = "An unexpected exception has occurred";

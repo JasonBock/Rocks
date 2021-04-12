@@ -2,14 +2,14 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Descriptors;
+using Rocks.Diagnostics;
 using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Rocks.Tests.Descriptors
+namespace Rocks.Tests.Diagnostics
 {
-	public static class TypeHasNoMockableMembersDescriptorTests
+	public static class CannotMockObsoleteTypeDiagnosticTests
 	{
 		[Test]
 		public static void Create()
@@ -25,13 +25,13 @@ namespace Rocks.Tests.Descriptors
 			var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 				.OfType<TypeDeclarationSyntax>().Single();
 			
-			var descriptor = TypeHasNoMockableMembersDescriptor.Create(model.GetDeclaredSymbol(typeSyntax)!);
+			var descriptor = CannotMockObsoleteTypeDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no members that can be overriden"));
-				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
-				Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
+				Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X is obsolete and cannot be mocked"));
+				Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Title));
+				Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Id));
 				Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 			});
 		}
