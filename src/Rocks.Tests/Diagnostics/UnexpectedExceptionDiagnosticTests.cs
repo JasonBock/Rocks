@@ -25,7 +25,7 @@ namespace Rocks.Tests.Diagnostics
 				{
 					const string expectedMessageStart =
 						"System.NotSupportedException: Specified method is not supported. :    at Rocks.Tests.Diagnostics.UnexpectedExceptionDiagnosticTests.CreateException()";
-					Assert.That(descriptor.GetMessage().StartsWith(expectedMessageStart), Is.True);
+					Assert.That(descriptor.GetMessage(), Does.StartWith(expectedMessageStart));
 					Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(UnexpectedExceptionDiagnostic.Title));
 					Assert.That(descriptor.Id, Is.EqualTo(UnexpectedExceptionDiagnostic.Id));
 					Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));

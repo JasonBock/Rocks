@@ -41,5 +41,41 @@ dotnet_diagnostic.CA1303.severity = none
 # Once https://github.com/dotnet/roslyn-analyzers/issues/4414 is addressed, this should be removed
 dotnet_diagnostic.RS1024.severity = none
 
+# NUnit analyzers
+dotnet_diagnostic.NUnit2029.severity=error
+dotnet_diagnostic.NUnit2001.severity=error
+dotnet_diagnostic.NUnit2002.severity=error
+dotnet_diagnostic.NUnit2003.severity=error
+dotnet_diagnostic.NUnit2004.severity=error
+dotnet_diagnostic.NUnit2005.severity=error
+dotnet_diagnostic.NUnit2006.severity=error
+dotnet_diagnostic.NUnit2007.severity=error
+dotnet_diagnostic.NUnit2008.severity=error
+dotnet_diagnostic.NUnit2009.severity=error
+dotnet_diagnostic.NUnit2010.severity=error
+dotnet_diagnostic.NUnit2011.severity=error
+dotnet_diagnostic.NUnit2012.severity=error
+dotnet_diagnostic.NUnit2013.severity=error
+dotnet_diagnostic.NUnit2014.severity=error
+dotnet_diagnostic.NUnit2015.severity=error
+dotnet_diagnostic.NUnit2016.severity=error
+dotnet_diagnostic.NUnit2017.severity=error
+dotnet_diagnostic.NUnit2018.severity=error
+dotnet_diagnostic.NUnit2019.severity=error
+dotnet_diagnostic.NUnit2027.severity=error
+dotnet_diagnostic.NUnit2030.severity=error
+dotnet_diagnostic.NUnit2028.severity=error
+dotnet_diagnostic.NUnit2031.severity=error
+dotnet_diagnostic.NUnit2032.severity=error
+dotnet_diagnostic.NUnit2033.severity=error
+dotnet_diagnostic.NUnit2034.severity=error
+dotnet_diagnostic.NUnit2035.severity=error
+dotnet_diagnostic.NUnit2036.severity=error
+dotnet_diagnostic.NUnit2037.severity=error
+dotnet_diagnostic.NUnit2038.severity=error
+dotnet_diagnostic.NUnit2039.severity=error
+dotnet_diagnostic.NUnit2042.severity=error
+dotnet_diagnostic.NUnit2043.severity=error
+
 [*.xml]
 indent_style = tab
