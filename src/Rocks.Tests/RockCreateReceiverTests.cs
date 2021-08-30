@@ -11,7 +11,7 @@ namespace Rocks.Tests
 	public static class RockCreateReceiverTests
 	{
 		[Test]
-		public static async Task FindCandidatesWhenInvocationIsRockCreate()
+		public static async Task FindCandidatesWhenInvocationIsRockCreateAsync()
 		{
 			var code =
 @"using Rocks;
@@ -34,7 +34,7 @@ public static class Invoker
 		}
 
 		[Test]
-		public static async Task FindCandidatesWhenInvocationIsCreate()
+		public static async Task FindCandidatesWhenInvocationIsCreateAsync()
 		{
 			var code =
 @"using Rocks;
@@ -58,7 +58,7 @@ public static class Invoker
 		}
 
 		[Test]
-		public static async Task FindCandidatesWhenInvocationIsNotRockCreate()
+		public static async Task FindCandidatesWhenInvocationIsNotRockCreateAsync()
 		{
 			var code =
 @"using Rocks;
