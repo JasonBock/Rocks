@@ -12,7 +12,8 @@ namespace Rocks.Tests
 	{
 		internal static async Task RunAsync<T>(string code,
 			IEnumerable<(Type, string, string)> generatedSources,
-			IEnumerable<DiagnosticResult> expectedDiagnostics)
+			IEnumerable<DiagnosticResult> expectedDiagnostics,
+			OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
 			where T : ISourceGenerator, new()
 		{
 			var test = new CSharpSourceGeneratorTest<T, NUnitVerifier>
@@ -21,6 +22,7 @@ namespace Rocks.Tests
 				TestState =
 				{
 					Sources = { code },
+					OutputKind = outputKind
 				},
 			};
 

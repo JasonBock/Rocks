@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
+using Rocks.Diagnostics;
 using Rocks.Tests.Targets;
 using System;
 using System.Collections.Immutable;
@@ -198,30 +199,94 @@ namespace MockTests
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeIsInGlobalNamespace()
+		public static async Task GenerateWhenTargetTypeIsInGlobalNamespaceAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 using System;
 
-var rock = Rock.Create<ITest>();
+public static class Runner
+{
+	public static void Run() 
+	{
+		var rock = Rock.Create<ITest>();
+	}
+}
 
 public interface ITest
 {
 	void Foo();
-}");
+}";
 
-			Assert.Multiple(() =>
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+internal static class CreateExpectationsOfITestExtensions
+{
+	internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+		new(self);
+	
+	internal static ITest Instance(this Expectations<ITest> self)
+	{
+		var mock = new RockITest(self);
+		self.Mocks.Add(mock);
+		return mock;
+	}
+	
+	private sealed class RockITest
+		: ITest, IMock
+	{
+		private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+		
+		public RockITest(Expectations<ITest> expectations) =>
+			this.handlers = expectations.CreateHandlers();
+		
+		[MemberIdentifier(0, ""void Foo()"")]
+		public void Foo()
+		{
+			if (this.handlers.TryGetValue(0, out var methodHandlers))
 			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
-			});
+				var methodHandler = methodHandlers[0];
+				if (methodHandler.Method is not null)
+				{
+					((Action)methodHandler.Method)();
+				}
+				
+				methodHandler.IncrementCallCount();
+			}
+			else
+			{
+				throw new ExpectationException(""No handlers were found for void Foo())"");
+			}
+		}
+		
+		
+		ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+	}
+}
+
+internal static class MethodExpectationsOfITestExtensions
+{
+	internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
+		new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+}
+";
+
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+				Enumerable.Empty<DiagnosticResult>());
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeIsValidForRockRepository()
+		public static async Task GenerateWhenTargetTypeIsValidForRockRepositoryAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 using System;
 
@@ -240,19 +305,80 @@ namespace MockTests
 			var rock = repository.Create<ITest>();
 		}
 	}
-}");
+}";
 
-			Assert.Multiple(() =>
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class CreateExpectationsOfITestExtensions
+	{
+		internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+			new(self);
+		
+		internal static ITest Instance(this Expectations<ITest> self)
+		{
+			var mock = new RockITest(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockITest
+			: ITest, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockITest(Expectations<ITest> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, ""void Foo()"")]
+			public void Foo()
 			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
-			});
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException(""No handlers were found for void Foo())"");
+				}
+			}
+			
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfITestExtensions
+	{
+		internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
+			new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+	}
+}
+";
+
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+				Enumerable.Empty<DiagnosticResult>());
 		}
 
 		[Test]
-		public static void GenerateWhenInvocationExistsInTopLevelStatements()
+		public static async Task GenerateWhenInvocationExistsInTopLevelStatementsAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using MockTests;
 using Rocks;
 using System;
@@ -265,19 +391,80 @@ namespace MockTests
 	{
 		void Foo();
 	}
-}", OutputKind.ConsoleApplication);
+}";
 
-			Assert.Multiple(() =>
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class CreateExpectationsOfITestExtensions
+	{
+		internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+			new(self);
+		
+		internal static ITest Instance(this Expectations<ITest> self)
+		{
+			var mock = new RockITest(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockITest
+			: ITest, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockITest(Expectations<ITest> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, ""void Foo()"")]
+			public void Foo()
 			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
-			});
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException(""No handlers were found for void Foo())"");
+				}
+			}
+			
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfITestExtensions
+	{
+		internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
+			new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+	}
+}
+";
+
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+				Enumerable.Empty<DiagnosticResult>(), OutputKind.ConsoleApplication);
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeIsInvalid()
+		public static async Task GenerateWhenTargetTypeIsInvalidAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 
 namespace MockTests
@@ -291,19 +478,19 @@ namespace MockTests
 			var rock = Rock.Create<ITest>();
 		}
 	}
-}");
+}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(diagnostics.Length, Is.GreaterThan(0));
-				Assert.That(output, Is.EqualTo(string.Empty));
-			});
+			var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDiagnostic.Id, DiagnosticSeverity.Error)
+				.WithSpan(5, 19, 5, 24);
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				Enumerable.Empty<(Type, string, string)>(),
+				new[] { diagnostic });
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeHasDiagnostics()
+		public static async Task GenerateWhenTargetTypeHasDiagnosticsAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 
 namespace MockTests
@@ -321,19 +508,19 @@ namespace MockTests
 			var rock = Rock.Create<ITest>();
 		}
 	}
-}");
+}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Is.EqualTo(string.Empty));
-			});
+			var diagnostic = new DiagnosticResult("CS1002", DiagnosticSeverity.Error)
+				.WithSpan(8, 13, 8, 13);
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				Enumerable.Empty<(Type, string, string)>(),
+				new[] { diagnostic });
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnostics()
+		public static async Task GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnosticsAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 
 namespace MockTests
@@ -350,35 +537,76 @@ namespace MockTests
 			var rock = Rock.Create<ITest>();
 		}
 // Note the missing closing brace
-	}");
+	}";
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
-			});
-		}
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 
-		private static (ImmutableArray<Diagnostic>, string) GetGeneratedOutput(string source, OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
+#nullable enable
+namespace MockTests
+{
+	internal static class CreateExpectationsOfITestExtensions
+	{
+		internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+			new(self);
+		
+		internal static ITest Instance(this Expectations<ITest> self)
 		{
-			var syntaxTree = CSharpSyntaxTree.ParseText(source);
-			var references = AppDomain.CurrentDomain.GetAssemblies()
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location))
-				.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) })
-				.Concat(new[] { MetadataReference.CreateFromFile(typeof(IContainNullableReferences).Assembly.Location) });
-			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-				references, new CSharpCompilationOptions(outputKind));
-			var originalTreeCount = compilation.SyntaxTrees.Length;
+			var mock = new RockITest(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockITest
+			: ITest, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockITest(Expectations<ITest> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, ""void Foo()"")]
+			public void Foo()
+			{
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException(""No handlers were found for void Foo())"");
+				}
+			}
+			
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfITestExtensions
+	{
+		internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
+			new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+	}
+}
+";
 
-			var generator = new RockCreateGenerator();
-
-			var driver = CSharpGeneratorDriver.Create(ImmutableArray.Create<ISourceGenerator>(generator));
-			driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
-
-			var trees = outputCompilation.SyntaxTrees.ToList();
-
-			return (diagnostics, trees.Count != originalTreeCount ? trees[^1].ToString() : string.Empty);
+			var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
+				.WithSpan(17, 3, 17, 3);
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+				new[] { diagnostic });
 		}
 	}
 }
