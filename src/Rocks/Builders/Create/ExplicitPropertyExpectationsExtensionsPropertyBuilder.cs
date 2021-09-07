@@ -52,7 +52,7 @@ namespace Rocks.Builders.Create
 			writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, {nameof(Argument)}<{propertyParameterValue}> value) =>");
 			writer.Indent++;
 
-			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}> {{ value }}));");
+			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>(1) {{ value }}));");
 			writer.Indent--;
 		}
 

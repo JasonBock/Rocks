@@ -35,7 +35,7 @@ namespace Rocks.Builders.Create
 				_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
 			var addMethod = property.Type.IsEsoteric() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
+			writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>({property.GetMethod!.Parameters.Length}) {{ {parameters} }}));");
 			writer.Indent--;
 		}
 
@@ -64,7 +64,7 @@ namespace Rocks.Builders.Create
 
 			var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
 				_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
-			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
+			writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>({property.SetMethod!.Parameters.Length}) {{ {parameters} }}));");
 			writer.Indent--;
 		}
 

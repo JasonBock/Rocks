@@ -14,7 +14,7 @@ namespace Rocks.Expectations
 		{
 			var information = new HandlerInformation(arguments.ToImmutableArray());
 			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,
-				() => new List<HandlerInformation> { information }, _ => _.Add(information));
+				() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));
 			return information;
 		}
 
@@ -22,7 +22,7 @@ namespace Rocks.Expectations
 		{
 			var information = new HandlerInformation<TReturn>(arguments.ToImmutableArray());
 			this.Expectations.Handlers.AddOrUpdate(memberIdentifier,
-				() => new List<HandlerInformation> { information }, _ => _.Add(information));
+				() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));
 			return information;
 		}
 

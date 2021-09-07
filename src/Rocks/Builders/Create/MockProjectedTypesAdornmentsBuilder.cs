@@ -82,7 +82,7 @@ namespace Rocks.Builders.Create
 				writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
 				writer.WriteLine($"self.{WellKnownNames.Expectations}.Handlers.AddOrUpdate(memberIdentifier,");
 				writer.Indent++;
-				writer.WriteLine("() => new List<HandlerInformation> { information }, _ => _.Add(information));");
+				writer.WriteLine("() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));");
 				writer.Indent--;
 				writer.WriteLine("return information;");
 

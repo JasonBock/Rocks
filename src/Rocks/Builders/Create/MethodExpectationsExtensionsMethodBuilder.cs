@@ -74,7 +74,7 @@ namespace Rocks.Builders.Create
 							return _.Name;
 						}
 					}));
-				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}> {{ {parameters} }}));");
+				writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>({method.Parameters.Length}) {{ {parameters} }}));");
 			}
 
 			writer.Indent--;

@@ -147,7 +147,7 @@ namespace Rocks.Extensions
 
 							if (!foundMatch)
 							{
-								baseInterfaceEventsGroups.Add(new List<IEventSymbol> { selfBaseEvent });
+								baseInterfaceEventsGroups.Add(new List<IEventSymbol>(1) { selfBaseEvent });
 							}
 						}
 					}
@@ -219,7 +219,7 @@ namespace Rocks.Extensions
 
 							if (!foundMatch)
 							{
-								baseInterfaceMethodGroups.Add(new List<IMethodSymbol> { selfBaseMethod });
+								baseInterfaceMethodGroups.Add(new List<IMethodSymbol>(1) { selfBaseMethod });
 							}
 						}
 					}
@@ -343,7 +343,7 @@ namespace Rocks.Extensions
 
 							if (!foundMatch)
 							{
-								baseInterfacePropertyGroups.Add(new List<IPropertySymbol> { selfBaseProperty });
+								baseInterfacePropertyGroups.Add(new List<IPropertySymbol>(1) { selfBaseProperty });
 							}
 						}
 					}
