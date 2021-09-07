@@ -1,21 +1,22 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
 using Rocks.Tests.Targets;
 using System;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Rocks.Tests
 {
 	public static class RockCreateGeneratorTests
 	{
 		[Test]
-		public static void GenerateWhenTargetTypeContainsCompilerGeneratedMembers()
+		public static async Task GenerateWhenTargetTypeContainsCompilerGeneratedMembersAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
-using Rocks.Tests.Targets;
 using System;
 
 namespace MockTests
@@ -32,21 +33,83 @@ namespace MockTests
 			var rock = Rock.Create<IContainNullableReferences>();
 		}
 	}
-}");
+}";
 
-			Assert.Multiple(() =>
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class CreateExpectationsOfIContainNullableReferencesExtensions
+	{
+		internal static MethodExpectations<IContainNullableReferences> Methods(this Expectations<IContainNullableReferences> self) =>
+			new(self);
+		
+		internal static IContainNullableReferences Instance(this Expectations<IContainNullableReferences> self)
+		{
+			var mock = new RockIContainNullableReferences(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockIContainNullableReferences
+			: IContainNullableReferences, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockIContainNullableReferences(Expectations<IContainNullableReferences> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, ""string? DoSomething(string? a, string b)"")]
+			public string? DoSomething(string? a, string b)
 			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output.Length, Is.GreaterThan(0));
-				Assert.That(output, Does.Not.Contain("[Nullable"));
-				Assert.That(output, Does.Not.Contain("[NullableContext"));
-			});
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((methodHandler.Expectations[0] as Argument<string?>)?.IsValid(a) ?? false) &&
+							((methodHandler.Expectations[1] as Argument<string>)?.IsValid(b) ?? false))
+						{
+							var result = methodHandler.Method is not null ?
+								((Func<string?, string, string?>)methodHandler.Method)(a, b) :
+								((HandlerInformation<string?>)methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+					}
+				}
+				
+				throw new ExpectationException(""No handlers were found for string? DoSomething(string? a, string b)"");
+			}
+			
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfIContainNullableReferencesExtensions
+	{
+		internal static MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?> DoSomething(this MethodExpectations<IContainNullableReferences> self, Argument<string?> a, Argument<string> b) =>
+			new MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?>(self.Add<string?>(0, new List<Argument> { a, b }));
+	}
+}
+";
+
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
+				Enumerable.Empty<DiagnosticResult>());
 		}
 
 		[Test]
-		public static void GenerateWhenTargetTypeIsValid()
+		public static async Task GenerateWhenTargetTypeIsValidAsync()
 		{
-			var (diagnostics, output) = RockCreateGeneratorTests.GetGeneratedOutput(
+			var code =
 @"using Rocks;
 using System;
 
@@ -64,13 +127,74 @@ namespace MockTests
 			var rock = Rock.Create<ITest>();
 		}
 	}
-}");
+}";
 
-			Assert.Multiple(() =>
+			var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using Rocks.Expectations;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class CreateExpectationsOfITestExtensions
+	{
+		internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+			new(self);
+		
+		internal static ITest Instance(this Expectations<ITest> self)
+		{
+			var mock = new RockITest(self);
+			self.Mocks.Add(mock);
+			return mock;
+		}
+		
+		private sealed class RockITest
+			: ITest, IMock
+		{
+			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			
+			public RockITest(Expectations<ITest> expectations) =>
+				this.handlers = expectations.CreateHandlers();
+			
+			[MemberIdentifier(0, ""void Foo()"")]
+			public void Foo()
 			{
-				Assert.That(diagnostics.Length, Is.EqualTo(0));
-				Assert.That(output, Does.Contain("internal static class CreateExpectationsOfITestExtensions"));
-			});
+				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				{
+					var methodHandler = methodHandlers[0];
+					if (methodHandler.Method is not null)
+					{
+						((Action)methodHandler.Method)();
+					}
+					
+					methodHandler.IncrementCallCount();
+				}
+				else
+				{
+					throw new ExpectationException(""No handlers were found for void Foo())"");
+				}
+			}
+			
+			
+			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		}
+	}
+	
+	internal static class MethodExpectationsOfITestExtensions
+	{
+		internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
+			new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+	}
+}
+";
+
+			await TestAssistants.RunAsync<RockCreateGenerator>(code,
+				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+				Enumerable.Empty<DiagnosticResult>());
 		}
 
 		[Test]
