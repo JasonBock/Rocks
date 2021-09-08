@@ -43,14 +43,10 @@ namespace Rocks.Builders.Create
 				const string callbackName = "TCallback";
 				const string returnName = "TReturn";
 
-				var adornmentsTypes = new List<string>(hasReturn ? 3 : 2) { typeToMockName, callbackName };
-				var raisesTypes = new List<string>(hasReturn ? 2 : 1) { callbackName };
-
-				if (hasReturn)
-				{
-					adornmentsTypes.Add(returnName);
-					raisesTypes.Add(returnName);
-				}
+				var adornmentsTypes = hasReturn ? new string[] { typeToMockName, callbackName, returnName } :
+					new string[] { typeToMockName, callbackName };
+				var raisesTypes = hasReturn ? new string[] { callbackName, returnName } :
+					new string[] { callbackName };
 
 				var adornments = string.Join(", ", adornmentsTypes);
 				var raises = string.Join(", ", raisesTypes);
