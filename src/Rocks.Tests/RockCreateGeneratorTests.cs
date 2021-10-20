@@ -59,10 +59,10 @@ namespace MockTests
 		private sealed class RockIContainNullableReferences
 			: IContainNullableReferences, IMock
 		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockIContainNullableReferences(Expectations<IContainNullableReferences> expectations) =>
-				this.handlers = expectations.CreateHandlers();
+				this.handlers = expectations.Handlers;
 			
 			[MemberIdentifier(0, ""string? DoSomething(string? a, string b)"")]
 			public string? DoSomething(string? a, string b)
@@ -87,7 +87,7 @@ namespace MockTests
 			}
 			
 			
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 		}
 	}
 	
@@ -153,10 +153,10 @@ namespace MockTests
 		private sealed class RockITest
 			: ITest, IMock
 		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockITest(Expectations<ITest> expectations) =>
-				this.handlers = expectations.CreateHandlers();
+				this.handlers = expectations.Handlers;
 			
 			[MemberIdentifier(0, ""void Foo()"")]
 			public void Foo()
@@ -178,7 +178,7 @@ namespace MockTests
 			}
 			
 			
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 		}
 	}
 	
@@ -239,10 +239,10 @@ internal static class CreateExpectationsOfITestExtensions
 	private sealed class RockITest
 		: ITest, IMock
 	{
-		private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+		private readonly Dictionary<int, List<HandlerInformation>> handlers;
 		
 		public RockITest(Expectations<ITest> expectations) =>
-			this.handlers = expectations.CreateHandlers();
+			this.handlers = expectations.Handlers;
 		
 		[MemberIdentifier(0, ""void Foo()"")]
 		public void Foo()
@@ -264,7 +264,7 @@ internal static class CreateExpectationsOfITestExtensions
 		}
 		
 		
-		ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+		Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 	}
 }
 
@@ -330,10 +330,10 @@ namespace MockTests
 		private sealed class RockITest
 			: ITest, IMock
 		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockITest(Expectations<ITest> expectations) =>
-				this.handlers = expectations.CreateHandlers();
+				this.handlers = expectations.Handlers;
 			
 			[MemberIdentifier(0, ""void Foo()"")]
 			public void Foo()
@@ -355,7 +355,7 @@ namespace MockTests
 			}
 			
 			
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 		}
 	}
 	
@@ -416,10 +416,10 @@ namespace MockTests
 		private sealed class RockITest
 			: ITest, IMock
 		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockITest(Expectations<ITest> expectations) =>
-				this.handlers = expectations.CreateHandlers();
+				this.handlers = expectations.Handlers;
 			
 			[MemberIdentifier(0, ""void Foo()"")]
 			public void Foo()
@@ -441,7 +441,7 @@ namespace MockTests
 			}
 			
 			
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 		}
 	}
 	
@@ -562,10 +562,10 @@ namespace MockTests
 		private sealed class RockITest
 			: ITest, IMock
 		{
-			private readonly ImmutableDictionary<int, ImmutableArray<HandlerInformation>> handlers;
+			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockITest(Expectations<ITest> expectations) =>
-				this.handlers = expectations.CreateHandlers();
+				this.handlers = expectations.Handlers;
 			
 			[MemberIdentifier(0, ""void Foo()"")]
 			public void Foo()
@@ -587,7 +587,7 @@ namespace MockTests
 			}
 			
 			
-			ImmutableDictionary<int, ImmutableArray<HandlerInformation>> IMock.Handlers => this.handlers;
+			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
 		}
 	}
 	

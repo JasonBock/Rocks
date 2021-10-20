@@ -25,7 +25,7 @@ namespace Rocks.Builders.Create
 				writer.Indent++;
 				writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
 				writer.Indent++;
-				writer.WriteLine("this.handlers = expectations.CreateHandlers();");
+				writer.WriteLine("this.handlers = expectations.Handlers;");
 				writer.Indent--;
 				writer.Indent--;
 			}
@@ -33,7 +33,7 @@ namespace Rocks.Builders.Create
 			{
 				writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters}) =>");
 				writer.Indent++;
-				writer.WriteLine("this.handlers = expectations.CreateHandlers();");
+				writer.WriteLine("this.handlers = expectations.Handlers;");
 				writer.Indent--;
 			}
 		}

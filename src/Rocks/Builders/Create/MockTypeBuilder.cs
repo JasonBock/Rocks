@@ -20,7 +20,7 @@ namespace Rocks.Builders.Create
 			writer.Indent++;
 
 			MockTypeBuilder.BuildRefReturnFields(writer, information);
-			writer.WriteLine($"private readonly {nameof(ImmutableDictionary)}<int, {nameof(ImmutableArray)}<{nameof(HandlerInformation)}>> handlers;");
+			writer.WriteLine($"private readonly Dictionary<int, List<{nameof(HandlerInformation)}>> handlers;");
 			writer.WriteLine();
 
 			if (information.Constructors.Length > 0)
@@ -68,7 +68,7 @@ namespace Rocks.Builders.Create
 			}
 
 			writer.WriteLine();
-			writer.WriteLine($"{nameof(ImmutableDictionary)}<int, {nameof(ImmutableArray)}<{nameof(HandlerInformation)}>> {nameof(IMock)}.{nameof(IMock.Handlers)} => this.handlers;");
+			writer.WriteLine($"Dictionary<int, List<{nameof(HandlerInformation)}>> {nameof(IMock)}.{nameof(IMock.Handlers)} => this.handlers;");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

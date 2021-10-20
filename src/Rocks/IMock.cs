@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
+﻿using System.Collections.Generic;
 
 namespace Rocks
 {
 	public interface IMock
 	{
-		ImmutableDictionary<int, ImmutableArray<HandlerInformation>> Handlers { get; }
+		Dictionary<int, List<HandlerInformation>> Handlers { get; }
 	}
 }
