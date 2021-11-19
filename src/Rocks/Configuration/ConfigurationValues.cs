@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Rocks.Configuration;
 
@@ -10,9 +11,9 @@ internal sealed class ConfigurationValues
 	private const IndentStyle IndentStyleDefaultValue = IndentStyle.Tab;
 	private const string TreatWarningsAsErrorsKey = "build_property.TreatWarningsAsErrors";
 
-	public ConfigurationValues(GeneratorExecutionContext context, SyntaxTree tree)
+	public ConfigurationValues(AnalyzerConfigOptionsProvider optionsProvider, SyntaxTree tree)
 	{
-		var options = context.AnalyzerConfigOptions.GetOptions(tree);
+		var options = optionsProvider.GetOptions(tree);
 
 		this.IndentStyle = options.TryGetValue(ConfigurationValues.IndentStyleKey, out var indentStyle) ?
 			(Enum.TryParse<IndentStyle>(indentStyle, out var indentStyleValue) ? indentStyleValue : ConfigurationValues.IndentStyleDefaultValue) :
