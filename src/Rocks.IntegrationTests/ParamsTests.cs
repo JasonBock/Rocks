@@ -1,74 +1,72 @@
 ﻿using NUnit.Framework;
-using System;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public interface IHaveParams
 {
-	public interface IHaveParams
+	void Foo(int a, params string[] b);
+	int this[int a, params string[] b] { get; }
+}
+
+public static class ParamsTests
+{
+	[Test]
+	public static void CreateMembersWithParamsArgumentsSpecified()
 	{
-		void Foo(int a, params string[] b);
-		int this[int a, params string[] b] { get; }
+		var returnValue = 3;
+		var rock = Rock.Create<IHaveParams>();
+		rock.Methods().Foo(1, new[] { "b" });
+		rock.Indexers().Getters().This(1, new[] { "b" }).Returns(returnValue);
+
+		var chunk = rock.Instance();
+		chunk.Foo(1, "b");
+		var value = chunk[1, "b"];
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(returnValue));
 	}
 
-	public static class ParamsTests
+	[Test]
+	public static void MakeMembersWithParamsArgumentsSpecified()
 	{
-		[Test]
-		public static void CreateMembersWithParamsArgumentsSpecified()
+		var chunk = Rock.Make<IHaveParams>().Instance();
+		var value = chunk[1, "b"];
+
+		Assert.Multiple(() =>
 		{
-			var returnValue = 3;
-			var rock = Rock.Create<IHaveParams>();
-			rock.Methods().Foo(1, new[] { "b" });
-			rock.Indexers().Getters().This(1, new[] { "b" }).Returns(returnValue);
+			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(() => chunk.Foo(1, "b"), Throws.Nothing);
+		});
+	}
 
-			var chunk = rock.Instance();
-			chunk.Foo(1, "b");
-			var value = chunk[1, "b"];
+	[Test]
+	public static void CreateMembersWithParamsArgumentsNotSpecified()
+	{
+		var returnValue = 3;
+		var rock = Rock.Create<IHaveParams>();
+		rock.Methods().Foo(1, Array.Empty<string>());
+		rock.Indexers().Getters().This(1, Array.Empty<string>()).Returns(returnValue);
 
-			rock.Verify();
+		var chunk = rock.Instance();
+		chunk.Foo(1);
+		var value = chunk[1];
 
-			Assert.That(value, Is.EqualTo(returnValue));
-		}
+		rock.Verify();
 
-		[Test]
-		public static void MakeMembersWithParamsArgumentsSpecified()
+		Assert.That(value, Is.EqualTo(returnValue));
+	}
+
+	[Test]
+	public static void MakeMembersWithParamsArgumentsNotSpecified()
+	{
+		var chunk = Rock.Make<IHaveParams>().Instance();
+		var value = chunk[1];
+
+		Assert.Multiple(() =>
 		{
-			var chunk = Rock.Make<IHaveParams>().Instance();
-			var value = chunk[1, "b"];
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-				Assert.That(() => chunk.Foo(1, "b"), Throws.Nothing);
-			});
-		}
-
-		[Test]
-		public static void CreateMembersWithParamsArgumentsNotSpecified()
-		{
-			var returnValue = 3;
-			var rock = Rock.Create<IHaveParams>();
-			rock.Methods().Foo(1, Array.Empty<string>());
-			rock.Indexers().Getters().This(1, Array.Empty<string>()).Returns(returnValue);
-
-			var chunk = rock.Instance();
-			chunk.Foo(1);
-			var value = chunk[1];
-
-			rock.Verify();
-
-			Assert.That(value, Is.EqualTo(returnValue));
-		}
-
-		[Test]
-		public static void MakeMembersWithParamsArgumentsNotSpecified()
-		{
-			var chunk = Rock.Make<IHaveParams>().Instance();
-			var value = chunk[1];
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-				Assert.That(() => chunk.Foo(1), Throws.Nothing);
-			});
-		}
+			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(() => chunk.Foo(1), Throws.Nothing);
+		});
 	}
 }

@@ -1,7 +1,6 @@
-﻿namespace Rocks.Builders
+﻿namespace Rocks.Builders;
+
+internal enum BuildType
 {
-	internal enum BuildType
-	{
-		Create, Make
-	}
+   Create, Make
 }

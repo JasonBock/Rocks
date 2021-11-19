@@ -1,117 +1,115 @@
 ﻿using NUnit.Framework;
-using System;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public abstract class AbstractClassMethodReturnWithEvents
 {
-	public abstract class AbstractClassMethodReturnWithEvents
+	public abstract int NoParameters();
+	public abstract event EventHandler MyEvent;
+}
+
+public static class AbstractClassMethodReturnWithEventsTests
+{
+	[Test]
+	public static void CreateRaiseEvent()
 	{
-		public abstract int NoParameters();
-		public abstract event EventHandler MyEvent;
+		var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
+		rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
+
+		var wasEventRaised = false;
+		var chunk = rock.Instance();
+		chunk.MyEvent += (s, e) => wasEventRaised = true;
+		var value = chunk.NoParameters();
+
+		rock.Verify();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(wasEventRaised, Is.True);
+			Assert.That(value, Is.EqualTo(default(int)));
+		});
 	}
 
-	public static class AbstractClassMethodReturnWithEventsTests
+	[Test]
+	public static void CreateRaiseEventWithCallback()
 	{
-		[Test]
-		public static void CreateRaiseEvent()
-		{
-			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
-			rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
-
-			var wasEventRaised = false;
-			var chunk = rock.Instance();
-			chunk.MyEvent += (s, e) => wasEventRaised = true;
-			var value = chunk.NoParameters();
-
-			rock.Verify();
-
-			Assert.Multiple(() =>
+		var wasCallbackInvoked = false;
+		var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
+		rock.Methods().NoParameters()
+			.Callback(() =>
 			{
-				Assert.That(wasEventRaised, Is.True);
-				Assert.That(value, Is.EqualTo(default(int)));
-			});
-		}
+				wasCallbackInvoked = true;
+				return 3;
+			})
+			.RaisesMyEvent(EventArgs.Empty);
 
-		[Test]
-		public static void CreateRaiseEventWithCallback()
+		var wasEventRaised = false;
+		var chunk = rock.Instance();
+		chunk.MyEvent += (s, e) => wasEventRaised = true;
+		var value = chunk.NoParameters();
+
+		rock.Verify();
+
+		Assert.Multiple(() =>
 		{
-			var wasCallbackInvoked = false;
-			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
-			rock.Methods().NoParameters()
-				.Callback(() =>
-				{
-					wasCallbackInvoked = true;
-					return 3;
-				})
-				.RaisesMyEvent(EventArgs.Empty);
+			Assert.That(wasEventRaised, Is.True);
+			Assert.That(wasCallbackInvoked, Is.True);
+			Assert.That(value, Is.EqualTo(3));
+		});
+	}
 
-			var wasEventRaised = false;
-			var chunk = rock.Instance();
-			chunk.MyEvent += (s, e) => wasEventRaised = true;
-			var value = chunk.NoParameters();
+	[Test]
+	public static void CreateRaiseEventWithMultipleCalls()
+	{
+		var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
+		rock.Methods().NoParameters()
+			.CallCount(2)
+			.RaisesMyEvent(EventArgs.Empty);
 
-			rock.Verify();
+		var eventRaisedCount = 0;
+		var chunk = rock.Instance();
+		chunk.MyEvent += (s, e) => eventRaisedCount++;
+		var valueOne = chunk.NoParameters();
+		var valueTwo = chunk.NoParameters();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(wasEventRaised, Is.True);
-				Assert.That(wasCallbackInvoked, Is.True);
-				Assert.That(value, Is.EqualTo(3));
-			});
-		}
+		rock.Verify();
 
-		[Test]
-		public static void CreateRaiseEventWithMultipleCalls()
+		Assert.Multiple(() =>
 		{
-			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
-			rock.Methods().NoParameters()
-				.CallCount(2)
-				.RaisesMyEvent(EventArgs.Empty);
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
+			Assert.That(valueOne, Is.EqualTo(default(int)));
+			Assert.That(valueTwo, Is.EqualTo(default(int)));
+		});
+	}
 
-			var eventRaisedCount = 0;
-			var chunk = rock.Instance();
-			chunk.MyEvent += (s, e) => eventRaisedCount++;
-			var valueOne = chunk.NoParameters();
-			var valueTwo = chunk.NoParameters();
-
-			rock.Verify();
-
-			Assert.Multiple(() =>
+	[Test]
+	public static void CreateRaiseEventWithMultipleCallsWithCallback()
+	{
+		var callbackInvokedCount = 0;
+		var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
+		rock.Methods().NoParameters()
+			.CallCount(2)
+			.Callback(() =>
 			{
-				Assert.That(eventRaisedCount, Is.EqualTo(2));
-				Assert.That(valueOne, Is.EqualTo(default(int)));
-				Assert.That(valueTwo, Is.EqualTo(default(int)));
-			});
-		}
+				callbackInvokedCount++;
+				return 3;
+			})
+			.RaisesMyEvent(EventArgs.Empty);
 
-		[Test]
-		public static void CreateRaiseEventWithMultipleCallsWithCallback()
+		var eventRaisedCount = 0;
+		var chunk = rock.Instance();
+		chunk.MyEvent += (s, e) => eventRaisedCount++;
+		var valueOne = chunk.NoParameters();
+		var valueTwo = chunk.NoParameters();
+
+		rock.Verify();
+
+		Assert.Multiple(() =>
 		{
-			var callbackInvokedCount = 0;
-			var rock = Rock.Create<AbstractClassMethodReturnWithEvents>();
-			rock.Methods().NoParameters()
-				.CallCount(2)
-				.Callback(() =>
-				{
-					callbackInvokedCount++;
-					return 3;
-				})
-				.RaisesMyEvent(EventArgs.Empty);
-
-			var eventRaisedCount = 0;
-			var chunk = rock.Instance();
-			chunk.MyEvent += (s, e) => eventRaisedCount++;
-			var valueOne = chunk.NoParameters();
-			var valueTwo = chunk.NoParameters();
-
-			rock.Verify();
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(eventRaisedCount, Is.EqualTo(2));
-				Assert.That(callbackInvokedCount, Is.EqualTo(2));
-				Assert.That(valueOne, Is.EqualTo(3));
-				Assert.That(valueTwo, Is.EqualTo(3));
-			});
-		}
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
+			Assert.That(callbackInvokedCount, Is.EqualTo(2));
+			Assert.That(valueOne, Is.EqualTo(3));
+			Assert.That(valueTwo, Is.EqualTo(3));
+		});
 	}
 }

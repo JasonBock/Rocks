@@ -1,8 +1,7 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum RequiresIsNewImplementation
 {
-	public enum RequiresIsNewImplementation
-	{
-		No,
-		Yes
-	}
+	No,
+	Yes
 }

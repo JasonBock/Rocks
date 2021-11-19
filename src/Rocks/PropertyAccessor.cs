@@ -1,9 +1,8 @@
-﻿namespace Rocks
+﻿namespace Rocks;
+
+public enum PropertyAccessor
 {
-	public enum PropertyAccessor
-	{
-		Get,
-		Set,
-		GetAndSet
-	}
+	Get,
+	Set,
+	GetAndSet
 }

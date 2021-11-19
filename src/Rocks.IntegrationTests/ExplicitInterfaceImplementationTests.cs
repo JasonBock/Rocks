@@ -1,122 +1,120 @@
 ﻿using NUnit.Framework;
-using System;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public interface IExplicitInterfaceImplementationOne
 {
-	public interface IExplicitInterfaceImplementationOne
+	void A();
+	int B { get; set; }
+	int this[int x] { get; set; }
+	event EventHandler C;
+}
+
+public interface IExplicitInterfaceImplementationTwo
+{
+	void A();
+	int B { get; set; }
+	int this[int x] { get; set; }
+	event EventHandler C;
+}
+
+public interface IExplicitInterfaceImplementation
+	: IExplicitInterfaceImplementationOne, IExplicitInterfaceImplementationTwo
+{ }
+
+public static class ExplicitInterfaceImplementationTests
+{
+	[Test]
+	public static void CreateMethod()
 	{
-		void A();
-		int B { get; set; }
-		int this[int x] { get; set; }
-		event EventHandler C;
+		var rock = Rock.Create<IExplicitInterfaceImplementation>();
+		rock.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
+		rock.ExplicitMethodsForIExplicitInterfaceImplementationTwo().A();
+
+		var chunk = rock.Instance();
+		((IExplicitInterfaceImplementationOne)chunk).A();
+		((IExplicitInterfaceImplementationTwo)chunk).A();
+
+		rock.Verify();
 	}
 
-	public interface IExplicitInterfaceImplementationTwo
+	[Test]
+	public static void MakeMethod()
 	{
-		void A();
-		int B { get; set; }
-		int this[int x] { get; set; }
-		event EventHandler C;
+		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).A(), Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).A(), Throws.Nothing);
+		});
 	}
 
-	public interface IExplicitInterfaceImplementation
-		: IExplicitInterfaceImplementationOne, IExplicitInterfaceImplementationTwo
-	{ }
-
-	public static class ExplicitInterfaceImplementationTests
+	[Test]
+	public static void CreateProperty()
 	{
-		[Test]
-		public static void CreateMethod()
+		var rock = Rock.Create<IExplicitInterfaceImplementation>();
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Setters().B(Arg.Any<int>());
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().B();
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Setters().B(Arg.Any<int>());
+
+		var chunk = rock.Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
+		((IExplicitInterfaceImplementationOne)chunk).B = oneValue;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
+		((IExplicitInterfaceImplementationTwo)chunk).B = twoValue;
+
+		rock.Verify();
+	}
+
+	[Test]
+	public static void MakeProperty()
+	{
+		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
+
+		Assert.Multiple(() =>
 		{
-			var rock = Rock.Create<IExplicitInterfaceImplementation>();
-			rock.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
-			rock.ExplicitMethodsForIExplicitInterfaceImplementationTwo().A();
+			Assert.That(oneValue, Is.EqualTo(default(int)));
+			Assert.That(twoValue, Is.EqualTo(default(int)));
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).B = oneValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).B = twoValue, Throws.Nothing);
+		});
+	}
 
-			var chunk = rock.Instance();
-			((IExplicitInterfaceImplementationOne)chunk).A();
-			((IExplicitInterfaceImplementationTwo)chunk).A();
+	[Test]
+	public static void CreateIndexer()
+	{
+		var rock = Rock.Create<IExplicitInterfaceImplementation>();
+		rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
+		rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
+		rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Getters().This(Arg.Any<int>());
+		rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
 
-			rock.Verify();
-		}
+		var chunk = rock.Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
+		((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
+		((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue;
 
-		[Test]
-		public static void MakeMethod()
+		rock.Verify();
+	}
+
+	[Test]
+	public static void MakeIndexer()
+	{
+		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
+		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
+
+		Assert.Multiple(() =>
 		{
-			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).A(), Throws.Nothing);
-				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).A(), Throws.Nothing);
-			});
-		}
-
-		[Test]
-		public static void CreateProperty()
-		{
-			var rock = Rock.Create<IExplicitInterfaceImplementation>();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Setters().B(Arg.Any<int>());
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().B();
-			rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Setters().B(Arg.Any<int>());
-
-			var chunk = rock.Instance();
-			var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
-			((IExplicitInterfaceImplementationOne)chunk).B = oneValue;
-			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
-			((IExplicitInterfaceImplementationTwo)chunk).B = twoValue;
-
-			rock.Verify();
-		}
-
-		[Test]
-		public static void MakeProperty()
-		{
-			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-			var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
-			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(oneValue, Is.EqualTo(default(int)));
-				Assert.That(twoValue, Is.EqualTo(default(int)));
-				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).B = oneValue, Throws.Nothing);
-				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).B = twoValue, Throws.Nothing);
-			});
-		}
-
-		[Test]
-		public static void CreateIndexer()
-		{
-			var rock = Rock.Create<IExplicitInterfaceImplementation>();
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Getters().This(Arg.Any<int>());
-			rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
-
-			var chunk = rock.Instance();
-			var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
-			((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue;
-			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
-			((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue;
-
-			rock.Verify();
-		}
-
-		[Test]
-		public static void MakeIndexer()
-		{
-			var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-			var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
-			var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(oneValue, Is.EqualTo(default(int)));
-				Assert.That(twoValue, Is.EqualTo(default(int)));
-				Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue, Throws.Nothing);
-				Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue, Throws.Nothing);
-			});
-		}
+			Assert.That(oneValue, Is.EqualTo(default(int)));
+			Assert.That(twoValue, Is.EqualTo(default(int)));
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue, Throws.Nothing);
+		});
 	}
 }

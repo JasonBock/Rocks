@@ -1,14 +1,8 @@
-﻿using System;
+﻿namespace Rocks.IntegrationTests;
 
-namespace Rocks.IntegrationTests
+public interface IHaveSpans
 {
-	public interface IHaveSpans
-	{
-		void Foo(Span<int> data);
-	}
-
-	public static class SpanTests
-	{
-
-	}
+	void Foo(Span<int> data);
 }
+
+public static class SpanTests { }

@@ -1,10 +1,9 @@
-﻿namespace Rocks.Expectations
+﻿namespace Rocks.Expectations;
+
+public sealed class IndexerGetterExpectations<T>
+	: IndexerExpectations<T>
+	where T : class
 {
-	public sealed class IndexerGetterExpectations<T>
-		: IndexerExpectations<T>
-		where T : class
-	{
-		public IndexerGetterExpectations(Expectations<T> expectations)
-			: base(expectations) { }
-	}
+	public IndexerGetterExpectations(Expectations<T> expectations)
+		: base(expectations) { }
 }

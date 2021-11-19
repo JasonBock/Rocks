@@ -1,77 +1,75 @@
 ﻿using NUnit.Framework;
-using System.Threading.Tasks;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public interface IAmAsynchronous
 {
-	public interface IAmAsynchronous
+	Task FooAsync();
+	ValueTask ValueFooAsync();
+	Task<int> FooReturnAsync();
+	ValueTask<int> ValueFooReturnAsync();
+}
+
+public static class AsynchronousTests
+{
+	[Test]
+	public static async Task CreateAsynchronousMethodsAsync()
 	{
-		Task FooAsync();
-		ValueTask ValueFooAsync();
-		Task<int> FooReturnAsync();
-		ValueTask<int> ValueFooReturnAsync();
+		const int returnValue = 3;
+		var rock = Rock.Create<IAmAsynchronous>();
+		rock.Methods().FooAsync().Returns(Task.CompletedTask);
+		rock.Methods().FooReturnAsync().Returns(Task.FromResult(returnValue));
+		rock.Methods().ValueFooAsync().Returns(new ValueTask());
+		rock.Methods().ValueFooReturnAsync().Returns(new ValueTask<int>(returnValue));
+
+		var chunk = rock.Instance();
+		await chunk.FooAsync().ConfigureAwait(false);
+		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
+		await chunk.ValueFooAsync().ConfigureAwait(false);
+		var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
+
+		rock.Verify();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(value, Is.EqualTo(returnValue));
+			Assert.That(valueValue, Is.EqualTo(returnValue));
+		});
 	}
 
-	public static class AsynchronousTests
+	[Test]
+	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
-		[Test]
-		public static async Task CreateAsynchronousMethods()
+		var rock = Rock.Create<IAmAsynchronous>();
+		rock.Methods().FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
+		rock.Methods().FooReturnAsync().Callback(async () =>
 		{
-			const int returnValue = 3;
-			var rock = Rock.Create<IAmAsynchronous>();
-			rock.Methods().FooAsync().Returns(Task.CompletedTask);
-			rock.Methods().FooReturnAsync().Returns(Task.FromResult(returnValue));
-			rock.Methods().ValueFooAsync().Returns(new ValueTask());
-			rock.Methods().ValueFooReturnAsync().Returns(new ValueTask<int>(returnValue));
+			await Task.Delay(10).ConfigureAwait(false);
+			return 3;
+		});
 
-			var chunk = rock.Instance();
-			await chunk.FooAsync().ConfigureAwait(false);
-			var value = await chunk.FooReturnAsync().ConfigureAwait(false);
-			await chunk.ValueFooAsync().ConfigureAwait(false);
-			var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
+		var chunk = rock.Instance();
+		await chunk.FooAsync().ConfigureAwait(false);
+		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
 
-			rock.Verify();
+		rock.Verify();
 
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(returnValue));
-				Assert.That(valueValue, Is.EqualTo(returnValue));
-			});
-		}
+		Assert.That(value, Is.EqualTo(3));
+	}
 
-		[Test]
-		public static async Task CreateAsynchronousMethodsWithAsyncCallback()
+	[Test]
+	public static async Task MakeAsynchronousMethodsAsync()
+	{
+		var chunk = Rock.Make<IAmAsynchronous>().Instance();
+		await chunk.FooAsync().ConfigureAwait(false);
+		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
+		await chunk.ValueFooAsync().ConfigureAwait(false);
+		var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
+
+		Assert.Multiple(() =>
 		{
-			var rock = Rock.Create<IAmAsynchronous>();
-			rock.Methods().FooAsync().Callback(async () => await Task.Delay(10));
-			rock.Methods().FooReturnAsync().Callback(async () =>
-			{
-				await Task.Delay(10);
-				return 3;
-			});
-
-			var chunk = rock.Instance();
-			await chunk.FooAsync().ConfigureAwait(false);
-			var value = await chunk.FooReturnAsync().ConfigureAwait(false);
-
-			rock.Verify();
-
-			Assert.That(value, Is.EqualTo(3));
-		}
-
-		[Test]
-		public static async Task MakeAsynchronousMethods()
-		{
-			var chunk = Rock.Make<IAmAsynchronous>().Instance();
-			await chunk.FooAsync().ConfigureAwait(false);
-			var value = await chunk.FooReturnAsync().ConfigureAwait(false);
-			await chunk.ValueFooAsync().ConfigureAwait(false);
-			var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
-
-			Assert.Multiple(() =>
-			{
-				Assert.That(value, Is.EqualTo(default(int)));
-				Assert.That(valueValue, Is.EqualTo(default(int)));
-			});
-		}
+			Assert.That(value, Is.EqualTo(default(int)));
+			Assert.That(valueValue, Is.EqualTo(default(int)));
+		});
 	}
 }

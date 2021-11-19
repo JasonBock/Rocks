@@ -1,62 +1,60 @@
 ﻿using NUnit.Framework;
-using System.Collections.Generic;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public interface IInterfaceGenericProperty<T>
 {
-	public interface IInterfaceGenericProperty<T>
+	List<string> Values { get; }
+	T Data { get; }
+}
+
+public static class InterfaceGenericPropertyTests
+{
+	[Test]
+	public static void CreateUsingGenericType()
 	{
-		List<string> Values { get; }
-		T Data { get; }
+		var returnValue = new List<string>();
+		var rock = Rock.Create<IInterfaceGenericProperty<int>>();
+		rock.Properties().Getters().Values().Returns(returnValue);
+
+		var chunk = rock.Instance();
+		var value = chunk.Values;
+
+		rock.Verify();
+
+		Assert.That(value, Is.SameAs(returnValue));
 	}
 
-	public static class InterfaceGenericPropertyTests
+	[Test]
+	public static void MakeUsingGenericType()
 	{
-		[Test]
-		public static void CreateUsingGenericType()
-		{
-			var returnValue = new List<string>();
-			var rock = Rock.Create<IInterfaceGenericProperty<int>>();
-			rock.Properties().Getters().Values().Returns(returnValue);
+		var chunk = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
+		var value = chunk.Values;
 
-			var chunk = rock.Instance();
-			var value = chunk.Values;
+		Assert.That(value, Is.SameAs(default(List<string>)));
+	}
 
-			rock.Verify();
+	[Test]
+	public static void CreateUsingGenericTypeParameter()
+	{
+		var returnValue = 3;
+		var rock = Rock.Create<IInterfaceGenericProperty<int>>();
+		rock.Properties().Getters().Data().Returns(returnValue);
 
-			Assert.That(value, Is.SameAs(returnValue));
-		}
+		var chunk = rock.Instance();
+		var value = chunk.Data;
 
-		[Test]
-		public static void MakeUsingGenericType()
-		{
-			var chunk = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
-			var value = chunk.Values;
+		rock.Verify();
 
-			Assert.That(value, Is.SameAs(default(List<string>)));
-		}
+		Assert.That(value, Is.EqualTo(returnValue));
+	}
 
-		[Test]
-		public static void CreateUsingGenericTypeParameter()
-		{
-			var returnValue = 3;
-			var rock = Rock.Create<IInterfaceGenericProperty<int>>();
-			rock.Properties().Getters().Data().Returns(returnValue);
+	[Test]
+	public static void MakeUsingGenericTypeParameter()
+	{
+		var chunk = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
+		var value = chunk.Data;
 
-			var chunk = rock.Instance();
-			var value = chunk.Data;
-
-			rock.Verify();
-
-			Assert.That(value, Is.EqualTo(returnValue));
-		}
-
-		[Test]
-		public static void MakeUsingGenericTypeParameter()
-		{
-			var chunk = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
-			var value = chunk.Data;
-
-			Assert.That(value, Is.EqualTo(default(int)));
-		}
+		Assert.That(value, Is.EqualTo(default(int)));
 	}
 }

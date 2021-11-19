@@ -1,9 +1,8 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+internal enum MethodMatch
 {
-	internal enum MethodMatch
-	{
-		Exact,
-		DifferByReturnTypeOnly,
-		None,
-	}
+	Exact,
+	DifferByReturnTypeOnly,
+	None,
 }

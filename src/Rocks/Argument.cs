@@ -1,45 +1,45 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace Rocks
+namespace Rocks;
+
+[Serializable]
+public abstract class Argument
 {
-	[Serializable]
-	public abstract class Argument
-	{
-		protected Argument() { }
-	}
+	protected Argument() { }
+}
 
-	[Serializable]
-	public sealed class Argument<T>
-		: Argument
-	{
-		private readonly Predicate<T>? evaluation;
-		private readonly T? value;
-		private readonly ValidationState validation;
+[Serializable]
+public sealed class Argument<T>
+	: Argument
+{
+	private readonly Predicate<T>? evaluation;
+	private readonly T? value;
+	private readonly ValidationState validation;
 
-		internal Argument() => this.validation = ValidationState.None;
+	internal Argument() => this.validation = ValidationState.None;
 
-		internal Argument(ValidationState state) => this.validation = state;
+	internal Argument(ValidationState state) => this.validation = state;
 
-		internal Argument(T value) =>
-			(this.value, this.validation) = (value, ValidationState.Value);
+	internal Argument(T value) =>
+		(this.value, this.validation) = (value, ValidationState.Value);
 
-		internal Argument(Predicate<T> evaluation) =>
-			(this.evaluation, this.validation) = (evaluation, ValidationState.Evaluation);
+	internal Argument(Predicate<T> evaluation) =>
+		(this.evaluation, this.validation) = (evaluation, ValidationState.Evaluation);
 
-		public static implicit operator Argument<T>(T value) => new(value);
+#pragma warning disable CA2225 // Operator overloads have named alternates
+	public static implicit operator Argument<T>(T value) => new(value);
+#pragma warning restore CA2225 // Operator overloads have named alternates
 
-		public bool IsValid(T value) =>
-			this.validation switch
-			{
-				ValidationState.None => true,
-				ValidationState.Value => ObjectEquality.AreEqual(value, this.value),
-				ValidationState.Evaluation => this.evaluation!(value),
-				ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the DefaultValue state."),
-				_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
-			};
+	public bool IsValid(T value) =>
+		this.validation switch
+		{
+			ValidationState.None => true,
+			ValidationState.Value => ObjectEquality.AreEqual(value, this.value),
+			ValidationState.Evaluation => this.evaluation!(value),
+			ValidationState.DefaultValue => throw new NotSupportedException("Cannot validate an argument value in the DefaultValue state."),
+			_ => throw new InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
+		};
 
-		public Argument<T> Transform(T value) =>
-			this.validation == ValidationState.DefaultValue ? new Argument<T>(value) : this;
-	}
+	public Argument<T> Transform(T value) =>
+		this.validation == ValidationState.DefaultValue ? new Argument<T>(value) : this;
 }

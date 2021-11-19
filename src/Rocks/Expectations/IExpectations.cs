@@ -1,7 +1,6 @@
-﻿namespace Rocks.Expectations
+﻿namespace Rocks.Expectations;
+
+public interface IExpectations
 {
-	public interface IExpectations
-	{
-		void Verify();
-	}
+	void Verify();
 }

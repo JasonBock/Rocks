@@ -1,10 +1,9 @@
-﻿namespace Rocks.Expectations
+﻿namespace Rocks.Expectations;
+
+public sealed class PropertyGetterExpectations<T>
+	: ExpectationsWrapper<T>
+	where T : class
 {
-	public sealed class PropertyGetterExpectations<T>
-		: ExpectationsWrapper<T>
-		where T : class
-	{
-		public PropertyGetterExpectations(Expectations<T> expectations)
-			: base(expectations) { }
-	}
+	public PropertyGetterExpectations(Expectations<T> expectations)
+		: base(expectations) { }
 }

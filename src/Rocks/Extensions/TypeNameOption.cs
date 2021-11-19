@@ -1,9 +1,8 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum TypeNameOption
 {
-	public enum TypeNameOption
-	{
-		NoGenerics, 
-		IncludeGenerics, 
-		Flatten
-	}
+	NoGenerics,
+	IncludeGenerics,
+	Flatten
 }

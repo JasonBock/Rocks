@@ -1,4 +1,3 @@
-﻿namespace Rocks
-{
-	public sealed class MakeGeneration<T> { }
-}
+﻿namespace Rocks;
+
+public sealed class MakeGeneration<T> { }

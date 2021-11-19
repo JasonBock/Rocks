@@ -1,8 +1,7 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum RequiresExplicitInterfaceImplementation
 {
-	public enum RequiresExplicitInterfaceImplementation
-	{
-		No, 
-		Yes
-	}
+	No,
+	Yes
 }

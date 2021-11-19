@@ -3,83 +3,65 @@ using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
 using Rocks.Builders.Create;
 using Rocks.Configuration;
-using Rocks.Diagnostics;
-using System;
 using System.Collections.Immutable;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
-namespace Rocks
+namespace Rocks;
+
+[Generator]
+public sealed class RockCreateGenerator
+	 : ISourceGenerator
 {
-	[Generator]
-	public sealed class RockCreateGenerator
-		: ISourceGenerator
+	private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
+		ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
+		ConfigurationValues configurationValues, Compilation compilation)
 	{
-		private static (ImmutableArray<Diagnostic> diagnostics, string? name, SourceText? text) GenerateMapping(
-			ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
-			ConfigurationValues configurationValues, Compilation compilation)
-		{
-			var information = new MockInformation(typeToMock, containingAssemblySymbol, model, 
-				configurationValues, BuildType.Create);
+		var information = new MockInformation(typeToMock, containingAssemblySymbol, model,
+			configurationValues, BuildType.Create);
 
-			if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
-			{
-				var builder = new RockCreateBuilder(information, configurationValues, compilation);
-				return (builder.Diagnostics, builder.Name, builder.Text);
-			}
-			else
-			{
-				return (information.Diagnostics, null, null);
-			}
+		if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
+		{
+			var builder = new RockCreateBuilder(information, configurationValues, compilation);
+			return (builder.Diagnostics, builder.Name, builder.Text);
 		}
-
-		/// <summary>
-		/// I'm following the lead I got from StrongInject, though this 
-		/// was recently taken out there. It's because of this: https://github.com/dotnet/roslyn/pull/46804
-		/// I'm getting an exception and I'm getting no information in VS, so I have to keep this in
-		/// until I <b>know</b> that full exception information will be shown.
-		/// </summary>
-		public void Execute(GeneratorExecutionContext context)
+		else
 		{
-			try
-			{
-				RockCreateGenerator.PrivateExecute(context);
-			}
-			catch (Exception e)
-			{
-				context.ReportDiagnostic(UnexpectedExceptionDiagnostic.Create(e));
-			}
+			return (information.Diagnostics, null, null);
 		}
+	}
 
-		[MethodImpl(MethodImplOptions.NoInlining)]
-		private static void PrivateExecute(GeneratorExecutionContext context)
+	/// <summary>
+	/// I'm following the lead I got from StrongInject, though this 
+	/// was recently taken out there. It's because of this: https://github.com/dotnet/roslyn/pull/46804
+	/// I'm getting an exception and I'm getting no information in VS, so I have to keep this in
+	/// until I <b>know</b> that full exception information will be shown.
+	/// </summary>
+	public void Execute(GeneratorExecutionContext context)
+	{
+		if (context.SyntaxContextReceiver is RockCreateReceiver receiver &&
+			receiver.Targets.Count > 0)
 		{
-			if (context.SyntaxContextReceiver is RockCreateReceiver receiver &&
-				receiver.Targets.Count > 0)
-			{
-				var compilation = context.Compilation;
+			var compilation = context.Compilation;
 
-				foreach (var targetPair in receiver.Targets)
+			foreach (var targetPair in receiver.Targets)
+			{
+				var model = compilation.GetSemanticModel(targetPair.Value.SyntaxTree);
+				var configurationValues = new ConfigurationValues(context, targetPair.Value.SyntaxTree);
+				var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
+					targetPair.Key, compilation.Assembly, model, configurationValues, compilation);
+
+				foreach (var diagnostic in diagnostics)
 				{
-					var model = compilation.GetSemanticModel(targetPair.Value.SyntaxTree);
-					var configurationValues = new ConfigurationValues(context, targetPair.Value.SyntaxTree);
-					var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
-						targetPair.Key, compilation.Assembly, model, configurationValues, compilation);
+					context.ReportDiagnostic(diagnostic);
+				}
 
-					foreach (var diagnostic in diagnostics)
-					{
-						context.ReportDiagnostic(diagnostic);
-					}
-
-					if (name is not null && text is not null)
-					{
-						context.AddSource(name, text);
-					}
+				if (name is not null && text is not null)
+				{
+					context.AddSource(name, text);
 				}
 			}
 		}
-
-		public void Initialize(GeneratorInitializationContext context) =>
-			context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 	}
+
+	public void Initialize(GeneratorInitializationContext context) =>
+		context.RegisterForSyntaxNotifications(() => new RockCreateReceiver());
 }

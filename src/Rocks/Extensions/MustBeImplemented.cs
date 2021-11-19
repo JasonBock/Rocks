@@ -1,8 +1,7 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum MustBeImplemented
 {
-	public enum MustBeImplemented
-	{
-		No,
-		Yes
-	}
+	No,
+	Yes
 }

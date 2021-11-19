@@ -2,18 +2,15 @@
 using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
 using Rocks.Diagnostics;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Rocks.Tests
+namespace Rocks.Tests;
+
+public static class RockCreateGeneratorTests
 {
-	public static class RockCreateGeneratorTests
+	[Test]
+	public static async Task GenerateWhenTargetTypeContainsCompilerGeneratedMembersAsync()
 	{
-		[Test]
-		public static async Task GenerateWhenTargetTypeContainsCompilerGeneratedMembersAsync()
-		{
-			var code =
+		var code =
 @"using Rocks;
 using System;
 
@@ -33,7 +30,7 @@ namespace MockTests
 	}
 }";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -99,15 +96,15 @@ namespace MockTests
 }
 ";
 
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
-				Enumerable.Empty<DiagnosticResult>());
-		}
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeIsValidAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeIsValidAsync()
+	{
+		var code =
 @"using Rocks;
 using System;
 
@@ -127,7 +124,7 @@ namespace MockTests
 	}
 }";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -190,15 +187,15 @@ namespace MockTests
 }
 ";
 
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
-				Enumerable.Empty<DiagnosticResult>());
-		}
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeIsInGlobalNamespaceAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeIsInGlobalNamespaceAsync()
+	{
+		var code =
 @"using Rocks;
 using System;
 
@@ -215,7 +212,7 @@ public interface ITest
 	void Foo();
 }";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -275,15 +272,15 @@ internal static class MethodExpectationsOfITestExtensions
 }
 ";
 
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
-				Enumerable.Empty<DiagnosticResult>());
-		}
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeIsValidForRockRepositoryAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeIsValidForRockRepositoryAsync()
+	{
+		var code =
 @"using Rocks;
 using System;
 
@@ -304,7 +301,7 @@ namespace MockTests
 	}
 }";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -367,15 +364,15 @@ namespace MockTests
 }
 ";
 
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
-				Enumerable.Empty<DiagnosticResult>());
-		}
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenInvocationExistsInTopLevelStatementsAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenInvocationExistsInTopLevelStatementsAsync()
+	{
+		var code =
 @"using MockTests;
 using Rocks;
 using System;
@@ -390,7 +387,7 @@ namespace MockTests
 	}
 }";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -453,15 +450,15 @@ namespace MockTests
 }
 ";
 
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
-				Enumerable.Empty<DiagnosticResult>(), OutputKind.ConsoleApplication);
-		}
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>(), OutputKind.ConsoleApplication).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeIsInvalidAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeIsInvalidAsync()
+	{
+		var code =
 @"using Rocks;
 
 namespace MockTests
@@ -477,17 +474,17 @@ namespace MockTests
 	}
 }";
 
-			var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDiagnostic.Id, DiagnosticSeverity.Error)
-				.WithSpan(5, 19, 5, 24);
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				Enumerable.Empty<(Type, string, string)>(),
-				new[] { diagnostic });
-		}
+		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDiagnostic.Id, DiagnosticSeverity.Error)
+			.WithSpan(5, 19, 5, 24);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic }).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeHasDiagnosticsAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeHasDiagnosticsAsync()
+	{
+		var code =
 @"using Rocks;
 
 namespace MockTests
@@ -507,17 +504,17 @@ namespace MockTests
 	}
 }";
 
-			var diagnostic = new DiagnosticResult("CS1002", DiagnosticSeverity.Error)
-				.WithSpan(8, 13, 8, 13);
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				Enumerable.Empty<(Type, string, string)>(),
-				new[] { diagnostic });
-		}
+		var diagnostic = new DiagnosticResult("CS1002", DiagnosticSeverity.Error)
+			.WithSpan(8, 13, 8, 13);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic }).ConfigureAwait(false);
+	}
 
-		[Test]
-		public static async Task GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnosticsAsync()
-		{
-			var code =
+	[Test]
+	public static async Task GenerateWhenTargetTypeIsValidButOtherCodeHasDiagnosticsAsync()
+	{
+		var code =
 @"using Rocks;
 
 namespace MockTests
@@ -536,7 +533,7 @@ namespace MockTests
 // Note the missing closing brace
 	}";
 
-			var generatedCode =
+		var generatedCode =
 @"using Rocks;
 using Rocks.Exceptions;
 using Rocks.Expectations;
@@ -599,11 +596,10 @@ namespace MockTests
 }
 ";
 
-			var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
-				.WithSpan(17, 3, 17, 3);
-			await TestAssistants.RunAsync<RockCreateGenerator>(code,
-				new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
-				new[] { diagnostic });
-		}
+		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
+			.WithSpan(17, 3, 17, 3);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { diagnostic }).ConfigureAwait(false);
 	}
 }

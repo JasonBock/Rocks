@@ -37,8 +37,17 @@ dotnet_diagnostic.CA1030.severity = none
 # CA1303: Do not pass literals as localized parameters
 dotnet_diagnostic.CA1303.severity = none
 
+# CA1002: Do not expose generic lists
+# TODO: I really should NOT suppress this, but
+# it's too much of a PITA at the present moment.
+dotnet_diagnostic.CA1002.severity = none
+
+# CA1014: Mark assemblies with CLSCompliant
+dotnet_diagnostic.CA1014.severity = none
+
 # RS1024: Compare symbols correctly
-# Once https://github.com/dotnet/roslyn-analyzers/issues/4414 is addressed, this should be removed
+# TODO: Adding SymbolEqualityComparer.Default should fix this,
+# but...then it casts down to a ISymbol?, which leads to other problems.
 dotnet_diagnostic.RS1024.severity = none
 
 # NUnit analyzers

@@ -1,10 +1,9 @@
-﻿namespace Rocks.Expectations
+﻿namespace Rocks.Expectations;
+
+public sealed class ExplicitPropertyGetterExpectations<T, TContainingType>
+	: ExpectationsWrapper<T>
+	where T : class, TContainingType
 {
-	public sealed class ExplicitPropertyGetterExpectations<T, TContainingType>
-		: ExpectationsWrapper<T>
-		where T : class, TContainingType
-	{
-		public ExplicitPropertyGetterExpectations(Expectations<T> expectations)
-			: base(expectations) { }
-	}
+	public ExplicitPropertyGetterExpectations(Expectations<T> expectations)
+		: base(expectations) { }
 }

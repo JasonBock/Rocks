@@ -1,43 +1,42 @@
 ﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 
-namespace Rocks.IntegrationTests
+namespace Rocks.IntegrationTests;
+
+public sealed class AbstractClassEventArgs
+	: EventArgs
+{ }
+
+public abstract class AbstractClassGenericEvents<T>
 {
-	public sealed class AbstractClassEventArgs
-		: EventArgs
-	{ }
+	public abstract void Foo();
+#pragma warning disable CA1003 // Use generic event handler instances
+	public abstract event EventHandler<T> MyEvent;
+#pragma warning restore CA1003 // Use generic event handler instances
+}
 
-	public abstract class AbstractClassGenericEvents<T>
+public static class AbstractClassGenericEventsTests
+{
+	[Test]
+	public static void CreateUsingGenericType()
 	{
-		public abstract void Foo();
-		public abstract event EventHandler<T> MyEvent;
+		var returnValue = new List<string>();
+		var rock = Rock.Create<AbstractClassGenericEvents<AbstractClassEventArgs>>();
+		rock.Methods().Foo().RaisesMyEvent(new AbstractClassEventArgs());
+
+		var wasEventRaised = false;
+		var chunk = rock.Instance();
+		chunk.MyEvent += (s, e) => wasEventRaised = true;
+		chunk.Foo();
+
+		rock.Verify();
+
+		Assert.That(wasEventRaised, Is.True);
 	}
 
-	public static class AbstractClassGenericEventsTests
+	[Test]
+	public static void MakeUsingGenericType()
 	{
-		[Test]
-		public static void CreateUsingGenericType()
-		{
-			var returnValue = new List<string>();
-			var rock = Rock.Create<AbstractClassGenericEvents<AbstractClassEventArgs>>();
-			rock.Methods().Foo().RaisesMyEvent(new AbstractClassEventArgs());
-
-			var wasEventRaised = false;
-			var chunk = rock.Instance();
-			chunk.MyEvent += (s, e) => wasEventRaised = true;
-			chunk.Foo();
-
-			rock.Verify();
-
-			Assert.That(wasEventRaised, Is.True);
-		}
-
-		[Test]
-		public static void MakeUsingGenericType()
-		{
-			var chunk = Rock.Make<AbstractClassGenericEvents<AbstractClassEventArgs>>().Instance();
-			chunk.Foo();
-		}
+		var chunk = Rock.Make<AbstractClassGenericEvents<AbstractClassEventArgs>>().Instance();
+		chunk.Foo();
 	}
 }

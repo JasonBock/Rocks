@@ -1,28 +1,25 @@
 ﻿using Rocks.Expectations;
-using System;
-using System.Collections.Generic;
 
-namespace Rocks
+namespace Rocks;
+
+public sealed class RockRepository
+	 : IDisposable
 {
-	public sealed class RockRepository
-		: IDisposable
+	private readonly List<IExpectations> rocks = new();
+
+	public Expectations<T> Create<T>()
+		where T : class
 	{
-		private readonly List<IExpectations> rocks = new();
+		var expectations = new Expectations<T>();
+		this.rocks.Add(expectations);
+		return expectations;
+	}
 
-		public Expectations<T> Create<T>()
-			where T : class
+	public void Dispose()
+	{
+		foreach (var chunk in this.rocks)
 		{
-			var expectations = new Expectations<T>();
-			this.rocks.Add(expectations);
-			return expectations;
-		}
-
-		public void Dispose()
-		{
-			foreach (var chunk in this.rocks)
-			{
-				chunk.Verify();
-			}
+			chunk.Verify();
 		}
 	}
 }

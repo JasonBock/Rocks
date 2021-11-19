@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace Rocks;
 
-namespace Rocks
+public interface IMockWithEvents
+	: IMock
 {
-	public interface IMockWithEvents
-		: IMock
-	{
-		void Raise(string eventName, EventArgs args);
-	}
+	void Raise(string eventName, EventArgs args);
 }

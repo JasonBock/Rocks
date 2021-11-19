@@ -1,14 +1,11 @@
-﻿using System;
+﻿namespace Rocks;
 
-namespace Rocks
+[Serializable]
+public sealed class RaiseEventInformation
 {
-	[Serializable]
-	public sealed class RaiseEventInformation
-	{
-		public RaiseEventInformation(string fieldName, EventArgs args) =>
-			(this.FieldName, this.Args) = (fieldName, args);
+	public RaiseEventInformation(string fieldName, EventArgs args) =>
+		(this.FieldName, this.Args) = (fieldName, args);
 
-		public EventArgs Args { get; }
-		public string FieldName { get; }
-	}
+	public EventArgs Args { get; }
+	public string FieldName { get; }
 }

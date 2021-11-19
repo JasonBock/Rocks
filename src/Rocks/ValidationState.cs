@@ -1,7 +1,6 @@
-﻿namespace Rocks
+﻿namespace Rocks;
+
+public enum ValidationState
 {
-	public enum ValidationState
-	{
-		None, Evaluation, Value, DefaultValue
-	}
+	None, Evaluation, Value, DefaultValue
 }

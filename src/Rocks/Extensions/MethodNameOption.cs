@@ -1,8 +1,7 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum MethodNameOption
 {
-	public enum MethodNameOption
-	{
-		NoGenerics, 
-		IncludeGenerics
-	}
+	NoGenerics,
+	IncludeGenerics
 }

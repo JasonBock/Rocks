@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿namespace Rocks;
 
-namespace Rocks
+public interface IMock
 {
-	public interface IMock
-	{
-		Dictionary<int, List<HandlerInformation>> Handlers { get; }
-	}
+	Dictionary<int, List<HandlerInformation>> Handlers { get; }
 }

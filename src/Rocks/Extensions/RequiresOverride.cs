@@ -1,8 +1,7 @@
-﻿namespace Rocks.Extensions
+﻿namespace Rocks.Extensions;
+
+public enum RequiresOverride
 {
-	public enum RequiresOverride
-	{
-		No,
-		Yes
-	}
+	No,
+	Yes
 }
