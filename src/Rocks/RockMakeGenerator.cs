@@ -45,7 +45,7 @@ public sealed class RockMakeGenerator
 			foreach (var targetPair in receiver.Targets)
 			{
 				var model = compilation.GetSemanticModel(targetPair.Value.SyntaxTree);
-				var configurationValues = new ConfigurationValues(context, targetPair.Value.SyntaxTree);
+				var configurationValues = new ConfigurationValues(context.AnalyzerConfigOptions, targetPair.Value.SyntaxTree);
 				var (diagnostics, name, text) = RockMakeGenerator.GenerateMapping(
 					targetPair.Key, compilation.Assembly, model, configurationValues, compilation);
 

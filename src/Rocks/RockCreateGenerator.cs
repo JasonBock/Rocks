@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.Text;
 using Rocks.Builders;
 using Rocks.Builders.Create;
 using Rocks.Configuration;
+using Rocks.Extensions;
 using System.Collections.Immutable;
 
 namespace Rocks;
@@ -16,15 +17,14 @@ internal sealed class RockCreateIncrementalGenerator
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
 		static bool IsSyntaxTargetForGeneration(SyntaxNode node, CancellationToken token) =>
-			// We're looking for invocations with the name "Create"
-			// that were done on either "Rock" or "RockRepository" -
+			// We're looking for invocations with the name "Create" -
 			// that's good enough for our purposes.
+			// Note that we can't check the Expression on memberExpression
+			// for "RockRepository" because it will be an invocation on an instance
+			// and we can't figure out at this point if it's done on a RockRepository type.
 			node is InvocationExpressionSyntax invocationNode &&
 				invocationNode.Expression is MemberAccessExpressionSyntax memberExpression &&
-				memberExpression.Name.Identifier.Text == nameof(Rock.Create) &&
-				memberExpression.Expression is IdentifierNameSyntax identifierName &&
-				(identifierName.Identifier.Text == nameof(Rock) ||
-					identifierName.Identifier.Text == nameof(RockRepository));
+				memberExpression.Name.Identifier.Text == nameof(Rock.Create);
 
 		static SyntaxNode? TransformTargets(GeneratorSyntaxContext context, CancellationToken token)
 		{
@@ -75,7 +75,7 @@ internal sealed class RockCreateIncrementalGenerator
 				var target = RockCreateIncrementalGenerator.GetTarget(
 					node!, model, context.CancellationToken);
 
-				if (targets.Add(target))
+				if (!target.ContainsDiagnostics() && targets.Add(target))
 				{
 					var tree = node!.SyntaxTree;
 					var configurationValues = new ConfigurationValues(options, tree);
