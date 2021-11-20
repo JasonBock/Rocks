@@ -8,6 +8,32 @@ namespace Rocks.Tests;
 public static class RockMakeGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWhenInvocationIsNotRockMakeAsync()
+	{
+		var code =
+@"using Rocks;
+
+public interface ITest { }
+
+public static class Rocker
+{
+	public static void Make<T>() { }
+}
+
+public static class Invoker
+{
+	public static void Invoke()
+	{
+		Rocker.Make<ITest>();
+	}
+}";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWhenValueTaskOfTIsReturnedAsync()
 	{
 		var code =
