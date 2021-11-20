@@ -45,6 +45,9 @@ dotnet_diagnostic.CA1002.severity = none
 # CA1014: Mark assemblies with CLSCompliant
 dotnet_diagnostic.CA1014.severity = none
 
+# CA1812: Program is an internal class...
+dotnet_diagnostic.CA1812.severity = none
+
 # RS1024: Compare symbols correctly
 # TODO: Adding SymbolEqualityComparer.Default should fix this,
 # but...then it casts down to a ISymbol?, which leads to other problems.
