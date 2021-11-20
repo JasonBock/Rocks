@@ -24,7 +24,6 @@ internal static class RefLikeArgTypeBuilder
 
 		writer.WriteLine($"public delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
-		writer.WriteLine("[Serializable]");
 		writer.WriteLine($"public sealed class {argName}");
 		writer.Indent++;
 		writer.WriteLine($": {nameof(Argument)}");

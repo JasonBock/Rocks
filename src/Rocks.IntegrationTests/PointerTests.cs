@@ -1,8 +1,4 @@
-﻿/*
-
-TODO: This will be addressed with https://github.com/JasonBock/Rocks/issues/154
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Rocks.Exceptions;
 
 namespace Rocks.IntegrationTests;
@@ -237,4 +233,3 @@ public unsafe static class PointerTests
 		rock.Verify();
 	}
 }
-*/

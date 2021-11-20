@@ -21,7 +21,6 @@ internal static class PointerArgTypeBuilder
 
 		writer.WriteLine($"public unsafe delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
-		writer.WriteLine("[Serializable]");
 		writer.WriteLine($"public unsafe sealed class {argName}");
 		writer.Indent++;
 		writer.WriteLine($": {nameof(Argument)}");

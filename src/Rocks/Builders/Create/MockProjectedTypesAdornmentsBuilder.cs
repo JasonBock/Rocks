@@ -98,7 +98,6 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 		var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
 
-		writer.WriteLine("[Serializable]");
 		writer.WriteLine($"internal {isUnsafe}sealed class {handlerName}");
 		writer.Indent++;
 		writer.WriteLine(": HandlerInformation");
