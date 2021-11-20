@@ -25,6 +25,49 @@ public static class CodeGenerationTests
 	public static void GenerateMakesForBaseClassLibrary(Type targetType) =>
 		CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockMakeGenerator());
 
+	private static void GenerateForBaseClassLibrary(Type targetType, IIncrementalGenerator generator)
+	{
+		if (targetType is null)
+		{
+			throw new ArgumentNullException(nameof(targetType));
+		}
+
+		var types = new ConcurrentBag<Type>();
+		Parallel.ForEach(targetType.Assembly.GetTypes()
+			.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+			{
+				if (_.IsValidTarget())
+				{
+					types.Add(_);
+				}
+			});
+
+		var discoveredTypes = types.ToArray();
+
+		var code = CodeGenerationTests.GetCode(types, discoveredTypes);
+		var syntaxTree = CSharpSyntaxTree.ParseText(code);
+		var references = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(new[]
+			{
+					MetadataReference.CreateFromFile(targetType.Assembly.Location),
+					MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+			});
+		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
+			references, new(OutputKind.DynamicallyLinkedLibrary));
+
+		var driver = CSharpGeneratorDriver.Create(generator);
+		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(discoveredTypes.Length, Is.GreaterThan(0));
+			Assert.That(diagnostics.Any(
+					 _ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
+		});
+	}
+
 	private static void GenerateForBaseClassLibrary(Type targetType, ISourceGenerator generator)
 	{
 		if (targetType is null)
