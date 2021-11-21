@@ -4,5 +4,7 @@ public enum PropertyAccessor
 {
 	Get,
 	Set,
-	GetAndSet
+	GetAndSet,
+	Init,
+	GetAndInit
 }

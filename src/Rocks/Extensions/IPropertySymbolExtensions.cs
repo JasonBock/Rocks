@@ -36,7 +36,19 @@ internal static class IPropertySymbolExtensions
 	internal static bool IsUnsafe(this IPropertySymbol self) =>
 		self.IsIndexer ? (self.Parameters.Any(_ => _.Type.IsPointer()) || self.Type.IsPointer()) : self.Type.IsPointer();
 
-	internal static PropertyAccessor GetAccessors(this IPropertySymbol self) =>
-		self.GetMethod is not null && self.SetMethod is not null ?
-			PropertyAccessor.GetAndSet : (self.SetMethod is null ? PropertyAccessor.Get : PropertyAccessor.Set);
+	internal static PropertyAccessor GetAccessors(this IPropertySymbol self)
+	{
+		if (self.GetMethod is not null && self.SetMethod is not null)
+		{
+			return self.SetMethod.IsInitOnly ? PropertyAccessor.GetAndInit : PropertyAccessor.GetAndSet;
+		}
+		else if (self.GetMethod is not null)
+		{
+			return PropertyAccessor.Get;
+		}
+		else
+		{
+			return self.SetMethod!.IsInitOnly ? PropertyAccessor.Init : PropertyAccessor.Set;
+		}
+	}
 }

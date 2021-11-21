@@ -6,6 +6,11 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
+public interface ITest
+{
+	int Data { get; init; }
+}
+
 public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 {
 	[Test]
