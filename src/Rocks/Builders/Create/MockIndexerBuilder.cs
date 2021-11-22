@@ -152,13 +152,15 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || 
+			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false, compilation)}"")]");
 			memberIdentifierAttribute++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init || 
+			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false, compilation)}"")]");
 		}
@@ -176,13 +178,15 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || 
+			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init || 
+			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 		}

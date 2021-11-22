@@ -6,13 +6,34 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
-public interface ITest
-{
-	int Data { get; init; }
-}
-
 public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 {
+	[Test]
+	public static void GetMockablePropertiesWithInit()
+	{
+		const string targetTypeName = "Test";
+
+		var code =
+$@"public class {targetTypeName}
+{{
+	public virtual int GetAndInit {{ get; init; }}
+	public virtual int Init {{ init; }}
+}}";
+
+		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
+		var memberIdentifier = 0u;
+		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, ref memberIdentifier);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(properties.Length, Is.EqualTo(2));
+			var getAndInitProperty = properties.Single(_ => _.Value.Name == "GetAndInit");
+			Assert.That(getAndInitProperty.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
+			var initProperty = properties.Single(_ => _.Value.Name == "Init");
+			Assert.That(initProperty.Accessors, Is.EqualTo(PropertyAccessor.Init));
+		});
+	}
+
 	[Test]
 	public static void GetMockablePropertiesWithMultipleIndexers()
 	{
@@ -34,11 +55,11 @@ $@"public abstract class {targetTypeName}
 		{
 			Assert.That(properties.Length, Is.EqualTo(3));
 			var thisIntProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
-					 _.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
+				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
 			Assert.That(thisIntProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(thisIntProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var thisStringProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
-					 _.Value.Parameters[0].Type.SpecialType == SpecialType.System_String);
+				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_String);
 			Assert.That(thisStringProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(thisStringProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var thisIntStringProperty = properties.Single(_ => _.Value.Parameters.Length == 2);

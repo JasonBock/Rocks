@@ -23,15 +23,43 @@ namespace MockTests
 	{
 		public static void Generate()
 		{
-			var rock = Rock.Create<ITest>();
+			var rock = Rock.Make<ITest>();
 		}
 	}
 }";
 
-		var generatedCode = string.Empty;
+		var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class MakeExpectationsOfITestExtensions
+	{
+		internal static ITest Instance(this MakeGeneration<ITest> self) =>
+			new RockITest();
+		
+		private sealed class RockITest
+			: ITest
+		{
+			public RockITest() { }
+			
+			public int Bar
+			{
+				get => default!;
+				init { }
+			}
+		}
+	}
+}
+";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "ITest_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

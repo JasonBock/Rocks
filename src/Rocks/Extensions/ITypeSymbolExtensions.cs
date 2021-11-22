@@ -311,7 +311,7 @@ internal static class ITypeSymbolExtensions
 
 				memberIdentifier++;
 
-				if (accessors == PropertyAccessor.GetAndSet)
+				if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
 				{
 					memberIdentifier++;
 				}
@@ -355,7 +355,7 @@ internal static class ITypeSymbolExtensions
 						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
 					memberIdentifier++;
 
-					if (accessors == PropertyAccessor.GetAndSet)
+					if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
 					{
 						memberIdentifier++;
 					}
@@ -369,7 +369,7 @@ internal static class ITypeSymbolExtensions
 							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, accessors, memberIdentifier));
 						memberIdentifier++;
 
-						if (accessors == PropertyAccessor.GetAndSet)
+						if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
 						{
 							memberIdentifier++;
 						}
@@ -404,7 +404,7 @@ internal static class ITypeSymbolExtensions
 							properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
 							memberIdentifier++;
 
-							if (accessors == PropertyAccessor.GetAndSet)
+							if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
 							{
 								memberIdentifier++;
 							}

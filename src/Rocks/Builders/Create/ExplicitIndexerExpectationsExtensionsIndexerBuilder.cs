@@ -38,11 +38,11 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, string thisParameterName)
 	{
 		var property = result.Value;
 		var mockTypeName = result.MockType.GetName();
-		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
+		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Indexer}{thisParameterName}{WellKnownNames.Expectations}";
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}, {containingTypeName}> self";
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
@@ -68,6 +68,10 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.Indent--;
 	}
 
+	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
+	// if I should be doing a "get", "set", or "init", but then I also look at the 
+	// property's accessor value for the member identifier increment. This
+	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;
@@ -78,12 +82,14 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		}
 		else
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet)
+			if (result.Accessors == PropertyAccessor.GetAndSet ||
+				result.Accessors == PropertyAccessor.GetAndInit)
 			{
 				memberIdentifier++;
 			}
 
-			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
+			var thisParameterName = accessor == PropertyAccessor.Set ? WellKnownNames.Setter : WellKnownNames.Init;
+			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName, thisParameterName);
 		}
 	}
 }

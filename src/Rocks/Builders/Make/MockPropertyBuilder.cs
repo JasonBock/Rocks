@@ -30,7 +30,8 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
+			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 			{
@@ -45,6 +46,10 @@ internal static class MockPropertyBuilder
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
 		{
 			writer.WriteLine("set { }");
+		}
+		else if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
+		{
+			writer.WriteLine("init { }");
 		}
 
 		writer.Indent--;

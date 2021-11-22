@@ -10,6 +10,7 @@ internal static class MockPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
+		var methodName = result.Value.GetMethod!.Name;
 		writer.WriteLine("get");
 		writer.WriteLine("{");
 		writer.Indent++;
@@ -64,16 +65,24 @@ internal static class MockPropertyBuilder
 
 		writer.WriteLine();
 
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}get_{property.Name}())\");");
+		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}())\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
+		var methodName = result.Value.SetMethod!.Name;
 		var property = result.Value;
 
-		writer.WriteLine("set");
+		if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.Set)
+		{
+			writer.WriteLine("set");
+		}
+		else
+		{
+			writer.WriteLine("init");
+		}
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -113,7 +122,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("if (!foundMatch)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
+		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -138,7 +147,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("else");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}set_{property.Name}(value)\");");
+		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -161,15 +170,17 @@ internal static class MockPropertyBuilder
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
+			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}get_{property.Name}()"")]");
+			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
 			memberIdentifierAttribute++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
+			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}set_{property.Name}(value)"")]");
+			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(value)"")]");
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -184,13 +195,15 @@ internal static class MockPropertyBuilder
 
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
+			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
+			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 		}

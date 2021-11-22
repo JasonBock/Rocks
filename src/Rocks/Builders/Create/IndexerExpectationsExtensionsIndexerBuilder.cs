@@ -38,11 +38,11 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string thisParameterName)
 	{
 		var property = result.Value;
 		var mockTypeName = result.MockType.GetName();
-		var thisTypeName = $"{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
+		var thisTypeName = $"{WellKnownNames.Indexer}{thisParameterName}{WellKnownNames.Expectations}";
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
@@ -67,6 +67,10 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.Indent--;
 	}
 
+	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
+	// if I should be doing a "get", "set", or "init", but then I also look at the 
+	// property's accessor value for the member identifier increment. This
+	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
@@ -77,12 +81,14 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		}
 		else
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet)
+			if (result.Accessors == PropertyAccessor.GetAndSet ||
+				result.Accessors == PropertyAccessor.GetAndInit)
 			{
 				memberIdentifier++;
 			}
 
-			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier);
+			var thisParameterName = accessor == PropertyAccessor.Set ? WellKnownNames.Setter : WellKnownNames.Init;
+			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, thisParameterName);
 		}
 	}
 }

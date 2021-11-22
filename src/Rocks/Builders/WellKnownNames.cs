@@ -13,6 +13,8 @@ internal sealed class WellKnownNames
 	internal const string Getters = nameof(WellKnownNames.Getters);
 	internal const string Indexer = nameof(WellKnownNames.Indexer);
 	internal const string Indexers = nameof(WellKnownNames.Indexers);
+	internal const string Init = nameof(WellKnownNames.Init);
+	internal const string Initializers = nameof(WellKnownNames.Initializers);
 	internal const string Instance = nameof(WellKnownNames.Instance);
 	internal const string Method = nameof(WellKnownNames.Method);
 	internal const string Methods = nameof(WellKnownNames.Methods);

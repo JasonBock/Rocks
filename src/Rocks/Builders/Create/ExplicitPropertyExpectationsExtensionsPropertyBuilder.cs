@@ -33,11 +33,11 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, string thisParameterName)
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
+		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{thisParameterName}{WellKnownNames.Expectations}";
 		var thisParameter = $"this {thisTypeName}<{result.MockType.GetName()}, {containingTypeName}> self";
 		var mockTypeName = result.MockType.GetName();
 
@@ -56,6 +56,10 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
+	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
+	// if I should be doing a "get", "set", or "init", but then I also look at the 
+	// property's accessor value for the member identifier increment. This
+	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;
@@ -66,12 +70,14 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		}
 		else
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet)
+			if (result.Accessors == PropertyAccessor.GetAndSet ||
+				result.Accessors == PropertyAccessor.GetAndInit)
 			{
 				memberIdentifier++;
 			}
 
-			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
+			var thisParameterName = accessor == PropertyAccessor.Set ? WellKnownNames.Setter : WellKnownNames.Init;
+			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName, thisParameterName);
 		}
 	}
 }
