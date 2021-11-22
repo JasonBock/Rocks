@@ -75,84 +75,84 @@ internal static class MockPropertyBuilder
 		var methodName = result.Value.SetMethod!.Name;
 		var property = result.Value;
 
-		if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.Set)
+		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine("set");
+			writer.WriteLine("init { }");
 		}
 		else
 		{
-			writer.WriteLine("init");
+			writer.WriteLine("set");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			writer.WriteLine("var foundMatch = false;");
+			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			var argType = property.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(property.Type) :
+				property.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
+				$"{nameof(Argument)}<{property.Type.GetName()}>";
+
+			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			writer.WriteLine("foundMatch = true;");
+			writer.WriteLine();
+			writer.WriteLine("if (methodHandler.Method is not null)");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
+				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+				DelegateBuilder.Build(property.SetMethod!.Parameters);
+
+			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine();
+			writer.WriteLine("if (!foundMatch)");
+			writer.WriteLine("{");
+			writer.Indent++;
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine();
+			if (raiseEvents)
+			{
+				writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
+			}
+
+			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
+			writer.WriteLine("break;");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine("else");
+			writer.WriteLine("{");
+			writer.Indent++;
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
 		}
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("var foundMatch = false;");
-		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		var argType = property.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(property.Type) :
-			property.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
-			$"{nameof(Argument)}<{property.Type.GetName()}>";
-
-		writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("foundMatch = true;");
-		writer.WriteLine();
-		writer.WriteLine("if (methodHandler.Method is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
-			DelegateBuilder.Build(property.SetMethod!.Parameters);
-
-		writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
-		writer.WriteLine("if (!foundMatch)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
-		if (raiseEvents)
-		{
-			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
-		}
-
-		writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
-		writer.WriteLine("break;");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine("else");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents,

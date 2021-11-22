@@ -8,6 +8,12 @@ public abstract class AbstractClassIndexerGetterSetter
 	public abstract int this[int a, string b] { get; set; }
 }
 
+public abstract class AbstractClassIndexerGetterInit
+{
+	public abstract int this[int a] { get; init; }
+	public abstract int this[int a, string b] { get; init; }
+}
+
 public abstract class AbstractClassIndexerGetter
 {
 	public abstract int this[int a] { get; }
@@ -38,6 +44,20 @@ public static class AbstractClassIndexerTests
 		var chunk = rock.Instance();
 		var value = chunk[3];
 		chunk[3] = 4;
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void CreateWithOneParameterGetterAndInit()
+	{
+		var rock = Rock.Create<AbstractClassIndexerGetterInit>();
+		rock.Indexers().Getters().This(3);
+
+		var chunk = rock.Instance();
+		var value = chunk[3];
 
 		rock.Verify();
 

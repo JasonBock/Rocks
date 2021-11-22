@@ -45,16 +45,6 @@ internal static class MockPropertyExtensionsBuilder
 				writer.Indent--;
 				writer.WriteLine();
 			}
-
-			if (information.Properties.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
-			{
-				writer.WriteLine($"internal static {WellKnownNames.Indexer}{WellKnownNames.Init}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Initializers}(this {WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
-				writer.Indent--;
-				writer.WriteLine();
-			}
 		}
 
 		foreach (var typeGroup in information.Properties
@@ -81,15 +71,6 @@ internal static class MockPropertyExtensionsBuilder
 			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
-				writer.Indent--;
-				writer.WriteLine();
-			}
-
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
-			{
-				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Init}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
 				writer.Indent--;
@@ -127,16 +108,6 @@ internal static class MockPropertyExtensionsBuilder
 				writer.Indent--;
 				writer.WriteLine();
 			}
-
-			if (information.Properties.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
-			{
-				writer.WriteLine($"internal static {WellKnownNames.Property}{WellKnownNames.Init}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Initializers}(this {WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
-				writer.Indent--;
-				writer.WriteLine();
-			}
 		}
 
 		foreach (var typeGroup in information.Properties
@@ -163,15 +134,6 @@ internal static class MockPropertyExtensionsBuilder
 			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
-				writer.Indent--;
-				writer.WriteLine();
-			}
-
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
-			{
-				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Init}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
 				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
 				writer.Indent--;

@@ -78,63 +78,70 @@ internal static class MockIndexerBuilder
 		var methodSignature =
 			$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
 
-		writer.WriteLine("set");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		for (var i = 0; i < method.Parameters.Length; i++)
+		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			var parameter = method.Parameters[i];
-
-			if (i == 0)
-			{
-				writer.WriteLine(
-					$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
-			}
-			else
-			{
-				if (i == 1)
-				{
-					writer.Indent++;
-				}
-
-				writer.WriteLine(
-					$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
-
-				if (i == method.Parameters.Length - 1)
-				{
-					writer.Indent--;
-				}
-			}
+			writer.WriteLine("init { }");
 		}
+		else
+		{
+			writer.WriteLine("set");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		writer.WriteLine("{");
-		writer.Indent++;
+			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
-		writer.WriteLine("return;");
-		writer.Indent--;
-		writer.WriteLine("}");
+			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		writer.Indent--;
-		writer.WriteLine("}");
+			for (var i = 0; i < method.Parameters.Length; i++)
+			{
+				var parameter = method.Parameters[i];
 
-		writer.Indent--;
-		writer.WriteLine("}");
+				if (i == 0)
+				{
+					writer.WriteLine(
+						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+				}
+				else
+				{
+					if (i == 1)
+					{
+						writer.Indent++;
+					}
 
-		writer.WriteLine();
+					writer.WriteLine(
+						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature})\");");
-		writer.Indent--;
-		writer.WriteLine("}");
+					if (i == method.Parameters.Length - 1)
+					{
+						writer.Indent--;
+					}
+				}
+			}
+
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
+			writer.WriteLine("return;");
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+
+			writer.WriteLine();
+
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature})\");");
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents,
@@ -152,14 +159,14 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || 
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false, compilation)}"")]");
 			memberIdentifierAttribute++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init || 
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false, compilation)}"")]");
@@ -178,14 +185,14 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || 
+		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init || 
+		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);

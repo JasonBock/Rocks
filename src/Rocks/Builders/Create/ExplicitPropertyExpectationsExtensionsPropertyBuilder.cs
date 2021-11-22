@@ -33,11 +33,11 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, string thisParameterName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{thisParameterName}{WellKnownNames.Expectations}";
+		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
 		var thisParameter = $"this {thisTypeName}<{result.MockType.GetName()}, {containingTypeName}> self";
 		var mockTypeName = result.MockType.GetName();
 
@@ -68,16 +68,14 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		{
 			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
-		else
+		else if(accessor == PropertyAccessor.Set)
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet ||
-				result.Accessors == PropertyAccessor.GetAndInit)
+			if (result.Accessors == PropertyAccessor.GetAndSet)
 			{
 				memberIdentifier++;
 			}
 
-			var thisParameterName = accessor == PropertyAccessor.Set ? WellKnownNames.Setter : WellKnownNames.Init;
-			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName, thisParameterName);
+			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
 		}
 	}
 }

@@ -47,9 +47,6 @@ namespace MockTests
 		internal static PropertyGetterExpectations<ITest> Getters(this PropertyExpectations<ITest> self) =>
 			new(self.Expectations);
 		
-		internal static PropertyInitExpectations<ITest> Initializers(this PropertyExpectations<ITest> self) =>
-			new(self.Expectations);
-		
 		internal static ITest Instance(this Expectations<ITest> self)
 		{
 			var mock = new RockITest(self);
@@ -83,37 +80,7 @@ namespace MockTests
 					
 					throw new ExpectationException(""No handlers were found for get_Bar())"");
 				}
-				init
-				{
-					if (this.handlers.TryGetValue(1, out var methodHandlers))
-					{
-						var foundMatch = false;
-						foreach (var methodHandler in methodHandlers)
-						{
-							if ((methodHandler.Expectations[0] as Argument<int>)?.IsValid(value) ?? false)
-							{
-								foundMatch = true;
-								
-								if (methodHandler.Method is not null)
-								{
-									((Action<int>)methodHandler.Method)(value);
-								}
-								
-								if (!foundMatch)
-								{
-									throw new ExpectationException(""No handlers were found for set_Bar(value)"");
-								}
-								
-								methodHandler.IncrementCallCount();
-								break;
-							}
-						}
-					}
-					else
-					{
-						throw new ExpectationException(""No handlers were found for set_Bar(value)"");
-					}
-				}
+				init { }
 			}
 			
 			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
@@ -122,11 +89,8 @@ namespace MockTests
 	
 	internal static class PropertyGetterExpectationsOfITestExtensions
 	{
-	}
-	internal static class PropertyInitExpectationsOfITestExtensions
-	{
-		internal static PropertyAdornments<ITest, Action<int>> Bar(this PropertyInitExpectations<ITest> self, Argument<int> value) =>
-			new PropertyAdornments<ITest, Action<int>>(self.Add(1, new List<Argument>(1) { value }));
+		internal static PropertyAdornments<ITest, Func<int>, int> Bar(this PropertyGetterExpectations<ITest> self) =>
+			new PropertyAdornments<ITest, Func<int>, int>(self.Add<int>(0, new List<Argument>()));
 	}
 }
 ";
