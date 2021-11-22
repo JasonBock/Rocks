@@ -2,6 +2,12 @@
 
 namespace Rocks.IntegrationTests;
 
+public class ClassIndexerGetterInit
+{
+	public virtual int this[int a] { get => default; init { } }
+	public virtual int this[int a, string b] { get => default; init { } }
+}
+
 public class ClassIndexerGetterSetter
 {
 	public virtual int this[int a] { get => default; set { } }
@@ -12,6 +18,20 @@ public class ClassIndexerGetter
 {
 	public virtual int this[int a] => default;
 	public virtual int this[int a, string b] => default;
+
+#pragma warning disable CA1070 // Do not declare event fields as virtual
+#pragma warning disable CS0067
+	public virtual event EventHandler? MyEvent;
+#pragma warning restore CS0067
+#pragma warning restore CA1070 // Do not declare event fields as virtual
+}
+
+public class ClassIndexerInit
+{
+#pragma warning disable CA1044 // Properties should not be write only
+	public virtual int this[int a] { init { } }
+	public virtual int this[int a, string b] { init { } }
+#pragma warning restore CA1044 // Properties should not be write only
 
 #pragma warning disable CA1070 // Do not declare event fields as virtual
 #pragma warning disable CS0067
@@ -37,6 +57,20 @@ public class ClassIndexerSetter
 public static class ClassIndexerTests
 {
 	[Test]
+	public static void CreateWithOneParameterGetterAndInit()
+	{
+		var rock = Rock.Create<ClassIndexerGetterInit>();
+		rock.Indexers().Getters().This(3);
+
+		var chunk = rock.Instance();
+		var value = chunk[3];
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateWithOneParameterGetterAndSetter()
 	{
 		var rock = Rock.Create<ClassIndexerGetterSetter>();
@@ -48,6 +82,15 @@ public static class ClassIndexerTests
 		chunk[3] = 4;
 
 		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeWithOneParameterGetterAndInit()
+	{
+		var chunk = Rock.Make<ClassIndexerGetterInit>().Instance();
+		var value = chunk[3];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -174,6 +217,14 @@ public static class ClassIndexerTests
 	}
 
 	[Test]
+	public static void CreateWithOneParameterInit()
+	{
+		var rock = Rock.Create<ClassIndexerInit>();
+		var chunk = rock.Instance();
+		rock.Verify();
+	}
+
+	[Test]
 	public static void CreateWithOneParameterSetter()
 	{
 		var rock = Rock.Create<ClassIndexerSetter>();
@@ -184,6 +235,10 @@ public static class ClassIndexerTests
 
 		rock.Verify();
 	}
+
+	[Test]
+	public static void MakeWithOneParameterInit() => 
+		Assert.That(() => Rock.Make<ClassIndexerInit>().Instance(), Throws.Nothing);
 
 	[Test]
 	public static void MakeWithOneParameterSetter()
@@ -260,6 +315,20 @@ public static class ClassIndexerTests
 	}
 
 	[Test]
+	public static void CreateWithMultipleParametersGetterAndInit()
+	{
+		var rock = Rock.Create<ClassIndexerGetterInit>();
+		rock.Indexers().Getters().This(3, "b");
+
+		var chunk = rock.Instance();
+		var value = chunk[3, "b"];
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateWithMultipleParametersGetterAndSetter()
 	{
 		var rock = Rock.Create<ClassIndexerGetterSetter>();
@@ -271,6 +340,15 @@ public static class ClassIndexerTests
 		chunk[3, "b"] = 4;
 
 		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeWithMultipleParametersGetterAndInit()
+	{
+		var chunk = Rock.Make<ClassIndexerGetterInit>().Instance();
+		var value = chunk[3, "b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

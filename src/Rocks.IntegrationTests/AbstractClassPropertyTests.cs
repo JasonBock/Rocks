@@ -5,11 +5,12 @@ namespace Rocks.IntegrationTests;
 public abstract class AbstractClassProperty
 {
 	public abstract int GetData { get; }
+	public abstract int GetAndInitData { get; init; }
 	public abstract int GetAndSetData { get; set; }
 #pragma warning disable CA1044 // Properties should not be write only
+	public abstract int InitData { init; }
 	public abstract int SetData { set; }
 #pragma warning restore CA1044 // Properties should not be write only
-
 	public abstract event EventHandler MyEvent;
 }
 
@@ -184,6 +185,20 @@ public static class AbstractClassPropertyTests
 	}
 
 	[Test]
+	public static void CreateGetAndInit()
+	{
+		var rock = Rock.Create<AbstractClassProperty>();
+		rock.Properties().Getters().GetAndInitData();
+
+		var chunk = rock.Instance();
+		var value = chunk.GetAndInitData;
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateGetAndSet()
 	{
 		var rock = Rock.Create<AbstractClassProperty>();
@@ -197,6 +212,18 @@ public static class AbstractClassPropertyTests
 		rock.Verify();
 
 		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeGetAndInit()
+	{
+		var chunk = Rock.Make<AbstractClassProperty>().Instance();
+		var value = chunk.GetAndInitData;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(value, Is.EqualTo(default(int)));
+		});
 	}
 
 	[Test]
