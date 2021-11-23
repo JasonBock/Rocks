@@ -298,6 +298,8 @@ rock.Verify();
 
 Note that you can also set up callbacks and expected call counts just like you can with methods.
 
+If you have a property that uses `init`, you can create a mock with that, but you can't set any expectations with it.
+
 ### Mocking Indexers
 
 Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks:
