@@ -5,8 +5,10 @@ namespace Rocks.IntegrationTests;
 public class ClassProperty
 {
 	public virtual int GetData => default;
+	public virtual int GetAndInitData { get => default; init { } }
 	public virtual int GetAndSetData { get => default; set { } }
 #pragma warning disable CA1044 // Properties should not be write only
+	public virtual int InitData { init { } }
 	public virtual int SetData { set { } }
 #pragma warning restore CA1044 // Properties should not be write only
 
@@ -188,6 +190,20 @@ public static class ClassPropertyTests
 	}
 
 	[Test]
+	public static void CreateGetAndInit()
+	{
+		var rock = Rock.Create<ClassProperty>();
+		rock.Properties().Getters().GetAndInitData();
+
+		var chunk = rock.Instance();
+		var value = chunk.GetAndInitData;
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateGetAndSet()
 	{
 		var rock = Rock.Create<ClassProperty>();
@@ -199,6 +215,15 @@ public static class ClassPropertyTests
 		chunk.GetAndSetData = value;
 
 		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeGetAndInit()
+	{
+		var chunk = Rock.Make<ClassProperty>().Instance();
+		var value = chunk.GetAndInitData;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

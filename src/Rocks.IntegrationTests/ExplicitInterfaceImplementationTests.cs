@@ -8,6 +8,7 @@ public interface IExplicitInterfaceImplementationOne
 	int B { get; set; }
 	int this[int x] { get; set; }
 	event EventHandler C;
+	int D { get; init; }
 }
 
 public interface IExplicitInterfaceImplementationTwo
@@ -16,6 +17,7 @@ public interface IExplicitInterfaceImplementationTwo
 	int B { get; set; }
 	int this[int x] { get; set; }
 	event EventHandler C;
+	int D { get; init; }
 }
 
 public interface IExplicitInterfaceImplementation
@@ -69,6 +71,20 @@ public static class ExplicitInterfaceImplementationTests
 	}
 
 	[Test]
+	public static void CreatePropertyWithInit()
+	{
+		var rock = Rock.Create<IExplicitInterfaceImplementation>();
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().D();
+		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().D();
+
+		var chunk = rock.Instance();
+		_ = ((IExplicitInterfaceImplementationOne)chunk).D;
+		_ = ((IExplicitInterfaceImplementationTwo)chunk).D;
+
+		rock.Verify();
+	}
+
+	[Test]
 	public static void MakeProperty()
 	{
 		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
@@ -81,6 +97,20 @@ public static class ExplicitInterfaceImplementationTests
 			Assert.That(twoValue, Is.EqualTo(default(int)));
 			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).B = oneValue, Throws.Nothing);
 			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).B = twoValue, Throws.Nothing);
+		});
+	}
+
+	[Test]
+	public static void MakePropertyWithInit()
+	{
+		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).D;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).D;
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(oneValue, Is.EqualTo(default(int)));
+			Assert.That(twoValue, Is.EqualTo(default(int)));
 		});
 	}
 

@@ -5,8 +5,10 @@ namespace Rocks.IntegrationTests;
 public interface IInterfaceProperty
 {
 	int GetData { get; }
+	int GetAndInitData { get; set; }
 	int GetAndSetData { get; set; }
 #pragma warning disable CA1044 // Properties should not be write only
+	int InitData { set; }
 	int SetData { set; }
 #pragma warning restore CA1044 // Properties should not be write only
 
@@ -184,6 +186,20 @@ public static class InterfacePropertyTests
 	}
 
 	[Test]
+	public static void CreateGetAndInit()
+	{
+		var rock = Rock.Create<IInterfaceProperty>();
+		rock.Properties().Getters().GetAndInitData();
+
+		var chunk = rock.Instance();
+		var value = chunk.GetAndInitData;
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateGetAndSet()
 	{
 		var rock = Rock.Create<IInterfaceProperty>();
@@ -195,6 +211,15 @@ public static class InterfacePropertyTests
 		chunk.GetAndSetData = value;
 
 		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeGetAndInit()
+	{
+		var chunk = Rock.Make<IInterfaceProperty>().Instance();
+		var value = chunk.GetAndInitData;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

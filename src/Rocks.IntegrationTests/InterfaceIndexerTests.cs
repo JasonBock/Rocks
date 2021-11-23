@@ -2,6 +2,12 @@
 
 namespace Rocks.IntegrationTests;
 
+public interface IInterfaceIndexerGetterInit
+{
+	int this[int a] { get; init; }
+	int this[int a, string b] { get; init; }
+}
+
 public interface IInterfaceIndexerGetterSetter
 {
 	int this[int a] { get; set; }
@@ -12,6 +18,16 @@ public interface IInterfaceIndexerGetter
 {
 	int this[int a] { get; }
 	int this[int a, string b] { get; }
+
+	event EventHandler MyEvent;
+}
+
+public interface IInterfaceIndexerInit
+{
+#pragma warning disable CA1044 // Properties should not be write only
+	int this[int a] { init; }
+	int this[int a, string b] { init; }
+#pragma warning restore CA1044 // Properties should not be write only
 
 	event EventHandler MyEvent;
 }
@@ -29,6 +45,20 @@ public interface IInterfaceIndexerSetter
 public static class InterfaceIndexerTests
 {
 	[Test]
+	public static void CreateWithOneParameterGetterAndInit()
+	{
+		var rock = Rock.Create<IInterfaceIndexerGetterInit>();
+		rock.Indexers().Getters().This(3);
+
+		var chunk = rock.Instance();
+		var value = chunk[3];
+
+		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
 	public static void CreateWithOneParameterGetterAndSetter()
 	{
 		var rock = Rock.Create<IInterfaceIndexerGetterSetter>();
@@ -40,6 +70,15 @@ public static class InterfaceIndexerTests
 		chunk[3] = 4;
 
 		rock.Verify();
+
+		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void MakeWithOneParameterGetterAndInit()
+	{
+		var chunk = Rock.Make<IInterfaceIndexerGetterInit>().Instance();
+		var value = chunk[3];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -163,6 +202,13 @@ public static class InterfaceIndexerTests
 		rock.Verify();
 
 		Assert.That(value, Is.EqualTo(default(int)));
+	}
+
+	[Test]
+	public static void CreateWithOneParameterInit()
+	{
+		var rock = Rock.Create<IInterfaceIndexerInit>();
+		Assert.That(() => rock.Instance(), Throws.Nothing);
 	}
 
 	[Test]
