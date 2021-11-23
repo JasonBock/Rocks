@@ -3,13 +3,6 @@ using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
-public record Test
-{
-	public Test() { }
-
-	public virtual void Foo() { }
-}
-
 public static class RecordCreateGeneratorTests
 {
 	[Test]
