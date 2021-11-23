@@ -11,7 +11,8 @@ internal static class MockMakeBuilder
 		Compilation compilation)
 	{
 		var typeToMock = information.TypeToMock;
-		writer.WriteLine($"private sealed class {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
+		var kind = typeToMock.IsRecord ? "record" : "class";
+		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
 		writer.Indent++;
 		writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}");
 		writer.Indent--;
