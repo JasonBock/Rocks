@@ -36,8 +36,6 @@ internal sealed class RockCreateGenerator
 
 			if (invocationSymbol is not null)
 			{
-				// We just need to make sure the invocation node is actually
-				// from our Rock or RockRepository type and is the Create method.
 				var rockCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
 					.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
 				var rockRepositoryCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(RockRepository).FullName)!
