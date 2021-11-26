@@ -26,7 +26,7 @@ internal sealed class RockCreateGenerator
 				invocationNode.Expression is MemberAccessExpressionSyntax memberExpression &&
 				memberExpression.Name.Identifier.Text == nameof(Rock.Create);
 
-		static SyntaxNode? TransformTargets(GeneratorSyntaxContext context, CancellationToken token)
+		static (SyntaxNode, ITypeSymbol)? TransformTargets(GeneratorSyntaxContext context, CancellationToken token)
 		{
 			var node = (InvocationExpressionSyntax)context.Node;
 			var model = context.SemanticModel;
@@ -34,10 +34,10 @@ internal sealed class RockCreateGenerator
 			var invocationSymbol = nodeSymbol.Symbol is IMethodSymbol symbol ? symbol :
 				nodeSymbol.CandidateSymbols.Length > 0 ? (IMethodSymbol)nodeSymbol.CandidateSymbols[0] : null;
 
-			// We just need to make sure the invocation node is actually
-			// from our Rock or RockRepository type and is the Create method.
 			if (invocationSymbol is not null)
 			{
+				// We just need to make sure the invocation node is actually
+				// from our Rock or RockRepository type and is the Create method.
 				var rockCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(Rock).FullName)!
 					.GetMembers().Single(_ => _.Name == nameof(Rock.Create));
 				var rockRepositoryCreateSymbol = model.Compilation.GetTypeByMetadataName(typeof(RockRepository).FullName)!
@@ -46,7 +46,8 @@ internal sealed class RockCreateGenerator
 				if (SymbolEqualityComparer.Default.Equals(rockCreateSymbol, invocationSymbol.ConstructedFrom) ||
 					SymbolEqualityComparer.Default.Equals(rockRepositoryCreateSymbol, invocationSymbol.ConstructedFrom))
 				{
-					return node;
+					// Return the generic type argument along with the node, as that's the target we need to find.
+					return (node, invocationSymbol!.TypeArguments[0]);
 				}
 			}
 
@@ -62,22 +63,19 @@ internal sealed class RockCreateGenerator
 			(context, source) => CreateOutput(source.Right.Left, source.Right.Right, source.Left, context));
 	}
 
-	private static void CreateOutput(Compilation compilation, ImmutableArray<SyntaxNode?> nodes,
+	private static void CreateOutput(Compilation compilation, ImmutableArray<(SyntaxNode, ITypeSymbol)?> symbols,
 		AnalyzerConfigOptionsProvider options, SourceProductionContext context)
 	{
-		if (nodes.Length > 0)
+		if (symbols.Length > 0)
 		{
 			var targets = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
-			foreach (var node in nodes.Distinct())
+			foreach (var (node, target) in symbols.Distinct().Cast<(SyntaxNode, ITypeSymbol)>())
 			{
-				var model = compilation.GetSemanticModel(node!.SyntaxTree);
-				var target = RockCreateGenerator.GetTarget(
-					node!, model, context.CancellationToken);
-
 				if (!target.ContainsDiagnostics() && targets.Add(target))
 				{
-					var tree = node!.SyntaxTree;
+					var tree = node.SyntaxTree;
+					var model = compilation.GetSemanticModel(tree);
 					var configurationValues = new ConfigurationValues(options, tree);
 					var (diagnostics, name, text) = RockCreateGenerator.GenerateMapping(
 						target, compilation.Assembly, model, configurationValues, compilation);
@@ -112,13 +110,5 @@ internal sealed class RockCreateGenerator
 		{
 			return (information.Diagnostics, null, null);
 		}
-	}
-
-	private static ITypeSymbol GetTarget(SyntaxNode node, SemanticModel model, CancellationToken token)
-	{
-		var nodeSymbol = model.GetSymbolInfo(node, token);
-		var invocationSymbol = nodeSymbol.Symbol is IMethodSymbol symbol ? symbol :
-			nodeSymbol.CandidateSymbols.Length > 0 ? (IMethodSymbol)nodeSymbol.CandidateSymbols[0] : null;
-		return invocationSymbol!.TypeArguments[0];
 	}
 }
