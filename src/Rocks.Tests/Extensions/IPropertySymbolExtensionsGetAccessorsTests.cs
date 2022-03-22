@@ -30,7 +30,7 @@ public static class IPropertySymbolExtensionsGetAccessorsTests
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.Where(_ => _.Kind() == SyntaxKind.IndexerDeclaration || _.Kind() == SyntaxKind.PropertyDeclaration).Single();
+			.Where(_ => _.IsKind(SyntaxKind.IndexerDeclaration) || _.IsKind(SyntaxKind.PropertyDeclaration)).Single();
 		return (model.GetDeclaredSymbol(propertySyntax) as IPropertySymbol)!;
 	}
 }

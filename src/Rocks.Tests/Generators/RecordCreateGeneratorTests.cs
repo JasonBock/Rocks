@@ -49,15 +49,29 @@ namespace MockTests
 		
 		internal static RecordTest Instance(this Expectations<RecordTest> self)
 		{
-			var mock = new RockRecordTest(self);
-			self.Mocks.Add(mock);
-			return mock;
+			if (self.Mock is null)
+			{
+				var mock = new RockRecordTest(self);
+				self.Mock = mock;
+				return mock;
+			}
+			else
+			{
+				throw new NewMockInstanceException(""Can only create a new mock once."");
+			}
 		}
 		internal static RecordTest Instance(this Expectations<RecordTest> self, RecordTest original)
 		{
-			var mock = new RockRecordTest(self, original);
-			self.Mocks.Add(mock);
-			return mock;
+			if (self.Mock is null)
+			{
+				var mock = new RockRecordTest(self, original);
+				self.Mock = mock;
+				return mock;
+			}
+			else
+			{
+				throw new NewMockInstanceException(""Can only create a new mock once."");
+			}
 		}
 		
 		private sealed record RockRecordTest

@@ -48,9 +48,16 @@ namespace MockTests
 		
 		internal static ClassTest Instance(this Expectations<ClassTest> self)
 		{
-			var mock = new RockClassTest(self);
-			self.Mocks.Add(mock);
-			return mock;
+			if (self.Mock is null)
+			{
+				var mock = new RockClassTest(self);
+				self.Mock = mock;
+				return mock;
+			}
+			else
+			{
+				throw new NewMockInstanceException(""Can only create a new mock once."");
+			}
 		}
 		
 		private sealed class RockClassTest
