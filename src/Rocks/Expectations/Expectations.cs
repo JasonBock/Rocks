@@ -29,22 +29,6 @@ public class Expectations<T>
 		}
 	}
 
-	/*
-	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
-	/// <summary>
-	/// This method is used by Rocks and is not intented to be used by developers.
-	/// </summary>
-	public ImmutableDictionary<int, ImmutableArray<HandlerInformation>> CreateHandlers() =>
-		this.Handlers.ToImmutableDictionary(pair => pair.Key, kvp => kvp.Value.ToImmutableArray());
-
-	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
-	/// <summary>
-	/// This method is used by Rocks and is not intented to be used by developers.
-	/// </summary>
-	public Expectations<TTarget> To<TTarget>()
-		where TTarget : class => new(this.Handlers, this.Mock);
-	*/
-
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
 	/// This property is used by Rocks and is not intented to be used by developers.
