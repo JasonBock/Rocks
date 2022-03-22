@@ -16,17 +16,13 @@ public class Expectations<T>
 {
 	internal Expectations() { }
 
-	internal Expectations(Dictionary<int, List<HandlerInformation>> handlers, List<IMock> mocks) =>
-		(this.Handlers, this.Mocks) = (handlers, mocks);
+	internal Expectations(Dictionary<int, List<HandlerInformation>> handlers, IMock? mock) =>
+		(this.Handlers, this.Mock) = (handlers, mock);
 
 	public void Verify()
 	{
 		var failures = new List<string>();
-
-		foreach (var rock in this.Mocks)
-		{
-			failures.AddRange(rock.GetVerificationFailures());
-		}
+		failures.AddRange(this.Mock?.GetVerificationFailures());
 
 		if (failures.Count > 0)
 		{
@@ -34,6 +30,7 @@ public class Expectations<T>
 		}
 	}
 
+	/*
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
 	/// This method is used by Rocks and is not intented to be used by developers.
@@ -46,7 +43,8 @@ public class Expectations<T>
 	/// This method is used by Rocks and is not intented to be used by developers.
 	/// </summary>
 	public Expectations<TTarget> To<TTarget>()
-		where TTarget : class => new(this.Handlers, this.Mocks);
+		where TTarget : class => new(this.Handlers, this.Mock);
+	*/
 
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
@@ -58,5 +56,5 @@ public class Expectations<T>
 	/// <summary>
 	/// This method is used by Rocks and is not intented to be used by developers.
 	/// </summary>
-	public List<IMock> Mocks { get; } = new();
+	public IMock? Mock { get; set; }
 }

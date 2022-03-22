@@ -42,9 +42,22 @@ internal static class MockConstructorExtensionsBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
+		writer.WriteLine("if (self.Mock is null)");
+		writer.WriteLine("{");
+		writer.Indent++;
+
 		writer.WriteLine($"var mock = new {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
-		writer.WriteLine("self.Mocks.Add(mock);");
+		writer.WriteLine("self.Mock = mock;");
 		writer.WriteLine("return mock;");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+		writer.WriteLine("else");
+		writer.WriteLine("{");
+		writer.Indent++;
+		writer.WriteLine("throw new NewMockInstanceException(\"Can only create a new mock once.\");");
+		writer.Indent--;
+		writer.WriteLine("}");
 
 		writer.Indent--;
 		writer.WriteLine("}");
