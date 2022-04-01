@@ -11,7 +11,7 @@ internal static class MethodExpectationsExtensionsBuilder
 		if (information.Methods.Length > 0)
 		{
 			writer.WriteLine();
-			var typeToMock = information.TypeToMock.GetName(TypeNameOption.Flatten);
+			var typeToMock = information.TypeToMock!.FlattenedName;
 
 			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{

@@ -9,11 +9,11 @@ internal static class MockTypeBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
-		var typeToMock = information.TypeToMock;
-		var kind = typeToMock.IsRecord ? "record" : "class";
-		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
+		var typeToMock = information.TypeToMock!;
+		var kind = typeToMock.Type.IsRecord ? "record" : "class";
+		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.FlattenedName}");
 		writer.Indent++;
-		writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
+		writer.WriteLine($": {typeToMock.GenericName}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 		writer.Indent--;
 
 		writer.WriteLine("{");

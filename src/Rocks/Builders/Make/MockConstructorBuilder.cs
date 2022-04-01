@@ -7,15 +7,15 @@ namespace Rocks.Builders.Make;
 
 internal static class MockConstructorBuilder
 {
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock,
+	internal static void Build(IndentedTextWriter writer, MockedType typeToMock,
 		ImmutableArray<IParameterSymbol> parameters)
 	{
-		var typeToMockName = typeToMock.GetName();
+		var typeToMockName = typeToMock.GenericName;
 
 		if (parameters.Length > 0)
 		{
 			var instanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
-			writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({instanceParameters})");
+			writer.WriteLine($"public {nameof(Rock)}{typeToMock.FlattenedName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))})");
 			writer.Indent--;
@@ -23,7 +23,7 @@ internal static class MockConstructorBuilder
 		}
 		else
 		{
-			writer.WriteLine($"public {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}() {{ }}");
+			writer.WriteLine($"public {nameof(Rock)}{typeToMock.FlattenedName}() {{ }}");
 		}
 	}
 }

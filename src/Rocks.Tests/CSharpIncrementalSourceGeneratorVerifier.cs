@@ -14,7 +14,7 @@ namespace Rocks.Tests
 	// If the .NET Roslyn testing packages get updated to have something like this in the future
 	// I'll remove these helpers.
 	public static partial class CSharpIncrementalSourceGeneratorVerifier<TIncrementalGenerator>
-		 where TIncrementalGenerator : IIncrementalGenerator, new()
+		where TIncrementalGenerator : IIncrementalGenerator, new()
 	{
 #pragma warning disable CA1034 // Nested types should not be visible
 		public class Test : CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>

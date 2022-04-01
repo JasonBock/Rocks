@@ -51,8 +51,8 @@ public static class CodeGenerationTests
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(new[]
 			{
-					MetadataReference.CreateFromFile(targetType.Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				MetadataReference.CreateFromFile(targetType.Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
 			});
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
 			references, new(OutputKind.DynamicallyLinkedLibrary));
@@ -64,7 +64,7 @@ public static class CodeGenerationTests
 		{
 			Assert.That(discoveredTypes.Length, Is.GreaterThan(0));
 			Assert.That(diagnostics.Any(
-					 _ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
+				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 		});
 	}
 
@@ -94,8 +94,8 @@ public static class CodeGenerationTests
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(new[]
 			{
-					MetadataReference.CreateFromFile(targetType.Assembly.Location),
-					MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				MetadataReference.CreateFromFile(targetType.Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
 			});
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
 			references, new(OutputKind.DynamicallyLinkedLibrary));
@@ -107,7 +107,7 @@ public static class CodeGenerationTests
 		{
 			Assert.That(discoveredTypes.Length, Is.GreaterThan(0));
 			Assert.That(diagnostics.Any(
-					 _ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
+				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 		});
 	}
 

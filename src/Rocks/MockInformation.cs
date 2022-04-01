@@ -12,9 +12,9 @@ internal sealed class MockInformation
 	public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 		SemanticModel model, ConfigurationValues configurationValues, BuildType buildType)
 	{
-		(this.TypeToMock, this.ContainingAssemblyOfInvocationSymbol, this.Model, this.ConfigurationValues) =
-			(typeToMock, containingAssemblyOfInvocationSymbol, model, configurationValues);
-		this.Validate(buildType);
+		(this.ContainingAssemblyOfInvocationSymbol, this.Model, this.ConfigurationValues) =
+			(containingAssemblyOfInvocationSymbol, model, configurationValues);
+		this.Validate(typeToMock, buildType);
 	}
 
 	private static bool HasOpenGenerics(INamedTypeSymbol type)
@@ -33,51 +33,56 @@ internal sealed class MockInformation
 		return false;
 	}
 
-	private void Validate(BuildType buildType)
+	private void Validate(ITypeSymbol typeToMock, BuildType buildType)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-		if (this.TypeToMock.IsSealed)
+		if (typeToMock.IsSealed)
 		{
-			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(this.TypeToMock));
+			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(typeToMock));
 		}
 
-		if (this.TypeToMock is INamedTypeSymbol namedType &&
+		if (typeToMock is INamedTypeSymbol namedType &&
 			MockInformation.HasOpenGenerics(namedType))
 		{
-			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(this.TypeToMock));
+			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(typeToMock));
 		}
 
-		var attributes = this.TypeToMock.GetAttributes();
+		var attributes = typeToMock.GetAttributes();
 		var obsoleteAttribute = this.Model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
 
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 			(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors)))
 		{
-			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(this.TypeToMock));
+			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(typeToMock));
 		}
 
 		var memberIdentifier = 0u;
 
-		this.Constructors = this.TypeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
-		this.Methods = this.TypeToMock.GetMockableMethods(
+		this.Constructors = typeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
+		this.Methods = typeToMock.GetMockableMethods(
 			this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
-		this.Properties = this.TypeToMock.GetMockableProperties(
+		this.Properties = typeToMock.GetMockableProperties(
 			this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
-		this.Events = this.TypeToMock.GetMockableEvents(
+		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
 
 		if (buildType == BuildType.Create && this.Methods.Length == 0 && this.Properties.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(this.TypeToMock));
+			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(typeToMock));
 		}
 
-		if (this.TypeToMock.TypeKind == TypeKind.Class && this.Constructors.Length == 0)
+		if (typeToMock.TypeKind == TypeKind.Class && this.Constructors.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(this.TypeToMock));
+			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(typeToMock));
 		}
 
 		this.Diagnostics = diagnostics.ToImmutable();
+
+		if (!this.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
+		{
+			this.TypeToMock = new(typeToMock);
+		}
 	}
 
 	public ConfigurationValues ConfigurationValues { get; }
@@ -88,5 +93,5 @@ internal sealed class MockInformation
 	public ImmutableArray<MethodMockableResult> Methods { get; private set; }
 	public SemanticModel Model { get; }
 	public ImmutableArray<PropertyMockableResult> Properties { get; private set; }
-	public ITypeSymbol TypeToMock { get; }
+	public MockedType? TypeToMock { get; private set; }
 }

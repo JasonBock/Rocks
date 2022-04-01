@@ -51,7 +51,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 				BuildHandlerInformationType(writer, handlerType);
 			}
 
-			BuildAddExtensionMethod(writer, information.TypeToMock, types, namespaces);
+			BuildAddExtensionMethod(writer, information.TypeToMock!, types, namespaces);
 
 			foreach (var (type, adornment, isExplicit) in adornmentTypes)
 			{
@@ -60,7 +60,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		}
 	}
 
-	private static void BuildAddExtensionMethod(IndentedTextWriter writer, ITypeSymbol typeToMock, IEnumerable<ITypeSymbol> types,
+	private static void BuildAddExtensionMethod(IndentedTextWriter writer, MockedType typeToMock, IEnumerable<ITypeSymbol> types,
 		NamespaceGatherer namespaces)
 	{
 		writer.WriteLine($"internal static class {WellKnownNames.Expectations}{WellKnownNames.Wrapper}{WellKnownNames.Extensions}");
@@ -72,7 +72,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 			var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
 
-			writer.WriteLine($"internal static {handlerType} {methodName}(this {WellKnownNames.Expectations}{WellKnownNames.Wrapper}<{typeToMock.GetName()}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
+			writer.WriteLine($"internal static {handlerType} {methodName}(this {WellKnownNames.Expectations}{WellKnownNames.Wrapper}<{typeToMock.GenericName}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
 			writer.WriteLine("{");
 			writer.Indent++;
 

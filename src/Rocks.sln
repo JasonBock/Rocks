@@ -24,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.NuGetHost", "Rocks.Nu
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{B39A3442-A867-4C48-89D7-5006677BF503}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +50,14 @@ Global
 		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B39A3442-A867-4C48-89D7-5006677BF503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B39A3442-A867-4C48-89D7-5006677BF503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

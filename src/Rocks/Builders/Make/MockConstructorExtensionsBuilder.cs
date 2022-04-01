@@ -13,28 +13,28 @@ internal static class MockConstructorExtensionsBuilder
 		{
 			foreach (var constructor in information.Constructors)
 			{
-				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
 					constructor.Parameters);
 			}
 		}
 		else
 		{
-			MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+			MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
 				ImmutableArray<IParameterSymbol>.Empty);
 		}
 	}
 
-	private static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock, ImmutableArray<IParameterSymbol> parameters)
+	private static void Build(IndentedTextWriter writer, MockedType typeToMock, ImmutableArray<IParameterSymbol> parameters)
 	{
 		var instanceParameters = parameters.Length == 0 ?
-			$"this MakeGeneration<{typeToMock.GetName()}> self" :
-			string.Join(", ", $"this MakeGeneration<{typeToMock.GetName()}> self",
+			$"this MakeGeneration<{typeToMock.GenericName}> self" :
+			string.Join(", ", $"this MakeGeneration<{typeToMock.GenericName}> self",
 				string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
 		var rockInstanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Name}"));
 
-		writer.WriteLine($"internal static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} Instance({instanceParameters}) =>");
+		writer.WriteLine($"internal static {typeToMock.GenericName} Instance({instanceParameters}) =>");
 		writer.Indent++;
-		writer.WriteLine($"new {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
+		writer.WriteLine($"new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters});");
 		writer.Indent--;
 	}
 }

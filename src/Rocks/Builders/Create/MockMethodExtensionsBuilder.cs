@@ -10,7 +10,7 @@ internal static class MockMethodExtensionsBuilder
 	{
 		if (information.Methods.Length > 0)
 		{
-			var typeToMockName = information.TypeToMock.GetName();
+			var typeToMockName = information.TypeToMock!.GenericName;
 
 			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{

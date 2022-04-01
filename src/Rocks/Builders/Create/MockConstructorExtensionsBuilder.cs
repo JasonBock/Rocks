@@ -13,22 +13,22 @@ internal static class MockConstructorExtensionsBuilder
 		{
 			foreach (var constructor in information.Constructors)
 			{
-				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
 					constructor.Parameters);
 			}
 		}
 		else
 		{
-			MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock,
+			MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
 				ImmutableArray<IParameterSymbol>.Empty);
 		}
 	}
 
-	private static void Build(IndentedTextWriter writer, ITypeSymbol typeToMock, ImmutableArray<IParameterSymbol> parameters)
+	private static void Build(IndentedTextWriter writer, MockedType typeToMock, ImmutableArray<IParameterSymbol> parameters)
 	{
 		var instanceParameters = parameters.Length == 0 ?
-			$"this {WellKnownNames.Expectations}<{typeToMock.GetName()}> self" :
-			string.Join(", ", $"this {WellKnownNames.Expectations}<{typeToMock.GetName()}> self",
+			$"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self" :
+			string.Join(", ", $"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self",
 				string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
 		var isUnsafe = false;
 		var rockInstanceParameters = parameters.Length == 0 ? "self" :
@@ -38,7 +38,7 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{_.Name}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GetName(TypeNameOption.IncludeGenerics)} {WellKnownNames.Instance}({instanceParameters})");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} {WellKnownNames.Instance}({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -46,7 +46,7 @@ internal static class MockConstructorExtensionsBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"var mock = new {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}({rockInstanceParameters});");
+		writer.WriteLine($"var mock = new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters});");
 		writer.WriteLine("self.Mock = mock;");
 		writer.WriteLine("return mock;");
 

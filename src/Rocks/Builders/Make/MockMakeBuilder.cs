@@ -10,11 +10,11 @@ internal static class MockMakeBuilder
 	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces,
 		Compilation compilation)
 	{
-		var typeToMock = information.TypeToMock;
-		var kind = typeToMock.IsRecord ? "record" : "class";
-		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.GetName(TypeNameOption.Flatten)}");
+		var typeToMock = information.TypeToMock!;
+		var kind = typeToMock.Type.IsRecord ? "record" : "class";
+		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.FlattenedName}");
 		writer.Indent++;
-		writer.WriteLine($": {typeToMock.GetName(TypeNameOption.IncludeGenerics)}");
+		writer.WriteLine($": {typeToMock.GenericName}");
 		writer.Indent--;
 
 		writer.WriteLine("{");

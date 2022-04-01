@@ -67,11 +67,11 @@ internal static class EventExpectationsExtensionsBuilder
 			writer.WriteLine("}");
 		}
 
-		writer.WriteLine($"internal static class {prefix}{WellKnownNames.Adornments}Of{information.TypeToMock.GetName(TypeNameOption.Flatten)}{WellKnownNames.Extensions}");
+		writer.WriteLine($"internal static class {prefix}{WellKnownNames.Adornments}Of{information.TypeToMock!.FlattenedName}{WellKnownNames.Extensions}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		var typeToMockName = information.TypeToMock.GetName();
+		var typeToMockName = information.TypeToMock!.GenericName;
 
 		foreach (var result in information.Events)
 		{

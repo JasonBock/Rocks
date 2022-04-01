@@ -99,7 +99,7 @@ internal sealed class RockCreateGenerator
 		var information = new MockInformation(typeToMock, containingAssemblySymbol, model,
 			configurationValues, BuildType.Create);
 
-		if (!information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
+		if (information.TypeToMock is not null)
 		{
 			var builder = new RockCreateBuilder(information, configurationValues, compilation);
 			return (builder.Diagnostics, builder.Name, builder.Text);

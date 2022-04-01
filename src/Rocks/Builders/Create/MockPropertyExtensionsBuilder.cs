@@ -10,7 +10,7 @@ internal static class MockPropertyExtensionsBuilder
 	{
 		if (information.Properties.Length > 0)
 		{
-			var typeToMockName = information.TypeToMock.GetName();
+			var typeToMockName = information.TypeToMock!.GenericName;
 			MockPropertyExtensionsBuilder.BuildProperties(writer, information, typeToMockName);
 			MockPropertyExtensionsBuilder.BuildIndexers(writer, information, typeToMockName);
 		}
