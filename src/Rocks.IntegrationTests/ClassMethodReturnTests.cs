@@ -95,7 +95,7 @@ public static class ClassMethodReturnTests
 
 		var chunk = rock.Instance();
 
-		Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => chunk.NoParameters(), Throws.Nothing);
 	}
 
 	[Test]

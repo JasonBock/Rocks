@@ -45,7 +45,7 @@ namespace MockTests
 {
 	public interface IContainNullableReferences
 	{
-		string? DoSomething(string? a, string b) => string.Empty;
+		string? DoSomething(string? a, string b);
 	}
 	
 	public static class Test
@@ -112,6 +112,8 @@ namespace MockTests
 							return result!;
 						}
 					}
+					
+					throw new ExpectationException(""No handlers match for string? DoSomething(string? a, string b)"");
 				}
 				
 				throw new ExpectationException(""No handlers were found for string? DoSomething(string? a, string b)"");
@@ -211,7 +213,7 @@ namespace MockTests
 				}
 				else
 				{
-					throw new ExpectationException(""No handlers were found for void Foo())"");
+					throw new ExpectationException(""No handlers were found for void Foo()"");
 				}
 			}
 			
@@ -304,7 +306,7 @@ internal static class CreateExpectationsOfITestExtensions
 			}
 			else
 			{
-				throw new ExpectationException(""No handlers were found for void Foo())"");
+				throw new ExpectationException(""No handlers were found for void Foo()"");
 			}
 		}
 		
@@ -402,7 +404,7 @@ namespace MockTests
 				}
 				else
 				{
-					throw new ExpectationException(""No handlers were found for void Foo())"");
+					throw new ExpectationException(""No handlers were found for void Foo()"");
 				}
 			}
 			
@@ -495,7 +497,7 @@ namespace MockTests
 				}
 				else
 				{
-					throw new ExpectationException(""No handlers were found for void Foo())"");
+					throw new ExpectationException(""No handlers were found for void Foo()"");
 				}
 			}
 			
@@ -648,7 +650,7 @@ namespace MockTests
 				}
 				else
 				{
-					throw new ExpectationException(""No handlers were found for void Foo())"");
+					throw new ExpectationException(""No handlers were found for void Foo()"");
 				}
 			}
 			

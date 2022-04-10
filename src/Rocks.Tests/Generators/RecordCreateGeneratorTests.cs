@@ -100,7 +100,7 @@ namespace MockTests
 				}
 				else
 				{
-					throw new ExpectationException(""No handlers were found for void Foo())"");
+					base.Foo();
 				}
 			}
 			
@@ -116,8 +116,10 @@ namespace MockTests
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
-				
-				throw new ExpectationException(""No handlers were found for string ToString()"");
+				else
+				{
+					return base.ToString();
+				}
 			}
 			
 			[MemberIdentifier(4, ""int GetHashCode()"")]
@@ -132,8 +134,10 @@ namespace MockTests
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
-				
-				throw new ExpectationException(""No handlers were found for int GetHashCode()"");
+				else
+				{
+					return base.GetHashCode();
+				}
 			}
 			
 			

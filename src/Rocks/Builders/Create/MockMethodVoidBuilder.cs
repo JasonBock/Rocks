@@ -104,7 +104,32 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("else");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")})\");");
+
+		if (!method.IsAbstract && method.ContainingType.TypeKind != TypeKind.Interface)
+		{
+			// We'll call the base implementation if an expectation wasn't provided.
+			// We'd do this as well for interfaces with a DIM, but right now
+			// there's no way to call a "base" interface member. If something like this
+			// is added in the future, then I'll revisit this:
+			// https://github.com/dotnet/csharplang/issues/2337
+			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
+			{
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Name}";
+			}));
+			writer.WriteLine($"base.{method.GetName()}({passedParameter});");
+		}
+		else
+		{
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
+		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 

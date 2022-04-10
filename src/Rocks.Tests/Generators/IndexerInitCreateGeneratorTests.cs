@@ -88,9 +88,13 @@ namespace MockTests
 							return result!;
 						}
 					}
+					
+					throw new ExpectationException(""No handlers match for bool Equals(object? obj)"");
 				}
-				
-				throw new ExpectationException(""No handlers were found for bool Equals(object? obj)"");
+				else
+				{
+					return base.Equals(obj);
+				}
 			}
 			
 			[MemberIdentifier(1, ""int GetHashCode()"")]
@@ -105,8 +109,10 @@ namespace MockTests
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
-				
-				throw new ExpectationException(""No handlers were found for int GetHashCode()"");
+				else
+				{
+					return base.GetHashCode();
+				}
 			}
 			
 			[MemberIdentifier(2, ""string? ToString()"")]
@@ -121,8 +127,10 @@ namespace MockTests
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
-				
-				throw new ExpectationException(""No handlers were found for string? ToString()"");
+				else
+				{
+					return base.ToString();
+				}
 			}
 			
 			[MemberIdentifier(3, ""this[int a]"")]

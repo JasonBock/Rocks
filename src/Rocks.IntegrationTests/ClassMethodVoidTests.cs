@@ -79,7 +79,7 @@ public static class ClassMethodVoidTests
 
 		var chunk = rock.Instance();
 
-		Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => chunk.NoParameters(), Throws.Nothing);
 	}
 
 	[Test]
