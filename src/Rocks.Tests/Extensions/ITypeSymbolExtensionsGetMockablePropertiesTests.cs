@@ -22,7 +22,8 @@ $@"public class {targetTypeName}
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, ref memberIdentifier);
+		var shims = new HashSet<ITypeSymbol>();
+		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
@@ -49,7 +50,8 @@ $@"public abstract class {targetTypeName}
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, ref memberIdentifier);
+		var shims = new HashSet<ITypeSymbol>();
+		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
@@ -94,7 +96,8 @@ public class {targetTypeName}
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, ref memberIdentifier);
+		var shims = new HashSet<ITypeSymbol>();
+		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
@@ -131,7 +134,8 @@ public class {targetTypeName}
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, ref memberIdentifier);
+		var shims = new HashSet<ITypeSymbol>();
+		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{

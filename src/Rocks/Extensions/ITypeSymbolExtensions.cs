@@ -170,7 +170,7 @@ internal static class ITypeSymbolExtensions
 		else
 		{
 			foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
-				.Where(_ => !_.IsStatic && _.CanBeReferencedByName && 
+				.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
 					(_.IsAbstract || _.IsVirtual) && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 			{
 				events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
@@ -181,17 +181,24 @@ internal static class ITypeSymbolExtensions
 	}
 
 	internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
-		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, ref uint memberIdentifier)
+		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
 	{
 		var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
 			foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
-				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName && 
+				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
 					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 			{
 				methods.Add(new(selfMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier));
+
+				if (selfMethod.IsVirtual)
+				{
+					shims.Add(self);
+				}
+
 				memberIdentifier++;
 			}
 
@@ -231,6 +238,12 @@ internal static class ITypeSymbolExtensions
 				{
 					methods.Add(new(baseInterfaceMethodGroup[0], self,
 						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier));
+
+					if (baseInterfaceMethodGroup[0].IsVirtual)
+					{
+						shims.Add(baseInterfaceMethodGroup[0].ContainingType);
+					}
+
 					memberIdentifier++;
 				}
 				else
@@ -239,6 +252,12 @@ internal static class ITypeSymbolExtensions
 					{
 						methods.Add(new(baseInterfaceMethod, self,
 							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
+
+						if (baseInterfaceMethod.IsVirtual)
+						{
+							shims.Add(baseInterfaceMethod.ContainingType);
+						}
+
 						memberIdentifier++;
 					}
 				}
@@ -269,6 +288,12 @@ internal static class ITypeSymbolExtensions
 						if (!hierarchyMethod.IsSealed)
 						{
 							methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+
+							if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
+							{
+								shims.Add(hierarchyMethod.ContainingType);
+							}
+
 							memberIdentifier++;
 						}
 					}
@@ -280,7 +305,8 @@ internal static class ITypeSymbolExtensions
 	}
 
 	internal static ImmutableArray<PropertyMockableResult> GetMockableProperties(
-		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, ref uint memberIdentifier)
+		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
 	{
 		static bool AreParametersEqual(IPropertySymbol property1, IPropertySymbol property2)
 		{
@@ -312,6 +338,11 @@ internal static class ITypeSymbolExtensions
 			{
 				var accessors = selfProperty.GetAccessors();
 				properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
+
+				if (selfProperty.IsVirtual)
+				{
+					shims.Add(self);
+				}
 
 				memberIdentifier++;
 
@@ -357,6 +388,12 @@ internal static class ITypeSymbolExtensions
 					var accessors = baseInterfacePropertyGroup[0].GetAccessors();
 					properties.Add(new(baseInterfacePropertyGroup[0], self,
 						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
+
+					if (baseInterfacePropertyGroup[0].IsVirtual)
+					{
+						shims.Add(baseInterfacePropertyGroup[0].ContainingType);
+					}
+
 					memberIdentifier++;
 
 					if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
@@ -371,6 +408,12 @@ internal static class ITypeSymbolExtensions
 						var accessors = baseInterfaceProperty.GetAccessors();
 						properties.Add(new(baseInterfaceProperty, self,
 							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, accessors, memberIdentifier));
+
+						if (baseInterfaceProperty.IsVirtual)
+						{
+							shims.Add(baseInterfaceProperty.ContainingType);
+						}
+
 						memberIdentifier++;
 
 						if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
@@ -407,6 +450,12 @@ internal static class ITypeSymbolExtensions
 						{
 							var accessors = hierarchyProperty.GetAccessors();
 							properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
+
+							if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
+							{
+								shims.Add(hierarchyProperty.ContainingType);
+							}
+
 							memberIdentifier++;
 
 							if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)

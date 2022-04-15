@@ -58,12 +58,13 @@ internal sealed class MockInformation
 		}
 
 		var memberIdentifier = 0u;
+		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
 		this.Constructors = typeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
 		this.Methods = typeToMock.GetMockableMethods(
-			this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
+			this.ContainingAssemblyOfInvocationSymbol, shims, ref memberIdentifier);
 		this.Properties = typeToMock.GetMockableProperties(
-			this.ContainingAssemblyOfInvocationSymbol, ref memberIdentifier);
+			this.ContainingAssemblyOfInvocationSymbol, shims, ref memberIdentifier);
 		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
 
@@ -77,6 +78,8 @@ internal sealed class MockInformation
 			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(typeToMock));
 		}
 
+		this.Shims = shims.ToImmutableArray();
+		
 		this.Diagnostics = diagnostics.ToImmutable();
 
 		if (!this.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))
@@ -93,5 +96,6 @@ internal sealed class MockInformation
 	public ImmutableArray<MethodMockableResult> Methods { get; private set; }
 	public SemanticModel Model { get; }
 	public ImmutableArray<PropertyMockableResult> Properties { get; private set; }
+	public ImmutableArray<ITypeSymbol> Shims { get; private set; }
 	public MockedType? TypeToMock { get; private set; }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Shim;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -11,7 +12,9 @@ internal static class MockTypeBuilder
 	{
 		var typeToMock = information.TypeToMock!;
 		var kind = typeToMock.Type.IsRecord ? "record" : "class";
-		writer.WriteLine($"private sealed {kind} {nameof(Rock)}{typeToMock.FlattenedName}");
+		var mockTypeName = $"{nameof(Rock)}{typeToMock.FlattenedName}";
+
+		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
 		writer.WriteLine($": {typeToMock.GenericName}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
 		writer.Indent--;
@@ -19,7 +22,9 @@ internal static class MockTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
+		MockTypeBuilder.BuildShimFields(writer, information);
 		MockTypeBuilder.BuildRefReturnFields(writer, information);
+
 		writer.WriteLine($"private readonly Dictionary<int, List<{nameof(HandlerInformation)}>> handlers;");
 		writer.WriteLine();
 
@@ -27,12 +32,12 @@ internal static class MockTypeBuilder
 		{
 			foreach (var constructor in information.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, typeToMock, constructor.Parameters);
+				MockConstructorBuilder.Build(writer, typeToMock, constructor.Parameters, information.Shims);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, typeToMock, ImmutableArray<IParameterSymbol>.Empty);
+			MockConstructorBuilder.Build(writer, typeToMock, ImmutableArray<IParameterSymbol>.Empty, information.Shims);
 		}
 
 		writer.WriteLine();
@@ -67,10 +72,30 @@ internal static class MockTypeBuilder
 			MockEventsBuilder.Build(writer, information.Events, compilation);
 		}
 
+		// TODO: Take this WriteLine() out, it's ugly
 		writer.WriteLine();
 		writer.WriteLine($"Dictionary<int, List<{nameof(HandlerInformation)}>> {nameof(IMock)}.{nameof(IMock.Handlers)} => this.handlers;");
+		MockTypeBuilder.BuildShimTypes(writer, information, mockTypeName, compilation);
 		writer.Indent--;
 		writer.WriteLine("}");
+	}
+
+	private static void BuildShimTypes(IndentedTextWriter writer, MockInformation information, string mockTypeName,
+		Compilation compilation)
+	{
+		foreach (var shimType in information.Shims)
+		{
+			writer.WriteLine();
+			ShimBuilder.Build(writer, shimType, mockTypeName, compilation);
+		}
+	}
+
+	private static void BuildShimFields(IndentedTextWriter writer, MockInformation information)
+	{
+		foreach (var shimType in information.Shims)
+		{
+			writer.WriteLine($"private readonly {shimType.GetName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
+		}
 	}
 
 	private static void BuildRefReturnFields(IndentedTextWriter writer, MockInformation information)

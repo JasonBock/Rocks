@@ -105,12 +105,11 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		if (!method.IsAbstract && method.ContainingType.TypeKind != TypeKind.Interface)
+		if (!method.IsAbstract)
 		{
 			// We'll call the base implementation if an expectation wasn't provided.
-			// We'd do this as well for interfaces with a DIM, but right now
-			// there's no way to call a "base" interface member. If something like this
-			// is added in the future, then I'll revisit this:
+			// We'll do this as well for interfaces with a DIM through a shim.
+			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
@@ -123,7 +122,9 @@ internal static class MockMethodVoidBuilder
 				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Name}";
 			}));
-			writer.WriteLine($"base.{method.GetName()}({passedParameter});");
+			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
+				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+			writer.WriteLine($"{target}.{method.GetName()}({passedParameter});");
 		}
 		else
 		{

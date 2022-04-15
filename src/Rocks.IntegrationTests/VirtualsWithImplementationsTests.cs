@@ -24,7 +24,8 @@ public static class VirtualsWithImplementationsTests
 	public static void CallVirtualMethodOnInterfaceWithNoExpectation()
 	{
 		var polygonMock = Rock.Create<IPolygon>();
-		polygonMock.Methods().GetPerimeter().Returns(15);
+		polygonMock.Properties().Getters().SideLength().Returns(3);
+		polygonMock.Properties().Getters().NumberOfSides().Returns(5);
 
 		var polygon = polygonMock.Instance();
 		Assert.That(polygon.GetPerimeter(), Is.EqualTo(15));
