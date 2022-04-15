@@ -2,12 +2,12 @@
 	<PropertyGroup>
 		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
 		<Authors>Jason Bock</Authors>
-		<Copyright>Copyright © 2021</Copyright>
+		<Copyright>Copyright © 2022</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net6.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<Version>6.4.0</Version>
+		<Version>6.4.1</Version>
 	</PropertyGroup>
 </Project>

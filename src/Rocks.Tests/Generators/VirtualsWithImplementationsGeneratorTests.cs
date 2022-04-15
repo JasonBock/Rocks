@@ -169,10 +169,11 @@ namespace MockTests
 		private sealed class RockIHaveImplementation
 			: IHaveImplementation, IMock
 		{
+			private readonly IHaveImplementation shimForIHaveImplementation;
 			private readonly Dictionary<int, List<HandlerInformation>> handlers;
 			
 			public RockIHaveImplementation(Expectations<IHaveImplementation> expectations) =>
-				this.handlers = expectations.Handlers;
+				(this.handlers, this.shimForIHaveImplementation) = (expectations.Handlers, new ShimRockIHaveImplementation(this));
 			
 			[MemberIdentifier(0, ""int Foo()"")]
 			public int Foo()
@@ -186,12 +187,23 @@ namespace MockTests
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
-				
-				throw new ExpectationException(""No handlers were found for int Foo()"");
+				else
+				{
+					return this.shimForIHaveImplementation.Foo();
+				}
 			}
 			
 			
 			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
+			
+			private sealed class ShimRockIHaveImplementation
+				: IHaveImplementation
+			{
+				private readonly RockIHaveImplementation mock;
+				
+				public ShimRockIHaveImplementation(RockIHaveImplementation mock) =>
+					this.mock = mock;
+			}
 		}
 	}
 	

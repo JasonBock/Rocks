@@ -63,9 +63,30 @@ internal static class MockPropertyBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		writer.WriteLine();
+		if (!property.IsAbstract)
+		{
+			writer.WriteLine("else");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}())\");");
+			// We'll call the base implementation if an expectation wasn't provided.
+			// We'll do this as well for interfaces with a DIM through a shim.
+			// If something like this is added in the future, then I'll revisit this:
+			// https://github.com/dotnet/csharplang/issues/2337
+			var refReturn = property.ReturnsByRef || property.ReturnsByRefReadonly ? "ref " : string.Empty;
+			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
+				$"this.shimFor{property.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+			writer.WriteLine($"return {refReturn}{target}.{property.Name};");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+		else
+		{
+			writer.WriteLine();
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}())\");");
+		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
@@ -121,7 +142,7 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -146,7 +167,22 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+
+			if (!property.IsAbstract)
+			{
+				// We'll call the base implementation if an expectation wasn't provided.
+				// We'll do this as well for interfaces with a DIM through a shim.
+				// If something like this is added in the future, then I'll revisit this:
+				// https://github.com/dotnet/csharplang/issues/2337
+				var target = property.ContainingType.TypeKind == TypeKind.Interface ?
+					$"this.shimFor{property.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+				writer.WriteLine($"{target}.{property.Name} = value;");
+			}
+			else
+			{
+				writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+			}
+
 			writer.Indent--;
 			writer.WriteLine("}");
 

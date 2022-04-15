@@ -8,11 +8,11 @@ namespace Rocks.Builders.Create;
 
 internal static class MockIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, 
+		string signature, string explicitTypeName)
 	{
-		var method = result.Value.GetMethod!;
-		var methodSignature =
-			$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+		var indexer = result.Value;
+		var method = indexer.GetMethod!;
 
 		writer.WriteLine("get");
 		writer.WriteLine("{");
@@ -62,21 +62,54 @@ internal static class MockIndexerBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
+		writer.WriteLine();
+		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		writer.WriteLine();
+		if (!indexer.IsAbstract)
+		{
+			writer.WriteLine("else");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature})\");");
+			// We'll call the base implementation if an expectation wasn't provided.
+			// We'll do this as well for interfaces with a DIM through a shim.
+			// If something like this is added in the future, then I'll revisit this:
+			// https://github.com/dotnet/csharplang/issues/2337
+			var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
+			{
+				var direction = _.RefKind switch
+				{
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}{_.Name}";
+			}));
+			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadonly ? "ref " : string.Empty;
+			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
+				$"this.shimFor{indexer.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+			writer.WriteLine($"return {refReturn}{target}[{parameters}];");
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+		else
+		{
+			writer.WriteLine();
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {signature})\");");
+		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, 
+		string signature, string explicitTypeName)
 	{
-		var method = result.Value.SetMethod!;
-		var methodSignature =
-			$"{method.ReturnType.GetName()} {explicitTypeName}this[{string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))}";
+		var indexer = result.Value;
+		var method = indexer.SetMethod!;
 
 		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
@@ -133,12 +166,44 @@ internal static class MockIndexerBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 
+			writer.WriteLine();
+			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			writer.WriteLine();
+			if (!indexer.IsAbstract)
+			{
+				writer.WriteLine("else");
+				writer.WriteLine("{");
+				writer.Indent++;
 
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature})\");");
+				// We'll call the base implementation if an expectation wasn't provided.
+				// We'll do this as well for interfaces with a DIM through a shim.
+				// If something like this is added in the future, then I'll revisit this:
+				// https://github.com/dotnet/csharplang/issues/2337
+				var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
+				{
+					var direction = _.RefKind switch
+					{
+						RefKind.In => "in ",
+						_ => string.Empty
+					};
+					return $"{direction}{_.Name}";
+				}));
+				var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
+					$"this.shimFor{indexer.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+				writer.WriteLine($"{target}[{parameters}] = value;");
+
+				writer.Indent--;
+				writer.WriteLine("}");
+			}
+			else
+			{
+				writer.WriteLine();
+				writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
+			}
+
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -158,18 +223,19 @@ internal static class MockIndexerBuilder
 		}
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
+		var signature = MockIndexerBuilder.GetSignature(indexer.Parameters, false, compilation);
 
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.GetMethod!.Parameters, false, compilation)}"")]");
+			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
 			memberIdentifierAttribute++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.SetMethod!.Parameters, false, compilation)}"")]");
+			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -188,14 +254,14 @@ internal static class MockIndexerBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, signature, explicitTypeName);
 			memberIdentifier++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, signature, explicitTypeName);
 		}
 
 		writer.Indent--;
