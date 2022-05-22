@@ -63,7 +63,7 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetCodeValue()} " : string.Empty;
+			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
 		var constraints = method.GetConstraints();

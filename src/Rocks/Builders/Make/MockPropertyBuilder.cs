@@ -21,7 +21,7 @@ internal static class MockPropertyBuilder
 			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetCodeValue()} " : string.Empty;
+			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 

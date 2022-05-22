@@ -49,7 +49,7 @@ internal static class MockMethodVoidBuilder
 
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetCodeValue()} " : string.Empty;
+			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{isUnsafe}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
 		var constraints = method.GetConstraints();
