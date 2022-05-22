@@ -14,14 +14,16 @@ namespace Rocks.Tests;
 public static class CodeGenerationTests
 {
 	[TestCase(typeof(object))]
-	//[TestCase(typeof(Dictionary<,>))]
-	//[TestCase(typeof(ImmutableArray))]
+	[TestCase(typeof(Dictionary<,>))]
+	[TestCase(typeof(ImmutableArray))]
+	[TestCase(typeof(HttpMessageHandler))]
 	public static void GenerateCreatesForBaseClassLibrary(Type targetType) =>
 		CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockCreateGenerator());
 
 	[TestCase(typeof(object))]
-	//[TestCase(typeof(Dictionary<,>))]
-	//[TestCase(typeof(ImmutableArray))]
+	[TestCase(typeof(Dictionary<,>))]
+	[TestCase(typeof(ImmutableArray))]
+	[TestCase(typeof(HttpMessageHandler))]
 	public static void GenerateMakesForBaseClassLibrary(Type targetType) =>
 		CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockMakeGenerator());
 

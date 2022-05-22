@@ -11,9 +11,11 @@ internal static class MockEventsBuilder
 	{
 		var isOverride = @event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var declareNullable = @event.Value.Type.NullableAnnotation == NullableAnnotation.Annotated ? string.Empty : "?";
+		var isPublic = @event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+			$"{@event.Value.DeclaredAccessibility.GetCodeValue()} " : string.Empty;
 
 		writer.WriteLine(
-			$"public {isOverride}event {@event.Value.Type.GetName()}{declareNullable} {@event.Value.Name};");
+			$"{isPublic}{isOverride}event {@event.Value.Type.GetName()}{declareNullable} {@event.Value.Name};");
 	}
 
 	private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)

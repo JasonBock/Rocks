@@ -37,6 +37,7 @@ using Rocks.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Text;
 
 #nullable enable
 namespace MockTests
@@ -63,9 +64,17 @@ namespace MockTests
 			{
 				return default!;
 			}
+			protected override bool PrintMembers(StringBuilder builder)
+			{
+				return default!;
+			}
 			public override int GetHashCode()
 			{
 				return default!;
+			}
+			protected override Type EqualityContract
+			{
+				get => default!;
 			}
 		}
 	}
