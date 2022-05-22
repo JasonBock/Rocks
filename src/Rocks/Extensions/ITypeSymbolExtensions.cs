@@ -105,7 +105,7 @@ internal static class ITypeSymbolExtensions
 			self.TypeKind == TypeKind.Class ?
 				self.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Constructor &&
-						ISymbolExtensions.CanBeSeenByContainingAssembly(_, containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
+						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
 				Array.Empty<IMethodSymbol>().ToImmutableArray();
 
 	internal static ImmutableArray<EventMockableResult> GetMockableEvents(
@@ -271,8 +271,7 @@ internal static class ITypeSymbolExtensions
 			{
 				foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-						_.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
-						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+						!_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
 					if ((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual) &&
 						(!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
@@ -431,8 +430,7 @@ internal static class ITypeSymbolExtensions
 			foreach (var hierarchyType in hierarchy)
 			{
 				foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
-					.Where(_ => _.DeclaredAccessibility == Accessibility.Public && !_.IsStatic &&
-						(_.IsIndexer || _.CanBeReferencedByName) &&
+					.Where(_ => !_.IsStatic && (_.IsIndexer || _.CanBeReferencedByName) &&
 						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 				{
 					if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)

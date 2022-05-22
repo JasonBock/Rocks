@@ -1,6 +1,6 @@
 <Project>
 	<PropertyGroup>
-		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<AnalysisMode>all</AnalysisMode>
 		<Authors>Jason Bock</Authors>
 		<Copyright>Copyright © 2022</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>

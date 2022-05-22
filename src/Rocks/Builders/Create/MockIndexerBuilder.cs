@@ -239,7 +239,7 @@ internal static class MockIndexerBuilder
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			"public " : string.Empty;
+			$"{result.Value.DeclaredAccessibility.GetCodeValue()} " : string.Empty;
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
