@@ -18,7 +18,13 @@ public static class HttpMessageHandlerTests
 			.Returns(Task.FromResult(response));
 
 		using var client = new HttpClient(handlerMock.Instance());
-		await client.GetAsync(new Uri("https://localhost.com")).ConfigureAwait(false);
+		var getResponse = await client.GetAsync(new Uri("https://localhost.com")).ConfigureAwait(false);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(getResponse.StatusCode, Is.EqualTo(response.StatusCode));
+			Assert.That(getResponse.Content, Is.EqualTo(response.Content));
+		});
 
 		handlerMock.Verify();
 	}
