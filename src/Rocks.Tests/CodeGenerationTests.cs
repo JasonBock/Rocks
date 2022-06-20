@@ -16,49 +16,43 @@ namespace Rocks.Tests;
 // and we need to such that we make sure it is actually able to compile.
 public static class CodeGenerationTests
 {
-	[TestCase(typeof(object))]
-	[TestCase(typeof(Dictionary<,>))]
-	[TestCase(typeof(ImmutableArray))]
-	[TestCase(typeof(HttpMessageHandler))]
-	public static void GenerateCreatesForBaseClassLibrary(Type targetType) =>
-		CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockCreateGenerator());
+	private static readonly Type[] targetTypes = new Type[] { typeof(object), typeof(Dictionary<,>), typeof(ImmutableArray), typeof(HttpMessageHandler) };
 
-	[TestCase(typeof(object))]
-	[TestCase(typeof(Dictionary<,>))]
-	[TestCase(typeof(ImmutableArray))]
-	[TestCase(typeof(HttpMessageHandler))]
-	public static void GenerateMakesForBaseClassLibrary(Type targetType) =>
-		CodeGenerationTests.GenerateForBaseClassLibrary(targetType, new RockMakeGenerator());
+	[Test]
+	public static void GenerateCreatesForBaseClassLibrary() =>
+		CodeGenerationTests.GenerateForBaseClassLibrary(new RockCreateGenerator());
 
-	private static void GenerateForBaseClassLibrary(Type targetType, IIncrementalGenerator generator)
+	[Test]
+	public static void GenerateMakesForBaseClassLibrary() =>
+		CodeGenerationTests.GenerateForBaseClassLibrary(new RockMakeGenerator());
+
+	private static void GenerateForBaseClassLibrary(IIncrementalGenerator generator)
 	{
-		if (targetType is null)
+		var isCreate = generator is RockCreateGenerator;
+		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
+		var assemblies = CodeGenerationTests.targetTypes.Select(_ => _.Assembly).ToHashSet();
+
+		foreach(var assembly in assemblies)
 		{
-			throw new ArgumentNullException(nameof(targetType));
+			Parallel.ForEach(assembly.GetTypes()
+				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+				{
+					if (_.IsValidTarget())
+					{
+						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
+					}
+				});
 		}
 
-		var isCreate = generator is RockCreateGenerator;
-
-		var types = new ConcurrentBag<Type>();
-		Parallel.ForEach(targetType.Assembly.GetTypes()
-			.Where(_ => _.IsPublic && !_.IsSealed), _ =>
-			{
-				if (_.IsValidTarget())
-				{
-					types.Add(_);
-				}
-			});
-
-		var discoveredTypes = types.ToArray();
-
-		var code = CodeGenerationTests.GetCode(types, discoveredTypes, isCreate);
+		var types = discoveredTypes.Keys.ToArray();
+		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)))
 			.Concat(new[]
 			{
-				MetadataReference.CreateFromFile(targetType.Assembly.Location),
 				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
 			});
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
@@ -69,13 +63,13 @@ public static class CodeGenerationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(discoveredTypes.Length, Is.GreaterThan(0));
+			Assert.That(types.Length, Is.GreaterThan(0));
 			Assert.That(diagnostics.Any(
 				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 		});
 	}
 
-	private static string GetCode(ConcurrentBag<Type> types, Type[] discoveredTypes, bool isCreate)
+	private static string GetCode(Type[] types, bool isCreate)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -89,9 +83,9 @@ public static class CodeGenerationTests
 		indentWriter.WriteLine("{");
 		indentWriter.Indent++;
 
-		for (var i = 0; i < types.Count; i++)
+		for (var i = 0; i < types.Length; i++)
 		{
-			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{discoveredTypes[i].GetTypeDefinition()}>();");
+			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition()}>();");
 		}
 
 		indentWriter.Indent--;
