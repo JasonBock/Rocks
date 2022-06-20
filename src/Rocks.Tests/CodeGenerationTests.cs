@@ -37,6 +37,8 @@ public static class CodeGenerationTests
 			throw new ArgumentNullException(nameof(targetType));
 		}
 
+		var isCreate = generator is RockCreateGenerator;
+
 		var types = new ConcurrentBag<Type>();
 		Parallel.ForEach(targetType.Assembly.GetTypes()
 			.Where(_ => _.IsPublic && !_.IsSealed), _ =>
@@ -49,7 +51,7 @@ public static class CodeGenerationTests
 
 		var discoveredTypes = types.ToArray();
 
-		var code = CodeGenerationTests.GetCode(types, discoveredTypes);
+		var code = CodeGenerationTests.GetCode(types, discoveredTypes, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -73,7 +75,7 @@ public static class CodeGenerationTests
 		});
 	}
 
-	private static string GetCode(ConcurrentBag<Type> types, Type[] discoveredTypes)
+	private static string GetCode(ConcurrentBag<Type> types, Type[] discoveredTypes, bool isCreate)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -89,7 +91,7 @@ public static class CodeGenerationTests
 
 		for (var i = 0; i < types.Count; i++)
 		{
-			indentWriter.WriteLine($"var r{i} = Rock.Create<{discoveredTypes[i].GetTypeDefinition()}>();");
+			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{discoveredTypes[i].GetTypeDefinition()}>();");
 		}
 
 		indentWriter.Indent--;
