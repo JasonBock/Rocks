@@ -49,7 +49,7 @@ internal static class AttributeDataExtensions
 				TypedConstantKind.Primitive => GetValue(value.Value),
 				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetName()})",
 				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
-				TypedConstantKind.Enum => $"({value.Type!.GetName()}){value.Value}",
+				TypedConstantKind.Enum => $"({value.Type!.GetName()})({value.Value})",
 				_ => value.Value?.ToString() ?? string.Empty
 			};
 

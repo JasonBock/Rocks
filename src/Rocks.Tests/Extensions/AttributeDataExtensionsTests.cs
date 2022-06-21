@@ -31,7 +31,10 @@ namespace Rocks.Tests.Extensions
 {
 	public enum MyValue
 	{
-		ThisOne, ThatOne, AnotherOne
+		ThisNegativeOne = -1, 
+		ThisOne = 0, 
+		ThatOne = 1, 
+		AnotherOne = 2
 	}
 
 	[AttributeUsage(AttributeTargets.All)]
@@ -91,7 +94,23 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0), NamedA = 44)"));
+		}
+
+		[Test]
+		public static void GetDescriptionWithNegativeEnumValue()
+		{
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+@"using Rocks.Tests.Extensions;
+using System;
+
+public interface IA
+{
+	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisNegativeOne, NamedA = 44)]
+	void Foo();
+}");
+
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(-1), NamedA = 44)"));
 		}
 
 		[Test]
@@ -107,7 +126,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)0, NamedA = 44)"));
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)(0), NamedA = 44)"));
 		}
 
 		[Test]
@@ -124,7 +143,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0)), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)(1))]"));
 		}
 
 		[Test]
@@ -141,7 +160,7 @@ public interface IA
 	void Foo();
 }");
 
-			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)0), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)1)]"));
+			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0)), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)(1))]"));
 		}
 
 		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
