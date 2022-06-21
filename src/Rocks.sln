@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
 		LICENSE = LICENSE
 		nuget.config = nuget.config
 		..\README.md = ..\README.md
@@ -24,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.NuGetHost", "Rocks.Nu
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{B39A3442-A867-4C48-89D7-5006677BF503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{B39A3442-A867-4C48-89D7-5006677BF503}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

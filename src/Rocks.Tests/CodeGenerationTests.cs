@@ -29,10 +29,11 @@ public static class CodeGenerationTests
 	private static void GenerateForBaseClassLibrary(IIncrementalGenerator generator)
 	{
 		var isCreate = generator is RockCreateGenerator;
-		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 		var assemblies = CodeGenerationTests.targetTypes.Select(_ => _.Assembly).ToHashSet();
 
-		foreach(var assembly in assemblies)
+		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
+
+		foreach (var assembly in assemblies)
 		{
 			Parallel.ForEach(assembly.GetTypes()
 				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
@@ -45,6 +46,8 @@ public static class CodeGenerationTests
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
+
+		//var types = new Type[] { typeof(TextWriter) };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -65,6 +68,13 @@ public static class CodeGenerationTests
 		{
 			Assert.That(types.Length, Is.GreaterThan(0));
 			Assert.That(diagnostics.Any(
+				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
+
+			using var outputStream = new MemoryStream();
+			var result = outputCompilation.Emit(outputStream);
+
+			Assert.That(result.Success, Is.True);
+			Assert.That(result.Diagnostics.Any(
 				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 		});
 	}

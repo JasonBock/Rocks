@@ -135,7 +135,7 @@ internal static class MockMethodValueBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Name}";
+				return $"{direction}{_.Name}";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ? 
 				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
