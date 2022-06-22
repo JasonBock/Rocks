@@ -44,7 +44,7 @@ public static class CodeGenerationTests
 		//}
 
 		//var types = discoveredTypes.Keys.ToArray();
-		var types = new Type[] { typeof(System.Runtime.InteropServices.ComWrappers) };
+		var types = new Type[] { typeof(TextReader) };
 
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -73,8 +73,8 @@ public static class CodeGenerationTests
 
 			Assert.That(result.Success, Is.True);
 			// TODO: Remember to include warnings as well before #167 is merged.
-			Assert.That(result.Diagnostics.Any(
-				_ => _.Severity == DiagnosticSeverity.Error), Is.False);
+			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
+			Assert.That(errorDiagnostics.Length, Is.EqualTo(0));
 		});
 	}
 

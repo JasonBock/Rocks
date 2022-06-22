@@ -81,12 +81,21 @@ internal static class AttributeDataExtensions
 
 	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, AttributeTargets? target = null)
 	{
-		// We can't emit attributes that are compiler-generated
+		// We can't emit attributes that are:
+		// * Compiler-generated
+		// * Not visible to the current compilation (e.g. IntrinsicAttribute).
+		// * IteratorStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.iteratorstatemachineattribute#remarks)
+		// * AsyncStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.asyncstatemachineattribute#remarks)
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
+		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
+		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
 
 		var attributes = self.Where(
-			_ => _.AttributeClass is not null && !_.AttributeClass.GetAttributes().Any(
-				_ => _.AttributeClass is not null && _.AttributeClass.Equals(compilerGeneratedAttribute))).ToImmutableArray();
+			_ => _.AttributeClass is not null &&
+				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
+				!_.AttributeClass.Equals(compilerGeneratedAttribute) &&
+				!_.AttributeClass.Equals(iteratorStateMachineAttribute) &&
+				!_.AttributeClass.Equals(asyncStateMachineAttribute)).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

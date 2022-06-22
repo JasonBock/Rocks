@@ -39,6 +39,9 @@ internal static class ITypeSymbolExtensions
 		return false;
 	}
 
+	// TODO: This method really needs to change.
+	// It's doing WAY too much in too many different contexts.
+	// I need to split this out and have methods that are well-focus and defined.
 	internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 	{
 		static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)
