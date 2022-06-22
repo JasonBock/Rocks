@@ -81,18 +81,12 @@ internal static class AttributeDataExtensions
 
 	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, AttributeTargets? target = null)
 	{
-		// We can't emit attributes that are:
-		// * Compiler-generated
-		// * Not visible to the current compilation (e.g. IntrinsicAttribute).
-		// * IteratorStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.iteratorstatemachineattribute#remarks)
+		// We can't emit attributes that are compiler-generated
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
-		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
 
 		var attributes = self.Where(
-			_ => _.AttributeClass is not null &&
-				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
-				!_.AttributeClass.Equals(compilerGeneratedAttribute) &&
-				!_.AttributeClass.Equals(iteratorStateMachineAttribute)).ToImmutableArray();
+			_ => _.AttributeClass is not null && !_.AttributeClass.GetAttributes().Any(
+				_ => _.AttributeClass is not null && _.AttributeClass.Equals(compilerGeneratedAttribute))).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

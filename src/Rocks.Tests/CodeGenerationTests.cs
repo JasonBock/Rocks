@@ -72,10 +72,9 @@ public static class CodeGenerationTests
 			var result = outputCompilation.Emit(outputStream);
 
 			Assert.That(result.Success, Is.True);
-			var emitErrorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
-
 			// TODO: Remember to include warnings as well before #167 is merged.
-			Assert.That(emitErrorDiagnostics.Length, Is.EqualTo(0));
+			Assert.That(result.Diagnostics.Any(
+				_ => _.Severity == DiagnosticSeverity.Error), Is.False);
 		});
 	}
 
