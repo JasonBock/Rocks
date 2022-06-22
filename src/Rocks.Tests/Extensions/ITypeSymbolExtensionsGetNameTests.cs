@@ -11,6 +11,9 @@ public static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.NoGenerics, "int*")]
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.IncludeGenerics, "int*")]
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.Flatten, "intPointer")]
+	[TestCase("public class Target { public unsafe void Foo(Inner* a) { } public struct Inner { } }", TypeNameOption.NoGenerics, "Target.Inner*")]
+	[TestCase("public class Target { public unsafe void Foo(Inner* a) { } public struct Inner { } }", TypeNameOption.IncludeGenerics, "Target.Inner*")]
+	[TestCase("public class Target { public unsafe void Foo(Inner* a) { } public struct Inner { } }", TypeNameOption.Flatten, "Target_InnerPointer")]
 	[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", TypeNameOption.NoGenerics, "delegate*<int, void>")]
 	[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", TypeNameOption.IncludeGenerics, "delegate*<int, void>")]
 	[TestCase("public class Target { public unsafe void Foo(delegate*<int, void> a) { } }", TypeNameOption.Flatten, "delegatePointerOfint__void")]
@@ -30,8 +33,22 @@ public static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { }", TypeNameOption.IncludeGenerics, "Target")]
 	[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.IncludeGenerics, "Target<T, T2, TSomething>")]
 	[TestCase("public class Target { }", TypeNameOption.Flatten, "Target")]
-	[TestCase("public class Target<T, T2, TSomething> : Base", TypeNameOption.Flatten, "TargetOfT_T2_TSomething")]
+	[TestCase("public class Target<T, T2, TSomething> { }", TypeNameOption.Flatten, "TargetOfT_T2_TSomething")]
 	public static void GetName(string code, TypeNameOption option, string expectedName)
+	{
+		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
+		var name = typeSymbol.GetName(option);
+
+		Assert.That(name, Is.EqualTo(expectedName));
+	}
+
+	[TestCase("public class Outer { public class Target { } }", TypeNameOption.NoGenerics, "Outer.Target")]
+	[TestCase("public class Outer<TOuter> { public class Target<T, T2, TSomething> { } }", TypeNameOption.NoGenerics, "Outer.Target")]
+	[TestCase("public class Outer { public class Target { } }", TypeNameOption.IncludeGenerics, "Outer.Target")]
+	[TestCase("public class Outer<TOuter> { public class Target<T, T2, TSomething> { } }", TypeNameOption.IncludeGenerics, "Outer<TOuter>.Target<T, T2, TSomething>")]
+	[TestCase("public class Outer { public class Target { } }", TypeNameOption.Flatten, "Outer_Target")]
+	[TestCase("public class Outer<TOuter> { public class Target<T, T2, TSomething> { } }", TypeNameOption.Flatten, "OuterOfTOuter_TargetOfT_T2_TSomething")]
+	public static void GetNameForNestedTypes(string code, TypeNameOption option, string expectedName)
 	{
 		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbol(code);
 		var name = typeSymbol.GetName(option);

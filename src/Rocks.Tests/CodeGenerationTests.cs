@@ -12,9 +12,6 @@ using System.Runtime.Versioning;
 
 namespace Rocks.Tests;
 
-// TODO: These methods just create code that generator driver can work off of,
-// but we actually don't compile the resultant assembly with that new generated code,
-// and we need to such that we make sure it is actually able to compile.
 public static class CodeGenerationTests
 {
 	private static readonly Type[] targetTypes = new Type[] { typeof(object), typeof(Dictionary<,>), typeof(ImmutableArray), typeof(HttpMessageHandler) };
@@ -47,7 +44,7 @@ public static class CodeGenerationTests
 		//}
 
 		//var types = discoveredTypes.Keys.ToArray();
-		var types = new Type[] { typeof(TypeDelegator) };
+		var types = new Type[] { typeof(System.Runtime.InteropServices.ComWrappers) };
 
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -60,7 +57,7 @@ public static class CodeGenerationTests
 				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
 			});
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
-			references, new(OutputKind.DynamicallyLinkedLibrary));
+			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);

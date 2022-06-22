@@ -41,27 +41,49 @@ internal static class ITypeSymbolExtensions
 
 	internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 	{
-		static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)
+		static string GetFlattenedName(INamedTypeSymbol symbol, TypeNameOption flattenedOptions)
 		{
-			if (flattenedName.TypeArguments.Length == 0)
+			if (symbol.TypeArguments.Length == 0)
 			{
-				return flattenedName.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+				return symbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 			}
 			else
 			{
-				return $"{flattenedName.Name}Of{string.Join("_", flattenedName.TypeArguments.Select(_ => _.GetName(flattenedOptions)))}";
+				return $"{symbol.Name}Of{string.Join("_", symbol.TypeArguments.Select(_ => _.ToDisplayString()))}";
+			}
+		}
+
+		static INamedTypeSymbol? GetContainingType(ITypeSymbol symbol)
+		{
+			if(symbol is IPointerTypeSymbol pointerSymbol)
+			{
+				return pointerSymbol.PointedAtType.ContainingType;
+			}
+			else
+			{
+				return symbol.ContainingType;
 			}
 		}
 
 		if (options == TypeNameOption.IncludeGenerics)
 		{
-			return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var name = self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			var containingType = GetContainingType(self);
+
+			if (containingType is not null)
+			{
+				return $"{containingType.GetName(options)}.{name}";
+			}
+			else
+			{
+				return name;
+			}
 		}
 		else if (options == TypeNameOption.Flatten)
 		{
 			if (self.Kind == SymbolKind.PointerType)
 			{
-				return self.ToDisplayString().Replace("*", "Pointer");
+				return self.ToDisplayString().Replace(".", "_").Replace("*", "Pointer");
 			}
 			else if (self.Kind == SymbolKind.FunctionPointerType)
 			{
@@ -72,17 +94,53 @@ internal static class ITypeSymbolExtensions
 			}
 			else if (self is INamedTypeSymbol namedSelf)
 			{
-				return GetFlattenedName(namedSelf, options);
+				var name = GetFlattenedName(namedSelf, options);
+				var containingType = GetContainingType(self);
+
+				if (containingType is not null)
+				{
+					return $"{containingType.GetName(options)}_{name}";
+				}
+				else
+				{
+					return name;
+				}
 			}
 			else
 			{
-				return self.Name;
+				var name = self.Name;
+				var containingType = GetContainingType(self);
+
+				if (containingType is not null)
+				{
+					return $"{containingType.GetName(options)}.{name}";
+				}
+				else
+				{
+					return name;
+				}
 			}
 		}
 		else
 		{
-			return self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType ?
-				self.ToDisplayString() : self.Name;
+			if(self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType)
+			{
+				return self.ToDisplayString();
+			}
+			else
+			{
+				var name = self.Name;
+				var containingType = GetContainingType(self);
+
+				if (containingType is not null)
+				{
+					return $"{containingType.GetName(options)}.{name}";
+				}
+				else
+				{
+					return name;
+				}
+			}
 		}
 	}
 
