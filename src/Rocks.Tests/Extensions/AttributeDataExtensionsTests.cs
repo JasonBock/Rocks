@@ -163,6 +163,81 @@ public interface IA
 			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0)), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)(1))]"));
 		}
 
+		[Test]
+		public static void GetDescriptionWhenCompilerGeneratedAttributeIsPresent()
+		{
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+@"using System;
+using System.Runtime.CompilerServices;
+
+public interface IA
+{
+	[CompilerGeneratedAttribute]
+	void Foo();
+}");
+
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
+		}
+
+		[Test]
+		public static void GetDescriptionWhenIteratorStateMachineAttributeIsPresent()
+		{
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+@"using System;
+using System.Runtime.CompilerServices;
+
+public interface IA
+{
+	[IteratorStateMachine(typeof(object))]
+	void Foo();
+}");
+
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
+		}
+
+		[Test]
+		public static void GetDescriptionWhenAttributeCannotBeSeen()
+		{
+			var internalCode =
+@"using System;
+
+internal sealed class YouCannotSeeThisAttribute : Attribute { }
+
+public static class Test
+{
+	[YouCannotSeeThis]
+	public static void Run() { }
+}";
+
+			var references = AppDomain.CurrentDomain.GetAssemblies()
+				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+				.Select(_ => MetadataReference.CreateFromFile(_.Location) as MetadataReference);
+
+			var internalSyntaxTree = CSharpSyntaxTree.ParseText(internalCode);
+			var internalCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { internalSyntaxTree },
+				references, 
+				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+			var externalCode =
+@"public static class UseTest
+{
+	public static void CallRun() => Test.Run();
+}";
+
+			var externalSyntaxTree = CSharpSyntaxTree.ParseText(externalCode);
+			var externalCompilation = CSharpCompilation.Create("external", new SyntaxTree[] { externalSyntaxTree },
+				references.Concat(new[] { internalCompilation.ToMetadataReference() as MetadataReference }), 
+				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+
+			var externalModel = externalCompilation.GetSemanticModel(externalSyntaxTree, true);
+
+			var internalInvocation = externalSyntaxTree.GetRoot().DescendantNodes(_ => true)
+				.OfType<InvocationExpressionSyntax>().Single();
+			var internalMethodSymbol = externalModel.GetSymbolInfo(internalInvocation).Symbol!;
+
+			Assert.That(internalMethodSymbol.GetAttributes().GetDescription(externalCompilation), Is.EqualTo(string.Empty));
+		}
+
 		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
