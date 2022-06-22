@@ -53,15 +53,44 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
+		static INamedTypeSymbol? GetContainingType(ITypeSymbol symbol)
+		{
+			if (symbol is IPointerTypeSymbol pointerSymbol)
+			{
+				return pointerSymbol.PointedAtType.ContainingType;
+			}
+			else
+			{
+				return symbol.ContainingType;
+			}
+		}
+
 		if (options == TypeNameOption.IncludeGenerics)
 		{
-			return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			if(self.Kind == SymbolKind.PointerType)
+			{
+				var name = self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+				var containingType = GetContainingType(self);
+
+				if (containingType is not null)
+				{
+					return $"{containingType.GetName(options)}.{name}";
+				}
+				else
+				{
+					return name;
+				}
+			}
+			else
+			{
+				return self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
+			}
 		}
 		else if (options == TypeNameOption.Flatten)
 		{
 			if (self.Kind == SymbolKind.PointerType)
 			{
-				return self.ToDisplayString().Replace("*", "Pointer");
+				return self.ToDisplayString().Replace(".", "_").Replace("*", "Pointer");
 			}
 			else if (self.Kind == SymbolKind.FunctionPointerType)
 			{
