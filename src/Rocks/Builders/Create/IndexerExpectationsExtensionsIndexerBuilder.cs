@@ -5,7 +5,7 @@ namespace Rocks.Builders.Create;
 
 internal static class IndexerExpectationsExtensionsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildGetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var propertyReturnValue = property.Type.GetName();
@@ -14,10 +14,10 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}> self";
 
 		var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!)}" :
 			DelegateBuilder.Build(property.Parameters, property.Type);
 		var adornmentsType = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Indexer}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -38,17 +38,17 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildSetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var mockTypeName = result.MockType.GetName();
 		var thisTypeName = $"{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!)}" :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Indexer}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -71,13 +71,13 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 	// if I should be doing a "get", "set", or "init", but then I also look at the 
 	// property's accessor value for the member identifier increment. This
 	// doesn't feel "right".
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
+	internal static void Build(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get)
 		{
-			IndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, result, memberIdentifier);
+			IndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, information, result, memberIdentifier);
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
@@ -86,7 +86,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier);
+			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, information, result, memberIdentifier);
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodValueBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents,
+	internal static void Build(IndentedTextWriter writer, MockInformation information, MethodMockableResult result, bool raiseEvents,
 		Compilation compilation)
 	{
 		var method = result.Value;
@@ -100,11 +100,11 @@ internal static class MockMethodValueBuilder
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method, raiseEvents, result.MemberIdentifier);
+			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, information, method, raiseEvents, result.MemberIdentifier);
 		}
 		else
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents, result.MemberIdentifier);
+			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, information, method, raiseEvents, result.MemberIdentifier);
 		}
 
 		if (method.Parameters.Length > 0)
@@ -155,7 +155,8 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine();
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIndentifier)
+	internal static void BuildMethodHandler(IndentedTextWriter writer, MockInformation information, IMethodSymbol method, 
+	bool raiseEvents, uint memberIndentifier)
 	{
 		if (method.ReturnsByRef || method.ReturnsByRefReadonly)
 		{
@@ -169,13 +170,13 @@ internal static class MockMethodValueBuilder
 		writer.Indent++;
 
 		var methodCast = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
+			$"{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}" :
 			DelegateBuilder.Build(method.Parameters, method.ReturnType);
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
 		var handlerName = method.ReturnType.IsEsoteric() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType) :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType)}" :
 			$"{nameof(HandlerInformation)}<{method.ReturnType.GetName()}>";
 		writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
 		writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
@@ -199,7 +200,8 @@ internal static class MockMethodValueBuilder
 		}
 	}
 
-	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
+	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, MockInformation information,
+		IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
 	{
 		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
 		writer.WriteLine("{");
@@ -237,7 +239,7 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
+		MockMethodValueBuilder.BuildMethodHandler(writer, information, method, raiseEvents, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -245,9 +247,10 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MockInformation information,
+		IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
 	{
 		writer.WriteLine("var methodHandler = methodHandlers[0];");
-		MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
+		MockMethodValueBuilder.BuildMethodHandler(writer, information, method, raiseEvents, memberIdentifier);
 	}
 }

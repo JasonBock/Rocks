@@ -8,7 +8,8 @@ namespace Rocks.Builders.Create;
 
 internal static class MockPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, MockInformation information, 
+		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var methodName = result.Value.GetMethod!.Name;
 		writer.WriteLine("get");
@@ -34,10 +35,10 @@ internal static class MockPropertyBuilder
 		writer.Indent++;
 
 		var methodCast = property.GetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!)}" :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var handlerName = property.Type.IsEsoteric() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
+			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type)}" :
 			$"{nameof(HandlerInformation)}<{property.Type.GetName()}>";
 
 		writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
@@ -91,7 +92,8 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, MockInformation information,
+		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var methodName = result.Value.SetMethod!.Name;
 		var property = result.Value;
@@ -115,9 +117,11 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var argType = property.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(property.Type) :
-				property.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
-				$"{nameof(Argument)}<{property.Type.GetName()}>";
+			var argType = property.Type.IsPointer() ?
+				$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{PointerArgTypeBuilder.GetProjectedName(property.Type)}" :
+					property.Type.IsRefLikeType ?
+						$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{RefLikeArgTypeBuilder.GetProjectedName(property.Type)}" :
+						$"{nameof(Argument)}<{property.Type.GetName()}>";
 
 			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
 			writer.WriteLine("{");
@@ -130,7 +134,7 @@ internal static class MockPropertyBuilder
 			writer.Indent++;
 
 			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
-				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+				$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!)}" :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
 			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
@@ -191,8 +195,8 @@ internal static class MockPropertyBuilder
 		}
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, bool raiseEvents,
-		Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, MockInformation information, 
+		PropertyMockableResult result, bool raiseEvents, Compilation compilation)
 	{
 		var property = result.Value;
 		var attributes = property.GetAttributes();
@@ -234,14 +238,14 @@ internal static class MockPropertyBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			MockPropertyBuilder.BuildGetter(writer, information, result, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			MockPropertyBuilder.BuildSetter(writer, information, result, memberIdentifier, raiseEvents, explicitTypeName);
 		}
 
 		writer.Indent--;

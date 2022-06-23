@@ -21,7 +21,7 @@ internal static class MethodExpectationsExtensionsBuilder
 
 				foreach (var result in information.Methods.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
-					MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
+					MethodExpectationsExtensionsMethodBuilder.Build(writer, information, result);
 				}
 
 				writer.Indent--;
@@ -41,7 +41,7 @@ internal static class MethodExpectationsExtensionsBuilder
 
 					foreach (var result in typeGroup)
 					{
-						MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
+						MethodExpectationsExtensionsMethodBuilder.Build(writer, information, result);
 					}
 
 					writer.Indent--;
