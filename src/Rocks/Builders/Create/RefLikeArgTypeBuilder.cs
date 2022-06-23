@@ -6,13 +6,13 @@ namespace Rocks.Builders.Create;
 
 internal static class RefLikeArgTypeBuilder
 {
-	internal static string GetProjectedConstructorName(ITypeSymbol type) =>
+	private static string GetProjectedConstructorName(ITypeSymbol type) =>
 		$"ArgFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}";
 
 	internal static string GetProjectedName(ITypeSymbol type) =>
 		$"ArgFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
 
-	internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
+	private static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
 		$"ArgEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
 
 	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)

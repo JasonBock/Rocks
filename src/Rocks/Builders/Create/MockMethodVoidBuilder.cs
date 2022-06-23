@@ -157,9 +157,11 @@ internal static class MockMethodVoidBuilder
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
 			var parameter = method.Parameters[i];
-			var argType = parameter.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
-				parameter.Type.IsRefLikeType ? RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
-				$"{nameof(Argument)}<{parameter.Type.GetName()}>";
+			var argType = parameter.Type.IsPointer() ?
+				$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{PointerArgTypeBuilder.GetProjectedName(parameter.Type)}" :
+					parameter.Type.IsRefLikeType ?
+						$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{RefLikeArgTypeBuilder.GetProjectedName(parameter.Type)}" :
+						$"{nameof(Argument)}<{parameter.Type.GetName()}>";
 
 			if (i == 0)
 			{

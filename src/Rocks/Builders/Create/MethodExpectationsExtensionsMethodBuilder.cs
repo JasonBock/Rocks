@@ -22,8 +22,9 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				{
 					if (_.Type.IsEsoteric())
 					{
-						var argName = _.Type.IsPointer() ? PointerArgTypeBuilder.GetProjectedName(_.Type) :
-								 RefLikeArgTypeBuilder.GetProjectedName(_.Type);
+						var argName = _.Type.IsPointer() ?
+							$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{PointerArgTypeBuilder.GetProjectedName(_.Type)}" :
+							$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{RefLikeArgTypeBuilder.GetProjectedName(_.Type)}";
 						return $"{argName} {_.Name}";
 					}
 					else

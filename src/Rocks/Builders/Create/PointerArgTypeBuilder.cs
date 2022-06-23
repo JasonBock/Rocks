@@ -10,7 +10,7 @@ internal static class PointerArgTypeBuilder
 	internal static string GetProjectedName(ITypeSymbol type) =>
 		$"{nameof(Argument)}For{type.GetName(TypeNameOption.Flatten)}";
 
-	internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
+	private static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
 		$"{nameof(Argument)}EvaluationFor{type.GetName(TypeNameOption.Flatten)}";
 
 	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
