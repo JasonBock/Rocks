@@ -14,6 +14,6 @@ internal static class SyntaxNodeExtensions
 			parent = parent.Parent;
 		}
 
-		return (T)(parent!);
+		return (T)parent!;
 	}
 }

@@ -73,13 +73,13 @@ internal static class MockProjectedDelegateBuilder
 		if (information.Methods.Length > 0)
 		{
 			var methods = information.Methods
-				.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
+				.Where(_ => _.Value.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.Value);
 			BuildDelegates(writer, methods, compilation);
 
 			var explicitMethodGroups = information.Methods
-				.Where(_ => (_.Value.RequiresProjectedDelegate()) &&
+				.Where(_ => _.Value.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 				.GroupBy(_ => _.Value.ContainingType);
 

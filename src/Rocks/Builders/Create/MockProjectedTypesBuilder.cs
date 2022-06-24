@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
+using System.Reflection;
 
 namespace Rocks.Builders.Create;
 
@@ -11,32 +12,61 @@ internal static class MockProjectedTypesBuilder
 	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces,
 		Compilation compilation)
 	{
-		// TODO: Technically, we may not have any need for projections,
-		// but for now, it's just easier to emit it.
-		// At some point, we may want to do the work to figure out that we
-		// actually created projected types, and in that case,
-		// we'll create the namespace and reference it.
-		// One way to do it would be to create a local IndentedTextWriter
-		// that the builders would write to, and if we got any string content
-		// out of that, we'd just put it into the writer.
-		// However, while we can "reuse" the Indent value, we don't know
-		// what the TabString value is, so we can't reliably pass that
-		// into a local IndentedTextWriter.
-		// See https://github.com/dotnet/runtime/issues/68726
+		using var projectedWriter = new StringWriter();
+		using var projectedIndentWriter = new IndentedTextWriter(projectedWriter,
+			MockProjectedTypesBuilder.GetTabString(writer));
 
-		var projectionsNamespace = $"ProjectionsFor{information.TypeToMock!.FlattenedName}";
-		writer.WriteLine($"namespace {projectionsNamespace}");
-		writer.WriteLine("{");
-		writer.Indent++;
+		MockProjectedDelegateBuilder.Build(projectedIndentWriter, information, compilation);
+		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, information, namespaces);
+		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, information, namespaces);
 
-		MockProjectedDelegateBuilder.Build(writer, information, compilation);
-		MockProjectedArgTypeBuilder.Build(writer, information, namespaces);
-		MockProjectedTypesAdornmentsBuilder.Build(writer, information, namespaces);
+		var projectedCode = projectedWriter.ToString();
 
-		writer.Indent--;
-		writer.WriteLine("}");
-		writer.WriteLine();
+		if(!string.IsNullOrWhiteSpace(projectedCode))
+		{
+			var projectionsNamespace = $"ProjectionsFor{information.TypeToMock!.FlattenedName}";
+			writer.WriteLine($"namespace {projectionsNamespace}");
+			writer.WriteLine("{");
+			writer.Indent++;
 
-		namespaces.Add($"{information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}");
+			foreach(var line in MockProjectedTypesBuilder.GetLines(projectedCode))
+			{
+				writer.WriteLine(line);
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+			writer.WriteLine();
+
+			namespaces.Add($"{information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}");
+		}
+	}
+
+	private static IEnumerable<string> GetLines(string code)
+	{
+		var lines = code.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+		for (var i = 0; i < lines.Length; i++)
+		{
+			if(i < lines.Length - 1)
+			{
+				var line = lines[i];
+				yield return line;
+			}
+		}
+	}
+
+	// See https://github.com/dotnet/runtime/issues/68726
+	// This is a bit "dangerous" but I made it as safe as possible.
+	private static string GetTabString(IndentedTextWriter writer)
+	{
+		var tabStringField = typeof(IndentedTextWriter).GetField("_tabString", BindingFlags.NonPublic | BindingFlags.Instance);
+
+		if(tabStringField is not null && tabStringField.FieldType == typeof(string))
+		{
+			return (string)tabStringField.GetValue(writer);
+		}
+
+		return "\t";
 	}
 }
