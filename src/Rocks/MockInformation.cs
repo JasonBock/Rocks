@@ -37,6 +37,13 @@ internal sealed class MockInformation
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
+		var delegateType = this.Model.Compilation.GetTypeByMetadataName(typeof(Delegate).FullName)!;
+
+		if (typeToMock.IsAssignableTo(delegateType))
+		{
+			diagnostics.Add(CannotMockDelegatesDiagnostic.Create(typeToMock));
+		}
+
 		if (typeToMock.IsSealed)
 		{
 			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(typeToMock));
@@ -79,7 +86,7 @@ internal sealed class MockInformation
 		}
 
 		this.Shims = shims.ToImmutableArray();
-		
+
 		this.Diagnostics = diagnostics.ToImmutable();
 
 		if (!this.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))

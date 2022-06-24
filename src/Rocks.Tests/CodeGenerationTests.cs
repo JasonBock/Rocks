@@ -44,7 +44,7 @@ public static class CodeGenerationTests
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(StreamWriter) };
+		//var types = new Type[] { typeof(Delegate) };
 
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -126,7 +126,7 @@ public static class CodeGenerationTests
 			var information = new MockInformation(symbol!, compilation.Assembly, model,
 				new ConfigurationValues(IndentStyle.Tab, 3, true), BuildType.Create);
 
-			return !information.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
+			return information.TypeToMock is not null;
 		}
 
 		return false;
