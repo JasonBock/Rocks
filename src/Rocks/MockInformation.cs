@@ -44,6 +44,13 @@ internal sealed class MockInformation
 			diagnostics.Add(CannotMockDelegatesDiagnostic.Create(typeToMock));
 		}
 
+		var enumType = this.Model.Compilation.GetTypeByMetadataName(typeof(Enum).FullName)!;
+
+		if (typeToMock.IsAssignableTo(enumType))
+		{
+			diagnostics.Add(CannotMockEnumsDiagnostic.Create(typeToMock));
+		}
+
 		if (typeToMock.IsSealed)
 		{
 			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(typeToMock));

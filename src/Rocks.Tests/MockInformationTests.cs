@@ -12,7 +12,7 @@ namespace Rocks.Tests;
 public static class MockInformationTests
 {
 	[Test]
-	public static void CreateWhenClassIsEnum()
+	public static void CreateWhenClassDerivesFromEnum()
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
@@ -21,6 +21,22 @@ public static class MockInformationTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
+	public static void CreateWhenClassIsEnum()
+	{
+		const string targetTypeName = "EnumType";
+		var code = $"public enum {targetTypeName} {{ }}";
+		var (type, model) = MockInformationTests.GetType(code, targetTypeName);
+		var information = new MockInformation(type.BaseType!, type.ContainingAssembly, model,
+			new ConfigurationValues(IndentStyle.Tab, 3, false), BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockEnumsDiagnostic.Id), Is.True);
 			Assert.That(information.TypeToMock, Is.Null);
 		});
 	}
@@ -417,8 +433,8 @@ public class {targetTypeName}
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
-	private static MockInformation GetInformation(string source, string targetTypeName,
-		BuildType buildType, bool treatWarningsAsErrors = false)
+
+	private static (ITypeSymbol, SemanticModel) GetType(string source, string targetTypeName)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -438,7 +454,13 @@ public class {targetTypeName}
 				.Single(_ => _.Identifier.Text == targetTypeName);
 		}
 
-		var typeSymbol = (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!;
+		return ((model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
+	}
+
+	private static MockInformation GetInformation(string source, string targetTypeName,
+		BuildType buildType, bool treatWarningsAsErrors = false)
+	{
+		var (typeSymbol, model) = MockInformationTests.GetType(source, targetTypeName);
 		return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model,
 			new ConfigurationValues(IndentStyle.Tab, 3, treatWarningsAsErrors), buildType);
 	}
