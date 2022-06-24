@@ -7,17 +7,17 @@ namespace Rocks.Builders.Create;
 
 internal static class PropertyExpectationsExtensionsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
 		var mockTypeName = result.MockType.GetName();
 		var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{mockTypeName}> self";
 		var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var adornmentsType = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -25,24 +25,24 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent++;
 
 		var addMethod = property.Type.IsEsoteric() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type)}" : 
+			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
 			$"Add<{propertyReturnValue}>";
 
 		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>()));");
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
 		var mockTypeName = result.MockType.GetName();
 		var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -57,13 +57,13 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 	// if I should be doing a "get", "set", or "init", but then I also look at the 
 	// property's accessor value for the member identifier increment. This
 	// doesn't feel "right".
-	internal static void Build(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, PropertyAccessor accessor)
+	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get)
 		{
-			PropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, information, result, memberIdentifier);
+			PropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier);
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
@@ -72,7 +72,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			PropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, information, result, memberIdentifier);
+			PropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier);
 		}
 	}
 }

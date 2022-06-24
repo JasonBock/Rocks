@@ -15,7 +15,7 @@ internal static class MockProjectedTypesBuilder
 		// but for now, it's just easier to emit it.
 		// At some point, we may want to do the work to figure out that we
 		// actually created projected types, and in that case,
-		// we'll create the namespace.
+		// we'll create the namespace and reference it.
 		// One way to do it would be to create a local IndentedTextWriter
 		// that the builders would write to, and if we got any string content
 		// out of that, we'd just put it into the writer.
@@ -24,7 +24,8 @@ internal static class MockProjectedTypesBuilder
 		// into a local IndentedTextWriter.
 		// See https://github.com/dotnet/runtime/issues/68726
 
-		writer.WriteLine($"namespace ProjectionsFor{information.TypeToMock!.FlattenedName}");
+		var projectionsNamespace = $"ProjectionsFor{information.TypeToMock!.FlattenedName}";
+		writer.WriteLine($"namespace {projectionsNamespace}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -35,5 +36,7 @@ internal static class MockProjectedTypesBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
+
+		namespaces.Add($"{information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}");
 	}
 }

@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var propertyReturnValue = property.GetMethod!.ReturnType.GetName();
@@ -16,10 +16,10 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var adornmentsType = property.Type.IsEsoteric() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -27,13 +27,14 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent++;
 
 		var addMethod = property.Type.IsEsoteric() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
+			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
+			$"Add<{propertyReturnValue}>";
 
 		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>()));");
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
@@ -42,13 +43,14 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
+		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, {nameof(Argument)}<{propertyParameterValue}> value) =>");
 		writer.Indent++;
 
@@ -60,13 +62,13 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 	// if I should be doing a "get", "set", or "init", but then I also look at the 
 	// property's accessor value for the member identifier increment. This
 	// doesn't feel "right".
-	internal static void Build(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
+	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get)
 		{
-			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, information, result, memberIdentifier, containingTypeName);
+			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
@@ -75,7 +77,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, information, result, memberIdentifier, containingTypeName);
+			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
 		}
 	}
 }

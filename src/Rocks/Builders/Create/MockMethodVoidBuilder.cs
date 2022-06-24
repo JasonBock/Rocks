@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodVoidBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, MethodMockableResult result, bool raiseEvents,
+	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents,
 		Compilation compilation)
 	{
 		var method = result.Value;
@@ -91,11 +91,11 @@ internal static class MockMethodVoidBuilder
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, information, method, methodSignature, raiseEvents);
+			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(writer, method, methodSignature, raiseEvents);
 		}
 		else
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, information, method, raiseEvents);
+			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents);
 		}
 
 		writer.Indent--;
@@ -139,13 +139,13 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MockInformation information, IMethodSymbol method, bool raiseEvents)
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 	{
 		writer.WriteLine("var methodHandler = methodHandlers[0];");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, information, method, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
 	}
 
-	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, MockInformation information, IMethodSymbol method,
+	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method,
 		string methodSignature, bool raiseEvents)
 	{
 		writer.WriteLine("var foundMatch = false;");
@@ -158,9 +158,9 @@ internal static class MockMethodVoidBuilder
 		{
 			var parameter = method.Parameters[i];
 			var argType = parameter.Type.IsPointer() ?
-				$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{PointerArgTypeBuilder.GetProjectedName(parameter.Type)}" :
+				PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
 					parameter.Type.IsRefLikeType ?
-						$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{RefLikeArgTypeBuilder.GetProjectedName(parameter.Type)}" :
+						RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
 						$"{nameof(Argument)}<{parameter.Type.GetName()}>";
 
 			if (i == 0)
@@ -189,7 +189,7 @@ internal static class MockMethodVoidBuilder
 		writer.Indent++;
 		writer.WriteLine("foundMatch = true;");
 		writer.WriteLine();
-		MockMethodVoidBuilder.BuildMethodHandler(writer, information, method, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -206,14 +206,14 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("}");
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, MockInformation information, IMethodSymbol method, bool raiseEvents)
+	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 	{
 		writer.WriteLine("if (methodHandler.Method is not null)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		var methodCast = method.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
 			DelegateBuilder.Build(method.Parameters);
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(

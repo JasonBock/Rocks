@@ -6,7 +6,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MethodExpectationsExtensionsMethodBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, MethodMockableResult result)
+	internal static void Build(IndentedTextWriter writer, MethodMockableResult result)
 	{
 		var method = result.Value;
 		var isExplicitImplementation = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
@@ -23,8 +23,8 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					if (_.Type.IsEsoteric())
 					{
 						var argName = _.Type.IsPointer() ?
-							$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{PointerArgTypeBuilder.GetProjectedName(_.Type)}" :
-							$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{RefLikeArgTypeBuilder.GetProjectedName(_.Type)}";
+							PointerArgTypeBuilder.GetProjectedName(_.Type) :
+							RefLikeArgTypeBuilder.GetProjectedName(_.Type);
 						return $"{argName} {_.Name}";
 					}
 					else
@@ -35,12 +35,14 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
 
 		var delegateTypeName = method.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(method)}" :
-				method.ReturnsVoid ? DelegateBuilder.Build(method.Parameters) : DelegateBuilder.Build(method.Parameters, method.ReturnType);
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
+				method.ReturnsVoid ? 
+					DelegateBuilder.Build(method.Parameters) : 
+					DelegateBuilder.Build(method.Parameters, method.ReturnType);
 		var adornmentsType = method.ReturnsVoid ?
 			$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>" :
 			method.ReturnType.IsEsoteric() ?
-				$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {delegateTypeName}>" :
+				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {delegateTypeName}>" :
 				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -51,7 +53,8 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 
 		var addMethod = method.ReturnsVoid ? "Add" :
 			method.ReturnType.IsEsoteric() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : $"Add<{method.ReturnType.GetName()}>";
+				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : 
+				$"Add<{method.ReturnType.GetName()}>";
 
 		if (method.Parameters.Length == 0)
 		{

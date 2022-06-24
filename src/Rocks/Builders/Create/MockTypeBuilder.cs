@@ -48,22 +48,22 @@ internal static class MockTypeBuilder
 		{
 			if (method.Value.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, information, method, raiseEvents, compilation);
+				MockMethodVoidBuilder.Build(writer, method, raiseEvents, compilation);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, information, method, raiseEvents, compilation);
+				MockMethodValueBuilder.Build(writer, method, raiseEvents, compilation);
 			}
 		}
 
 		foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
 		{
-			MockPropertyBuilder.Build(writer, information, property, raiseEvents, compilation);
+			MockPropertyBuilder.Build(writer, property, raiseEvents, compilation);
 		}
 
 		foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
 		{
-			MockIndexerBuilder.Build(writer, information, indexer, raiseEvents, compilation);
+			MockIndexerBuilder.Build(writer, indexer, raiseEvents, compilation);
 		}
 
 		if (information.Events.Length > 0)

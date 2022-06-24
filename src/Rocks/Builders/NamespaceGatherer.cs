@@ -15,6 +15,9 @@ internal sealed class NamespaceGatherer
 	public void Add(Type type) =>
 		this.builder.Add(type.Namespace);
 
+	public void Add(string @namespace) =>
+		this.builder.Add(@namespace);
+
 	public void AddRange(IEnumerable<INamespaceSymbol> namespaces) =>
 		this.builder.AddRange(namespaces.Select(_ => _.GetName()));
 

@@ -5,7 +5,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var propertyReturnValue = property.Type.GetName();
@@ -14,10 +14,10 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}, {containingTypeName}> self";
 
 		var delegateTypeName = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
 			DelegateBuilder.Build(property.Parameters, property.Type);
 		var adornmentsType = property.GetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Indexer}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -33,12 +33,13 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var parameters = string.Join(", ", property.GetMethod!.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
 		var addMethod = property.Type.IsEsoteric() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : $"Add<{propertyReturnValue}>";
+			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
+			$"Add<{propertyReturnValue}>";
 		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>({property.GetMethod!.Parameters.Length}) {{ {parameters} }}));");
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var mockTypeName = result.MockType.GetName();
@@ -46,10 +47,10 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var thisParameter = $"this {thisTypeName}<{mockTypeName}, {containingTypeName}> self";
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!)}" :
+			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"ProjectionsFor{information.TypeToMock!.FlattenedName}.{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Indexer}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -62,6 +63,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters}) =>");
 		writer.Indent++;
 
+		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
 		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>({property.SetMethod!.Parameters.Length}) {{ {parameters} }}));");
@@ -72,13 +74,13 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 	// if I should be doing a "get", "set", or "init", but then I also look at the 
 	// property's accessor value for the member identifier increment. This
 	// doesn't feel "right".
-	internal static void Build(IndentedTextWriter writer, MockInformation information, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
+	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get)
 		{
-			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, information, result, memberIdentifier, containingTypeName);
+			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
@@ -87,7 +89,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, information, result, memberIdentifier, containingTypeName);
+			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
 		}
 	}
 }
