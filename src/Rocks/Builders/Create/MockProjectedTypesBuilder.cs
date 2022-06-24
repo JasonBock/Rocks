@@ -38,7 +38,16 @@ internal static class MockProjectedTypesBuilder
 			writer.WriteLine("}");
 			writer.WriteLine();
 
-			namespaces.Add($"{information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}");
+			var containingNamespace = information.TypeToMock!.Type.ContainingNamespace;
+
+			if(containingNamespace is not null && !containingNamespace.IsGlobalNamespace)
+			{
+				namespaces.Add($"{containingNamespace.ToDisplayString()}.{projectionsNamespace}");
+			}
+			else
+			{
+				namespaces.Add(projectionsNamespace);
+			}
 		}
 	}
 

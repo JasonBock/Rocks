@@ -14,6 +14,8 @@ public static class PointersGenerationTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(compilation.SyntaxTrees.Count, Is.EqualTo(2));
+
+			var x = compilation.GetDiagnostics().ToArray();
 			Assert.That(compilation.GetDiagnostics().Count(_ => _.Severity == DiagnosticSeverity.Error), 
 				Is.EqualTo(0));
 		});
