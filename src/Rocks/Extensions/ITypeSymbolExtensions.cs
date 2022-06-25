@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Collections;
 using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
@@ -286,8 +287,17 @@ internal static class ITypeSymbolExtensions
 			{
 				if (baseInterfaceMethodGroup.Count == 1)
 				{
+					// If this one method differs by return type only
+					// from any other method currently captured in the list
+					// (think IEnumerable<T> -> IEnumerable and their GetEnumerator() methods),
+					// then we must require explicit implementation.
+					var requiresExplicitImplementation = methods.Any(
+						_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.DifferByReturnTypeOnly) ?
+						RequiresExplicitInterfaceImplementation.Yes :
+						RequiresExplicitInterfaceImplementation.No;
+
 					methods.Add(new(baseInterfaceMethodGroup[0], self,
-						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier));
+						requiresExplicitImplementation, RequiresOverride.No, memberIdentifier));
 
 					if (baseInterfaceMethodGroup[0].IsVirtual)
 					{

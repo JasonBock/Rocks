@@ -24,8 +24,44 @@ public interface IExplicitInterfaceImplementation
 	: IExplicitInterfaceImplementationOne, IExplicitInterfaceImplementationTwo
 { }
 
+public interface IIterator
+{
+	void Iterate();
+}
+
+public interface IIterator<out T>
+	: IIterator
+{
+	new T Iterate();
+}
+
+public interface IIterable
+{
+	IIterator GetIterator();
+}
+
+public interface IIterable<out T>
+	: IIterable
+{
+	new IIterator<T> GetIterator();
+}
+
 public static class ExplicitInterfaceImplementationTests
 {
+	[Test]
+	public static void CreateDifferByReturnTypeOnly()
+	{
+		var rock = Rock.Create<IIterable<string>>();
+		rock.Methods().GetIterator();
+		rock.ExplicitMethodsForIIterable().GetIterator();
+
+		var chunk = rock.Instance();
+		chunk.GetIterator();
+		((IIterable)chunk).GetIterator();
+
+		rock.Verify();
+	}
+
 	[Test]
 	public static void CreateMethod()
 	{

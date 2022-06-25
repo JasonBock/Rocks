@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Rocks.Builders;
 using Rocks.Configuration;
 using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Reflection;
@@ -29,22 +30,22 @@ public static class CodeGenerationTests
 		var isCreate = generator is RockCreateGenerator;
 		var assemblies = CodeGenerationTests.targetTypes.Select(_ => _.Assembly).ToHashSet();
 
-		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
+		//var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
-		foreach (var assembly in assemblies)
-		{
-			Parallel.ForEach(assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
-				{
-					if (_.IsValidTarget())
-					{
-						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
-					}
-				});
-		}
+		//foreach (var assembly in assemblies)
+		//{
+		//	Parallel.ForEach(assembly.GetTypes()
+		//		.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+		//		{
+		//			if (_.IsValidTarget())
+		//			{
+		//				discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
+		//			}
+		//		});
+		//}
 
-		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(TextWriter) };
+		//var types = discoveredTypes.Keys.ToArray();
+		var types = new Type[] { typeof(IEnumerable<>) };
 
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
