@@ -45,7 +45,7 @@ public static class CodeGenerationTests
 		//}
 
 		//var types = discoveredTypes.Keys.ToArray();
-		var types = new Type[] { typeof(ISet<>) };
+		var types = new Type[] { typeof(System.Text.UTF8Encoding) };
 
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);

@@ -36,13 +36,29 @@ public static class MockInformationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockEnumsDiagnostic.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
 			Assert.That(information.TypeToMock, Is.Null);
 		});
 	}
 
 	[Test]
 	public static void CreateWhenClassIsValueType()
+	{
+		const string targetTypeName = "ValueTypeType";
+		var code = $"public struct {targetTypeName} {{ }}";
+		var (type, model) = MockInformationTests.GetType(code, targetTypeName);
+		var information = new MockInformation(type.BaseType!, type.ContainingAssembly, model,
+			new ConfigurationValues(IndentStyle.Tab, 3, false), BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
+	public static void CreateWhenClassDerivesFromValueType()
 	{
 		const string targetTypeName = "StructType";
 		var code = $"public struct {targetTypeName} {{ }}";
@@ -129,7 +145,7 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 	}
 
 	[Test]
-	public static void CreateWhenClassIsDelegate()
+	public static void CreateWhenClassDerivesFromDelegate()
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
@@ -137,7 +153,29 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockDelegatesDiagnostic.Id), Is.True);
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
+	public static void CreateWhenClassIsDelegate()
+	{
+		const string targetTypeName = "MySpecialMethod";
+		var code = $"public delegate void {targetTypeName}();";
+		var (type, model) = MockInformationTests.GetType(code, targetTypeName);
+
+		while (type is not null && type.SpecialType != SpecialType.System_Delegate)
+		{
+			type = type.BaseType;
+		}
+
+		var information = new MockInformation(type!, type!.ContainingAssembly, model,
+			new ConfigurationValues(IndentStyle.Tab, 3, false), BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
 			Assert.That(information.TypeToMock, Is.Null);
 		});
 	}
