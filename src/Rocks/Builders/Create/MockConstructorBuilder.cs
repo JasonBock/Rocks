@@ -15,7 +15,7 @@ internal static class MockConstructorBuilder
 			$"{WellKnownNames.Expectations}<{typeToMockName}> expectations" :
 			string.Join(", ", $"{WellKnownNames.Expectations}<{typeToMockName}> expectations",
 				string.Join(", ",
-					parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
+					parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}")));
 
 		var mockTypeName = $"{nameof(Rock)}{typeToMock.FlattenedName}";
 

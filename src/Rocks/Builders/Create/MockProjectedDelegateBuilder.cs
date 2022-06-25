@@ -11,11 +11,11 @@ internal static class MockProjectedDelegateBuilder
 
 	internal static string GetProjectedDelegate(IMethodSymbol method, Compilation compilation)
 	{
-		var returnType = method.ReturnType.GetName();
+		var returnType = method.ReturnType.GetReferenceableName();
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;

@@ -10,6 +10,10 @@ public static class ITypeSymbolExtensionsGetNameTests
 {
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", "int*")]
 	[TestCase("public class Target { public void Foo(string a) { } }", "string")]
+	[TestCase("public class Target { public void Foo(string? a) { } }", "string?")]
+	[TestCase("public class Target<T> { public void Foo(T a) { } }", "T")]
+	[TestCase("public class Target<T> { public void Foo(T? a) { } }", "T?")]
+	[TestCase("public class Generic<T> { } public class Target<U> { public void Foo(Generic<U> a) { } }", "Generic<U>")]
 	[TestCase("public class Outer { public struct Inner { public unsafe void Foo(Inner* a) { } } }", "Outer.Inner*")]
 	[TestCase("public class Outer { public struct Inner { public void Foo(Inner a) { } } }", "Outer.Inner")]
 	[TestCase("public class Outer<T> { public struct Inner { public void Foo(Inner a) { } } }", "Outer<T>.Inner")]

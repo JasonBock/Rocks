@@ -49,6 +49,10 @@ internal static class ITypeSymbolExtensions
 		{
 			return self.ToDisplayString();
 		}
+		else if(self.Kind == SymbolKind.TypeParameter)
+		{
+			return $"{self.Name}{(self.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
+		}
 		else
 		{
 			var names = new List<string>();

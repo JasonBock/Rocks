@@ -10,15 +10,15 @@ internal static class DelegateBuilder
 	{
 		if (parameters.Length > 0)
 		{
-			var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetName()));
+			var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetReferenceableName()));
 			return returnType is not null ?
-				$"{WellKnownNames.Func}<{parameterTypes}, {returnType.GetName()}>" :
+				$"{WellKnownNames.Func}<{parameterTypes}, {returnType.GetReferenceableName()}>" :
 				$"{WellKnownNames.Action}<{parameterTypes}>";
 		}
 		else
 		{
 			return returnType is not null ?
-				$"{WellKnownNames.Func}<{returnType.GetName()}>" :
+				$"{WellKnownNames.Func}<{returnType.GetReferenceableName()}>" :
 				WellKnownNames.Action;
 		}
 	}

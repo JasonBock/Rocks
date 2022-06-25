@@ -29,7 +29,7 @@ internal static class MockConstructorExtensionsBuilder
 		var instanceParameters = parameters.Length == 0 ?
 			$"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self" :
 			string.Join(", ", $"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self",
-				string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}")));
+				string.Join(", ", parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}")));
 		var isUnsafe = false;
 		var rockInstanceParameters = parameters.Length == 0 ? "self" :
 			string.Join(", ", "self", string.Join(", ", parameters.Select(_ =>

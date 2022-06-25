@@ -29,10 +29,10 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					}
 					else
 					{
-						return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
+						return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
 					}
 				})));
-		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetName()));
+		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetReferenceableName()));
 
 		var delegateTypeName = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
@@ -43,7 +43,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 			$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>" :
 			method.ReturnType.IsEsoteric() ?
 				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {delegateTypeName}>" :
-				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetName()}>";
+				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {method.ReturnType.GetReferenceableName()}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
@@ -70,7 +70,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
-					return $"Arg.Any<{_.Type.GetName()}>()";
+					return $"Arg.Any<{_.Type.GetReferenceableName()}>()";
 				}
 				else
 				{

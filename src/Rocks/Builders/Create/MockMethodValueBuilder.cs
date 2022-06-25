@@ -12,7 +12,7 @@ internal static class MockMethodValueBuilder
 	{
 		var method = result.Value;
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnType.GetName()}";
+		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var direction = _.RefKind switch
@@ -22,7 +22,7 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
@@ -38,7 +38,7 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
@@ -214,7 +214,7 @@ internal static class MockMethodValueBuilder
 				PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
 					parameter.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
-						$"{nameof(Argument)}<{parameter.Type.GetName()}>";
+						$"{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>";
 
 			if (i == 0)
 			{
