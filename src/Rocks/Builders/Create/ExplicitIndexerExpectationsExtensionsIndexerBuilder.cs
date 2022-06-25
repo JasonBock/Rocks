@@ -24,7 +24,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", property.GetMethod!.Parameters.Select(_ =>
 			{
-				return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
+				return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters}) =>");
@@ -57,7 +57,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", property.SetMethod!.Parameters.Select(_ =>
 			{
-				return $"{nameof(Argument)}<{_.Type.GetName()}> {_.Name}";
+				return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters}) =>");

@@ -14,7 +14,7 @@ internal static class MockConstructorBuilder
 
 		if (parameters.Length > 0)
 		{
-			var instanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Type.GetName()} {_.Name}"));
+			var instanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}"));
 			writer.WriteLine($"public {nameof(Rock)}{typeToMock.FlattenedName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))})");

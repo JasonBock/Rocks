@@ -34,7 +34,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -44,7 +44,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -138,7 +138,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -148,7 +148,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -247,7 +247,7 @@ internal static class MockIndexerBuilder
 		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
 
 		var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetName()} {indexerSignature}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetReferenceableName()} {indexerSignature}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -282,7 +282,7 @@ internal static class MockIndexerBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 

@@ -45,7 +45,7 @@ public static class CodeGenerationTests
 
 		//var types = discoveredTypes.Keys.ToArray();
 		//System.IO.Enumeration.FileSystemEnumerable<>
-		var types = new Type[] { typeof(System.Runtime.InteropServices.ComWrappers) };
+		var types = new Type[] { typeof(System.IO.Enumeration.FileSystemEnumerable<>) };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
