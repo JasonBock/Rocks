@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 internal static class MockProjectedDelegateBuilder
 {
 	internal static string GetProjectedDelegateName(IMethodSymbol method) =>
-		method.GetName(extendedName: "Callback");
+		method.GetName(extendedName: $"Callback_{(uint)method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHashCode()}");
 
 	internal static string GetProjectedDelegate(IMethodSymbol method, Compilation compilation)
 	{

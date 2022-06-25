@@ -1,29 +1,10 @@
 ﻿using Microsoft.CodeAnalysis;
-using System.Collections;
 using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	// TODO: This needs to consider base interfaces as well.
-	internal static bool IsAssignableTo(this ITypeSymbol self, ITypeSymbol type)
-	{
-		var typeToCheck = self;
-
-		while(typeToCheck is not null)
-		{
-			if(typeToCheck.Equals(type, SymbolEqualityComparer.Default))
-			{
-				return true;
-			}
-
-			typeToCheck = typeToCheck.BaseType;
-		}
-
-		return false;
-	}
-
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
 		if (self is INamedTypeSymbol namedType)

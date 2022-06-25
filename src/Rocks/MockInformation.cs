@@ -37,17 +37,6 @@ internal sealed class MockInformation
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-		//var delegateType = this.Model.Compilation.GetTypeByMetadataName(typeof(Delegate).FullName)!;
-		//var enumType = this.Model.Compilation.GetTypeByMetadataName(typeof(Enum).FullName)!;
-		//var valueTypeType = this.Model.Compilation.GetTypeByMetadataName(typeof(ValueType).FullName)!;
-
-		//if (typeToMock.IsAssignableTo(delegateType) ||
-		//	typeToMock.IsAssignableTo(enumType) ||
-		//	typeToMock.IsAssignableTo(valueTypeType))
-		//{
-		//	diagnostics.Add(CannotMockSpecialTypesDiagnostic.Create(typeToMock));
-		//}
-
 		if (typeToMock.SpecialType == SpecialType.System_Delegate ||
 			typeToMock.SpecialType == SpecialType.System_Enum ||
 			typeToMock.SpecialType == SpecialType.System_ValueType)
