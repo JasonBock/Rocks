@@ -53,7 +53,8 @@ internal static class MockPropertyExtensionsBuilder
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName();
-			writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Indexers}For{containingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
+			var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+			writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Indexers}For{flattenedContainingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 			writer.Indent++;
 			writer.WriteLine($"new(self);");
 			writer.Indent--;
@@ -116,7 +117,8 @@ internal static class MockPropertyExtensionsBuilder
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName();
-			writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Properties}For{containingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
+			var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+			writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Properties}For{flattenedContainingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 			writer.Indent++;
 			writer.WriteLine($"new(self);");
 			writer.Indent--;

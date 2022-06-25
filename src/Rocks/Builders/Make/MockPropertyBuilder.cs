@@ -18,7 +18,7 @@ internal static class MockPropertyBuilder
 		}
 
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
+			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.IncludeGenerics)}.";
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;

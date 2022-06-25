@@ -208,7 +208,7 @@ internal static class MockPropertyBuilder
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.NoGenerics)}.";
+			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.IncludeGenerics)}.";
 
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)

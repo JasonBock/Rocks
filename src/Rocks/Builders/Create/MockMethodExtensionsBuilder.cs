@@ -28,7 +28,8 @@ internal static class MockMethodExtensionsBuilder
 					.GroupBy(_ => _.Value.ContainingType))
 				{
 					var containingTypeName = typeGroup.Key.GetName();
-					writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Method}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Methods}For{containingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
+					var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+					writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Method}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Explicit}{WellKnownNames.Methods}For{flattenedContainingTypeName}(this {WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 					writer.Indent++;
 					writer.WriteLine($"new(self);");
 					writer.Indent--;

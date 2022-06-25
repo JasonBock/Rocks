@@ -22,7 +22,7 @@ internal static class MockMethodVoidBuilder
 			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetName(TypeNameOption.NoGenerics)}." : string.Empty;
+			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
