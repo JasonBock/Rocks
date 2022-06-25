@@ -38,6 +38,7 @@ internal sealed class MockInformation
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
 		if (typeToMock.SpecialType == SpecialType.System_Delegate ||
+			typeToMock.SpecialType == SpecialType.System_MulticastDelegate ||
 			typeToMock.SpecialType == SpecialType.System_Enum ||
 			typeToMock.SpecialType == SpecialType.System_ValueType)
 		{

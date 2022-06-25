@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Rocks.Builders;
 using Rocks.Configuration;
 using System.CodeDom.Compiler;
+using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.Versioning;
@@ -43,8 +44,8 @@ public static class CodeGenerationTests
 		//}
 
 		//var types = discoveredTypes.Keys.ToArray();
-		var types = new Type[] { typeof(System.Text.UTF8Encoding) };
-
+		//System.Runtime.InteropServices.ComWrappers
+		var types = new Type[] { typeof(System.IO.Enumeration.FileSystemEnumerable<>) };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()

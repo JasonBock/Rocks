@@ -159,6 +159,28 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 	}
 
 	[Test]
+	public static void CreateWhenClassIsMulticastDelegate()
+	{
+		const string targetTypeName = "MySpecialMethod";
+		var code = $"public delegate void {targetTypeName}();";
+		var (type, model) = MockInformationTests.GetType(code, targetTypeName);
+
+		while (type is not null && type.SpecialType != SpecialType.System_MulticastDelegate)
+		{
+			type = type.BaseType;
+		}
+
+		var information = new MockInformation(type!, type!.ContainingAssembly, model,
+			new ConfigurationValues(IndentStyle.Tab, 3, false), BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
 	public static void CreateWhenClassIsDelegate()
 	{
 		const string targetTypeName = "MySpecialMethod";

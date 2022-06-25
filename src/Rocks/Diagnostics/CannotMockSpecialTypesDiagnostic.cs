@@ -16,6 +16,6 @@ public static class CannotMockSpecialTypesDiagnostic
 			type.Locations.Length > 0 ? type.Locations[0] : null);
 
 	public const string Id = "ROCK6";
-	public const string Message = "The type {0} is a special type (delegate, enum, or value type) and cannot be mocked";
+	public const string Message = "The type {0} is a special type and cannot be mocked";
 	public const string Title = "Cannot Mock Special Types";
 }

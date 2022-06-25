@@ -39,6 +39,32 @@ internal static class ITypeSymbolExtensions
 		return false;
 	}
 
+	// Gets the name of the type, useful for getting the name of a type
+	// that will be used in a parameter name.
+	// For example if the type is "FileTransform", which is a nested type,
+	// this will return "FileSystemEnumerable<object>.FindTransform"
+	internal static string GetReferenceableName(this ITypeSymbol self)
+	{
+		if (self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType)
+		{
+			return self.ToDisplayString();
+		}
+		else
+		{
+			var names = new List<string>();
+
+			var currentSelf = self;
+
+			while(currentSelf is not null)
+			{
+				names.Insert(0, currentSelf.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
+				currentSelf = currentSelf.ContainingType;
+			}
+
+			return string.Join(".", names);
+		}
+	}
+
 	// TODO: This method really needs to change.
 	// It's doing WAY too much in too many different contexts.
 	// I need to split this out and have methods that are well-focus and defined.
@@ -70,7 +96,7 @@ internal static class ITypeSymbolExtensions
 
 		if (options == TypeNameOption.IncludeGenerics)
 		{
-			if(self.Kind == SymbolKind.PointerType)
+			if (self.Kind == SymbolKind.PointerType)
 			{
 				var name = self.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 				var containingType = GetContainingType(self);

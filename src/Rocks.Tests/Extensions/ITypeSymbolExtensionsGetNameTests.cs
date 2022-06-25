@@ -8,6 +8,20 @@ namespace Rocks.Tests.Extensions;
 
 public static class ITypeSymbolExtensionsGetNameTests
 {
+	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", "int*")]
+	[TestCase("public class Target { public void Foo(string a) { } }", "string")]
+	[TestCase("public class Outer { public struct Inner { public unsafe void Foo(Inner* a) { } } }", "Outer.Inner*")]
+	[TestCase("public class Outer { public struct Inner { public void Foo(Inner a) { } } }", "Outer.Inner")]
+	[TestCase("public class Outer<T> { public struct Inner { public void Foo(Inner a) { } } }", "Outer<T>.Inner")]
+	[TestCase("public class Outer<T> { public struct Inner { public void Foo(Outer<object>.Inner a) { } } }", "Outer<object>.Inner")]
+	public static void GetReferenceableName(string code, string expectedName)
+	{
+		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var name = typeSymbol.GetReferenceableName();
+
+		Assert.That(name, Is.EqualTo(expectedName));
+	}
+
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.NoGenerics, "int*")]
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.IncludeGenerics, "int*")]
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", TypeNameOption.Flatten, "intPointer")]
