@@ -29,13 +29,30 @@ internal static class MockConstructorExtensionsBuilder
 		var instanceParameters = parameters.Length == 0 ?
 			$"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self" :
 			string.Join(", ", $"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self",
-				string.Join(", ", parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}")));
+				string.Join(", ", parameters.Select(_ =>
+				{
+					var direction = _.RefKind switch
+					{
+						RefKind.Ref => "ref ",
+						RefKind.Out => "out ",
+						RefKind.In => "in ",
+						_ => string.Empty
+					};
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
+				})));
 		var isUnsafe = false;
 		var rockInstanceParameters = parameters.Length == 0 ? "self" :
 			string.Join(", ", "self", string.Join(", ", parameters.Select(_ =>
 			{
 				isUnsafe |= _.Type.IsPointer();
-				return $"{_.Name}";
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}{_.Name}";
 			})));
 
 		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} {WellKnownNames.Instance}({instanceParameters})");

@@ -29,8 +29,28 @@ internal static class MockConstructorExtensionsBuilder
 		var instanceParameters = parameters.Length == 0 ?
 			$"this MakeGeneration<{typeToMock.GenericName}> self" :
 			string.Join(", ", $"this MakeGeneration<{typeToMock.GenericName}> self",
-				string.Join(", ", parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}")));
-		var rockInstanceParameters = string.Join(", ", parameters.Select(_ => $"{_.Name}"));
+				string.Join(", ", string.Join(", ", parameters.Select(_ =>
+				{
+					var direction = _.RefKind switch
+					{
+						RefKind.Ref => "ref ",
+						RefKind.Out => "out ",
+						RefKind.In => "in ",
+						_ => string.Empty
+					};
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
+				}))));
+		var rockInstanceParameters = string.Join(", ", string.Join(", ", parameters.Select(_ =>
+		{
+			var direction = _.RefKind switch
+			{
+				RefKind.Ref => "ref ",
+				RefKind.Out => "out ",
+				RefKind.In => "in ",
+				_ => string.Empty
+			};
+			return $"{direction}{_.Name}";
+		})));
 
 		writer.WriteLine($"internal static {typeToMock.GenericName} Instance({instanceParameters}) =>");
 		writer.Indent++;

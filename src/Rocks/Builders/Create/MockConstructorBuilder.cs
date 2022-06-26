@@ -14,17 +14,37 @@ internal static class MockConstructorBuilder
 		var instanceParameters = parameters.Length == 0 ?
 			$"{WellKnownNames.Expectations}<{typeToMockName}> expectations" :
 			string.Join(", ", $"{WellKnownNames.Expectations}<{typeToMockName}> expectations",
-				string.Join(", ",
-					parameters.Select(_ => $"{_.Type.GetReferenceableName()} {_.Name}")));
+				string.Join(", ", parameters.Select(_ =>
+				{
+					var direction = _.RefKind switch
+					{
+						RefKind.Ref => "ref ",
+						RefKind.Out => "out ",
+						RefKind.In => "in ",
+						_ => string.Empty
+					};
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
+				})));
 
 		var mockTypeName = $"{nameof(Rock)}{typeToMock.FlattenedName}";
 
 		if (parameters.Length > 0)
 		{
+			var passedParameter = string.Join(", ", parameters.Select(_ =>
+			{
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}{_.Name}";
+			}));
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
-			writer.WriteLine($": base({string.Join(", ", parameters.Select(_ => $"{_.Name}"))}) =>");
+			writer.WriteLine($": base({passedParameter}) =>");
 			writer.Indent++;
 			MockConstructorBuilder.BuildFieldSetters(writer, mockTypeName, shims);
 			writer.Indent--;

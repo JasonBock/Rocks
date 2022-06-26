@@ -2,6 +2,27 @@
 
 namespace Rocks.IntegrationTests;
 
+public class ClassConstructorWithSpecialParameters
+{
+	public ClassConstructorWithSpecialParameters(int a, ref string b, out string c, params string[] d)
+	{
+		c = "42";
+		(this.A, this.B, this.C, this.D) = (a, b, c, d);
+	}
+
+	public virtual void Foo() { }
+
+	public int A { get; }
+
+	public string B { get; }
+
+	public string C { get; }
+
+#pragma warning disable CA1819 // Properties should not return arrays
+	public string[] D { get; }
+#pragma warning restore CA1819 // Properties should not return arrays
+}
+
 public class ClassConstructor
 {
 	protected ClassConstructor(string stringData) =>
@@ -17,6 +38,52 @@ public class ClassConstructor
 
 public static class ClassConstructorTests
 {
+	[Test]
+	public static void CreateSpecialConstructor()
+	{
+		var bValue = "b";
+		var cValue = "c";
+		var d1Value = "d1";
+		var d2Value = "d2";
+
+		var rock = Rock.Create<ClassConstructorWithSpecialParameters>();
+		rock.Methods().Foo();
+
+		var chunk = rock.Instance(2, ref bValue, out cValue, d1Value, d2Value);
+		chunk.Foo();
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(chunk.A, Is.EqualTo(2));
+			Assert.That(chunk.B, Is.EqualTo("b"));
+			Assert.That(chunk.C, Is.EqualTo("42"));
+			Assert.That(cValue, Is.EqualTo("42"));
+			Assert.That(chunk.D, Is.EquivalentTo(new [] { d1Value, d2Value }));
+		});
+
+		rock.Verify();
+	}
+
+	[Test]
+	public static void MakeSpecialConstructor()
+	{
+		var bValue = "b";
+		var cValue = "c";
+		var d1Value = "d1";
+		var d2Value = "d2";
+
+		var chunk = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out cValue, d1Value, d2Value);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(chunk.A, Is.EqualTo(2));
+			Assert.That(chunk.B, Is.EqualTo("b"));
+			Assert.That(chunk.C, Is.EqualTo("42"));
+			Assert.That(cValue, Is.EqualTo("42"));
+			Assert.That(chunk.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
+		});
+	}
+
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
