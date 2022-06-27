@@ -2,6 +2,12 @@
 
 namespace Rocks.IntegrationTests;
 
+public interface IReturnSpan
+{
+	Span<int> GetRandomData();
+	Span<byte> Values { get; set; }
+}
+
 public interface IHaveSpan
 {
 	void Foo(Span<int> values);

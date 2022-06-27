@@ -23,7 +23,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		{
 			var method = methodResult.Value;
 
-			if (!method.ReturnsVoid && method.ReturnType.IsEsoteric())
+			if (!method.ReturnsVoid && method.ReturnType.IsPointer())
 			{
 				adornmentTypes.Add((method.ReturnType, AdornmentType.Method,
 					methodResult.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes));
@@ -35,7 +35,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			var property = propertyResult.Value;
 
 			if ((propertyResult.Accessors == PropertyAccessor.Get || propertyResult.Accessors == PropertyAccessor.GetAndSet) &&
-				property.Type.IsEsoteric())
+				property.Type.IsPointer())
 			{
 				adornmentTypes.Add((property.Type, property.IsIndexer ? AdornmentType.Indexer : AdornmentType.Property,
 					propertyResult.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes));

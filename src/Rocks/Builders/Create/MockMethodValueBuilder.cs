@@ -170,16 +170,26 @@ internal static class MockMethodValueBuilder
 		writer.Indent++;
 
 		var methodCast = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
 			DelegateBuilder.Build(method.Parameters, method.ReturnType);
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
-		var handlerName = method.ReturnType.IsEsoteric() ?
+		var methodReturnType = method.ReturnType.IsRefLikeType ?
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method) : method.ReturnType.GetReferenceableName();
+		var handlerName = method.ReturnType.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType) :
-			$"{nameof(HandlerInformation)}<{method.ReturnType.GetName()}>";
+			$"{nameof(HandlerInformation)}<{methodReturnType}>";
 		writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
-		writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+
+		if(method.ReturnType.IsPointer() || !method.ReturnType.IsRefLikeType)
+		{
+			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+		}
+		else
+		{
+			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+		}
 
 		writer.Indent--;
 

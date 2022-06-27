@@ -213,7 +213,7 @@ internal static class MockMethodVoidBuilder
 		writer.Indent++;
 
 		var methodCast = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(method) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
 			DelegateBuilder.Build(method.Parameters);
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(

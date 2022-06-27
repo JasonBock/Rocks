@@ -11,7 +11,10 @@ internal static class MockPropertyBuilder
 	private static void BuildGetter(IndentedTextWriter writer,
 		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
-		var methodName = result.Value.GetMethod!.Name;
+		var property = result.Value;
+		var propertyGetMethod = property.GetMethod!;
+
+		var methodName = propertyGetMethod.Name;
 		writer.WriteLine("get");
 		writer.WriteLine("{");
 		writer.Indent++;
@@ -22,7 +25,6 @@ internal static class MockPropertyBuilder
 
 		writer.WriteLine("var methodHandler = methodHandlers[0];");
 
-		var property = result.Value;
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
 			writer.WriteLine($"this.rr{result.MemberIdentifier} = methodHandler.Method is not null ?");
@@ -34,15 +36,24 @@ internal static class MockPropertyBuilder
 
 		writer.Indent++;
 
-		var methodCast = property.GetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedDelegateName(property.GetMethod!) :
+		var methodCast = propertyGetMethod.RequiresProjectedDelegate() ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(propertyGetMethod) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
-		var handlerName = property.Type.IsEsoteric() ?
+		var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(propertyGetMethod) : propertyGetMethod.ReturnType.GetReferenceableName();
+		var handlerName = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
-			$"{nameof(HandlerInformation)}<{property.Type.GetName()}>";
+			$"{nameof(HandlerInformation)}<{propertyReturnType}>";
 
 		writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
-		writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
+		{
+			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+		}
+		else
+		{
+			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+		}
 		writer.Indent--;
 
 		if (raiseEvents)
@@ -134,7 +145,7 @@ internal static class MockPropertyBuilder
 			writer.Indent++;
 
 			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
-				MockProjectedDelegateBuilder.GetProjectedDelegateName(property.SetMethod!) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
 			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
