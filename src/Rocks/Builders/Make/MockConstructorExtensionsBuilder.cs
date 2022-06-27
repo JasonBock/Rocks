@@ -40,8 +40,10 @@ internal static class MockConstructorExtensionsBuilder
 					};
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 				}))));
+		var isUnsafe = false;
 		var rockInstanceParameters = string.Join(", ", string.Join(", ", parameters.Select(_ =>
 		{
+			isUnsafe |= _.Type.IsPointer();
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -52,7 +54,7 @@ internal static class MockConstructorExtensionsBuilder
 			return $"{direction}{_.Name}";
 		})));
 
-		writer.WriteLine($"internal static {typeToMock.GenericName} Instance({instanceParameters}) =>");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} Instance({instanceParameters}) =>");
 		writer.Indent++;
 		writer.WriteLine($"new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters});");
 		writer.Indent--;

@@ -44,7 +44,7 @@ public static class CodeGenerationTests
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(System.Text.ASCIIEncoding) };
+		//var types = new Type[] { typeof(UnmanagedMemoryStream) };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()

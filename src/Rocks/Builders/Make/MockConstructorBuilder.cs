@@ -25,7 +25,8 @@ internal static class MockConstructorBuilder
 				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 			}));
-			writer.WriteLine($"public {nameof(Rock)}{typeToMock.FlattenedName}({instanceParameters})");
+			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
+			writer.WriteLine($"public {isUnsafe}{nameof(Rock)}{typeToMock.FlattenedName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine(@$": base({string.Join(", ", parameters.Select(_ =>
 			{
