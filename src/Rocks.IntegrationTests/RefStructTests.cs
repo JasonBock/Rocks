@@ -2,6 +2,12 @@
 
 namespace Rocks.IntegrationTests;
 
+public interface IHaveInAndOutSpan
+{
+	Span<int> Foo(Span<int> values);
+	Span<byte> Values { get; set; }
+}
+
 public interface IReturnSpan
 {
 	Span<int> GetRandomData();
@@ -16,6 +22,37 @@ public interface IHaveSpan
 
 public static class RefStructTests
 {
+	[Test]
+	public static void CreateInAndOut()
+	{
+		var rock = Rock.Create<IHaveInAndOutSpan>();
+		rock.Methods().Foo(new()).Returns(() => new[] { 1, 2 }.AsSpan());
+		rock.Properties().Getters().Values().Returns(() => new byte[] { 3, 4, 5 }.AsSpan());
+
+		var chunk = rock.Instance();
+
+		Assert.Multiple(() =>
+		{
+			var data = chunk.Foo(default);
+			Assert.That(data.Length, Is.EqualTo(2));
+			Assert.That(data[0], Is.EqualTo(1));
+			Assert.That(data[1], Is.EqualTo(2));
+			var values = chunk.Values;
+			Assert.That(values.Length, Is.EqualTo(3));
+			Assert.That(values[0], Is.EqualTo(3));
+			Assert.That(values[1], Is.EqualTo(4));
+			Assert.That(values[2], Is.EqualTo(5));
+		});
+
+		rock.Verify();
+	}
+
+	[Test]
+	public static void MakeInAndOut()
+	{
+
+	}
+
 	[Test]
 	public static void CreateWithReturnValues()
 	{

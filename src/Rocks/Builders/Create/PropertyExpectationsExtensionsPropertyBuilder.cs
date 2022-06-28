@@ -39,13 +39,19 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
 	{
 		var property = result.Value;
-		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
+		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
+		var propertyParameterValue = 
+			propertyParameterType.IsEsoteric() ?
+				propertyParameterType.IsPointer() ?
+					PointerArgTypeBuilder.GetProjectedName(propertyParameterType) :
+					RefLikeArgTypeBuilder.GetProjectedName(propertyParameterType) :
+			propertyParameterType.GetReferenceableName();
 		var mockTypeName = result.MockType.GetName();
 		var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
-		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
+		var adornmentsType = propertyParameterType.IsPointer() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");

@@ -71,9 +71,26 @@ public static class CodeGenerationTests
 			var result = outputCompilation.Emit(outputStream);
 
 			Assert.That(result.Success, Is.True);
-			// TODO: Remember to include warnings as well before #167 is merged.
+			// TODO: Remember to address warnings as well before #167 is merged.
+
 			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
 			Assert.That(errorDiagnostics.Length, Is.EqualTo(0));
+
+			var warningGroups = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Warning)
+				.GroupBy(_ => _.Id)
+				.Select(_ => new
+				{
+					Id = _.Key,
+					Count = _.Count(),
+					Title = _.ToArray()[0].Descriptor.Title,
+				})
+				.OrderByDescending(_ => _.Count);
+
+			foreach(var warningGroup in warningGroups)
+			{
+				TestContext.WriteLine(
+					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
+			}
 		});
 	}
 

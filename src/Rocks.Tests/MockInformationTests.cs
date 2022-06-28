@@ -105,13 +105,13 @@ public class {targetTypeName} {{ }}";
 	}
 
 	[Test]
-	public static void CreateWhenTypeIsObsoleteAndErrorIsNotSetAndTreatWarningsAsErrorsAsTrue()
+	public static void CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsTrue()
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
 $@"using System;
 
-[Obsolete(""a"")]
+[Obsolete(""a"", false)]
 public class {targetTypeName} {{ }}";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, true);
@@ -120,6 +120,28 @@ public class {targetTypeName} {{ }}";
 		{
 			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.True);
 			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
+	public static void CreateWhenTypeIsObsoleteAndErrorIsSetToFalseAndTreatWarningsAsErrorsAsFalse()
+	{
+		const string targetTypeName = "ObsoleteType";
+		var code =
+$@"using System;
+
+[Obsolete(""a"", false)]
+public class {targetTypeName} 
+{{ 
+	public virtual void Foo() {{ }}
+}}";
+
+		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, false);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.False);
+			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
 
