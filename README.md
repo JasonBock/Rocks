@@ -36,3 +36,7 @@ mock.Verify();
 ```
 
 More details can be found on the [Quickstart page](https://github.com/JasonBock/Rocks/blob/main/docs/Quickstart.md). Note that if you build the code locally, you'll need to build in `Release` mode for the package reference in `Rocks.NuGetHost` to resolve correctly (or unload that project from the solution as it's optional and delete `nuget.config`).
+
+## Changelog
+
+A changelog was (finally!) added for the `6.4.4` version. You can read it [here](https://github.com/JasonBock/Rocks/blob/main/changelog.md).

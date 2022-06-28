@@ -10,6 +10,7 @@
 		<PackageIcon>RocksIcon.png</PackageIcon>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/jasonbock/rocks</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageVersion>$(Version)</PackageVersion>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -28,6 +29,7 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="" />
 		<None Include="..\..\LICENSE" Pack="true" PackagePath="" />
 		<None Include="..\Images\RocksIcon.png" Pack="true" PackagePath="" Visible="false" />
 		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
