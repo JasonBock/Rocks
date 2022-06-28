@@ -29,22 +29,22 @@ public static class CodeGenerationTests
 		var isCreate = generator is RockCreateGenerator;
 		var assemblies = CodeGenerationTests.targetTypes.Select(_ => _.Assembly).ToHashSet();
 
-		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
+		//var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
-		foreach (var assembly in assemblies)
-		{
-			Parallel.ForEach(assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
-				{
-					if (_.IsValidTarget())
-					{
-						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
-					}
-				});
-		}
+		//foreach (var assembly in assemblies)
+		//{
+		//	Parallel.ForEach(assembly.GetTypes()
+		//		.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+		//		{
+		//			if (_.IsValidTarget())
+		//			{
+		//				discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
+		//			}
+		//		});
+		//}
 
-		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(IndentedTextWriter) };
+		//var types = discoveredTypes.Keys.ToArray();
+		var types = new Type[] { typeof(IEquatable<>) };
 		//var types = new Type[] { Type.GetType("System.Diagnostics.DebugProvider")! };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -92,7 +92,7 @@ public static class CodeGenerationTests
 					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
 			}
 
-			var warningIssue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS3021");
+			var warningIssue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS0114");
 		});
 	}
 

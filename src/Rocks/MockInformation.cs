@@ -70,7 +70,7 @@ internal sealed class MockInformation
 
 		this.Constructors = typeToMock.GetMockableConstructors(this.ContainingAssemblyOfInvocationSymbol);
 		this.Methods = typeToMock.GetMockableMethods(
-			this.ContainingAssemblyOfInvocationSymbol, shims, ref memberIdentifier);
+			this.ContainingAssemblyOfInvocationSymbol, shims, this.Model.Compilation, ref memberIdentifier);
 		this.Properties = typeToMock.GetMockableProperties(
 			this.ContainingAssemblyOfInvocationSymbol, shims, ref memberIdentifier);
 		this.Events = typeToMock.GetMockableEvents(

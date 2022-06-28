@@ -244,17 +244,34 @@ internal static class ITypeSymbolExtensions
 
 	internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
 	{
 		var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
+			// We need to get the set of virtual methods from object,
+			// because the mock object will derive from object,
+			// and interfaces like IEquatable<T> have a method (Equals(T? other))
+			// that have the possibility of colliding with methods from interfaces.
+			// We don't want to include them, we just need to consider them to see
+			// if a method requires explicit implementation
+			var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
+			var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
+				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
+					_.IsVirtual && !_.IsStatic);
+
 			foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
 					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
 			{
-				methods.Add(new(selfMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier));
+				var selfMethodRequiresExplicit = objectMethods.Any(
+					_ => _.Match(selfMethod) switch
+					{
+						MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+						_ => false
+					}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
+				methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
 
 				if (selfMethod.IsVirtual)
 				{
@@ -294,42 +311,51 @@ internal static class ITypeSymbolExtensions
 				}
 			}
 
-			foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+			if(baseInterfaceMethodGroups.Count > 0)
 			{
-				if (baseInterfaceMethodGroup.Count == 1)
+				foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 				{
-					// If this one method differs by return type only
-					// from any other method currently captured in the list
-					// (think IEnumerable<T> -> IEnumerable and their GetEnumerator() methods),
-					// then we must require explicit implementation.
-					var requiresExplicitImplementation = methods.Any(
-						_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.DifferByReturnTypeOnly) ?
-						RequiresExplicitInterfaceImplementation.Yes :
-						RequiresExplicitInterfaceImplementation.No;
-
-					methods.Add(new(baseInterfaceMethodGroup[0], self,
-						requiresExplicitImplementation, RequiresOverride.No, memberIdentifier));
-
-					if (baseInterfaceMethodGroup[0].IsVirtual)
+					if (baseInterfaceMethodGroup.Count == 1)
 					{
-						shims.Add(baseInterfaceMethodGroup[0].ContainingType);
-					}
+						// If this one method differs by return type only
+						// from any other method currently captured in the list
+						// (think IEnumerable<T> -> IEnumerable and their GetEnumerator() methods),
+						// or any of the virtual methods from object,
+						// then we must require explicit implementation.
+						var requiresExplicitImplementation = methods.Any(
+							_ => _.Value.Match(baseInterfaceMethodGroup[0]) == MethodMatch.DifferByReturnTypeOnly) ||
+							objectMethods.Any(_ => _.Match(baseInterfaceMethodGroup[0]) switch
+								{
+									MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+									_ => false
+								}) ?
+							RequiresExplicitInterfaceImplementation.Yes :
+							RequiresExplicitInterfaceImplementation.No;
 
-					memberIdentifier++;
-				}
-				else
-				{
-					foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
-					{
-						methods.Add(new(baseInterfaceMethod, self,
-							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
+						methods.Add(new(baseInterfaceMethodGroup[0], self,
+							requiresExplicitImplementation, RequiresOverride.No, memberIdentifier));
 
-						if (baseInterfaceMethod.IsVirtual)
+						if (baseInterfaceMethodGroup[0].IsVirtual)
 						{
-							shims.Add(baseInterfaceMethod.ContainingType);
+							shims.Add(baseInterfaceMethodGroup[0].ContainingType);
 						}
 
 						memberIdentifier++;
+					}
+					else
+					{
+						foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
+						{
+							methods.Add(new(baseInterfaceMethod, self,
+								RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
+
+							if (baseInterfaceMethod.IsVirtual)
+							{
+								shims.Add(baseInterfaceMethod.ContainingType);
+							}
+
+							memberIdentifier++;
+						}
 					}
 				}
 			}
