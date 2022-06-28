@@ -29,22 +29,23 @@ public static class CodeGenerationTests
 		var isCreate = generator is RockCreateGenerator;
 		var assemblies = CodeGenerationTests.targetTypes.Select(_ => _.Assembly).ToHashSet();
 
-		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
+		//var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
-		foreach (var assembly in assemblies)
-		{
-			Parallel.ForEach(assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
-				{
-					if (_.IsValidTarget())
-					{
-						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
-					}
-				});
-		}
+		//foreach (var assembly in assemblies)
+		//{
+		//	Parallel.ForEach(assembly.GetTypes()
+		//		.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+		//		{
+		//			if (_.IsValidTarget())
+		//			{
+		//				discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
+		//			}
+		//		});
+		//}
 
-		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(UnmanagedMemoryStream) };
+		//var types = discoveredTypes.Keys.ToArray();
+		//var types = new Type[] { typeof(System.Diagnostics.DebugProvider) };
+		var types = new Type[] { Type.GetType("System.Diagnostics.DebugProvider")! };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -71,7 +72,6 @@ public static class CodeGenerationTests
 			var result = outputCompilation.Emit(outputStream);
 
 			Assert.That(result.Success, Is.True);
-			// TODO: Remember to address warnings as well before #167 is merged.
 
 			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
 			Assert.That(errorDiagnostics.Length, Is.EqualTo(0));
@@ -91,6 +91,8 @@ public static class CodeGenerationTests
 				TestContext.WriteLine(
 					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
 			}
+
+			var CS8763Issue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS8763");
 		});
 	}
 

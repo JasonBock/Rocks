@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 
@@ -7,9 +8,11 @@ namespace Rocks.Builders.Make;
 internal static class MockMethodVoidBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodMockableResult result,
-		Compilation compilation)
+		NamespaceGatherer namespaces, Compilation compilation)
 	{
 		var method = result.Value;
+
+		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var direction = _.RefKind switch
@@ -78,6 +81,12 @@ internal static class MockMethodVoidBuilder
 		foreach (var outParameter in method.Parameters.Where(_ => _.RefKind == RefKind.Out))
 		{
 			writer.WriteLine($"{outParameter.Name} = default!;");
+		}
+
+		if (shouldThrowDoesNotReturnException)
+		{
+			namespaces.Add(typeof(DoesNotReturnException));
+			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
 		}
 
 		writer.Indent--;

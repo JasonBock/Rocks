@@ -93,9 +93,9 @@ internal static class AttributeDataExtensions
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
 				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
-				!_.AttributeClass.Equals(compilerGeneratedAttribute) &&
-				!_.AttributeClass.Equals(iteratorStateMachineAttribute) &&
-				!_.AttributeClass.Equals(asyncStateMachineAttribute)).ToImmutableArray();
+				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

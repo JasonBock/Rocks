@@ -4,7 +4,7 @@ namespace Rocks.Exceptions;
 
 [Serializable]
 public sealed class NewMockInstanceException
-	 : Exception
+	: Exception
 {
 	public NewMockInstanceException() { }
 	public NewMockInstanceException(string message) : base(message) { }

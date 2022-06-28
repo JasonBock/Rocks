@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Exceptions;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 
@@ -10,6 +11,8 @@ internal static class MockMethodValueBuilder
 		NamespaceGatherer namespaces, Compilation compilation)
 	{
 		var method = result.Value;
+
+		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
@@ -94,39 +97,46 @@ internal static class MockMethodValueBuilder
 		var valueTaskType = model.Compilation.GetTypeByMetadataName(typeof(ValueTask).FullName);
 		var valueTaskOfTType = model.Compilation.GetTypeByMetadataName(typeof(ValueTask<>).FullName);
 
-		if (method.ReturnType.Equals(taskType))
+		if(shouldThrowDoesNotReturnException)
 		{
-			namespaces.Add(taskType.ContainingNamespace);
-			writer.WriteLine($"return {nameof(Task)}.{nameof(Task.CompletedTask)};");
-		}
-		else if (method.ReturnType.Equals(valueTaskType))
-		{
-			namespaces.Add(valueTaskType.ContainingNamespace);
-			writer.WriteLine($"return new {nameof(ValueTask)}();");
-		}
-		else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
-		{
-			namespaces.Add(taskOfTType.ContainingNamespace);
-			writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
-		}
-		else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
-		{
-			namespaces.Add(valueTaskOfTType.ContainingNamespace);
-			var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
-			writer.WriteLine($"return new {nameof(ValueTask)}<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
+			namespaces.Add(typeof(DoesNotReturnException));
+			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
 		}
 		else
 		{
-			if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+			if (method.ReturnType.Equals(taskType))
 			{
-				writer.WriteLine($"return ref this.rr{result.MemberIdentifier};");
+				namespaces.Add(taskType.ContainingNamespace);
+				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.CompletedTask)};");
+			}
+			else if (method.ReturnType.Equals(valueTaskType))
+			{
+				namespaces.Add(valueTaskType.ContainingNamespace);
+				writer.WriteLine($"return new {nameof(ValueTask)}();");
+			}
+			else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
+			{
+				namespaces.Add(taskOfTType.ContainingNamespace);
+				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
+			}
+			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
+			{
+				namespaces.Add(valueTaskOfTType.ContainingNamespace);
+				var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
+				writer.WriteLine($"return new {nameof(ValueTask)}<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
 			}
 			else
 			{
-				writer.WriteLine("return default!;");
+				if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+				{
+					writer.WriteLine($"return ref this.rr{result.MemberIdentifier};");
+				}
+				else
+				{
+					writer.WriteLine("return default!;");
+				}
 			}
 		}
-
 		writer.Indent--;
 		writer.WriteLine("}");
 	}

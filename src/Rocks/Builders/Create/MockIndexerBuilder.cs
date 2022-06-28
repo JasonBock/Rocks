@@ -9,11 +9,12 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, 
-		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, 
+		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
 		string signature, string explicitTypeName)
 	{
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
+		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 
 		writer.WriteLine("get");
 		writer.WriteLine("{");
@@ -56,7 +57,8 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, result.MemberIdentifier);
+		MockMethodValueBuilder.BuildMethodHandler(
+			writer, method, raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -107,11 +109,12 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, 
+		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
 		string signature, string explicitTypeName)
 	{
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
+		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 
 		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
@@ -161,7 +164,16 @@ internal static class MockIndexerBuilder
 			writer.Indent++;
 
 			MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
-			writer.WriteLine("return;");
+
+			if (shouldThrowDoesNotReturnException)
+			{
+				writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			}
+			else
+			{
+				writer.WriteLine("return;");
+			}
+
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -256,14 +268,16 @@ internal static class MockIndexerBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockIndexerBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, signature, explicitTypeName);
+			MockIndexerBuilder.BuildGetter(writer, result, compilation, 
+				memberIdentifier, raiseEvents, signature, explicitTypeName);
 			memberIdentifier++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockIndexerBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, signature, explicitTypeName);
+			MockIndexerBuilder.BuildSetter(writer, result, compilation, 
+				memberIdentifier, raiseEvents, signature, explicitTypeName);
 		}
 
 		writer.Indent--;

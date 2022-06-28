@@ -42,7 +42,7 @@ internal static class MockMakeBuilder
 		{
 			if (method.Value.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, method, compilation);
+				MockMethodVoidBuilder.Build(writer, method, namespaces, compilation);
 			}
 			else
 			{

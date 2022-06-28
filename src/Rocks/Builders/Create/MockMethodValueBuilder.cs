@@ -11,6 +11,8 @@ internal static class MockMethodValueBuilder
 		Compilation compilation)
 	{
 		var method = result.Value;
+		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
@@ -100,11 +102,13 @@ internal static class MockMethodValueBuilder
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(writer, method, raiseEvents, result.MemberIdentifier);
+			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
+				writer, method, raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
 		}
 		else
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(writer, method, raiseEvents, result.MemberIdentifier);
+			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(
+				writer, method, raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
 		}
 
 		if (method.Parameters.Length > 0)
@@ -126,6 +130,9 @@ internal static class MockMethodValueBuilder
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
+			// Note that if the method has [DoesNotReturn], calling the base method
+			// and returning its' value should not trip a compiler warning,
+			// as the base method is responsible for not returning.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
@@ -156,7 +163,7 @@ internal static class MockMethodValueBuilder
 	}
 
 	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, 
-		bool raiseEvents, uint memberIndentifier)
+		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
 		if (method.ReturnsByRef || method.ReturnsByRefReadonly)
 		{
@@ -164,7 +171,14 @@ internal static class MockMethodValueBuilder
 		}
 		else
 		{
-			writer.WriteLine("var result = methodHandler.Method is not null ?");
+			if(shouldThrowDoesNotReturnException)
+			{
+				writer.WriteLine("_ = methodHandler.Method is not null ?");
+			}
+			else
+			{
+				writer.WriteLine("var result = methodHandler.Method is not null ?");
+			}
 		}
 
 		writer.Indent++;
@@ -200,18 +214,25 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
 
-		if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"return ref this.rr{memberIndentifier};");
+			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
 		}
 		else
 		{
-			writer.WriteLine("return result!;");
+			if (method.ReturnsByRef || method.ReturnsByRefReadonly)
+			{
+				writer.WriteLine($"return ref this.rr{memberIndentifier};");
+			}
+			else
+			{
+				writer.WriteLine("return result!;");
+			}
 		}
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, 
-		IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
+		IMethodSymbol method, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
 		writer.WriteLine("{");
@@ -251,7 +272,8 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
+		MockMethodValueBuilder.BuildMethodHandler(
+			writer, method, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -259,9 +281,11 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents, uint memberIdentifier)
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, 
+		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine("var methodHandler = methodHandlers[0];");
-		MockMethodValueBuilder.BuildMethodHandler(writer, method, raiseEvents, memberIdentifier);
+		MockMethodValueBuilder.BuildMethodHandler(
+			writer, method, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 	}
 }
