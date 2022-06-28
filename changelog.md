@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added the README.md file to the package (issue [#168](https://github.com/JasonBock/Rocks/issues/168)).
 
+### Changed
+
+- Methods that have the `[DoesNotReturn]` attribute are now mocked such that they will throw `DoesNotReturnException` (this is to address the `CS8763` warning).
+
 ## [6.4.4] - 2022-06-27
 
 ### Changed
