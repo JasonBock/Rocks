@@ -44,7 +44,7 @@ public static class CodeGenerationTests
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
-		//var types = new Type[] { typeof(IndentedTextWriter) };
+		//var types = new Type[] { typeof(System.Collections.Hashtable) };
 		//var types = new Type[] { Type.GetType("System.Diagnostics.DebugProvider")! };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -76,7 +76,9 @@ public static class CodeGenerationTests
 			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
 			Assert.That(errorDiagnostics.Length, Is.EqualTo(0));
 
-			var warningGroups = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Warning)
+			var ignoredWarnings = new[] { "CS0618", "SYSLIB0001", "CS1701" };
+			var warningGroups = result.Diagnostics
+				.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
 				.GroupBy(_ => _.Id)
 				.Select(_ => new
 				{
@@ -90,13 +92,6 @@ public static class CodeGenerationTests
 			{
 				TestContext.WriteLine(
 					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
-			}
-
-			var warningIssue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS8765");
-
-			if(warningIssue is not null)
-			{
-				TestContext.WriteLine($"Current Warning: {warningIssue}");
 			}
 		});
 	}
