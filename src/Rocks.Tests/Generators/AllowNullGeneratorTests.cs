@@ -150,6 +150,68 @@ namespace MockTests
 	}
 
 	[Test]
+	public static async Task GenerateAbstractMakeAsync()
+	{
+		var code =
+@"using Rocks;
+using System;
+using System.Diagnostics.CodeAnalysis;
+
+namespace MockTests
+{
+	public interface IAllow
+	{
+		 [AllowNull]
+		 string NewLine { get; set; }
+	}
+	
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Make<IAllow>();
+		}
+	}
+}";
+
+		var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class MakeExpectationsOfIAllowExtensions
+	{
+		internal static IAllow Instance(this MakeGeneration<IAllow> self) =>
+			new RockIAllow();
+		
+		private sealed class RockIAllow
+			: IAllow
+		{
+			public RockIAllow() { }
+			
+			[AllowNull]
+			public string NewLine
+			{
+				get => default!;
+				set { }
+			}
+		}
+	}
+}
+";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "IAllow_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateNonAbstractCreateAsync()
 	{
 		var code =
@@ -366,6 +428,80 @@ namespace MockTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "Allow_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateNonAbstractMakeAsync()
+	{
+		var code =
+@"using Rocks;
+using System;
+using System.Diagnostics.CodeAnalysis;
+
+namespace MockTests
+{
+	public class Allow
+	{
+		 [AllowNull]
+		 public virtual string NewLine { get; set; }
+	}
+	
+	public static class Test
+	{
+		public static void Generate()
+		{
+			var rock = Rock.Make<Allow>();
+		}
+	}
+}";
+
+		var generatedCode =
+@"using Rocks;
+using Rocks.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+
+#nullable enable
+namespace MockTests
+{
+	internal static class MakeExpectationsOfAllowExtensions
+	{
+		internal static Allow Instance(this MakeGeneration<Allow> self) =>
+			new RockAllow();
+		
+		private sealed class RockAllow
+			: Allow
+		{
+			public RockAllow() { }
+			
+			public override bool Equals(object? obj)
+			{
+				return default!;
+			}
+			public override int GetHashCode()
+			{
+				return default!;
+			}
+			public override string? ToString()
+			{
+				return default!;
+			}
+			[AllowNull]
+			public override string NewLine
+			{
+				get => default!;
+				set { }
+			}
+		}
+	}
+}
+";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "Allow_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

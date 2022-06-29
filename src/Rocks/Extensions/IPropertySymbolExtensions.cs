@@ -36,7 +36,7 @@ internal static class IPropertySymbolExtensions
 
 		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();
 
-		namespaces.AddRange(self.GetAttributes().SelectMany(_ => _.GetNamespaces()));
+		namespaces.AddRange(self.GetAllAttributes().SelectMany(_ => _.GetNamespaces()));
 		namespaces.AddRange(self.Type.GetNamespaces());
 
 		if (self.IsIndexer)
