@@ -104,7 +104,7 @@ internal static class MockPropertyBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
 	{
 		var methodName = result.Value.SetMethod!.Name;
 		var property = result.Value;
@@ -115,6 +115,7 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
+			var nullableFlag = allowNull ? "!" : string.Empty;
 			writer.WriteLine("set");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -134,7 +135,7 @@ internal static class MockPropertyBuilder
 						RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
 						$"{nameof(Argument)}<{property.Type.GetName()}>";
 
-			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value) ?? false)");
+			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value{nullableFlag}) ?? false)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -148,7 +149,7 @@ internal static class MockPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-			writer.WriteLine($"(({methodCast})methodHandler.Method)(value);");
+			writer.WriteLine($"(({methodCast})methodHandler.Method)(value{nullableFlag});");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -210,7 +211,7 @@ internal static class MockPropertyBuilder
 		PropertyMockableResult result, bool raiseEvents, Compilation compilation)
 	{
 		var property = result.Value;
-		var attributes = property.GetAttributes();
+		var attributes = property.GetAllAttributes();
 
 		if (attributes.Length > 0)
 		{
@@ -256,7 +257,9 @@ internal static class MockPropertyBuilder
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			var allowNullAttributeType = compilation.GetTypeByMetadataName("System.Diagnostics.CodeAnalysis.AllowNullAttribute");
+			var allowNull = attributes.Any(_ => _.AttributeClass?.Equals(allowNullAttributeType, SymbolEqualityComparer.Default) ?? false);
+			MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName, allowNull);
 		}
 
 		writer.Indent--;

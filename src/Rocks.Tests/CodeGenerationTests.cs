@@ -44,7 +44,7 @@ public static class CodeGenerationTests
 		//}
 
 		//var types = discoveredTypes.Keys.ToArray();
-		var types = new Type[] { typeof(IEqualityComparer<>) };
+		var types = new Type[] { typeof(IndentedTextWriter) };
 		//var types = new Type[] { Type.GetType("System.Diagnostics.DebugProvider")! };
 		var code = CodeGenerationTests.GetCode(types, isCreate);
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -92,12 +92,11 @@ public static class CodeGenerationTests
 					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
 			}
 
-			var warningIssue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS0108");
+			var warningIssue = result.Diagnostics.FirstOrDefault(_ => _.Id == "CS8765");
 
 			if(warningIssue is not null)
 			{
-				TestContext.WriteLine(
-					$"Current Warning: Id: {warningIssue.Id}, Description: {warningIssue.Descriptor.Title}");
+				TestContext.WriteLine($"Current Warning: {warningIssue}");
 			}
 		});
 	}

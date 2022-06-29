@@ -5,6 +5,20 @@ namespace Rocks.Extensions;
 
 internal static class IPropertySymbolExtensions
 {
+	internal static ImmutableArray<AttributeData> GetAllAttributes(this IPropertySymbol self)
+	{
+		var attributes = self.GetAttributes().ToList();
+
+		// [AllowNull] shows up on the value parameter of the setter if the property
+		// is not abstract (and has a setter), so we need to do go deeper.
+		if (!self.IsAbstract && self.SetMethod is not null)
+		{
+			attributes.AddRange(self.SetMethod.Parameters[self.SetMethod.Parameters.Length - 1].GetAttributes());
+		}
+
+		return attributes.ToImmutableArray();
+	}
+
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IPropertySymbol self)
 	{
 		static IEnumerable<INamespaceSymbol> GetParameterNamespaces(IParameterSymbol parameter)
