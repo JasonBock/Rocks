@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Methods that have the `[DoesNotReturn]` attribute are now mocked such that they will throw `DoesNotReturnException`. This addresses the `CS8763` warning (issue [#169](https://github.com/JasonBock/Rocks/issues/169)). 
 - If the mock type is an interface and it contains methods that match accessible methods from the `object` type (e.g. `Equals(T? other)` from `IEquatable<T>`), the methods will be implemented in the mock explicitly. This addresses the `CS0114` and `CS0108` warnings (issue [#169](https://github.com/JasonBock/Rocks/issues/169)).
 - Properties with the `[AllowNull]` attribute are now handled correctly. This addresses the `CS8765` warning (issue [#169](https://github.com/JasonBock/Rocks/issues/169)).
+- If a property expectation was not met, calling `Verify()` was causing `InvalidOperationException` to be thrown instead of `VerificationException`. This is fixed (issue [#171](https://github.com/JasonBock/Rocks/issues/171)).
 
 ## [6.4.4] - 2022-06-27
 
