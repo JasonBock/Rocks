@@ -18,8 +18,8 @@ namespace MockTests
 	public interface IMatchObject<T>
 	{
 		bool Equals(T? other);
-		int GetHashCode();
-		string? ToString();
+		bool ReferenceEquals(T? objA, T? objB);
+		T MemberwiseClone();
 	}
 
 	public static class Test
@@ -92,36 +92,44 @@ namespace MockTests
 				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.Equals(object? other)"");
 			}
 			
-			[MemberIdentifier(1, ""int IMatchObject<object>.GetHashCode()"")]
-			int IMatchObject<object>.GetHashCode()
+			[MemberIdentifier(1, ""bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"")]
+			bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
 			{
 				if (this.handlers.TryGetValue(1, out var methodHandlers))
 				{
-					var methodHandler = methodHandlers[0];
-					var result = methodHandler.Method is not null ?
-						((Func<int>)methodHandler.Method)() :
-						((HandlerInformation<int>)methodHandler).ReturnValue;
-					methodHandler.IncrementCallCount();
-					return result!;
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
+							((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+						{
+							var result = methodHandler.Method is not null ?
+								((Func<object?, object?, bool>)methodHandler.Method)(objA, objB) :
+								((HandlerInformation<bool>)methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+					}
+					
+					throw new ExpectationException(""No handlers match for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
 				}
 				
-				throw new ExpectationException(""No handlers were found for int IMatchObject<object>.GetHashCode()"");
+				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
 			}
 			
-			[MemberIdentifier(2, ""string? IMatchObject<object>.ToString()"")]
-			string? IMatchObject<object>.ToString()
+			[MemberIdentifier(2, ""object IMatchObject<object>.MemberwiseClone()"")]
+			object IMatchObject<object>.MemberwiseClone()
 			{
 				if (this.handlers.TryGetValue(2, out var methodHandlers))
 				{
 					var methodHandler = methodHandlers[0];
 					var result = methodHandler.Method is not null ?
-						((Func<string?>)methodHandler.Method)() :
-						((HandlerInformation<string?>)methodHandler).ReturnValue;
+						((Func<object>)methodHandler.Method)() :
+						((HandlerInformation<object>)methodHandler).ReturnValue;
 					methodHandler.IncrementCallCount();
 					return result!;
 				}
 				
-				throw new ExpectationException(""No handlers were found for string? IMatchObject<object>.ToString()"");
+				throw new ExpectationException(""No handlers were found for object IMatchObject<object>.MemberwiseClone()"");
 			}
 			
 			
@@ -133,10 +141,10 @@ namespace MockTests
 	{
 		internal static MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
 			new MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { other }));
-		internal static MethodAdornments<IMatchObject<object>, Func<int>, int> GetHashCode(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-		internal static MethodAdornments<IMatchObject<object>, Func<string?>, string?> ToString(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
+		internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
+			new MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool>(self.Add<bool>(1, new List<Argument>(2) { objA, objB }));
+		internal static MethodAdornments<IMatchObject<object>, Func<object>, object> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
+			new MethodAdornments<IMatchObject<object>, Func<object>, object>(self.Add<object>(2, new List<Argument>()));
 	}
 }
 ";
@@ -159,8 +167,8 @@ namespace MockTests
 	public interface IMatchObject<T>
 	{
 		bool Equals(T? other);
-		int GetHashCode();
-		string? ToString();
+		bool ReferenceEquals(T? objA, T? objB);
+		T MemberwiseClone();
 	}
 
 	public static class Test
@@ -196,11 +204,11 @@ namespace MockTests
 			{
 				return default!;
 			}
-			int IMatchObject<object>.GetHashCode()
+			bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
 			{
 				return default!;
 			}
-			string? IMatchObject<object>.ToString()
+			object IMatchObject<object>.MemberwiseClone()
 			{
 				return default!;
 			}
@@ -226,9 +234,9 @@ namespace MockTests
 {
 	public interface IMatchObject<T>
 	{
-		string? Equals(T? other);
-		bool GetHashCode();
-		int ToString();
+		string Equals(T? other);
+		int ReferenceEquals(T? objA, T? objB);
+		bool MemberwiseClone();
 	}
 
 	public static class Test
@@ -278,8 +286,8 @@ namespace MockTests
 			public RockIMatchObjectOfobject(Expectations<IMatchObject<object>> expectations) =>
 				this.handlers = expectations.Handlers;
 			
-			[MemberIdentifier(0, ""string? IMatchObject<object>.Equals(object? other)"")]
-			string? IMatchObject<object>.Equals(object? other)
+			[MemberIdentifier(0, ""string IMatchObject<object>.Equals(object? other)"")]
+			string IMatchObject<object>.Equals(object? other)
 			{
 				if (this.handlers.TryGetValue(0, out var methodHandlers))
 				{
@@ -288,23 +296,47 @@ namespace MockTests
 						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
 						{
 							var result = methodHandler.Method is not null ?
-								((Func<object?, string?>)methodHandler.Method)(other) :
-								((HandlerInformation<string?>)methodHandler).ReturnValue;
+								((Func<object?, string>)methodHandler.Method)(other) :
+								((HandlerInformation<string>)methodHandler).ReturnValue;
 							methodHandler.IncrementCallCount();
 							return result!;
 						}
 					}
 					
-					throw new ExpectationException(""No handlers match for string? IMatchObject<object>.Equals(object? other)"");
+					throw new ExpectationException(""No handlers match for string IMatchObject<object>.Equals(object? other)"");
 				}
 				
-				throw new ExpectationException(""No handlers were found for string? IMatchObject<object>.Equals(object? other)"");
+				throw new ExpectationException(""No handlers were found for string IMatchObject<object>.Equals(object? other)"");
 			}
 			
-			[MemberIdentifier(1, ""bool IMatchObject<object>.GetHashCode()"")]
-			bool IMatchObject<object>.GetHashCode()
+			[MemberIdentifier(1, ""int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"")]
+			int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
 			{
 				if (this.handlers.TryGetValue(1, out var methodHandlers))
+				{
+					foreach (var methodHandler in methodHandlers)
+					{
+						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
+							((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+						{
+							var result = methodHandler.Method is not null ?
+								((Func<object?, object?, int>)methodHandler.Method)(objA, objB) :
+								((HandlerInformation<int>)methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+					}
+					
+					throw new ExpectationException(""No handlers match for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
+				}
+				
+				throw new ExpectationException(""No handlers were found for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
+			}
+			
+			[MemberIdentifier(2, ""bool IMatchObject<object>.MemberwiseClone()"")]
+			bool IMatchObject<object>.MemberwiseClone()
+			{
+				if (this.handlers.TryGetValue(2, out var methodHandlers))
 				{
 					var methodHandler = methodHandlers[0];
 					var result = methodHandler.Method is not null ?
@@ -314,23 +346,7 @@ namespace MockTests
 					return result!;
 				}
 				
-				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.GetHashCode()"");
-			}
-			
-			[MemberIdentifier(2, ""int IMatchObject<object>.ToString()"")]
-			int IMatchObject<object>.ToString()
-			{
-				if (this.handlers.TryGetValue(2, out var methodHandlers))
-				{
-					var methodHandler = methodHandlers[0];
-					var result = methodHandler.Method is not null ?
-						((Func<int>)methodHandler.Method)() :
-						((HandlerInformation<int>)methodHandler).ReturnValue;
-					methodHandler.IncrementCallCount();
-					return result!;
-				}
-				
-				throw new ExpectationException(""No handlers were found for int IMatchObject<object>.ToString()"");
+				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.MemberwiseClone()"");
 			}
 			
 			
@@ -340,12 +356,12 @@ namespace MockTests
 	
 	internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
 	{
-		internal static MethodAdornments<IMatchObject<object>, Func<object?, string?>, string?> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
-			new MethodAdornments<IMatchObject<object>, Func<object?, string?>, string?>(self.Add<string?>(0, new List<Argument>(1) { other }));
-		internal static MethodAdornments<IMatchObject<object>, Func<bool>, bool> GetHashCode(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<bool>, bool>(self.Add<bool>(1, new List<Argument>()));
-		internal static MethodAdornments<IMatchObject<object>, Func<int>, int> ToString(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<int>, int>(self.Add<int>(2, new List<Argument>()));
+		internal static MethodAdornments<IMatchObject<object>, Func<object?, string>, string> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
+			new MethodAdornments<IMatchObject<object>, Func<object?, string>, string>(self.Add<string>(0, new List<Argument>(1) { other }));
+		internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
+			new MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int>(self.Add<int>(1, new List<Argument>(2) { objA, objB }));
+		internal static MethodAdornments<IMatchObject<object>, Func<bool>, bool> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
+			new MethodAdornments<IMatchObject<object>, Func<bool>, bool>(self.Add<bool>(2, new List<Argument>()));
 	}
 }
 ";
@@ -367,9 +383,9 @@ namespace MockTests
 {
 	public interface IMatchObject<T>
 	{
-		string? Equals(T? other);
-		bool GetHashCode();
-		int ToString();
+		string Equals(T? other);
+		int ReferenceEquals(T? objA, T? objB);
+		bool MemberwiseClone();
 	}
 
 	public static class Test
@@ -401,15 +417,15 @@ namespace MockTests
 		{
 			public RockIMatchObjectOfobject() { }
 			
-			string? IMatchObject<object>.Equals(object? other)
+			string IMatchObject<object>.Equals(object? other)
 			{
 				return default!;
 			}
-			bool IMatchObject<object>.GetHashCode()
+			int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
 			{
 				return default!;
 			}
-			int IMatchObject<object>.ToString()
+			bool IMatchObject<object>.MemberwiseClone()
 			{
 				return default!;
 			}
@@ -417,6 +433,7 @@ namespace MockTests
 	}
 }
 ";
+
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "IMatchObjectOfobject_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);

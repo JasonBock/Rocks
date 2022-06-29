@@ -250,7 +250,7 @@ internal static class ITypeSymbolExtensions
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
-			// We need to get the set of virtual methods from object,
+			// We need to get the set of methods from object (static, instance, virtual, non-virtual, doesn't matter)
 			// because the mock object will derive from object,
 			// and interfaces like IEquatable<T> have a method (Equals(T? other))
 			// that have the possibility of colliding with methods from interfaces.
@@ -259,7 +259,7 @@ internal static class ITypeSymbolExtensions
 			var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
 			var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
 				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-					_.IsVirtual && !_.IsStatic);
+					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
 			foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
 				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
