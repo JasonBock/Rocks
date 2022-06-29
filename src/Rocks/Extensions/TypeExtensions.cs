@@ -6,7 +6,7 @@ internal static class TypeExtensions
 {
 	internal static string? GetMemberDescription(this Type self, int identifier) =>
 		(from member in self.GetMembers()
-		 let memberIdentifier = member.GetCustomAttributes<MemberIdentifierAttribute>().SingleOrDefault()
+		 from memberIdentifier in member.GetCustomAttributes<MemberIdentifierAttribute>()
 		 where memberIdentifier is not null
 		 where memberIdentifier.Value == identifier
 		 select memberIdentifier.Description).FirstOrDefault();
