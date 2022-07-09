@@ -61,7 +61,7 @@ var result = chunk.TargetFunc();
 rock.Verify();
 ```
 
-Note that all mocks generated with Rocks are **strict**. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call <ins>would fail.</ins>
+Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail.
 
 ### Parameter Verification
 
