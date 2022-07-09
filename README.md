@@ -39,4 +39,4 @@ More details can be found on the [Quickstart page](https://github.com/JasonBock/
 
 ## Changelog
 
-A changelog was (finally!) added, starting from the `6.4.4` version. You can read it **[here](https://github.com/JasonBock/Rocks/blob/main/changelog.md "Changelog Page")**.
+A changelog was (finally!) added, starting from the `6.4.4` version. You can read it [here](https://github.com/JasonBock/Rocks/blob/main/changelog.md "Changelog Page").
