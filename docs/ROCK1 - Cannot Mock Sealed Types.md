@@ -1,6 +1,6 @@
 # Cannot Mock Sealed Types
 If the given type is sealed, a mock cannot be created.
-```
+```csharp
 public sealed class TypeToMock { }
 
 ...
