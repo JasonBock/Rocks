@@ -1,3 +1,26 @@
+## Table of Contents
+- [Introduction](#introduction)
+  - [Creating Mocks](#creating-mocks)
+    - [API Generation](#api-generation)
+    - [Mocking Simple Methods](#mocking-simple-methods)
+    - [Parameter Verification](#parameter-verification)
+    - [Method Call Counts](#method-call-counts)
+    - [Implementing Handled Methods](#implementing-handled-methods)
+    - [Returning Values](#returning-values)
+    - [Passing Constructor Arguments to a Mock](#passing-constructor-arguments-to-a-mock)
+    - [Mocking Generic Methods](#mocking-generic-methods)
+    - [Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values](#mocking-methods-with-refoutin-parameters-or-ref-readonly-return-values)
+    - [Optional Arguments](#optional-arguments)
+    - [Mocking Properties](#mocking-properties)
+    - [Mocking Indexers](#mocking-indexers)
+    - [Mocking Events](#mocking-events)
+  - [Using Makes](#using-makes)
+  - [Handling Asynchronous Code](#handling-asynchronous-code)
+  - [Managing Multiple Mocks](#managing-multiple-mocks)
+  - [`dynamic` Types](#dynamic-types)
+  - ["Special" Types](#special-types)
+- [Conclusion](#conclusion)
+  
 # Introduction
 
 New to Rocks? In this page, we'll cover the essentials of what Rocks can do so you can get up to speed on the API with little effort. We'll go through creating mocks and how you handle methods, properties and events. We'll show what "makes" are and where they're useful. We'll illustrate how you can use options with your mocks to debug the generated code. We'll also demonstrate how you can test asynchronous code.
@@ -10,13 +33,13 @@ There's a lot of scenarios that can be encountered when you want to create a moc
 
 ### API Generation
 
-With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of extension methods are generated that group the members you can set expectations on. You'll see in this document references in code to `.Methods()`, `.Properties()`, and `.Indexers()`. You use these extension methods to set expectations on specific members. This should become clear as you read on and look at the examples.
+With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/ "Introducing C# Source Generators - Microsoft"). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of extension methods are generated that group the members you can set expectations on. You'll see in this document references in code to `.Methods()`, `.Properties()`, and `.Indexers()`. You use these extension methods to set expectations on specific members. This should become clear as you read on and look at the examples.
 
 ### Mocking Simple Methods
 
 Creating a mock in Rocks is pretty easy. Let's say you have an interface defined like this:
 
-```
+```csharp
 public interface IAmSimple
 {
   void TargetAction();
@@ -26,7 +49,7 @@ public interface IAmSimple
 
 Here's how you create the mock, define its expected interactions, use the mock, and verify the expectations:
 
-```
+```csharp
 var rock = Rock.Create<IAmSimple>();
 rock.Methods().TargetAction();
 rock.Methods().TargetFunc().Returns(44);
@@ -44,7 +67,7 @@ Note that all mocks generated with Rocks are strict. That is, if you didn't set 
 
 If your method has parameters, there are a couple of ways you can set up expectations on what should be passed into the method. Here's an interface with a method that takes an integer:
 
-```
+```csharp
 public interface IHaveParameterExpectations
 {
   void Target(int a);
@@ -53,14 +76,14 @@ public interface IHaveParameterExpectations
 
 You can verify that `Target(`) will be called with an exact value by passing in that value when you set up the expectation:
 
-```
+```csharp
 var rock = Rock.Create<IHaveParameterExpectations>();
 rock.Methods().Target(44);
 ```
 
 You create an instance of the mock with the `Instance()` method:
 
-```
+```csharp
 var chunk = rock.Instance();
 chunk.Target(44);
 
@@ -69,7 +92,7 @@ rock.Verify();
 
 If you don't care what the value is, you use `Arg.Any<>()`:
 
-```
+```csharp
 var rock = Rock.Create<IHaveParameterExpectations>();
 rock.Methods().Target(Arg.IsAny<int>());
 
@@ -81,7 +104,7 @@ rock.Verify();
 
 If you want to specify logic to validate the given value, you use `Arg.Validate<>()`:
 
-```
+```csharp
 var rock = Rock.Create<IHaveParameterExpectations>();
 rock.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
 
@@ -93,7 +116,7 @@ rock.Verify();
 
 You can also specify multiple expectations:
 
-```
+```csharp
 var rock = Rock.Create<IHaveParameterExpectations>();
 rock.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
 rock.Methods().Target(10);
@@ -109,7 +132,7 @@ rock.Verify();
 
 You may want to verify that code under test calls a method a specific number of times. You can do that by specifying an expected call count:
 
-```
+```csharp
 var rock = Rock.Create<IAmSimple>();
 rock.Methods().TargetAction().CallCount(2);
 
@@ -122,7 +145,7 @@ rock.Verify();
 
 This also works with multiple expectations:
 
-```
+```csharp
 var rock = Rock.Create<IHaveParameterExpectations>();
 rock.Methods().Target(44).CallCount(2);
 rock.Methods().Target(22).CallCount(3);
@@ -143,7 +166,7 @@ We haven't covered properties yet, but this works with them as well.
 
 You can provide a lambda that will be called when a method is invoked so you can do things like capture method argument values:
 
-```
+```csharp
 var value = 0;
 
 var rock = Rock.Create<IHaveParameterExpectations>();
@@ -162,7 +185,7 @@ rock.Verify();
 
 If a method returns a value, you can use `Returns()`:
 
-```
+```csharp
 var rock = Rock.Create<IAmSimple>();
 rock.Methods().TargetFunc().Returns(44);
 
@@ -178,7 +201,7 @@ rock.Verify();
 
 If you want to mock a class with virtual members where the class only has constructors with multiple arguments, you can do it. You pass the constructor arguments to `Instance()`. Rocks will generate an override of `Instance()` for each constructor that exists on the target type. Here's an example:
 
-```
+```csharp
 public class MockedClass
 {
   public MockedClass(int value) { }
@@ -201,7 +224,7 @@ rock.Verify();
 
 If generics are in play, Rocks can handle that:
 
-```
+```csharp
 public interface IHaveGenerics<T>
 {
   void Target<Q>(T a, Q b);
@@ -222,7 +245,7 @@ rock.Verify();
 
 Methods with either `ref`, `out`, or `in` parameters are supported. A delegate is created for you so you can easily create a callback method to handle the parameters if you want:
 
-```
+```csharp
 public interface IHaveRefs
 {
   void Target(ref int a);
@@ -254,7 +277,7 @@ Since `Action` and `Func` do not support `ref` and `out`, you have to declare th
 
 If your method has optional arguments, you can handle them just like other arguments. You can also use `Arg.IsDefault()` if you want to use the default argument no matter what it is (or if it changes in the future). Here's what that looks like:
 
-```
+```csharp
 public interface IHaveOptionalArguments
 {
   void Target(int a, string b = "b", long c = 44);
@@ -275,7 +298,7 @@ rock.Verify();
 
 Mocking properties is a breeze in Rocks. `Get` and `Set` extension methods are generated for you that are available from the `Properties()` extension method:
 
-```
+```csharp
 public interface IHaveAProperty
 {
   string GetterAndSetter { get; set; }
@@ -284,7 +307,7 @@ public interface IHaveAProperty
 
 Here's how you set up the expectations:
 
-```
+```csharp
 var rock = Rock.Create<IHaveAProperty>();
 rock.Properties().Getters().GetterAndSetter();
 rock.Properties().Setters().GetterAndSetter();
@@ -304,7 +327,7 @@ If you have a property that uses `init`, you can create a mock with that, but yo
 
 Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks:
 
-```
+```csharp
 public interface IHaveIndexer
 {
   string this[string a] { get; set; }
@@ -329,7 +352,7 @@ Note that the setter looks like it's taking an extra parameter - that's because 
 
 If there's an event on the mock, you can raise it as part of a member's usage:
 
-```
+```csharp
 public interface IHaveAnEvent
 {
   void Target(int a);
@@ -357,7 +380,7 @@ rock.Verify();
 
 There are times where your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you always do `Rock.Create()`, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" via a call to `Rock.Make()`:
 
-```
+```csharp
 public interface IValue { }
 
 public interface IProduceValue
@@ -400,7 +423,7 @@ Note that makes do no have any expectations set up on them so they can't be veri
 
 If your mock returns a `Task`, `Task<T>`, `ValueTask`, or a `ValueTask<T>`, or you're using that returned value with `async/await`, you can create mocks that will allow you to test it:
 
-```
+```csharp
 public interface IAmAsync
 {
   Task<int> GoAsync();
@@ -434,7 +457,7 @@ rock.Verify();
 
 If you need to create a number of mocks within a test, you can use `RockRepository` to call `Verify()` on all of them once the test completes. Here's an example of how it works:
 
-```
+```csharp
 public interface IFirstRepository
 {
   void Foo();
@@ -469,7 +492,7 @@ Before 5.0.0, the repository worked by calling `repository.Create<MyTypeToMock>(
 
 It's not a common thing to see `dynamic` used, but Rocks supports it just fine:
 
-```
+```csharp
 public interface IHaveDynamic
 {
   void Foo(dynamic d);
@@ -488,7 +511,7 @@ dynamicRock.Verify();
 
 Rocks can mock members with certain kinds of types, such as pointer types and ref structs like `Span<T>`. So if you have an interface like this:
 
-```
+```csharp
 public unsafe interface IHavePointers
 {
   void PointerParameter(int* value);
@@ -497,7 +520,7 @@ public unsafe interface IHavePointers
 
 You can mock it like this:
 
-```
+```csharp
 var value = 10;
 
 var rock = Rock.Create<IHavePointers>();
