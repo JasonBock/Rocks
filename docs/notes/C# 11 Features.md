@@ -4,6 +4,8 @@ This document contains notes on how I'll handle C# 11 features in Rocks. This do
 
 ## Static Abstract Members in Interfaces
 
+This is probably the feature that has the most impact, so I should handle this one first.
+
 This feature is pretty much self-defining. You can do this:
 ```csharp
 public interface ICreatableAsync<TSelf>
@@ -23,16 +25,16 @@ public interface IAdditionOperators<TSelf, TOther, TResult>
 }
 ```
 
-You can define methods, properties, **and** operators in interfaces like this. The operator example come from the [experimental generic math](https://devblogs.microsoft.com/dotnet/preview-features-in-net-6-generic-math/) work that's been done for C# 11.
+You can define methods, properties, **and** operators in interfaces like this. The operator example come from the [experimental generic math](https://devblogs.microsoft.com/dotnet/dotnet-7-generic-math/) work that's been done for C# 11.
 
 So, how do we handle this?
 
 Right now, Rocks returns an instance of a mock type:
 
 ```csharp
-var mock = Rock.Create<IThing>();
+var expectations = Rock.Create<IThing>();
 //...
-var mockInstance = mock.Instance();
+var mock = expectations.Instance();
 ```
 
 But static members can't follow the same approach. They **have** to be implemented, but a static member can't access the expectations that are stored in the instance field in the mock object. If I come up with a way to allow a developer to specify an expectation, these are static members, and they are accessible anywhere in an `AppDomain`. I'd have to come up with a way to allow a set of expectations to be done that are **isolated** from any other set.
@@ -43,20 +45,33 @@ Well, this has already been done by some libraries (commercial and free), like [
 
 We also need to be concerned about parallel execution, if tests are running in parallel. Because these are static members, we need to use a static field to store those expectations such that the static members can look them up and evaluate them. If tests are running in a synchronous manner, switching them in and out keeps them isolated, but across multiple threads, we can easily run into race conditions. I think the key is to use `AsyncLocal<>` for the static field. I did a POC, and it seems like having a static `AsyncLocal<>` field will do the trick. Note that this isn't just for `async` methods. It's to keep the context correct, so for a static member, this should be seamless.
 
-I think I can create a context on the fly (or maybe I predefine this in Rocks), `ExpectationsContext<TTargetType>` that implements `IDisposable` and has an `.Instance()` method to get an instance **if** the target type has instance members. Once `Instance()` is called, it cannot be called again for those set of expectations, just like Rocks works now. The static expectations are housed in a private static `AsyncLocal<>` if any exist. If it is already "set", that means a previous set of expectations were not verified. When `Dispose()` is called, it sets the static `AsyncLocal<>` to `null`, and it calls `Verify()` on the expectations. If `ExpectationsContext<TTargetType>` is defined in Rocks, I can make `Verify()` `internal`. This would be a breaking change, but it would force uses to change to getting the context. This means that the developer no longer needs to explicitly call `Verify()`
-
-Code analysis will help here to make sure you get the context and dispose it correctly:
+If there are any static abstract members, we need to create a `Statics()` method, similar to `Instance()`. It doesn't return anything; it just sets an  `AsyncLocal<>` value in the mock to the static set of expectations. If it is already "set", that means a previous set of expectations were not verified, and an exception should be thrown. When `Verify()` is called, it will set that field to `null`, along with checking all expectations, both static and instance. 
 
 ```csharp
+public interface IThing
+{
+	static abstract void StaticTest();
+	void InstanceTest();	
+}
+
 var expectations = Rock.Create<IThing>();
-expectations.Methods().Test();
-using var mockContext = expectations.Context();
-var instance = mockContext.Instance();
+expectations.Methods().InstanceTest();
+expectations.Methods().StaticTest();
+
+expectations.Statics();
+var mock = mockStatics.Instance();
+
+RockIThing.StaticTest();
+mock.InstanceTest();
+
+expectations.Verify();
 ```
 
-It's one more line to get the context, but a call to `Verify()` is no longer needed.
+This makes it even more important to call `Verify()` in a test.
 
-Static member shouldn't need different handling with adornments, but I'll need to add `AddStatic()` methods to `ExpectationsWrapper<>`. Members that are static, the gen'd code will need to call this method instead of `Add()`. So this:
+Maybe create an `Initialize()` method (or use a "better" word, the concept is what matters), instead of having both `Statics()` and `Instance()` methods. If the target type has instance members, this would return an instance of the mock, otherwise, it returns `void`. This would be a breaking change, in that there would no longer be an `Instance()` method. But this "feels" better. However, for makes, this doesn't make sense. I'm not sure there's a need to have a make for statics, but an interface can have statics and instance methods, so a make would have to do something with it anyway. Maybe `Rock.Make<>()` does the same thing as `Initialize()` and I remove the `Instance()` method altogether.
+
+Static members shouldn't need different handling with adornments, but I'll need to add `AddStatic()` methods to `ExpectationsWrapper<>` to differentiate expectations between static and instance members. Members that are static, the gen'd code will need to call this method instead of `Add()`. So this:
 
 ```csharp
 internal static MethodAdornments<IInterfaceMethodVoidWithEvents, Action> NoParameters(this MethodExpectations<IInterfaceMethodVoidWithEvents> self) =>
@@ -70,15 +85,15 @@ internal static MethodAdornments<IInterfaceMethodVoidWithEvents, Action> NoParam
 	new MethodAdornments<IInterfaceMethodVoidWithEvents, Action>(self.AddStatic(0, new List<Argument>()));
 ```
 
-When I generate the mock, I'll know if I ever generated static members, so in mock constructors, I can have a static `AsyncLocal<>` field, "staticHandlers", generated and set. In the static member, I just do
+When I generate the mock, I'll know if I ever generated static members, so in mock constructors, I can have a static `AsyncLocal<>` field, `staticHandlers`, generated and set. In the static member, I just do
 
 ```csharp
-if (ClassName.staticHandlers.Value.TryGetValue(0, out var methodHandlers))
+if (MockTypeName.staticHandlers.Value.TryGetValue(0, out var methodHandlers))
 ```
-	
-RaiseEvents...that's taking an object instance, so we may need something that allows you to raise static events (?)
 
-IMockWithEvents...
+Note that now an interface can only have static abstract members. In that case, we should not generate any `Instance()` methods.
+
+Raising events...right now, `IMockWithEvents` is for instance events, so we may need something that allows you to raise static events like this:
 
 ```csharp
 public interface IMockWithEvents
@@ -95,6 +110,8 @@ public interface IMockWithStaticEvents
 ```
 
 I can explicitly implement one or both, and I shouldn't have a name collision. Then I can call on the handler `RaiseEvents()`, this overload doesn't take a "this" reference. That will end up calling the `IMockWithStaticEvents.Raise()` that's implemented to raise a static event.
+
+Operators are another issue. I'm thinking I'd have an `Operators()` name like I do with `Methods()` and `Properties()`. However, I can't use the name of the operator, because they're not valid names (e.g. `+`). I'll probably have to keep a map of operators to well-understood names (e.g. `+` would be `Add`). I'm not sure how the generics will be resovled either - should I just set them to the name of the mock, or let the user pick a type?
 
 ## Generic Attributes
 
@@ -138,7 +155,7 @@ The second one has this error:
 error CS0246: The type or namespace name 'T' could not be found (are you missing a using directive or an assembly reference?)
 ```
 
-I don't see Rocks needing to **use** generic attributes itself. It just needs to emit the name of these attributes correctly.
+I don't see Rocks needing to **use** generic attributes itself right now. It just needs to emit the name of these attributes correctly.
 
 ## Required Members
 
@@ -146,7 +163,7 @@ These are some random ideas around both `required` and `init` properties and con
 
 ### `init` Properties
 
-Right now, I have `init` properties unmockable. I'd like to rectify that.
+`init` is a C# 10 feature, but because of `required`, I'm revisiting the approach. Right now, I have `init` properties unmockable. I'd like to rectify that.
 
 For `init` properties, would this work?
 
@@ -285,8 +302,12 @@ I'm thinking that maybe the "right" thing to do is to always put the required pr
 
 This idea could also be done for `init` properties. Create an `InitPropertyValues`, which allows a user to set these properties on construction. I'm still keeping `init` properties from being verifiable, as you know it has to be called, but I'm open to changing my mind on this.
 
-If a property is both `init` and `required`, it would be `required`. In other words, I wouldn't make an optional parameter in the `Instance()` methods for this property; it would be handled by the generated `RequiredPropertyValues` class.
+If a property is both `init` and `required`, it would be `required`. In other words, it would be handled by the generated `RequiredPropertyValues` class.
 
-### File-Local Types
+## Raw String Literals
+
+This feature won't affect mock execution, but it can be extremely useful for code generation. I've used it for [StaticCast](https://github.com/jasonbock/staticcast) and it works really well. I create a `WriteLines()` extension method for `IndentedTextWriter` there, and it make it easy to put snippets of multi-line text into an `IndentedTextWriter` (though it may not be entirely efficient). Definitely should look at using raw string literals as much as possible.
+
+## File-Local Types
 
 [This feature](https://github.com/dotnet/csharplang/issues/6011) wasn't one that was on my radar until recently. What's interesting about this one is that it may make it easier for projected types. Right now I'm creating a namespace for all these types. If I make them `file` types, then there should not be a reason to make that namespace. Not sure that this will be in for C# 11.
