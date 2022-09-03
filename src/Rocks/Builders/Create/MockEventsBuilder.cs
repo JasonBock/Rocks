@@ -62,7 +62,7 @@ internal static class MockEventsBuilder
 		writer.WriteLine("#pragma warning restore CS0067");
 		writer.WriteLine();
 
-		writer.WriteLine($"void {nameof(IMockWithEvents)}.{nameof(IMockWithEvents.Raise)}(string fieldName, EventArgs args)");
+		writer.WriteLine($"void {nameof(IRaiseEvents)}.{nameof(IRaiseEvents.Raise)}(string fieldName, EventArgs args)");
 		writer.WriteLine("{");
 		writer.Indent++;
 

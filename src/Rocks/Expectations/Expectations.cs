@@ -1,5 +1,6 @@
 ﻿using Rocks.Exceptions;
 using Rocks.Extensions;
+using System.Collections.Immutable;
 using System.ComponentModel;
 
 namespace Rocks.Expectations;
@@ -13,31 +14,67 @@ public class Expectations<T>
 	where T : class
 #pragma warning restore CA1724
 {
-	internal Expectations() { }
+	internal Expectations() =>
+		this.Handlers = new();
 
-	internal Expectations(Dictionary<int, List<HandlerInformation>> handlers, IMock? mock) =>
-		(this.Handlers, this.Mock) = (handlers, mock);
+	internal Expectations(Expectations<T> expectations) =>
+		this.Handlers = expectations.Handlers;
+
+	//internal Expectations(Dictionary<int, List<HandlerInformation>> handlers) =>
+	//	this.Handlers = handlers;
+
+	public HandlerInformation Add(int memberIdentifier, List<Argument> arguments)
+	{
+		var information = new HandlerInformation(arguments.ToImmutableArray());
+		this.Handlers.AddOrUpdate(memberIdentifier,
+			() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));
+		return information;
+	}
+
+	public HandlerInformation<TReturn> Add<TReturn>(int memberIdentifier, List<Argument> arguments)
+	{
+		var information = new HandlerInformation<TReturn>(arguments.ToImmutableArray());
+		this.Handlers.AddOrUpdate(memberIdentifier,
+			() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));
+		return information;
+	}
 
 	public void Verify()
 	{
-		var failures = new List<string>();
-		failures.AddRange(this.Mock?.GetVerificationFailures());
-
-		if (failures.Count > 0)
+		if(this.WasInstanceInvoked)
 		{
-			throw new VerificationException(failures);
+			var failures = new List<string>();
+
+			foreach (var pair in this.Handlers)
+			{
+				foreach (var handler in pair.Value)
+				{
+					foreach (var failure in handler.Verify())
+					{
+						var method = typeof(T).GetMemberDescription(pair.Key);
+
+						failures.Add($"Type: {typeof(T).FullName}, method: {method}, message: {failure}");
+					}
+				}
+			}
+
+			if (failures.Count > 0)
+			{
+				throw new VerificationException(failures);
+			}
 		}
 	}
 
+	// TODO: Can we make this private?
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
 	/// This property is used by Rocks and is not intented to be used by developers.
 	/// </summary>
-	public Dictionary<int, List<HandlerInformation>> Handlers { get; } = new();
+	public Dictionary<int, List<HandlerInformation>> Handlers { get; } 
 
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
 	/// This method is used by Rocks and is not intented to be used by developers.
 	/// </summary>
-	public IMock? Mock { get; set; }
+	public bool WasInstanceInvoked { get; set; }
 }

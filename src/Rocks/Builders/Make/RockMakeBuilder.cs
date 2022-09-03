@@ -27,7 +27,7 @@ internal sealed class RockMakeBuilder
 		var usings = new SortedSet<string>
 		{
 			$"using {typeof(Action).Namespace};",
-			$"using {typeof(IMock).Namespace};",
+			$"using {typeof(HandlerInformation).Namespace};",
 			$"using {typeof(ExpectationException).Namespace};",
 			$"using {typeof(List<>).Namespace};",
 			$"using {typeof(ImmutableArray).Namespace};"

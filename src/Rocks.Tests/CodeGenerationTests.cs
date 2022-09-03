@@ -16,11 +16,11 @@ public static class CodeGenerationTests
 {
 	private static readonly Type[] targetTypes = new Type[] { typeof(object), typeof(Dictionary<,>), typeof(ImmutableArray), typeof(HttpMessageHandler) };
 
-	[Test]
+	//[Test]
 	public static void GenerateCreatesForBaseClassLibrary() =>
 		CodeGenerationTests.GenerateForBaseClassLibrary(new RockCreateGenerator());
 
-	[Test]
+	//[Test]
 	public static void GenerateMakesForBaseClassLibrary() =>
 		CodeGenerationTests.GenerateForBaseClassLibrary(new RockMakeGenerator());
 

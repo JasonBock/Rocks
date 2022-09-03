@@ -1,9 +1,9 @@
 ﻿namespace Rocks.Expectations;
 
 public sealed class ExplicitIndexerGetterExpectations<T, TContainingType>
-	: ExpectationsWrapper<T>
+	: ExplicitIndexerExpectations<T, TContainingType>
 	where T : class, TContainingType
 {
-	public ExplicitIndexerGetterExpectations(Expectations<T> expectations)
-		: base(expectations) { }
+	public ExplicitIndexerGetterExpectations(ExplicitIndexerExpectations<T, TContainingType> expectations)
+		: base(expectations ?? throw new ArgumentNullException(nameof(expectations))) { }
 }

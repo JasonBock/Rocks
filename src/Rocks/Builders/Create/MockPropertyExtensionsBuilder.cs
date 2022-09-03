@@ -31,7 +31,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Indexer}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Getters}(this {WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -41,7 +41,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Setters}(this {WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -64,7 +64,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Getters}(this {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -73,7 +73,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Indexer}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -95,7 +95,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Getters}(this {WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -105,7 +105,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}> {WellKnownNames.Setters}(this {WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -128,7 +128,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Getters}(this {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}
@@ -137,7 +137,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLine($"internal static {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> {WellKnownNames.Setters}(this {WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Expectations}<{typeToMockName}, {containingTypeName}> self) =>");
 				writer.Indent++;
-				writer.WriteLine($"new(self.{WellKnownNames.Expectations});");
+				writer.WriteLine("new(self);");
 				writer.Indent--;
 				writer.WriteLine();
 			}

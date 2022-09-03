@@ -4,6 +4,19 @@ This document contains notes on how I'll handle C# 11 features in Rocks. This do
 
 ## Static Abstract Members in Interfaces
 
+### On Hold
+**THIS IS ON HOLD**. The reason why has to do with [this restriction](https://github.com/dotnet/csharplang/issues/5955). This has a huge effect on how Rocks currently relies on generic parameters, and my first attempt to work around it...didn't work. So I'm putting this issue on the back burner for now. It just means that you can't mock static abstract members with Rocks until I have another solution.
+
+One thing I want to keep in mind is that if I end up supporting SAMIs, I'll need to change a bunch of things. Since interfaces with SAMs can't be passed to generic parameters, `Rock.Create<>()` won't work. What I can do is something I've done with `StaticCast` and `PartiallyApplied`, which is to remove the `Rock` type altogether and look for "imaginary" method calls. Then I can do this:
+
+```
+Rock.Create(typeof(IHaveSAMs), out var expectations);
+```
+
+All of the `Expectation` types also need to be generated with specific types for a given mock type. Since methods can't be overriden by return type, the synthesized `Create()` method needs to "return" the expectation as an `out` parameter.
+
+### Discussion
+
 This is probably the feature that has the most impact, so I should handle this one first.
 
 This feature is pretty much self-defining. You can do this:
@@ -45,7 +58,9 @@ Well, this has already been done by some libraries (commercial and free), like [
 
 We also need to be concerned about parallel execution, if tests are running in parallel. Because these are static members, we need to use a static field to store those expectations such that the static members can look them up and evaluate them. If tests are running in a synchronous manner, switching them in and out keeps them isolated, but across multiple threads, we can easily run into race conditions. I think the key is to use `AsyncLocal<>` for the static field. I did a POC, and it seems like having a static `AsyncLocal<>` field will do the trick. Note that this isn't just for `async` methods. It's to keep the context correct, so for a static member, this should be seamless.
 
-If there are any static abstract members, we need to create a `Statics()` method, similar to `Instance()`. It doesn't return anything; it just sets an  `AsyncLocal<>` value in the mock to the static set of expectations. If it is already "set", that means a previous set of expectations were not verified, and an exception should be thrown. When `Verify()` is called, it will set that field to `null`, along with checking all expectations, both static and instance. 
+Maybe create an `Initialize()` method (or use a "better" word, the concept is what matters), instead of having both `Statics()` and `Instance()` methods. If the target type has instance members, this would return an instance of the mock, otherwise, it returns `void`. This would be a breaking change, in that there would no longer be an `Instance()` method. But this "feels" better. However, for makes, this doesn't make sense. I'm not sure there's a need to have a make for statics, but an interface can have statics and instance methods, so a make would have to do something with it anyway. Maybe `Rock.Make<>()` does the same thing as `Initialize()` and I remove the `Instance()` method altogether.
+
+So let's land on this design:
 
 ```csharp
 public interface IThing
@@ -57,9 +72,8 @@ public interface IThing
 var expectations = Rock.Create<IThing>();
 expectations.Methods().InstanceTest();
 expectations.Methods().StaticTest();
-
-expectations.Statics();
-var mock = mockStatics.Instance();
+ 
+var mock = expectations.Initialize();
 
 RockIThing.StaticTest();
 mock.InstanceTest();
@@ -67,51 +81,74 @@ mock.InstanceTest();
 expectations.Verify();
 ```
 
-This makes it even more important to call `Verify()` in a test.
+If the mock is just doing statics, `Initialize()` wouldn't return anything. (The power of generated code!). Note that the test `CreateWhenInterfaceHasNoMockableMembers()` shows that interfaces with no members isn't mockable, so if it only contains `static` members, we can give the mock type a private, no-argument constructor (I'd like to make it `static`, but static types can't implement interfaces even if the interface only has static members, though [it's been proposed](https://github.com/dotnet/csharplang/issues/5783) that this should be considered as something that should be allowed).
 
-Maybe create an `Initialize()` method (or use a "better" word, the concept is what matters), instead of having both `Statics()` and `Instance()` methods. If the target type has instance members, this would return an instance of the mock, otherwise, it returns `void`. This would be a breaking change, in that there would no longer be an `Instance()` method. But this "feels" better. However, for makes, this doesn't make sense. I'm not sure there's a need to have a make for statics, but an interface can have statics and instance methods, so a make would have to do something with it anyway. Maybe `Rock.Make<>()` does the same thing as `Initialize()` and I remove the `Instance()` method altogether.
+Verification...I think I can do a bunch of revisiting. `public static void Verify(this IMock self)` in `IMockExtensions` is never called. `GetVerificationFailures()` really can be done within `Verify()` in `Expectations<T>`. Furthermore, there's no reason to keep an instance of the mock in `Expectations<T>`. I can simply flip a flag, something like `WasInitializeCalled`. At least I won't be keeping a reference to the mock around. I could also put logic around the property that once it's flipped, it can't be changed. This also means that the `IMock` interface can go away. `IMockWithEvents` can be changed to `IRaiseEvents`.
 
-Static members shouldn't need different handling with adornments, but I'll need to add `AddStatic()` methods to `ExpectationsWrapper<>` to differentiate expectations between static and instance members. Members that are static, the gen'd code will need to call this method instead of `Add()`. So this:
+Static members shouldn't need different handling with adornments. In other words, this should be fine:
 
 ```csharp
-internal static MethodAdornments<IInterfaceMethodVoidWithEvents, Action> NoParameters(this MethodExpectations<IInterfaceMethodVoidWithEvents> self) =>
-	new MethodAdornments<IInterfaceMethodVoidWithEvents, Action>(self.Add(0, new List<Argument>()));
+internal static MethodAdornments<IThing, Action> InstanceTest(this MethodExpectations<IThing> self) =>
+	new MethodAdornments<IThing, Action>(self.Add(1, new List<Argument>()));
+
+internal static MethodAdornments<IThing, Action> StaticTest(this MethodExpectations<IThing> self) =>
+	new MethodAdornments<IThing, Action>(self.Add(0, new List<Argument>()));
 ```
 
-Will change to this:
+When I generate the mock, I'll know if I ever generated static members, so I'll generate a property like this:
 
 ```csharp
-internal static MethodAdornments<IInterfaceMethodVoidWithEvents, Action> NoParameters(this MethodExpectations<IInterfaceMethodVoidWithEvents> self) =>
-	new MethodAdornments<IInterfaceMethodVoidWithEvents, Action>(self.AddStatic(0, new List<Argument>()));
+private static AsyncLocal<Dictionary<int, List<HandlerInformation>>>? handlers;
+
+public static Dictionary<int, List<HandlerInformation>> Handlers
+{
+	private get => MockTypeName.handlers?.Value ?? throw new NotSupportedException("No handlers have been given.");
+	set => MockTypeName.handlers = new AsyncLocal<Dictionary<int, List<HandlerInformation>>>() { Value = value };
+}
 ```
 
-When I generate the mock, I'll know if I ever generated static members, so in mock constructors, I can have a static `AsyncLocal<>` field, `staticHandlers`, generated and set. In the static member, I just do
+This should only ever be set by `Initialize()` methods:
 
 ```csharp
-if (MockTypeName.staticHandlers.Value.TryGetValue(0, out var methodHandlers))
+internal static void Initialize(this Expectations<IHaveStaticMembers> self)
+{
+	if (!self.WasInitializeCalled)
+	{
+		self.WasInitializeCalled = true;
+		RockIHaveStaticMembers.Handlers = self.Handlers;
+	}
+	else
+	{
+		throw new NewMockInstanceException("Can only initialize with a set of expectations once.");
+	}
+}
 ```
 
-Note that now an interface can only have static abstract members. In that case, we should not generate any `Instance()` methods.
-
-Raising events...right now, `IMockWithEvents` is for instance events, so we may need something that allows you to raise static events like this:
+Raising events...right now (assuming I do the name change I mentioned above), `IRaiseEvents` is for instance events, so we may need something that allows you to raise static events like this:
 
 ```csharp
-public interface IMockWithEvents
-	: IMock
+public interface IRaiseEvents
 {
 	void Raise(string eventName, EventArgs args);
 }
 
-public interface IMockWithStaticEvents
-	: IMock
+public interface IRaiseStaticEvents
 {
 	static abstract void Raise(string eventName, EventArgs args);
 }
 ```
 
-I can explicitly implement one or both, and I shouldn't have a name collision. Then I can call on the handler `RaiseEvents()`, this overload doesn't take a "this" reference. That will end up calling the `IMockWithStaticEvents.Raise()` that's implemented to raise a static event.
+I can explicitly implement one or both, and I shouldn't have a name collision. Then I can call on the handler `RaiseEvents()`, this overload doesn't take a "this" reference. That will end up calling the `IRaiseStaticEvents.Raise()` that's implemented to raise a static event.
 
 Operators are another issue. I'm thinking I'd have an `Operators()` name like I do with `Methods()` and `Properties()`. However, I can't use the name of the operator, because they're not valid names (e.g. `+`). I'll probably have to keep a map of operators to well-understood names (e.g. `+` would be `Add`). I'm not sure how the generics will be resovled either - should I just set them to the name of the mock, or let the user pick a type?
+
+Getting the name of an operator should be easy, but unfortunately, `OperatorFacts` has a method, [`OperatorNameFromDeclaration()`](https://sourceroslyn.io/#Microsoft.CodeAnalysis.CSharp/Binder/Semantics/Operators/OperatorFacts.cs,a5b9b365f1adc121,references) that seems to do exactly what I want, but `OperatorFacts` is `internal`. So I'll have to basically copy-and-paste what [this](https://sourceroslyn.io/#Microsoft.CodeAnalysis.CSharp/Binder/Semantics/Operators/OperatorFacts.cs,2c88c8a0a9b2d953,references) does. However, the semantic model should be able to give me a consumable name (this idea was mentioned [here](https://discord.com/channels/732297728826277939/735233259763400715/1013302280474345532)):
+
+```csharp
+model.GetDeclaredSymbol(operatorNode);
+
+// then just ask it for its Name (or MetadataName)
+```
 
 ## Generic Attributes
 
@@ -310,4 +347,4 @@ This feature won't affect mock execution, but it can be extremely useful for cod
 
 ## File-Local Types
 
-[This feature](https://github.com/dotnet/csharplang/issues/6011) wasn't one that was on my radar until recently. What's interesting about this one is that it may make it easier for projected types. Right now I'm creating a namespace for all these types. If I make them `file` types, then there should not be a reason to make that namespace. Not sure that this will be in for C# 11.
+[This feature](https://github.com/dotnet/csharplang/issues/6011) wasn't one that was on my radar until recently. What's interesting about this one is that it may make it easier for projected types, along with the mock type itself (I can make it `private` or `file` depending on if the type needs to be available for static abstract members). Right now I'm creating a namespace for all these types. If I make them `file` types, then there should not be a reason to make that namespace. Not sure that this will be in for C# 11.

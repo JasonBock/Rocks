@@ -10,16 +10,16 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit" Version="1.1.1">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0-1.final">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
-		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.2.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.4.0-1.final">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0-preview-20220726-02" />
 		<PackageReference Include="NUnit" Version="3.13.3" />
 		<PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
-		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1">
+		<PackageReference Include="NUnit3TestAdapter" Version="4.3.0-alpha-net7.4">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>

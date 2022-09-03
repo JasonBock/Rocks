@@ -1,9 +1,9 @@
 ﻿namespace Rocks.Expectations;
 
 public class IndexerExpectations<T>
-	: ExpectationsWrapper<T>
+	: Expectations<T>
 	where T : class
 {
 	public IndexerExpectations(Expectations<T> expectations)
-		: base(expectations) { }
+		: base(expectations ?? throw new ArgumentNullException(nameof(expectations))) { }
 }

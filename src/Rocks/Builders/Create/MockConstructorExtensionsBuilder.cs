@@ -55,28 +55,20 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{direction}{_.Name}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} {WellKnownNames.Instance}({instanceParameters})");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("if (self.Mock is null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"var mock = new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters});");
-		writer.WriteLine("self.Mock = mock;");
-		writer.WriteLine("return mock;");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-		writer.WriteLine("else");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("throw new NewMockInstanceException(\"Can only create a new mock once.\");");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			$$"""
+			internal {{(isUnsafe ? "unsafe " : string.Empty)}}static {{typeToMock.GenericName}} {{WellKnownNames.Instance}}({{instanceParameters}})
+			{
+				if (!self.WasInstanceInvoked)
+				{
+					self.WasInstanceInvoked = true;
+					return new {{nameof(Rock)}}{{typeToMock.FlattenedName}}({{rockInstanceParameters}});
+				}
+				else
+				{
+					throw new NewMockInstanceException("Can only create a new mock once.");
+				}
+			}
+			""");
 	}
 }

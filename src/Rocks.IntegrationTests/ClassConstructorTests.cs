@@ -42,14 +42,13 @@ public static class ClassConstructorTests
 	public static void CreateSpecialConstructor()
 	{
 		var bValue = "b";
-		var cValue = "c";
 		var d1Value = "d1";
 		var d2Value = "d2";
 
 		var rock = Rock.Create<ClassConstructorWithSpecialParameters>();
 		rock.Methods().Foo();
 
-		var chunk = rock.Instance(2, ref bValue, out cValue, d1Value, d2Value);
+		var chunk = rock.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 		chunk.Foo();
 
 		Assert.Multiple(() =>
@@ -68,11 +67,10 @@ public static class ClassConstructorTests
 	public static void MakeSpecialConstructor()
 	{
 		var bValue = "b";
-		var cValue = "c";
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var chunk = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out cValue, d1Value, d2Value);
+		var chunk = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 
 		Assert.Multiple(() =>
 		{

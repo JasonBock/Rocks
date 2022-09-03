@@ -4,6 +4,6 @@ public sealed class IndexerGetterExpectations<T>
 	: IndexerExpectations<T>
 	where T : class
 {
-	public IndexerGetterExpectations(Expectations<T> expectations)
-		: base(expectations) { }
+	public IndexerGetterExpectations(IndexerExpectations<T> expectations)
+		: base(expectations ?? throw new ArgumentNullException(nameof(expectations))) { }
 }

@@ -3,11 +3,12 @@
 		<AnalysisMode>all</AnalysisMode>
 		<Authors>Jason Bock</Authors>
 		<Copyright>Copyright © 2022</Copyright>
+		<EnablePreviewFeatures>true</EnablePreviewFeatures>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>latest</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net6.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<Version>6.4.5</Version>
+		<Version>7.0.0-alpha.1</Version>
 	</PropertyGroup>
 </Project>

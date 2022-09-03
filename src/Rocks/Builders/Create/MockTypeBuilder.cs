@@ -16,7 +16,7 @@ internal static class MockTypeBuilder
 
 		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
-		writer.WriteLine($": {typeToMock.GenericName}, {(information.Events.Length > 0 ? nameof(IMockWithEvents) : nameof(IMock))}");
+		writer.WriteLine($": {typeToMock.GenericName}{(information.Events.Length > 0 ? $", {nameof(IRaiseEvents)}" : string.Empty)}");
 		writer.Indent--;
 
 		writer.WriteLine("{");
@@ -72,9 +72,6 @@ internal static class MockTypeBuilder
 			MockEventsBuilder.Build(writer, information.Events, compilation);
 		}
 
-		// TODO: Take this WriteLine() out, it's ugly
-		writer.WriteLine();
-		writer.WriteLine($"Dictionary<int, List<{nameof(HandlerInformation)}>> {nameof(IMock)}.{nameof(IMock.Handlers)} => this.handlers;");
 		MockTypeBuilder.BuildShimTypes(writer, information, mockTypeName, compilation);
 		writer.Indent--;
 		writer.WriteLine("}");

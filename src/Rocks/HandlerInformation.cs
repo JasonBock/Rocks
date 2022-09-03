@@ -34,7 +34,7 @@ public class HandlerInformation
 
 	public void IncrementCallCount() => Interlocked.Increment(ref this.callCount);
 
-	public void RaiseEvents(IMockWithEvents target)
+	public void RaiseEvents(IRaiseEvents target)
 	{
 		if (target is null) { throw new ArgumentNullException(nameof(target)); }
 

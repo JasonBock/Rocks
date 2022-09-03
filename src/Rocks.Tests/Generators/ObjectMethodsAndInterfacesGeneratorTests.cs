@@ -9,145 +9,146 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 	public static async Task GenerateWithExactMatchesCreateAsync()
 	{
 		var code =
-@"using Rocks;
+			"""
+			using Rocks;
 
-#nullable enable
+			#nullable enable
 
-namespace MockTests
-{
-	public interface IMatchObject<T>
-	{
-		bool Equals(T? other);
-		bool ReferenceEquals(T? objA, T? objB);
-		T MemberwiseClone();
-	}
+			namespace MockTests
+			{
+				public interface IMatchObject<T>
+				{
+					bool Equals(T? other);
+					bool ReferenceEquals(T? objA, T? objB);
+					T MemberwiseClone();
+				}
 
-	public static class Test
-	{
-		public static void Generate()
-		{
-			var rock = Rock.Create<IMatchObject<object>>();
-		}
-	}
-}";
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IMatchObject<object>>();
+					}
+				}
+			}
+			""";
 
 		var generatedCode =
-@"using Rocks;
-using Rocks.Exceptions;
-using Rocks.Expectations;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-
-#nullable enable
-namespace MockTests
-{
-	internal static class CreateExpectationsOfIMatchObjectOfobjectExtensions
-	{
-		internal static ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> ExplicitMethodsForIMatchObjectOfobject(this Expectations<IMatchObject<object>> self) =>
-			new(self);
-		
-		internal static IMatchObject<object> Instance(this Expectations<IMatchObject<object>> self)
-		{
-			if (self.Mock is null)
-			{
-				var mock = new RockIMatchObjectOfobject(self);
-				self.Mock = mock;
-				return mock;
-			}
-			else
-			{
-				throw new NewMockInstanceException(""Can only create a new mock once."");
-			}
-		}
-		
-		private sealed class RockIMatchObjectOfobject
-			: IMatchObject<object>, IMock
-		{
-			private readonly Dictionary<int, List<HandlerInformation>> handlers;
+			"""
+			using Rocks;
+			using Rocks.Exceptions;
+			using Rocks.Expectations;
+			using System;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			
-			public RockIMatchObjectOfobject(Expectations<IMatchObject<object>> expectations) =>
-				this.handlers = expectations.Handlers;
-			
-			[MemberIdentifier(0, ""bool IMatchObject<object>.Equals(object? other)"")]
-			bool IMatchObject<object>.Equals(object? other)
+			#nullable enable
+			namespace MockTests
 			{
-				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				internal static class CreateExpectationsOfIMatchObjectOfobjectExtensions
 				{
-					foreach (var methodHandler in methodHandlers)
+					internal static ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> ExplicitMethodsForIMatchObjectOfobject(this Expectations<IMatchObject<object>> self) =>
+						new(self);
+					
+					internal static IMatchObject<object> Instance(this Expectations<IMatchObject<object>> self)
 					{
-						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+						if (!self.WasInstanceInvoked)
 						{
-							var result = methodHandler.Method is not null ?
-								((Func<object?, bool>)methodHandler.Method)(other) :
-								((HandlerInformation<bool>)methodHandler).ReturnValue;
-							methodHandler.IncrementCallCount();
-							return result!;
+							self.WasInstanceInvoked = true;
+							return new RockIMatchObjectOfobject(self);
+						}
+						else
+						{
+							throw new NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
-					throw new ExpectationException(""No handlers match for bool IMatchObject<object>.Equals(object? other)"");
-				}
-				
-				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.Equals(object? other)"");
-			}
-			
-			[MemberIdentifier(1, ""bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"")]
-			bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
-			{
-				if (this.handlers.TryGetValue(1, out var methodHandlers))
-				{
-					foreach (var methodHandler in methodHandlers)
+					private sealed class RockIMatchObjectOfobject
+						: IMatchObject<object>
 					{
-						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
-							((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						
+						public RockIMatchObjectOfobject(Expectations<IMatchObject<object>> expectations) =>
+							this.handlers = expectations.Handlers;
+						
+						[MemberIdentifier(0, "bool IMatchObject<object>.Equals(object? other)")]
+						bool IMatchObject<object>.Equals(object? other)
 						{
-							var result = methodHandler.Method is not null ?
-								((Func<object?, object?, bool>)methodHandler.Method)(objA, objB) :
-								((HandlerInformation<bool>)methodHandler).ReturnValue;
-							methodHandler.IncrementCallCount();
-							return result!;
+							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							{
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+									{
+										var result = methodHandler.Method is not null ?
+											((Func<object?, bool>)methodHandler.Method)(other) :
+											((HandlerInformation<bool>)methodHandler).ReturnValue;
+										methodHandler.IncrementCallCount();
+										return result!;
+									}
+								}
+								
+								throw new ExpectationException("No handlers match for bool IMatchObject<object>.Equals(object? other)");
+							}
+							
+							throw new ExpectationException("No handlers were found for bool IMatchObject<object>.Equals(object? other)");
 						}
+						
+						[MemberIdentifier(1, "bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)")]
+						bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
+						{
+							if (this.handlers.TryGetValue(1, out var methodHandlers))
+							{
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
+										((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+									{
+										var result = methodHandler.Method is not null ?
+											((Func<object?, object?, bool>)methodHandler.Method)(objA, objB) :
+											((HandlerInformation<bool>)methodHandler).ReturnValue;
+										methodHandler.IncrementCallCount();
+										return result!;
+									}
+								}
+								
+								throw new ExpectationException("No handlers match for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)");
+							}
+							
+							throw new ExpectationException("No handlers were found for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)");
+						}
+						
+						[MemberIdentifier(2, "object IMatchObject<object>.MemberwiseClone()")]
+						object IMatchObject<object>.MemberwiseClone()
+						{
+							if (this.handlers.TryGetValue(2, out var methodHandlers))
+							{
+								var methodHandler = methodHandlers[0];
+								var result = methodHandler.Method is not null ?
+									((Func<object>)methodHandler.Method)() :
+									((HandlerInformation<object>)methodHandler).ReturnValue;
+								methodHandler.IncrementCallCount();
+								return result!;
+							}
+							
+							throw new ExpectationException("No handlers were found for object IMatchObject<object>.MemberwiseClone()");
+						}
+						
 					}
-					
-					throw new ExpectationException(""No handlers match for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
 				}
 				
-				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
-			}
-			
-			[MemberIdentifier(2, ""object IMatchObject<object>.MemberwiseClone()"")]
-			object IMatchObject<object>.MemberwiseClone()
-			{
-				if (this.handlers.TryGetValue(2, out var methodHandlers))
+				internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
 				{
-					var methodHandler = methodHandlers[0];
-					var result = methodHandler.Method is not null ?
-						((Func<object>)methodHandler.Method)() :
-						((HandlerInformation<object>)methodHandler).ReturnValue;
-					methodHandler.IncrementCallCount();
-					return result!;
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
+						new MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { other }));
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
+						new MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool>(self.Add<bool>(1, new List<Argument>(2) { objA, objB }));
+					internal static MethodAdornments<IMatchObject<object>, Func<object>, object> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
+						new MethodAdornments<IMatchObject<object>, Func<object>, object>(self.Add<object>(2, new List<Argument>()));
 				}
-				
-				throw new ExpectationException(""No handlers were found for object IMatchObject<object>.MemberwiseClone()"");
 			}
 			
-			
-			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
-		}
-	}
-	
-	internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
-	{
-		internal static MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
-			new MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { other }));
-		internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
-			new MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool>(self.Add<bool>(1, new List<Argument>(2) { objA, objB }));
-		internal static MethodAdornments<IMatchObject<object>, Func<object>, object> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<object>, object>(self.Add<object>(2, new List<Argument>()));
-	}
-}
-";
+			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "IMatchObjectOfobject_Rock_Create.g.cs", generatedCode) },
@@ -226,145 +227,146 @@ namespace MockTests
 	public static async Task GenerateWithDiffByReturnTypeMatchesCreateAsync()
 	{
 		var code =
-@"using Rocks;
+			"""
+			using Rocks;
 
-#nullable enable
+			#nullable enable
 
-namespace MockTests
-{
-	public interface IMatchObject<T>
-	{
-		string Equals(T? other);
-		int ReferenceEquals(T? objA, T? objB);
-		bool MemberwiseClone();
-	}
+			namespace MockTests
+			{
+				public interface IMatchObject<T>
+				{
+					string Equals(T? other);
+					int ReferenceEquals(T? objA, T? objB);
+					bool MemberwiseClone();
+				}
 
-	public static class Test
-	{
-		public static void Generate()
-		{
-			var rock = Rock.Create<IMatchObject<object>>();
-		}
-	}
-}";
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IMatchObject<object>>();
+					}
+				}
+			}
+			""";
 
 		var generatedCode =
-@"using Rocks;
-using Rocks.Exceptions;
-using Rocks.Expectations;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-
-#nullable enable
-namespace MockTests
-{
-	internal static class CreateExpectationsOfIMatchObjectOfobjectExtensions
-	{
-		internal static ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> ExplicitMethodsForIMatchObjectOfobject(this Expectations<IMatchObject<object>> self) =>
-			new(self);
-		
-		internal static IMatchObject<object> Instance(this Expectations<IMatchObject<object>> self)
-		{
-			if (self.Mock is null)
-			{
-				var mock = new RockIMatchObjectOfobject(self);
-				self.Mock = mock;
-				return mock;
-			}
-			else
-			{
-				throw new NewMockInstanceException(""Can only create a new mock once."");
-			}
-		}
-		
-		private sealed class RockIMatchObjectOfobject
-			: IMatchObject<object>, IMock
-		{
-			private readonly Dictionary<int, List<HandlerInformation>> handlers;
+			"""
+			using Rocks;
+			using Rocks.Exceptions;
+			using Rocks.Expectations;
+			using System;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			
-			public RockIMatchObjectOfobject(Expectations<IMatchObject<object>> expectations) =>
-				this.handlers = expectations.Handlers;
-			
-			[MemberIdentifier(0, ""string IMatchObject<object>.Equals(object? other)"")]
-			string IMatchObject<object>.Equals(object? other)
+			#nullable enable
+			namespace MockTests
 			{
-				if (this.handlers.TryGetValue(0, out var methodHandlers))
+				internal static class CreateExpectationsOfIMatchObjectOfobjectExtensions
 				{
-					foreach (var methodHandler in methodHandlers)
+					internal static ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> ExplicitMethodsForIMatchObjectOfobject(this Expectations<IMatchObject<object>> self) =>
+						new(self);
+					
+					internal static IMatchObject<object> Instance(this Expectations<IMatchObject<object>> self)
 					{
-						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+						if (!self.WasInstanceInvoked)
 						{
-							var result = methodHandler.Method is not null ?
-								((Func<object?, string>)methodHandler.Method)(other) :
-								((HandlerInformation<string>)methodHandler).ReturnValue;
-							methodHandler.IncrementCallCount();
-							return result!;
+							self.WasInstanceInvoked = true;
+							return new RockIMatchObjectOfobject(self);
+						}
+						else
+						{
+							throw new NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
-					throw new ExpectationException(""No handlers match for string IMatchObject<object>.Equals(object? other)"");
-				}
-				
-				throw new ExpectationException(""No handlers were found for string IMatchObject<object>.Equals(object? other)"");
-			}
-			
-			[MemberIdentifier(1, ""int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"")]
-			int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
-			{
-				if (this.handlers.TryGetValue(1, out var methodHandlers))
-				{
-					foreach (var methodHandler in methodHandlers)
+					private sealed class RockIMatchObjectOfobject
+						: IMatchObject<object>
 					{
-						if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
-							((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						
+						public RockIMatchObjectOfobject(Expectations<IMatchObject<object>> expectations) =>
+							this.handlers = expectations.Handlers;
+						
+						[MemberIdentifier(0, "string IMatchObject<object>.Equals(object? other)")]
+						string IMatchObject<object>.Equals(object? other)
 						{
-							var result = methodHandler.Method is not null ?
-								((Func<object?, object?, int>)methodHandler.Method)(objA, objB) :
-								((HandlerInformation<int>)methodHandler).ReturnValue;
-							methodHandler.IncrementCallCount();
-							return result!;
+							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							{
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+									{
+										var result = methodHandler.Method is not null ?
+											((Func<object?, string>)methodHandler.Method)(other) :
+											((HandlerInformation<string>)methodHandler).ReturnValue;
+										methodHandler.IncrementCallCount();
+										return result!;
+									}
+								}
+								
+								throw new ExpectationException("No handlers match for string IMatchObject<object>.Equals(object? other)");
+							}
+							
+							throw new ExpectationException("No handlers were found for string IMatchObject<object>.Equals(object? other)");
 						}
+						
+						[MemberIdentifier(1, "int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)")]
+						int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)
+						{
+							if (this.handlers.TryGetValue(1, out var methodHandlers))
+							{
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
+										((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+									{
+										var result = methodHandler.Method is not null ?
+											((Func<object?, object?, int>)methodHandler.Method)(objA, objB) :
+											((HandlerInformation<int>)methodHandler).ReturnValue;
+										methodHandler.IncrementCallCount();
+										return result!;
+									}
+								}
+								
+								throw new ExpectationException("No handlers match for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)");
+							}
+							
+							throw new ExpectationException("No handlers were found for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)");
+						}
+						
+						[MemberIdentifier(2, "bool IMatchObject<object>.MemberwiseClone()")]
+						bool IMatchObject<object>.MemberwiseClone()
+						{
+							if (this.handlers.TryGetValue(2, out var methodHandlers))
+							{
+								var methodHandler = methodHandlers[0];
+								var result = methodHandler.Method is not null ?
+									((Func<bool>)methodHandler.Method)() :
+									((HandlerInformation<bool>)methodHandler).ReturnValue;
+								methodHandler.IncrementCallCount();
+								return result!;
+							}
+							
+							throw new ExpectationException("No handlers were found for bool IMatchObject<object>.MemberwiseClone()");
+						}
+						
 					}
-					
-					throw new ExpectationException(""No handlers match for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
 				}
 				
-				throw new ExpectationException(""No handlers were found for int IMatchObject<object>.ReferenceEquals(object? objA, object? objB)"");
-			}
-			
-			[MemberIdentifier(2, ""bool IMatchObject<object>.MemberwiseClone()"")]
-			bool IMatchObject<object>.MemberwiseClone()
-			{
-				if (this.handlers.TryGetValue(2, out var methodHandlers))
+				internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
 				{
-					var methodHandler = methodHandlers[0];
-					var result = methodHandler.Method is not null ?
-						((Func<bool>)methodHandler.Method)() :
-						((HandlerInformation<bool>)methodHandler).ReturnValue;
-					methodHandler.IncrementCallCount();
-					return result!;
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, string>, string> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
+						new MethodAdornments<IMatchObject<object>, Func<object?, string>, string>(self.Add<string>(0, new List<Argument>(1) { other }));
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
+						new MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int>(self.Add<int>(1, new List<Argument>(2) { objA, objB }));
+					internal static MethodAdornments<IMatchObject<object>, Func<bool>, bool> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
+						new MethodAdornments<IMatchObject<object>, Func<bool>, bool>(self.Add<bool>(2, new List<Argument>()));
 				}
-				
-				throw new ExpectationException(""No handlers were found for bool IMatchObject<object>.MemberwiseClone()"");
 			}
 			
-			
-			Dictionary<int, List<HandlerInformation>> IMock.Handlers => this.handlers;
-		}
-	}
-	
-	internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
-	{
-		internal static MethodAdornments<IMatchObject<object>, Func<object?, string>, string> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
-			new MethodAdornments<IMatchObject<object>, Func<object?, string>, string>(self.Add<string>(0, new List<Argument>(1) { other }));
-		internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
-			new MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int>(self.Add<int>(1, new List<Argument>(2) { objA, objB }));
-		internal static MethodAdornments<IMatchObject<object>, Func<bool>, bool> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
-			new MethodAdornments<IMatchObject<object>, Func<bool>, bool>(self.Add<bool>(2, new List<Argument>()));
-	}
-}
-";
+			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "IMatchObjectOfobject_Rock_Create.g.cs", generatedCode) },

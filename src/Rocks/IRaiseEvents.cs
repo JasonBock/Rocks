@@ -1,7 +1,6 @@
 ﻿namespace Rocks;
 
-public interface IMockWithEvents
-	: IMock
+public interface IRaiseEvents
 {
 	void Raise(string eventName, EventArgs args);
 }
