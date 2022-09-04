@@ -13,11 +13,12 @@ public static class HttpMessageHandlerTests
 			StatusCode = HttpStatusCode.OK,
 			Content = new StringContent("OK")
 		};
-		var handlerMock = Rock.Create<HttpMessageHandler>();
-		handlerMock.Methods().SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
+		var expectations = Rock.Create<HttpMessageHandler>();
+		expectations.Methods().SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
 			.Returns(Task.FromResult(response));
 
-		using var client = new HttpClient(handlerMock.Instance());
+		using var mock = expectations.Instance();
+		using var client = new HttpClient(mock);
 		var getResponse = await client.GetAsync(new Uri("https://localhost.com")).ConfigureAwait(false);
 
 		Assert.Multiple(() =>
@@ -26,6 +27,6 @@ public static class HttpMessageHandlerTests
 			Assert.That(getResponse.Content, Is.EqualTo(response.Content));
 		});
 
-		handlerMock.Verify();
+		expectations.Verify();
 	}
 }

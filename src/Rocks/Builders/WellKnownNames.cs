@@ -22,5 +22,4 @@ internal sealed class WellKnownNames
 	internal const string Setters = nameof(WellKnownNames.Setters);
 	internal const string This = nameof(WellKnownNames.This);
 	internal const string Transform = nameof(WellKnownNames.Transform);
-	internal const string Wrapper = nameof(WellKnownNames.Wrapper);
 }

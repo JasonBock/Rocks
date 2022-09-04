@@ -20,9 +20,6 @@ public class Expectations<T>
 	internal Expectations(Expectations<T> expectations) =>
 		this.Handlers = expectations.Handlers;
 
-	//internal Expectations(Dictionary<int, List<HandlerInformation>> handlers) =>
-	//	this.Handlers = handlers;
-
 	public HandlerInformation Add(int memberIdentifier, List<Argument> arguments)
 	{
 		var information = new HandlerInformation(arguments.ToImmutableArray());
@@ -64,6 +61,10 @@ public class Expectations<T>
 			}
 		}
 	}
+
+	public void AddOrUpdate(int key,
+		Func<List<HandlerInformation>>? add, Action<List<HandlerInformation>>? update) =>
+		this.Handlers.AddOrUpdate(key, add, update);
 
 	// TODO: Can we make this private?
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
