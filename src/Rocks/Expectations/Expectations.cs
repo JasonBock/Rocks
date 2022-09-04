@@ -62,11 +62,6 @@ public class Expectations<T>
 		}
 	}
 
-	public void AddOrUpdate(int key,
-		Func<List<HandlerInformation>>? add, Action<List<HandlerInformation>>? update) =>
-		this.Handlers.AddOrUpdate(key, add, update);
-
-	// TODO: Can we make this private?
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
 	/// This property is used by Rocks and is not intented to be used by developers.

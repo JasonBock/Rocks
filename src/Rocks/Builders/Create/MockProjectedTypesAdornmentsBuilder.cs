@@ -77,7 +77,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			writer.Indent++;
 
 			writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
-			writer.WriteLine($"self.AddOrUpdate(memberIdentifier,");
+			writer.WriteLine($"self.Handlers.AddOrUpdate(memberIdentifier,");
 			writer.Indent++;
 			writer.WriteLine("() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));");
 			writer.Indent--;
