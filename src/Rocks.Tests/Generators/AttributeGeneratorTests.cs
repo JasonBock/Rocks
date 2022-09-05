@@ -123,17 +123,24 @@ public static class AttributeGeneratorTests
 
 			namespace MockTests
 			{
-				public interface IAllow
+				[AttributeUsage(AttributeTargets.Parameter)]
+				public sealed class ParameterOneAttribute
+					: Attribute { }
+
+				[AttributeUsage(AttributeTargets.Parameter)]
+				public sealed class ParameterTwoAttribute
+					: Attribute { }				
+
+				public interface IHaveMultipleAttributes
 				{
-					 [AllowNull]
-					 string NewLine { get; set; }
+					void Foo([ParameterOne, ParameterTwo] string data);
 				}
 	
 				public static class Test
 				{
 					public static void Generate()
 					{
-						var rock = Rock.Make<IAllow>();
+						var rock = Rock.Create<IHaveMultipleAttributes>();
 					}
 				}
 			}
@@ -141,40 +148,91 @@ public static class AttributeGeneratorTests
 
 		var generatedCode =
 			"""
+			using MockTests;
 			using Rocks;
 			using Rocks.Exceptions;
+			using Rocks.Expectations;
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
 			
 			#nullable enable
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfIAllowExtensions
+				internal static class CreateExpectationsOfIHaveMultipleAttributesExtensions
 				{
-					internal static IAllow Instance(this MakeGeneration<IAllow> self) =>
-						new RockIAllow();
+					internal static MethodExpectations<IHaveMultipleAttributes> Methods(this Expectations<IHaveMultipleAttributes> self) =>
+						new(self);
 					
-					private sealed class RockIAllow
-						: IAllow
+					internal static IHaveMultipleAttributes Instance(this Expectations<IHaveMultipleAttributes> self)
 					{
-						public RockIAllow() { }
-						
-						[AllowNull]
-						public string NewLine
+						if (!self.WasInstanceInvoked)
 						{
-							get => default!;
-							set { }
+							self.WasInstanceInvoked = true;
+							return new RockIHaveMultipleAttributes(self);
+						}
+						else
+						{
+							throw new NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
+					
+					private sealed class RockIHaveMultipleAttributes
+						: IHaveMultipleAttributes
+					{
+						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						
+						public RockIHaveMultipleAttributes(Expectations<IHaveMultipleAttributes> expectations) =>
+							this.handlers = expectations.Handlers;
+						
+						[MemberIdentifier(0, "void Foo(string data)")]
+						public void Foo([ParameterOne, ParameterTwo] string data)
+						{
+							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							{
+								var foundMatch = false;
+								
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (((methodHandler.Expectations[0] as Argument<string>)?.IsValid(data) ?? false))
+									{
+										foundMatch = true;
+										
+										if (methodHandler.Method is not null)
+										{
+											((Action<string>)methodHandler.Method)(data);
+										}
+										
+										methodHandler.IncrementCallCount();
+										break;
+									}
+								}
+								
+								if (!foundMatch)
+								{
+									throw new ExpectationException("No handlers match for void Foo([ParameterOne, ParameterTwo] string data))");
+								}
+							}
+							else
+							{
+								throw new ExpectationException("No handlers were found for void Foo([ParameterOne, ParameterTwo] string data)");
+							}
+						}
+						
+					}
+				}
+				
+				internal static class MethodExpectationsOfIHaveMultipleAttributesExtensions
+				{
+					internal static MethodAdornments<IHaveMultipleAttributes, Action<string>> Foo(this MethodExpectations<IHaveMultipleAttributes> self, Argument<string> data) =>
+						new MethodAdornments<IHaveMultipleAttributes, Action<string>>(self.Add(0, new List<Argument>(1) { data }));
 				}
 			}
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IAllow_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }
