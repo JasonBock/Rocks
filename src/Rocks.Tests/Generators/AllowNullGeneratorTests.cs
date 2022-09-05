@@ -441,70 +441,74 @@ public static class AllowNullGeneratorTests
 	public static async Task GenerateNonAbstractMakeAsync()
 	{
 		var code =
-@"using Rocks;
-using System;
-using System.Diagnostics.CodeAnalysis;
+			"""
+			using Rocks;
+			using System;
+			using System.Diagnostics.CodeAnalysis;
 
-namespace MockTests
-{
-	public class Allow
-	{
-		 [AllowNull]
-		 public virtual string NewLine { get; set; }
-	}
+			namespace MockTests
+			{
+				public class Allow
+				{
+					 [AllowNull]
+					 public virtual string NewLine { get; set; }
+				}
 	
-	public static class Test
-	{
-		public static void Generate()
-		{
-			var rock = Rock.Make<Allow>();
-		}
-	}
-}";
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Make<Allow>();
+					}
+				}
+			}
+			""";
 
 		var generatedCode =
-@"using Rocks;
-using Rocks.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
-
-#nullable enable
-namespace MockTests
-{
-	internal static class MakeExpectationsOfAllowExtensions
-	{
-		internal static Allow Instance(this MakeGeneration<Allow> self) =>
-			new RockAllow();
-		
-		private sealed class RockAllow
-			: Allow
-		{
-			public RockAllow() { }
+			"""
+			using Rocks;
+			using Rocks.Exceptions;
+			using System;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			using System.Diagnostics.CodeAnalysis;
 			
-			public override bool Equals(object? obj)
+			#nullable enable
+			namespace MockTests
 			{
-				return default!;
+				internal static class MakeExpectationsOfAllowExtensions
+				{
+					internal static Allow Instance(this MakeGeneration<Allow> self) =>
+						new RockAllow();
+					
+					private sealed class RockAllow
+						: Allow
+					{
+						public RockAllow() { }
+						
+						public override bool Equals(object? obj)
+						{
+							return default!;
+						}
+						public override int GetHashCode()
+						{
+							return default!;
+						}
+						public override string? ToString()
+						{
+							return default!;
+						}
+						[AllowNull]
+						public override string NewLine
+						{
+							get => default!;
+							set { }
+						}
+					}
+				}
 			}
-			public override int GetHashCode()
-			{
-				return default!;
-			}
-			public override string? ToString()
-			{
-				return default!;
-			}
-			[AllowNull]
-			public override string NewLine
-			{
-				get => default!;
-				set { }
-			}
-		}
-	}
-}
-";
+			
+			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "Allow_Rock_Make.g.cs", generatedCode) },

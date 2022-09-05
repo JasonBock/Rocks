@@ -62,14 +62,16 @@ namespace Rocks.Tests.Extensions
 		public static void GetNamespaces()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@$"using {typeof(TypeOfThis).Namespace};
-using {typeof(MethodAttribute).Namespace};
+$$"""
+using {{typeof(TypeOfThis).Namespace}};
+using {{typeof(MethodAttribute).Namespace}};
 
 public interface IA
-{{
+{
 	[Method(typeof(TypeOfThis))]
 	void Foo();
-}}");
+}
+""");
 
 			var namespaces = attributes[0].GetNamespaces();
 

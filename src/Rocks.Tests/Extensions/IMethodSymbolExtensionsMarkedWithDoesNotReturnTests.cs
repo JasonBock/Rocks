@@ -12,13 +12,15 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 	public static void GetResultWhenMethodHasDoesNotReturnAttribute()
 	{
 		var code =
-@"using System.Diagnostics.CodeAnalysis;
+			"""
+			using System.Diagnostics.CodeAnalysis;
 
-public static class Test
-{
-	[DoesNotReturn]
-	public static void Foo() { }
-}";
+			public static class Test
+			{
+				[DoesNotReturn]
+				public static void Foo() { }
+			}
+			""";
 
 		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.True);
@@ -28,10 +30,12 @@ public static class Test
 	public static void GetResultWhenMethodDoesNotHaveDoesNotReturnAttribute()
 	{
 		var code =
-@"public static class Test
-{
-	public static void Foo() { }
-}";
+			"""
+			public static class Test
+			{
+				public static void Foo() { }
+			}
+			""";
 
 		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
 		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.False);

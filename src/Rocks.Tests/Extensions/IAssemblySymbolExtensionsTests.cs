@@ -11,9 +11,11 @@ public static class IAssemblySymbolExtensionsTests
 	public static void CheckExposureWhenSourceAssemblyHasInternalsVisibleToWithTargetAssemblyName()
 	{
 		var sourceCode =
- @"using System.Runtime.CompilerServices;
+			"""
+			using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo(""TargetAssembly"")]";
+			[assembly: InternalsVisibleTo("TargetAssembly")]
+			""";
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
 		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
@@ -44,9 +46,11 @@ public static class IAssemblySymbolExtensionsTests
 	public static void CheckExposureWhenSourceAssemblyHasInternalsVisibleToWithDifferentTargetAssemblyName()
 	{
 		var sourceCode =
- @"using System.Runtime.CompilerServices;
+			"""
+			using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo(""DifferentTargetAssembly"")]";
+			[assembly: InternalsVisibleTo("DifferentTargetAssembly")]
+			""";
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
 		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()

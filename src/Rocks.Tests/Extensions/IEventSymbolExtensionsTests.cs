@@ -16,30 +16,32 @@ public static class IEventSymbolExtensionsTests
 		var typeName = "EventClass";
 
 		var code =
-$@"using System;
-using {customEventArgNamespace};
-using {attributeNamespace};
+			$$"""
+			using System;
+			using {{customEventArgNamespace}};
+			using {{attributeNamespace}};
 
-namespace {attributeNamespace}
-{{
-	[AttributeUsage(AttributeTargets.Event)]
-	public sealed class EventAttribute
-		: Attribute
-	{{ }}
-}}
+			namespace {attributeNamespace}
+			{
+				[AttributeUsage(AttributeTargets.Event)]
+				public sealed class EventAttribute
+					: Attribute
+				{ }
+			}
 
-namespace {customEventArgNamespace}
-{{
-	public sealed class ACustomEventArgs
-		: EventArgs
-	{{ }}
-}}
+			namespace {customEventArgNamespace}
+			{
+				public sealed class ACustomEventArgs
+					: EventArgs
+				{ }
+			}
 
-public class {typeName}
-{{
-	[Event]
-	public event EventHandler<ACustomEventArgs> CustomEvent;
-}}";
+			public class {typeName}
+			{
+				[Event]
+				public event EventHandler<ACustomEventArgs> CustomEvent;
+			}
+			""";
 
 		Assert.Multiple(() =>
 		{

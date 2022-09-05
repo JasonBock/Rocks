@@ -17,15 +17,17 @@ public static class IMethodSymbolExtensionsMatchTests
 	public static void MatchWhenMethodsAreExactNoParameters()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}
+$$"""
+public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+{
+	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}";
+public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+{
+	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+}
+""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
@@ -35,15 +37,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsAreExactWithParameters()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
-}}
+$$"""
+public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+{
+	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
-}}";
+public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+{
+	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+}
+""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));

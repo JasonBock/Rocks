@@ -17,47 +17,49 @@ public static class IMethodSymbolExtensionsGetNamespacesTests
 		var returnAttribute = "NSReturn";
 
 		var code =
-$@"using System;
-using {methodAttributeNamespace};
-using {returnAttribute};
-using {parameterTypeNamespace};
-using {parameterAttributeNamespace};
+$$"""
+using System;
+using {{methodAttributeNamespace}};
+using {{returnAttribute}};
+using {{parameterTypeNamespace}};
+using {{parameterAttributeNamespace}};
 
 namespace {parameterTypeNamespace}
-{{
-	public sealed class ParameterType {{ }}
-}}
+{
+	public sealed class ParameterType { }
+}
 
 namespace {parameterAttributeNamespace}
-{{
+{
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class ParameterAttribute
 		: Attribute
-	{{ }}
-}}
+	{ }
+}
 
 namespace {methodAttributeNamespace}
-{{
+{
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class MethodAttribute
 		: Attribute
-	{{ }}
-}}
+	{ }
+}
 
 namespace {returnAttribute}
-{{
+{
 	[AttributeUsage(AttributeTargets.ReturnValue)]
 	public sealed class ReturnAttribute
 		: Attribute
-	{{ }}
-}}
+	{ }
+}
 
 public class NamespaceClass
-{{
+{
 	[Method]
 	[return: Return]
 	public string Foo([Parameter] ParameterType p) => string.Empty;
-}}";
+}
+""";
 
 		Assert.Multiple(() =>
 		{
