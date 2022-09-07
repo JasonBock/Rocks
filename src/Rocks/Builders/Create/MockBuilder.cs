@@ -22,7 +22,7 @@ internal static class MockBuilder
 
 		MockMethodExtensionsBuilder.Build(writer, information);
 		MockPropertyExtensionsBuilder.Build(writer, information);
-		MockConstructorExtensionsBuilder.Build(writer, information);
+		MockConstructorExtensionsBuilder.Build(writer, information, compilation);
 
 		writer.WriteLine();
 		MockTypeBuilder.Build(writer, information, compilation);
