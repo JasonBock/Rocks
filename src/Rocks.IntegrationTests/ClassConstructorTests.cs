@@ -45,22 +45,22 @@ public static class ClassConstructorTests
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var rock = Rock.Create<ClassConstructorWithSpecialParameters>();
-		rock.Methods().Foo();
+		var expectations = Rock.Create<ClassConstructorWithSpecialParameters>();
+		expectations.Methods().Foo();
 
-		var chunk = rock.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
-		chunk.Foo();
+		var mock = expectations.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
+		mock.Foo();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.A, Is.EqualTo(2));
-			Assert.That(chunk.B, Is.EqualTo("b"));
-			Assert.That(chunk.C, Is.EqualTo("42"));
+			Assert.That(mock.A, Is.EqualTo(2));
+			Assert.That(mock.B, Is.EqualTo("b"));
+			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
-			Assert.That(chunk.D, Is.EquivalentTo(new [] { d1Value, d2Value }));
+			Assert.That(mock.D, Is.EquivalentTo(new [] { d1Value, d2Value }));
 		});
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -70,41 +70,41 @@ public static class ClassConstructorTests
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var chunk = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
+		var mock = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.A, Is.EqualTo(2));
-			Assert.That(chunk.B, Is.EqualTo("b"));
-			Assert.That(chunk.C, Is.EqualTo("42"));
+			Assert.That(mock.A, Is.EqualTo(2));
+			Assert.That(mock.B, Is.EqualTo("b"));
+			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
-			Assert.That(chunk.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
+			Assert.That(mock.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
 		});
 	}
 
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var rock = Rock.Create<ClassConstructor>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<ClassConstructor>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance(3);
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance(3);
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.IntData, Is.EqualTo(3));
-			Assert.That(chunk.StringData, Is.Null);
+			Assert.That(mock.IntData, Is.EqualTo(3));
+			Assert.That(mock.StringData, Is.Null);
 		});
 	}
 
 	[Test]
 	public static void MakeWithNoParametersAndPublicConstructor()
 	{
-		var chunk = Rock.Make<ClassConstructor>().Instance(3);
-		var value = chunk.NoParameters();
+		var mock = Rock.Make<ClassConstructor>().Instance(3);
+		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -112,26 +112,26 @@ public static class ClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var rock = Rock.Create<ClassConstructor>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<ClassConstructor>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance("b");
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance("b");
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.IntData, Is.EqualTo(default(int)));
-			Assert.That(chunk.StringData, Is.EqualTo("b"));
+			Assert.That(mock.IntData, Is.EqualTo(default(int)));
+			Assert.That(mock.StringData, Is.EqualTo("b"));
 		});
 	}
 
 	[Test]
 	public static void MakeWithNoParametersAndProtectedConstructor()
 	{
-		var chunk = Rock.Make<ClassConstructor>().Instance("b");
-		var value = chunk.NoParameters();
+		var mock = Rock.Make<ClassConstructor>().Instance("b");
+		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

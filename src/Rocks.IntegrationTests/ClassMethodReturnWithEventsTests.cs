@@ -18,15 +18,15 @@ public static class ClassMethodReturnWithEventsTests
    [Test]
    public static void CreateRaiseEvent()
    {
-	  var rock = Rock.Create<ClassMethodReturnWithEvents>();
-	  rock.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
+	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
+	  expectations.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
 
 	  var wasEventRaised = false;
-	  var chunk = rock.Instance();
-	  chunk.MyEvent += (s, e) => wasEventRaised = true;
-	  var value = chunk.NoParameters();
+	  var mock = expectations.Instance();
+	  mock.MyEvent += (s, e) => wasEventRaised = true;
+	  var value = mock.NoParameters();
 
-	  rock.Verify();
+	  expectations.Verify();
 
 	  Assert.Multiple(() =>
 	  {
@@ -39,8 +39,8 @@ public static class ClassMethodReturnWithEventsTests
    public static void CreateRaiseEventWithCallback()
    {
 	  var wasCallbackInvoked = false;
-	  var rock = Rock.Create<ClassMethodReturnWithEvents>();
-	  rock.Methods().NoParameters()
+	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
+	  expectations.Methods().NoParameters()
 		  .Callback(() =>
 		  {
 			 wasCallbackInvoked = true;
@@ -49,11 +49,11 @@ public static class ClassMethodReturnWithEventsTests
 		  .RaisesMyEvent(EventArgs.Empty);
 
 	  var wasEventRaised = false;
-	  var chunk = rock.Instance();
-	  chunk.MyEvent += (s, e) => wasEventRaised = true;
-	  var value = chunk.NoParameters();
+	  var mock = expectations.Instance();
+	  mock.MyEvent += (s, e) => wasEventRaised = true;
+	  var value = mock.NoParameters();
 
-	  rock.Verify();
+	  expectations.Verify();
 
 	  Assert.Multiple(() =>
 	  {
@@ -66,18 +66,18 @@ public static class ClassMethodReturnWithEventsTests
    [Test]
    public static void CreateRaiseEventWithMultipleCalls()
    {
-	  var rock = Rock.Create<ClassMethodReturnWithEvents>();
-	  rock.Methods().NoParameters()
+	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
+	  expectations.Methods().NoParameters()
 		  .CallCount(2)
 		  .RaisesMyEvent(EventArgs.Empty);
 
 	  var eventRaisedCount = 0;
-	  var chunk = rock.Instance();
-	  chunk.MyEvent += (s, e) => eventRaisedCount++;
-	  var valueOne = chunk.NoParameters();
-	  var valueTwo = chunk.NoParameters();
+	  var mock = expectations.Instance();
+	  mock.MyEvent += (s, e) => eventRaisedCount++;
+	  var valueOne = mock.NoParameters();
+	  var valueTwo = mock.NoParameters();
 
-	  rock.Verify();
+	  expectations.Verify();
 
 	  Assert.Multiple(() =>
 	  {
@@ -91,8 +91,8 @@ public static class ClassMethodReturnWithEventsTests
    public static void CreateRaiseEventWithMultipleCallsWithCallback()
    {
 	  var callbackInvokedCount = 0;
-	  var rock = Rock.Create<ClassMethodReturnWithEvents>();
-	  rock.Methods().NoParameters()
+	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
+	  expectations.Methods().NoParameters()
 		  .CallCount(2)
 		  .Callback(() =>
 		  {
@@ -102,12 +102,12 @@ public static class ClassMethodReturnWithEventsTests
 		  .RaisesMyEvent(EventArgs.Empty);
 
 	  var eventRaisedCount = 0;
-	  var chunk = rock.Instance();
-	  chunk.MyEvent += (s, e) => eventRaisedCount++;
-	  var valueOne = chunk.NoParameters();
-	  var valueTwo = chunk.NoParameters();
+	  var mock = expectations.Instance();
+	  mock.MyEvent += (s, e) => eventRaisedCount++;
+	  var valueOne = mock.NoParameters();
+	  var valueTwo = mock.NoParameters();
 
-	  rock.Verify();
+	  expectations.Verify();
 
 	  Assert.Multiple(() =>
 	  {

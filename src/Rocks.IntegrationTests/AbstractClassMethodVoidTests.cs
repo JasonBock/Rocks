@@ -29,7 +29,7 @@ public static class AbstractClassMethodVoidTests
 	{
 		var mock = Rock.Make<AbstractMethodVoidTests>().Instance();
 
-		Assert.That(() => mock.NoParameters(), Throws.Nothing);
+		Assert.That(mock.NoParameters, Throws.Nothing);
 	}
 
 	[Test]
@@ -54,7 +54,7 @@ public static class AbstractClassMethodVoidTests
 		var mock = expectations.Instance();
 		mock.NoParameters();
 
-		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(expectations.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]
@@ -79,7 +79,7 @@ public static class AbstractClassMethodVoidTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.NoParameters(), Throws.TypeOf<ExpectationException>());
+		Assert.That(mock.NoParameters, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -90,7 +90,7 @@ public static class AbstractClassMethodVoidTests
 
 		_ = expectations.Instance();
 
-		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(expectations.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]

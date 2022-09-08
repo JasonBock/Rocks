@@ -208,7 +208,7 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterInit()
 	{
 		var rock = Rock.Create<IInterfaceIndexerInit>();
-		Assert.That(() => rock.Instance(), Throws.Nothing);
+		Assert.That(rock.Instance, Throws.Nothing);
 	}
 
 	[Test]

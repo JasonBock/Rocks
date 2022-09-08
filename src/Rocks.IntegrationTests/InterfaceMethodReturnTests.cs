@@ -80,7 +80,7 @@ public static class InterfaceMethodReturnTests
 		var chunk = rock.Instance();
 		chunk.NoParameters();
 
-		Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(rock.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]
@@ -104,7 +104,7 @@ public static class InterfaceMethodReturnTests
 
 		var chunk = rock.Instance();
 
-		Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
+		Assert.That(chunk.NoParameters, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -115,7 +115,7 @@ public static class InterfaceMethodReturnTests
 
 		var chunk = rock.Instance();
 
-		Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(rock.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]

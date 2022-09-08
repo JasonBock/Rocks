@@ -18,6 +18,6 @@ public static class VerificationTests
 
 		_ = rock.Instance();
 
-		Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(rock.Verify, Throws.TypeOf<VerificationException>());
 	}
 }

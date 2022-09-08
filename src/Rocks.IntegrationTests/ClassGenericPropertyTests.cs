@@ -20,13 +20,13 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var rock = Rock.Create<ClassGenericProperty<int>>();
-		rock.Properties().Getters().Values().Returns(returnValue);
+		var expectations = Rock.Create<ClassGenericProperty<int>>();
+		expectations.Properties().Getters().Values().Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk.Values;
+		var mock = expectations.Instance();
+		var value = mock.Values;
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -35,13 +35,13 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var rock = Rock.Create<ClassGenericPropertyGetAndInit<int>>();
-		rock.Properties().Getters().Values().Returns(returnValue);
+		var expectations = Rock.Create<ClassGenericPropertyGetAndInit<int>>();
+		expectations.Properties().Getters().Values().Returns(returnValue);
 
-		var chunk = rock.Instance(null);
-		var value = chunk.Values;
+		var mock = expectations.Instance(null);
+		var value = mock.Values;
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -49,8 +49,8 @@ public static class ClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericType()
 	{
-		var chunk = Rock.Make<ClassGenericProperty<int>>().Instance();
-		var value = chunk.Values;
+		var mock = Rock.Make<ClassGenericProperty<int>>().Instance();
+		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
@@ -58,8 +58,8 @@ public static class ClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var chunk = Rock.Make<ClassGenericPropertyGetAndInit<int>>().Instance(null);
-		var value = chunk.Values;
+		var mock = Rock.Make<ClassGenericPropertyGetAndInit<int>>().Instance(null);
+		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
@@ -68,13 +68,13 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<ClassGenericProperty<int>>();
-		rock.Properties().Getters().Data().Returns(returnValue);
+		var expectations = Rock.Create<ClassGenericProperty<int>>();
+		expectations.Properties().Getters().Data().Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk.Data;
+		var mock = expectations.Instance();
+		var value = mock.Data;
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -83,13 +83,13 @@ public static class ClassGenericPropertyTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<ClassGenericPropertyGetAndInit<int>>();
-		rock.Properties().Getters().Data().Returns(returnValue);
+		var expectations = Rock.Create<ClassGenericPropertyGetAndInit<int>>();
+		expectations.Properties().Getters().Data().Returns(returnValue);
 
-		var chunk = rock.Instance(null);
-		var value = chunk.Data;
+		var mock = expectations.Instance(null);
+		var value = mock.Data;
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -97,8 +97,8 @@ public static class ClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var chunk = Rock.Make<ClassGenericProperty<int>>().Instance();
-		var value = chunk.Data;
+		var mock = Rock.Make<ClassGenericProperty<int>>().Instance();
+		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -106,8 +106,8 @@ public static class ClassGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var chunk = Rock.Make<ClassGenericPropertyGetAndInit<int>>().Instance(null);
-		var value = chunk.Data;
+		var mock = Rock.Make<ClassGenericPropertyGetAndInit<int>>().Instance(null);
+		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

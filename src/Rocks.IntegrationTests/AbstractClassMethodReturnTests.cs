@@ -71,7 +71,7 @@ public static class AbstractClassMethodReturnTests
 		var mock = expectations.Instance();
 		mock.NoParameters();
 
-		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(expectations.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]
@@ -95,7 +95,7 @@ public static class AbstractClassMethodReturnTests
 
 		var chunk = expectations.Instance();
 
-		Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
+		Assert.That(chunk.NoParameters, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -106,7 +106,7 @@ public static class AbstractClassMethodReturnTests
 
 		_ = expectations.Instance();
 
-		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(expectations.Verify, Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]

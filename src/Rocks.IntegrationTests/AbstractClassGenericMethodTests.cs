@@ -165,7 +165,7 @@ public static class AbstractClassGenericMethodTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(() => mock.BarReturn<string>(), Throws.TypeOf<InvalidCastException>());
+		Assert.That(mock.BarReturn<string>, Throws.TypeOf<InvalidCastException>());
 	}
 
 	[Test]

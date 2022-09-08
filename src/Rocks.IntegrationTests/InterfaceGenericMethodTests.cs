@@ -168,7 +168,7 @@ public static class InterfaceGenericMethodTests
 
 		var chunk = rock.Instance();
 
-		Assert.That(() => chunk.BarReturn<string>(), Throws.TypeOf<InvalidCastException>());
+		Assert.That(chunk.BarReturn<string>, Throws.TypeOf<InvalidCastException>());
 	}
 
 	[Test]

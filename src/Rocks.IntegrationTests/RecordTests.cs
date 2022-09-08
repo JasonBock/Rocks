@@ -25,6 +25,6 @@ public static class RecordTests
 	public static void Make()
 	{
 		var chunk = Rock.Make<MyRecord>().Instance();
-		Assert.That(() => chunk.Foo(), Throws.Nothing);
+		Assert.That(chunk.Foo, Throws.Nothing);
 	}
 }

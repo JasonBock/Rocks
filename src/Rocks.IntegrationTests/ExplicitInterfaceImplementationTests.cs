@@ -51,97 +51,97 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateDifferByReturnTypeOnly()
 	{
-		var rock = Rock.Create<IIterable<string>>();
-		rock.Methods().GetIterator();
-		rock.ExplicitMethodsForIIterable().GetIterator();
+		var expectations = Rock.Create<IIterable<string>>();
+		expectations.Methods().GetIterator();
+		expectations.ExplicitMethodsForIIterable().GetIterator();
 
-		var chunk = rock.Instance();
-		chunk.GetIterator();
-		((IIterable)chunk).GetIterator();
+		var mock = expectations.Instance();
+		mock.GetIterator();
+		((IIterable)mock).GetIterator();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateMethod()
 	{
-		var rock = Rock.Create<IExplicitInterfaceImplementation>();
-		rock.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
-		rock.ExplicitMethodsForIExplicitInterfaceImplementationTwo().A();
+		var expectations = Rock.Create<IExplicitInterfaceImplementation>();
+		expectations.ExplicitMethodsForIExplicitInterfaceImplementationOne().A();
+		expectations.ExplicitMethodsForIExplicitInterfaceImplementationTwo().A();
 
-		var chunk = rock.Instance();
-		((IExplicitInterfaceImplementationOne)chunk).A();
-		((IExplicitInterfaceImplementationTwo)chunk).A();
+		var mock = expectations.Instance();
+		((IExplicitInterfaceImplementationOne)mock).A();
+		((IExplicitInterfaceImplementationTwo)mock).A();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeMethod()
 	{
-		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var mock = Rock.Make<IExplicitInterfaceImplementation>().Instance();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).A(), Throws.Nothing);
-			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).A(), Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).A(), Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).A(), Throws.Nothing);
 		});
 	}
 
 	[Test]
 	public static void CreateProperty()
 	{
-		var rock = Rock.Create<IExplicitInterfaceImplementation>();
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Setters().B(Arg.Any<int>());
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().B();
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Setters().B(Arg.Any<int>());
+		var expectations = Rock.Create<IExplicitInterfaceImplementation>();
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().B();
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Setters().B(Arg.Any<int>());
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().B();
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Setters().B(Arg.Any<int>());
 
-		var chunk = rock.Instance();
-		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
-		((IExplicitInterfaceImplementationOne)chunk).B = oneValue;
-		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
-		((IExplicitInterfaceImplementationTwo)chunk).B = twoValue;
+		var mock = expectations.Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)mock).B;
+		((IExplicitInterfaceImplementationOne)mock).B = oneValue;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).B;
+		((IExplicitInterfaceImplementationTwo)mock).B = twoValue;
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreatePropertyWithInit()
 	{
-		var rock = Rock.Create<IExplicitInterfaceImplementation>();
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().D();
-		rock.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().D();
+		var expectations = Rock.Create<IExplicitInterfaceImplementation>();
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationOne().Getters().D();
+		expectations.ExplicitPropertiesForIExplicitInterfaceImplementationTwo().Getters().D();
 
-		var chunk = rock.Instance();
-		_ = ((IExplicitInterfaceImplementationOne)chunk).D;
-		_ = ((IExplicitInterfaceImplementationTwo)chunk).D;
+		var mock = expectations.Instance();
+		_ = ((IExplicitInterfaceImplementationOne)mock).D;
+		_ = ((IExplicitInterfaceImplementationTwo)mock).D;
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeProperty()
 	{
-		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).B;
-		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).B;
+		var mock = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)mock).B;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).B;
 
 		Assert.Multiple(() =>
 		{
 			Assert.That(oneValue, Is.EqualTo(default(int)));
 			Assert.That(twoValue, Is.EqualTo(default(int)));
-			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk).B = oneValue, Throws.Nothing);
-			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk).B = twoValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock).B = oneValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock).B = twoValue, Throws.Nothing);
 		});
 	}
 
 	[Test]
 	public static void MakePropertyWithInit()
 	{
-		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-		var oneValue = ((IExplicitInterfaceImplementationOne)chunk).D;
-		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk).D;
+		var mock = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)mock).D;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)mock).D;
 
 		Assert.Multiple(() =>
 		{
@@ -153,34 +153,35 @@ public static class ExplicitInterfaceImplementationTests
 	[Test]
 	public static void CreateIndexer()
 	{
-		var rock = Rock.Create<IExplicitInterfaceImplementation>();
-		rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
-		rock.ExplicitIndexersForIExplicitInterfaceImplementationOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
-		rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Getters().This(Arg.Any<int>());
-		rock.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
 
-		var chunk = rock.Instance();
-		var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
-		((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue;
-		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
-		((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue;
+		var expectations = Rock.Create<IExplicitInterfaceImplementation>();
+		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne().Getters().This(Arg.Any<int>());
+		expectations.ExplicitIndexersForIExplicitInterfaceImplementationOne().Setters().This(Arg.Any<int>(), Arg.Any<int>());
+		expectations.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Getters().This(Arg.Any<int>());
+		expectations.ExplicitIndexersForIExplicitInterfaceImplementationTwo().Setters().This(Arg.Any<int>(), Arg.Any<int>());
 
-		rock.Verify();
+		var mock = expectations.Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)mock)[3];
+		((IExplicitInterfaceImplementationOne)mock)[3] = oneValue;
+		var twoValue = ((IExplicitInterfaceImplementationTwo)mock)[3];
+		((IExplicitInterfaceImplementationTwo)mock)[3] = twoValue;
+
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeIndexer()
 	{
-		var chunk = Rock.Make<IExplicitInterfaceImplementation>().Instance();
-		var oneValue = ((IExplicitInterfaceImplementationOne)chunk)[3];
-		var twoValue = ((IExplicitInterfaceImplementationTwo)chunk)[3];
+		var mock = Rock.Make<IExplicitInterfaceImplementation>().Instance();
+		var oneValue = ((IExplicitInterfaceImplementationOne)mock)[3];
+		var twoValue = ((IExplicitInterfaceImplementationTwo)mock)[3];
 
 		Assert.Multiple(() =>
 		{
 			Assert.That(oneValue, Is.EqualTo(default(int)));
 			Assert.That(twoValue, Is.EqualTo(default(int)));
-			Assert.That(() => ((IExplicitInterfaceImplementationOne)chunk)[3] = oneValue, Throws.Nothing);
-			Assert.That(() => ((IExplicitInterfaceImplementationTwo)chunk)[3] = twoValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationOne)mock)[3] = oneValue, Throws.Nothing);
+			Assert.That(() => ((IExplicitInterfaceImplementationTwo)mock)[3] = twoValue, Throws.Nothing);
 		});
 	}
 }
