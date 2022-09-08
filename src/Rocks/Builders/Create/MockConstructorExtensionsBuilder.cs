@@ -11,7 +11,7 @@ internal static class MockConstructorExtensionsBuilder
 	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
 		var requiredInitProperties = information.TypeToMock!.Type.GetMembers().OfType<IPropertySymbol>()
-			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
+			.Where(_ => !_.IsIndexer && (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
 				_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
 
 		var requiredInitObjectInitializationSyntax = string.Empty;
@@ -32,10 +32,18 @@ internal static class MockConstructorExtensionsBuilder
 			foreach (var requiredInitProperty in requiredInitProperties)
 			{
 				hasRequiredProperties |= requiredInitProperty.IsRequired;
+				var propertyNullability = (requiredInitProperty.NullableAnnotation == NullableAnnotation.None ||
+					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ? 
+						"?" : string.Empty;
+				var propertyAssignment = (requiredInitProperty.NullableAnnotation == NullableAnnotation.None ||
+					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ?
+						"!" : string.Empty;
+				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
+				var propertyTypeName = requiredInitProperty.Type.GetReferenceableName();
 				writer.WriteLine(
-					$"public {(requiredInitProperty.IsRequired ? "required " : string.Empty)}{requiredInitProperty.Type.GetReferenceableName()} {requiredInitProperty.Name} {{ get; init; }}");
+					$"public {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 				requiredInitObjectInitializationSyntaxBuilder.AppendLine(
-					$"\t{requiredInitProperty.Name} = constructorProperties.{requiredInitProperty.Name},");
+					$"\t{requiredInitProperty.Name} = constructorProperties.{requiredInitProperty.Name}{propertyAssignment},");
 			}
 
 			requiredInitObjectInitializationSyntaxBuilder.Append("};");

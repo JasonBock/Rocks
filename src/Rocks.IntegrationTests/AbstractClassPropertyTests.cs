@@ -22,7 +22,7 @@ public static class AbstractClassPropertyTests
 		var rock = Rock.Create<AbstractClassProperty>();
 		rock.Properties().Getters().GetData();
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.GetData;
 
 		rock.Verify();
@@ -46,7 +46,7 @@ public static class AbstractClassPropertyTests
 		rock.Properties().Getters().GetData().RaisesMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.MyEvent += (s, e) => wasEventRaised = true;
 		var value = chunk.GetData;
 
@@ -70,7 +70,7 @@ public static class AbstractClassPropertyTests
 			return 3;
 		});
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.GetData;
 
 		rock.Verify();
@@ -94,7 +94,7 @@ public static class AbstractClassPropertyTests
 		}).RaisesMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.MyEvent += (s, e) => wasEventRaised = true;
 		var value = chunk.GetData;
 
@@ -114,7 +114,7 @@ public static class AbstractClassPropertyTests
 		var rock = Rock.Create<AbstractClassProperty>();
 		rock.Properties().Setters().SetData(Arg.Any<int>());
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.SetData = 1;
 
 		rock.Verify();
@@ -136,7 +136,7 @@ public static class AbstractClassPropertyTests
 			.RaisesMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.MyEvent += (s, e) => wasEventRaised = true;
 		chunk.SetData = 1;
 
@@ -153,7 +153,7 @@ public static class AbstractClassPropertyTests
 		rock.Properties().Setters().SetData(Arg.Any<int>())
 			.Callback(_ => wasCallbackInvoked = true);
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.SetData = 1;
 
 		rock.Verify();
@@ -171,7 +171,7 @@ public static class AbstractClassPropertyTests
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		chunk.MyEvent += (s, e) => wasEventRaised = true;
 		chunk.SetData = 1;
 
@@ -190,7 +190,7 @@ public static class AbstractClassPropertyTests
 		var rock = Rock.Create<AbstractClassProperty>();
 		rock.Properties().Getters().GetAndInitData();
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.GetAndInitData;
 
 		rock.Verify();
@@ -205,7 +205,7 @@ public static class AbstractClassPropertyTests
 		rock.Properties().Getters().GetAndSetData();
 		rock.Properties().Setters().GetAndSetData(Arg.Any<int>());
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.GetAndSetData;
 		chunk.GetAndSetData = value;
 

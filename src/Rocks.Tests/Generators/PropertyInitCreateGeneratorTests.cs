@@ -13,11 +13,15 @@ public static class PropertyInitCreateGeneratorTests
 			using Rocks;
 			using System;
 
+			#nullable enable
 			namespace MockTests
 			{
 				public interface ITest
 				{
-					int Bar { get; init; }
+					int NonNullableValueType { get; init; }
+					int? NullableValueType { get; init; }
+					string NonNullableReferenceType { get; init; }
+					string? NullableReferenceType { get; init; }
 				}
 
 				public static class Test
@@ -52,7 +56,10 @@ public static class PropertyInitCreateGeneratorTests
 					
 					public sealed class ConstructorProperties
 					{
-						public int Bar { get; init; }
+						public int NonNullableValueType { get; init; }
+						public int? NullableValueType { get; init; }
+						public string? NonNullableReferenceType { get; init; }
+						public string? NullableReferenceType { get; init; }
 					}
 					
 					internal static ITest Instance(this Expectations<ITest> self, ConstructorProperties? constructorProperties)
@@ -64,7 +71,10 @@ public static class PropertyInitCreateGeneratorTests
 								new RockITest(self) :
 								new RockITest(self)
 								{
-									Bar = constructorProperties.Bar,
+									NonNullableValueType = constructorProperties.NonNullableValueType,
+									NullableValueType = constructorProperties.NullableValueType,
+									NonNullableReferenceType = constructorProperties.NonNullableReferenceType!,
+									NullableReferenceType = constructorProperties.NullableReferenceType,
 								};
 						}
 						else
@@ -81,9 +91,9 @@ public static class PropertyInitCreateGeneratorTests
 						public RockITest(Expectations<ITest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "get_Bar()")]
-						[MemberIdentifier(1, "set_Bar(value)")]
-						public int Bar
+						[MemberIdentifier(0, "get_NonNullableValueType()")]
+						[MemberIdentifier(1, "set_NonNullableValueType(value)")]
+						public int NonNullableValueType
 						{
 							get
 							{
@@ -97,7 +107,67 @@ public static class PropertyInitCreateGeneratorTests
 									return result!;
 								}
 								
-								throw new ExpectationException("No handlers were found for get_Bar())");
+								throw new ExpectationException("No handlers were found for get_NonNullableValueType())");
+							}
+							init { }
+						}
+						[MemberIdentifier(2, "get_NullableValueType()")]
+						[MemberIdentifier(3, "set_NullableValueType(value)")]
+						public int? NullableValueType
+						{
+							get
+							{
+								if (this.handlers.TryGetValue(2, out var methodHandlers))
+								{
+									var methodHandler = methodHandlers[0];
+									var result = methodHandler.Method is not null ?
+										((Func<int?>)methodHandler.Method)() :
+										((HandlerInformation<int?>)methodHandler).ReturnValue;
+									methodHandler.IncrementCallCount();
+									return result!;
+								}
+								
+								throw new ExpectationException("No handlers were found for get_NullableValueType())");
+							}
+							init { }
+						}
+						[MemberIdentifier(4, "get_NonNullableReferenceType()")]
+						[MemberIdentifier(5, "set_NonNullableReferenceType(value)")]
+						public string NonNullableReferenceType
+						{
+							get
+							{
+								if (this.handlers.TryGetValue(4, out var methodHandlers))
+								{
+									var methodHandler = methodHandlers[0];
+									var result = methodHandler.Method is not null ?
+										((Func<string>)methodHandler.Method)() :
+										((HandlerInformation<string>)methodHandler).ReturnValue;
+									methodHandler.IncrementCallCount();
+									return result!;
+								}
+								
+								throw new ExpectationException("No handlers were found for get_NonNullableReferenceType())");
+							}
+							init { }
+						}
+						[MemberIdentifier(6, "get_NullableReferenceType()")]
+						[MemberIdentifier(7, "set_NullableReferenceType(value)")]
+						public string? NullableReferenceType
+						{
+							get
+							{
+								if (this.handlers.TryGetValue(6, out var methodHandlers))
+								{
+									var methodHandler = methodHandlers[0];
+									var result = methodHandler.Method is not null ?
+										((Func<string?>)methodHandler.Method)() :
+										((HandlerInformation<string?>)methodHandler).ReturnValue;
+									methodHandler.IncrementCallCount();
+									return result!;
+								}
+								
+								throw new ExpectationException("No handlers were found for get_NullableReferenceType())");
 							}
 							init { }
 						}
@@ -106,8 +176,14 @@ public static class PropertyInitCreateGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfITestExtensions
 				{
-					internal static PropertyAdornments<ITest, Func<int>, int> Bar(this PropertyGetterExpectations<ITest> self) =>
+					internal static PropertyAdornments<ITest, Func<int>, int> NonNullableValueType(this PropertyGetterExpectations<ITest> self) =>
 						new PropertyAdornments<ITest, Func<int>, int>(self.Add<int>(0, new List<Argument>()));
+					internal static PropertyAdornments<ITest, Func<int?>, int?> NullableValueType(this PropertyGetterExpectations<ITest> self) =>
+						new PropertyAdornments<ITest, Func<int?>, int?>(self.Add<int?>(2, new List<Argument>()));
+					internal static PropertyAdornments<ITest, Func<string>, string> NonNullableReferenceType(this PropertyGetterExpectations<ITest> self) =>
+						new PropertyAdornments<ITest, Func<string>, string>(self.Add<string>(4, new List<Argument>()));
+					internal static PropertyAdornments<ITest, Func<string?>, string?> NullableReferenceType(this PropertyGetterExpectations<ITest> self) =>
+						new PropertyAdornments<ITest, Func<string?>, string?>(self.Add<string?>(6, new List<Argument>()));
 				}
 			}
 			
@@ -118,6 +194,7 @@ public static class PropertyInitCreateGeneratorTests
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
+	[Ignore("Currently cannot run this test until the required property feature is fully supported by the compiler.")]
 	[Test]
 	public static async Task GenerateWithRequiredAsync()
 	{

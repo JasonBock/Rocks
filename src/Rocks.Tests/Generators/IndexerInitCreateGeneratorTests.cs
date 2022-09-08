@@ -53,11 +53,6 @@ public static class IndexerInitCreateGeneratorTests
 					internal static IndexerGetterExpectations<Target> Getters(this IndexerExpectations<Target> self) =>
 						new(self);
 					
-					public sealed class ConstructorProperties
-					{
-						public int this[] { get; set; }
-					}
-
 					internal static Target Instance(this Expectations<Target> self)
 					{
 						if (!self.WasInstanceInvoked)

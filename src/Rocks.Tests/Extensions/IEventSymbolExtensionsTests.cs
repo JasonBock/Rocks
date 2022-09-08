@@ -21,7 +21,7 @@ public static class IEventSymbolExtensionsTests
 			using {{customEventArgNamespace}};
 			using {{attributeNamespace}};
 
-			namespace {attributeNamespace}
+			namespace {{attributeNamespace}}
 			{
 				[AttributeUsage(AttributeTargets.Event)]
 				public sealed class EventAttribute
@@ -29,14 +29,14 @@ public static class IEventSymbolExtensionsTests
 				{ }
 			}
 
-			namespace {customEventArgNamespace}
+			namespace {{customEventArgNamespace}}
 			{
 				public sealed class ACustomEventArgs
 					: EventArgs
 				{ }
 			}
 
-			public class {typeName}
+			public class {{typeName}}
 			{
 				[Event]
 				public event EventHandler<ACustomEventArgs> CustomEvent;

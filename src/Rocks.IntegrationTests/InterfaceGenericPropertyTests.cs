@@ -38,7 +38,7 @@ public static class InterfaceGenericPropertyTests
 		var rock = Rock.Create<IInterfaceGenericPropertyGetAndInit<int>>();
 		rock.Properties().Getters().Values().Returns(returnValue);
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.Values;
 
 		rock.Verify();
@@ -86,7 +86,7 @@ public static class InterfaceGenericPropertyTests
 		var rock = Rock.Create<IInterfaceGenericPropertyGetAndInit<int>>();
 		rock.Properties().Getters().Data().Returns(returnValue);
 
-		var chunk = rock.Instance();
+		var chunk = rock.Instance(null);
 		var value = chunk.Data;
 
 		rock.Verify();
