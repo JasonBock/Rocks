@@ -6,8 +6,7 @@ namespace Rocks.Builders.Shim;
 
 internal static class ShimMethodBuilder
 {
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol shimType, string mockTypeName,
-		Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, ITypeSymbol shimType, Compilation compilation)
 	{
 		foreach (var method in shimType.GetMembers().OfType<IMethodSymbol>()
 			.Where(_ => _.MethodKind == MethodKind.Ordinary && !_.IsVirtual))

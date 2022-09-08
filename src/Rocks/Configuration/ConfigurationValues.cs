@@ -21,9 +21,8 @@ internal sealed class ConfigurationValues
 		this.IndentSize = options.TryGetValue(ConfigurationValues.IndentSizeKey, out var indentSize) ?
 			(uint.TryParse(indentSize, out var indentSizeValue) ? indentSizeValue : ConfigurationValues.IndentSizeDefaultValue) :
 			ConfigurationValues.IndentSizeDefaultValue;
-		this.TreatWarningsAsErrors = options.TryGetValue(ConfigurationValues.TreatWarningsAsErrorsKey, out var treatWarningsAsErrors) ?
-			(bool.TryParse(treatWarningsAsErrors, out var treatWarningsAsErrorsValue) ? treatWarningsAsErrorsValue : false) :
-			false;
+		this.TreatWarningsAsErrors = options.TryGetValue(ConfigurationValues.TreatWarningsAsErrorsKey, out var treatWarningsAsErrors) && 
+			bool.TryParse(treatWarningsAsErrors, out var treatWarningsAsErrorsValue) && treatWarningsAsErrorsValue;
 	}
 
 	internal ConfigurationValues(IndentStyle indentStyle, uint indentSize, bool treatWarningsAsErrors) =>

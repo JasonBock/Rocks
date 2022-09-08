@@ -26,7 +26,7 @@ internal static class ShimBuilder
 		writer.WriteLine($"this.mock = mock;");
 		writer.Indent--;
 
-		ShimMethodBuilder.Build(writer, shimType, mockTypeName, compilation);
+		ShimMethodBuilder.Build(writer, shimType, compilation);
 		ShimPropertyBuilder.Build(writer, shimType, compilation);
 		ShimIndexerBuilder.Build(writer, shimType, compilation);
 

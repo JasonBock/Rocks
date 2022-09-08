@@ -83,8 +83,11 @@ public static class RefStructTests
 	{
 		var chunk = Rock.Make<IReturnSpan>().Instance();
 #pragma warning disable NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
-		Assert.That(chunk.GetRandomData() == default(Span<int>), Is.True);
-		Assert.That(chunk.Values == default(Span<byte>), Is.True);
+		Assert.Multiple(() =>
+		{
+			Assert.That(chunk.GetRandomData() == default, Is.True);
+			Assert.That(chunk.Values == default, Is.True);
+		});
 #pragma warning restore NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 	}
 

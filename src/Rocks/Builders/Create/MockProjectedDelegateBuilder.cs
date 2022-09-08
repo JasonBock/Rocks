@@ -25,7 +25,7 @@ internal static class MockProjectedDelegateBuilder
 		return $"internal {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method)}({methodParameters});";
 	}
 
-	internal static string GetProjectedReturnValueDelegate(IMethodSymbol method, Compilation compilation)
+	internal static string GetProjectedReturnValueDelegate(IMethodSymbol method)
 	{
 		var returnType = method.ReturnType.GetReferenceableName();
 		return $"internal delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method)}();";
@@ -39,7 +39,7 @@ internal static class MockProjectedDelegateBuilder
 
 			if(method.ReturnType.IsRefLikeType)
 			{
-				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedReturnValueDelegate(method, compilation));
+				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedReturnValueDelegate(method));
 			}
 		}
 
