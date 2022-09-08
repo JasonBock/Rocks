@@ -19,7 +19,7 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 		var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 		var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly);
 
-		Assert.That(constructors.Length, Is.EqualTo(1));
+		Assert.That(constructors, Has.Length.EqualTo(1));
 	}
 
 	[Test]
@@ -45,7 +45,7 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 
 		var constructors = typeSymbol.GetMockableConstructors(containingCompilation.Assembly);
 
-		Assert.That(constructors.Length, Is.EqualTo(0));
+		Assert.That(constructors, Has.Length.EqualTo(0));
 	}
 
 	[Test]
@@ -55,7 +55,7 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 		var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 		var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly);
 
-		Assert.That(constructors.Length, Is.EqualTo(0));
+		Assert.That(constructors, Has.Length.EqualTo(0));
 	}
 
 	private static ITypeSymbol GetTypeSymbol(string source)

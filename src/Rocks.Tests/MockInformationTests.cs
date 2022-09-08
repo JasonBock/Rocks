@@ -261,7 +261,7 @@ $@"public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+			Assert.That(information.Diagnostics, Is.Empty);
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -291,7 +291,7 @@ $@"public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
+			Assert.That(information.Diagnostics, Is.Empty);
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -329,11 +329,11 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(0));
-			Assert.That(information.Methods.Length, Is.EqualTo(1));
-			Assert.That(information.Properties.Length, Is.EqualTo(0));
-			Assert.That(information.Events.Length, Is.EqualTo(0));
+			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(information.Constructors, Has.Length.EqualTo(0));
+			Assert.That(information.Methods, Has.Length.EqualTo(1));
+			Assert.That(information.Properties, Has.Length.EqualTo(0));
+			Assert.That(information.Events, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -353,11 +353,11 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(0));
-			Assert.That(information.Methods.Length, Is.EqualTo(0));
-			Assert.That(information.Properties.Length, Is.EqualTo(1));
-			Assert.That(information.Events.Length, Is.EqualTo(0));
+			Assert.That(information.Diagnostics, Is.Empty);
+			Assert.That(information.Constructors, Has.Length.EqualTo(0));
+			Assert.That(information.Methods, Has.Length.EqualTo(0));
+			Assert.That(information.Properties, Has.Length.EqualTo(1));
+			Assert.That(information.Events, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -378,11 +378,11 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(0));
-			Assert.That(information.Methods.Length, Is.EqualTo(1));
-			Assert.That(information.Properties.Length, Is.EqualTo(0));
-			Assert.That(information.Events.Length, Is.EqualTo(1));
+			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(information.Constructors, Has.Length.EqualTo(0));
+			Assert.That(information.Methods, Has.Length.EqualTo(1));
+			Assert.That(information.Properties, Has.Length.EqualTo(0));
+			Assert.That(information.Events, Has.Length.EqualTo(1));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -404,9 +404,9 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(1));
-			Assert.That(information.Methods.Length, Is.EqualTo(4));
+			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(information.Constructors, Has.Length.EqualTo(1));
+			Assert.That(information.Methods, Has.Length.EqualTo(4));
 			var fooMethod = information.Methods.Single(_ => _.Value.Name == fooMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -415,8 +415,8 @@ public class {targetTypeName}
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			Assert.That(information.Properties.Length, Is.EqualTo(0));
-			Assert.That(information.Events.Length, Is.EqualTo(0));
+			Assert.That(information.Properties, Has.Length.EqualTo(0));
+			Assert.That(information.Events, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -436,17 +436,17 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(1));
-			Assert.That(information.Methods.Length, Is.EqualTo(3));
+			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(information.Constructors, Has.Length.EqualTo(1));
+			Assert.That(information.Methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			Assert.That(information.Properties.Length, Is.EqualTo(1));
-			Assert.That(information.Events.Length, Is.EqualTo(0));
+			Assert.That(information.Properties, Has.Length.EqualTo(1));
+			Assert.That(information.Events, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -467,17 +467,17 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(1));
-			Assert.That(information.Methods.Length, Is.EqualTo(3));
+			Assert.That(information.Diagnostics, Is.Empty);
+			Assert.That(information.Constructors, Has.Length.EqualTo(1));
+			Assert.That(information.Methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			Assert.That(information.Properties.Length, Is.EqualTo(0));
-			Assert.That(information.Events.Length, Is.EqualTo(1));
+			Assert.That(information.Properties, Is.Empty);
+			Assert.That(information.Events, Has.Length.EqualTo(1));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}
@@ -501,17 +501,17 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(information.Diagnostics.Length, Is.EqualTo(0));
-			Assert.That(information.Constructors.Length, Is.EqualTo(2));
-			Assert.That(information.Methods.Length, Is.EqualTo(3));
+			Assert.That(information.Diagnostics, Is.Empty);
+			Assert.That(information.Constructors, Has.Length.EqualTo(2));
+			Assert.That(information.Methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var toStringMethod = information.Methods.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			Assert.That(information.Properties.Length, Is.EqualTo(0));
-			Assert.That(information.Events.Length, Is.EqualTo(1));
+			Assert.That(information.Properties, Is.Empty);
+			Assert.That(information.Events, Has.Length.EqualTo(1));
 			Assert.That(information.TypeToMock, Is.Not.Null);
 		});
 	}

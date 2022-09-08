@@ -27,7 +27,7 @@ $@"public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(properties.Length, Is.EqualTo(2));
+			Assert.That(properties, Has.Length.EqualTo(2));
 			var getAndInitProperty = properties.Single(_ => _.Value.Name == "GetAndInit");
 			Assert.That(getAndInitProperty.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
 			var initProperty = properties.Single(_ => _.Value.Name == "Init");
@@ -55,7 +55,7 @@ $@"public abstract class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(properties.Length, Is.EqualTo(3));
+			Assert.That(properties, Has.Length.EqualTo(3));
 			var thisIntProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
 				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
 			Assert.That(thisIntProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
@@ -101,7 +101,7 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(properties.Length, Is.EqualTo(1));
+			Assert.That(properties, Has.Length.EqualTo(1));
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
@@ -139,7 +139,7 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(properties.Length, Is.EqualTo(1));
+			Assert.That(properties, Has.Length.EqualTo(1));
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(dataProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));

@@ -38,7 +38,7 @@ public static class NamespaceGathererTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(namespaces.Count, Is.EqualTo(1));
+			Assert.That(namespaces, Has.Count.EqualTo(1));
 			Assert.That(namespaces, Contains.Item(namespaceValue));
 		});
 	}
@@ -81,7 +81,7 @@ public static class NamespaceGathererTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(namespaces.Count, Is.EqualTo(2));
+			Assert.That(namespaces, Has.Count.EqualTo(2));
 			Assert.That(namespaces, Contains.Item(namespaceValue1));
 			Assert.That(namespaces, Contains.Item(namespaceValue2));
 		});

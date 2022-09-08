@@ -22,7 +22,7 @@ $@"namespace {@namespace}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(namespaces.Count, Is.EqualTo(1));
+			Assert.That(namespaces, Has.Count.EqualTo(1));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == @namespace), Is.True);
 		});
 	}
@@ -70,7 +70,7 @@ namespace {@namespace}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(namespaces.Count, Is.EqualTo(3));
+			Assert.That(namespaces, Has.Count.EqualTo(3));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == outerNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == middleNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == innerNamespace), Is.True);

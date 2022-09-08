@@ -29,7 +29,7 @@ namespace MockTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(attributes.Length, Is.EqualTo(1));
+			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
 		});
 	}
@@ -55,7 +55,7 @@ namespace MockTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(attributes.Length, Is.EqualTo(1));
+			Assert.That(attributes, Has.Length.EqualTo(1));
 			Assert.That(attributes[0].AttributeClass!.Name, Is.EqualTo(nameof(AllowNullAttribute)));
 		});
 	}

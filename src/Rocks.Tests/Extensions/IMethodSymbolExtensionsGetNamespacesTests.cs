@@ -66,7 +66,7 @@ public static class IMethodSymbolExtensionsGetNamespacesTests
 			var method = IMethodSymbolExtensionsGetNamespacesTests.GetMethod(code);
 			var namespaces = method.GetNamespaces();
 
-			Assert.That(namespaces.Count, Is.EqualTo(5));
+			Assert.That(namespaces, Has.Count.EqualTo(5));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(string).Namespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == methodAttributeNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == returnAttribute), Is.True);

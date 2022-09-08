@@ -74,7 +74,7 @@ public static class CodeGenerationTests
 			Assert.That(result.Success, Is.True);
 
 			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
-			Assert.That(errorDiagnostics.Length, Is.EqualTo(0));
+			Assert.That(errorDiagnostics, Is.Empty);
 
 			var ignoredWarnings = new[] { "CS0618", "SYSLIB0001", "CS1701" };
 			var warningGroups = result.Diagnostics

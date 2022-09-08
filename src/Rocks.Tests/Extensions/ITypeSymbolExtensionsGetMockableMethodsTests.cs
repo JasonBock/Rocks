@@ -83,7 +83,7 @@ public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(4));
+			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
@@ -146,7 +146,7 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(2));
+			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseMethod = methods.Single(_ => _.Value.Name == baseMethodName);
 			Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName);
@@ -218,7 +218,7 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(3));
+			Assert.That(methods, Has.Length.EqualTo(3));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 			Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(baseOneMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
@@ -261,7 +261,7 @@ public interface {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(2));
+			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 			Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
 			Assert.That(baseOneMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
@@ -290,7 +290,7 @@ $@"public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(4));
+			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
@@ -316,7 +316,7 @@ $@"public class {targetTypeName}
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(methods.Length, Is.EqualTo(3));
+			Assert.That(methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
