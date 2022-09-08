@@ -48,7 +48,7 @@ public static class IEventSymbolExtensionsTests
 			var @event = IEventSymbolExtensionsTests.GetEvent(code, typeName);
 			var namespaces = @event.GetNamespaces();
 
-			Assert.That(namespaces.Count, Is.EqualTo(3));
+			Assert.That(namespaces, Has.Count.EqualTo(3));
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == typeof(EventHandler).Namespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == attributeNamespace), Is.True);
 			Assert.That(namespaces.Any(_ => _.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat) == customEventArgNamespace), Is.True);

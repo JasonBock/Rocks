@@ -64,7 +64,7 @@ public static class CodeGenerationTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(types.Length, Is.GreaterThan(0));
+			Assert.That(types, Is.Not.Empty);
 			Assert.That(diagnostics.Any(
 				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
 
@@ -84,7 +84,7 @@ public static class CodeGenerationTests
 				{
 					Id = _.Key,
 					Count = _.Count(),
-					Title = _.ToArray()[0].Descriptor.Title,
+					_.ToArray()[0].Descriptor.Title,
 				})
 				.OrderByDescending(_ => _.Count);
 

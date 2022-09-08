@@ -77,7 +77,7 @@ public interface IA
 
 			Assert.Multiple(() =>
 			{
-				Assert.That(namespaces.Count, Is.EqualTo(2));
+				Assert.That(namespaces, Has.Count.EqualTo(2));
 				Assert.That(namespaces.Any(_ => _.Name == typeof(TypeOfThis).Namespace), Is.True);
 				Assert.That(namespaces.Any(_ => _.Name == typeof(MethodAttribute).Namespace), Is.True);
 			});
@@ -86,7 +86,7 @@ public interface IA
 		[Test]
 		public static void GetDescription()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -102,7 +102,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionWithNegativeEnumValue()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
@@ -118,7 +118,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionWithOpenGeneric()
 		{
-			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
 @"using Rocks.Tests.Extensions;
 using System;
 
