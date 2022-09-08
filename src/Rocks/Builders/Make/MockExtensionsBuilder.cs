@@ -18,7 +18,7 @@ internal static class MockExtensionsBuilder
 		namespaces.AddRange(information.Properties.SelectMany(_ => _.Value.GetNamespaces()));
 		namespaces.AddRange(information.Events.SelectMany(_ => _.Value.GetNamespaces()));
 
-		MockConstructorExtensionsBuilder.Build(writer, information);
+		MockConstructorExtensionsBuilder.Build(writer, information, compilation);
 		writer.WriteLine();
 		MockMakeBuilder.Build(writer, information, namespaces, compilation);
 

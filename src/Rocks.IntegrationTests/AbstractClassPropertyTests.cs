@@ -33,7 +33,7 @@ public static class AbstractClassPropertyTests
 	[Test]
 	public static void MakeGet()
 	{
-		var chunk = Rock.Make<AbstractClassProperty>().Instance();
+		var chunk = Rock.Make<AbstractClassProperty>().Instance(null);
 		var value = chunk.GetData;
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -123,7 +123,7 @@ public static class AbstractClassPropertyTests
 	[Test]
 	public static void MakeSet()
 	{
-		var chunk = Rock.Make<AbstractClassProperty>().Instance();
+		var chunk = Rock.Make<AbstractClassProperty>().Instance(null);
 
 		Assert.That(() => chunk.SetData = 1, Throws.Nothing);
 	}
@@ -217,7 +217,7 @@ public static class AbstractClassPropertyTests
 	[Test]
 	public static void MakeGetAndInit()
 	{
-		var chunk = Rock.Make<AbstractClassProperty>().Instance();
+		var chunk = Rock.Make<AbstractClassProperty>().Instance(null);
 		var value = chunk.GetAndInitData;
 
 		Assert.Multiple(() =>
@@ -229,7 +229,7 @@ public static class AbstractClassPropertyTests
 	[Test]
 	public static void MakeGetAndSet()
 	{
-		var chunk = Rock.Make<AbstractClassProperty>().Instance();
+		var chunk = Rock.Make<AbstractClassProperty>().Instance(null);
 		var value = chunk.GetAndSetData;
 
 		Assert.Multiple(() =>

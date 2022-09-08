@@ -58,7 +58,7 @@ public static class InterfaceGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var chunk = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance();
+		var chunk = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance(null);
 		var value = chunk.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
@@ -106,7 +106,7 @@ public static class InterfaceGenericPropertyTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var chunk = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance();
+		var chunk = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance(null);
 		var value = chunk.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
