@@ -18,20 +18,20 @@ public static class MultipleRockCallsTests
 	[Test]
 	public static void CreateMocks()
 	{
-		var rock1 = Rock.Create<IMultipleRockCalls>();
-		var rock2 = Rock.Create<IMultipleRockCalls>();
+		var expectations1 = Rock.Create<IMultipleRockCalls>();
+		var expectations2 = Rock.Create<IMultipleRockCalls>();
 
-		rock1.Methods().Foo();
-		rock2.Methods().Foo();
+		expectations1.Methods().Foo();
+		expectations2.Methods().Foo();
 
-		var chunk1 = rock1.Instance();
-		var chunk2 = rock2.Instance();
+		var mock1 = expectations1.Instance();
+		var mock2 = expectations2.Instance();
 
-		chunk1.Foo();
-		chunk2.Foo();
+		mock1.Foo();
+		mock2.Foo();
 
-		rock1.Verify();
-		rock2.Verify();
+		expectations1.Verify();
+		expectations2.Verify();
 	}
 
 	[Test]

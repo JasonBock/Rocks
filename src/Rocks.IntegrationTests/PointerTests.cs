@@ -19,13 +19,13 @@ public unsafe static class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerParameter(new(pValue));
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerParameter(new(pValue));
 
-		var chunk = rock.Instance();
-		chunk.PointerParameter(pValue);
+		var mock = expectations.Instance();
+		mock.PointerParameter(pValue);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -34,8 +34,8 @@ public unsafe static class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var chunk = Rock.Make<IHavePointers>().Instance();
-		chunk.PointerParameter(pValue);
+		var mock = Rock.Make<IHavePointers>().Instance();
+		mock.PointerParameter(pValue);
 	}
 
 	[Test]
@@ -44,13 +44,13 @@ public unsafe static class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerParameter(pValue);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerParameter(pValue);
 
-		var chunk = rock.Instance();
-		chunk.PointerParameter(pValue);
+		var mock = expectations.Instance();
+		mock.PointerParameter(pValue);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -61,12 +61,12 @@ public unsafe static class PointerTests
 		var otherValue = 10;
 		var pOtherValue = &otherValue;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerParameter(pValue);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerParameter(pValue);
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
-		Assert.That(() => chunk.PointerParameter(pOtherValue), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => mock.PointerParameter(pOtherValue), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -77,13 +77,13 @@ public unsafe static class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerParameter(pValue).Callback(PointerParameterCallback);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerParameter(pValue).Callback(PointerParameterCallback);
 
-		var chunk = rock.Instance();
-		chunk.PointerParameter(pValue);
+		var mock = expectations.Instance();
+		mock.PointerParameter(pValue);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(20));
 	}
@@ -91,13 +91,13 @@ public unsafe static class PointerTests
 	[Test]
 	public static void CreateWithPointerReturn()
 	{
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerReturn();
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerReturn();
 
-		var chunk = rock.Instance();
-		chunk.PointerReturn();
+		var mock = expectations.Instance();
+		mock.PointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -109,25 +109,25 @@ public unsafe static class PointerTests
 	{
 		unsafe static int* PointerReturnCallback() => default;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerReturn().Callback(PointerReturnCallback);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerReturn().Callback(PointerReturnCallback);
 
-		var chunk = rock.Instance();
-		chunk.PointerReturn();
+		var mock = expectations.Instance();
+		mock.PointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithPointerReturnWithResult()
 	{
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().PointerReturn().Returns(default);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().PointerReturn().Returns(default);
 
-		var chunk = rock.Instance();
-		chunk.PointerReturn();
+		var mock = expectations.Instance();
+		mock.PointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -135,13 +135,13 @@ public unsafe static class PointerTests
 	{
 		static void DelegatePointerParameterDelegate(int a) { }
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
 
-		var chunk = rock.Instance();
-		chunk.DelegatePointerParameter(&DelegatePointerParameterDelegate);
+		var mock = expectations.Instance();
+		mock.DelegatePointerParameter(&DelegatePointerParameterDelegate);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -150,12 +150,12 @@ public unsafe static class PointerTests
 		static void DelegatePointerParameterDelegate(int a) { }
 		static void OtherDelegatePointerParameterDelegate(int a) { }
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate));
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
-		Assert.That(() => chunk.DelegatePointerParameter(&OtherDelegatePointerParameterDelegate), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => mock.DelegatePointerParameter(&OtherDelegatePointerParameterDelegate), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
@@ -168,14 +168,14 @@ public unsafe static class PointerTests
 		var value = 10;
 		var pValue = &value;
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate))
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerParameter(new(&DelegatePointerParameterDelegate))
 			.Callback(DelegatePointerParameterCallback);
 
-		var chunk = rock.Instance();
-		chunk.DelegatePointerParameter(&DelegatePointerParameterDelegate);
+		var mock = expectations.Instance();
+		mock.DelegatePointerParameter(&DelegatePointerParameterDelegate);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(wasCalled, Is.True);
 	}
@@ -183,13 +183,13 @@ public unsafe static class PointerTests
 	[Test]
 	public static void CreateWithDelegatePointerReturn()
 	{
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerReturn();
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerReturn();
 
-		var chunk = rock.Instance();
-		chunk.DelegatePointerReturn();
+		var mock = expectations.Instance();
+		mock.DelegatePointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -205,13 +205,13 @@ public unsafe static class PointerTests
 			return &DelegatePointerParameterDelegate;
 		}
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerReturn().Callback(DelegatePointerReturnCallback);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerReturn().Callback(DelegatePointerReturnCallback);
 
-		var chunk = rock.Instance();
-		var value = chunk.DelegatePointerReturn();
+		var mock = expectations.Instance();
+		var value = mock.DelegatePointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -224,12 +224,12 @@ public unsafe static class PointerTests
 	{
 		static void DelegatePointerParameterDelegate(int a) { }
 
-		var rock = Rock.Create<IHavePointers>();
-		rock.Methods().DelegatePointerReturn().Returns(&DelegatePointerParameterDelegate);
+		var expectations = Rock.Create<IHavePointers>();
+		expectations.Methods().DelegatePointerReturn().Returns(&DelegatePointerParameterDelegate);
 
-		var chunk = rock.Instance();
-		chunk.DelegatePointerReturn();
+		var mock = expectations.Instance();
+		mock.DelegatePointerReturn();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 }

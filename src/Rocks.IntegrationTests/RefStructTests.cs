@@ -25,26 +25,26 @@ public static class RefStructTests
 	[Test]
 	public static void CreateInAndOut()
 	{
-		var rock = Rock.Create<IHaveInAndOutSpan>();
-		rock.Methods().Foo(new()).Returns(() => new[] { 1, 2 }.AsSpan());
-		rock.Properties().Getters().Values().Returns(() => new byte[] { 3, 4, 5 }.AsSpan());
+		var expectations = Rock.Create<IHaveInAndOutSpan>();
+		expectations.Methods().Foo(new()).Returns(() => new[] { 1, 2 }.AsSpan());
+		expectations.Properties().Getters().Values().Returns(() => new byte[] { 3, 4, 5 }.AsSpan());
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
 		Assert.Multiple(() =>
 		{
-			var data = chunk.Foo(default);
+			var data = mock.Foo(default);
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
 			Assert.That(data[1], Is.EqualTo(2));
-			var values = chunk.Values;
+			var values = mock.Values;
 			Assert.That(values.Length, Is.EqualTo(3));
 			Assert.That(values[0], Is.EqualTo(3));
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
 		});
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
@@ -56,37 +56,37 @@ public static class RefStructTests
 	[Test]
 	public static void CreateWithReturnValues()
 	{
-		var rock = Rock.Create<IReturnSpan>();
-		rock.Methods().GetRandomData().Returns(() => new[] { 1, 2 }.AsSpan());
-		rock.Properties().Getters().Values().Returns(() => new byte[] { 3, 4, 5 }.AsSpan());
+		var expectations = Rock.Create<IReturnSpan>();
+		expectations.Methods().GetRandomData().Returns(() => new[] { 1, 2 }.AsSpan());
+		expectations.Properties().Getters().Values().Returns(() => new byte[] { 3, 4, 5 }.AsSpan());
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
 		Assert.Multiple(() =>
 		{
-			var data = chunk.GetRandomData();
+			var data = mock.GetRandomData();
 			Assert.That(data.Length, Is.EqualTo(2));
 			Assert.That(data[0], Is.EqualTo(1));
 			Assert.That(data[1], Is.EqualTo(2));
-			var values = chunk.Values;
+			var values = mock.Values;
 			Assert.That(values.Length, Is.EqualTo(3));
 			Assert.That(values[0], Is.EqualTo(3));
 			Assert.That(values[1], Is.EqualTo(4));
 			Assert.That(values[2], Is.EqualTo(5));
 		});
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeWithReturnValues()
 	{
-		var chunk = Rock.Make<IReturnSpan>().Instance();
+		var mock = Rock.Make<IReturnSpan>().Instance();
 #pragma warning disable NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.GetRandomData() == default, Is.True);
-			Assert.That(chunk.Values == default, Is.True);
+			Assert.That(mock.GetRandomData() == default, Is.True);
+			Assert.That(mock.Values == default, Is.True);
 		});
 #pragma warning restore NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 	}
@@ -94,23 +94,23 @@ public static class RefStructTests
 	[Test]
 	public static void CreateWithSpanOfInt()
 	{
-		var rock = Rock.Create<IHaveSpan>();
-		rock.Methods().Foo(new());
+		var expectations = Rock.Create<IHaveSpan>();
+		expectations.Methods().Foo(new());
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-		chunk.Foo(new Span<int>(buffer));
+		mock.Foo(new Span<int>(buffer));
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeWithSpanOfInt()
 	{
-		var chunk = Rock.Make<IHaveSpan>().Instance();
+		var mock = Rock.Make<IHaveSpan>().Instance();
 		var buffer = new int[] { 3 };
-		chunk.Foo(new Span<int>(buffer));
+		mock.Foo(new Span<int>(buffer));
 	}
 
 	[Test]
@@ -119,37 +119,37 @@ public static class RefStructTests
 		static bool FooEvaluation(Span<int> value) =>
 			value.Length == 1 && value[0] == 3;
 
-		var rock = Rock.Create<IHaveSpan>();
-		rock.Methods().Foo(new(FooEvaluation));
+		var expectations = Rock.Create<IHaveSpan>();
+		expectations.Methods().Foo(new(FooEvaluation));
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-		chunk.Foo(new Span<int>(buffer));
+		mock.Foo(new Span<int>(buffer));
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithSpanOfT()
 	{
-		var rock = Rock.Create<IHaveSpan>();
-		rock.Methods().Bar<int>(new());
+		var expectations = Rock.Create<IHaveSpan>();
+		expectations.Methods().Bar<int>(new());
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-		chunk.Bar(new Span<int>(buffer));
+		mock.Bar(new Span<int>(buffer));
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeWithSpanOfT()
 	{
-		var chunk = Rock.Make<IHaveSpan>().Instance();
+		var mock = Rock.Make<IHaveSpan>().Instance();
 		var buffer = new int[] { 3 };
-		chunk.Bar(new Span<int>(buffer));
+		mock.Bar(new Span<int>(buffer));
 	}
 
 	[Test]
@@ -158,14 +158,14 @@ public static class RefStructTests
 		static bool BarEvaluation(Span<int> value) =>
 			value.Length == 1 && value[0] == 3;
 
-		var rock = Rock.Create<IHaveSpan>();
-		rock.Methods().Bar<int>(new(BarEvaluation));
+		var expectations = Rock.Create<IHaveSpan>();
+		expectations.Methods().Bar<int>(new(BarEvaluation));
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 		var buffer = new int[] { 3 };
 
-		chunk.Bar(new Span<int>(buffer));
+		mock.Bar(new Span<int>(buffer));
 
-		rock.Verify();
+		expectations.Verify();
 	}
 }

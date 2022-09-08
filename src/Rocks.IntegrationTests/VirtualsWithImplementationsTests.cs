@@ -53,76 +53,76 @@ public static class VirtualsWithImplementationsTests
 	[Test]
 	public static void CallVirtualIndexerOnInterfaceWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<IIndexerPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
+		var expectations = Rock.Create<IIndexerPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon[5], Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock[5], Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualMethodOnInterfaceWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<IMethodPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
-		polygonMock.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = Rock.Create<IMethodPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
+		expectations.Properties().Getters().NumberOfSides().Returns(5);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon.GetPerimeter(), Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualPropertyOnInterfaceWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<IPropertyPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
-		polygonMock.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = Rock.Create<IPropertyPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
+		expectations.Properties().Getters().NumberOfSides().Returns(5);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon.Perimeter, Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock.Perimeter, Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualIndexerOnClassWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<IndexerPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
+		var expectations = Rock.Create<IndexerPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon[5], Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock[5], Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualMethodOnClassWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<MethodPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
-		polygonMock.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = Rock.Create<MethodPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
+		expectations.Properties().Getters().NumberOfSides().Returns(5);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon.GetPerimeter(), Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CallVirtualPropertyOnClassWithNoExpectation()
 	{
-		var polygonMock = Rock.Create<PropertyPolygon>();
-		polygonMock.Properties().Getters().SideLength().Returns(3);
-		polygonMock.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = Rock.Create<PropertyPolygon>();
+		expectations.Properties().Getters().SideLength().Returns(3);
+		expectations.Properties().Getters().NumberOfSides().Returns(5);
 
-		var polygon = polygonMock.Instance();
-		Assert.That(polygon.Perimeter, Is.EqualTo(15));
+		var mock = expectations.Instance();
+		Assert.That(mock.Perimeter, Is.EqualTo(15));
 
-		polygonMock.Verify();
+		expectations.Verify();
 	}
 }

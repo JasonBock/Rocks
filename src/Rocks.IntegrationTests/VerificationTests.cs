@@ -13,11 +13,11 @@ public static class VerificationTests
 	[Test]
 	public static void VerifyWhenPropertyExpectationIsNotMet()
 	{
-		var rock = Rock.Create<IData>();
-		rock.Properties().Setters().Value("3");
+		var expectations = Rock.Create<IData>();
+		expectations.Properties().Setters().Value("3");
 
-		_ = rock.Instance();
+		_ = expectations.Instance();
 
-		Assert.That(rock.Verify, Throws.TypeOf<VerificationException>());
+		Assert.That(expectations.Verify, Throws.TypeOf<VerificationException>());
 	}
 }

@@ -12,19 +12,19 @@ public static class RecordTests
 	[Test]
 	public static void Create()
 	{
-		var rock = Rock.Create<MyRecord>();
-		rock.Methods().Foo();
+		var expectations = Rock.Create<MyRecord>();
+		expectations.Methods().Foo();
 
-		var chunk = rock.Instance();
-		chunk.Foo();
+		var mock = expectations.Instance();
+		mock.Foo();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void Make()
 	{
-		var chunk = Rock.Make<MyRecord>().Instance();
-		Assert.That(chunk.Foo, Throws.Nothing);
+		var mock = Rock.Make<MyRecord>().Instance();
+		Assert.That(mock.Foo, Throws.Nothing);
 	}
 }

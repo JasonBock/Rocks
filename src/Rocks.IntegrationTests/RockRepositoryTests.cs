@@ -20,17 +20,17 @@ public static class RockRepositoryTests
 	{
 		using var repository = new RockRepository();
 
-		var firstRock = repository.Create<IFirstRepository>();
-		firstRock.Methods().Foo();
+		var expectationsFirst = repository.Create<IFirstRepository>();
+		expectationsFirst.Methods().Foo();
 
-		var secondRock = repository.Create<ISecondRepository>();
-		secondRock.Methods().Bar();
+		var expectationsSecond = repository.Create<ISecondRepository>();
+		expectationsSecond.Methods().Bar();
 
-		var firstChunk = firstRock.Instance();
-		firstChunk.Foo();
+		var mockFirst = expectationsFirst.Instance();
+		mockFirst.Foo();
 
-		var secondChunk = secondRock.Instance();
-		secondChunk.Bar();
+		var mockSecond = expectationsSecond.Instance();
+		mockSecond.Bar();
 	}
 
 	[Test]
@@ -39,9 +39,9 @@ public static class RockRepositoryTests
 		{
 			using var repository = new RockRepository();
 
-			var rock = repository.Create<IFirstRepository>();
-			rock.Methods().Foo();
+			var expectations = repository.Create<IFirstRepository>();
+			expectations.Methods().Foo();
 
-			var chunk = rock.Instance();
+			_ = expectations.Instance();
 		}, Throws.TypeOf<VerificationException>());
 }
