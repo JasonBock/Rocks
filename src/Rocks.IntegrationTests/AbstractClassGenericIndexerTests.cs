@@ -22,13 +22,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
-		rock.Indexers().Getters().This(4).Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexer<int>>();
+		expectations.Indexers().Getters().This(4).Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk[4];
+		var mock = expectations.Instance();
+		var value = mock[4];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -37,13 +37,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var rock = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
-		rock.Indexers().Getters().This(4).Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
+		expectations.Indexers().Getters().This(4).Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk[4];
+		var mock = expectations.Instance();
+		var value = mock[4];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.SameAs(returnValue));
 	}
@@ -51,8 +51,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericType()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
-		var value = chunk[4];
+		var mock = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+		var value = mock[4];
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
 	}
@@ -60,8 +60,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
-		var value = chunk[4];
+		var mock = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
+		var value = mock[4];
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
 	}
@@ -70,13 +70,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
-		rock.Indexers().Getters().This(4, 5).Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexer<int>>();
+		expectations.Indexers().Getters().This(4, 5).Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk[4, 5];
+		var mock = expectations.Instance();
+		var value = mock[4, 5];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -85,13 +85,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
-		rock.Indexers().Getters().This(4, 5).Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
+		expectations.Indexers().Getters().This(4, 5).Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk[4, 5];
+		var mock = expectations.Instance();
+		var value = mock[4, 5];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -99,8 +99,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
-		var value = chunk[4, 5];
+		var mock = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+		var value = mock[4, 5];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -108,8 +108,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
-		var value = chunk[4, 5];
+		var mock = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
+		var value = mock[4, 5];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -118,13 +118,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<AbstractClassGenericIndexer<int>>();
-		rock.Indexers().Getters().This("b").Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexer<int>>();
+		expectations.Indexers().Getters().This("b").Returns(returnValue);
 
-		var chunk = rock.Instance();
-		var value = chunk["b"];
+		var mock = expectations.Instance();
+		var value = mock["b"];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -133,13 +133,13 @@ public static class AbstractClassGenericIndexerTests
 	public static void CreateUsingGenericTypeParameterAsReturnWithInit()
 	{
 		var returnValue = 3;
-		var rock = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
-		rock.Indexers().Getters().This("b").Returns(returnValue);
+		var expectations = Rock.Create<AbstractClassGenericIndexerGetAndInit<int>>();
+		expectations.Indexers().Getters().This("b").Returns(returnValue);
 
-		var chunk = rock.Instance();
+		var chunk = expectations.Instance();
 		var value = chunk["b"];
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(returnValue));
 	}
@@ -147,8 +147,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterAsReturn()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
-		var value = chunk["b"];
+		var mock = Rock.Make<AbstractClassGenericIndexer<int>>().Instance();
+		var value = mock["b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -156,8 +156,8 @@ public static class AbstractClassGenericIndexerTests
 	[Test]
 	public static void MakeUsingGenericTypeParameterAsReturnWithInit()
 	{
-		var chunk = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
-		var value = chunk["b"];
+		var mock = Rock.Make<AbstractClassGenericIndexerGetAndInit<int>>().Instance();
+		var value = mock["b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

@@ -20,38 +20,38 @@ public static class AllowNullTests
 	[Test]
 	public static void CreateWithAbstract()
 	{
-		var rock = Rock.Create<IAllow>();
-		rock.Properties().Setters().NewLine(Arg.Is<string>(null!));
+		var expectations = Rock.Create<IAllow>();
+		expectations.Properties().Setters().NewLine(Arg.Is<string>(null!));
 
-		var chunk = rock.Instance();
-		chunk.NewLine = null;
+		var mock = expectations.Instance();
+		mock.NewLine = null;
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeWithAbstract()
 	{
-		var chunk = Rock.Make<IAllow>().Instance();
-		chunk.NewLine = null;
+		var mock = Rock.Make<IAllow>().Instance();
+		mock.NewLine = null;
 	}
 
 	[Test]
 	public static void CreateWithNonAbstract()
 	{
-		var rock = Rock.Create<Allow>();
-		rock.Properties().Setters().NewLine(Arg.Is<string>(null!));
+		var expectations = Rock.Create<Allow>();
+		expectations.Properties().Setters().NewLine(Arg.Is<string>(null!));
 
-		var chunk = rock.Instance();
+		var chunk = expectations.Instance();
 		chunk.NewLine = null;
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void MakeWithNonAbstract()
 	{
-		var chunk = Rock.Make<Allow>().Instance();
-		chunk.NewLine = null;
+		var mock = Rock.Make<Allow>().Instance();
+		mock.NewLine = null;
 	}
 }

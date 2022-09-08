@@ -16,19 +16,19 @@ public static class AsynchronousTests
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
 		const int returnValue = 3;
-		var rock = Rock.Create<IAmAsynchronous>();
-		rock.Methods().FooAsync().Returns(Task.CompletedTask);
-		rock.Methods().FooReturnAsync().Returns(Task.FromResult(returnValue));
-		rock.Methods().ValueFooAsync().Returns(new ValueTask());
-		rock.Methods().ValueFooReturnAsync().Returns(new ValueTask<int>(returnValue));
+		var expectations = Rock.Create<IAmAsynchronous>();
+		expectations.Methods().FooAsync().Returns(Task.CompletedTask);
+		expectations.Methods().FooReturnAsync().Returns(Task.FromResult(returnValue));
+		expectations.Methods().ValueFooAsync().Returns(new ValueTask());
+		expectations.Methods().ValueFooReturnAsync().Returns(new ValueTask<int>(returnValue));
 
-		var chunk = rock.Instance();
-		await chunk.FooAsync().ConfigureAwait(false);
-		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
-		await chunk.ValueFooAsync().ConfigureAwait(false);
-		var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
+		var mock = expectations.Instance();
+		await mock.FooAsync().ConfigureAwait(false);
+		var value = await mock.FooReturnAsync().ConfigureAwait(false);
+		await mock.ValueFooAsync().ConfigureAwait(false);
+		var valueValue = await mock.ValueFooReturnAsync().ConfigureAwait(false);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -40,19 +40,19 @@ public static class AsynchronousTests
 	[Test]
 	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
-		var rock = Rock.Create<IAmAsynchronous>();
-		rock.Methods().FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
-		rock.Methods().FooReturnAsync().Callback(async () =>
+		var expectations = Rock.Create<IAmAsynchronous>();
+		expectations.Methods().FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
+		expectations.Methods().FooReturnAsync().Callback(async () =>
 		{
 			await Task.Delay(10).ConfigureAwait(false);
 			return 3;
 		});
 
-		var chunk = rock.Instance();
-		await chunk.FooAsync().ConfigureAwait(false);
-		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
+		var mock = expectations.Instance();
+		await mock.FooAsync().ConfigureAwait(false);
+		var value = await mock.FooReturnAsync().ConfigureAwait(false);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -60,11 +60,11 @@ public static class AsynchronousTests
 	[Test]
 	public static async Task MakeAsynchronousMethodsAsync()
 	{
-		var chunk = Rock.Make<IAmAsynchronous>().Instance();
-		await chunk.FooAsync().ConfigureAwait(false);
-		var value = await chunk.FooReturnAsync().ConfigureAwait(false);
-		await chunk.ValueFooAsync().ConfigureAwait(false);
-		var valueValue = await chunk.ValueFooReturnAsync().ConfigureAwait(false);
+		var mock = Rock.Make<IAmAsynchronous>().Instance();
+		await mock.FooAsync().ConfigureAwait(false);
+		var value = await mock.FooReturnAsync().ConfigureAwait(false);
+		await mock.ValueFooAsync().ConfigureAwait(false);
+		var valueValue = await mock.ValueFooReturnAsync().ConfigureAwait(false);
 
 		Assert.Multiple(() =>
 		{

@@ -22,26 +22,26 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var rock = Rock.Create<AbstractClassConstructor>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<AbstractClassConstructor>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance(3);
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance(3);
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.IntData, Is.EqualTo(3));
-			Assert.That(chunk.StringData, Is.Null);
+			Assert.That(mock.IntData, Is.EqualTo(3));
+			Assert.That(mock.StringData, Is.Null);
 		});
 	}
 
 	[Test]
 	public static void MakeWithNoParametersAndPublicConstructor()
 	{
-		var chunk = Rock.Make<AbstractClassConstructor>().Instance(3);
-		var value = chunk.NoParameters();
+		var mock = Rock.Make<AbstractClassConstructor>().Instance(3);
+		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -49,26 +49,26 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var rock = Rock.Create<AbstractClassConstructor>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<AbstractClassConstructor>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance("b");
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance("b");
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(chunk.IntData, Is.EqualTo(default(int)));
-			Assert.That(chunk.StringData, Is.EqualTo("b"));
+			Assert.That(mock.IntData, Is.EqualTo(default(int)));
+			Assert.That(mock.StringData, Is.EqualTo("b"));
 		});
 	}
 
 	[Test]
 	public static void MakeWithNoParametersAndProtectedConstructor()
 	{
-		var chunk = Rock.Make<AbstractClassConstructor>().Instance("b");
-		var value = chunk.NoParameters();
+		var mock = Rock.Make<AbstractClassConstructor>().Instance("b");
+		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}

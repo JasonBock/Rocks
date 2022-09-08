@@ -15,13 +15,13 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParameters()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance();
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance();
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -29,8 +29,8 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void MakeWithNoParameters()
 	{
-		var chunk = Rock.Make<AbstractClassMethodReturn>().Instance();
-		var value = chunk.NoParameters();
+		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -38,13 +38,13 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersWithReturn()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters().Returns(3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters().Returns(3);
 
-		var chunk = rock.Instance();
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance();
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -52,38 +52,38 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters().CallCount(2);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters().CallCount(2);
 
-		var chunk = rock.Instance();
-		chunk.NoParameters();
-		chunk.NoParameters();
+		var mock = expectations.Instance();
+		mock.NoParameters();
+		mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters().CallCount(2);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters().CallCount(2);
 
-		var chunk = rock.Instance();
-		chunk.NoParameters();
+		var mock = expectations.Instance();
+		mock.NoParameters();
 
-		Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]
 	public static void CreateWithNoParametersAndCallback()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters().Callback(() => 3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters().Callback(() => 3);
 
-		var chunk = rock.Instance();
-		var value = chunk.NoParameters();
+		var mock = expectations.Instance();
+		var value = mock.NoParameters();
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -91,9 +91,9 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
 
-		var chunk = rock.Instance();
+		var chunk = expectations.Instance();
 
 		Assert.That(() => chunk.NoParameters(), Throws.TypeOf<ExpectationException>());
 	}
@@ -101,24 +101,24 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().NoParameters();
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().NoParameters();
 
-		var chunk = rock.Instance();
+		_ = expectations.Instance();
 
-		Assert.That(() => rock.Verify(), Throws.TypeOf<VerificationException>());
+		Assert.That(() => expectations.Verify(), Throws.TypeOf<VerificationException>());
 	}
 
 	[Test]
 	public static void CreateWithOneParameter()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().OneParameter(3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().OneParameter(3);
 
-		var chunk = rock.Instance();
-		var value = chunk.OneParameter(3);
+		var mock = expectations.Instance();
+		var value = mock.OneParameter(3);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -126,8 +126,8 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void MakeWithOneParameter()
 	{
-		var chunk = Rock.Make<AbstractClassMethodReturn>().Instance();
-		var value = chunk.OneParameter(3);
+		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var value = mock.OneParameter(3);
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -135,13 +135,13 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithOneParameterWithReturn()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().OneParameter(3).Returns(3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().OneParameter(3).Returns(3);
 
-		var chunk = rock.Instance();
-		var value = chunk.OneParameter(3);
+		var mock = expectations.Instance();
+		var value = mock.OneParameter(3);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -149,13 +149,13 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithOneParameterWithCallback()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().OneParameter(3).Callback(_ => 3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().OneParameter(3).Callback(_ => 3);
 
-		var chunk = rock.Instance();
-		var value = chunk.OneParameter(3);
+		var mock = expectations.Instance();
+		var value = mock.OneParameter(3);
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -163,24 +163,24 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().OneParameter(3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().OneParameter(3);
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
-		Assert.That(() => chunk.OneParameter(1), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => mock.OneParameter(1), Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
 	public static void CreateWithMultipleParameters()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().MultipleParameters(3, "b");
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().MultipleParameters(3, "b");
 
-		var chunk = rock.Instance();
-		var value = chunk.MultipleParameters(3, "b");
+		var mock = expectations.Instance();
+		var value = mock.MultipleParameters(3, "b");
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -188,8 +188,8 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void MakeWithMultipleParameters()
 	{
-		var chunk = Rock.Make<AbstractClassMethodReturn>().Instance();
-		var value = chunk.MultipleParameters(3, "b");
+		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var value = mock.MultipleParameters(3, "b");
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
@@ -197,13 +197,13 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithMultipleParametersWithReturn()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().MultipleParameters(3, "b").Returns(3);
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().MultipleParameters(3, "b").Returns(3);
 
-		var chunk = rock.Instance();
-		var value = chunk.MultipleParameters(3, "b");
+		var mock = expectations.Instance();
+		var value = mock.MultipleParameters(3, "b");
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.That(value, Is.EqualTo(3));
 	}
@@ -213,17 +213,17 @@ public static class AbstractClassMethodReturnTests
 	{
 		var aValue = 0;
 		var bValue = string.Empty;
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().MultipleParameters(3, "b").Callback((a, b) =>
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().MultipleParameters(3, "b").Callback((a, b) =>
 		{
 			(aValue, bValue) = (a, b);
 			return 3;
 		});
 
-		var chunk = rock.Instance();
-		var value = chunk.MultipleParameters(3, "b");
+		var mock = expectations.Instance();
+		var value = mock.MultipleParameters(3, "b");
 
-		rock.Verify();
+		expectations.Verify();
 
 		Assert.Multiple(() =>
 		{
@@ -236,11 +236,11 @@ public static class AbstractClassMethodReturnTests
 	[Test]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
-		var rock = Rock.Create<AbstractClassMethodReturn>();
-		rock.Methods().MultipleParameters(3, "b");
+		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		expectations.Methods().MultipleParameters(3, "b");
 
-		var chunk = rock.Instance();
+		var mock = expectations.Instance();
 
-		Assert.That(() => chunk.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
+		Assert.That(() => mock.MultipleParameters(3, "a"), Throws.TypeOf<ExpectationException>());
 	}
 }

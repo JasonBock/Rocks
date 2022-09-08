@@ -13,60 +13,60 @@ public static class ArgTests
 	[Test]
 	public static void DeclareArgumentWithValue()
 	{
-		var rock = Rock.Create<IHaveArgument>();
-		rock.Methods().Foo(3);
+		var expectations = Rock.Create<IHaveArgument>();
+		expectations.Methods().Foo(3);
 
-		var chunk = rock.Instance();
-		chunk.Foo(3);
+		var mock = expectations.Instance();
+		mock.Foo(3);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithIs()
 	{
-		var rock = Rock.Create<IHaveArgument>();
-		rock.Methods().Foo(Arg.Is(3));
+		var expectations = Rock.Create<IHaveArgument>();
+		expectations.Methods().Foo(Arg.Is(3));
 
-		var chunk = rock.Instance();
-		chunk.Foo(3);
+		var mock = expectations.Instance();
+		mock.Foo(3);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithAny()
 	{
-		var rock = Rock.Create<IHaveArgument>();
-		rock.Methods().Foo(Arg.Any<int>());
+		var expectations = Rock.Create<IHaveArgument>();
+		expectations.Methods().Foo(Arg.Any<int>());
 
-		var chunk = rock.Instance();
-		chunk.Foo(3);
+		var mock = expectations.Instance();
+		mock.Foo(3);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithValidate()
 	{
-		var rock = Rock.Create<IHaveArgument>();
-		rock.Methods().Foo(Arg.Validate<int>(_ => _ > 20 && _ < 30));
+		var expectations = Rock.Create<IHaveArgument>();
+		expectations.Methods().Foo(Arg.Validate<int>(_ => _ > 20 && _ < 30));
 
-		var chunk = rock.Instance();
-		chunk.Foo(25);
+		var mock = expectations.Instance();
+		mock.Foo(25);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 
 	[Test]
 	public static void DeclareArgumentWithDefault()
 	{
-		var rock = Rock.Create<IHaveArgument>();
-		rock.Methods().Bar(Arg.IsDefault<int>());
+		var expectations = Rock.Create<IHaveArgument>();
+		expectations.Methods().Bar(Arg.IsDefault<int>());
 
-		var chunk = rock.Instance();
-		chunk.Bar(3);
+		var mock = expectations.Instance();
+		mock.Bar(3);
 
-		rock.Verify();
+		expectations.Verify();
 	}
 }
