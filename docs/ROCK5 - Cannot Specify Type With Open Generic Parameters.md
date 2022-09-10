@@ -5,10 +5,10 @@ public interface IMock<T> { ... }
 
 public class Factory<T>
 {
-	public IMock<T> Mock()
-	{
-		// This will generate ROCK5
-		var rock = Rock.Create<IMock<T>>;
-	}
+  public IMock<T> Mock()
+  {
+    // This will generate ROCK5
+    var expectations = Rock.Create<IMock<T>>;
+  }
 }
 ```

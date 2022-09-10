@@ -3,14 +3,12 @@ If the given type is a class that has no accessible constructors, a mock cannot 
 ```csharp
 public class TypeToMock 
 { 
-	private TypeToMock()
-		: base() { }
+  private TypeToMock()
+    : base() { }
 		
-	public virtual void Foo() { }
+  public virtual void Foo() { }
 }
 
-...
-
 // This will generate ROCK4
-var rock = Rock.Create<TypeToMock>();
+var expectations = Rock.Create<TypeToMock>();
 ```
