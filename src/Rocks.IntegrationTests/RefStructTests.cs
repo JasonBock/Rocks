@@ -50,7 +50,15 @@ public static class RefStructTests
 	[Test]
 	public static void MakeInAndOut()
 	{
+		var mock = Rock.Make<IHaveInAndOutSpan>().Instance();
 
+#pragma warning disable NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
+		Assert.Multiple(() =>
+		{
+			Assert.That(mock.Foo(default) == default, Is.True);
+			Assert.That(mock.Values == default, Is.True);
+		});
+#pragma warning restore NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 	}
 
 	[Test]

@@ -16,13 +16,13 @@ public static class CodeGenerationTests
 {
 	private static readonly Type[] targetTypes = new Type[] { typeof(object), typeof(Dictionary<,>), typeof(ImmutableArray), typeof(HttpMessageHandler) };
 
-	//[Test]
-	//public static void GenerateCreatesForBaseClassLibrary() =>
-	//	CodeGenerationTests.GenerateForBaseClassLibrary(new RockCreateGenerator());
+	[Test]
+	public static void GenerateCreatesForBaseClassLibrary() =>
+		CodeGenerationTests.GenerateForBaseClassLibrary(new RockCreateGenerator());
 
-	//[Test]
-	//public static void GenerateMakesForBaseClassLibrary() =>
-	//	CodeGenerationTests.GenerateForBaseClassLibrary(new RockMakeGenerator());
+	[Test]
+	public static void GenerateMakesForBaseClassLibrary() =>
+		CodeGenerationTests.GenerateForBaseClassLibrary(new RockMakeGenerator());
 
 	private static void GenerateForBaseClassLibrary(IIncrementalGenerator generator)
 	{

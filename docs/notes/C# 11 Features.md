@@ -2,6 +2,8 @@
 
 This document contains notes on how I'll handle C# 11 features in Rocks. This doesn't cover all the C# 11 features; I'm only focused on those that I think will have significant impact on how Rocks works. For example, static abstract members in interfaces will require me to do **something** with those members - otherwise, I'll generate invalid code.
 
+Also, this document doesn't necessarily reflect any eventual implementation in Rocks that I did. Consider this to be a bunch of notes that I made as I reviewed these features, and the work I actually did may (and probably does) look different.
+
 ## Static Abstract Members in Interfaces
 
 ### On Hold
@@ -348,3 +350,20 @@ This feature won't affect mock execution, but it can be extremely useful for cod
 ## File-Local Types
 
 [This feature](https://github.com/dotnet/csharplang/issues/6011) wasn't one that was on my radar until recently. What's interesting about this one is that it may make it easier for projected types, along with the mock type itself (I can make it `private` or `file` depending on if the type needs to be available for static abstract members). Right now I'm creating a namespace for all these types. If I make them `file` types, then there should not be a reason to make that namespace. Not sure that this will be in for C# 11.
+
+## Other Features
+
+There are other features in C# 11, but I don't think they should impact Rocks in any way in terms of creating a mock type. I may **use** these features internally, but I shouldn't have to be concerned about them needing support in Rocks:
+
+* Ref fields - Fields are an implementation detail that wouldn't surface as something that Rocks would care about.
+* Numeric IntPtr - This seems like a very minor change and would not have any effect on Rocks.
+* Unsigned Right Shift - This is a new operator and doesn't affect Rocks.
+* Utf8 String Literals - These are `ReadOnlySpan<byte>` at the end of the day, so Rocks already handles that.
+* Pattern matching on `ReadOnlySpan<char>` - No effect
+* Checked Operators - No effect
+* Auto-default structs - No effect
+* Newlines in interpolations - No effect
+* List patterns - No effect
+* Cache delegates for static method group - No effect
+* nameof(parameter) - No effect
+* Relaxing Shift Operator - No effect
