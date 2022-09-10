@@ -50,15 +50,15 @@ public interface IAmSimple
 Here's how you create the mock, define its expected interactions, use the mock, and verify the expectations:
 
 ```csharp
-var rock = Rock.Create<IAmSimple>();
-rock.Methods().TargetAction();
-rock.Methods().TargetFunc().Returns(44);
+var expectations = Rock.Create<IAmSimple>();
+expectations.Methods().TargetAction();
+expectations.Methods().TargetFunc().Returns(44);
 
-var chunk = rock.Instance();
-chunk.TargetAction();
-var result = chunk.TargetFunc();
+var mock = expectations.Instance();
+mock.TargetAction();
+var result = mock.TargetFunc();
 
-rock.Verify();
+expectations.Verify();
 ```
 
 Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail.
@@ -77,55 +77,55 @@ public interface IHaveParameterExpectations
 You can verify that `Target(`) will be called with an exact value by passing in that value when you set up the expectation:
 
 ```csharp
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(44);
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(44);
 ```
 
 You create an instance of the mock with the `Instance()` method:
 
 ```csharp
-var chunk = rock.Instance();
-chunk.Target(44);
+var mock = expectations.Instance();
+mock.Target(44);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 If you don't care what the value is, you use `Arg.Any<>()`:
 
 ```csharp
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(Arg.IsAny<int>());
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(Arg.IsAny<int>());
 
-var chunk = rock.Instance();
-chunk.Target(44);
+var mock = expectations.Instance();
+mock.Target(44);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 If you want to specify logic to validate the given value, you use `Arg.Validate<>()`:
 
 ```csharp
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
 
-var chunk = rock.Instance();
-chunk.Target(44);
+var mock = expectations.Instance();
+mock.Target(44);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 You can also specify multiple expectations:
 
 ```csharp
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
-rock.Methods().Target(10);
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(Arg.Validate<int>(a => a > 20 && a < 50));
+expectations.Methods().Target(10);
 
-var chunk = rock.Instance();
-chunk.Target(44);
-chunk.Target(10);
+var mock = expectations.Instance();
+mock.Target(44);
+mock.Target(10);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Method Call Counts
@@ -133,31 +133,31 @@ rock.Verify();
 You may want to verify that code under test calls a method a specific number of times. You can do that by specifying an expected call count:
 
 ```csharp
-var rock = Rock.Create<IAmSimple>();
-rock.Methods().TargetAction().CallCount(2);
+var expectations = Rock.Create<IAmSimple>();
+expectations.Methods().TargetAction().CallCount(2);
 
-var chunk = rock.Instance();
-chunk.TargetAction();
-chunk.TargetAction();
+var mock = expectations.Instance();
+mock.TargetAction();
+mock.TargetAction();
 
-rock.Verify();
+expectations.Verify();
 ```
 
 This also works with multiple expectations:
 
 ```csharp
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(44).CallCount(2);
-rock.Methods().Target(22).CallCount(3);
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(44).CallCount(2);
+expectations.Methods().Target(22).CallCount(3);
 
-var chunk = rock.Instance();
-chunk.Target(22);
-chunk.Target(44);
-chunk.Target(22);
-chunk.Target(44);
-chunk.Target(22);
+var mock = expectations.Instance();
+mock.Target(22);
+mock.Target(44);
+mock.Target(22);
+mock.Target(44);
+mock.Target(22);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 We haven't covered properties yet, but this works with them as well.
@@ -169,16 +169,16 @@ You can provide a lambda that will be called when a method is invoked so you can
 ```csharp
 var value = 0;
 
-var rock = Rock.Create<IHaveParameterExpectations>();
-rock.Methods().Target(Arg.Validate<int>(i => i > 10))
-	.Callback(a => value = a);
+var expectations = Rock.Create<IHaveParameterExpectations>();
+expectations.Methods().Target(Arg.Validate<int>(i => i > 10))
+  .Callback(a => value = a);
 
-var chunk = rock.Instance();
-chunk.Target(44);
+var mock = expectations.Instance();
+mock.Target(44);
 
 // value would be equal to 44 here.
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Returning Values
@@ -186,15 +186,15 @@ rock.Verify();
 If a method returns a value, you can use `Returns()`:
 
 ```csharp
-var rock = Rock.Create<IAmSimple>();
-rock.Methods().TargetFunc().Returns(44);
+var expectations = Rock.Create<IAmSimple>();
+expectations.Methods().TargetFunc().Returns(44);
 
-var chunk = rock.Instance();
-var x = chunk.TargetFunc();
+var mock = expectations.Instance();
+var x = mock.TargetFunc();
 
 // x is equal to 44.
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Passing Constructor Arguments to a Mock
@@ -211,13 +211,13 @@ public class MockedClass
 
 // ...
 
-var rock = Rock.Create<MockedClass>();
-rock.Methods().Target();
+var expectations = Rock.Create<MockedClass>();
+expectations.Methods().Target();
 
-var chunk = rock.Instance(44);
-chunk.Target();
+var mock = expectations.Instance(44);
+mock.Target();
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Mocking Generic Methods
@@ -232,13 +232,13 @@ public interface IHaveGenerics<T>
 
 // ...
 
-var rock = Rock.Create<IHaveGenerics<string>>();
-rock.Methods().Target<int>("a", 44));
+var expectations = Rock.Create<IHaveGenerics<string>>();
+expectations.Methods().Target<int>("a", 44));
 
-var chunk = rock.Instance();
-chunk.Target("a", 44);
+var mock = expectations.Instance();
+mock.Target("a", 44);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values
@@ -256,16 +256,16 @@ public void MyTestMethod()
 {
   static void TargetCallback(ref int a) => a = 4;
 
-  var rock = Rock.Create<IHaveRefs>();
-  rock.Methods().Target(3).Callback(TargetCallback);
+  var expectations = Rock.Create<IHaveRefs>();
+  expectations.Methods().Target(3).Callback(TargetCallback);
 
-  var chunk = rock.Instance();
+  var mock = expectations.Instance();
   var value = 3;
-  chunk.Target(ref value);
+  mock.Target(ref value);
 
   // value is 4 here.
 
-  rock.Verify();
+  expectations.Verify();
 }
 ```
 
@@ -285,13 +285,13 @@ public interface IHaveOptionalArguments
 
 // ...
 
-var rock = Rock.Create<IHaveOptionalArguments>();
-rock.Methods().Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
+var expectations = Rock.Create<IHaveOptionalArguments>();
+expectations.Methods().Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
 
-var chunk = rock.Instance();
-chunk.Target(22);
+var mock = expectations.Instance();
+mock.Target(22);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ### Mocking Properties
@@ -308,15 +308,15 @@ public interface IHaveAProperty
 Here's how you set up the expectations:
 
 ```csharp
-var rock = Rock.Create<IHaveAProperty>();
-rock.Properties().Getters().GetterAndSetter();
-rock.Properties().Setters().GetterAndSetter();
+var expectations = Rock.Create<IHaveAProperty>();
+expectations.Properties().Getters().GetterAndSetter();
+expectations.Properties().Setters().GetterAndSetter();
 
-var chunk = rock.Instance();
-chunk.GetterAndSetter = Guid.NewGuid().ToString();
-var value = chunk.GetterAndSetter;
+var mock = expectations.Instance();
+mock.GetterAndSetter = Guid.NewGuid().ToString();
+var value = mock.GetterAndSetter;
 
-rock.Verify();
+expectations.Verify();
 ```
 
 Note that you can also set up callbacks and expected call counts just like you can with methods.
@@ -335,18 +335,43 @@ public interface IHaveIndexer
 
 // ...
 
-var rock = Rock.Create<IHaveIndexer>();
-rock.Indexers().Getters().This(4);
-rock.Indexers().Setters().This("b", 4);
+var expectations = Rock.Create<IHaveIndexer>();
+expectations.Indexers().Getters().This(4);
+expectations.Indexers().Setters().This("b", 4);
 
-var chunk = rock.Instance();
-var propertyValue = chunk[indexer1];
-chunk[indexer1] = indexer1SetValue;
+var mock = expectations.Instance();
+var propertyValue = mock[indexer1];
+mock[indexer1] = indexer1SetValue;
 
-rock.Verify();
+expectations.Verify();
 ```
 
 Note that the setter looks like it's taking an extra parameter - that's because the value is passed in as the last argument.
+
+### Setting `required` and `init` Properties
+
+The `init` feature was added with C# 9, and `required` properties were added with C# 11. Starting with Rocks `7.0.0`, there's a way to set these properties when the mock is created. A type called `ConstructorProperties` is created that contains all of the `required` and `init` properties, and an instance of this type can be given as the first argument to the generated `Instance()` methods:
+
+```csharp
+public class RequiredAndInit
+{
+  public virtual void Foo() { }
+  
+  public string InitData { get; init; }
+  public required string RequiredData { get; set; }
+}
+
+var expectations = Rock.Create<RequiredAndInit>();
+expectations.Methods().Foo();
+
+var mock = expectations.Instance(new() { InitData = "a", RequiredData = "b" });
+```
+
+This will set `InitData` to `"a"` and `RequiredData` to `"b"` on the mock instance.
+
+`ConstructorProperties` will contain properties that are both virtual and non-virtual. If there are no `required` properties, the `constructorProperties` parameter will be nullable.
+
+Note, indexers with an `init` cannot be set this way.
 
 ### Mocking Events
 
@@ -362,18 +387,18 @@ public interface IHaveAnEvent
 
 // ...
 
-var rock = Rock.Create<IHaveAnEvent>();
-rock.Methods().Target(1).RaisesTargetEvent(EventArgs.Empty);
+var expectations = Rock.Create<IHaveAnEvent>();
+expectations.Methods().Target(1).RaisesTargetEvent(EventArgs.Empty);
 
 var wasEventRaised = false;
-var chunk = rock.Instance();
-chunk.TargetEvent += (s, e) => wasEventRaised = true;
+var mock = expectations.Instance();
+mock.TargetEvent += (s, e) => wasEventRaised = true;
 
 // wasEventRaised is still false
-chunk.Target(1);
+mock.Target(1);
 // wasEventRaised is now equal to true
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ## Using Makes
@@ -405,16 +430,16 @@ public class UsesProducer
 
 // ...
 
-var value = Rock.Make<IValue>().Instance();
+var valueMock = Rock.Make<IValue>().Instance();
 
-var producer = Rock.Create<IProduceValue>();
-producer.Methods().Produce().Returns(value);
+var produceExpectations = Rock.Create<IProduceValue>();
+produceExpectations.Methods().Produce().Returns(valueMock);
 
-var uses = new UsesProducer(producer.Instance());
+var uses = new UsesProducer(produceExpectations.Instance());
 
 var producedValue = uses.GetValue();
 
-// producedValue and value are the same references.
+// producedValue and valueMock are the same references.
 ```
 
 Note that makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type (same thing applies for getters on properties and indexers).
@@ -444,13 +469,13 @@ public class UsesAsync
   }
 }
 
-var rock = Rock.Create<IAmAsync>();
-rock.Methods().GoAsync().Returns(Task.FromResult(44));
+var expectations = Rock.Create<IAmAsync>();
+expectations.Methods().GoAsync().Returns(Task.FromResult(44));
 
-var uses = new UsesAsync(rock.Instance());
+var uses = new UsesAsync(expectations.Instance());
 await uses.RunGoAsync().ConfigureAwait(false);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 ## Managing Multiple Mocks
@@ -472,17 +497,17 @@ public void MyTestMethod()
 {
   using var repository = new RockRepository();
 
-  var firstRock = repository.Add(Rock.Create<IFirstRepository>());
-  firstRock.Methods().Foo();
+  var firstExpectations = repository.Add(Rock.Create<IFirstRepository>());
+  firstExpectations.Methods().Foo();
 
-  var secondRock = repository.Add(Rock.Create<ISecondRepository>());
-  secondRock.Methods().Bar();
+  var secondExpectations = repository.Add(Rock.Create<ISecondRepository>());
+  secondExpectations.Methods().Bar();
 
-  var firstChunk = firstRock.Instance();
-  firstChunk.Foo();
+  var firstMock = firstExpectations.Instance();
+  firstMock.Foo();
 
-  var secondChunk = secondRock.Instance();
-  secondChunk.Bar();
+  var secondMock = secondExpectations.Instance();
+  secondMock.Bar();
 }
 ```
 
@@ -498,13 +523,13 @@ public interface IHaveDynamic
   void Foo(dynamic d);
 }
 
-var dynamicRock = Rock.Create<IHaveDynamic>();
-dynamicRock.Methods().Foo(Arg.Is<dynamic>("b"));
+var expectations = Rock.Create<IHaveDynamic>();
+expectations.Methods().Foo(Arg.Is<dynamic>("b"));
 
-var dynamicChunk = dynamicRock.Instance();
-dynamicChunk.Foo("b");
+var mock = expectations.Instance();
+mock.Foo("b");
 
-dynamicRock.Verify();
+expectations.Verify();
 ```
 
 ## "Special" Types
@@ -523,13 +548,13 @@ You can mock it like this:
 ```csharp
 var value = 10;
 
-var rock = Rock.Create<IHavePointers>();
-rock.Methods().PointerParameter(new()).Callback(_ => *_ = 20);
+var expectations = Rock.Create<IHavePointers>();
+expectations.Methods().PointerParameter(new()).Callback(_ => *_ = 20);
 
-var chunk = rock.Instance();
-chunk.PointerParameter(&value);
+var mock = expectations.Instance();
+mock.PointerParameter(&value);
 
-rock.Verify();
+expectations.Verify();
 ```
 
 Note that `value` would be equal to 20 after `PointerParameter()` is called.
