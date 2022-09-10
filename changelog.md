@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0-alpha.1] - 2022-09-10
+
+### Added
+
+- While this package technically targets .NET 6, this version is intended to target .NET 7.0 and C# 11-related features.
+- `required` and `init` properties can be set in the `Instance()` method via a `ConstructorProperties` type (issue [#162](https://github.com/JasonBock/Rocks/issues/162))
+
 ## [6.4.5] - 2022-06-29
 
 ### Added
