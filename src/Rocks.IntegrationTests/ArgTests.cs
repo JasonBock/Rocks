@@ -6,12 +6,25 @@ public interface IHaveArgument
 {
 	void Foo(int a);
 	void Bar(int a = 3);
+	string this[int a] { get; set; }
 }
 
 public static class ArgTests
 {
 	[Test]
-	public static void DeclareArgumentWithNull()
+	public static void DeclareArgumentFromIndexerWithNull()
+	{
+		var expectations = Rock.Create<IHaveArgument>();
+		Assert.Multiple(() =>
+		{
+			Assert.That(() => expectations.Indexers().Getters().This(null!), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers().Setters().This(null!, "value"), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers().Setters().This(1, null!), Throws.TypeOf<ArgumentNullException>());
+		});
+	}
+
+	[Test]
+	public static void DeclareArgumentFromMethodWithNull()
 	{
 		var expectations = Rock.Create<IHaveArgument>();
 		Assert.That(() => expectations.Methods().Foo(null!), Throws.TypeOf<ArgumentNullException>());

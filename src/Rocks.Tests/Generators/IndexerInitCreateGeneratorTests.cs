@@ -180,8 +180,11 @@ public static class IndexerInitCreateGeneratorTests
 				
 				internal static class IndexerGetterExpectationsOfTargetExtensions
 				{
-					internal static IndexerAdornments<Target, Func<int, int>, int> This(this IndexerGetterExpectations<Target> self, Argument<int> a) =>
-						new IndexerAdornments<Target, Func<int, int>, int>(self.Add<int>(3, new List<Argument>(1) { a }));
+					internal static IndexerAdornments<Target, Func<int, int>, int> This(this IndexerGetterExpectations<Target> self, Argument<int> a)
+					{
+						ArgumentNullException.ThrowIfNull(a);
+						return new IndexerAdornments<Target, Func<int, int>, int>(self.Add<int>(3, new List<Argument>(1) { a }));
+					}
 				}
 			}
 			

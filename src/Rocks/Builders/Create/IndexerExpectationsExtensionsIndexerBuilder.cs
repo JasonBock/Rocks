@@ -31,16 +31,24 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
 			})));
 
-		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters}) =>");
+		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters})");
+		writer.WriteLine("{");
 		writer.Indent++;
+
+		foreach (var parameter in propertyGetMethod.Parameters)
+		{
+			writer.WriteLine($"ArgumentNullException.ThrowIfNull({parameter.Name});");
+		}
 
 		var parameters = string.Join(", ", propertyGetMethod.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
 		var addMethod = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
 			$"Add<{propertyReturnValue}>";
-		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>({propertyGetMethod.Parameters.Length}) {{ {parameters} }}));");
+		writer.WriteLine($"return {newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>({propertyGetMethod.Parameters.Length}) {{ {parameters} }}));");
+
 		writer.Indent--;
+		writer.WriteLine("}");
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
@@ -63,14 +71,22 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
 			})));
 
-		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters}) =>");
+		writer.WriteLine($"internal static {returnValue} {WellKnownNames.This}({instanceParameters})");
+		writer.WriteLine("{");
 		writer.Indent++;
+
+		foreach (var parameter in property.SetMethod!.Parameters)
+		{
+			writer.WriteLine($"ArgumentNullException.ThrowIfNull({parameter.Name});");
+		}
 
 		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.{WellKnownNames.Transform}({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
-		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>({property.SetMethod!.Parameters.Length}) {{ {parameters} }}));");
+		writer.WriteLine($"return {newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>({property.SetMethod!.Parameters.Length}) {{ {parameters} }}));");
+
 		writer.Indent--;
+		writer.WriteLine("}");
 	}
 
 	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
