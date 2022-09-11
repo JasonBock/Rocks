@@ -168,14 +168,20 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfVoidMethodWithParamsExtensions
 				{
-					internal static MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<VoidMethodWithParams> self, Argument<object?> obj) =>
-						new MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<VoidMethodWithParams> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<VoidMethodWithParams, Func<int>, int> GetHashCode(this MethodExpectations<VoidMethodWithParams> self) =>
 						new MethodAdornments<VoidMethodWithParams, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<VoidMethodWithParams, Func<string?>, string?> ToString(this MethodExpectations<VoidMethodWithParams> self) =>
 						new MethodAdornments<VoidMethodWithParams, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<VoidMethodWithParams, Action<string[]>> CallMe(this MethodExpectations<VoidMethodWithParams> self, Argument<string[]> values) =>
-						new MethodAdornments<VoidMethodWithParams, Action<string[]>>(self.Add(3, new List<Argument>(1) { values }));
+					internal static MethodAdornments<VoidMethodWithParams, Action<string[]>> CallMe(this MethodExpectations<VoidMethodWithParams> self, Argument<string[]> values)
+					{
+						ArgumentNullException.ThrowIfNull(values);
+						return new MethodAdornments<VoidMethodWithParams, Action<string[]>>(self.Add(3, new List<Argument>(1) { values }));
+					}
 				}
 			}
 			
@@ -340,14 +346,20 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfValueMethodWithParamsExtensions
 				{
-					internal static MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<ValueMethodWithParams> self, Argument<object?> obj) =>
-						new MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<ValueMethodWithParams> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<ValueMethodWithParams, Func<int>, int> GetHashCode(this MethodExpectations<ValueMethodWithParams> self) =>
 						new MethodAdornments<ValueMethodWithParams, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<ValueMethodWithParams, Func<string?>, string?> ToString(this MethodExpectations<ValueMethodWithParams> self) =>
 						new MethodAdornments<ValueMethodWithParams, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<ValueMethodWithParams, Func<string[], int>, int> CallMe(this MethodExpectations<ValueMethodWithParams> self, Argument<string[]> values) =>
-						new MethodAdornments<ValueMethodWithParams, Func<string[], int>, int>(self.Add<int>(3, new List<Argument>(1) { values }));
+					internal static MethodAdornments<ValueMethodWithParams, Func<string[], int>, int> CallMe(this MethodExpectations<ValueMethodWithParams> self, Argument<string[]> values)
+					{
+						ArgumentNullException.ThrowIfNull(values);
+						return new MethodAdornments<ValueMethodWithParams, Func<string[], int>, int>(self.Add<int>(3, new List<Argument>(1) { values }));
+					}
 				}
 			}
 			
@@ -723,8 +735,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj) =>
-						new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<HaveImplementation, Func<int>, int> GetHashCode(this MethodExpectations<HaveImplementation> self) =>
 						new MethodAdornments<HaveImplementation, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<HaveImplementation, Func<string?>, string?> ToString(this MethodExpectations<HaveImplementation> self) =>
@@ -888,8 +903,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj) =>
-						new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<HaveImplementation, Func<int>, int> GetHashCode(this MethodExpectations<HaveImplementation> self) =>
 						new MethodAdornments<HaveImplementation, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<HaveImplementation, Func<string?>, string?> ToString(this MethodExpectations<HaveImplementation> self) =>

@@ -50,9 +50,6 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
-		writer.Indent++;
-
 		var addMethod = method.ReturnsVoid ? "Add" :
 			method.ReturnType.IsPointer() ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : 
@@ -60,10 +57,22 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 
 		if (method.Parameters.Length == 0)
 		{
+			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
+			writer.Indent++;
 			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>()));");
+			writer.Indent--;
 		}
 		else
 		{
+			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters})");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			foreach(var parameter in method.Parameters)
+			{
+				writer.WriteLine($"ArgumentNullException.ThrowIfNull({parameter.Name});");
+			}
+
 			var parameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				if (_.HasExplicitDefaultValue)
@@ -79,9 +88,10 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					return _.Name;
 				}
 			}));
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>({method.Parameters.Length}) {{ {parameters} }}));");
-		}
+			writer.WriteLine($"return {newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>({method.Parameters.Length}) {{ {parameters} }}));");
 
-		writer.Indent--;
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
 	}
 }

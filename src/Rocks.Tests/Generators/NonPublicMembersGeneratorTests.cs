@@ -242,8 +242,11 @@ public static class NonPublicMembersGeneratorTests
 				
 				internal static class MethodExpectationsOfTestExtensions
 				{
-					internal static MethodAdornments<Test, Func<object?, bool>, bool> Equals(this MethodExpectations<Test> self, Argument<object?> obj) =>
-						new MethodAdornments<Test, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<Test, Func<object?, bool>, bool> Equals(this MethodExpectations<Test> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<Test, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<Test, Func<int>, int> GetHashCode(this MethodExpectations<Test> self) =>
 						new MethodAdornments<Test, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<Test, Func<string?>, string?> ToString(this MethodExpectations<Test> self) =>
@@ -538,8 +541,11 @@ public static class NonPublicMembersGeneratorTests
 				
 				internal static class MethodExpectationsOfTestExtensions
 				{
-					internal static MethodAdornments<Test, Func<object?, bool>, bool> Equals(this MethodExpectations<Test> self, Argument<object?> obj) =>
-						new MethodAdornments<Test, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<Test, Func<object?, bool>, bool> Equals(this MethodExpectations<Test> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<Test, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<Test, Func<int>, int> GetHashCode(this MethodExpectations<Test> self) =>
 						new MethodAdornments<Test, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<Test, Func<string?>, string?> ToString(this MethodExpectations<Test> self) =>

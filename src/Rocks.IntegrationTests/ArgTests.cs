@@ -11,6 +11,13 @@ public interface IHaveArgument
 public static class ArgTests
 {
 	[Test]
+	public static void DeclareArgumentWithNull()
+	{
+		var expectations = Rock.Create<IHaveArgument>();
+		Assert.That(() => expectations.Methods().Foo(null!), Throws.TypeOf<ArgumentNullException>());
+	}
+
+	[Test]
 	public static void DeclareArgumentWithValue()
 	{
 		var expectations = Rock.Create<IHaveArgument>();

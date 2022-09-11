@@ -224,8 +224,11 @@ public static class AttributeGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveMultipleAttributesExtensions
 				{
-					internal static MethodAdornments<IHaveMultipleAttributes, Action<string>> Foo(this MethodExpectations<IHaveMultipleAttributes> self, Argument<string> data) =>
-						new MethodAdornments<IHaveMultipleAttributes, Action<string>>(self.Add(0, new List<Argument>(1) { data }));
+					internal static MethodAdornments<IHaveMultipleAttributes, Action<string>> Foo(this MethodExpectations<IHaveMultipleAttributes> self, Argument<string> data)
+					{
+						ArgumentNullException.ThrowIfNull(data);
+						return new MethodAdornments<IHaveMultipleAttributes, Action<string>>(self.Add(0, new List<Argument>(1) { data }));
+					}
 				}
 			}
 			

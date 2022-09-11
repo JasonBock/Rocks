@@ -126,8 +126,12 @@ public static class Invoker
 				
 				internal static class MethodExpectationsOfIContainNullableReferencesExtensions
 				{
-					internal static MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?> DoSomething(this MethodExpectations<IContainNullableReferences> self, Argument<string?> a, Argument<string> b) =>
-						new MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?>(self.Add<string?>(0, new List<Argument>(2) { a, b }));
+					internal static MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?> DoSomething(this MethodExpectations<IContainNullableReferences> self, Argument<string?> a, Argument<string> b)
+					{
+						ArgumentNullException.ThrowIfNull(a);
+						ArgumentNullException.ThrowIfNull(b);
+						return new MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?>(self.Add<string?>(0, new List<Argument>(2) { a, b }));
+					}
 				}
 			}
 			

@@ -139,10 +139,17 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 				
 				internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
 				{
-					internal static MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
-						new MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { other }));
-					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
-						new MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool>(self.Add<bool>(1, new List<Argument>(2) { objA, objB }));
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other)
+					{
+						ArgumentNullException.ThrowIfNull(other);
+						return new MethodAdornments<IMatchObject<object>, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { other }));
+					}
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB)
+					{
+						ArgumentNullException.ThrowIfNull(objA);
+						ArgumentNullException.ThrowIfNull(objB);
+						return new MethodAdornments<IMatchObject<object>, Func<object?, object?, bool>, bool>(self.Add<bool>(1, new List<Argument>(2) { objA, objB }));
+					}
 					internal static MethodAdornments<IMatchObject<object>, Func<object>, object> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
 						new MethodAdornments<IMatchObject<object>, Func<object>, object>(self.Add<object>(2, new List<Argument>()));
 				}
@@ -357,10 +364,17 @@ namespace MockTests
 				
 				internal static class ExplicitMethodExpectationsOfIMatchObjectOfobjectForIMatchObjectOfobjectExtensions
 				{
-					internal static MethodAdornments<IMatchObject<object>, Func<object?, string>, string> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other) =>
-						new MethodAdornments<IMatchObject<object>, Func<object?, string>, string>(self.Add<string>(0, new List<Argument>(1) { other }));
-					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB) =>
-						new MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int>(self.Add<int>(1, new List<Argument>(2) { objA, objB }));
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, string>, string> Equals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> other)
+					{
+						ArgumentNullException.ThrowIfNull(other);
+						return new MethodAdornments<IMatchObject<object>, Func<object?, string>, string>(self.Add<string>(0, new List<Argument>(1) { other }));
+					}
+					internal static MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int> ReferenceEquals(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self, Argument<object?> objA, Argument<object?> objB)
+					{
+						ArgumentNullException.ThrowIfNull(objA);
+						ArgumentNullException.ThrowIfNull(objB);
+						return new MethodAdornments<IMatchObject<object>, Func<object?, object?, int>, int>(self.Add<int>(1, new List<Argument>(2) { objA, objB }));
+					}
 					internal static MethodAdornments<IMatchObject<object>, Func<bool>, bool> MemberwiseClone(this ExplicitMethodExpectations<IMatchObject<object>, IMatchObject<object>> self) =>
 						new MethodAdornments<IMatchObject<object>, Func<bool>, bool>(self.Add<bool>(2, new List<Argument>()));
 				}

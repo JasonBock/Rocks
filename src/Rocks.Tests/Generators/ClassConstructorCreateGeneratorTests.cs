@@ -156,8 +156,11 @@ public static class ClassConstructorCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfBaseCtorExtensions
 				{
-					internal static MethodAdornments<BaseCtor, Func<object?, bool>, bool> Equals(this MethodExpectations<BaseCtor> self, Argument<object?> obj) =>
-						new MethodAdornments<BaseCtor, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<BaseCtor, Func<object?, bool>, bool> Equals(this MethodExpectations<BaseCtor> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<BaseCtor, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<BaseCtor, Func<int>, int> GetHashCode(this MethodExpectations<BaseCtor> self) =>
 						new MethodAdornments<BaseCtor, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<BaseCtor, Func<string?>, string?> ToString(this MethodExpectations<BaseCtor> self) =>

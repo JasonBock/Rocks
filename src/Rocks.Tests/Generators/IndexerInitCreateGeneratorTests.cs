@@ -167,8 +167,11 @@ public static class IndexerInitCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfTargetExtensions
 				{
-					internal static MethodAdornments<Target, Func<object?, bool>, bool> Equals(this MethodExpectations<Target> self, Argument<object?> obj) =>
-						new MethodAdornments<Target, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<Target, Func<object?, bool>, bool> Equals(this MethodExpectations<Target> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<Target, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<Target, Func<int>, int> GetHashCode(this MethodExpectations<Target> self) =>
 						new MethodAdornments<Target, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<Target, Func<string?>, string?> ToString(this MethodExpectations<Target> self) =>

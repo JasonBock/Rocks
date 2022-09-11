@@ -410,8 +410,11 @@ public static class AllowNullGeneratorTests
 				
 				internal static class MethodExpectationsOfAllowExtensions
 				{
-					internal static MethodAdornments<Allow, Func<object?, bool>, bool> Equals(this MethodExpectations<Allow> self, Argument<object?> obj) =>
-						new MethodAdornments<Allow, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<Allow, Func<object?, bool>, bool> Equals(this MethodExpectations<Allow> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<Allow, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<Allow, Func<int>, int> GetHashCode(this MethodExpectations<Allow> self) =>
 						new MethodAdornments<Allow, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<Allow, Func<string?>, string?> ToString(this MethodExpectations<Allow> self) =>

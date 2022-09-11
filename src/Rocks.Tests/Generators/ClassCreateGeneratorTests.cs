@@ -155,8 +155,11 @@ public static class ClassCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfClassTestExtensions
 				{
-					internal static MethodAdornments<ClassTest, Func<object?, bool>, bool> Equals(this MethodExpectations<ClassTest> self, Argument<object?> obj) =>
-						new MethodAdornments<ClassTest, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					internal static MethodAdornments<ClassTest, Func<object?, bool>, bool> Equals(this MethodExpectations<ClassTest> self, Argument<object?> obj)
+					{
+						ArgumentNullException.ThrowIfNull(obj);
+						return new MethodAdornments<ClassTest, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+					}
 					internal static MethodAdornments<ClassTest, Func<int>, int> GetHashCode(this MethodExpectations<ClassTest> self) =>
 						new MethodAdornments<ClassTest, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
 					internal static MethodAdornments<ClassTest, Func<string?>, string?> ToString(this MethodExpectations<ClassTest> self) =>

@@ -202,8 +202,11 @@ public static class RecordCreateGeneratorTests
 						new MethodAdornments<RecordTest, Action>(self.Add(2, new List<Argument>()));
 					internal static MethodAdornments<RecordTest, Func<string>, string> ToString(this MethodExpectations<RecordTest> self) =>
 						new MethodAdornments<RecordTest, Func<string>, string>(self.Add<string>(3, new List<Argument>()));
-					internal static MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool> PrintMembers(this MethodExpectations<RecordTest> self, Argument<StringBuilder> builder) =>
-						new MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool>(self.Add<bool>(4, new List<Argument>(1) { builder }));
+					internal static MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool> PrintMembers(this MethodExpectations<RecordTest> self, Argument<StringBuilder> builder)
+					{
+						ArgumentNullException.ThrowIfNull(builder);
+						return new MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool>(self.Add<bool>(4, new List<Argument>(1) { builder }));
+					}
 					internal static MethodAdornments<RecordTest, Func<int>, int> GetHashCode(this MethodExpectations<RecordTest> self) =>
 						new MethodAdornments<RecordTest, Func<int>, int>(self.Add<int>(5, new List<Argument>()));
 				}
