@@ -75,7 +75,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :
@@ -138,7 +138,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<string[]>)?.IsValid(values) ?? false))
+									if (((Argument<string[]>)methodHandler.Expectations[0]).IsValid(values))
 									{
 										foundMatch = true;
 										
@@ -262,7 +262,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :
@@ -323,7 +323,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<string[]>)?.IsValid(values) ?? false))
+									if (((Argument<string[]>)methodHandler.Expectations[0]).IsValid(values))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<string[], int>)methodHandler.Method)(values) :
@@ -657,7 +657,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :
@@ -826,7 +826,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :

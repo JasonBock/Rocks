@@ -137,7 +137,7 @@ public static class RecordCreateGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<StringBuilder>)?.IsValid(builder) ?? false))
+									if (((Argument<StringBuilder>)methodHandler.Expectations[0]).IsValid(builder))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<StringBuilder, bool>)methodHandler.Method)(builder) :

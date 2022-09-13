@@ -194,7 +194,7 @@ public static class AttributeGeneratorTests
 								
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<string>)?.IsValid(data) ?? false))
+									if (((Argument<string>)methodHandler.Expectations[0]).IsValid(data))
 									{
 										foundMatch = true;
 										

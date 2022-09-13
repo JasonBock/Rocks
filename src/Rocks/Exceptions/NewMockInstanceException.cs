@@ -3,13 +3,13 @@
 namespace Rocks.Exceptions;
 
 [Serializable]
-public sealed class NewMockInstanceException
+public sealed class MockException
 	: Exception
 {
-	public NewMockInstanceException() { }
-	public NewMockInstanceException(string message) : base(message) { }
-	public NewMockInstanceException(string message, Exception inner) : base(message, inner) { }
-	private NewMockInstanceException(SerializationInfo info, StreamingContext context)
+	public MockException() { }
+	public MockException(string message) : base(message) { }
+	public MockException(string message, Exception inner) : base(message, inner) { }
+	private MockException(SerializationInfo info, StreamingContext context)
 		: base(info, context)
 	{ }
 }

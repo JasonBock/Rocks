@@ -78,7 +78,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(other))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(other) :
@@ -101,8 +101,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
-										((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(objA) &&
+										((Argument<object?>)methodHandler.Expectations[1]).IsValid(objB))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, object?, bool>)methodHandler.Method)(objA, objB) :
@@ -303,7 +303,7 @@ namespace MockTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(other) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(other))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, string>)methodHandler.Method)(other) :
@@ -326,8 +326,8 @@ namespace MockTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(objA) ?? false) &&
-										((methodHandler.Expectations[1] as Argument<object?>)?.IsValid(objB) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(objA) &&
+										((Argument<object?>)methodHandler.Expectations[1]).IsValid(objB))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, object?, int>)methodHandler.Method)(objA, objB) :

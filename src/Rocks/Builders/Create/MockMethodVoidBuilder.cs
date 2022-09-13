@@ -177,7 +177,9 @@ internal static class MockMethodVoidBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+						$"if ((({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -187,7 +189,9 @@ internal static class MockMethodVoidBuilder
 				}
 
 				writer.WriteLine(
-					$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+						$"(({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -225,17 +229,22 @@ internal static class MockMethodVoidBuilder
 
 	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
 	{
-		writer.WriteLine("if (methodHandler.Method is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
 		var methodCast = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
 			DelegateBuilder.Build(method.Parameters);
+
+		writer.WriteLine(!method.IsGenericMethod ? 
+			"if (methodHandler.Method is not null)" :
+			$"if (methodHandler.Method is not null && methodHandler.Method is {methodCast} method)");
+		writer.WriteLine("{");
+		writer.Indent++;
+
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
-		writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments});");
+		writer.WriteLine(!method.IsGenericMethod ? 
+			$"(({methodCast})methodHandler.Method)({methodArguments});" :
+			$"method({methodArguments});");
 
 		writer.Indent--;
 		writer.WriteLine("}");

@@ -78,7 +78,7 @@ public static class ClassConstructorCreateGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :

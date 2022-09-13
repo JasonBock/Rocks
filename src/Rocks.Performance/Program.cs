@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Running;
 using Rocks.Performance;
 
-BenchmarkRunner.Run<PointersGeneration>();
+BenchmarkRunner.Run<CastingSpeed>();
 
 //var test = new SimpleGeneration();
 

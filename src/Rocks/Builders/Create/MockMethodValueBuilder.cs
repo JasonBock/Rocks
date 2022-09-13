@@ -12,7 +12,7 @@ internal static class MockMethodValueBuilder
 	{
 		var method = result.Value;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		
+
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
@@ -144,7 +144,7 @@ internal static class MockMethodValueBuilder
 				};
 				return $"{direction}{_.Name}";
 			}));
-			var target = method.ContainingType.TypeKind == TypeKind.Interface ? 
+			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
 			writer.WriteLine($"return {target}.{method.GetName()}({passedParameter});");
 
@@ -162,30 +162,40 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine();
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, 
+	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
+		var methodCast = method.RequiresProjectedDelegate() ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
+			DelegateBuilder.Build(method.Parameters, method.ReturnType);
+
 		if (method.ReturnsByRef || method.ReturnsByRefReadonly)
 		{
-			writer.WriteLine($"this.rr{memberIndentifier} = methodHandler.Method is not null ?");
+			writer.WriteLine(
+				method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+					$"this.rr{memberIndentifier} = methodHandler.Method is not null ?" :
+					$"this.rr{memberIndentifier} = methodHandler.Method is not null && methodHandler.Method is {methodCast} methodReturn ?");
 		}
 		else
 		{
-			if(shouldThrowDoesNotReturnException)
+			if (shouldThrowDoesNotReturnException)
 			{
-				writer.WriteLine("_ = methodHandler.Method is not null ?");
+				writer.WriteLine(
+					method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+						"_ = methodHandler.Method is not null ?" :
+						$"_ = methodHandler.Method is not null && methodHandler.Method is {methodCast} methodReturn ?");
 			}
 			else
 			{
-				writer.WriteLine("var result = methodHandler.Method is not null ?");
+				writer.WriteLine(
+					method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+						"var result = methodHandler.Method is not null ?" :
+						$"var result = methodHandler.Method is not null && methodHandler.Method is {methodCast} methodReturn ?");
 			}
 		}
 
 		writer.Indent++;
 
-		var methodCast = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
-			DelegateBuilder.Build(method.Parameters, method.ReturnType);
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
@@ -194,15 +204,45 @@ internal static class MockMethodValueBuilder
 		var handlerName = method.ReturnType.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType) :
 			$"{nameof(HandlerInformation)}<{methodReturnType}>";
-		writer.WriteLine($"(({methodCast})methodHandler.Method)({methodArguments}) :");
 
-		if(method.ReturnType.IsPointer() || !method.ReturnType.IsRefLikeType)
+		writer.WriteLine(
+			method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+				$"(({methodCast})methodHandler.Method)({methodArguments}) :" :
+				$"methodReturn({methodArguments}) :");
+
+		if (method.ReturnType.IsPointer() || !method.ReturnType.IsRefLikeType)
 		{
-			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
+			{
+				writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+			}
+			else
+			{
+				writer.WriteLines(
+					$$"""
+					methodHandler is {{handlerName}} returnValue ?
+						returnValue.ReturnValue :
+						throw new MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+					"""
+				);
+			}
 		}
 		else
 		{
-			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
+			{
+				writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+			}
+			else
+			{
+				writer.WriteLines(
+					$$"""
+					methodHandler is {{handlerName}} returnValue ?
+						returnValue.ReturnValue!.Invoke() :
+						throw new MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+					"""
+				);
+			}
 		}
 
 		writer.Indent--;
@@ -231,7 +271,7 @@ internal static class MockMethodValueBuilder
 		}
 	}
 
-	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, 
+	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer,
 		IMethodSymbol method, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
@@ -250,7 +290,9 @@ internal static class MockMethodValueBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+						$"if ((({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -260,7 +302,9 @@ internal static class MockMethodValueBuilder
 				}
 
 				writer.WriteLine(
-					$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+						$"(({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -281,7 +325,7 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, 
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine("var methodHandler = methodHandlers[0];");

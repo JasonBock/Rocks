@@ -81,7 +81,7 @@ public static class IndexerInitCreateGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<object?>)?.IsValid(obj) ?? false))
+									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<object?, bool>)methodHandler.Method)(obj) :
@@ -145,7 +145,7 @@ public static class IndexerInitCreateGeneratorTests
 								{
 									foreach (var methodHandler in methodHandlers)
 									{
-										if (((methodHandler.Expectations[0] as Argument<int>)?.IsValid(a) ?? false))
+										if (((Argument<int>)(methodHandler.Expectations[0])).IsValid(a))
 										{
 											var result = methodHandler.Method is not null ?
 												((Func<int, int>)methodHandler.Method)(a) :

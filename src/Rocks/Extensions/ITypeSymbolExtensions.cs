@@ -5,6 +5,7 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	// TODO: I think this could be replaced with self.Kind == TypeParameter
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
 		if (self is INamedTypeSymbol namedType)

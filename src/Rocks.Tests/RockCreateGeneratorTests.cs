@@ -104,8 +104,8 @@ public static class Invoker
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((methodHandler.Expectations[0] as Argument<string?>)?.IsValid(a) ?? false) &&
-										((methodHandler.Expectations[1] as Argument<string>)?.IsValid(b) ?? false))
+									if (((Argument<string?>)methodHandler.Expectations[0]).IsValid(a) &&
+										((Argument<string>)methodHandler.Expectations[1]).IsValid(b))
 									{
 										var result = methodHandler.Method is not null ?
 											((Func<string?, string, string?>)methodHandler.Method)(a, b) :
