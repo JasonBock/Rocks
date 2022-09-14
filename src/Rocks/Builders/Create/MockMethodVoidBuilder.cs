@@ -216,7 +216,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("if (!foundMatch)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {methodSignature.Replace("\"", "\\\"")})\");");
+		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 

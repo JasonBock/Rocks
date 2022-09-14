@@ -210,7 +210,7 @@ public static class AttributeGeneratorTests
 								
 								if (!foundMatch)
 								{
-									throw new ExpectationException("No handlers match for void Foo([ParameterOne, ParameterTwo] string data))");
+									throw new ExpectationException("No handlers match for void Foo([ParameterOne, ParameterTwo] string data)");
 								}
 							}
 							else

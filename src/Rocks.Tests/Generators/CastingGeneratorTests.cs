@@ -15,10 +15,10 @@ public static class CastingGeneratorTests
 
 			namespace MockTests
 			{
-				public interface IHaveOpenGenerics
+				public interface IHaveOpenGenerics<Q>
 				{
-					void HasGenerics<T>(T value, string data);
-					T HasGenericsWithReturn<T>(T value, string data);
+					void HasGenerics<T>(T value, string data, Q information);
+					T HasGenericsWithReturn<T>(T value, string data, Q information);
 					void NoGenerics(int value, string data);
 					int NoGenericsWithReturn(int value, string data);
 				}
@@ -27,7 +27,7 @@ public static class CastingGeneratorTests
 				{
 					public static void Generate()
 					{
-						var rock = Rock.Create<IHaveOpenGenerics>();
+						var rock = Rock.Create<IHaveOpenGenerics<Guid>>();
 					}
 				}
 			}
@@ -46,17 +46,17 @@ public static class CastingGeneratorTests
 			#nullable enable
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfIHaveOpenGenericsExtensions
+				internal static class CreateExpectationsOfIHaveOpenGenericsOfGuidExtensions
 				{
-					internal static MethodExpectations<IHaveOpenGenerics> Methods(this Expectations<IHaveOpenGenerics> self) =>
+					internal static MethodExpectations<IHaveOpenGenerics<Guid>> Methods(this Expectations<IHaveOpenGenerics<Guid>> self) =>
 						new(self);
 					
-					internal static IHaveOpenGenerics Instance(this Expectations<IHaveOpenGenerics> self)
+					internal static IHaveOpenGenerics<Guid> Instance(this Expectations<IHaveOpenGenerics<Guid>> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
 							self.WasInstanceInvoked = true;
-							return new RockIHaveOpenGenerics(self);
+							return new RockIHaveOpenGenericsOfGuid(self);
 						}
 						else
 						{
@@ -64,16 +64,16 @@ public static class CastingGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveOpenGenerics
-						: IHaveOpenGenerics
+					private sealed class RockIHaveOpenGenericsOfGuid
+						: IHaveOpenGenerics<Guid>
 					{
 						private readonly Dictionary<int, List<HandlerInformation>> handlers;
 						
-						public RockIHaveOpenGenerics(Expectations<IHaveOpenGenerics> expectations) =>
+						public RockIHaveOpenGenericsOfGuid(Expectations<IHaveOpenGenerics<Guid>> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "void HasGenerics<T>(T value, string data)")]
-						public void HasGenerics<T>(T value, string data)
+						[MemberIdentifier(0, "void HasGenerics<T>(T value, string data, Guid information)")]
+						public void HasGenerics<T>(T value, string data, Guid information)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
@@ -82,13 +82,14 @@ public static class CastingGeneratorTests
 								foreach (var methodHandler in methodHandlers)
 								{
 									if (((methodHandler.Expectations[0] as Argument<T>)?.IsValid(value) ?? false) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data))
+										((Argument<string>)methodHandler.Expectations[1]).IsValid(data) &&
+										((Argument<Guid>)methodHandler.Expectations[2]).IsValid(information))
 									{
 										foundMatch = true;
 										
-										if (methodHandler.Method is not null && methodHandler.Method is Action<T, string> method)
+										if (methodHandler.Method is not null && methodHandler.Method is Action<T, string, Guid> method)
 										{
-											method(value, data);
+											method(value, data, information);
 										}
 										
 										methodHandler.IncrementCallCount();
@@ -98,27 +99,28 @@ public static class CastingGeneratorTests
 								
 								if (!foundMatch)
 								{
-									throw new ExpectationException("No handlers match for void HasGenerics<T>(T value, string data))");
+									throw new ExpectationException("No handlers match for void HasGenerics<T>(T value, string data, Guid information)");
 								}
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void HasGenerics<T>(T value, string data)");
+								throw new ExpectationException("No handlers were found for void HasGenerics<T>(T value, string data, Guid information)");
 							}
 						}
 						
-						[MemberIdentifier(1, "T HasGenericsWithReturn<T>(T value, string data)")]
-						public T HasGenericsWithReturn<T>(T value, string data)
+						[MemberIdentifier(1, "T HasGenericsWithReturn<T>(T value, string data, Guid information)")]
+						public T HasGenericsWithReturn<T>(T value, string data, Guid information)
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
 									if (((methodHandler.Expectations[0] as Argument<T>)?.IsValid(value) ?? false) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data))
+										((Argument<string>)methodHandler.Expectations[1]).IsValid(data) &&
+										((Argument<Guid>)methodHandler.Expectations[2]).IsValid(information))
 									{
-										var result = methodHandler.Method is not null && methodHandler.Method is Func<T, string, T> methodReturn ?
-											methodReturn(value, data) :
+										var result = methodHandler.Method is not null && methodHandler.Method is Func<T, string, Guid, T> methodReturn ?
+											methodReturn(value, data, information) :
 											methodHandler is HandlerInformation<T> returnValue ?
 												returnValue.ReturnValue :
 												throw new MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
@@ -127,10 +129,10 @@ public static class CastingGeneratorTests
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for T HasGenericsWithReturn<T>(T value, string data)");
+								throw new ExpectationException("No handlers match for T HasGenericsWithReturn<T>(T value, string data, Guid information)");
 							}
 							
-							throw new ExpectationException("No handlers were found for T HasGenericsWithReturn<T>(T value, string data)");
+							throw new ExpectationException("No handlers were found for T HasGenericsWithReturn<T>(T value, string data, Guid information)");
 						}
 						
 						[MemberIdentifier(2, "void NoGenerics(int value, string data)")]
@@ -159,7 +161,7 @@ public static class CastingGeneratorTests
 								
 								if (!foundMatch)
 								{
-									throw new ExpectationException("No handlers match for void NoGenerics(int value, string data))");
+									throw new ExpectationException("No handlers match for void NoGenerics(int value, string data)");
 								}
 							}
 							else
@@ -195,31 +197,33 @@ public static class CastingGeneratorTests
 					}
 				}
 				
-				internal static class MethodExpectationsOfIHaveOpenGenericsExtensions
+				internal static class MethodExpectationsOfIHaveOpenGenericsOfGuidExtensions
 				{
-					internal static MethodAdornments<IHaveOpenGenerics, Action<T, string>> HasGenerics<T>(this MethodExpectations<IHaveOpenGenerics> self, Argument<T> value, Argument<string> data)
+					internal static MethodAdornments<IHaveOpenGenerics<Guid>, Action<T, string, Guid>> HasGenerics<T>(this MethodExpectations<IHaveOpenGenerics<Guid>> self, Argument<T> value, Argument<string> data, Argument<Guid> information)
 					{
 						ArgumentNullException.ThrowIfNull(value);
 						ArgumentNullException.ThrowIfNull(data);
-						return new MethodAdornments<IHaveOpenGenerics, Action<T, string>>(self.Add(0, new List<Argument>(2) { value, data }));
+						ArgumentNullException.ThrowIfNull(information);
+						return new MethodAdornments<IHaveOpenGenerics<Guid>, Action<T, string, Guid>>(self.Add(0, new List<Argument>(3) { value, data, information }));
 					}
-					internal static MethodAdornments<IHaveOpenGenerics, Func<T, string, T>, T> HasGenericsWithReturn<T>(this MethodExpectations<IHaveOpenGenerics> self, Argument<T> value, Argument<string> data)
+					internal static MethodAdornments<IHaveOpenGenerics<Guid>, Func<T, string, Guid, T>, T> HasGenericsWithReturn<T>(this MethodExpectations<IHaveOpenGenerics<Guid>> self, Argument<T> value, Argument<string> data, Argument<Guid> information)
 					{
 						ArgumentNullException.ThrowIfNull(value);
 						ArgumentNullException.ThrowIfNull(data);
-						return new MethodAdornments<IHaveOpenGenerics, Func<T, string, T>, T>(self.Add<T>(1, new List<Argument>(2) { value, data }));
+						ArgumentNullException.ThrowIfNull(information);
+						return new MethodAdornments<IHaveOpenGenerics<Guid>, Func<T, string, Guid, T>, T>(self.Add<T>(1, new List<Argument>(3) { value, data, information }));
 					}
-					internal static MethodAdornments<IHaveOpenGenerics, Action<int, string>> NoGenerics(this MethodExpectations<IHaveOpenGenerics> self, Argument<int> value, Argument<string> data)
+					internal static MethodAdornments<IHaveOpenGenerics<Guid>, Action<int, string>> NoGenerics(this MethodExpectations<IHaveOpenGenerics<Guid>> self, Argument<int> value, Argument<string> data)
 					{
 						ArgumentNullException.ThrowIfNull(value);
 						ArgumentNullException.ThrowIfNull(data);
-						return new MethodAdornments<IHaveOpenGenerics, Action<int, string>>(self.Add(2, new List<Argument>(2) { value, data }));
+						return new MethodAdornments<IHaveOpenGenerics<Guid>, Action<int, string>>(self.Add(2, new List<Argument>(2) { value, data }));
 					}
-					internal static MethodAdornments<IHaveOpenGenerics, Func<int, string, int>, int> NoGenericsWithReturn(this MethodExpectations<IHaveOpenGenerics> self, Argument<int> value, Argument<string> data)
+					internal static MethodAdornments<IHaveOpenGenerics<Guid>, Func<int, string, int>, int> NoGenericsWithReturn(this MethodExpectations<IHaveOpenGenerics<Guid>> self, Argument<int> value, Argument<string> data)
 					{
 						ArgumentNullException.ThrowIfNull(value);
 						ArgumentNullException.ThrowIfNull(data);
-						return new MethodAdornments<IHaveOpenGenerics, Func<int, string, int>, int>(self.Add<int>(3, new List<Argument>(2) { value, data }));
+						return new MethodAdornments<IHaveOpenGenerics<Guid>, Func<int, string, int>, int>(self.Add<int>(3, new List<Argument>(2) { value, data }));
 					}
 				}
 			}
@@ -227,7 +231,7 @@ public static class CastingGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveOpenGenerics_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "IHaveOpenGenericsOfGuid_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

@@ -154,7 +154,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								if (!foundMatch)
 								{
-									throw new ExpectationException("No handlers match for void CallMe(params string[] values))");
+									throw new ExpectationException("No handlers match for void CallMe(params string[] values)");
 								}
 							}
 							else
