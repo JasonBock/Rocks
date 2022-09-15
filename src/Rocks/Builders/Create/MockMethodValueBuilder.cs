@@ -207,14 +207,14 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine(
 			method.ReturnType.TypeKind != TypeKind.TypeParameter ?
-				$"(({methodCast})methodHandler.Method)({methodArguments}) :" :
+				$"Unsafe.As<{methodCast}>(methodHandler.Method)({methodArguments}) :" :
 				$"methodReturn({methodArguments}) :");
 
 		if (method.ReturnType.IsPointer() || !method.ReturnType.IsRefLikeType)
 		{
 			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
 			{
-				writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+				writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue;");
 			}
 			else
 			{
@@ -231,7 +231,7 @@ internal static class MockMethodValueBuilder
 		{
 			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
 			{
-				writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+				writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue!.Invoke();");
 			}
 			else
 			{
@@ -291,7 +291,7 @@ internal static class MockMethodValueBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if ((({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
@@ -303,7 +303,7 @@ internal static class MockMethodValueBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"(({argType})methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)

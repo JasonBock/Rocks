@@ -45,14 +45,14 @@ internal static class MockPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
 			$"{nameof(HandlerInformation)}<{propertyReturnType}>";
 
-		writer.WriteLine($"(({methodCast})methodHandler.Method)() :");
+		writer.WriteLine($"Unsafe.As<{methodCast}>(methodHandler.Method)() :");
 		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
 		{
-			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue;");
+			writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue;");
 		}
 		else
 		{
-			writer.WriteLine($"(({handlerName})methodHandler).ReturnValue!.Invoke();");
+			writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue!.Invoke();");
 		}
 		writer.Indent--;
 
@@ -135,7 +135,7 @@ internal static class MockPropertyBuilder
 						RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
 						$"{nameof(Argument)}<{property.Type.GetName()}>";
 
-			writer.WriteLine($"if ((methodHandler.Expectations[0] as {argType})?.IsValid(value{nullableFlag}) ?? false)");
+			writer.WriteLine($"if (Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -149,7 +149,7 @@ internal static class MockPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-			writer.WriteLine($"(({methodCast})methodHandler.Method)(value{nullableFlag});");
+			writer.WriteLine($"Unsafe.As<{methodCast}>(methodHandler.Method)(value{nullableFlag});");
 
 			writer.Indent--;
 			writer.WriteLine("}");

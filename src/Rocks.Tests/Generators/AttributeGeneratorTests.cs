@@ -45,6 +45,7 @@ public static class AttributeGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -84,7 +85,7 @@ public static class AttributeGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -155,6 +156,7 @@ public static class AttributeGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -194,13 +196,13 @@ public static class AttributeGeneratorTests
 								
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<string>)methodHandler.Expectations[0]).IsValid(data))
+									if (Unsafe.As<Argument<string>>(methodHandler.Expectations[0]).IsValid(data))
 									{
 										foundMatch = true;
 										
 										if (methodHandler.Method is not null)
 										{
-											((Action<string>)methodHandler.Method)(data);
+											Unsafe.As<Action<string>>(methodHandler.Method)(data);
 										}
 										
 										methodHandler.IncrementCallCount();

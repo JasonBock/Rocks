@@ -41,6 +41,7 @@ public static class RecordCreateGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			using System.Text;
 			
 			#nullable enable
@@ -101,7 +102,7 @@ public static class RecordCreateGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -119,8 +120,8 @@ public static class RecordCreateGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<string>)methodHandler.Method)() :
-									((HandlerInformation<string>)methodHandler).ReturnValue;
+									Unsafe.As<Func<string>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -137,11 +138,11 @@ public static class RecordCreateGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<StringBuilder>)methodHandler.Expectations[0]).IsValid(builder))
+									if (Unsafe.As<Argument<StringBuilder>>(methodHandler.Expectations[0]).IsValid(builder))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<StringBuilder, bool>)methodHandler.Method)(builder) :
-											((HandlerInformation<bool>)methodHandler).ReturnValue;
+											Unsafe.As<Func<StringBuilder, bool>>(methodHandler.Method)(builder) :
+											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -162,8 +163,8 @@ public static class RecordCreateGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<int>)methodHandler.Method)() :
-									((HandlerInformation<int>)methodHandler).ReturnValue;
+									Unsafe.As<Func<int>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -182,8 +183,8 @@ public static class RecordCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<Type>)methodHandler.Method)() :
-										((HandlerInformation<Type>)methodHandler).ReturnValue;
+										Unsafe.As<Func<Type>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<Type>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}

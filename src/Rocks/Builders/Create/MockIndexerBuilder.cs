@@ -35,7 +35,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if ((({nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)(methodHandler.{WellKnownNames.Expectations}[{i}])).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -45,7 +45,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"(({nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)(methodHandler.{WellKnownNames.Expectations}[{i}])).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -141,7 +141,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if ((({nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)(methodHandler.{WellKnownNames.Expectations}[{i}])).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -151,7 +151,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"(({nameof(Argument)}<{parameter.Type.GetReferenceableName()}>)(methodHandler.{WellKnownNames.Expectations}[{i}])).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{

@@ -42,6 +42,7 @@ public static class CastingGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -82,8 +83,8 @@ public static class CastingGeneratorTests
 								foreach (var methodHandler in methodHandlers)
 								{
 									if (((methodHandler.Expectations[0] as Argument<T>)?.IsValid(value) ?? false) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data) &&
-										((Argument<Guid>)methodHandler.Expectations[2]).IsValid(information))
+										Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(data) &&
+										Unsafe.As<Argument<Guid>>(methodHandler.Expectations[2]).IsValid(information))
 									{
 										foundMatch = true;
 										
@@ -116,8 +117,8 @@ public static class CastingGeneratorTests
 								foreach (var methodHandler in methodHandlers)
 								{
 									if (((methodHandler.Expectations[0] as Argument<T>)?.IsValid(value) ?? false) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data) &&
-										((Argument<Guid>)methodHandler.Expectations[2]).IsValid(information))
+										Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(data) &&
+										Unsafe.As<Argument<Guid>>(methodHandler.Expectations[2]).IsValid(information))
 									{
 										var result = methodHandler.Method is not null && methodHandler.Method is Func<T, string, Guid, T> methodReturn ?
 											methodReturn(value, data, information) :
@@ -144,14 +145,14 @@ public static class CastingGeneratorTests
 								
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<int>)methodHandler.Expectations[0]).IsValid(value) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data))
+									if (Unsafe.As<Argument<int>>(methodHandler.Expectations[0]).IsValid(value) &&
+										Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(data))
 									{
 										foundMatch = true;
 										
 										if (methodHandler.Method is not null)
 										{
-											((Action<int, string>)methodHandler.Method)(value, data);
+											Unsafe.As<Action<int, string>>(methodHandler.Method)(value, data);
 										}
 										
 										methodHandler.IncrementCallCount();
@@ -177,12 +178,12 @@ public static class CastingGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<int>)methodHandler.Expectations[0]).IsValid(value) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(data))
+									if (Unsafe.As<Argument<int>>(methodHandler.Expectations[0]).IsValid(value) &&
+										Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(data))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<int, string, int>)methodHandler.Method)(value, data) :
-											((HandlerInformation<int>)methodHandler).ReturnValue;
+											Unsafe.As<Func<int, string, int>>(methodHandler.Method)(value, data) :
+											Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}

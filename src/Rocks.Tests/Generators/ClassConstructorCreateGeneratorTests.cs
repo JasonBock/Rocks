@@ -40,6 +40,7 @@ public static class ClassConstructorCreateGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -78,11 +79,11 @@ public static class ClassConstructorCreateGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, bool>)methodHandler.Method)(obj) :
-											((HandlerInformation<bool>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
+											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -103,8 +104,8 @@ public static class ClassConstructorCreateGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<int>)methodHandler.Method)() :
-									((HandlerInformation<int>)methodHandler).ReturnValue;
+									Unsafe.As<Func<int>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -121,8 +122,8 @@ public static class ClassConstructorCreateGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<string?>)methodHandler.Method)() :
-									((HandlerInformation<string?>)methodHandler).ReturnValue;
+									Unsafe.As<Func<string?>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -140,7 +141,7 @@ public static class ClassConstructorCreateGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();

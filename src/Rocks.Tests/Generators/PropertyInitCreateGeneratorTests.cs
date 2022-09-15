@@ -42,6 +42,7 @@ public static class PropertyInitCreateGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -101,8 +102,8 @@ public static class PropertyInitCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<int>)methodHandler.Method)() :
-										((HandlerInformation<int>)methodHandler).ReturnValue;
+										Unsafe.As<Func<int>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -121,8 +122,8 @@ public static class PropertyInitCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<int?>)methodHandler.Method)() :
-										((HandlerInformation<int?>)methodHandler).ReturnValue;
+										Unsafe.As<Func<int?>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<int?>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -141,8 +142,8 @@ public static class PropertyInitCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<string>)methodHandler.Method)() :
-										((HandlerInformation<string>)methodHandler).ReturnValue;
+										Unsafe.As<Func<string>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -161,8 +162,8 @@ public static class PropertyInitCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<string?>)methodHandler.Method)() :
-										((HandlerInformation<string?>)methodHandler).ReturnValue;
+										Unsafe.As<Func<string?>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}

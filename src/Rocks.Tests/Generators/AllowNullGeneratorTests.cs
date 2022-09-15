@@ -41,7 +41,8 @@ public static class AllowNullGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			using System.Diagnostics.CodeAnalysis;
-
+			using System.Runtime.CompilerServices;
+			
 			#nullable enable
 			namespace MockTests
 			{
@@ -88,8 +89,8 @@ public static class AllowNullGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<string>)methodHandler.Method)() :
-										((HandlerInformation<string>)methodHandler).ReturnValue;
+										Unsafe.As<Func<string>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -103,13 +104,13 @@ public static class AllowNullGeneratorTests
 									var foundMatch = false;
 									foreach (var methodHandler in methodHandlers)
 									{
-										if ((methodHandler.Expectations[0] as Argument<string>)?.IsValid(value!) ?? false)
+										if (Unsafe.As<Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
 										{
 											foundMatch = true;
 											
 											if (methodHandler.Method is not null)
 											{
-												((Action<string>)methodHandler.Method)(value!);
+												Unsafe.As<Action<string>>(methodHandler.Method)(value!);
 											}
 											
 											if (!foundMatch)
@@ -252,6 +253,7 @@ public static class AllowNullGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			using System.Diagnostics.CodeAnalysis;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -298,11 +300,11 @@ public static class AllowNullGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(obj))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, bool>)methodHandler.Method)(obj) :
-											((HandlerInformation<bool>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
+											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -323,8 +325,8 @@ public static class AllowNullGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<int>)methodHandler.Method)() :
-									((HandlerInformation<int>)methodHandler).ReturnValue;
+									Unsafe.As<Func<int>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -341,8 +343,8 @@ public static class AllowNullGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<string?>)methodHandler.Method)() :
-									((HandlerInformation<string?>)methodHandler).ReturnValue;
+									Unsafe.As<Func<string?>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -363,8 +365,8 @@ public static class AllowNullGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										((Func<string>)methodHandler.Method)() :
-										((HandlerInformation<string>)methodHandler).ReturnValue;
+										Unsafe.As<Func<string>>(methodHandler.Method)() :
+										Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -380,13 +382,13 @@ public static class AllowNullGeneratorTests
 									var foundMatch = false;
 									foreach (var methodHandler in methodHandlers)
 									{
-										if ((methodHandler.Expectations[0] as Argument<string>)?.IsValid(value!) ?? false)
+										if (Unsafe.As<Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
 										{
 											foundMatch = true;
 											
 											if (methodHandler.Method is not null)
 											{
-												((Action<string>)methodHandler.Method)(value!);
+												Unsafe.As<Action<string>>(methodHandler.Method)(value!);
 											}
 											
 											if (!foundMatch)

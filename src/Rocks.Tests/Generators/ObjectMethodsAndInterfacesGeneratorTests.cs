@@ -41,6 +41,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -78,11 +79,11 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(other))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(other))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, bool>)methodHandler.Method)(other) :
-											((HandlerInformation<bool>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(other) :
+											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -101,12 +102,12 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(objA) &&
-										((Argument<object?>)methodHandler.Expectations[1]).IsValid(objB))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(objA) &&
+										Unsafe.As<Argument<object?>>(methodHandler.Expectations[1]).IsValid(objB))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, object?, bool>)methodHandler.Method)(objA, objB) :
-											((HandlerInformation<bool>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, object?, bool>>(methodHandler.Method)(objA, objB) :
+											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -125,8 +126,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<object>)methodHandler.Method)() :
-									((HandlerInformation<object>)methodHandler).ReturnValue;
+									Unsafe.As<Func<object>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<object>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -266,6 +267,7 @@ namespace MockTests
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -303,11 +305,11 @@ namespace MockTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(other))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(other))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, string>)methodHandler.Method)(other) :
-											((HandlerInformation<string>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, string>>(methodHandler.Method)(other) :
+											Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -326,12 +328,12 @@ namespace MockTests
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<object?>)methodHandler.Expectations[0]).IsValid(objA) &&
-										((Argument<object?>)methodHandler.Expectations[1]).IsValid(objB))
+									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(objA) &&
+										Unsafe.As<Argument<object?>>(methodHandler.Expectations[1]).IsValid(objB))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<object?, object?, int>)methodHandler.Method)(objA, objB) :
-											((HandlerInformation<int>)methodHandler).ReturnValue;
+											Unsafe.As<Func<object?, object?, int>>(methodHandler.Method)(objA, objB) :
+											Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -350,8 +352,8 @@ namespace MockTests
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									((Func<bool>)methodHandler.Method)() :
-									((HandlerInformation<bool>)methodHandler).ReturnValue;
+									Unsafe.As<Func<bool>>(methodHandler.Method)() :
+									Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}

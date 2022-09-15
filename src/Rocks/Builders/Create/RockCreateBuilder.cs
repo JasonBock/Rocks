@@ -6,6 +6,7 @@ using Rocks.Expectations;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Rocks.Builders.Create;
@@ -28,6 +29,7 @@ internal sealed class RockCreateBuilder
 		var usings = new SortedSet<string>
 		{
 			$"using {typeof(Action).Namespace};",
+			$"using {typeof(Unsafe).Namespace};",
 			$"using {typeof(HandlerInformation).Namespace};",
 			$"using {typeof(ExpectationException).Namespace};",
 			$"using {typeof(List<>).Namespace};",

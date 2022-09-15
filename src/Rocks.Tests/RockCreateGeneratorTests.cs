@@ -67,6 +67,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -104,12 +105,12 @@ public static class Invoker
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (((Argument<string?>)methodHandler.Expectations[0]).IsValid(a) &&
-										((Argument<string>)methodHandler.Expectations[1]).IsValid(b))
+									if (Unsafe.As<Argument<string?>>(methodHandler.Expectations[0]).IsValid(a) &&
+										Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(b))
 									{
 										var result = methodHandler.Method is not null ?
-											((Func<string?, string, string?>)methodHandler.Method)(a, b) :
-											((HandlerInformation<string?>)methodHandler).ReturnValue;
+											Unsafe.As<Func<string?, string, string?>>(methodHandler.Method)(a, b) :
+											Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
@@ -175,6 +176,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -213,7 +215,7 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -271,6 +273,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			internal static class CreateExpectationsOfITestExtensions
@@ -307,7 +310,7 @@ public static class Invoker
 							var methodHandler = methodHandlers[0];
 							if (methodHandler.Method is not null)
 							{
-								((Action)methodHandler.Method)();
+								Unsafe.As<Action>(methodHandler.Method)();
 							}
 							
 							methodHandler.IncrementCallCount();
@@ -368,6 +371,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -406,7 +410,7 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -462,6 +466,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -500,7 +505,7 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -620,6 +625,7 @@ public static class Invoker
 			using System;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
+			using System.Runtime.CompilerServices;
 			
 			#nullable enable
 			namespace MockTests
@@ -658,7 +664,7 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									((Action)methodHandler.Method)();
+									Unsafe.As<Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
