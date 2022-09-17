@@ -1,75 +1,83 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks;
-using System.Collections.Immutable;
+﻿using Rocks;
 using Rocks.CodeGenerationTest;
-using ComputeSharp;
-using ComputeSharp.D2D1;
-using Csla;
-using Moq;
-using SixLabors.ImageSharp;
-using TerraFX.Interop.DirectX;
-using TerraFX.Interop;
-using System.Text.Json;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Castle.DynamicProxy;
-using Mono.Cecil;
-using AutoMapper;
-using NUnit.Framework;
-using System.Threading.Channels;
 
 var targetAssemblies = new Type[] 
 { 
 	// Core .NET types
-	//typeof(object), typeof(Dictionary<,>), typeof(ImmutableArray), typeof(HttpMessageHandler),
+	//typeof(object), typeof(Dictionary<,>), 
+	//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 	// ComputeSharp
-	//typeof(AutoConstructorAttribute),
+	//typeof(ComputeSharp.AutoConstructorAttribute),
 	
 	// ComputeSharp.D2D1
-	//typeof(D2DCompileOptionsAttribute),
+	//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 	
 	// CSLA
-	//typeof(DataPortal<>),
+	//typeof(Csla.DataPortal<>),
 	
 	// Moq
-	//typeof(Mock<>),
+	//typeof(Moq.Mock<>),
 	
 	// ImageSharp
-	//typeof(GraphicsOptions),
+	//typeof(SixLabors.ImageSharp.GraphicsOptions),
 	
 	// TerraFX.Interop.D3D12MemoryAllocator
-	//typeof(D3D12MA_Allocation),
+	//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 	
 	// TerraFX.Interop.Windows
-	//typeof(INativeGuid),
+	//typeof(TerraFX.Interop.INativeGuid),
 	
 	// Microsoft.CodeAnalysis.CSharp
-	//typeof(SyntaxTree),
+	//typeof(Microsoft.CodeAnalysis.SyntaxTree),
 
 	// System.Text.Json
-	//typeof(JsonDocument),
+	//typeof(System.Text.Json.JsonDocument),
 
 	// Microsoft.Extensions.DependencyInjection
-	//typeof(AsyncServiceScope),
+	//typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 
 	// Microsoft.Extensions.Logging
-	//typeof(LogDefineOptions),
+	//typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 
 	// Castle.Core
-	//typeof(ProxyGenerationOptions),
+	//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 
 	// Mono.Cecil
-	//typeof(FixedSysStringMarshalInfo),
+	//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
 	// AutoMapper
-	//typeof(AutoMapAttribute),
+	//typeof(AutoMapper.AutoMapAttribute),
 
 	// NUnit
-	//typeof(TestCaseAttribute),
+	//typeof(NUnit.Framework.TestCaseAttribute),
 
 	// System.Threading.Channels
-	typeof(BoundedChannelFullMode)
+	//typeof(System.Threading.Channels.BoundedChannelFullMode),
+
+	// Serilog
+	//typeof(Serilog.Core.IDestructuringPolicy),
+
+	// Polly
+	//typeof(Polly.AdvancedCircuitBreakerSyntax),
+
+	// EntityFramework
+	//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+
+	// FluentAssertions
+	//typeof(FluentAssertions.AggregateExceptionExtractor),
+
+	// StackExchange.Redis
+	//typeof(StackExchange.Redis.Aggregate),
+
+	// RestSharp
+	//typeof(RestSharp.BodyParameter),
+
+	// IdentityModel
+	//typeof(IdentityModel.Base64Url),
+
+	// Google.Protobuf
+	typeof(Google.Protobuf.ByteString)
 }.Select(_ => _.Assembly).ToHashSet();
 
 Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");

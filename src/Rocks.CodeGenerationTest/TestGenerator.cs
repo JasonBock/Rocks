@@ -57,10 +57,6 @@ internal static class TestGenerator
 
 		Console.WriteLine($"Was emit successful? {result.Success}");
 
-		var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
-
-		Console.WriteLine($"How many error diagnostics were reported from emit? {errorDiagnostics.Length}");
-
 		var errors = result.Diagnostics
 			.Where(_ => _.Severity == DiagnosticSeverity.Error)
 			.Select(_ => new
@@ -68,13 +64,7 @@ internal static class TestGenerator
 				_.Id,
 				Description = _.ToString(),
 			})
-			.OrderBy(_ => _.Id);
-
-		foreach (var error in errors)
-		{
-			Console.WriteLine(
-				$"Error - Id: {error.Id}, Description: {error.Description}");
-		}
+			.OrderBy(_ => _.Id).ToArray();
 
 		var ignoredWarnings = new[] { "CS0618", "SYSLIB0001", "CS1701" };
 		var warnings = result.Diagnostics
@@ -84,48 +74,22 @@ internal static class TestGenerator
 				_.Id,
 				Description = _.ToString(),
 			})
-			.OrderBy(_ => _.Id);
+			.OrderBy(_ => _.Id).ToArray();
+
+		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
+		Console.WriteLine();
+
+		foreach (var error in errors)
+		{
+			Console.WriteLine(
+				$"Error - Id: {error.Id}, Description: {error.Description}");
+		}
 
 		foreach (var warning in warnings)
 		{
 			Console.WriteLine(
 				$"Warning - Id: {warning.Id}, Description: {warning.Description}");
 		}
-
-		/*
-		Assert.Multiple(() =>
-		{
-			Assert.That(types, Is.Not.Empty);
-			Assert.That(diagnostics.Any(
-				_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning), Is.False);
-
-			using var outputStream = new MemoryStream();
-			var result = outputCompilation.Emit(outputStream);
-
-			Assert.That(result.Success, Is.True);
-
-			var errorDiagnostics = result.Diagnostics.Where(_ => _.Severity == DiagnosticSeverity.Error).ToArray();
-			Assert.That(errorDiagnostics, Is.Empty);
-
-			var ignoredWarnings = new[] { "CS0618", "SYSLIB0001", "CS1701" };
-			var warningGroups = result.Diagnostics
-				.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
-				.GroupBy(_ => _.Id)
-				.Select(_ => new
-				{
-					Id = _.Key,
-					Count = _.Count(),
-					_.ToArray()[0].Descriptor.Title,
-				})
-				.OrderByDescending(_ => _.Count);
-
-			foreach (var warningGroup in warningGroups)
-			{
-				TestContext.WriteLine(
-					$"Id: {warningGroup.Id}, Count: {warningGroup.Count}, Description: {warningGroup.Title}");
-			}
-		});
-		*/
 	}
 
 	static string GetCode(Type[] types, bool isCreate)
