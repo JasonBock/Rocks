@@ -81,6 +81,9 @@ var targetAssemblies = new Type[]
 
 	// CsvHelper
 	typeof(CsvHelper.ArrayHelper),
+
+	// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
+	// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp
 }.Select(_ => _.Assembly).ToHashSet();
 
 Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
