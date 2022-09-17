@@ -117,6 +117,29 @@ So, after creating the console app and adding some other packages, I have some w
   * `Make` (0 errors, 11 warnings)
     * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\IDiscoveryCache_Rock_Make.g.cs(24,12): warning CS8619: Nullability of reference types in value of type 'Task<DiscoveryDocumentResponse?>' doesn't match target type 'Task<DiscoveryDocumentResponse>'.
     * Warning - Id: CS8625, Description: Rocks\Rocks.RockMakeGenerator\TokenResponse_Rock_Make.g.cs(33,72): warning CS8625: Cannot convert null literal to non-nullable reference type.
+* CsvHelper
+  * `Create` (78 errors, 3 warnings)
+    * Error - Id: CS0103, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1446,55): error CS0103: The name 'd__93' does not exist in the current context
+    * Error - Id: CS0111, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(447,46): error CS0111: Type 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object' already defines a member called 'Ignore' with the same parameter types
+    * Error - Id: CS0460, Description: Rocks\Rocks.RockCreateGenerator\DefaultClassMapOfobject_Rock_Create.g.cs(666,23): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
+    * Error - Id: CS0507, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(723,5): error CS0507: 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Data.set': cannot change access modifiers when overriding 'protected' inherited member 'MemberMap.Data.set'
+    * Error - Id: CS0508, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(208,30): error CS0508: 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Ignore(bool)': return type must be 'MemberMap<object, object>' to match overridden member 'MemberMap<object, object>.Ignore(bool)'
+    * Error - Id: CS1001, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,63): error CS1001: Identifier expected
+    * Error - Id: CS1026, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,38): error CS1026: ) expected
+    * Error - Id: CS1031, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,38): error CS1031: Type expected
+    * Error - Id: CS1970, Description: Rocks\Rocks.RockCreateGenerator\DynamicRecordCreator_Rock_Create.g.cs(151,13): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.
+    * Warning - Id: CS8424, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1448,73): warning CS8424: The EnumeratorCancellationAttribute applied to parameter 'cancellationToken' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable
+  * `Make` (63 errors, 3 warnings)
+    * Error - Id: CS0103, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(267,55): error CS0103: The name 'd__93' does not exist in the current context
+    * Error - Id: CS0111, Description: Rocks\Rocks.RockMakeGenerator\MemberMapOfobject_object_Rock_Make.g.cs(99,46): error CS0111: Type 'MakeExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object' already defines a member called 'Ignore' with the same parameter types
+    * Error - Id: CS0460, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(216,24): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
+    * Error - Id: CS0507, Description: Rocks\Rocks.RockMakeGenerator\MemberMap_Rock_Make.g.cs(88,5): error CS0507: 'MakeExpectationsOfMemberMapExtensions.RockMemberMap.TypeConverterOption.set': cannot change access modifiers when overriding 'protected' inherited member 'MemberMap.TypeConverterOption.set'
+    * Error - Id: CS0508, Description: Rocks\Rocks.RockMakeGenerator\MemberMapOfobject_object_Rock_Make.g.cs(54,30): error CS0508: 'MakeExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Ignore(bool)': return type must be 'MemberMap<object, object>' to match overridden member 'MemberMap<object, object>.Ignore(bool)'
+    * Error - Id: CS1001, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,63): error CS1001: Identifier expected
+    * Error - Id: CS1026, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,38): error CS1026: ) expected
+    * Error - Id: CS1031, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,38): error CS1031: Type expected
+    * Warning - Id: CS8424, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(273,76): warning CS8424: The EnumeratorCancellationAttribute applied to parameter 'cancellationToken' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable
+
 
 
 In some cases, the error count was different between `Create` and `Make`, which is confusing.

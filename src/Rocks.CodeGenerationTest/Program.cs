@@ -77,7 +77,10 @@ var targetAssemblies = new Type[]
 	//typeof(IdentityModel.Base64Url),
 
 	// Google.Protobuf
-	typeof(Google.Protobuf.ByteString)
+	//typeof(Google.Protobuf.ByteString),
+
+	// CsvHelper
+	typeof(CsvHelper.ArrayHelper),
 }.Select(_ => _.Assembly).ToHashSet();
 
 Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
