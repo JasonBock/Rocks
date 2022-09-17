@@ -9,6 +9,14 @@ using Moq;
 using SixLabors.ImageSharp;
 using TerraFX.Interop.DirectX;
 using TerraFX.Interop;
+using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Castle.DynamicProxy;
+using Mono.Cecil;
+using AutoMapper;
+using NUnit.Framework;
+using System.Threading.Channels;
 
 var targetAssemblies = new Type[] 
 { 
@@ -37,7 +45,31 @@ var targetAssemblies = new Type[]
 	//typeof(INativeGuid),
 	
 	// Microsoft.CodeAnalysis.CSharp
-	typeof(SyntaxTree),
+	//typeof(SyntaxTree),
+
+	// System.Text.Json
+	//typeof(JsonDocument),
+
+	// Microsoft.Extensions.DependencyInjection
+	//typeof(AsyncServiceScope),
+
+	// Microsoft.Extensions.Logging
+	//typeof(LogDefineOptions),
+
+	// Castle.Core
+	//typeof(ProxyGenerationOptions),
+
+	// Mono.Cecil
+	//typeof(FixedSysStringMarshalInfo),
+
+	// AutoMapper
+	//typeof(AutoMapAttribute),
+
+	// NUnit
+	//typeof(TestCaseAttribute),
+
+	// System.Threading.Channels
+	typeof(BoundedChannelFullMode)
 }.Select(_ => _.Assembly).ToHashSet();
 
 Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
