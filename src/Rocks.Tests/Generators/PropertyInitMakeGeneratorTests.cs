@@ -103,7 +103,6 @@ public static class PropertyInitMakeGeneratorTests
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
-	//[Ignore("Currently cannot run this test until the required property feature is fully supported by the compiler.")]
 	[Test]
 	public static async Task GenerateWithRequiredAsync()
 	{
@@ -137,7 +136,60 @@ public static class PropertyInitMakeGeneratorTests
 
 		var generatedCode =
 			"""
-
+			using Rocks;
+			using Rocks.Exceptions;
+			using System;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			
+			#nullable enable
+			namespace MockTests
+			{
+				internal static class MakeExpectationsOfTestExtensions
+				{
+					public sealed class ConstructorProperties
+					{
+						public required int NonNullableValueType { get; init; }
+						public required int? NullableValueType { get; init; }
+						public required string? NonNullableReferenceType { get; init; }
+						public required string? NullableReferenceType { get; init; }
+					}
+					
+					internal static Test Instance(this MakeGeneration<Test> self, ConstructorProperties constructorProperties) =>
+						constructorProperties is null ?
+							throw new ArgumentNullException(nameof(constructorProperties)) :
+							new RockTest()
+							{
+								NonNullableValueType = constructorProperties.NonNullableValueType,
+								NullableValueType = constructorProperties.NullableValueType,
+								NonNullableReferenceType = constructorProperties.NonNullableReferenceType!,
+								NullableReferenceType = constructorProperties.NullableReferenceType,
+							};
+					
+					private sealed class RockTest
+						: Test
+					{
+						public RockTest() { }
+						
+						public override bool Equals(object? obj)
+						{
+							return default!;
+						}
+						public override int GetHashCode()
+						{
+							return default!;
+						}
+						public override string? ToString()
+						{
+							return default!;
+						}
+						public override void Foo()
+						{
+						}
+					}
+				}
+			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,

@@ -14,7 +14,7 @@ internal static class TestAssistants
 	{
 		var test = new CSharpIncrementalSourceGeneratorVerifier<T>.Test
 		{
-			ReferenceAssemblies = ReferenceAssemblies.Net.Net60, // TestAssistants.GetNet60(), /* ReferenceAssemblies.Net.Net50, */
+			ReferenceAssemblies = TestAssistants.GetNet70(), // ReferenceAssemblies.Net.Net60, // TestAssistants.GetNet60(), /* ReferenceAssemblies.Net.Net50, */
 			TestState =
 			{
 				Sources = { code },
@@ -48,5 +48,21 @@ internal static class TestAssistants
 				  "Microsoft.NETCore.App.Ref",
 				  "6.0.0"),
 			 Path.Combine("ref", "net6.0"));
+	}
+
+	private static ReferenceAssemblies GetNet70()
+	{
+		if (!NuGetFramework.Parse("net7.0").IsPackageBased)
+		{
+			// The NuGet version provided at runtime does not recognize the 'net7.0' target framework
+			throw new NotSupportedException("The 'net7.0' target framework is not supported by this version of NuGet.");
+		}
+
+		return new ReferenceAssemblies(
+			 "net7.0",
+			 new PackageIdentity(
+				  "Microsoft.NETCore.App.Ref",
+				  "7.0.0-rc.1.22426.10"),
+			 Path.Combine("ref", "net7.0"));
 	}
 }
