@@ -4,8 +4,8 @@ using Rocks.CodeGenerationTest;
 var targetAssemblies = new Type[] 
 { 
 	// Core .NET types
-	//typeof(object), typeof(Dictionary<,>), 
-	//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+	typeof(object), typeof(Dictionary<,>),
+	typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 	// ComputeSharp
 	//typeof(ComputeSharp.AutoConstructorAttribute),
@@ -80,7 +80,7 @@ var targetAssemblies = new Type[]
 	//typeof(Google.Protobuf.ByteString),
 
 	// CsvHelper
-	typeof(CsvHelper.ArrayHelper),
+	//typeof(CsvHelper.ArrayHelper),
 
 	// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
 	// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp

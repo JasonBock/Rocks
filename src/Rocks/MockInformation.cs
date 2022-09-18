@@ -65,6 +65,11 @@ internal sealed class MockInformation
 			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(typeToMock));
 		}
 
+		if(typeToMock.GetMembers().Any(_ => _.IsAbstract && _.IsStatic))
+		{
+			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
+		}
+
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 

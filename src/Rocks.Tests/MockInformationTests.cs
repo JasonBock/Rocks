@@ -12,6 +12,26 @@ namespace Rocks.Tests;
 public static class MockInformationTests
 {
 	[Test]
+	public static void CreateWhenInterfaceHasStaticAbstractMethod()
+	{
+		const string targetTypeName = "IHaveStaticAbstractMethod";
+		var code = 
+			$$"""
+			public interface {{targetTypeName}} 
+			{ 
+				static abstract void Foo();
+			}
+			""";
+		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == InterfaceHasStaticAbstractMembersDiagnostic.Id), Is.True);
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
+	[Test]
 	public static void CreateWhenClassDerivesFromEnum()
 	{
 		const string targetTypeName = "EnumType";
