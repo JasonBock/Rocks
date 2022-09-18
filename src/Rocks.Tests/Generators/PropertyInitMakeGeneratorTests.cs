@@ -103,7 +103,7 @@ public static class PropertyInitMakeGeneratorTests
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
-	[Ignore("Currently cannot run this test until the required property feature is fully supported by the compiler.")]
+	//[Ignore("Currently cannot run this test until the required property feature is fully supported by the compiler.")]
 	[Test]
 	public static async Task GenerateWithRequiredAsync()
 	{
