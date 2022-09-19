@@ -117,13 +117,16 @@ internal static class MockMethodValueBuilder
 			else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
 			{
 				namespaces.Add(taskOfTType.ContainingNamespace);
-				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({(method.ReturnType as INamedTypeSymbol)!.TypeArguments[0].GetName()}));");
+				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
+				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
+				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
 			{
 				namespaces.Add(valueTaskOfTType.ContainingNamespace);
-				var typeArgument = (method.ReturnType as INamedTypeSymbol)!.TypeArguments[0];
-				writer.WriteLine($"return new {nameof(ValueTask)}<{typeArgument.GetName()}>(default({typeArgument.GetName()})!);");
+				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
+				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
+				writer.WriteLine($"return new {nameof(ValueTask)}<{taskReturnType.TypeArguments[0].GetName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
 			}
 			else
 			{

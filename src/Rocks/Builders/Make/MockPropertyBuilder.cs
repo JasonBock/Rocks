@@ -10,7 +10,7 @@ internal static class MockPropertyBuilder
 		Compilation compilation)
 	{
 		var property = result.Value;
-		var attributes = property.GetAttributes();
+		var attributes = property.GetAllAttributes();
 
 		if (attributes.Length > 0)
 		{

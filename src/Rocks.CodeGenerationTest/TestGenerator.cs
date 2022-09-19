@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -40,7 +41,8 @@ internal static class TestGenerator
 			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)))
 			.Concat(new[]
 			{
-			MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			});
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
 			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));

@@ -1,11 +1,19 @@
 So, after creating the console app and adding some other packages, I have some work to do.
 
+## Fixes
+* For makes, any `Task<>` or `ValueTask<>` return types are marked with the null-forgiving operator when the return type is not nullable.
+* For makes, `[AllowNull]` now shows up on properties when the base property has it defined.
+
+## Issues
+
+.NET 7
 * Core .NET Types
-  * `Create` (15 errors, 0 warnings)
-    * Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\UTF7Encoding_Rock_Create.g.cs(193,21): error CS1069: The type name 'InvalidEnumArgumentException' could not be found in the namespace 'System.ComponentModel'. This type has been forwarded to assembly 'System.ComponentModel.Primitives, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.
-  * `Make` (0 errors, 26 warnings)
-    * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\HttpContent_Rock_Make.g.cs(54,12): warning CS8619: Nullability of reference types in value of type 'Task<Stream?>' doesn't match target type 'Task<Stream>'.
-    * Warning - Id: CS8765, Description: Rocks\Rocks.RockMakeGenerator\StreamWriter_Rock_Make.g.cs(297,5): warning CS8765: Nullability of type of parameter 'value' doesn't match overridden member (possibly because of nullability attributes).
+  * RESOLVED - `Create` (15 errors, 0 warnings)
+    * RESOLVED - added reference to assembly that contains InvalidEnumArgumentException in `TestGenerator.Generate()` :: Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\UTF8Encoding_Rock_Create.g.cs(61,21): error CS1069: The type name 'InvalidEnumArgumentException' could not be found in the namespace 'System.ComponentModel'. This type has been forwarded to assembly 'System.ComponentModel.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.
+  * RESOLVED - `Make` (0 errors, 29 warnings)
+    * RESOLVED - Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\StreamReader_Rock_Make.g.cs(157,12): warning CS8619: Nullability of reference types in value of type 'Task<string?>' doesn't match target type 'Task<string>'.
+
+.NET 6
 * ComputeSharp.D2D1
   * `Create` (38 errors, 0 warnings) and `Make` (13 errors, 0 warnings)
     * Error - Id: CS0315, Description: Rocks\Rocks.RockCreateGenerator\ID2D1TransformMapperOfint_Rock_Create.g.cs(213,101): error CS0315: The type 'int' cannot be used as type parameter 'T' in the generic type or method 'ID2D1TransformMapper<T>'. There is no boxing conversion from 'int' to 'ComputeSharp.D2D1.ID2D1PixelShader'.

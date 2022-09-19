@@ -65,11 +65,6 @@ internal sealed class MockInformation
 			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(typeToMock));
 		}
 
-		if(typeToMock.GetMembers().Any(_ => _.IsAbstract && _.IsStatic))
-		{
-			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
-		}
-
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 
@@ -80,6 +75,12 @@ internal sealed class MockInformation
 			this.ContainingAssemblyOfInvocationSymbol, shims, ref memberIdentifier);
 		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
+
+		if (this.Methods.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
+			this.Properties.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
+		{
+			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
+		}
 
 		if (buildType == BuildType.Create && this.Methods.Length == 0 && this.Properties.Length == 0)
 		{

@@ -1,7 +1,9 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 
-var targetAssemblies = new Type[] 
+//TestGenerator.Generate(new RockMakeGenerator(), new Type[] { typeof(System.CodeDom.Compiler.IndentedTextWriter) });
+
+var targetAssemblies = new Type[]
 { 
 	// Core .NET types
 	typeof(object), typeof(Dictionary<,>),
@@ -83,7 +85,8 @@ var targetAssemblies = new Type[]
 	//typeof(CsvHelper.ArrayHelper),
 
 	// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
-	// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp
+	// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
+	// ClangSharp, LLVMSharp, Silk.NET,
 }.Select(_ => _.Assembly).ToHashSet();
 
 Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
