@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ComputeSharp.D2D1" Version="2.0.0-alpha.28" />
+		<PackageReference Include="Csla" Version="6.1.0" />
+	</ItemGroup>
+</Project>

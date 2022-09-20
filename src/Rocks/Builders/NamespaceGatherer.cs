@@ -9,17 +9,33 @@ internal sealed class NamespaceGatherer
 	private readonly ImmutableHashSet<string>.Builder builder =
 		ImmutableHashSet.CreateBuilder<string>();
 
-	public void Add(INamespaceSymbol @namespace) =>
-		this.builder.Add(@namespace.GetName());
+	public void Add(INamespaceSymbol? @namespace)
+	{
+		if(!@namespace?.IsGlobalNamespace ?? false)
+		{
+			this.Add(@namespace.GetName());
+		}
+	}
 
-	public void Add(Type type) =>
-		this.builder.Add(type.Namespace);
+	public void Add(Type type) => 
+		this.Add(type.Namespace);
 
-	public void Add(string @namespace) =>
-		this.builder.Add(@namespace);
+	public void Add(string? @namespace)
+	{
+		if (!string.IsNullOrWhiteSpace(@namespace) &&
+			@namespace != "<global namespace>")
+		{
+			this.builder.Add(@namespace!);
+		}
+	}
 
-	public void AddRange(IEnumerable<INamespaceSymbol> namespaces) =>
-		this.builder.AddRange(namespaces.Select(_ => _.GetName()));
+	public void AddRange(IEnumerable<INamespaceSymbol> namespaces)
+	{
+		foreach(var @namespace in namespaces)
+		{
+			this.Add(@namespace);
+		}
+	}
 
 	public ImmutableHashSet<string> Values => this.builder.ToImmutable();
 }

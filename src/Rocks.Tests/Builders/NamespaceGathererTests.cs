@@ -25,6 +25,18 @@ public static class NamespaceGathererTests
 	}
 
 	[Test]
+	public static void AddNamespaceFromTypeInGlobalNamespace()
+	{
+		var gatherer = new NamespaceGatherer();
+		var listType = typeof(IAmInGlobalNamespace);
+		gatherer.Add(listType);
+
+		var namespaces = gatherer.Values;
+
+		Assert.That(namespaces, Has.Count.EqualTo(0));
+	}
+
+	[Test]
 	public static void AddNamespaceSymbol()
 	{
 		var namespaceValue = "MyNamespace.Stuff";

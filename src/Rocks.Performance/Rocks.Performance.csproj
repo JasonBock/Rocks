@@ -3,9 +3,9 @@
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
+		<PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Rocks\Rocks.csproj" />
+		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 </Project>

@@ -58,7 +58,7 @@ internal sealed class RockCreateBuilder
 
 		MockBuilder.Build(indentWriter, this.information, namespaces, this.compilation);
 
-		foreach (var @namespace in namespaces.Values.Where(_ => _ is not null && !string.IsNullOrWhiteSpace(_)))
+		foreach (var @namespace in namespaces.Values)
 		{
 			usings.Add($"using {@namespace};");
 		}

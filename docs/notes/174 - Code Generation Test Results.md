@@ -7,18 +7,18 @@ So, after creating the console app and adding some other packages, I have some w
 ## Issues
 
 .NET 7
-* Core .NET Types
+* RESOLVED - Core .NET Types
   * RESOLVED - `Create` (15 errors, 0 warnings)
     * RESOLVED - added reference to assembly that contains InvalidEnumArgumentException in `TestGenerator.Generate()` :: Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\UTF8Encoding_Rock_Create.g.cs(61,21): error CS1069: The type name 'InvalidEnumArgumentException' could not be found in the namespace 'System.ComponentModel'. This type has been forwarded to assembly 'System.ComponentModel.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.
   * RESOLVED - `Make` (0 errors, 29 warnings)
     * RESOLVED - Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\StreamReader_Rock_Make.g.cs(157,12): warning CS8619: Nullability of reference types in value of type 'Task<string?>' doesn't match target type 'Task<string>'.
-
-.NET 6
 * ComputeSharp.D2D1
   * `Create` (38 errors, 0 warnings) and `Make` (13 errors, 0 warnings)
-    * Error - Id: CS0315, Description: Rocks\Rocks.RockCreateGenerator\ID2D1TransformMapperOfint_Rock_Create.g.cs(213,101): error CS0315: The type 'int' cannot be used as type parameter 'T' in the generic type or method 'ID2D1TransformMapper<T>'. There is no boxing conversion from 'int' to 'ComputeSharp.D2D1.ID2D1PixelShader'.
-    * Error - Id: CS0315, Description: (10,70): error CS0315: The type 'int' cannot be used as type parameter 'T' in the generic type or method 'ID2D1TransformMapperFactory<T>'. There is no boxing conversion from 'int' to 'ComputeSharp.D2D1.ID2D1PixelShader'.
-    * Error - Id: CS0449, Description: Rocks\Rocks.RockCreateGenerator\ID2D1PixelShader_Rock_Create.g.cs(190,51): error CS0449: The 'class', 'struct', 'unmanaged', 'notnull', and 'default' constraints cannot be combined or duplicated, and must be specified first in the constraints list.
+    * Error - Id: CS0315, Description: Rocks\Rocks.RockCreateGenerator\ID2D1TransformMapperFactoryOfint_Rock_Create.g.cs(61,195): error CS0315: The type 'int' cannot be used as type parameter 'T' in the generic type or method 'ID2D1TransformMapperFactory<T>'. There is no boxing conversion from 'int' to 'ComputeSharp.D2D1.ID2D1PixelShader'.
+	* Error - Id: CS0449, Description: Rocks\Rocks.RockCreateGenerator\ID2D1PixelShader_Rock_Create.g.cs(226,61): error CS0449: The 'class', 'struct', 'unmanaged', 'notnull', and 'default' constraints cannot be combined or duplicated, and must be specified first in the constraints list.
+
+.NET 6
+
 * CSLA
   * `Create` and `Make` (both 22 errors, 0 warnings)
     * Error - Id: CS0311, Description: (82,57): error CS0311: The type 'object' cannot be used as type parameter 'T' in the generic type or method 'MinValue<T>'. There is no implicit reference conversion from 'object' to 'System.IComparable'.

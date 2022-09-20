@@ -19,6 +19,8 @@ public static class ITypeParameterSymbolExtensionsTests
 	[TestCase("public class Target<T> where T : notnull { }", "where T : notnull")]
 	[TestCase("public class Target<T> where T : unmanaged { }", "where T : unmanaged, struct")]
 	[TestCase("public class Target<T> where T : struct { }", "where T : struct")]
+	[TestCase("public interface IThing { } public class Target<T> where T : struct, IThing { }", "where T : struct, IThing")]
+	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : Thing, IThing")]
 	public static void GetConstraints(string code, string expectedConstraints)
 	{
 		var constraints = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code).GetConstraints();

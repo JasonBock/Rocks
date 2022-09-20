@@ -1,9 +1,0 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>Exe</OutputType>
-	</PropertyGroup>
-	<ItemGroup>
-		<!-- Note: https://docs.microsoft.com/en-us/nuget/Consume-Packages/managing-the-global-packages-and-cache-folders -->
-		<PackageReference Include="Rocks" Version="6.4.5" />
-	</ItemGroup>
-</Project>

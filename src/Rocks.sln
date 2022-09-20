@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.IntegrationTests", "Rocks.IntegrationTests\Rocks.IntegrationTests.csproj", "{EB1465BD-5400-4226-BFA3-FA59EA14DB02}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.NuGetHost", "Rocks.NuGetHost\Rocks.NuGetHost.csproj", "{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.PackageHost", "Rocks.PackageHost\Rocks.PackageHost.csproj", "{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
 	EndProjectSection
@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocks.CodeGenerationTest", "Rocks.CodeGenerationTest\Rocks.CodeGenerationTest.csproj", "{3C14FE57-F5C6-4AB8-A514-783C2CE33A91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.CodeGenerationTest", "Rocks.CodeGenerationTest\Rocks.CodeGenerationTest.csproj", "{3C14FE57-F5C6-4AB8-A514-783C2CE33A91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
