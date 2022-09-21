@@ -1,108 +1,141 @@
-﻿using Rocks;
+﻿using Moq;
+using Rocks;
 using Rocks.CodeGenerationTest;
+using System.Linq.Expressions;
 
-TestGenerator.Generate(new RockCreateGenerator(), new Type[] { typeof(Csla.BusinessBase<Customer>) });
+var x = typeof(Mock);
+//TestWithCode();
+TestWithType();
+//TestWithTypes();
 
-var targetAssemblies = new Type[]
-{ 
-	// Core .NET types
-	//typeof(object), typeof(Dictionary<,>),
-	//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+#pragma warning disable CS8321 // Local function is declared but never used
+static void TestWithCode()
+{
+	TestGenerator.Generate(new RockCreateGenerator(),
+		"""
+		using Csla;
+		using Rocks;
+		using System;
 
-	// ComputeSharp
-	//typeof(ComputeSharp.AutoConstructorAttribute),
+		[Serializable]
+		public class Customer
+			: BusinessBase<Customer> { }
+
+		public static class Test
+		{
+			public static void Go()
+			{
+				var expectations = Rock.Create<BusinessBase<Customer>>();
+			}
+		}
+		""",
+		typeof(Csla.BusinessBase<>),
+		typeof(System.ComponentModel.DataAnnotations.RequiredAttribute),
+		typeof(System.ComponentModel.PropertyChangingEventArgs));
+}
+
+static void TestWithType() =>
+	 TestGenerator.Generate(new RockCreateGenerator(), new[] { typeof(Moq.Mock<>) }, typeof(Expression));
+
+static void TestWithTypes()
+{
+	var targetAssemblies = new Type[]
+	{ 
+		// Core .NET types
+		//typeof(object), typeof(Dictionary<,>),
+		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// ComputeSharp
+		//typeof(ComputeSharp.AutoConstructorAttribute),
 	
-	// ComputeSharp.D2D1
-	// ID2D1TransformMapperFactory will fail because it needs a struct 
-	// that can be unmanaged and implement ID2D1PixelShader. If that's
-	// done, then it works just fine.
-	//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
+		// ComputeSharp.D2D1
+		// ID2D1TransformMapperFactory will fail because it needs a struct 
+		// that can be unmanaged and implement ID2D1PixelShader. If that's
+		// done, then it works just fine.
+		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 	
-	// CSLA
-	typeof(Csla.DataPortal<>),
-	
-	// Moq
-	//typeof(Moq.Mock<>),
-	
-	// ImageSharp
-	//typeof(SixLabors.ImageSharp.GraphicsOptions),
-	
-	// TerraFX.Interop.D3D12MemoryAllocator
-	//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
-	
-	// TerraFX.Interop.Windows
-	//typeof(TerraFX.Interop.INativeGuid),
-	
-	// Microsoft.CodeAnalysis.CSharp
-	//typeof(Microsoft.CodeAnalysis.SyntaxTree),
+		// CSLA
+		//typeof(Csla.DataPortal<>),
 
-	// System.Text.Json
-	//typeof(System.Text.Json.JsonDocument),
+		// Moq
+		typeof(Moq.Mock<>),
 
-	// Microsoft.Extensions.DependencyInjection
-	//typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
+		// ImageSharp
+		//typeof(SixLabors.ImageSharp.GraphicsOptions),
 
-	// Microsoft.Extensions.Logging
-	//typeof(Microsoft.Extensions.Logging.LogDefineOptions),
+		// TerraFX.Interop.D3D12MemoryAllocator
+		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 
-	// Castle.Core
-	//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
+		// TerraFX.Interop.Windows
+		//typeof(TerraFX.Interop.INativeGuid),
 
-	// Mono.Cecil
-	//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
+		// Microsoft.CodeAnalysis.CSharp
+		//typeof(Microsoft.CodeAnalysis.SyntaxTree),
 
-	// AutoMapper
-	//typeof(AutoMapper.AutoMapAttribute),
+		// System.Text.Json
+		//typeof(System.Text.Json.JsonDocument),
 
-	// NUnit
-	//typeof(NUnit.Framework.TestCaseAttribute),
+		// Microsoft.Extensions.DependencyInjection
+		//typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 
-	// System.Threading.Channels
-	//typeof(System.Threading.Channels.BoundedChannelFullMode),
+		// Microsoft.Extensions.Logging
+		//typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 
-	// Serilog
-	//typeof(Serilog.Core.IDestructuringPolicy),
+		// Castle.Core
+		//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 
-	// Polly
-	//typeof(Polly.AdvancedCircuitBreakerSyntax),
+		// Mono.Cecil
+		//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
-	// EntityFramework
-	//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		// AutoMapper
+		//typeof(AutoMapper.AutoMapAttribute),
 
-	// FluentAssertions
-	//typeof(FluentAssertions.AggregateExceptionExtractor),
+		// NUnit
+		//typeof(NUnit.Framework.TestCaseAttribute),
 
-	// StackExchange.Redis
-	//typeof(StackExchange.Redis.Aggregate),
+		// System.Threading.Channels
+		//typeof(System.Threading.Channels.BoundedChannelFullMode),
 
-	// RestSharp
-	//typeof(RestSharp.BodyParameter),
+		// Serilog
+		//typeof(Serilog.Core.IDestructuringPolicy),
 
-	// IdentityModel
-	//typeof(IdentityModel.Base64Url),
+		// Polly
+		//typeof(Polly.AdvancedCircuitBreakerSyntax),
 
-	// Google.Protobuf
-	//typeof(Google.Protobuf.ByteString),
+		// EntityFramework
+		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
-	// CsvHelper
-	//typeof(CsvHelper.ArrayHelper),
+		// FluentAssertions
+		//typeof(FluentAssertions.AggregateExceptionExtractor),
 
-	// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
-	// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
-	// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
-}.Select(_ => _.Assembly).ToHashSet();
+		// StackExchange.Redis
+		//typeof(StackExchange.Redis.Aggregate),
 
-Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
-TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies);
-Console.WriteLine();
+		// RestSharp
+		//typeof(RestSharp.BodyParameter),
 
-Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
-TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies);
-Console.WriteLine();
+		// IdentityModel
+		//typeof(IdentityModel.Base64Url),
 
-Console.WriteLine("Generator testing complete");
+		// Google.Protobuf
+		//typeof(Google.Protobuf.ByteString),
 
-[Serializable]
-public class Customer
-	: Csla.BusinessBase<Customer>
-{ }
+		// CsvHelper
+		//typeof(CsvHelper.ArrayHelper),
+
+		// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
+		// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
+		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
+	}.Select(_ => _.Assembly).ToHashSet();
+
+	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
+	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies);
+	Console.WriteLine();
+
+	Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
+	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies);
+	Console.WriteLine();
+
+	Console.WriteLine("Generator testing complete");
+}
+#pragma warning restore CS8321 // Local function is declared but never used

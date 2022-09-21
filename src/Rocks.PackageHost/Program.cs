@@ -4,7 +4,7 @@ using Rocks;
 
 RunITestCase();
 RunID2D1TransformMapperFactory();
-RunBusinessBaseCase();
+//RunBusinessBaseCase();
 
 static void RunITestCase()
 {
@@ -28,13 +28,13 @@ static void RunID2D1TransformMapperFactory()
 	expectations.Verify();
 }
 
-static void RunBusinessBaseCase()
-{
-	var expectations = Rock.Create<Customer>();
-	expectations.Methods().Delete();
+//static void RunBusinessBaseCase()
+//{
+//	var expectations = Rock.Create<Customer>();
+//	expectations.Methods().Delete();
 
-	//var mock = expectations.In
-}
+//	//var mock = expectations.In
+//}
 
 [Serializable]
 public class Customer

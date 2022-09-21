@@ -14,20 +14,102 @@ public static class IMethodSymbolExtensionsMatchTests
 	private const string MethodTwo = nameof(IMethodSymbolExtensionsMatchTests.MethodTwo);
 
 	[Test]
+	public static void MatchWhenMethodsDifferByParameterTypeNullability()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string? a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsDifferByReturnTypeNullability()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public string {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public string? {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsDifferByTypeParameterCountOnly()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}<T>() { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.None));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsAreExactWithTypeParametersInReturnType()
+	{
+		var code =
+			$$"""
+			public class ReturnType<T> { }
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public ReturnType<T> {{IMethodSymbolExtensionsMatchTests.MethodOne}}<T>() { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public ReturnType<T> {{IMethodSymbolExtensionsMatchTests.MethodOne}}<T>() { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
 	public static void MatchWhenMethodsAreExactNoParameters()
 	{
 		var code =
-$$"""
-public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
-{
-	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
-}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
 
-public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
-{
-	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
-}
-""";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
@@ -37,17 +119,17 @@ public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
 	public static void MatchWhenMethodsAreExactWithParameters()
 	{
 		var code =
-$$"""
-public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
-{
-	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
-}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
 
-public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
-{
-	public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
-}
-""";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
@@ -57,15 +139,17 @@ public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
 	public static void MatchWhenMethodsAreExactWithParamsParameter()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a, params object[] b) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a, params object[] b) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a, params object[] b) {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a, params object[] b) { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));

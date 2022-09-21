@@ -122,6 +122,11 @@ internal static class IMethodSymbolExtensions
 		}
 		else
 		{
+			if(self.TypeParameters.Length != other.TypeParameters.Length)
+			{
+				return MethodMatch.None;
+			}
+
 			var selfParameters = self.Parameters;
 			var otherParameters = other.Parameters;
 
@@ -135,7 +140,8 @@ internal static class IMethodSymbolExtensions
 				var selfParameter = selfParameters[i];
 				var otherParameter = otherParameters[i];
 
-				if (!selfParameter.Type.Equals(otherParameter.Type, SymbolEqualityComparer.Default) ||
+				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() != 
+					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() ||
 					!(selfParameter.RefKind == otherParameter.RefKind ||
 						(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
 						(selfParameter.RefKind == RefKind.Out && otherParameter.RefKind == RefKind.Ref)) ||
@@ -145,7 +151,8 @@ internal static class IMethodSymbolExtensions
 				}
 			}
 
-			return self.ReturnType.Equals(other.ReturnType, SymbolEqualityComparer.Default) ?
+			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() == 
+				other.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() ?
 				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 		}
 	}
