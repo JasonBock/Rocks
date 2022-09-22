@@ -3,160 +3,141 @@ So, after creating the console app and adding some other packages, I have some w
 ## Fixes
 * For makes, any `Task<>` or `ValueTask<>` return types are marked with the null-forgiving operator when the return type is not nullable.
 * For makes, `[AllowNull]` now shows up on properties when the base property has it defined.
+* Constraint ordering has been fixed in certain cases (it was failing when there were `struct` and interface constraints)
+* Method matching now correctly handles cases where the either parameters or return types use generic type parameters.
+* If an interface has static abstract members, Rocks will raise the `InterfaceHasStaticAbstractMembersDiagnostic` (`ROCK7`).
 
-## Issues
+## Unsolved Issues
 
-.NET 7
-* RESOLVED - Core .NET Types
-  * RESOLVED - `Create` (15 errors, 0 warnings)
-    * RESOLVED - added reference to assembly that contains InvalidEnumArgumentException in `TestGenerator.Generate()` :: Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\UTF8Encoding_Rock_Create.g.cs(61,21): error CS1069: The type name 'InvalidEnumArgumentException' could not be found in the namespace 'System.ComponentModel'. This type has been forwarded to assembly 'System.ComponentModel.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.
-  * RESOLVED - `Make` (0 errors, 29 warnings)
-    * RESOLVED - Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\StreamReader_Rock_Make.g.cs(157,12): warning CS8619: Nullability of reference types in value of type 'Task<string?>' doesn't match target type 'Task<string>'.
-* ComputeSharp.D2D1
-  * `Create` (38 errors, 0 warnings) and `Make` (13 errors, 0 warnings)
-    * Error - Id: CS0315, Description: Rocks\Rocks.RockCreateGenerator\ID2D1TransformMapperFactoryOfint_Rock_Create.g.cs(61,195): error CS0315: The type 'int' cannot be used as type parameter 'T' in the generic type or method 'ID2D1TransformMapperFactory<T>'. There is no boxing conversion from 'int' to 'ComputeSharp.D2D1.ID2D1PixelShader'.
-	* Error - Id: CS0449, Description: Rocks\Rocks.RockCreateGenerator\ID2D1PixelShader_Rock_Create.g.cs(226,61): error CS0449: The 'class', 'struct', 'unmanaged', 'notnull', and 'default' constraints cannot be combined or duplicated, and must be specified first in the constraints list.
+### Type Names in Multiple Interfaces
 
-.NET 6
+In CSLA, if `BusinessBase<>` is mocked, an error occurs where `SerializationInfo` is used, and both `Csla.Serialization.Mobile.SerializationInfo` and `System.Runtime.Serialization.SerializationInfo` show up in `using` statements. This is essentially ["the type problem"](https://github.com/JasonBock/Rocks/issues/129), where I need to decide if I stop doing `using` and use fully-qualified type names everywhere.
 
-* CSLA
-  * `Create` and `Make` (both 22 errors, 0 warnings)
-    * Error - Id: CS0311, Description: (82,57): error CS0311: The type 'object' cannot be used as type parameter 'T' in the generic type or method 'MinValue<T>'. There is no implicit reference conversion from 'object' to 'System.IComparable'.
-* TerraFX.Interop.Windows
-  * `Create` and `Make`
-    * Warning - Id: CS0628, Description: Rocks\Rocks.RockCreateGenerator\INativeGuid_Rock_Create.g.cs(135,27): warning CS0628: 'CreateExpectationsOfINativeGuidExtensions.RockINativeGuid.NativeGuid': new protected member declared in sealed type
-* Microsoft.Extensions.DependencyInjection
-  * `Create` (23 errors, 0 warnings) and `Make` (9 errors, 0 warnings)
-    * Error - Id: CS0012, Description: Rocks\Rocks.RockCreateGenerator\IServiceScope_Rock_Create.g.cs(37,6): error CS0012: The type 'IServiceProvider' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.ComponentModel, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
-    * Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\IServiceProviderFactoryOfobject_Rock_Create.g.cs(95,82): error CS1069: The type name 'IServiceProvider' could not be found in the namespace 'System'. This type has been forwarded to assembly 'System.ComponentModel, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' Consider adding a reference to that assembly.
-    * Error - Id: CS1503, Description: Rocks\Rocks.RockCreateGenerator\ServiceDescriptor_Rock_Create.g.cs(68,25): error CS1503: Argument 2: cannot convert from 'System.Func<IServiceProvider, object>' to 'System.Type'
-* Castle.Core
-  * `Create` (48 errors, 0 warnings)
-    * Error - Id: CS0012, Description: Rocks\Rocks.RockCreateGenerator\IEmailSender_Rock_Create.g.cs(32,6): error CS0012: The type 'MailMessage' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.Net.Mail, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'.
-	* Error - Id: CS0029, Description: Rocks\Rocks.RockCreateGenerator\EditableBindingListOfobject_Rock_Create.g.cs(579,14): error CS0029: Cannot implicitly convert type 'System.ComponentModel.PropertyDescriptor' to 'Castle.Components.DictionaryAdapter.PropertyDescriptor'
-	* Error - Id: CS0115, Description: Rocks\Rocks.RockCreateGenerator\EditableBindingListOfobject_Rock_Create.g.cs(403,28): error CS0115: 'CreateExpectationsOfEditableBindingListOfobjectExtensions.RockEditableBindingListOfobject.ApplySortCore(PropertyDescriptor, ListSortDirection)': no suitable method found to override
-	* Error - Id: CS0136, Description: Rocks\Rocks.RockCreateGenerator\DynamicDictionary_Rock_Create.g.cs(155,12): error CS0136: A local or parameter named 'result' cannot be declared in this scope because that name is used in an enclosing local scope to define a local or parameter
-	* Error - Id: CS0535, Description: Rocks\Rocks.RockCreateGenerator\IBindingListOfobject_Rock_Create.g.cs(52,6): error CS0535: 'CreateExpectationsOfIBindingListOfobjectExtensions.RockIBindingListOfobject' does not implement interface member 'IBindingList<object>.Find(PropertyDescriptor, object)'
-	* Error - Id: CS0738, Description: Rocks\Rocks.RockCreateGenerator\IBindingListOfobject_Rock_Create.g.cs(52,6): error CS0738: 'CreateExpectationsOfIBindingListOfobjectExtensions.RockIBindingListOfobject' does not implement interface member 'IBindingList<object>.SortProperty'. 'CreateExpectationsOfIBindingListOfobjectExtensions.RockIBindingListOfobject.SortProperty' cannot implement 'IBindingList<object>.SortProperty' because it does not have the matching return type of 'PropertyDescriptor'.
-	* Error - Id: CS0841, Description: Rocks\Rocks.RockCreateGenerator\DynamicDictionary_Rock_Create.g.cs(156,95): error CS0841: Cannot use local variable 'result' before it is declared
-	* Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\DefaultSmtpSender_Rock_Create.g.cs(116,38): error CS1069: The type name 'SmtpClient' could not be found in the namespace 'System.Net.Mail'. This type has been forwarded to assembly 'System.Net.Mail, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' Consider adding a reference to that assembly.
-	* Error - Id: CS1503, Description: Rocks\Rocks.RockCreateGenerator\EditableBindingListOfobject_Rock_Create.g.cs(433,25): error CS1503: Argument 1: cannot convert from 'Castle.Components.DictionaryAdapter.PropertyDescriptor' to 'System.ComponentModel.PropertyDescriptor'
-	* Error - Id: CS1715, Description: Rocks\Rocks.RockCreateGenerator\EditableBindingListOfobject_Rock_Create.g.cs(564,43): error CS1715: 'CreateExpectationsOfEditableBindingListOfobjectExtensions.RockEditableBindingListOfobject.SortPropertyCore': type must be 'PropertyDescriptor' to match overridden member 'BindingList<object>.SortPropertyCore'
-  * `Make` (13 errors, 9 warnings)
-    * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\XmlSubtreeReader_Rock_Make.g.cs(282,12): warning CS8619: Nullability of reference types in value of type 'Task<string?>' doesn't match target type 'Task<string>'.
-* AutoMapper
-  * `Create` (241 errors, 11 warnings) and `Make` (39 errors, 7 warnings)
-    * Error - Id: CS0029, Description: Rocks\Rocks.RockCreateGenerator\PathMap_Rock_Create.g.cs(161,14): error CS0029: Cannot implicitly convert type 'System.Reflection.MemberInfo[]' to 'MemberInfo[]'
-	* Error - Id: CS0246, Description: Rocks\Rocks.RockCreateGenerator\DuplicateTypeMapConfigurationException_Rock_Create.g.cs(28,131): error CS0246: The type or namespace name 'TypeMapConfigErrors' could not be found (are you missing a using directive or an assembly reference?)
-    * Error - Id: CS0311, Description: Rocks\Rocks.RockCreateGenerator\MappingExpressionBaseOfobject_object_object_Rock_Create.g.cs(173,107): error CS0311: The type 'object' cannot be used as type parameter 'TMappingExpression' in the generic type or method 'MappingExpressionBase<TSource, TDestination, TMappingExpression>'. There is no implicit reference conversion from 'object' to 'AutoMapper.IMappingExpressionBase<object, object, object>'.
-    * Error - Id: CS0460, Description: Rocks\Rocks.RockCreateGenerator\IMemberConfigurationExpression_Rock_Create.g.cs(334,28): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
-    * Error - Id: CS0507, Description: Rocks\Rocks.RockCreateGenerator\ConstructorParameterMap_Rock_Create.g.cs(674,5): error CS0507: 'CreateExpectationsOfConstructorParameterMapExtensions.RockConstructorParameterMap.SourceType.set': cannot change access modifiers when overriding 'protected' inherited member 'ConstructorParameterMap.SourceType.set'
-    * Error - Id: CS0535, Description: Rocks\Rocks.RockCreateGenerator\IGlobalConfiguration_Rock_Create.g.cs(43,6): error CS0535: 'CreateExpectationsOfIGlobalConfigurationExtensions.RockIGlobalConfiguration' does not implement interface member 'IConfigurationProvider.AssertConfigurationIsValid()'
-    * Error - Id: CS1503, Description: Rocks\Rocks.RockCreateGenerator\AutoMapperConfigurationException_Rock_Create.g.cs(58,59): error CS1503: Argument 2: cannot convert from 'TypeMapConfigErrors[]' to 'string'
-    * Warning - Id: CS8625, Description: Rocks\Rocks.RockCreateGenerator\IMemberConfiguration_Rock_Create.g.cs(52,93): warning CS8625: Cannot convert null literal to non-nullable reference type.
-    * Warning - Id: CS8633, Description: Rocks\Rocks.RockCreateGenerator\IMappingExpressionOfobject_object_Rock_Create.g.cs(155,46): warning CS8633: Nullability in constraints for type parameter 'TOtherSource' of method 'CreateExpectationsOfIMappingExpressionOfobject_objectExtensions.RockIMappingExpressionOfobject_object.Include<TOtherSource, TOtherDestination>()' doesn't match the constraints for type parameter 'TOtherSource' of interface method 'IMappingExpression<object, object>.Include<TOtherSource, TOtherDestination>()'. Consider using an explicit interface implementation instead.
-* System.Threading.Channels
-  * `Create` and `Make`
-    * Error - Id: CS0103, Description: Rocks\Rocks.RockCreateGenerator\ChannelReaderOfobject_Rock_Create.g.cs(216,52): error CS0103: The name 'd__12' does not exist in the current context
-    * Error - Id: CS1001, Description: Rocks\Rocks.RockCreateGenerator\ChannelReaderOfobject_Rock_Create.g.cs(216,58): error CS1001: Identifier expected
-    * Error - Id: CS1026, Description: Rocks\Rocks.RockCreateGenerator\ChannelReaderOfobject_Rock_Create.g.cs(216,38): error CS1026: ) expected
-    * Error - Id: CS1031, Description: Rocks\Rocks.RockCreateGenerator\ChannelReaderOfobject_Rock_Create.g.cs(216,38): error CS1031: Type expected
-* Polly
-  * `Create` (4 errors, 0 warnings)
-    * Error - Id: CS0136, Description: Rocks\Rocks.RockCreateGenerator\ITtlStrategy_Rock_Create.g.cs(50,12): error CS0136: A local or parameter named 'result' cannot be declared in this scope because that name is used in an enclosing local scope to define a local or parameter
-	* Error - Id: CS0841, Description: Rocks\Rocks.RockCreateGenerator\ITtlStrategy_Rock_Create.g.cs(51,78): error CS0841: Cannot use local variable 'result' before it is declared
-  * `Make` (0 errors, 47 warnings)
-    * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\IAsyncPolicyOfobject_Rock_Make.g.cs(29,12): warning CS8619: Nullability of reference types in value of type 'Task<object?>' doesn't match target type 'Task<object>'.
-* EntityFramework
-  * `Create` (a lot, I couldn't get the stats)
-    * Error - Id: CS0508, Description: Rocks\Rocks.RockCreateGenerator\IndexBuilderOfobject_Rock_Create.g.cs(76,33): error CS0508: 'CreateExpectationsOfIndexBuilderOfobjectExtensions.RockIndexBuilderOfobject.IsUnique(bool)': return type must be 'IndexBuilder<object>' to match overridden member 'IndexBuilder<object>.IsUnique(bool)'
-	* Error - Id: CS0535, Description: Rocks\Rocks.RockCreateGenerator\IDbContextTransaction_Rock_Create.g.cs(386,7): error CS0535: 'CreateExpectationsOfIDbContextTransactionExtensions.RockIDbContextTransaction.ShimRockIDbContextTransaction' does not implement interface member 'IDisposable.Dispose()'
-	* Error - Id: CS0738, Description: Rocks\Rocks.RockCreateGenerator\IMutableNavigation_Rock_Create.g.cs(83,6): error CS0738: 'CreateExpectationsOfIMutableNavigationExtensions.RockIMutableNavigation' does not implement interface member 'IReadOnlyNavigation.ForeignKey'. 'CreateExpectationsOfIMutableNavigationExtensions.RockIMutableNavigation.ForeignKey' cannot implement 'IReadOnlyNavigation.ForeignKey' because it does not have the matching return type of 'IReadOnlyForeignKey'.
-	* Error - Id: CS0841, Description: Rocks\Rocks.RockCreateGenerator\SaveChangesInterceptor_Rock_Create.g.cs(113,128): error CS0841: Cannot use local variable 'result' before it is declared
-	* Error - Id: CS1001, Description: Rocks\Rocks.RockCreateGenerator\ReferenceOfobject_Rock_Create.g.cs(27,96): error CS1001: Identifier expected
-    * Error - Id: CS1003, Description: Rocks\Rocks.RockCreateGenerator\ReferenceOfobject_Rock_Create.g.cs(27,96): error CS1003: Syntax error, ',' expected
-    * Error - Id: CS1069, Description: Rocks\Rocks.RockCreateGenerator\ITransactionEnlistmentManager_Rock_Create.g.cs(47,34): error CS1069: The type name 'Transaction' could not be found in the namespace 'System.Transactions'. This type has been forwarded to assembly 'System.Transactions.Local, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' Consider adding a reference to that assembly.
-    * Error - Id: CS1503, Description: Rocks\Rocks.RockCreateGenerator\ModelValidator_Rock_Create.g.cs(308,43): error CS1503: Argument 2: cannot convert from 'Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger<Validation>' to 'Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger<Microsoft.EntityFrameworkCore.DbLoggerCategory.Model.Validation>'
-    * Error - Id: CS1525, Description: Rocks\Rocks.RockCreateGenerator\ReferenceOfobject_Rock_Create.g.cs(32,44): error CS1525: Invalid expression term 'object'
-    * Error - Id: CS1729, Description: Rocks\Rocks.RockCreateGenerator\ReferenceOfobject_Rock_Create.g.cs(32,16): error CS1729: 'CreateExpectationsOfReferenceOfobjectExtensions.RockReferenceOfobject' does not contain a constructor that takes 2 arguments
-    * Error - Id: CS1750, Description: Rocks\Rocks.RockCreateGenerator\DbContextOptionsBuilderOfobject_Rock_Create.g.cs(116,82): error CS1750: A value of type 'int' cannot be used as a default parameter because there are no standard conversions to type 'LogLevel'
-	* Error - Id: CS8138, Description: Rocks\Rocks.RockCreateGenerator\DbContextOptionsOfobject_Rock_Create.g.cs(281,5): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.
-    * Warning - Id: CS0169, Description: Rocks\Rocks.RockCreateGenerator\IReadOnlyServiceProperty_Rock_Create.g.cs(462,52): warning CS0169: The field 'CreateExpectationsOfIReadOnlyServicePropertyExtensions.RockIReadOnlyServiceProperty.ShimRockIReadOnlyServiceProperty.mock' is never used
-    * Warning - Id: CS0612, Description: Rocks\Rocks.RockCreateGenerator\ModelBuilder_Rock_Create.g.cs(109,5): warning CS0612: 'ModelBuilder.ModelBuilder(IMutableModel)' is obsolete
-    * Warning - Id: CS1066, Description: Rocks\Rocks.RockCreateGenerator\IMutableModel_Rock_Create.g.cs(1144,125): warning CS1066: The default value specified for parameter 'condition' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments
-    * Warning - Id: CS8604, Description: Rocks\Rocks.RockCreateGenerator\GeometryValueComparerOfobject_Rock_Create.g.cs(308,27): warning CS8604: Possible null reference argument for parameter 'instance' in 'object ValueComparer<object>.Snapshot(object instance)'.
-    * Warning - Id: CS8618, Description: Rocks\Rocks.RockCreateGenerator\ISkipNavigation_Rock_Create.g.cs(72,11): warning CS8618: Non-nullable field 'shimForIReadOnlySkipNavigation' must contain a non-null value when exiting constructor. Consider declaring the field as nullable.
-  * `Make` (965 errors, 57 warnings)
-    * Error - Id: CS0012, Description: Rocks\Rocks.RockMakeGenerator\DiagnosticsLoggerOfobject_Rock_Make.g.cs(55,37): error CS0012: The type 'DiagnosticSource' is defined in an assembly that is not referenced. You must add a reference to assembly 'System.Diagnostics.DiagnosticSource, 
-    * Error - Id: CS0051, Description: Rocks\Rocks.RockMakeGenerator\CoreTypeMapping_Rock_Make.g.cs(25,11): error CS0051: Inconsistent accessibility: parameter type 'CoreTypeMapping.CoreTypeMappingParameters' is less accessible than method 'MakeExpectationsOfCoreTypeMappingExtensions.RockCoreTypeMapping.RockCoreTypeMapping(CoreTypeMapping.CoreTypeMappingParameters)'
-    * Error - Id: CS0111, Description: Rocks\Rocks.RockMakeGenerator\OwnedNavigationBuilderOfobject_object_Rock_Make.g.cs(311,59): error CS0111: Type 'MakeExpectationsOfOwnedNavigationBuilderOfobject_objectExtensions.RockOwnedNavigationBuilderOfobject_object' already defines a member called 'OwnsMany' with the same parameter types
-    * Error - Id: CS0115, Description: Rocks\Rocks.RockMakeGenerator\QueryCompilationContext_Rock_Make.g.cs(70,5): error CS0115: 'MakeExpectationsOfQueryCompilationContextExtensions.RockQueryCompilationContext.QueryTrackingBehavior.set': no suitable method found to override
-    * Error - Id: CS0118, Description: Rocks\Rocks.RockMakeGenerator\LazyLoader_Rock_Make.g.cs(19,130): error CS0118: 'Infrastructure' is a namespace but is used like a type
-    * Error - Id: CS0122, Description: Rocks\Rocks.RockMakeGenerator\CoreTypeMapping_Rock_Make.g.cs(19,103): error CS0122: 'CoreTypeMapping.CoreTypeMappingParameters' is inaccessible due to its protection level
-    * Error - Id: CS0234, Description: Rocks\Rocks.RockMakeGenerator\CompiledQueryCache_Rock_Make.g.cs(3,28): error CS0234: The type or namespace name 'Caching' does not exist in the namespace 'Microsoft.Extensions' (are you missing an assembly reference?)
-    * Error - Id: CS0243, Description: Rocks\Rocks.RockMakeGenerator\ConventionDispatcher_Rock_Make.g.cs(242,5): error CS0243: The Conditional attribute is not valid on 'MakeExpectationsOfConventionDispatcherExtensions.RockConventionDispatcher.AssertNoScope()' because it is an override method
-    * Error - Id: CS0246, Description: Rocks\Rocks.RockMakeGenerator\DbContextOptionsBuilderOfobject_Rock_Make.g.cs(68,60): error CS0246: The type or namespace name 'IMemoryCache' could not be found (are you missing a using directive or an assembly reference?)
-    * Error - Id: CS0311, Description: Rocks\Rocks.RockMakeGenerator\IDbContextFactoryOfobject_Rock_Make.g.cs(14,45): error CS0311: The type 'object' cannot be used as type parameter 'TContext' in the generic type or method 'IDbContextFactory<TContext>'. There is no implicit reference conversion from 'object' to 'Microsoft.EntityFrameworkCore.DbContext'.
-    * Error - Id: CS0409, Description: Rocks\Rocks.RockMakeGenerator\DbContextOptionsOfobject_Rock_Make.g.cs(35,11): error CS0409: A constraint clause has already been specified for type parameter 'TExtension'. All of the constraints for a type parameter must be specified in a single where clause.
-    * Error - Id: CS0449, Description: Rocks\Rocks.RockMakeGenerator\IDbContextOptions_Rock_Make.g.cs(24,52): error CS0449: The 'class', 'struct', 'unmanaged', 'notnull', and 'default' constraints cannot be combined or duplicated, and must be specified first in the constraints list.
-    * Error - Id: CS0453, Description: Rocks\Rocks.RockMakeGenerator\SimpleNullablePrincipalDependentKeyValueFactoryOfobject_object_Rock_Make.g.cs(18,83): error CS0453: The type 'object' must be a non-nullable value type in order to use it as parameter 'TNonNullableKey' in the generic type or method 'SimpleNullablePrincipalDependentKeyValueFactory<TKey, TNonNullableKey>'
-    * Error - Id: CS0460, Description: Rocks\Rocks.RockMakeGenerator\DbContextOptionsBuilderOfobject_Rock_Make.g.cs(97,29): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
-    * Error - Id: CS0462, Description: Rocks\Rocks.RockMakeGenerator\ValueComparerOfobject_Rock_Make.g.cs(59,25): error CS0462: The inherited members 'ValueComparer<T>.Equals(object?, object?)' and 'ValueComparer<T>.Equals(T?, T?)' have the same signature in type 'MakeExpectationsOfValueComparerOfobjectExtensions.RockValueComparerOfobject', so they cannot be overridden
-    * Error - Id: CS0506, Description: Rocks\Rocks.RockMakeGenerator\TimeSpanToStringConverter_Rock_Make.g.cs(28,28): error CS0506: 'MakeExpectationsOfTimeSpanToStringConverterExtensions.RockTimeSpanToStringConverter.ToString()': cannot override inherited member 'StringTimeSpanConverter<TimeSpan, string>.ToString()' because it is not marked virtual, abstract, or override
-    * Error - Id: CS0508, Description: Rocks\Rocks.RockMakeGenerator\TemporaryFloatValueGenerator_Rock_Make.g.cs(43,39): error CS0508: 'MakeExpectationsOfTemporaryFloatValueGeneratorExtensions.RockTemporaryFloatValueGenerator.NextAsync(EntityEntry, CancellationToken)': return type must be 'ValueTask<float>' to match overridden member 'ValueGenerator<float>.NextAsync(EntityEntry, CancellationToken)'
-    * Error - Id: CS0535, Description: Rocks\Rocks.RockMakeGenerator\IModelValidator_Rock_Make.g.cs(19,6): error CS0535: 'MakeExpectationsOfIModelValidatorExtensions.RockIModelValidator' does not implement interface member 'IModelValidator.Validate(IModel, IDiagnosticsLogger<DbLoggerCategory.Model.Validation>)'
-    * Error - Id: CS0619, Description: Rocks\Rocks.RockMakeGenerator\MethodCallCodeFragment_Rock_Make.g.cs(34,5): error CS0619: 'MethodCallCodeFragment.MethodCallCodeFragment(MethodInfo, object?[], MethodCallCodeFragment)' is obsolete: 'Use the constructor without a chained call, and then invoke Chain() on the result'
-    * Error - Id: CS0738, Description: Rocks\Rocks.RockMakeGenerator\IDbContextDependencies_Rock_Make.g.cs(21,6): error CS0738: 'MakeExpectationsOfIDbContextDependenciesExtensions.RockIDbContextDependencies' does not implement interface member 'IDbContextDependencies.UpdateLogger'. 'MakeExpectationsOfIDbContextDependenciesExtensions.RockIDbContextDependencies.UpdateLogger' cannot implement 'IDbContextDependencies.UpdateLogger' because it does not have the matching return type of 'IDiagnosticsLogger<DbLoggerCategory.Update>'.
-    * Error - Id: CS1001, Description: Rocks\Rocks.RockMakeGenerator\ReferenceOfobject_Rock_Make.g.cs(14,98): error CS1001: Identifier expected
-    * Error - Id: CS1003, Description: Rocks\Rocks.RockMakeGenerator\ReferenceOfobject_Rock_Make.g.cs(16,98): error CS1003: Syntax error, ',' expected
-    * Error - Id: CS1069, Description: Rocks\Rocks.RockMakeGenerator\ITransactionEnlistmentManager_Rock_Make.g.cs(24,11): error CS1069: The type name 'Transaction' could not be found in the namespace 'System.Transactions'. This type has been forwarded to assembly 'System.Transactions.Local, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' Consider adding a reference to that assembly.
-    * Error - Id: CS1503, Description: Rocks\Rocks.RockMakeGenerator\ChangeDetector_Rock_Make.g.cs(23,12): error CS1503: Argument 1: cannot convert from 'Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger<Microsoft.EntityFrameworkCore.ChangeTracking>' to 'Microsoft.EntityFrameworkCore.Diagnostics.IDiagnosticsLogger<Microsoft.EntityFrameworkCore.DbLoggerCategory.ChangeTracking>'
-    * Error - Id: CS1525, Description: Rocks\Rocks.RockMakeGenerator\ReferenceOfobject_Rock_Make.g.cs(17,30): error CS1525: Invalid expression term 'object'
-    * Error - Id: CS1729, Description: Rocks\Rocks.RockMakeGenerator\ReferenceOfobject_Rock_Make.g.cs(15,8): error CS1729: 'MakeExpectationsOfReferenceOfobjectExtensions.RockReferenceOfobject' does not contain a constructor that takes 1 arguments
-    * Error - Id: CS1750, Description: Rocks\Rocks.RockMakeGenerator\DbContextOptionsBuilderOfobject_Rock_Make.g.cs(40,82): error CS1750: A value of type 'int' cannot be used as a default parameter because there are no standard conversions to type 'LogLevel'
-    * Error - Id: CS8138, Description: Rocks\Rocks.RockMakeGenerator\WarningsConfigurationBuilder_Rock_Make.g.cs(49,54): error CS8138: Cannot reference 'System.Runtime.CompilerServices.TupleElementNamesAttribute' explicitly. Use the tuple syntax to define tuple names.
-    * Warning - Id: CS0612, Description: Rocks\Rocks.RockMakeGenerator\ModelBuilder_Rock_Make.g.cs(46,5): warning CS0612: 'ModelBuilder.ModelBuilder(IMutableModel)' is obsolete
-    * Warning - Id: CS1066, Description: Rocks\Rocks.RockMakeGenerator\IConventionSkipNavigationBuilder_Rock_Make.g.cs(65,103): warning CS1066: The default value specified for parameter 'fromDataAnnotation' will have no effect because it applies to a member that is used in contexts that do not allow optional arguments
-    * Warning - Id: CS8604, Description: Rocks\Rocks.RockMakeGenerator\ReferenceOfobject_Rock_Make.g.cs(17,38): warning CS8604: Possible null reference argument for parameter '' in 'RockReferenceOfobject.RockReferenceOfobject(object, object)'.
-    * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\CompiledAsyncTaskQueryOfobject_object_Rock_Make.g.cs(54,12): warning CS8619: Nullability of reference types in value of type 'Task<object?>' doesn't match target type 'Task<object>'.
-* IdentityModel
-  * `Create` (0 errors, 20 warnings)
-    * Warning - Id: CS8625, Description: Rocks\Rocks.RockCreateGenerator\DynamicClientRegistrationResponse_Rock_Create.g.cs(142,164): warning CS8625: Cannot convert null literal to non-nullable reference type.
-  * `Make` (0 errors, 11 warnings)
-    * Warning - Id: CS8619, Description: Rocks\Rocks.RockMakeGenerator\IDiscoveryCache_Rock_Make.g.cs(24,12): warning CS8619: Nullability of reference types in value of type 'Task<DiscoveryDocumentResponse?>' doesn't match target type 'Task<DiscoveryDocumentResponse>'.
-    * Warning - Id: CS8625, Description: Rocks\Rocks.RockMakeGenerator\TokenResponse_Rock_Make.g.cs(33,72): warning CS8625: Cannot convert null literal to non-nullable reference type.
-* CsvHelper
-  * `Create` (78 errors, 3 warnings)
-    * Error - Id: CS0103, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1446,55): error CS0103: The name 'd__93' does not exist in the current context
-    * Error - Id: CS0111, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(447,46): error CS0111: Type 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object' already defines a member called 'Ignore' with the same parameter types
-    * Error - Id: CS0460, Description: Rocks\Rocks.RockCreateGenerator\DefaultClassMapOfobject_Rock_Create.g.cs(666,23): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
-    * Error - Id: CS0507, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(723,5): error CS0507: 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Data.set': cannot change access modifiers when overriding 'protected' inherited member 'MemberMap.Data.set'
-    * Error - Id: CS0508, Description: Rocks\Rocks.RockCreateGenerator\MemberMapOfobject_object_Rock_Create.g.cs(208,30): error CS0508: 'CreateExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Ignore(bool)': return type must be 'MemberMap<object, object>' to match overridden member 'MemberMap<object, object>.Ignore(bool)'
-    * Error - Id: CS1001, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,63): error CS1001: Identifier expected
-    * Error - Id: CS1026, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,38): error CS1026: ) expected
-    * Error - Id: CS1031, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1394,38): error CS1031: Type expected
-    * Error - Id: CS1970, Description: Rocks\Rocks.RockCreateGenerator\DynamicRecordCreator_Rock_Create.g.cs(151,13): error CS1970: Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead.
-    * Warning - Id: CS8424, Description: Rocks\Rocks.RockCreateGenerator\CsvReader_Rock_Create.g.cs(1448,73): warning CS8424: The EnumeratorCancellationAttribute applied to parameter 'cancellationToken' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable
-  * `Make` (63 errors, 3 warnings)
-    * Error - Id: CS0103, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(267,55): error CS0103: The name 'd__93' does not exist in the current context
-    * Error - Id: CS0111, Description: Rocks\Rocks.RockMakeGenerator\MemberMapOfobject_object_Rock_Make.g.cs(99,46): error CS0111: Type 'MakeExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object' already defines a member called 'Ignore' with the same parameter types
-    * Error - Id: CS0460, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(216,24): error CS0460: Constraints for override and explicit interface implementation methods are inherited from the base method, so they cannot be specified directly, except for either a 'class', or a 'struct' constraint.
-    * Error - Id: CS0507, Description: Rocks\Rocks.RockMakeGenerator\MemberMap_Rock_Make.g.cs(88,5): error CS0507: 'MakeExpectationsOfMemberMapExtensions.RockMemberMap.TypeConverterOption.set': cannot change access modifiers when overriding 'protected' inherited member 'MemberMap.TypeConverterOption.set'
-    * Error - Id: CS0508, Description: Rocks\Rocks.RockMakeGenerator\MemberMapOfobject_object_Rock_Make.g.cs(54,30): error CS0508: 'MakeExpectationsOfMemberMapOfobject_objectExtensions.RockMemberMapOfobject_object.Ignore(bool)': return type must be 'MemberMap<object, object>' to match overridden member 'MemberMap<object, object>.Ignore(bool)'
-    * Error - Id: CS1001, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,63): error CS1001: Identifier expected
-    * Error - Id: CS1026, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,38): error CS1026: ) expected
-    * Error - Id: CS1031, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(258,38): error CS1031: Type expected
-    * Warning - Id: CS8424, Description: Rocks\Rocks.RockMakeGenerator\CsvReader_Rock_Make.g.cs(273,76): warning CS8424: The EnumeratorCancellationAttribute applied to parameter 'cancellationToken' will have no effect. The attribute is only effective on a parameter of type CancellationToken in an async-iterator method returning IAsyncEnumerable
+To reproduce this:
 
+```csharp
+namespace Namespace1
+{
+  public class Thing { }
+  public class Stuff { }
+}
 
+namespace Namespace2
+{
+  public class Thing { }
+}
 
-In some cases, the error count was different between `Create` and `Make`, which is confusing.
+public interface IUsesThing
+{
+  void Use(Namespace2.Thing thing, Namespace1.Stuff stuff);
+}
 
-Note that Moq, ImageSharp, Mono.Cecil, FluentAssertions, StackExchange.Redis, Google.Protobuf, and Microsoft.CodeAnalyis.CSharp have runtime errors because `ExposesInternalsTo()` assumes only one InternalsVisibleToAttribute will ever be found, which is a **terrible** assumption. I created a test, `CheckExposureWhenSourceAssemblyHasMultipleInternalsVisibleToWithOneTargetAssemblyName()` which should pass once I fix this.
+var expectations = Rock.Create<IUsesThing>();
+```
 
-The TerraFX libraries I think are targeting .NET 7 features, so those are also problematic:
+### Carrying Constraints to Extension Methods
 
-Unhandled exception. System.TypeLoadException: Virtual static method 'get_NativeGuid' is not implemented on type 'TerraFX.Interop.DirectX.D3D12MA_Allocation' from assembly 'TerraFX.Interop.D3D12MemoryAllocator, Version=2.0.0.0, Culture=neutral, PublicKeyToken=35b01b53313a6f7e'.
-   at Program.<Main>$(String[] args)
-   
-I need to not allow interfaces with static abstract members to be mocked, and not rely upon the compiler forbidding it.
+In Moq, mocking `Mock<>` creates this error:
+
+```
+error CS0452: The type 'TInterface' must be a reference type in order to use it as parameter 'T' in the generic type or method 'Mock<T>'
+```
+
+This is because the `As<TInterface>` method has a constraint on it, but when the `MethodExpectations<>` extension method is made for `As<TInterface>`, the constraints aren't there. I need to copy the constraints from methods into the extension methods.
+
+To reproduce this:
+
+```csharp
+public class Thing { }
+
+public abstract class Thing<T> : Thing where T : class
+{
+    public abstract Thing<TTarget> As<TTarget>() where TTarget : class;
+}
+
+var expectations = Rock.Create<Thing<object>>
+```
+
+### Delegate Creation for Ref Structs
+
+Doing this with ImageSharp:
+
+```csharp
+using SixLabors.ImageSharp.PixelFormats;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<PixelOperations<A8>>();
+	}
+}
+```
+
+Creates a delegate like this:
+
+```csharp
+public delegate bool ArgEvaluationForReadOnlySpanOfTSourcePixel(ReadOnlySpan<TSourcePixel> value);
+```
+
+The issue is, `TSourcePixel` is defined as a generic parameter anywhere.
+
+### Including Types From Constraints
+
+Doing this with ImageSharp:
+
+```csharp
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<IPixelSamplingStrategy>();
+	}
+}
+```
+
+Generates the `IPixel<TPixel>` constraint in `EnumeratePixelRegions<TPixel>`. However, `IPixel<TPixel>` is in the `SixLabors.ImageSharp.PixelFormats` namespace, and right now Rocks isn't looking at types in constraint to include their namespaces in `NamespaceGatherer`. Whether I decide to fully-qualify all type names to eliminate `NamespaceGatherer` or not, I need to ensure these types are resolved.
+
+### Creating Too Many Constraints
+
+Doing this with ImageSharp:
+
+```csharp
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<IPixelSamplingStrategy>();
+	}
+}
+```
+
+Creates the `where TPixel : unmanaged, struct, IPixel<TPixel>` constraint syntax, but this is illegal. `EnumeratePixelRegions<TPixel>` has `where TPixel : unmanaged, IPixel<TPixel>` in the source code. The `ITypeParameterSymbol` for `TPixel` ends up having `HasUnmanagedTypeConstraint` and `HasValueTypeConstraint`, but I'm guessing that if the `unmanaged` constraint exists, you don't need to look at `HasValueTypeConstraint`.
+
+I thought I had fixed this with an example that was `unmanaged` and an interface type. So I'm not sure why this is happening right now.
+
+To reproduce this:
+
+```csharp
+public interface IValue<TValue>
+  where TValue : IValue<TValue> { }
+
+public class Value<TValue>
+  where TValue : unmanaged, IValue<TValue> { }
+
+public interface IUnmanagedValue
+{
+    void Use<TValue>(Value<TValue> value)
+        where TValue : unmanaged, IValue<TValue>;
+}
+```
