@@ -723,3 +723,43 @@ public static class Test
 	}
 }
 ```
+
+### Missing Null Annotation With Null Default Value For Parameter
+
+Doing this with IdentityModel.Client:
+
+```csharp
+using Rocks;
+using System;
+using IdentityModel.Client;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<JsonWebKeySetResponse>();
+	}
+}
+```
+
+`InitializeAsync()` has a parameter, `object initializationData = null`. Doing a "Go To Definition" doesn't show the parameter with a "?", though it really should be. It's OK in an override to change it to have `?`. So, the fix seems to be that if a parameter is optional, and the default value is `null`, it should be annotated with `?`.
+
+To reproduce this:
+
+```csharp
+using Rocks;
+using System;
+
+public class NeedsNullable
+{
+	protected virtual void Initialize(object initializationData = null) { }
+}
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<NeedsNullable>();
+	}
+}
+```

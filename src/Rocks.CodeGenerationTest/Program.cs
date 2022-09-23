@@ -12,28 +12,18 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using System.Collections.Generic;
-		using System.Threading;
-		using System.Threading.Tasks;
-		using System.Runtime.CompilerServices;
+		using Google.Protobuf;
 
-		public class AsyncEnumeration
-		{
-			public virtual async IAsyncEnumerable<string> GetRecordsAsync([EnumeratorCancellation]CancellationToken cancellationToken = default(CancellationToken))
-			{
-				await Task.CompletedTask;
-				yield return "x";
-			}
-		}
-
+		public interface IExtendable : IExtendableMessage<IExtendable> { }
+		
 		public static class Test
 		{
 			public static void Go()
 			{
-				var expectations = Rock.Create<AsyncEnumeration>();
+				var expectations = Rock.Create<IExtendable>();
 			}
 		}
-		""", typeof(System.Runtime.CompilerServices.EnumeratorCancellationAttribute));
+		""", typeof(Google.Protobuf.IExtendableMessage<>));
 }
 
 static void TestWithType() =>
@@ -46,20 +36,20 @@ static void TestWithType() =>
 static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
-	{ 
+	{
 		// Core .NET types
 		//typeof(object), typeof(Dictionary<,>),
 		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// ComputeSharp
 		//typeof(ComputeSharp.AutoConstructorAttribute),
-	
+
 		// ComputeSharp.D2D1
 		// ID2D1TransformMapperFactory will fail because it needs a struct 
 		// that can be unmanaged and implement ID2D1PixelShader. If that's
 		// done, then it works just fine.
 		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
-	
+
 		// CSLA
 		//typeof(Csla.DataPortal<>),
 
@@ -118,26 +108,28 @@ static void TestWithTypes()
 		//typeof(CsvHelper.ArrayHelper),
 
 		// IdentityModel
-		typeof(IdentityModel.Base64Url),
-
-		// TerraFX.Interop.D3D12MemoryAllocator
-		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
-
-		// TerraFX.Interop.Windows
-		//typeof(TerraFX.Interop.INativeGuid),
+		//typeof(IdentityModel.Base64Url),
 
 		// Google.Protobuf
 		//typeof(Google.Protobuf.ByteString),
 
-		// TODO: Azure.Identity, Antlr, SharpZipLib, MediatR, System.Reactive, 
+		// TODO: Just referencing this makes a bug.
+		// TerraFX.Interop.D3D12MemoryAllocator
+		typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
+
+		// TerraFX.Interop.Windows
+		typeof(TerraFX.Interop.INativeGuid),
+
+		// Antlr
+		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
+
+		// TODO: Azure.Identity, SharpZipLib, MediatR, System.Reactive, 
 		// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
-		typeof(System.Uri),
-		typeof(System.Text.Json.JsonSerializerOptions)
 	};
 
 	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
