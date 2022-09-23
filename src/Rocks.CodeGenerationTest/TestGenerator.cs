@@ -9,7 +9,7 @@ namespace Rocks.CodeGenerationTest;
 
 internal static class TestGenerator
 {
-	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies)
+	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies, params Type[] typesToLoadAssembliesFrom)
 	{
 		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
@@ -26,7 +26,7 @@ internal static class TestGenerator
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
-		Generate(generator, types);
+		Generate(generator, types, typesToLoadAssembliesFrom);
 	}
 
 	internal static void Generate(IIncrementalGenerator generator, Type[] targetTypes, params Type[] typesToLoadAssembliesFrom)
@@ -87,6 +87,8 @@ internal static class TestGenerator
 				Description = _.ToString(),
 			})
 			.OrderBy(_ => _.Id).ToArray();
+
+		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 
 		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
 		Console.WriteLine();
@@ -156,6 +158,8 @@ internal static class TestGenerator
 				Description = _.ToString(),
 			})
 			.OrderBy(_ => _.Id).ToArray();
+
+		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 
 		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
 		Console.WriteLine();
