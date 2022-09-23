@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0-alpha.2] - Not Yet Released
+
+### Fixed
+- For makes, any `Task<>` or `ValueTask<>` return types are marked with the null-forgiving operator when the return type is not nullable. (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
+- For makes, `[AllowNull]` now shows up on properties when the base property has it defined. (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
+- Constraint ordering has been fixed in certain cases (it was failing when there were `struct` and interface constraints) (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
+- Method matching now correctly handles cases where the either parameters or return types use generic type parameters. (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
+- If an interface has static abstract members, Rocks will raise the `InterfaceHasStaticAbstractMembersDiagnostic` (`ROCK7`). (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
+
 ## [7.0.0-alpha.1] - 2022-09-10
 
 ### Added

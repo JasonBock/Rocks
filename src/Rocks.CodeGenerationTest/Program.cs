@@ -1,9 +1,9 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -11,24 +11,16 @@ static void TestWithCode()
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
 		using Rocks;
-		using System;
 
-		public class Outer
+		public interface IHaveNamingConflicts
 		{
-			public enum Values { One, Two }
-		}
-
-		public interface IUseValues
-		{
-			Outer.Values Settings { get; }
+			// If there are any other variables that Rocks create, include them as parameters.
+			int Foo(string methodHandlers, string methodHandler, string result);
 		}
 
 		public static class Test
 		{
-			public static void Go()
-			{
-				var expectations = Rock.Create<IUseValues>();
-			}
+			public static void Run() => Rock.Create<IHaveNamingConflicts>();
 		}
 		""");
 }
@@ -37,7 +29,7 @@ static void TestWithType() =>
 	 TestGenerator.Generate(new RockCreateGenerator(), 
 	 new[] 
 	 { 
-		 typeof(RestSharp.RestRequest)
+		 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
 	 });
 
 static void TestWithTypes()

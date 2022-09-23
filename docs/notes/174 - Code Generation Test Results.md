@@ -9,7 +9,7 @@ So, after creating the console app and adding some other packages, I have some w
 
 ## Unsolved Issues
 
-### Type Names in Multiple Interfaces
+### ADDED - Type Names in Multiple Interfaces
 
 In CSLA, if `BusinessBase<>` is mocked, an error occurs where `SerializationInfo` is used, and both `Csla.Serialization.Mobile.SerializationInfo` and `System.Runtime.Serialization.SerializationInfo` show up in `using` statements. This is essentially ["the type problem"](https://github.com/JasonBock/Rocks/issues/129), where I need to decide if I stop doing `using` and use fully-qualified type names everywhere.
 
@@ -35,56 +35,7 @@ public interface IUsesThing
 var expectations = Rock.Create<IUsesThing>();
 ```
 
-### Carrying Constraints to Extension Methods
-
-In Moq, mocking `Mock<>` creates this error:
-
-```
-error CS0452: The type 'TInterface' must be a reference type in order to use it as parameter 'T' in the generic type or method 'Mock<T>'
-```
-
-This is because the `As<TInterface>` method has a constraint on it, but when the `MethodExpectations<>` extension method is made for `As<TInterface>`, the constraints aren't there. I need to copy the constraints from methods into the extension methods.
-
-To reproduce this:
-
-```csharp
-public class Thing { }
-
-public abstract class Thing<T> : Thing where T : class
-{
-    public abstract Thing<TTarget> As<TTarget>() where TTarget : class;
-}
-
-var expectations = Rock.Create<Thing<object>>
-```
-
-### Delegate Creation for Ref Structs
-
-Doing this with ImageSharp:
-
-```csharp
-using SixLabors.ImageSharp.PixelFormats;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<PixelOperations<A8>>();
-	}
-}
-```
-
-Creates a delegate like this:
-
-```csharp
-public delegate bool ArgEvaluationForReadOnlySpanOfTSourcePixel(ReadOnlySpan<TSourcePixel> value);
-```
-
-The issue is, `TSourcePixel` is defined as a generic parameter anywhere.
-
-### Including Types From Constraints
+### ADDED - Including Types From Constraints
 
 Doing this with ImageSharp:
 
@@ -104,45 +55,7 @@ public static class Test
 
 Generates the `IPixel<TPixel>` constraint in `EnumeratePixelRegions<TPixel>`. However, `IPixel<TPixel>` is in the `SixLabors.ImageSharp.PixelFormats` namespace, and right now Rocks isn't looking at types in constraint to include their namespaces in `NamespaceGatherer`. Whether I decide to fully-qualify all type names to eliminate `NamespaceGatherer` or not, I need to ensure these types are resolved.
 
-### Creating Too Many Constraints
-
-Doing this with ImageSharp:
-
-```csharp
-using SixLabors.ImageSharp.Processing.Processors.Quantization;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<IPixelSamplingStrategy>();
-	}
-}
-```
-
-Creates the `where TPixel : unmanaged, struct, IPixel<TPixel>` constraint syntax, but this is illegal. `EnumeratePixelRegions<TPixel>` has `where TPixel : unmanaged, IPixel<TPixel>` in the source code. The `ITypeParameterSymbol` for `TPixel` ends up having `HasUnmanagedTypeConstraint` and `HasValueTypeConstraint`, but I'm guessing that if the `unmanaged` constraint exists, you don't need to look at `HasValueTypeConstraint`.
-
-I thought I had fixed this with an example that was `unmanaged` and an interface type. So I'm not sure why this is happening right now.
-
-To reproduce this:
-
-```csharp
-public interface IValue<TValue>
-  where TValue : IValue<TValue> { }
-
-public class Value<TValue>
-  where TValue : unmanaged, IValue<TValue> { }
-
-public interface IUnmanagedValue
-{
-    void Use<TValue>(Value<TValue> value)
-        where TValue : unmanaged, IValue<TValue>;
-}
-```
-
-### Nested Types and Properties
+### ADDED - Nested Types and Properties
 
 Doing this with Microsoft.CodeAnalysis:
 
@@ -162,145 +75,7 @@ public static class Test
 
 Gives an error when the mock implements the `ChildOperations` property. The type is `IOperation.OperationList`, but the code just generated `IOperation`. I thought I handled nested type names, but...maybe I didn't with property types?
 
-### Missing Members to Override
-
-Doing this with Microsoft.CodeAnalysis:
-
-```csharp
-using Microsoft.CodeAnalysis;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<Diagnostic>();
-	}
-}
-```
-
-The resulting mock misses three members: `WithSeverity()`, `WithIsSuppressed()`, and `WithLocation()`. It can't do this because they're `internal`, so they're not accessible. But...this means that if we find inaccessible members that are abstract, it can't be mocked. Trying to do this in VS:
-
-```csharp
-public class MyDiagnostic : Microsoft.CodeAnalysis.Diagnostic
-```
-
-and tell the "Implement Abstract Class" code fix will create these three methods, but the resulting code is incorrect.
-
-To reproduce this:
-
-```csharp
-// Note that this has to be compiled into its' own assembly
-public abstract class InternalTargets
-{
-	public abstract void VisibleWork();
-	internal abstract void Work();
-}
-
-// This class has to be in a different assembly.
-public static class Test
-{
-	public static void Test() => Rock.Create<IntegrationTests>();
-}
-```
-
-### Obsolete Types in Member Definitions
-
-Doing this with Microsoft.CodeAnalysis:
-
-```csharp
-using Microsoft.CodeAnalysis.Operations;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<OperationWalker>();
-	}
-}
-```
-
-Rocks overrides `VisitCollectionElementInitializer()`, which is fine as it correctly adds the `[Obsolete]` attribute. However, the extension method for `MethodExpectations<OperationWalker>` doesn't include the attribute, so we get a compiler error (`CS0619`). Seems like the way to fix this is similar to what I reported in "Including Types From Constraints" in that the attributes have to come along with the ride as well. That, or if the member is `virtual` but not `abstract`, just ignore it.
-
-To reproduce this:
-
-```csharp
-[Obsolete("Don't use", error: true)]
-public class DoNotUse { }
-
-// Rocks should ignore Foo
-public interface IHaveObsolete
-{
-    void Foo(DoNotUse doNotUse);
-    void Bar();
-}
-```
-
-### Conflict With Variable Names and Member Parameters
-
-Doing this with Castle.Core:
-
-```csharp
-using Castle.Components.DictionaryAdapter;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<DynamicDictionary>();
-	}
-}
-```
-
-Creates overrides for methods like `TryInvokeMember()` that have a parameter called `result`. This conflicts with Rocks generating a variable called `result` to house the return value. I need to ensure any variables generated in a member do not conflict with any parameters or return values (not sure if a tuple return with named values are included or not, I don't think so, but want to check to make sure).
-
-I think this would also have to be done for the `self` parameter used in extension methods, as well as the `constructorProperties` named used in `Instance()` for `required` and `init` properties.
-
-To reproduce this:
-
-```csharp
-public interface IHaveNamingConflicts
-{
-	// If there are any other variables that Rocks create, include them as parameters.
-	void Foo(string methodHandlers, string methodHandler, string result);
-}
-```
-
-### Target Type Uses Reserved Language Keywords
-
-Doing this with Mono.Cecil:
-
-```csharp
-using Mono.Cecil;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<TypeReference>();
-	}
-}
-```
-
-One of the constructors for `TypeReference` has a parameter with the name `namespace`. This is legal, but to declare in C# requires the `@` token in front of the name. Rocks isn't looking at the parameter names to see if they are a reserved keyword like `namespace` or `event`, and if they are, the `@` sign needs to be put in front.
-
-To reproduce this:
-
-```csharp
-public interface IUseKeyword
-{
-    void Foo(string @namespace, string @event, string @property);   
-}
-```
-
-### Missing Namespaces From Types From Properties
+### ADDED - Missing Namespaces From Types From Properties
 
 Doing this with AutoMapper:
 
@@ -359,7 +134,252 @@ public static class Test
 }
 ```
 
-### Emitting "Invalid" Attribute
+### ADDED - Missing Namespace For Parameter Types
+
+Doing this with Serilog:
+
+```csharp
+using Serilog.Formatting.Json;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<JsonFormatter>();
+	}
+}
+```
+
+A couple of types from `WriteRenderings()`, like `IGrouping<string, PropertyToken>[]`, the namespaces aren't being generated. I'm guessing this is the problem I mentioned above with "Missing Namespaces From Types From Properties". This should be included with "The Type Problem" issue.
+
+### ADDED - Constraints are Not Carried to Extension Methods
+
+In Moq, mocking `Mock<>` creates this error:
+
+```
+error CS0452: The type 'TInterface' must be a reference type in order to use it as parameter 'T' in the generic type or method 'Mock<T>'
+```
+
+This is because the `As<TInterface>` method has a constraint on it, but when the `MethodExpectations<>` extension method is made for `As<TInterface>`, the constraints aren't there. I need to copy the constraints from methods into the extension methods.
+
+To reproduce this:
+
+```csharp
+public class Thing { }
+
+public abstract class Thing<T> : Thing where T : class
+{
+    public abstract Thing<TTarget> As<TTarget>() where TTarget : class;
+}
+
+var expectations = Rock.Create<Thing<object>>
+```
+
+### Delegate Creation for Ref Structs
+
+Doing this with ImageSharp:
+
+```csharp
+using SixLabors.ImageSharp.PixelFormats;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<PixelOperations<A8>>();
+	}
+}
+```
+
+Creates a delegate like this:
+
+```csharp
+public delegate bool ArgEvaluationForReadOnlySpanOfTSourcePixel(ReadOnlySpan<TSourcePixel> value);
+```
+
+The issue is, `TSourcePixel` isn't defined as a generic parameter anywhere.
+
+### ADDED - Creating Too Many Constraints
+
+Doing this with ImageSharp:
+
+```csharp
+using SixLabors.ImageSharp.Processing.Processors.Quantization;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<IPixelSamplingStrategy>();
+	}
+}
+```
+
+Creates the `where TPixel : unmanaged, struct, IPixel<TPixel>` constraint syntax, but this is illegal. `EnumeratePixelRegions<TPixel>` has `where TPixel : unmanaged, IPixel<TPixel>` in the source code. The `ITypeParameterSymbol` for `TPixel` ends up having `HasUnmanagedTypeConstraint` and `HasValueTypeConstraint`, but I'm guessing that if the `unmanaged` constraint exists, you don't need to look at `HasValueTypeConstraint`.
+
+I thought I had fixed this with an example that was `unmanaged` and an interface type. So I'm not sure why this is happening right now.
+
+To reproduce this:
+
+```csharp
+public interface IValue<TValue>
+  where TValue : IValue<TValue> { }
+
+public class Value<TValue>
+  where TValue : unmanaged, IValue<TValue> { }
+
+public interface IUnmanagedValue
+{
+    void Use<TValue>(Value<TValue> value)
+        where TValue : unmanaged, IValue<TValue>;
+}
+```
+
+### ADDED - Internal Virtual Members Prevent a Mock From Being Created
+
+Doing this with Microsoft.CodeAnalysis:
+
+```csharp
+using Microsoft.CodeAnalysis;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<Diagnostic>();
+	}
+}
+```
+
+The resulting mock misses three members: `WithSeverity()`, `WithIsSuppressed()`, and `WithLocation()`. It can't do this because they're `internal`, so they're not accessible. But...this means that if we find inaccessible members that are abstract, it can't be mocked. Trying to do this in VS:
+
+```csharp
+public class MyDiagnostic : Microsoft.CodeAnalysis.Diagnostic
+```
+
+and tell the "Implement Abstract Class" code fix will create these three methods, but the resulting code is incorrect.
+
+To reproduce this:
+
+```csharp
+// Note that this has to be compiled into its' own assembly
+public abstract class InternalTargets
+{
+	public abstract void VisibleWork();
+	internal abstract void Work();
+}
+
+// This class has to be in a different assembly.
+public static class Test
+{
+	public static void Test() => Rock.Create<InternalTargets>();
+}
+```
+
+### ADDED - Obsolete Types in Member Definitions and Extension Methods
+
+Doing this with Microsoft.CodeAnalysis:
+
+```csharp
+using Microsoft.CodeAnalysis.Operations;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<OperationWalker>();
+	}
+}
+```
+
+Rocks overrides `VisitCollectionElementInitializer()`, which is fine as it correctly adds the `[Obsolete]` attribute. However, the extension method for `MethodExpectations<OperationWalker>` doesn't include the attribute, so we get a compiler error (`CS0619`). Seems like the way to fix this is similar to what I reported in "Including Types From Constraints" in that the attributes have to come along with the ride as well. That, or if the member is `virtual` but not `abstract`, just ignore it.
+
+To reproduce this:
+
+```csharp
+[Obsolete("Don't use", error: true)]
+public class DoNotUse { }
+
+// Rocks should ignore Foo
+public interface IHaveObsolete
+{
+    void Foo(DoNotUse doNotUse);
+    void Bar();
+}
+```
+
+### ADDED - Conflict With Variable Names and Member Parameters
+
+Doing this with Castle.Core:
+
+```csharp
+using Castle.Components.DictionaryAdapter;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<DynamicDictionary>();
+	}
+}
+```
+
+Creates overrides for methods like `TryInvokeMember()` that have a parameter called `result`. This conflicts with Rocks generating a variable called `result` to house the return value. I need to ensure any variables generated in a member do not conflict with any parameters or return values (not sure if a tuple return with named values are included or not, I don't think so, but want to check to make sure).
+
+I think this would also have to be done for the `self` parameter used in extension methods, as well as the `constructorProperties` named used in `Instance()` for `required` and `init` properties.
+
+To reproduce this:
+
+```csharp
+public interface IHaveNamingConflicts
+{
+	// If there are any other variables that Rocks create, include them as parameters.
+	int Foo(string methodHandlers, string methodHandler, string result);
+}
+```
+
+### ADDED - Target Type Uses Reserved Language Keywords
+
+Doing this with Mono.Cecil:
+
+```csharp
+using Mono.Cecil;
+using Rocks;
+using System;
+
+public static class Test
+{
+	public static void Go()
+	{
+		var expectations = Rock.Create<TypeReference>();
+	}
+}
+```
+
+One of the constructors for `TypeReference` has a parameter with the name `namespace`. This is legal, but to declare in C# requires the `@` token in front of the name. Rocks isn't looking at the parameter names to see if they are a reserved keyword like `namespace` or `event`, and if they are, the `@` sign needs to be put in front.
+
+To reproduce this:
+
+```csharp
+public interface IUseKeyword
+{
+    void Foo(string @namespace, string @event, string @property);   
+}
+```
+
+### ADDED - Emitting "Invalid" Attribute
 
 Doing this with System.Threading.Channels:
 
@@ -414,27 +434,7 @@ public class HasAsyncIteratorStateMachine<T>
 }
 ```
 
-### Missing Namespace For Parameter Types
-
-Doing this with Serilog:
-
-```csharp
-using Serilog.Formatting.Json;
-using Rocks;
-using System;
-
-public static class Test
-{
-	public static void Go()
-	{
-		var expectations = Rock.Create<JsonFormatter>();
-	}
-}
-```
-
-A couple of types from `WriteRenderings()`, like `IGrouping<string, PropertyToken>[]`, the namespaces aren't being generated. I'm guessing this is the problem I mentioned above with "Missing Namespaces From Types From Properties". This should be included with "The Type Problem" issue.
-
-### Overgenerating Constraints
+### ADDED - Overgenerating Constraints
 
 Doing this with EntityFramework:
 
@@ -482,7 +482,7 @@ public static class Test
 }
 ```
 
-### Duplicating Overrides From `new` Methods
+### ADDED - Duplicating Overrides From `new` Methods
 
 Doing this with EntityFramework:
 
@@ -548,7 +548,7 @@ public static class Test
 }
 ```
 
-### Odd Issue with `Microsoft.EntityFrameworkCore.Metadata.INavigation`
+### ADDED - Odd Issue with `Microsoft.EntityFrameworkCore.Metadata.INavigation`
 
 Doing this with EntityFramework:
 
@@ -568,7 +568,7 @@ public static class Test
 
 Results in some very wrong mock code. I don't know what the exact problem is right now, but this interface is definitely giving Rocks fits. Note that `IConventionProperty` yields similar results.
 
-### Types Within Delegates Do Not Show Up in Usings
+### ADDED - Types Within Delegates Do Not Show Up in Usings
 
 Doing this with RestSharp:
 
@@ -598,8 +598,6 @@ It's when the `ConstructorProperties` object tries to do this in `Instance()`:
 ResponseWriter = constructorProperties.ResponseWriter,
 ```
 
-The `using System.IO` doesn't show up. I think Rocks is looking at all the types within delegates to ensure they're included. Though, this should be included with "The Type Problem" issue.
-
 It's happening because the `ResponseWriter` property isn't virtual; it's only being included because it's an `init` and therefore it becomes a part of `ConstructorProperties`. But then, Rocks isn't analyzing it enough to include the "usings" within the delegate.
 
 To reproduce this:
@@ -612,7 +610,7 @@ using System.IO;
 public class IHaveDelegate
 {
 	public Func<Stream, Stream> Processor { get; init; }   
-	 public virtual void Foo() { }
+	public virtual void Foo() { }
 }
 
 public static class Test
@@ -624,7 +622,7 @@ public static class Test
 }
 ```
 
-### Emitting the `[Dynamic]` Attribute
+### ADDED - Emitting the `[Dynamic]` Attribute
 
 Doing this with CsvHelper:
 
@@ -672,7 +670,7 @@ public static class Test
 }
 ```
 
-### Async Iterators Aren't Implemented Correctly
+### ADDED - Async Iterators Aren't Implemented Correctly
 
 Doing this with CsvHelper:
 
