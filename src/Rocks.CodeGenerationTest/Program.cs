@@ -12,18 +12,25 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using Google.Protobuf;
 
-		public interface IExtendable : IExtendableMessage<IExtendable> { }
-		
+		public class Outer
+		{
+			public enum Values { One, Two }
+		}
+
+		public interface IUseValues
+		{
+			Outer.Values Settings { get; }
+		}
+
 		public static class Test
 		{
 			public static void Go()
 			{
-				var expectations = Rock.Create<IExtendable>();
+				var expectations = Rock.Create<IUseValues>();
 			}
 		}
-		""", typeof(Google.Protobuf.IExtendableMessage<>));
+		""");
 }
 
 static void TestWithType() =>
@@ -113,23 +120,32 @@ static void TestWithTypes()
 		// Google.Protobuf
 		//typeof(Google.Protobuf.ByteString),
 
-		// TODO: Just referencing this makes a bug.
-		// TerraFX.Interop.D3D12MemoryAllocator
-		typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
+		// TODO: Just referencing this makes a stack overflow occur.
+		// TerraFX.Interop.DirectX.D3D12MA_Allocation
+		//typeof(TerraFX.Interop.DirectX.AudioReverb),
 
 		// TerraFX.Interop.Windows
-		typeof(TerraFX.Interop.INativeGuid),
+		//typeof(TerraFX.Interop.INativeGuid),
 
-		// Antlr
+		// SharpZipLib
 		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 
-		// TODO: Azure.Identity, SharpZipLib, MediatR, System.Reactive, 
-		// NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
+		// MediatR
+		//typeof(MediatR.ISender),
+
+		// System.Reactive
+		//typeof(System.Reactive.ExperimentalAttribute),
+
+		// NSubstitute
+		typeof(NSubstitute.Arg),
+
+		// TODO: Azure.Identity, NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
+		typeof(System.Linq.Expressions.LambdaExpression)
 	};
 
 	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
