@@ -7,8 +7,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockMethodVoidBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodMockableResult result,
-		NamespaceGatherer namespaces, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, Compilation compilation)
 	{
 		var method = result.Value;
 
@@ -85,7 +84,6 @@ internal static class MockMethodVoidBuilder
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			namespaces.Add(typeof(DoesNotReturnException));
 			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
 		}
 

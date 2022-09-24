@@ -26,9 +26,7 @@ public sealed class Argument<T>
 	internal Argument(Predicate<T> evaluation) =>
 		(this.evaluation, this.validation) = (evaluation, ValidationState.Evaluation);
 
-#pragma warning disable CA2225 // Operator overloads have named alternates
 	public static implicit operator Argument<T>(T value) => new(value);
-#pragma warning restore CA2225 // Operator overloads have named alternates
 
 	public bool IsValid(T value) =>
 		this.validation switch

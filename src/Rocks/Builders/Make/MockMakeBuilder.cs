@@ -7,8 +7,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockMakeBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces,
-		Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
 		var typeToMock = information.TypeToMock!;
 		var kind = typeToMock.Type.IsRecord ? "record" : "class";
@@ -42,11 +41,11 @@ internal static class MockMakeBuilder
 		{
 			if (method.Value.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, method, namespaces, compilation);
+				MockMethodVoidBuilder.Build(writer, method, compilation);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, method, information.Model, namespaces, compilation);
+				MockMethodValueBuilder.Build(writer, method, information.Model, compilation);
 			}
 
 			memberIdentifier++;

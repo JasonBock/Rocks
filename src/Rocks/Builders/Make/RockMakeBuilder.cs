@@ -1,10 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using Rocks.Configuration;
-using Rocks.Exceptions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
-using System.Reflection;
 using System.Text;
 
 namespace Rocks.Builders.Make;
@@ -24,24 +22,12 @@ internal sealed class RockMakeBuilder
 
 	private (ImmutableArray<Diagnostic>, string, SourceText) Build()
 	{
-		var usings = new SortedSet<string>
-		{
-			$"using {typeof(Action).Namespace};",
-			$"using {typeof(HandlerInformation).Namespace};",
-			$"using {typeof(ExpectationException).Namespace};",
-			$"using {typeof(List<>).Namespace};",
-			$"using {typeof(ImmutableArray).Namespace};"
-		};
-
-		if (this.information.Events.Length > 0)
-		{
-			usings.Add($"using {typeof(EventArgs).Namespace};");
-			usings.Add($"using {typeof(BindingFlags).Namespace};");
-		}
-
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer,
 			this.configurationValues.IndentStyle == IndentStyle.Tab ? "\t" : new string(' ', (int)this.configurationValues.IndentSize));
+
+		indentWriter.WriteLine("#nullable enable");
+		indentWriter.WriteLine();
 
 		if (!this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
 		{
@@ -50,14 +36,7 @@ internal sealed class RockMakeBuilder
 			indentWriter.Indent++;
 		}
 
-		var namespaces = new NamespaceGatherer();
-
-		MockExtensionsBuilder.Build(indentWriter, this.information, namespaces, this.compilation);
-
-		foreach (var @namespace in namespaces.Values.Where(_ => _ is not null && !string.IsNullOrWhiteSpace(_)))
-		{
-			usings.Add($"using {@namespace};");
-		}
+		MockExtensionsBuilder.Build(indentWriter, this.information, this.compilation);
 
 		if (!this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
 		{
@@ -65,10 +44,7 @@ internal sealed class RockMakeBuilder
 			indentWriter.WriteLine("}");
 		}
 
-		var code = string.Join(Environment.NewLine,
-			string.Join(Environment.NewLine, usings), string.Empty, "#nullable enable", writer.ToString());
-
-		var text = SourceText.From(code, Encoding.UTF8);
+		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
 		return (this.information.Diagnostics, $"{this.information.TypeToMock!.FlattenedName}_Rock_Make.g.cs", text);
 	}
 

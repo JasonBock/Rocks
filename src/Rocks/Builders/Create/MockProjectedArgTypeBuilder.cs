@@ -2,20 +2,15 @@
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
-using System.ComponentModel;
 
 namespace Rocks.Builders.Create;
 
 internal static class MockProjectedArgTypeBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
+	internal static void Build(IndentedTextWriter writer, MockInformation information)
 	{
-		var argTypeBuilt = false;
-
 		foreach (var type in GetEsotericTypes(information))
 		{
-			argTypeBuilt = true;
-
 			if (type.IsPointer())
 			{
 				PointerArgTypeBuilder.Build(writer, type);
@@ -24,11 +19,6 @@ internal static class MockProjectedArgTypeBuilder
 			{
 				RefLikeArgTypeBuilder.Build(writer, type);
 			}
-		}
-
-		if (argTypeBuilt)
-		{
-			namespaces.Add(typeof(InvalidEnumArgumentException));
 		}
 	}
 

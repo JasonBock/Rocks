@@ -15,7 +15,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	internal static string GetProjectedAddExtensionMethodName(ITypeSymbol type) =>
 		$"AddFor{type.GetName(TypeNameOption.Flatten)}";
 
-	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces)
+	internal static void Build(IndentedTextWriter writer, MockInformation information)
 	{
 		var adornmentTypes = new HashSet<(ITypeSymbol type, AdornmentType adornment, bool isExplicit)>();
 
@@ -51,7 +51,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 				BuildHandlerInformationType(writer, handlerType);
 			}
 
-			BuildAddExtensionMethod(writer, information.TypeToMock!, types, namespaces);
+			BuildAddExtensionMethod(writer, information.TypeToMock!, types);
 
 			foreach (var (type, adornment, isExplicit) in adornmentTypes)
 			{
@@ -60,8 +60,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		}
 	}
 
-	private static void BuildAddExtensionMethod(IndentedTextWriter writer, MockedType typeToMock, IEnumerable<ITypeSymbol> types,
-		NamespaceGatherer namespaces)
+	private static void BuildAddExtensionMethod(IndentedTextWriter writer, MockedType typeToMock, IEnumerable<ITypeSymbol> types)
 	{
 		writer.WriteLine($"internal static class {WellKnownNames.Expectations}{WellKnownNames.Extensions}");
 		writer.WriteLine("{");
@@ -89,8 +88,6 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 
 		writer.Indent--;
 		writer.WriteLine("}");
-
-		namespaces.Add(typeof(IDictionaryOfTKeyTValueExtensions));
 	}
 
 	private static void BuildHandlerInformationType(IndentedTextWriter writer, ITypeSymbol type)

@@ -9,16 +9,15 @@ namespace Rocks.Builders.Create;
 // other types are gen'd to support "esoteric" types.
 internal static class MockProjectedTypesBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, NamespaceGatherer namespaces,
-		Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
 		using var projectedWriter = new StringWriter();
 		using var projectedIndentWriter = new IndentedTextWriter(projectedWriter,
 			MockProjectedTypesBuilder.GetTabString(writer));
 
 		MockProjectedDelegateBuilder.Build(projectedIndentWriter, information, compilation);
-		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, information, namespaces);
-		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, information, namespaces);
+		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, information);
+		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, information);
 
 		var projectedCode = projectedWriter.ToString();
 
@@ -37,17 +36,6 @@ internal static class MockProjectedTypesBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
-
-			var containingNamespace = information.TypeToMock!.Type.ContainingNamespace;
-
-			if(containingNamespace is not null && !containingNamespace.IsGlobalNamespace)
-			{
-				namespaces.Add($"{containingNamespace.ToDisplayString()}.{projectionsNamespace}");
-			}
-			else
-			{
-				namespaces.Add(projectionsNamespace);
-			}
 		}
 	}
 

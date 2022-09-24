@@ -7,8 +7,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockMethodValueBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SemanticModel model,
-		NamespaceGatherer namespaces, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, SemanticModel model, Compilation compilation)
 	{
 		var method = result.Value;
 
@@ -99,31 +98,26 @@ internal static class MockMethodValueBuilder
 
 		if(shouldThrowDoesNotReturnException)
 		{
-			namespaces.Add(typeof(DoesNotReturnException));
 			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
 		}
 		else
 		{
 			if (method.ReturnType.Equals(taskType))
 			{
-				namespaces.Add(taskType.ContainingNamespace);
 				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.CompletedTask)};");
 			}
 			else if (method.ReturnType.Equals(valueTaskType))
 			{
-				namespaces.Add(valueTaskType.ContainingNamespace);
 				writer.WriteLine($"return new {nameof(ValueTask)}();");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
 			{
-				namespaces.Add(taskOfTType.ContainingNamespace);
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
 				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
 			{
-				namespaces.Add(valueTaskOfTType.ContainingNamespace);
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
 				writer.WriteLine($"return new {nameof(ValueTask)}<{taskReturnType.TypeArguments[0].GetName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
