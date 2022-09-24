@@ -46,8 +46,10 @@ internal static class ITypeSymbolExtensions
 	// this will return "FileSystemEnumerable<object>.FindTransform"
 	internal static string GetReferenceableName(this ITypeSymbol self)
 	{
-		var x = self.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-		return x;
+		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat.
+			AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+		return self.ToDisplayString(symbolFormatter);
+
 		/*
 		// TODO: I may just need to do "global::self.ToDisplayString()", except for open generic types.
 		// But "primitive" types, like int and string, should just be like that.
