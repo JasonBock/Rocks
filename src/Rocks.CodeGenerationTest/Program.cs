@@ -1,8 +1,5 @@
-﻿using Csla;
-using Rocks;
+﻿using Rocks;
 using Rocks.CodeGenerationTest;
-
-var customer = new DataPortal<Customer>().Create();
 
 TestWithCode();
 //TestWithType();
@@ -154,11 +151,4 @@ static void TestWithTypes()
 
 	Console.WriteLine("Generator testing complete");
 }
-
-[Serializable]
-public class Customer : BusinessBase<Customer>
-{
-	public required string Value { get; set; }
-}
-
 #pragma warning restore CS8321 // Local function is declared but never used
