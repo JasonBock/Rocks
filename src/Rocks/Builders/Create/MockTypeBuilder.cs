@@ -16,7 +16,7 @@ internal static class MockTypeBuilder
 
 		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
-		writer.WriteLine($": {typeToMock.GenericName}{(information.Events.Length > 0 ? $", {nameof(IRaiseEvents)}" : string.Empty)}");
+		writer.WriteLine($": {typeToMock.ReferenceableName}{(information.Events.Length > 0 ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
 		writer.Indent--;
 
 		writer.WriteLine("{");
@@ -25,7 +25,7 @@ internal static class MockTypeBuilder
 		MockTypeBuilder.BuildShimFields(writer, information);
 		MockTypeBuilder.BuildRefReturnFields(writer, information);
 
-		writer.WriteLine($"private readonly Dictionary<int, List<{nameof(HandlerInformation)}>> handlers;");
+		writer.WriteLine($"private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;");
 		writer.WriteLine();
 
 		if (information.Constructors.Length > 0)
@@ -91,7 +91,7 @@ internal static class MockTypeBuilder
 	{
 		foreach (var shimType in information.Shims)
 		{
-			writer.WriteLine($"private readonly {shimType.GetName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
+			writer.WriteLine($"private readonly {shimType.GetReferenceableName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
 		}
 	}
 
@@ -99,12 +99,12 @@ internal static class MockTypeBuilder
 	{
 		foreach (var method in information.Methods.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {method.Value.ReturnType.GetName()} rr{method.MemberIdentifier};");
+			writer.WriteLine($"private {method.Value.ReturnType.GetReferenceableName()} rr{method.MemberIdentifier};");
 		}
 
 		foreach (var property in information.Properties.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {property.Value.Type.GetName()} rr{property.MemberIdentifier};");
+			writer.WriteLine($"private {property.Value.Type.GetReferenceableName()} rr{property.MemberIdentifier};");
 		}
 	}
 }

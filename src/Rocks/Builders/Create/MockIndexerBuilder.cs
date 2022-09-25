@@ -35,7 +35,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -45,7 +45,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -141,7 +141,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -151,7 +151,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -242,14 +242,14 @@ internal static class MockIndexerBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
 			memberIdentifierAttribute++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?

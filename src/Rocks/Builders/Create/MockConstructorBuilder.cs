@@ -10,10 +10,10 @@ internal static class MockConstructorBuilder
 	internal static void Build(IndentedTextWriter writer, MockedType typeToMock,
 		ImmutableArray<IParameterSymbol> parameters, ImmutableArray<ITypeSymbol> shims)
 	{
-		var typeToMockName = typeToMock.GenericName;
+		var typeToMockName = typeToMock.ReferenceableName;
 		var instanceParameters = parameters.Length == 0 ?
-			$"{WellKnownNames.Expectations}<{typeToMockName}> expectations" :
-			string.Join(", ", $"{WellKnownNames.Expectations}<{typeToMockName}> expectations",
+			$"global::Rocks.Expectations.Expectations<{typeToMockName}> expectations" :
+			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> expectations",
 				string.Join(", ", parameters.Select(_ =>
 				{
 					var direction = _.RefKind switch

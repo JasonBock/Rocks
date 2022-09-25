@@ -10,12 +10,12 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 	{
 		var method = result.Value;
 		var isExplicitImplementation = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
-		var mockTypeName = result.MockType.GetName();
-		var containingTypeName = method.ContainingType.GetName();
+		var mockTypeName = result.MockType.GetReferenceableName();
+		var containingTypeName = method.ContainingType.GetReferenceableName();
 
 		var thisParameter = isExplicitImplementation ?
-			$"this {WellKnownNames.Explicit}{WellKnownNames.Method}{WellKnownNames.Expectations}<{mockTypeName}, {containingTypeName}> self" :
-			$"this {WellKnownNames.Method}{WellKnownNames.Expectations}<{mockTypeName}> self";
+			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> self" :
+			$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> self";
 		var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 			string.Join(", ", thisParameter,
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -44,10 +44,10 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method) :
 				method.ReturnType.GetReferenceableName();
 		var adornmentsType = method.ReturnsVoid ?
-			$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {callbackDelegateTypeName}>" :
+			$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}>" :
 			method.ReturnType.IsPointer() ?
 				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-				$"{WellKnownNames.Method}{WellKnownNames.Adornments}<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
+				$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		var addMethod = method.ReturnsVoid ? "Add" :
@@ -59,7 +59,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		{
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
 			writer.Indent++;
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>()));");
+			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 			writer.Indent--;
 		}
 		else
@@ -70,7 +70,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 
 			foreach(var parameter in method.Parameters)
 			{
-				writer.WriteLine($"ArgumentNullException.ThrowIfNull({parameter.Name});");
+				writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull({parameter.Name});");
 			}
 
 			var parameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -81,14 +81,14 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
-					return $"Arg.Any<{_.Type.GetReferenceableName()}>()";
+					return $"global::Rocks.Arg.Any<{_.Type.GetReferenceableName()}>()";
 				}
 				else
 				{
 					return _.Name;
 				}
 			}));
-			writer.WriteLine($"return {newAdornments}(self.{addMethod}({result.MemberIdentifier}, new List<{nameof(Argument)}>({method.Parameters.Length}) {{ {parameters} }}));");
+			writer.WriteLine($"return {newAdornments}(self.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({method.Parameters.Length}) {{ {parameters} }}));");
 
 			writer.Indent--;
 			writer.WriteLine("}");

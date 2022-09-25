@@ -77,7 +77,7 @@ internal static class MockConstructorExtensionsBuilder
 				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} constructorProperties" : 
 				string.Empty;
 		var selfParameter =
-			$"this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self{constructorPropertiesParameter}";
+			$"this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> self{constructorPropertiesParameter}";
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,
 				string.Join(", ", parameters.Select(_ =>
@@ -106,7 +106,7 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{direction}{_.Name}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} {WellKnownNames.Instance}({instanceParameters})");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("if (!self.WasInstanceInvoked)");
@@ -114,7 +114,7 @@ internal static class MockConstructorExtensionsBuilder
 		writer.Indent++;
 		writer.WriteLine("self.WasInstanceInvoked = true;");
 
-		var newMock = $"new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters})";
+		var newMock = $"new Rock{typeToMock.FlattenedName}({rockInstanceParameters})";
 		if(requiredInitObjectInitializationSyntax.Length == 0)
 		{
 			writer.WriteLine($"return {newMock};");
@@ -126,7 +126,7 @@ internal static class MockConstructorExtensionsBuilder
 
 			if(hasRequiredProperties)
 			{
-				writer.WriteLine("throw new ArgumentNullException(nameof(constructorProperties)) :");
+				writer.WriteLine("throw new global::System.ArgumentNullException(nameof(constructorProperties)) :");
 			}
 			else
 			{
@@ -143,7 +143,7 @@ internal static class MockConstructorExtensionsBuilder
 		writer.WriteLine("else");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("throw new NewMockInstanceException(\"Can only create a new mock once.\");");
+		writer.WriteLine("throw new global::Rocks.Exceptions.NewMockInstanceException(\"Can only create a new mock once.\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.Indent--;

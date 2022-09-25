@@ -45,23 +45,23 @@ internal static class MockPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
 			$"{nameof(HandlerInformation)}<{propertyReturnType}>";
 
-		writer.WriteLine($"Unsafe.As<{methodCast}>(methodHandler.Method)() :");
+		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)() :");
 		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
 		{
-			writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue;");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(methodHandler).ReturnValue;");
 		}
 		else
 		{
-			writer.WriteLine($"Unsafe.As<{handlerName}>(methodHandler).ReturnValue!.Invoke();");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(methodHandler).ReturnValue!.Invoke();");
 		}
 		writer.Indent--;
 
 		if (raiseEvents)
 		{
-			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
+			writer.WriteLine("methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
+		writer.WriteLine($"methodHandler.IncrementCallCount();");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
@@ -96,7 +96,7 @@ internal static class MockPropertyBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}())\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}())\");");
 		}
 
 		writer.Indent--;
@@ -133,9 +133,9 @@ internal static class MockPropertyBuilder
 				PointerArgTypeBuilder.GetProjectedName(property.Type) :
 					property.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
-						$"{nameof(Argument)}<{property.Type.GetName()}>";
+						$"{nameof(Argument)}<{property.Type.GetReferenceableName()}>";
 
-			writer.WriteLine($"if (Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
+			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -149,7 +149,7 @@ internal static class MockPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-			writer.WriteLine($"Unsafe.As<{methodCast}>(methodHandler.Method)(value{nullableFlag});");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)(value{nullableFlag});");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -158,17 +158,17 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("if (!foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
 			writer.WriteLine();
 			if (raiseEvents)
 			{
-				writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
+				writer.WriteLine("methodHandler.RaiseEvents(this);");
 			}
 
-			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
+			writer.WriteLine("methodHandler.IncrementCallCount();");
 			writer.WriteLine("break;");
 
 			writer.Indent--;
@@ -196,7 +196,7 @@ internal static class MockPropertyBuilder
 			}
 			else
 			{
-				writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
 			}
 
 			writer.Indent--;
@@ -220,19 +220,19 @@ internal static class MockPropertyBuilder
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{property.ContainingType.GetName(TypeNameOption.IncludeGenerics)}.";
+			string.Empty : $"{property.ContainingType.GetReferenceableName()}.";
 
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
+			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
 			memberIdentifierAttribute++;
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(value)"")]");
+			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(value)"")]");
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -241,7 +241,7 @@ internal static class MockPropertyBuilder
 		var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 
 		var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetName()} {explicitTypeName}{property.Name}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetReferenceableName()} {explicitTypeName}{property.Name}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
