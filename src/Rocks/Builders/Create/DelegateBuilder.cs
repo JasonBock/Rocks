@@ -12,14 +12,14 @@ internal static class DelegateBuilder
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetReferenceableName()));
 			return returnType is not null ?
-				$"global::System.{WellKnownNames.Func}<{parameterTypes}, {returnType.GetReferenceableName()}>" :
-				$"global::System.{WellKnownNames.Action}<{parameterTypes}>";
+				$"global::System.Func<{parameterTypes}, {returnType.GetReferenceableName()}>" :
+				$"global::System.Action<{parameterTypes}>";
 		}
 		else
 		{
 			return returnType is not null ?
-				$"global::System.{WellKnownNames.Func}<{returnType.GetReferenceableName()}>" :
-				$"global::System.{WellKnownNames.Action}";
+				$"global::System.Func<{returnType.GetReferenceableName()}>" :
+				"global::System.Action";
 		}
 	}
 }

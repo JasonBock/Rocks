@@ -40,10 +40,12 @@ internal static class ITypeSymbolExtensions
 		return false;
 	}
 
-	// Gets the name of the type, useful for getting the name of a type
-	// that will be used in a parameter name.
-	// For example if the type is "FileTransform", which is a nested type,
-	// this will return "FileSystemEnumerable<object>.FindTransform"
+	// TODO - Before #129 is merged, ensure this implementation is correct,
+	// and then get rid of commented code.
+	// Gets the fully-qualified name (FQN) of the type, useful for getting the name of a type
+	// that will be used in a parameter name. Note that the name includes "global::"
+	// For example, for "List<Customer?>", this would return
+	// global::System.Collections.Generic<global::CustomerNamespace.Customer?>
 	internal static string GetReferenceableName(this ITypeSymbol self)
 	{
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat.
@@ -82,6 +84,7 @@ internal static class ITypeSymbolExtensions
 		*/
 	}
 
+	// TODO: I don't think I need this.
 	private static bool IsPrimitive(this ITypeSymbol self) =>
 		self.SpecialType switch
 		{
@@ -97,6 +100,9 @@ internal static class ITypeSymbolExtensions
 	// TODO: This method really needs to change.
 	// It's doing WAY too much in too many different contexts.
 	// I need to split this out and have methods that are well-focus and defined.
+	// In fact, I think GetReferenceableName() is going to do most of the work,
+	// and this can probably just be "GetFlattenedName()", which is needed
+	// in project type name creation.
 	internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 	{
 		static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)

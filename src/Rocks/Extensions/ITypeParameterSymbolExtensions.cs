@@ -35,9 +35,9 @@ internal static class ITypeParameterSymbolExtensions
 		}
 
 		// Then type constraints (classes first, then interfaces, then other generic type parameters)
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class) .Select(_ => _.GetName()));
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Interface).Select(_ => _.GetName()));
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter).Select(_ => _.GetName()));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class) .Select(_ => _.GetReferenceableName()));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Interface).Select(_ => _.GetReferenceableName()));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter).Select(_ => _.GetReferenceableName()));
 
 		// Then constructor constraint
 		if (self.HasConstructorConstraint)

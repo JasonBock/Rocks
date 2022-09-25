@@ -61,7 +61,7 @@ internal static class IMethodSymbolExtensions
 	internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
 	{
 		var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetName()))}>" : string.Empty;
+			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetReferenceableName()))}>" : string.Empty;
 		return $"{self.Name}{extendedName}{generics}";
 	}
 

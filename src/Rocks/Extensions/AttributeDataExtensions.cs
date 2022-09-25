@@ -62,7 +62,7 @@ internal static class AttributeDataExtensions
 				_ => value?.ToString() ?? string.Empty
 			};
 
-		var name = self.AttributeClass!.GetName().Replace("Attribute", string.Empty);
+		var name = self.AttributeClass!.GetReferenceableName();
 		var argumentParts = new List<string>();
 
 		if (self.ConstructorArguments.Length > 0)

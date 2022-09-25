@@ -71,11 +71,11 @@ internal static class EventExpectationsExtensionsBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		var typeToMockName = information.TypeToMock!.GenericName;
+		var typeToMockName = information.TypeToMock!.ReferenceableName;
 
 		foreach (var result in information.Events)
 		{
-			var argsType = nameof(EventArgs);
+			var argsType = "global::System.EventArgs";
 
 			if (result.Value.Type is INamedTypeSymbol namedSymbol &&
 				namedSymbol.DelegateInvokeMethod?.Parameters is { Length: 2 })

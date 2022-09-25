@@ -24,7 +24,7 @@ internal static class MockMethodVoidBuilder
 			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
+			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
 		var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -53,7 +53,7 @@ internal static class MockMethodVoidBuilder
 			writer.WriteLine(attributes.GetDescription(compilation));
 		}
 
-		writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
+		writer.WriteLine($@"[global::Rocks.MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
@@ -133,7 +133,7 @@ internal static class MockMethodVoidBuilder
 		}
 		else
 		{
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
 		}
 
 		writer.Indent--;
@@ -152,7 +152,7 @@ internal static class MockMethodVoidBuilder
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 	}
 
@@ -178,8 +178,8 @@ internal static class MockMethodVoidBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -190,8 +190,8 @@ internal static class MockMethodVoidBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -216,14 +216,14 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("if (!foundMatch)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
+		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 
 		if (shouldThrowDoesNotReturnException)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 	}
 
@@ -252,9 +252,9 @@ internal static class MockMethodVoidBuilder
 
 		if (raiseEvents)
 		{
-			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
+			writer.WriteLine("methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
+		writer.WriteLine("methodHandler.IncrementCallCount();");
 	}
 }

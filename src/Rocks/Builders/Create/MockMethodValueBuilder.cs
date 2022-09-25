@@ -27,7 +27,7 @@ internal static class MockMethodValueBuilder
 			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
+			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
 		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -63,7 +63,7 @@ internal static class MockMethodValueBuilder
 			writer.WriteLine(returnAttributes.GetDescription(compilation, AttributeTargets.ReturnValue));
 		}
 
-		writer.WriteLine($@"[MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
+		writer.WriteLine($@"[global::Rocks.MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
@@ -114,7 +114,7 @@ internal static class MockMethodValueBuilder
 		if (method.Parameters.Length > 0)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
 		}
 
 		writer.Indent--;
@@ -154,7 +154,7 @@ internal static class MockMethodValueBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {methodSignature.Replace("\"", "\\\"")}\");");
 		}
 
 		writer.Indent--;
@@ -203,7 +203,7 @@ internal static class MockMethodValueBuilder
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method) : method.ReturnType.GetReferenceableName();
 		var handlerName = method.ReturnType.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(method.ReturnType) :
-			$"{nameof(HandlerInformation)}<{methodReturnType}>";
+			$"global::Rocks.HandlerInformation<{methodReturnType}>";
 
 		writer.WriteLine(
 			method.ReturnType.TypeKind != TypeKind.TypeParameter ?
@@ -222,7 +222,7 @@ internal static class MockMethodValueBuilder
 					$$"""
 					methodHandler is {{handlerName}} returnValue ?
 						returnValue.ReturnValue :
-						throw new MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+						throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
 					"""
 				);
 			}
@@ -239,7 +239,7 @@ internal static class MockMethodValueBuilder
 					$$"""
 					methodHandler is {{handlerName}} returnValue ?
 						returnValue.ReturnValue!.Invoke() :
-						throw new MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+						throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
 					"""
 				);
 			}
@@ -249,14 +249,14 @@ internal static class MockMethodValueBuilder
 
 		if (raiseEvents)
 		{
-			writer.WriteLine($"methodHandler.{nameof(HandlerInformation.RaiseEvents)}(this);");
+			writer.WriteLine("methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine($"methodHandler.{nameof(HandlerInformation.IncrementCallCount)}();");
+		writer.WriteLine("methodHandler.IncrementCallCount();");
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 		else
 		{
@@ -291,8 +291,8 @@ internal static class MockMethodValueBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -303,8 +303,8 @@ internal static class MockMethodValueBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"Unsafe.As<{argType}>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((methodHandler.{WellKnownNames.Expectations}[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
