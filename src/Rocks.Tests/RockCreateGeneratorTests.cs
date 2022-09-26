@@ -11,22 +11,24 @@ public static class RockCreateGeneratorTests
 	public static async Task GenerateWhenInvocationIsNotRockCreateAsync()
 	{
 		var code =
-@"using Rocks;
+			"""
+			using Rocks;
 
-public interface ITest { }
+			public interface ITest { }
 
-public static class Rocker
-{
-	public static void Create<T>() { }
-}
+			public static class Rocker
+			{
+				public static void Create<T>() { }
+			}
 
-public static class Invoker
-{
-	public static void Invoke()
-	{
-		Rocker.Create<ITest>();
-	}
-}";
+			public static class Invoker
+			{
+				public static void Invoke()
+				{
+					Rocker.Create<ITest>();
+				}
+			}
+			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
@@ -40,7 +42,7 @@ public static class Invoker
 			"""
 			using Rocks;
 			using System;
-
+			
 			#nullable enable
 			namespace MockTests
 			{
@@ -48,7 +50,7 @@ public static class Invoker
 				{
 					string? DoSomething(string? a, string b);
 				}
-	
+				
 				public static class Test
 				{
 					public static void Generate()
@@ -59,84 +61,77 @@ public static class Invoker
 			}
 			""";
 
-		var generatedCode = "";
-			//"""
-			//using Rocks;
-			//using Rocks.Exceptions;
-			//using Rocks.Expectations;
-			//using System;
-			//using System.Collections.Generic;
-			//using System.Collections.Immutable;
-			//using System.Runtime.CompilerServices;
+		var generatedCode =
+			"""
+			#nullable enable
 			
-			//#nullable enable
-			//namespace MockTests
-			//{
-			//	internal static class CreateExpectationsOfIContainNullableReferencesExtensions
-			//	{
-			//		internal static MethodExpectations<IContainNullableReferences> Methods(this Expectations<IContainNullableReferences> self) =>
-			//			new(self);
+			namespace MockTests
+			{
+				internal static class CreateExpectationsOfIContainNullableReferencesExtensions
+				{
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> self) =>
+						new(self);
 					
-			//		internal static IContainNullableReferences Instance(this Expectations<IContainNullableReferences> self)
-			//		{
-			//			if (!self.WasInstanceInvoked)
-			//			{
-			//				self.WasInstanceInvoked = true;
-			//				return new RockIContainNullableReferences(self);
-			//			}
-			//			else
-			//			{
-			//				throw new NewMockInstanceException("Can only create a new mock once.");
-			//			}
-			//		}
+					internal static global::MockTests.IContainNullableReferences Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> self)
+					{
+						if (!self.WasInstanceInvoked)
+						{
+							self.WasInstanceInvoked = true;
+							return new RockIContainNullableReferences(self);
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
 					
-			//		private sealed class RockIContainNullableReferences
-			//			: IContainNullableReferences
-			//		{
-			//			private readonly Dictionary<int, List<HandlerInformation>> handlers;
+					private sealed class RockIContainNullableReferences
+						: global::MockTests.IContainNullableReferences
+					{
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-			//			public RockIContainNullableReferences(Expectations<IContainNullableReferences> expectations) =>
-			//				this.handlers = expectations.Handlers;
+						public RockIContainNullableReferences(global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> expectations) =>
+							this.handlers = expectations.Handlers;
 						
-			//			[MemberIdentifier(0, "string? DoSomething(string? a, string b)")]
-			//			public string? DoSomething(string? a, string b)
-			//			{
-			//				if (this.handlers.TryGetValue(0, out var methodHandlers))
-			//				{
-			//					foreach (var methodHandler in methodHandlers)
-			//					{
-			//						if (Unsafe.As<Argument<string?>>(methodHandler.Expectations[0]).IsValid(a) &&
-			//							Unsafe.As<Argument<string>>(methodHandler.Expectations[1]).IsValid(b))
-			//						{
-			//							var result = methodHandler.Method is not null ?
-			//								Unsafe.As<Func<string?, string, string?>>(methodHandler.Method)(a, b) :
-			//								Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
-			//							methodHandler.IncrementCallCount();
-			//							return result!;
-			//						}
-			//					}
+						[global::Rocks.MemberIdentifier(0, "string? DoSomething(string? a, string b)")]
+						public string? DoSomething(string? a, string b)
+						{
+							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							{
+								foreach (var methodHandler in methodHandlers)
+								{
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(methodHandler.Expectations[0]).IsValid(a) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler.Expectations[1]).IsValid(b))
+									{
+										var result = methodHandler.Method is not null ?
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?, string, string?>>(methodHandler.Method)(a, b) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
+										methodHandler.IncrementCallCount();
+										return result!;
+									}
+								}
 								
-			//					throw new ExpectationException("No handlers match for string? DoSomething(string? a, string b)");
-			//				}
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string? DoSomething(string? a, string b)");
+							}
 							
-			//				throw new ExpectationException("No handlers were found for string? DoSomething(string? a, string b)");
-			//			}
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string? DoSomething(string? a, string b)");
+						}
 						
-			//		}
-			//	}
+					}
+				}
 				
-			//	internal static class MethodExpectationsOfIContainNullableReferencesExtensions
-			//	{
-			//		internal static MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?> DoSomething(this MethodExpectations<IContainNullableReferences> self, Argument<string?> a, Argument<string> b)
-			//		{
-			//			ArgumentNullException.ThrowIfNull(a);
-			//			ArgumentNullException.ThrowIfNull(b);
-			//			return new MethodAdornments<IContainNullableReferences, Func<string?, string, string?>, string?>(self.Add<string?>(0, new List<Argument>(2) { a, b }));
-			//		}
-			//	}
-			//}
+				internal static class MethodExpectationsOfIContainNullableReferencesExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?> DoSomething(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> self, global::Rocks.Argument<string?> a, global::Rocks.Argument<string> b)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(a);
+						global::System.ArgumentNullException.ThrowIfNull(b);
+						return new global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?>(self.Add<string?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { a, b }));
+					}
+				}
+			}
 			
-			//""";
+			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
@@ -170,23 +165,16 @@ public static class Invoker
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
 						new(self);
 					
-					internal static ITest Instance(this Expectations<ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -195,19 +183,19 @@ public static class Invoker
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockITest
-						: ITest
+						: global::MockTests.ITest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(Expectations<ITest> expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -215,14 +203,14 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 							}
 						}
 						
@@ -231,11 +219,11 @@ public static class Invoker
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
-						new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
-
+			
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
@@ -267,21 +255,14 @@ public static class Invoker
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			internal static class CreateExpectationsOfITestExtensions
 			{
-				internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+				internal static global::Rocks.Expectations.MethodExpectations<global::ITest> Methods(this global::Rocks.Expectations.Expectations<global::ITest> self) =>
 					new(self);
 				
-				internal static ITest Instance(this Expectations<ITest> self)
+				internal static global::ITest Instance(this global::Rocks.Expectations.Expectations<global::ITest> self)
 				{
 					if (!self.WasInstanceInvoked)
 					{
@@ -290,19 +271,19 @@ public static class Invoker
 					}
 					else
 					{
-						throw new NewMockInstanceException("Can only create a new mock once.");
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
 				
 				private sealed class RockITest
-					: ITest
+					: global::ITest
 				{
-					private readonly Dictionary<int, List<HandlerInformation>> handlers;
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockITest(Expectations<ITest> expectations) =>
+					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> expectations) =>
 						this.handlers = expectations.Handlers;
 					
-					[MemberIdentifier(0, "void Foo()")]
+					[global::Rocks.MemberIdentifier(0, "void Foo()")]
 					public void Foo()
 					{
 						if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -310,14 +291,14 @@ public static class Invoker
 							var methodHandler = methodHandlers[0];
 							if (methodHandler.Method is not null)
 							{
-								Unsafe.As<Action>(methodHandler.Method)();
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 							}
 							
 							methodHandler.IncrementCallCount();
 						}
 						else
 						{
-							throw new ExpectationException("No handlers were found for void Foo()");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 						}
 					}
 					
@@ -326,8 +307,8 @@ public static class Invoker
 			
 			internal static class MethodExpectationsOfITestExtensions
 			{
-				internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
-					new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::ITest> self) =>
+					new global::Rocks.MethodAdornments<global::ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 			}
 			
 			""";
@@ -365,23 +346,16 @@ public static class Invoker
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
 						new(self);
 					
-					internal static ITest Instance(this Expectations<ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -390,19 +364,19 @@ public static class Invoker
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockITest
-						: ITest
+						: global::MockTests.ITest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(Expectations<ITest> expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -410,14 +384,14 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 							}
 						}
 						
@@ -426,8 +400,8 @@ public static class Invoker
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
-						new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -460,23 +434,16 @@ public static class Invoker
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
 						new(self);
 					
-					internal static ITest Instance(this Expectations<ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -485,19 +452,19 @@ public static class Invoker
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockITest
-						: ITest
+						: global::MockTests.ITest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(Expectations<ITest> expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -505,14 +472,14 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 							}
 						}
 						
@@ -521,8 +488,8 @@ public static class Invoker
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
-						new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -619,23 +586,16 @@ public static class Invoker
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static MethodExpectations<ITest> Methods(this Expectations<ITest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
 						new(self);
 					
-					internal static ITest Instance(this Expectations<ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -644,19 +604,19 @@ public static class Invoker
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockITest
-						: ITest
+						: global::MockTests.ITest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(Expectations<ITest> expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -664,14 +624,14 @@ public static class Invoker
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void Foo()");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 							}
 						}
 						
@@ -680,8 +640,8 @@ public static class Invoker
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static MethodAdornments<ITest, Action> Foo(this MethodExpectations<ITest> self) =>
-						new MethodAdornments<ITest, Action>(self.Add(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
