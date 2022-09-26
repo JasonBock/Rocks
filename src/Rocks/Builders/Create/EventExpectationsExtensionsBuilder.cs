@@ -50,7 +50,7 @@ internal static class EventExpectationsExtensionsBuilder
 			var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
 				$"On{result.Value.ContainingType.GetName(TypeNameOption.Flatten)}";
 
-			writer.WriteLine($"internal static global::Rocks.Extensions.{extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this global::Rocks.Extensions.{extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
+			writer.WriteLine($"internal static global::Rocks.{extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this global::Rocks.{extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
 			writer.Indent++;
 			writer.WriteLine($"where {callbackName} : global::System.Delegate");
 			writer.Indent--;
@@ -80,7 +80,7 @@ internal static class EventExpectationsExtensionsBuilder
 			if (result.Value.Type is INamedTypeSymbol namedSymbol &&
 				namedSymbol.DelegateInvokeMethod?.Parameters is { Length: 2 })
 			{
-				argsType = namedSymbol.DelegateInvokeMethod.Parameters[1].Type.GetName();
+				argsType = namedSymbol.DelegateInvokeMethod.Parameters[1].Type.GetReferenceableName();
 			}
 
 			if (information.Methods.Any(_ => !_.Value.ReturnsVoid) ||

@@ -32,29 +32,22 @@ public static class IndexerInitCreateGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfTargetExtensions
 				{
-					internal static MethodExpectations<Target> Methods(this Expectations<Target> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.Target> self) =>
 						new(self);
 					
-					internal static IndexerExpectations<Target> Indexers(this Expectations<Target> self) =>
+					internal static global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> Indexers(this global::Rocks.Expectations.Expectations<global::MockTests.Target> self) =>
 						new(self);
 					
-					internal static IndexerGetterExpectations<Target> Getters(this IndexerExpectations<Target> self) =>
+					internal static global::Rocks.Expectations.IndexerGetterExpectations<global::MockTests.Target> Getters(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> self) =>
 						new(self);
 					
-					internal static Target Instance(this Expectations<Target> self)
+					internal static global::MockTests.Target Instance(this global::Rocks.Expectations.Expectations<global::MockTests.Target> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -63,36 +56,36 @@ public static class IndexerInitCreateGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockTarget
-						: Target
+						: global::MockTests.Target
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockTarget(Expectations<Target> expectations) =>
+						public RockTarget(global::Rocks.Expectations.Expectations<global::MockTests.Target> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -100,15 +93,15 @@ public static class IndexerInitCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -118,15 +111,15 @@ public static class IndexerInitCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -136,8 +129,8 @@ public static class IndexerInitCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "this[int a]")]
-						[MemberIdentifier(4, "this[int a]")]
+						[global::Rocks.MemberIdentifier(3, "this[int a]")]
+						[global::Rocks.MemberIdentifier(4, "this[int a]")]
 						public override int this[int a]
 						{
 							get
@@ -146,20 +139,20 @@ public static class IndexerInitCreateGeneratorTests
 								{
 									foreach (var methodHandler in methodHandlers)
 									{
-										if (Unsafe.As<Argument<int>>(methodHandler.Expectations[0]).IsValid(a))
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(methodHandler.Expectations[0]).IsValid(a))
 										{
 											var result = methodHandler.Method is not null ?
-												Unsafe.As<Func<int, int>>(methodHandler.Method)(a) :
-												Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, int>>(methodHandler.Method)(a) :
+												global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 											methodHandler.IncrementCallCount();
 											return result!;
 										}
 									}
 									
-									throw new ExpectationException("No handlers match for this[int a]");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int a]");
 								}
 								
-								throw new ExpectationException("No handlers were found for this[int a])");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int a])");
 							}
 							init { }
 						}
@@ -168,23 +161,23 @@ public static class IndexerInitCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfTargetExtensions
 				{
-					internal static MethodAdornments<Target, Func<object?, bool>, bool> Equals(this MethodExpectations<Target> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<Target, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<Target, Func<int>, int> GetHashCode(this MethodExpectations<Target> self) =>
-						new MethodAdornments<Target, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<Target, Func<string?>, string?> ToString(this MethodExpectations<Target> self) =>
-						new MethodAdornments<Target, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				
 				internal static class IndexerGetterExpectationsOfTargetExtensions
 				{
-					internal static IndexerAdornments<Target, Func<int, int>, int> This(this IndexerGetterExpectations<Target> self, Argument<int> a)
+					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::MockTests.Target> self, global::Rocks.Argument<int> a)
 					{
-						ArgumentNullException.ThrowIfNull(a);
-						return new IndexerAdornments<Target, Func<int, int>, int>(self.Add<int>(3, new List<Argument>(1) { a }));
+						global::System.ArgumentNullException.ThrowIfNull(a);
+						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int>(self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { a }));
 					}
 				}
 			}

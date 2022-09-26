@@ -37,24 +37,16 @@ public static class DoesNotReturnGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfClassTestExtensions
 				{
-					internal static MethodExpectations<ClassTest> Methods(this Expectations<ClassTest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> self) =>
 						new(self);
 					
-					internal static ClassTest Instance(this Expectations<ClassTest> self)
+					internal static global::MockTests.ClassTest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -63,36 +55,36 @@ public static class DoesNotReturnGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockClassTest
-						: ClassTest
+						: global::MockTests.ClassTest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockClassTest(Expectations<ClassTest> expectations) =>
+						public RockClassTest(global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -100,15 +92,15 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -118,15 +110,15 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -136,8 +128,8 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[DoesNotReturn]
-						[MemberIdentifier(3, "void VoidMethod()")]
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						[global::Rocks.MemberIdentifier(3, "void VoidMethod()")]
 						public override void VoidMethod()
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
@@ -145,11 +137,11 @@ public static class DoesNotReturnGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
-								throw new DoesNotReturnException();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 							else
 							{
@@ -157,18 +149,18 @@ public static class DoesNotReturnGeneratorTests
 							}
 						}
 						
-						[DoesNotReturn]
-						[MemberIdentifier(4, "int IntMethod()")]
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						[global::Rocks.MemberIdentifier(4, "int IntMethod()")]
 						public override int IntMethod()
 						{
 							if (this.handlers.TryGetValue(4, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								_ = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
-								throw new DoesNotReturnException();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 							else
 							{
@@ -181,22 +173,22 @@ public static class DoesNotReturnGeneratorTests
 				
 				internal static class MethodExpectationsOfClassTestExtensions
 				{
-					internal static MethodAdornments<ClassTest, Func<object?, bool>, bool> Equals(this MethodExpectations<ClassTest> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<ClassTest, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<ClassTest, Func<int>, int> GetHashCode(this MethodExpectations<ClassTest> self) =>
-						new MethodAdornments<ClassTest, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<ClassTest, Func<string?>, string?> ToString(this MethodExpectations<ClassTest> self) =>
-						new MethodAdornments<ClassTest, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<ClassTest, Action> VoidMethod(this MethodExpectations<ClassTest> self) =>
-						new MethodAdornments<ClassTest, Action>(self.Add(3, new List<Argument>()));
-					internal static MethodAdornments<ClassTest, Func<int>, int> IntMethod(this MethodExpectations<ClassTest> self) =>
-						new MethodAdornments<ClassTest, Func<int>, int>(self.Add<int>(4, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Action> VoidMethod(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Action>(self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<int>, int> IntMethod(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ClassTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ClassTest, global::System.Func<int>, int>(self.Add<int>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
-
+			
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
@@ -208,77 +200,75 @@ public static class DoesNotReturnGeneratorTests
 	public static async Task GenerateClassMakeAsync()
 	{
 		var code =
-@"using Rocks;
-using System;
-using System.Diagnostics.CodeAnalysis;
+			"""
+			using Rocks;
+			using System;
+			using System.Diagnostics.CodeAnalysis;
 
-namespace MockTests
-{
-	public class ClassTest
-	{
-		[DoesNotReturn]
-		public virtual void VoidMethod() => throw new NotSupportedException();
+			namespace MockTests
+			{
+				public class ClassTest
+				{
+					[DoesNotReturn]
+					public virtual void VoidMethod() => throw new NotSupportedException();
 
-		[DoesNotReturn]
-		public virtual int IntMethod() => throw new NotSupportedException();
-	}
+					[DoesNotReturn]
+					public virtual int IntMethod() => throw new NotSupportedException();
+				}
 
-	public static class Test
-	{
-		public static void Generate()
-		{
-			var rock = Rock.Make<ClassTest>();
-		}
-	}
-}";
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Make<ClassTest>();
+					}
+				}
+			}
+			""";
 
 		var generatedCode =
-@"using Rocks;
-using Rocks.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
-
-#nullable enable
-namespace MockTests
-{
-	internal static class MakeExpectationsOfClassTestExtensions
-	{
-		internal static ClassTest Instance(this MakeGeneration<ClassTest> self) =>
-			new RockClassTest();
-		
-		private sealed class RockClassTest
-			: ClassTest
-		{
-			public RockClassTest() { }
+			"""
+			#nullable enable
 			
-			public override bool Equals(object? obj)
+			namespace MockTests
 			{
-				return default!;
+				internal static class MakeExpectationsOfClassTestExtensions
+				{
+					internal static global::MockTests.ClassTest Instance(this global::Rocks.MakeGeneration<global::MockTests.ClassTest> self) =>
+						new RockClassTest();
+					
+					private sealed class RockClassTest
+						: global::MockTests.ClassTest
+					{
+						public RockClassTest() { }
+						
+						public override bool Equals(object? obj)
+						{
+							return default!;
+						}
+						public override int GetHashCode()
+						{
+							return default!;
+						}
+						public override string? ToString()
+						{
+							return default!;
+						}
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						public override void VoidMethod()
+						{
+							throw new global::Rocks.Exceptions.DoesNotReturnException();
+						}
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						public override int IntMethod()
+						{
+							throw new global::Rocks.Exceptions.DoesNotReturnException();
+						}
+					}
+				}
 			}
-			public override int GetHashCode()
-			{
-				return default!;
-			}
-			public override string? ToString()
-			{
-				return default!;
-			}
-			[DoesNotReturn]
-			public override void VoidMethod()
-			{
-				throw new DoesNotReturnException();
-			}
-			[DoesNotReturn]
-			public override int IntMethod()
-			{
-				throw new DoesNotReturnException();
-			}
-		}
-	}
-}
-";
+			
+			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "ClassTest_Rock_Make.g.cs", generatedCode) },
@@ -317,24 +307,16 @@ namespace MockTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfIInterfaceTestExtensions
 				{
-					internal static MethodExpectations<IInterfaceTest> Methods(this Expectations<IInterfaceTest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IInterfaceTest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IInterfaceTest> self) =>
 						new(self);
 					
-					internal static IInterfaceTest Instance(this Expectations<IInterfaceTest> self)
+					internal static global::MockTests.IInterfaceTest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IInterfaceTest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -343,20 +325,20 @@ namespace MockTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockIInterfaceTest
-						: IInterfaceTest
+						: global::MockTests.IInterfaceTest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIInterfaceTest(Expectations<IInterfaceTest> expectations) =>
+						public RockIInterfaceTest(global::Rocks.Expectations.Expectations<global::MockTests.IInterfaceTest> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[DoesNotReturn]
-						[MemberIdentifier(0, "void VoidMethod()")]
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						[global::Rocks.MemberIdentifier(0, "void VoidMethod()")]
 						public void VoidMethod()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -364,33 +346,33 @@ namespace MockTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
-								throw new DoesNotReturnException();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 							else
 							{
-								throw new ExpectationException("No handlers were found for void VoidMethod()");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void VoidMethod()");
 							}
 						}
 						
-						[DoesNotReturn]
-						[MemberIdentifier(1, "int IntMethod()")]
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						[global::Rocks.MemberIdentifier(1, "int IntMethod()")]
 						public int IntMethod()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								_ = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
-								throw new DoesNotReturnException();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 							
-							throw new ExpectationException("No handlers were found for int IntMethod()");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int IntMethod()");
 						}
 						
 					}
@@ -398,13 +380,13 @@ namespace MockTests
 				
 				internal static class MethodExpectationsOfIInterfaceTestExtensions
 				{
-					internal static MethodAdornments<IInterfaceTest, Action> VoidMethod(this MethodExpectations<IInterfaceTest> self) =>
-						new MethodAdornments<IInterfaceTest, Action>(self.Add(0, new List<Argument>()));
-					internal static MethodAdornments<IInterfaceTest, Func<int>, int> IntMethod(this MethodExpectations<IInterfaceTest> self) =>
-						new MethodAdornments<IInterfaceTest, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IInterfaceTest, global::System.Action> VoidMethod(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IInterfaceTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IInterfaceTest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IInterfaceTest, global::System.Func<int>, int> IntMethod(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IInterfaceTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IInterfaceTest, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
-
+			
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
@@ -416,65 +398,63 @@ namespace MockTests
 	public static async Task GenerateInterfaceMakeAsync()
 	{
 		var code =
-@"using Rocks;
-using System;
-using System.Diagnostics.CodeAnalysis;
+			"""
+			using Rocks;
+			using System;
+			using System.Diagnostics.CodeAnalysis;
 
-namespace MockTests
-{
-	public interface IInterfaceTest
-	{
-		[DoesNotReturn]
-		void VoidMethod();
+			namespace MockTests
+			{
+				public interface IInterfaceTest
+				{
+					[DoesNotReturn]
+					void VoidMethod();
 
-		[DoesNotReturn]
-		int IntMethod();
-	}
+					[DoesNotReturn]
+					int IntMethod();
+				}
 
-	public static class Test
-	{
-		public static void Generate()
-		{
-			var rock = Rock.Make<IInterfaceTest>();
-		}
-	}
-}";
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Make<IInterfaceTest>();
+					}
+				}
+			}
+			""";
 
 		var generatedCode =
-@"using Rocks;
-using Rocks.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
-
-#nullable enable
-namespace MockTests
-{
-	internal static class MakeExpectationsOfIInterfaceTestExtensions
-	{
-		internal static IInterfaceTest Instance(this MakeGeneration<IInterfaceTest> self) =>
-			new RockIInterfaceTest();
-		
-		private sealed class RockIInterfaceTest
-			: IInterfaceTest
-		{
-			public RockIInterfaceTest() { }
+			"""
+			#nullable enable
 			
-			[DoesNotReturn]
-			public void VoidMethod()
+			namespace MockTests
 			{
-				throw new DoesNotReturnException();
+				internal static class MakeExpectationsOfIInterfaceTestExtensions
+				{
+					internal static global::MockTests.IInterfaceTest Instance(this global::Rocks.MakeGeneration<global::MockTests.IInterfaceTest> self) =>
+						new RockIInterfaceTest();
+					
+					private sealed class RockIInterfaceTest
+						: global::MockTests.IInterfaceTest
+					{
+						public RockIInterfaceTest() { }
+						
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						public void VoidMethod()
+						{
+							throw new global::Rocks.Exceptions.DoesNotReturnException();
+						}
+						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
+						public int IntMethod()
+						{
+							throw new global::Rocks.Exceptions.DoesNotReturnException();
+						}
+					}
+				}
 			}
-			[DoesNotReturn]
-			public int IntMethod()
-			{
-				throw new DoesNotReturnException();
-			}
-		}
-	}
-}
-";
+			
+			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "IInterfaceTest_Rock_Make.g.cs", generatedCode) },

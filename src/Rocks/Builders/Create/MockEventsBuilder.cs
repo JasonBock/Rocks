@@ -68,7 +68,7 @@ internal static class MockEventsBuilder
 		writer.WriteLine("var thisType = this.GetType();");
 		writer.WriteLine($"var eventDelegate = (global::System.MulticastDelegate)thisType.GetField(fieldName, ");
 		writer.Indent++;
-		writer.WriteLine($"BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(this)!;");
+		writer.WriteLine($"global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;");
 		writer.Indent--;
 		writer.WriteLine();
 		writer.WriteLine("if (eventDelegate is not null)");
