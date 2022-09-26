@@ -9,8 +9,8 @@ namespace Rocks.Tests.Extensions;
 public static class ITypeParameterSymbolExtensionsTests
 {
 	[TestCase("public class Target<T> { }", "")]
-	[TestCase("public class Base { } public class Target<T> where T : Base { }", "where T : Base")]
-	[TestCase("public class Base { } public class Target<T> where T : Base? { }", "where T : Base?")]
+	[TestCase("public class Base { } public class Target<T> where T : Base { }", "where T : global::Base")]
+	[TestCase("public class Base { } public class Target<T> where T : Base? { }", "where T : global::Base?")]
 	[TestCase("public class Target<T, U> where T : U { }", "where T : U")]
 	[TestCase("public class Target<T> where T : class { }", "where T : class")]
 	[TestCase("public class Target<T> where T : class, new() { }", "where T : class, new()")]
@@ -19,8 +19,8 @@ public static class ITypeParameterSymbolExtensionsTests
 	[TestCase("public class Target<T> where T : notnull { }", "where T : notnull")]
 	[TestCase("public class Target<T> where T : unmanaged { }", "where T : unmanaged, struct")]
 	[TestCase("public class Target<T> where T : struct { }", "where T : struct")]
-	[TestCase("public interface IThing { } public class Target<T> where T : struct, IThing { }", "where T : struct, IThing")]
-	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : Thing, IThing")]
+	[TestCase("public interface IThing { } public class Target<T> where T : struct, IThing { }", "where T : struct, global::IThing")]
+	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : global::Thing, global::IThing")]
 	public static void GetConstraints(string code, string expectedConstraints)
 	{
 		var constraints = ITypeParameterSymbolExtensionsTests.GetTypeParameterSymbol(code).GetConstraints();

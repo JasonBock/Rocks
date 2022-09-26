@@ -87,96 +87,109 @@ public interface IA
 		public static void GetDescription()
 		{
 			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
-@"using Rocks.Tests.Extensions;
-using System;
+				"""
+				using Rocks.Tests.Extensions;
+				using System;
 
-public interface IA
-{
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
-	void Foo();
-}");
+				public interface IA
+				{
+					[MyTest("a value", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
+					void Foo();
+				}
+				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0), NamedA = 44)"));
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]
 		public static void GetDescriptionWithNegativeEnumValue()
 		{
 			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
-@"using Rocks.Tests.Extensions;
-using System;
+				"""
+				using Rocks.Tests.Extensions;
+				using System;
 
-public interface IA
-{
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisNegativeOne, NamedA = 44)]
-	void Foo();
-}");
+				public interface IA
+				{
+					[MyTest("a value", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisNegativeOne, NamedA = 44)]
+					void Foo();
+				}
+				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(-1), NamedA = 44)"));
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(-1), NamedA = 44)"""));
 		}
 
 		[Test]
 		public static void GetDescriptionWithOpenGeneric()
 		{
 			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
-@"using Rocks.Tests.Extensions;
-using System;
+				"""
+				using ADETTypes;
+				using Rocks.Tests.Extensions;
+				using System;
 
-public interface IA
-{
-	[MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<,>), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
-	void Foo();
-}");
+				public interface IA
+				{
+					[MyTest("a value", 12.34, 22, 44, typeof(OpenGeneric<,>), new[] { 6, 7 }, MyValue.ThisOne, NamedA = 44)]
+					void Foo();
+				}
+				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo(@"MyTest(""a value"", 12.34, 22, 44, typeof(OpenGeneric<, >), new[] { 6, 7 }, (MyValue)(0), NamedA = 44)"));
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::ADETTypes.OpenGeneric<,>), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]
 		public static void GetDescriptionForArrayOfAttributes()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@"using Rocks.Tests.Extensions;
-using System;
+				"""
+				using Rocks.Tests.Extensions;
+				using System;
 
-public interface IA
-{
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
-	void Foo();
-}");
+				public interface IA
+				{
+					[MyTest("a value", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
+					[MyTest("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
+					void Foo();
+				}
+				""");
 
-			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(@"[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0)), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)(1))]"));
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo("""[global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0)), global::Rocks.Tests.Extensions.MyTestAttribute("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (global::Rocks.Tests.Extensions.MyValue)(1))]"""));
 		}
 
 		[Test]
 		public static void GetDescriptionForArrayWithTarget()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@"using Rocks.Tests.Extensions;
-using System;
+				"""
+				using Rocks.Tests.Extensions;
+				using System;
 
-public interface IA
-{
-	[MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
-	[MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
-	void Foo();
-}");
+				public interface IA
+				{
+					[MyTest("a value", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, MyValue.ThisOne)]
+					[MyTest("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, MyValue.ThatOne)]
+					void Foo();
+				}
+				""");
 
-			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo(@"[method: MyTest(""a value"", 12.34, 22, 44, typeof(Guid), new[] { 6, 7 }, (MyValue)(0)), MyTest(""b value"", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (MyValue)(1))]"));
+			Assert.That(attributes.GetDescription(compilation, AttributeTargets.Method), Is.EqualTo("""[method: global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0)), global::Rocks.Tests.Extensions.MyTestAttribute("b value", 22.34, 33, 55, typeof(string), new[] { 8, 9 }, (global::Rocks.Tests.Extensions.MyValue)(1))]"""));
 		}
 
 		[Test]
 		public static void GetDescriptionWhenCompilerGeneratedAttributeIsPresent()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@"using System;
-using System.Runtime.CompilerServices;
+				"""
+				using System;
+				using System.Runtime.CompilerServices;
 
-public interface IA
-{
-	[CompilerGeneratedAttribute]
-	void Foo();
-}");
+				public interface IA
+				{
+					[CompilerGeneratedAttribute]
+					void Foo();
+				}
+				""");
 
 			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
 		}
@@ -185,14 +198,16 @@ public interface IA
 		public static void GetDescriptionWhenIteratorStateMachineAttributeIsPresent()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@"using System;
-using System.Runtime.CompilerServices;
+				"""
+				using System;
+				using System.Runtime.CompilerServices;
 
-public interface IA
-{
-	[IteratorStateMachine(typeof(object))]
-	void Foo();
-}");
+				public interface IA
+				{
+					[IteratorStateMachine(typeof(object))]
+					void Foo();
+				}
+				""");
 
 			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
 		}
@@ -201,14 +216,16 @@ public interface IA
 		public static void GetDescriptionWhenAsyncStateMachineAttributeIsPresent()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
-@"using System;
-using System.Runtime.CompilerServices;
+				"""
+				using System;
+				using System.Runtime.CompilerServices;
 
-public interface IA
-{
-	[AsyncStateMachine(typeof(object))]
-	void Foo();
-}");
+				public interface IA
+				{
+					[AsyncStateMachine(typeof(object))]
+					void Foo();
+				}
+				""");
 
 			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
 		}
@@ -217,15 +234,17 @@ public interface IA
 		public static void GetDescriptionWhenAttributeCannotBeSeen()
 		{
 			var internalCode =
-@"using System;
+				"""
+				using System;
 
-internal sealed class YouCannotSeeThisAttribute : Attribute { }
+				internal sealed class YouCannotSeeThisAttribute : Attribute { }
 
-public static class Test
-{
-	[YouCannotSeeThis]
-	public static void Run() { }
-}";
+				public static class Test
+				{
+					[YouCannotSeeThis]
+					public static void Run() { }
+				}
+				""";
 
 			var references = AppDomain.CurrentDomain.GetAssemblies()
 				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -237,10 +256,12 @@ public static class Test
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 			var externalCode =
-@"public static class UseTest
-{
-	public static void CallRun() => Test.Run();
-}";
+				"""
+				public static class UseTest
+				{
+					public static void CallRun() => Test.Run();
+				}
+				""";
 
 			var externalSyntaxTree = CSharpSyntaxTree.ParseText(externalCode);
 			var externalCompilation = CSharpCompilation.Create("external", new SyntaxTree[] { externalSyntaxTree },

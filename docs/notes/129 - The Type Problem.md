@@ -45,3 +45,8 @@ Where do I need FQNs?
 		* DONE - Maybe I should just ditch these
 * DONE - Makes
 	* DONE - Whatever needs to be done
+	
+Other Issues
+* `ConstructorProperties` can be `internal`, not `public`
+* Invoking an event seems reflection-heavy, can that be simplified?
+* I put `#nullable enable` in every code-gen'ed file. Should I also put `#nullable restore` at the end?

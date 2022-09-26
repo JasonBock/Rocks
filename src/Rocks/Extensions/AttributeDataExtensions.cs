@@ -47,9 +47,9 @@ internal static class AttributeDataExtensions
 			value.Kind switch
 			{
 				TypedConstantKind.Primitive => GetValue(value.Value),
-				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetName()})",
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetReferenceableName()})",
 				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
-				TypedConstantKind.Enum => $"({value.Type!.GetName()})({value.Value})",
+				TypedConstantKind.Enum => $"({value.Type!.GetReferenceableName()})({value.Value})",
 				_ => value.Value?.ToString() ?? string.Empty
 			};
 

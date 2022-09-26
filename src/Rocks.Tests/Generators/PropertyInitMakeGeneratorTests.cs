@@ -37,13 +37,8 @@ public static class PropertyInitMakeGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
@@ -56,7 +51,7 @@ public static class PropertyInitMakeGeneratorTests
 						public string? NullableReferenceType { get; init; }
 					}
 					
-					internal static ITest Instance(this MakeGeneration<ITest> self, ConstructorProperties? constructorProperties) =>
+					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self, ConstructorProperties? constructorProperties) =>
 						constructorProperties is null ?
 							new RockITest() :
 							new RockITest()
@@ -68,7 +63,7 @@ public static class PropertyInitMakeGeneratorTests
 							};
 					
 					private sealed class RockITest
-						: ITest
+						: global::MockTests.ITest
 					{
 						public RockITest() { }
 						
@@ -133,16 +128,10 @@ public static class PropertyInitMakeGeneratorTests
 			}
 			""";
 
-
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class MakeExpectationsOfTestExtensions
@@ -155,9 +144,9 @@ public static class PropertyInitMakeGeneratorTests
 						public required string? NullableReferenceType { get; init; }
 					}
 					
-					internal static Test Instance(this MakeGeneration<Test> self, ConstructorProperties constructorProperties) =>
+					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> self, ConstructorProperties constructorProperties) =>
 						constructorProperties is null ?
-							throw new ArgumentNullException(nameof(constructorProperties)) :
+							throw new global::System.ArgumentNullException(nameof(constructorProperties)) :
 							new RockTest()
 							{
 								NonNullableValueType = constructorProperties.NonNullableValueType,
@@ -167,7 +156,7 @@ public static class PropertyInitMakeGeneratorTests
 							};
 					
 					private sealed class RockTest
-						: Test
+						: global::MockTests.Test
 					{
 						public RockTest() { }
 						

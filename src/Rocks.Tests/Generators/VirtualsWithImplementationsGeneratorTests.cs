@@ -32,23 +32,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfVoidMethodWithParamsExtensions
 				{
-					internal static MethodExpectations<VoidMethodWithParams> Methods(this Expectations<VoidMethodWithParams> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.VoidMethodWithParams> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.VoidMethodWithParams> self) =>
 						new(self);
 					
-					internal static VoidMethodWithParams Instance(this Expectations<VoidMethodWithParams> self)
+					internal static global::MockTests.VoidMethodWithParams Instance(this global::Rocks.Expectations.Expectations<global::MockTests.VoidMethodWithParams> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -57,36 +50,36 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockVoidMethodWithParams
-						: VoidMethodWithParams
+						: global::MockTests.VoidMethodWithParams
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockVoidMethodWithParams(Expectations<VoidMethodWithParams> expectations) =>
+						public RockVoidMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.VoidMethodWithParams> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -94,15 +87,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -112,15 +105,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -130,7 +123,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "void CallMe(params string[] values)")]
+						[global::Rocks.MemberIdentifier(3, "void CallMe(params string[] values)")]
 						public override void CallMe(params string[] values)
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
@@ -139,13 +132,13 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<string[]>>(methodHandler.Expectations[0]).IsValid(values))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string[]>>(methodHandler.Expectations[0]).IsValid(values))
 									{
 										foundMatch = true;
 										
 										if (methodHandler.Method is not null)
 										{
-											Unsafe.As<Action<string[]>>(methodHandler.Method)(values);
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string[]>>(methodHandler.Method)(values);
 										}
 										
 										methodHandler.IncrementCallCount();
@@ -155,7 +148,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								if (!foundMatch)
 								{
-									throw new ExpectationException("No handlers match for void CallMe(params string[] values)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void CallMe(params string[] values)");
 								}
 							}
 							else
@@ -169,19 +162,19 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfVoidMethodWithParamsExtensions
 				{
-					internal static MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<VoidMethodWithParams> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.VoidMethodWithParams> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<VoidMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<VoidMethodWithParams, Func<int>, int> GetHashCode(this MethodExpectations<VoidMethodWithParams> self) =>
-						new MethodAdornments<VoidMethodWithParams, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<VoidMethodWithParams, Func<string?>, string?> ToString(this MethodExpectations<VoidMethodWithParams> self) =>
-						new MethodAdornments<VoidMethodWithParams, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<VoidMethodWithParams, Action<string[]>> CallMe(this MethodExpectations<VoidMethodWithParams> self, Argument<string[]> values)
+					internal static global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.VoidMethodWithParams> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.VoidMethodWithParams> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Action<string[]>> CallMe(this global::Rocks.Expectations.MethodExpectations<global::MockTests.VoidMethodWithParams> self, global::Rocks.Argument<string[]> values)
 					{
-						ArgumentNullException.ThrowIfNull(values);
-						return new MethodAdornments<VoidMethodWithParams, Action<string[]>>(self.Add(3, new List<Argument>(1) { values }));
+						global::System.ArgumentNullException.ThrowIfNull(values);
+						return new global::Rocks.MethodAdornments<global::MockTests.VoidMethodWithParams, global::System.Action<string[]>>(self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { values }));
 					}
 				}
 			}
@@ -220,23 +213,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfValueMethodWithParamsExtensions
 				{
-					internal static MethodExpectations<ValueMethodWithParams> Methods(this Expectations<ValueMethodWithParams> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ValueMethodWithParams> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ValueMethodWithParams> self) =>
 						new(self);
 					
-					internal static ValueMethodWithParams Instance(this Expectations<ValueMethodWithParams> self)
+					internal static global::MockTests.ValueMethodWithParams Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ValueMethodWithParams> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -245,36 +231,36 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockValueMethodWithParams
-						: ValueMethodWithParams
+						: global::MockTests.ValueMethodWithParams
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockValueMethodWithParams(Expectations<ValueMethodWithParams> expectations) =>
+						public RockValueMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.ValueMethodWithParams> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -282,15 +268,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -300,15 +286,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -318,24 +304,24 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "int CallMe(params string[] values)")]
+						[global::Rocks.MemberIdentifier(3, "int CallMe(params string[] values)")]
 						public override int CallMe(params string[] values)
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<string[]>>(methodHandler.Expectations[0]).IsValid(values))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string[]>>(methodHandler.Expectations[0]).IsValid(values))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<string[], int>>(methodHandler.Method)(values) :
-											Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string[], int>>(methodHandler.Method)(values) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for int CallMe(params string[] values)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int CallMe(params string[] values)");
 							}
 							else
 							{
@@ -348,19 +334,19 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfValueMethodWithParamsExtensions
 				{
-					internal static MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool> Equals(this MethodExpectations<ValueMethodWithParams> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ValueMethodWithParams> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<ValueMethodWithParams, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<ValueMethodWithParams, Func<int>, int> GetHashCode(this MethodExpectations<ValueMethodWithParams> self) =>
-						new MethodAdornments<ValueMethodWithParams, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<ValueMethodWithParams, Func<string?>, string?> ToString(this MethodExpectations<ValueMethodWithParams> self) =>
-						new MethodAdornments<ValueMethodWithParams, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<ValueMethodWithParams, Func<string[], int>, int> CallMe(this MethodExpectations<ValueMethodWithParams> self, Argument<string[]> values)
+					internal static global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ValueMethodWithParams> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ValueMethodWithParams> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<string[], int>, int> CallMe(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ValueMethodWithParams> self, global::Rocks.Argument<string[]> values)
 					{
-						ArgumentNullException.ThrowIfNull(values);
-						return new MethodAdornments<ValueMethodWithParams, Func<string[], int>, int>(self.Add<int>(3, new List<Argument>(1) { values }));
+						global::System.ArgumentNullException.ThrowIfNull(values);
+						return new global::Rocks.MethodAdornments<global::MockTests.ValueMethodWithParams, global::System.Func<string[], int>, int>(self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { values }));
 					}
 				}
 			}
@@ -399,23 +385,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfIHaveImplementationExtensions
 				{
-					internal static MethodExpectations<IHaveImplementation> Methods(this Expectations<IHaveImplementation> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveImplementation> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> self) =>
 						new(self);
 					
-					internal static IHaveImplementation Instance(this Expectations<IHaveImplementation> self)
+					internal static global::MockTests.IHaveImplementation Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -424,20 +403,20 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockIHaveImplementation
-						: IHaveImplementation
+						: global::MockTests.IHaveImplementation
 					{
-						private readonly IHaveImplementation shimForIHaveImplementation;
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveImplementation(Expectations<IHaveImplementation> expectations) =>
+						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> expectations) =>
 							(this.handlers, this.shimForIHaveImplementation) = (expectations.Handlers, new ShimRockIHaveImplementation(this));
 						
-						[MemberIdentifier(0, "void Foo()")]
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
@@ -445,7 +424,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -458,7 +437,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						
 						
 						private sealed class ShimRockIHaveImplementation
-							: IHaveImplementation
+							: global::MockTests.IHaveImplementation
 						{
 							private readonly RockIHaveImplementation mock;
 							
@@ -470,8 +449,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveImplementationExtensions
 				{
-					internal static MethodAdornments<IHaveImplementation, Action> Foo(this MethodExpectations<IHaveImplementation> self) =>
-						new MethodAdornments<IHaveImplementation, Action>(self.Add(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveImplementation, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IHaveImplementation, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -509,23 +488,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfIHaveImplementationExtensions
 				{
-					internal static MethodExpectations<IHaveImplementation> Methods(this Expectations<IHaveImplementation> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveImplementation> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> self) =>
 						new(self);
 					
-					internal static IHaveImplementation Instance(this Expectations<IHaveImplementation> self)
+					internal static global::MockTests.IHaveImplementation Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -534,28 +506,28 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockIHaveImplementation
-						: IHaveImplementation
+						: global::MockTests.IHaveImplementation
 					{
-						private readonly IHaveImplementation shimForIHaveImplementation;
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveImplementation(Expectations<IHaveImplementation> expectations) =>
+						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> expectations) =>
 							(this.handlers, this.shimForIHaveImplementation) = (expectations.Handlers, new ShimRockIHaveImplementation(this));
 						
-						[MemberIdentifier(0, "int Foo()")]
+						[global::Rocks.MemberIdentifier(0, "int Foo()")]
 						public int Foo()
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -567,7 +539,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						
 						
 						private sealed class ShimRockIHaveImplementation
-							: IHaveImplementation
+							: global::MockTests.IHaveImplementation
 						{
 							private readonly RockIHaveImplementation mock;
 							
@@ -579,8 +551,8 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveImplementationExtensions
 				{
-					internal static MethodAdornments<IHaveImplementation, Func<int>, int> Foo(this MethodExpectations<IHaveImplementation> self) =>
-						new MethodAdornments<IHaveImplementation, Func<int>, int>(self.Add<int>(0, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveImplementation, global::System.Func<int>, int> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IHaveImplementation, global::System.Func<int>, int>(self.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -618,23 +590,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodExpectations<HaveImplementation> Methods(this Expectations<HaveImplementation> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> self) =>
 						new(self);
 					
-					internal static HaveImplementation Instance(this Expectations<HaveImplementation> self)
+					internal static global::MockTests.HaveImplementation Instance(this global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -643,36 +608,36 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockHaveImplementation
-						: HaveImplementation
+						: global::MockTests.HaveImplementation
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockHaveImplementation(Expectations<HaveImplementation> expectations) =>
+						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -680,15 +645,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -698,15 +663,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -716,7 +681,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "void Foo()")]
+						[global::Rocks.MemberIdentifier(3, "void Foo()")]
 						public override void Foo()
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
@@ -724,7 +689,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -740,17 +705,17 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<HaveImplementation, Func<int>, int> GetHashCode(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<HaveImplementation, Func<string?>, string?> ToString(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<HaveImplementation, Action> Foo(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Action>(self.Add(3, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Action>(self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -788,23 +753,16 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodExpectations<HaveImplementation> Methods(this Expectations<HaveImplementation> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> self) =>
 						new(self);
 					
-					internal static HaveImplementation Instance(this Expectations<HaveImplementation> self)
+					internal static global::MockTests.HaveImplementation Instance(this global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -813,36 +771,36 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockHaveImplementation
-						: HaveImplementation
+						: global::MockTests.HaveImplementation
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockHaveImplementation(Expectations<HaveImplementation> expectations) =>
+						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -850,15 +808,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -868,15 +826,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -886,15 +844,15 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "int Foo()")]
+						[global::Rocks.MemberIdentifier(3, "int Foo()")]
 						public override int Foo()
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -909,17 +867,17 @@ public static class VirtualsWithImplementationsGeneratorTests
 				
 				internal static class MethodExpectationsOfHaveImplementationExtensions
 				{
-					internal static MethodAdornments<HaveImplementation, Func<object?, bool>, bool> Equals(this MethodExpectations<HaveImplementation> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<HaveImplementation, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<HaveImplementation, Func<int>, int> GetHashCode(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<HaveImplementation, Func<string?>, string?> ToString(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-					internal static MethodAdornments<HaveImplementation, Func<int>, int> Foo(this MethodExpectations<HaveImplementation> self) =>
-						new MethodAdornments<HaveImplementation, Func<int>, int>(self.Add<int>(3, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.HaveImplementation> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.HaveImplementation, global::System.Func<int>, int>(self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			

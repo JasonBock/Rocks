@@ -34,31 +34,22 @@ public static class RecordCreateGeneratorTests
 
 		var generatedCode =
 			"""
-			using MockTests;
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Runtime.CompilerServices;
-			using System.Text;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfRecordTestExtensions
 				{
-					internal static MethodExpectations<RecordTest> Methods(this Expectations<RecordTest> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.RecordTest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> self) =>
 						new(self);
 					
-					internal static PropertyExpectations<RecordTest> Properties(this Expectations<RecordTest> self) =>
+					internal static global::Rocks.Expectations.PropertyExpectations<global::MockTests.RecordTest> Properties(this global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> self) =>
 						new(self);
 					
-					internal static PropertyGetterExpectations<RecordTest> Getters(this PropertyExpectations<RecordTest> self) =>
+					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.RecordTest> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.RecordTest> self) =>
 						new(self);
 					
-					internal static RecordTest Instance(this Expectations<RecordTest> self)
+					internal static global::MockTests.RecordTest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -67,10 +58,10 @@ public static class RecordCreateGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
-					internal static RecordTest Instance(this Expectations<RecordTest> self, RecordTest original)
+					internal static global::MockTests.RecordTest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> self, global::MockTests.RecordTest original)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -79,22 +70,22 @@ public static class RecordCreateGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed record RockRecordTest
-						: RecordTest
+						: global::MockTests.RecordTest
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockRecordTest(Expectations<RecordTest> expectations) =>
+						public RockRecordTest(global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> expectations) =>
 							this.handlers = expectations.Handlers;
-						public RockRecordTest(Expectations<RecordTest> expectations, RecordTest original)
+						public RockRecordTest(global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> expectations, global::MockTests.RecordTest original)
 							: base(original) =>
 								this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(2, "void Foo()")]
+						[global::Rocks.MemberIdentifier(2, "void Foo()")]
 						public override void Foo()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
@@ -102,7 +93,7 @@ public static class RecordCreateGeneratorTests
 								var methodHandler = methodHandlers[0];
 								if (methodHandler.Method is not null)
 								{
-									Unsafe.As<Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
 								}
 								
 								methodHandler.IncrementCallCount();
@@ -113,15 +104,15 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(3, "string ToString()")]
+						[global::Rocks.MemberIdentifier(3, "string ToString()")]
 						public override string ToString()
 						{
 							if (this.handlers.TryGetValue(3, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -131,24 +122,24 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(4, "bool PrintMembers(StringBuilder builder)")]
-						protected override bool PrintMembers(StringBuilder builder)
+						[global::Rocks.MemberIdentifier(4, "bool PrintMembers(global::System.Text.StringBuilder builder)")]
+						protected override bool PrintMembers(global::System.Text.StringBuilder builder)
 						{
 							if (this.handlers.TryGetValue(4, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<StringBuilder>>(methodHandler.Expectations[0]).IsValid(builder))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::System.Text.StringBuilder>>(methodHandler.Expectations[0]).IsValid(builder))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<StringBuilder, bool>>(methodHandler.Method)(builder) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Text.StringBuilder, bool>>(methodHandler.Method)(builder) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool PrintMembers(StringBuilder builder)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool PrintMembers(global::System.Text.StringBuilder builder)");
 							}
 							else
 							{
@@ -156,15 +147,15 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(5, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(5, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(5, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -174,8 +165,8 @@ public static class RecordCreateGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(6, "get_EqualityContract()")]
-						protected override Type EqualityContract
+						[global::Rocks.MemberIdentifier(6, "get_EqualityContract()")]
+						protected override global::System.Type EqualityContract
 						{
 							get
 							{
@@ -183,8 +174,8 @@ public static class RecordCreateGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										Unsafe.As<Func<Type>>(methodHandler.Method)() :
-										Unsafe.As<HandlerInformation<Type>>(methodHandler).ReturnValue;
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Type>>(methodHandler.Method)() :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::System.Type>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -199,23 +190,23 @@ public static class RecordCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfRecordTestExtensions
 				{
-					internal static MethodAdornments<RecordTest, Action> Foo(this MethodExpectations<RecordTest> self) =>
-						new MethodAdornments<RecordTest, Action>(self.Add(2, new List<Argument>()));
-					internal static MethodAdornments<RecordTest, Func<string>, string> ToString(this MethodExpectations<RecordTest> self) =>
-						new MethodAdornments<RecordTest, Func<string>, string>(self.Add<string>(3, new List<Argument>()));
-					internal static MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool> PrintMembers(this MethodExpectations<RecordTest> self, Argument<StringBuilder> builder)
+					internal static global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.RecordTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Action>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<string>, string> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.RecordTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<string>, string>(self.Add<string>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<global::System.Text.StringBuilder, bool>, bool> PrintMembers(this global::Rocks.Expectations.MethodExpectations<global::MockTests.RecordTest> self, global::Rocks.Argument<global::System.Text.StringBuilder> builder)
 					{
-						ArgumentNullException.ThrowIfNull(builder);
-						return new MethodAdornments<RecordTest, Func<StringBuilder, bool>, bool>(self.Add<bool>(4, new List<Argument>(1) { builder }));
+						global::System.ArgumentNullException.ThrowIfNull(builder);
+						return new global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<global::System.Text.StringBuilder, bool>, bool>(self.Add<bool>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { builder }));
 					}
-					internal static MethodAdornments<RecordTest, Func<int>, int> GetHashCode(this MethodExpectations<RecordTest> self) =>
-						new MethodAdornments<RecordTest, Func<int>, int>(self.Add<int>(5, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.RecordTest> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.RecordTest, global::System.Func<int>, int>(self.Add<int>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				
 				internal static class PropertyGetterExpectationsOfRecordTestExtensions
 				{
-					internal static PropertyAdornments<RecordTest, Func<Type>, Type> EqualityContract(this PropertyGetterExpectations<RecordTest> self) =>
-						new PropertyAdornments<RecordTest, Func<Type>, Type>(self.Add<Type>(6, new List<Argument>()));
+					internal static global::Rocks.PropertyAdornments<RecordTest, global::System.Func<global::System.Type>, global::System.Type> EqualityContract(this global::Rocks.Expectations.PropertyGetterExpectations<RecordTest> self) =>
+						new global::Rocks.PropertyAdornments<RecordTest, global::System.Func<global::System.Type>, global::System.Type>(self.Add<global::System.Type>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
