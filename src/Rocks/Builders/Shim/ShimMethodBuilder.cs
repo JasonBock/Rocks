@@ -22,7 +22,7 @@ internal static class ShimMethodBuilder
 			else
 			{
 				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-				returnType = $"{returnByRef}{method.ReturnType.GetName()}";
+				returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 			}
 
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -35,7 +35,7 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 

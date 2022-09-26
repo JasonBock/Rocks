@@ -10,8 +10,6 @@ internal static class MockConstructorBuilder
 	internal static void Build(IndentedTextWriter writer, MockedType typeToMock,
 		ImmutableArray<IParameterSymbol> parameters)
 	{
-		var typeToMockName = typeToMock.GenericName;
-
 		if (parameters.Length > 0)
 		{
 			var instanceParameters = string.Join(", ", parameters.Select(_ =>

@@ -24,7 +24,7 @@ internal static class ShimIndexerBuilder
 			var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.GetName()} {GetSignature(indexer.Parameters, true, compilation)}");
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.GetReferenceableName()} {GetSignature(indexer.Parameters, true, compilation)}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -66,7 +66,7 @@ internal static class ShimIndexerBuilder
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
 				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-						 $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
+					$" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.In => "in ",

@@ -62,7 +62,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
-			$"{WellKnownNames.Indexer}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
+			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		var instanceParameters = string.Join(", ", thisParameter,

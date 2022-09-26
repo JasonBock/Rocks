@@ -14,7 +14,7 @@ internal static class ShimBuilder
 		// TODO: If type is generic...what happens?
 		writer.WriteLine($"private sealed class {shimName}");
 		writer.Indent++;
-		writer.WriteLine($": {shimType.GetName()}");
+		writer.WriteLine($": {shimType.GetReferenceableName()}");
 		writer.Indent--;
 		writer.WriteLine("{");
 		writer.Indent++;

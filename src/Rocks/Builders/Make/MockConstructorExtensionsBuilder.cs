@@ -77,8 +77,7 @@ internal static class MockConstructorExtensionsBuilder
 				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} constructorProperties" :
 				string.Empty;
 		var selfParameter =
-			$"this MakeGeneration<{typeToMock.GenericName}> self{constructorPropertiesParameter}";
-
+			$"this global::Rocks.MakeGeneration<{typeToMock.ReferenceableName}> self{constructorPropertiesParameter}";
 
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,

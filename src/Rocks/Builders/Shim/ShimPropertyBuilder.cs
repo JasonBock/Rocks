@@ -23,7 +23,7 @@ internal static class ShimPropertyBuilder
 			var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 
 			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.GetName()} {property.Name}");
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.GetReferenceableName()} {property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

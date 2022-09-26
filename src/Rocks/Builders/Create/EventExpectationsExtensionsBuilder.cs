@@ -13,7 +13,7 @@ internal static class EventExpectationsExtensionsBuilder
 			if (information.Methods.Length > 0)
 			{
 				writer.WriteLine();
-				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Method);
+				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
 			}
 
 			if (information.Properties.Length > 0)
@@ -21,12 +21,12 @@ internal static class EventExpectationsExtensionsBuilder
 				if (information.Properties.Any(_ => !_.Value.IsIndexer))
 				{
 					writer.WriteLine();
-					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Property);
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
 				}
 				if (information.Properties.Any(_ => _.Value.IsIndexer))
 				{
 					writer.WriteLine();
-					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, WellKnownNames.Indexer);
+					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
 				}
 			}
 		}

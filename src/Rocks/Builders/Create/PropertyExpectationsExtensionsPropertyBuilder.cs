@@ -13,7 +13,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		var propertyGetMethod = property.GetMethod!;
 
 		var mockTypeName = result.MockType.GetName();
-		var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}<{mockTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.PropertyGetterExpectations<{mockTypeName}> self";
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(propertyGetMethod) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
@@ -22,7 +22,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 			propertyGetMethod.ReturnType.GetReferenceableName();
 		var adornmentsType = propertyGetMethod.ReturnType.IsPointer() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {callbackDelegateTypeName}, {propertyReturnValue}>";
+			$"global::Rocks.PropertyAdornments<{mockTypeName}, {callbackDelegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
@@ -47,13 +47,13 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedName(propertyParameterType) :
 			propertyParameterType.GetReferenceableName();
 		var mockTypeName = result.MockType.GetName();
-		var thisParameter = $"this {WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}<{mockTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.PropertySetterExpectations<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = propertyParameterType.IsPointer() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
-			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
+			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");

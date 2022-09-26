@@ -13,7 +13,7 @@ internal static class MockMakeBuilder
 		var kind = typeToMock.Type.IsRecord ? "record" : "class";
 		writer.WriteLine($"private sealed {kind} Rock{typeToMock.FlattenedName}");
 		writer.Indent++;
-		writer.WriteLine($": {typeToMock.GenericName}");
+		writer.WriteLine($": {typeToMock.ReferenceableName}");
 		writer.Indent--;
 
 		writer.WriteLine("{");
@@ -75,12 +75,12 @@ internal static class MockMakeBuilder
 	{
 		foreach (var method in information.Methods.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {method.Value.ReturnType.GetName()} rr{method.MemberIdentifier};");
+			writer.WriteLine($"private {method.Value.ReturnType.GetReferenceableName()} rr{method.MemberIdentifier};");
 		}
 
 		foreach (var property in information.Properties.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {property.Value.Type.GetName()} rr{property.MemberIdentifier};");
+			writer.WriteLine($"private {property.Value.Type.GetReferenceableName()} rr{property.MemberIdentifier};");
 		}
 	}
 }

@@ -7,7 +7,7 @@ internal static class MockExtensionsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
-		writer.WriteLine($"internal static class Make{WellKnownNames.Expectations}Of{information.TypeToMock!.FlattenedName}{WellKnownNames.Extensions}");
+		writer.WriteLine($"internal static class MakeExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 
