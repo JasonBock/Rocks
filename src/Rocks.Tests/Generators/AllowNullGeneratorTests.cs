@@ -34,30 +34,22 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfIAllowExtensions
 				{
-					internal static PropertyExpectations<IAllow> Properties(this Expectations<IAllow> self) =>
+					internal static global::Rocks.Expectations.PropertyExpectations<global::MockTests.IAllow> Properties(this global::Rocks.Expectations.Expectations<global::MockTests.IAllow> self) =>
 						new(self);
 					
-					internal static PropertyGetterExpectations<IAllow> Getters(this PropertyExpectations<IAllow> self) =>
+					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IAllow> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IAllow> self) =>
 						new(self);
 					
-					internal static PropertySetterExpectations<IAllow> Setters(this PropertyExpectations<IAllow> self) =>
+					internal static global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IAllow> Setters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IAllow> self) =>
 						new(self);
 					
-					internal static IAllow Instance(this Expectations<IAllow> self)
+					internal static global::MockTests.IAllow Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IAllow> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -66,21 +58,21 @@ public static class AllowNullGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockIAllow
-						: IAllow
+						: global::MockTests.IAllow
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIAllow(Expectations<IAllow> expectations) =>
+						public RockIAllow(global::Rocks.Expectations.Expectations<global::MockTests.IAllow> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[AllowNull]
-						[MemberIdentifier(0, "get_NewLine()")]
-						[MemberIdentifier(1, "set_NewLine(value)")]
+						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
+						[global::Rocks.MemberIdentifier(0, "get_NewLine()")]
+						[global::Rocks.MemberIdentifier(1, "set_NewLine(value)")]
 						public string NewLine
 						{
 							get
@@ -89,13 +81,13 @@ public static class AllowNullGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										Unsafe.As<Func<string>>(methodHandler.Method)() :
-										Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(methodHandler.Method)() :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
 								
-								throw new ExpectationException("No handlers were found for get_NewLine())");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NewLine())");
 							}
 							set
 							{
@@ -104,18 +96,18 @@ public static class AllowNullGeneratorTests
 									var foundMatch = false;
 									foreach (var methodHandler in methodHandlers)
 									{
-										if (Unsafe.As<Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
 										{
 											foundMatch = true;
 											
 											if (methodHandler.Method is not null)
 											{
-												Unsafe.As<Action<string>>(methodHandler.Method)(value!);
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(methodHandler.Method)(value!);
 											}
 											
 											if (!foundMatch)
 											{
-												throw new ExpectationException("No handlers match for set_NewLine(value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
 											}
 											
 											methodHandler.IncrementCallCount();
@@ -125,7 +117,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									throw new ExpectationException("No handlers were found for set_NewLine(value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(value)");
 								}
 							}
 						}
@@ -134,16 +126,16 @@ public static class AllowNullGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfIAllowExtensions
 				{
-					internal static PropertyAdornments<IAllow, Func<string>, string> NewLine(this PropertyGetterExpectations<IAllow> self) =>
-						new PropertyAdornments<IAllow, Func<string>, string>(self.Add<string>(0, new List<Argument>()));
+					internal static global::Rocks.PropertyAdornments<IAllow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<IAllow> self) =>
+						new global::Rocks.PropertyAdornments<IAllow, global::System.Func<string>, string>(self.Add<string>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfIAllowExtensions
 				{
-					internal static PropertyAdornments<IAllow, Action<string>> NewLine(this PropertySetterExpectations<IAllow> self, Argument<string> value) =>
-						new PropertyAdornments<IAllow, Action<string>>(self.Add(1, new List<Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<IAllow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<IAllow> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<IAllow, global::System.Action<string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 			}
-
+			
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
@@ -180,27 +172,21 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class MakeExpectationsOfIAllowExtensions
 				{
-					internal static IAllow Instance(this MakeGeneration<IAllow> self) =>
+					internal static global::MockTests.IAllow Instance(this global::Rocks.MakeGeneration<global::MockTests.IAllow> self) =>
 						new RockIAllow();
 					
 					private sealed class RockIAllow
-						: IAllow
+						: global::MockTests.IAllow
 					{
 						public RockIAllow() { }
 						
-						[AllowNull]
+						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						public string NewLine
 						{
 							get => default!;
@@ -246,33 +232,25 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using Rocks.Expectations;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			using System.Runtime.CompilerServices;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfAllowExtensions
 				{
-					internal static MethodExpectations<Allow> Methods(this Expectations<Allow> self) =>
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.Allow> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.Allow> self) =>
 						new(self);
 					
-					internal static PropertyExpectations<Allow> Properties(this Expectations<Allow> self) =>
+					internal static global::Rocks.Expectations.PropertyExpectations<global::MockTests.Allow> Properties(this global::Rocks.Expectations.Expectations<global::MockTests.Allow> self) =>
 						new(self);
 					
-					internal static PropertyGetterExpectations<Allow> Getters(this PropertyExpectations<Allow> self) =>
+					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.Allow> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.Allow> self) =>
 						new(self);
 					
-					internal static PropertySetterExpectations<Allow> Setters(this PropertyExpectations<Allow> self) =>
+					internal static global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.Allow> Setters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.Allow> self) =>
 						new(self);
 					
-					internal static Allow Instance(this Expectations<Allow> self)
+					internal static global::MockTests.Allow Instance(this global::Rocks.Expectations.Expectations<global::MockTests.Allow> self)
 					{
 						if (!self.WasInstanceInvoked)
 						{
@@ -281,36 +259,36 @@ public static class AllowNullGeneratorTests
 						}
 						else
 						{
-							throw new NewMockInstanceException("Can only create a new mock once.");
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
 					
 					private sealed class RockAllow
-						: Allow
+						: global::MockTests.Allow
 					{
-						private readonly Dictionary<int, List<HandlerInformation>> handlers;
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockAllow(Expectations<Allow> expectations) =>
+						public RockAllow(global::Rocks.Expectations.Expectations<global::MockTests.Allow> expectations) =>
 							this.handlers = expectations.Handlers;
 						
-						[MemberIdentifier(0, "bool Equals(object? obj)")]
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
 						public override bool Equals(object? obj)
 						{
 							if (this.handlers.TryGetValue(0, out var methodHandlers))
 							{
 								foreach (var methodHandler in methodHandlers)
 								{
-									if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
 									{
 										var result = methodHandler.Method is not null ?
-											Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-											Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
 										methodHandler.IncrementCallCount();
 										return result!;
 									}
 								}
 								
-								throw new ExpectationException("No handlers match for bool Equals(object? obj)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
 							}
 							else
 							{
@@ -318,15 +296,15 @@ public static class AllowNullGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(1, "int GetHashCode()")]
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
 							if (this.handlers.TryGetValue(1, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<int>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -336,15 +314,15 @@ public static class AllowNullGeneratorTests
 							}
 						}
 						
-						[MemberIdentifier(2, "string? ToString()")]
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
 							if (this.handlers.TryGetValue(2, out var methodHandlers))
 							{
 								var methodHandler = methodHandlers[0];
 								var result = methodHandler.Method is not null ?
-									Unsafe.As<Func<string?>>(methodHandler.Method)() :
-									Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
 								methodHandler.IncrementCallCount();
 								return result!;
 							}
@@ -354,9 +332,9 @@ public static class AllowNullGeneratorTests
 							}
 						}
 						
-						[AllowNull]
-						[MemberIdentifier(3, "get_NewLine()")]
-						[MemberIdentifier(4, "set_NewLine(value)")]
+						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
+						[global::Rocks.MemberIdentifier(3, "get_NewLine()")]
+						[global::Rocks.MemberIdentifier(4, "set_NewLine(value)")]
 						public override string NewLine
 						{
 							get
@@ -365,8 +343,8 @@ public static class AllowNullGeneratorTests
 								{
 									var methodHandler = methodHandlers[0];
 									var result = methodHandler.Method is not null ?
-										Unsafe.As<Func<string>>(methodHandler.Method)() :
-										Unsafe.As<HandlerInformation<string>>(methodHandler).ReturnValue;
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(methodHandler.Method)() :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(methodHandler).ReturnValue;
 									methodHandler.IncrementCallCount();
 									return result!;
 								}
@@ -382,18 +360,18 @@ public static class AllowNullGeneratorTests
 									var foundMatch = false;
 									foreach (var methodHandler in methodHandlers)
 									{
-										if (Unsafe.As<Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler.Expectations[0]).IsValid(value!))
 										{
 											foundMatch = true;
 											
 											if (methodHandler.Method is not null)
 											{
-												Unsafe.As<Action<string>>(methodHandler.Method)(value!);
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(methodHandler.Method)(value!);
 											}
 											
 											if (!foundMatch)
 											{
-												throw new ExpectationException("No handlers match for set_NewLine(value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
 											}
 											
 											methodHandler.IncrementCallCount();
@@ -412,26 +390,26 @@ public static class AllowNullGeneratorTests
 				
 				internal static class MethodExpectationsOfAllowExtensions
 				{
-					internal static MethodAdornments<Allow, Func<object?, bool>, bool> Equals(this MethodExpectations<Allow> self, Argument<object?> obj)
+					internal static global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Allow> self, global::Rocks.Argument<object?> obj)
 					{
-						ArgumentNullException.ThrowIfNull(obj);
-						return new MethodAdornments<Allow, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
+						global::System.ArgumentNullException.ThrowIfNull(obj);
+						return new global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
 					}
-					internal static MethodAdornments<Allow, Func<int>, int> GetHashCode(this MethodExpectations<Allow> self) =>
-						new MethodAdornments<Allow, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-					internal static MethodAdornments<Allow, Func<string?>, string?> ToString(this MethodExpectations<Allow> self) =>
-						new MethodAdornments<Allow, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Allow> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Allow> self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.Allow, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				
 				internal static class PropertyGetterExpectationsOfAllowExtensions
 				{
-					internal static PropertyAdornments<Allow, Func<string>, string> NewLine(this PropertyGetterExpectations<Allow> self) =>
-						new PropertyAdornments<Allow, Func<string>, string>(self.Add<string>(3, new List<Argument>()));
+					internal static global::Rocks.PropertyAdornments<Allow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<Allow> self) =>
+						new global::Rocks.PropertyAdornments<Allow, global::System.Func<string>, string>(self.Add<string>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfAllowExtensions
 				{
-					internal static PropertyAdornments<Allow, Action<string>> NewLine(this PropertySetterExpectations<Allow> self, Argument<string> value) =>
-						new PropertyAdornments<Allow, Action<string>>(self.Add(4, new List<Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<Allow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<Allow> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<Allow, global::System.Action<string>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 			}
 			
@@ -471,23 +449,17 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
-			using Rocks;
-			using Rocks.Exceptions;
-			using System;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			using System.Diagnostics.CodeAnalysis;
-			
 			#nullable enable
+			
 			namespace MockTests
 			{
 				internal static class MakeExpectationsOfAllowExtensions
 				{
-					internal static Allow Instance(this MakeGeneration<Allow> self) =>
+					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> self) =>
 						new RockAllow();
 					
 					private sealed class RockAllow
-						: Allow
+						: global::MockTests.Allow
 					{
 						public RockAllow() { }
 						
@@ -503,7 +475,7 @@ public static class AllowNullGeneratorTests
 						{
 							return default!;
 						}
-						[AllowNull]
+						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						public override string NewLine
 						{
 							get => default!;
