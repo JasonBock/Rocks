@@ -29,7 +29,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					}
 					else
 					{
-						return $"{nameof(Argument)}<{_.Type.GetReferenceableName()}> {_.Name}";
+						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> {_.Name}";
 					}
 				})));
 		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetReferenceableName()));

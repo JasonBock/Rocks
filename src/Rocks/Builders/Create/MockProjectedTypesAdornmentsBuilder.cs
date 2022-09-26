@@ -7,10 +7,10 @@ namespace Rocks.Builders.Create;
 internal static partial class MockProjectedTypesAdornmentsBuilder
 {
 	internal static string GetProjectedAdornmentName(ITypeSymbol type, AdornmentType adornment, bool isExplicit) =>
-		$"{(isExplicit ? WellKnownNames.Explicit : string.Empty)}{adornment}{WellKnownNames.Adornments}For{type.GetName(TypeNameOption.Flatten)}";
+		$"{(isExplicit ? "Explicit" : string.Empty)}{adornment}AdornmentsFor{type.GetName(TypeNameOption.Flatten)}";
 
 	internal static string GetProjectedHandlerInformationName(ITypeSymbol type) =>
-		$"{nameof(HandlerInformation)}For{type.GetName(TypeNameOption.Flatten)}";
+		$"HandlerInformationFor{type.GetName(TypeNameOption.Flatten)}";
 
 	internal static string GetProjectedAddExtensionMethodName(ITypeSymbol type) =>
 		$"AddFor{type.GetName(TypeNameOption.Flatten)}";
@@ -62,7 +62,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 
 	private static void BuildAddExtensionMethod(IndentedTextWriter writer, MockedType typeToMock, IEnumerable<ITypeSymbol> types)
 	{
-		writer.WriteLine($"internal static class {WellKnownNames.Expectations}{WellKnownNames.Extensions}");
+		writer.WriteLine($"internal static class ExpectationsExtensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -71,14 +71,14 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 			var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
 
-			writer.WriteLine($"internal static {handlerType} {methodName}(this {WellKnownNames.Expectations}<{typeToMock.GenericName}> self, int memberIdentifier, List<{nameof(Argument)}> arguments)");
+			writer.WriteLine($"internal static {handlerType} {methodName}(this global::Rocks.Expectations.Expectations<{typeToMock.GenericName}> self, int memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> arguments)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
 			writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
 			writer.WriteLine($"self.Handlers.AddOrUpdate(memberIdentifier,");
 			writer.Indent++;
-			writer.WriteLine("() => new List<HandlerInformation>(1) { information }, _ => _.Add(information));");
+			writer.WriteLine("() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { information }, _ => _.Add(information));");
 			writer.Indent--;
 			writer.WriteLine("return information;");
 
@@ -102,20 +102,20 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"internal {handlerName}(ImmutableArray<{nameof(Argument)}> expectations)");
+		writer.WriteLine($"internal {handlerName}(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)");
 		writer.Indent++;
 		writer.WriteLine(": base(null, expectations) => this.ReturnValue = default;");
 		writer.Indent--;
 
 		writer.WriteLine();
 
-		writer.WriteLine($"internal {handlerName}({nameof(Delegate)}? method, ImmutableArray<{nameof(Argument)}> expectations)");
+		writer.WriteLine($"internal {handlerName}(global::System.Delegate? method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)");
 		writer.Indent++;
 		writer.WriteLine(": base(method, expectations) => this.ReturnValue = default;");
 		writer.Indent--;
 
 		writer.WriteLine();
-		writer.WriteLine($"internal {type.GetName()} ReturnValue {{ get; set; }}");
+		writer.WriteLine($"internal {type.GetReferenceableName()} ReturnValue {{ get; set; }}");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -128,7 +128,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 
 		writer.WriteLine($"internal sealed class {adornmentName}<T, TCallback>");
 		writer.Indent++;
-		writer.WriteLine($": IAdornments<{handlerName}>");
+		writer.WriteLine($": global::Rocks.IAdornments<{handlerName}>");
 		writer.WriteLine("where T : class");
 		writer.WriteLine("where TCallback : Delegate");
 		writer.Indent--;
@@ -145,7 +145,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		writer.WriteLine($"internal {adornmentName}<T, TCallback> CallCount(uint expectedCallCount)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"this.Handler.{nameof(HandlerInformation.SetExpectedCallCount)}(expectedCallCount);");
+		writer.WriteLine("this.Handler.SetExpectedCallCount(expectedCallCount);");
 		writer.WriteLine("return this;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -155,7 +155,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		writer.WriteLine($"internal {adornmentName}<T, TCallback> Callback(TCallback callback)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"this.Handler.{nameof(HandlerInformation.SetCallback)}(callback);");
+		writer.WriteLine("this.Handler.SetCallback(callback);");
 		writer.WriteLine("return this;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -163,7 +163,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		writer.WriteLine();
 
 		var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
-		writer.WriteLine($"internal {isUnsafe}{adornmentName}<T, TCallback> Returns({type.GetName()} returnValue)");
+		writer.WriteLine($"internal {isUnsafe}{adornmentName}<T, TCallback> Returns({type.GetReferenceableName()} returnValue)");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.Handler.ReturnValue = returnValue;");

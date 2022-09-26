@@ -43,7 +43,7 @@ internal static class MockPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(propertyGetMethod) : propertyGetMethod.ReturnType.GetReferenceableName();
 		var handlerName = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
-			$"{nameof(HandlerInformation)}<{propertyReturnType}>";
+			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
 
 		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)() :");
 		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
@@ -133,7 +133,7 @@ internal static class MockPropertyBuilder
 				PointerArgTypeBuilder.GetProjectedName(property.Type) :
 					property.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
-						$"{nameof(Argument)}<{property.Type.GetReferenceableName()}>";
+						$"global::Rocks.Argument<{property.Type.GetReferenceableName()}>";
 
 			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
 			writer.WriteLine("{");

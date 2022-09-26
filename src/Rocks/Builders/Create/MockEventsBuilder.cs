@@ -16,7 +16,7 @@ internal static class MockEventsBuilder
 			$"{@event.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 
 		writer.WriteLine(
-			$"{isPublic}{isOverride}event {@event.Value.Type.GetName()}{declareNullable} {@event.Value.Name};");
+			$"{isPublic}{isOverride}event {@event.Value.Type.GetReferenceableName()}{declareNullable} {@event.Value.Name};");
 	}
 
 	private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
@@ -62,21 +62,21 @@ internal static class MockEventsBuilder
 		writer.WriteLine("#pragma warning restore CS0067");
 		writer.WriteLine();
 
-		writer.WriteLine($"void {nameof(IRaiseEvents)}.{nameof(IRaiseEvents.Raise)}(string fieldName, EventArgs args)");
+		writer.WriteLine("void global::Rocks.IRaiseEvents.Raise(string fieldName, global::System.EventArgs args)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		writer.WriteLine("var thisType = this.GetType();");
-		writer.WriteLine($"var eventDelegate = ({nameof(MulticastDelegate)})thisType.GetField(fieldName, ");
+		writer.WriteLine($"var eventDelegate = (global::System.MulticastDelegate)thisType.GetField(fieldName, ");
 		writer.Indent++;
-		writer.WriteLine($"{nameof(BindingFlags)}.{nameof(BindingFlags.Instance)} | {nameof(BindingFlags)}.{nameof(BindingFlags.NonPublic)})!.GetValue(this)!;");
+		writer.WriteLine($"BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(this)!;");
 		writer.Indent--;
 		writer.WriteLine();
 		writer.WriteLine("if (eventDelegate is not null)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"foreach (var handler in eventDelegate.{nameof(Delegate.GetInvocationList)}())");
+		writer.WriteLine("foreach (var handler in eventDelegate.GetInvocationList())");
 		writer.WriteLine("{");
 		writer.Indent++;
 

@@ -50,9 +50,9 @@ internal static class EventExpectationsExtensionsBuilder
 			var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
 				$"On{result.Value.ContainingType.GetName(TypeNameOption.Flatten)}";
 
-			writer.WriteLine($"internal static {extensionPrefix}{WellKnownNames.Adornments}<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this {extensionPrefix}{WellKnownNames.Adornments}<{adornments}> self, {argsType} args)");
+			writer.WriteLine($"internal static global::Rocks.Extensions.{extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this global::Rocks.Extensions.{extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
 			writer.Indent++;
-			writer.WriteLine($"where {callbackName} : {nameof(Delegate)}");
+			writer.WriteLine($"where {callbackName} : global::System.Delegate");
 			writer.Indent--;
 
 			writer.WriteLine("{");
@@ -67,7 +67,7 @@ internal static class EventExpectationsExtensionsBuilder
 			writer.WriteLine("}");
 		}
 
-		writer.WriteLine($"internal static class {prefix}{WellKnownNames.Adornments}Of{information.TypeToMock!.FlattenedName}{WellKnownNames.Extensions}");
+		writer.WriteLine($"internal static class {prefix}AdornmentsOf{information.TypeToMock!.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 

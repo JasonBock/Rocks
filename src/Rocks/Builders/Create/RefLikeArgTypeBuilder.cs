@@ -26,21 +26,21 @@ internal static class RefLikeArgTypeBuilder
 		writer.WriteLine();
 		writer.WriteLine($"public sealed class {argName}");
 		writer.Indent++;
-		writer.WriteLine($": {nameof(Argument)}");
+		writer.WriteLine(": global::Rocks.Argument");
 		writer.Indent--;
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		writer.WriteLine($"private readonly {validationDelegateName}? evaluation;");
-		writer.WriteLine($"private readonly {nameof(ValidationState)} validation;");
+		writer.WriteLine("private readonly global::Rocks.ValidationState validation;");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argConstructorName}() => this.validation = {nameof(ValidationState)}.{nameof(ValidationState.None)};");
+		writer.WriteLine($"internal {argConstructorName}() => this.validation = global::Rocks.ValidationState.None;");
 		writer.WriteLine();
 		writer.WriteLine($"internal {argConstructorName}({validationDelegateName} evaluation)");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.evaluation = evaluation;");
-		writer.WriteLine($"this.validation = {nameof(ValidationState)}.{nameof(ValidationState.Evaluation)};");
+		writer.WriteLine($"this.validation = global::Rocks.ValidationState.Evaluation;");
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
@@ -50,9 +50,9 @@ internal static class RefLikeArgTypeBuilder
 		writer.WriteLine("this.validation switch");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.None)} => true,");
-		writer.WriteLine($"{nameof(ValidationState)}.{nameof(ValidationState.Evaluation)} => this.evaluation!(value),");
-		writer.WriteLine($"_ => throw new {nameof(NotSupportedException)}(\"Invalid validation state.\"),");
+		writer.WriteLine("global::Rocks.ValidationState.None => true,");
+		writer.WriteLine("global::Rocks.ValidationState.Evaluation => this.evaluation!(value),");
+		writer.WriteLine("_ => throw new global::System.NotSupportedException(\"Invalid validation state.\"),");
 		writer.Indent--;
 		writer.WriteLine("};");
 		writer.Indent--;

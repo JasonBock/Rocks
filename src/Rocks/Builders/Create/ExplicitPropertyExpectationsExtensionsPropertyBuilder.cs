@@ -12,8 +12,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 
-		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Getter}{WellKnownNames.Expectations}";
-		var thisParameter = $"this {thisTypeName}<{result.MockType.GetName()}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetReferenceableName()}, {containingTypeName}> self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
@@ -25,7 +24,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			delegateTypeName : propertyGetMethod.ReturnType.GetReferenceableName();
 		var adornmentsType = property.Type.IsEsoteric() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
-			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
+			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
@@ -35,7 +34,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
 			$"Add<{propertyReturnValue}>";
 
-		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new List<{nameof(Argument)}>()));");
+		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 		writer.Indent--;
 	}
 
@@ -43,8 +42,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var thisTypeName = $"{WellKnownNames.Explicit}{WellKnownNames.Property}{WellKnownNames.Setter}{WellKnownNames.Expectations}";
-		var thisParameter = $"this {thisTypeName}<{result.MockType.GetName()}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
@@ -52,14 +50,14 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
-			$"{WellKnownNames.Property}{WellKnownNames.Adornments}<{mockTypeName}, {delegateTypeName}>";
+			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, {nameof(Argument)}<{propertyParameterValue}> value) =>");
+		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");
 		writer.Indent++;
 
-		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new List<{nameof(Argument)}>(1) {{ value }}));");
+		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new global::System.Collections.GenericList<global::Rocks.Argument>(1) {{ value }}));");
 		writer.Indent--;
 	}
 

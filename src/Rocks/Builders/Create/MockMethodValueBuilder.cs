@@ -285,7 +285,7 @@ internal static class MockMethodValueBuilder
 				PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
 					parameter.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
-						$"{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>";
+						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>";
 
 			if (i == 0)
 			{

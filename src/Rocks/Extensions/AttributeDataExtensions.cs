@@ -112,7 +112,7 @@ internal static class AttributeDataExtensions
 		{
 			AttributeTargets.Assembly => "assembly",
 			AttributeTargets.Class or AttributeTargets.Delegate or AttributeTargets.Enum or
-					 AttributeTargets.Interface or AttributeTargets.Struct => "type",
+				AttributeTargets.Interface or AttributeTargets.Struct => "type",
 			AttributeTargets.Constructor or AttributeTargets.Method => "method",
 			AttributeTargets.Event => "event",
 			AttributeTargets.Field => "field",

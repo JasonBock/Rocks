@@ -26,7 +26,7 @@ internal static class MockConstructorBuilder
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 				})));
 
-		var mockTypeName = $"{nameof(Rock)}{typeToMock.FlattenedName}";
+		var mockTypeName = $"Rock{typeToMock.FlattenedName}";
 
 		if (parameters.Length > 0)
 		{

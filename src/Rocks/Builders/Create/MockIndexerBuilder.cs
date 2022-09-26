@@ -35,7 +35,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -45,7 +45,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -66,7 +66,7 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -101,7 +101,7 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {signature})\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature})\");");
 		}
 
 		writer.Indent--;
@@ -141,7 +141,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -151,7 +151,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"global::System.Runtime.CompilerServices.Unsafe.As<{nameof(Argument)}<{parameter.Type.GetReferenceableName()}>>(methodHandler.{WellKnownNames.Expectations}[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -167,7 +167,7 @@ internal static class MockIndexerBuilder
 
 			if (shouldThrowDoesNotReturnException)
 			{
-				writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+				writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 			}
 			else
 			{
@@ -181,7 +181,7 @@ internal static class MockIndexerBuilder
 			writer.WriteLine("}");
 
 			writer.WriteLine();
-			writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -215,7 +215,7 @@ internal static class MockIndexerBuilder
 			else
 			{
 				writer.WriteLine();
-				writer.WriteLine($"throw new {nameof(ExpectationException)}(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
+				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
 			}
 
 			writer.Indent--;
@@ -229,7 +229,7 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var attributes = indexer.GetAttributes();
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{indexer.ContainingType.GetName(TypeNameOption.IncludeGenerics)}.";
+			string.Empty : $"{indexer.ContainingType.GetReferenceableName()}.";
 
 		if (attributes.Length > 0)
 		{

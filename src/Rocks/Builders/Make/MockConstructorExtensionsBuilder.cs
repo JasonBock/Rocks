@@ -107,10 +107,10 @@ internal static class MockConstructorExtensionsBuilder
 			return $"{direction}{_.Name}";
 		})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.GenericName} Instance({instanceParameters}) =>");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters}) =>");
 		writer.Indent++;
 
-		var newMock = $"new {nameof(Rock)}{typeToMock.FlattenedName}({rockInstanceParameters})";
+		var newMock = $"new Rock{typeToMock.FlattenedName}({rockInstanceParameters})";
 		if (requiredInitObjectInitializationSyntax.Length == 0)
 		{
 			writer.WriteLine($"{newMock};");
@@ -122,7 +122,7 @@ internal static class MockConstructorExtensionsBuilder
 
 			if (hasRequiredProperties)
 			{
-				writer.WriteLine("throw new ArgumentNullException(nameof(constructorProperties)) :");
+				writer.WriteLine("throw new global::System.ArgumentNullException(nameof(constructorProperties)) :");
 			}
 			else
 			{

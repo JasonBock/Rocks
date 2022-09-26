@@ -98,29 +98,29 @@ internal static class MockMethodValueBuilder
 
 		if(shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 		else
 		{
 			if (method.ReturnType.Equals(taskType))
 			{
-				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.CompletedTask)};");
+				writer.WriteLine("return global::System.Threading.Tasks.Task.CompletedTask;");
 			}
 			else if (method.ReturnType.Equals(valueTaskType))
 			{
-				writer.WriteLine($"return new {nameof(ValueTask)}();");
+				writer.WriteLine("return new global::System.Threading.Tasks.ValueTask();");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
 			{
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
-				writer.WriteLine($"return {nameof(Task)}.{nameof(Task.FromResult)}(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
+				writer.WriteLine($"return global::System.Threading.Tasks.Task.FromResult(default({taskReturnType.TypeArguments[0].GetReferenceableName()}){isNullForgiving});");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
 			{
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
-				writer.WriteLine($"return new {nameof(ValueTask)}<{taskReturnType.TypeArguments[0].GetName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
+				writer.WriteLine($"return new global::System.Threading.Tasks.ValueTask<{taskReturnType.TypeArguments[0].GetReferenceableName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
 			}
 			else
 			{

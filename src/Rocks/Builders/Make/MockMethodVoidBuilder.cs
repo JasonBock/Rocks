@@ -84,7 +84,7 @@ internal static class MockMethodVoidBuilder
 
 		if (shouldThrowDoesNotReturnException)
 		{
-			writer.WriteLine($"throw new {nameof(DoesNotReturnException)}();");
+			writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 
 		writer.Indent--;

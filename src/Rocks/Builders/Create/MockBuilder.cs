@@ -9,7 +9,7 @@ internal static class MockBuilder
 	{
 		MockProjectedTypesBuilder.Build(writer, information, compilation);
 
-		writer.WriteLine($"internal static class {WellKnownNames.Create}{WellKnownNames.Expectations}Of{information.TypeToMock!.FlattenedName}{WellKnownNames.Extensions}");
+		writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 
