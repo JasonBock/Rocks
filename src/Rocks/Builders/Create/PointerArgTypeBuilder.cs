@@ -32,13 +32,13 @@ internal static class PointerArgTypeBuilder
 		writer.WriteLine($"private readonly {typeName} value;");
 		writer.WriteLine($"private readonly global::Rocks.ValidationState validation;");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argName}() => this.validation = ValidationState.None;");
+		writer.WriteLine($"internal {argName}() => this.validation = global::Rocks.ValidationState.None;");
 		writer.WriteLine();
 		writer.WriteLine($"internal {argName}({typeName} value)");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.value = value;");
-		writer.WriteLine("this.validation = ValidationState.Value;");
+		writer.WriteLine("this.validation = global::Rocks.ValidationState.Value;");
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
@@ -46,7 +46,7 @@ internal static class PointerArgTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.evaluation = evaluation;");
-		writer.WriteLine("this.validation = ValidationState.Evaluation;");
+		writer.WriteLine("this.validation = global::Rocks.ValidationState.Evaluation;");
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
@@ -63,22 +63,22 @@ internal static class PointerArgTypeBuilder
 		writer.WriteLine("this.validation switch");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("ValidationState.None => true,");
+		writer.WriteLine("global::Rocks.ValidationState.None => true,");
 
 		if (type.Kind == SymbolKind.FunctionPointerType)
 		{
 			writer.WriteLine("#pragma warning disable CS8909");
 		}
 
-		writer.WriteLine("ValidationState.Value => value == this.value,");
+		writer.WriteLine("global::Rocks.ValidationState.Value => value == this.value,");
 
 		if (type.Kind == SymbolKind.FunctionPointerType)
 		{
 			writer.WriteLine("#pragma warning restore CS8909");
 		}
 
-		writer.WriteLine("ValidationState.Evaluation => this.evaluation!(value),");
-		writer.WriteLine("ValidationState.DefaultValue => throw new global::System.NotSupportedException(\"Cannot validate an argument value in the ValidationState.DefaultValue state.\"),");
+		writer.WriteLine("global::Rocks.ValidationState.Evaluation => this.evaluation!(value),");
+		writer.WriteLine("global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException(\"Cannot validate an argument value in the ValidationState.DefaultValue state.\"),");
 		writer.WriteLine("_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($\"Invalid value for validation: {{this.validation}}\")");
 		writer.Indent--;
 		writer.WriteLine("};");
