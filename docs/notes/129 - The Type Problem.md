@@ -46,6 +46,15 @@ Where do I need FQNs?
 * DONE - Makes
 	* DONE - Whatever needs to be done
 	
+For projected types, we need to do the full projected type "name". That means:
+
+```csharp
+var projectionsNamespace = $"ProjectionsFor{information.TypeToMock!.FlattenedName}";
+var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}";
+```
+
+I should put this into its own method: `GetProjectedCallbackDelegateFullyQualifiedName(typeToMock)`. Same thing for `GetProjectedReturnValueDelegateFullyQualifiedName()`, and `GetProjectedEvaluationDelegateName()`, `GetProjectedName()`
+
 Other Issues
 * `ConstructorProperties` can be `internal`, not `public`
 * Invoking an event seems reflection-heavy, can that be simplified?
