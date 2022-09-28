@@ -17,8 +17,8 @@ internal static class RefLikeArgTypeBuilder
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ? 
 			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
-		var argForType = type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.ArgFor{argForType}";
+		var argForType = RefLikeArgTypeBuilder.GetProjectedName(type);
+		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
@@ -29,8 +29,8 @@ internal static class RefLikeArgTypeBuilder
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ? 
 			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
-		var argForType = type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.ArgEvaluationFor{argForType}";
+		var argForType = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
+		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)

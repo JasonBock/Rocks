@@ -55,12 +55,12 @@ var projectionsNamespace = $"ProjectionsFor{information.TypeToMock!.FlattenedNam
 var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}.{projectionsNamespace}";
 ```
 
-* `RefLikeArgTypeBuilder`
+* DONE - `RefLikeArgTypeBuilder`
   * DONE - `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
-  * `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
-* `MockProjectedDelegateBuilder`  
-  * `GetProjectedCallbackDelegateName()` - needs `GetProjectedCallbackDelegateFullyQualifiedName()`
-  * `GetProjectedReturnValueDelegateName()` - needs `GetProjectedReturnValueDelegateFullyQualifiedName()`
+  * DONE - `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
+* DONE - `MockProjectedDelegateBuilder`  
+  * DONE - `GetProjectedCallbackDelegateName()` - needs `GetProjectedCallbackDelegateFullyQualifiedName()`
+  * DONE - `GetProjectedReturnValueDelegateName()` - needs `GetProjectedReturnValueDelegateFullyQualifiedName()`
 * `PointerArgTypeBuilder`
   * `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
   * `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
