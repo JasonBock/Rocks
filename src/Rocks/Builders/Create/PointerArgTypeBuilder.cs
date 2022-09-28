@@ -30,11 +30,12 @@ internal static class PointerArgTypeBuilder
 		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
 	}
 
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
+	internal static void Build(IndentedTextWriter writer, ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var validationDelegateName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
+		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock);
 		var argName = PointerArgTypeBuilder.GetProjectedName(type);
-		var typeName = type.GetName();
+		var typeName = type.GetReferenceableName();
 
 		writer.WriteLine($"public unsafe delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
@@ -45,7 +46,7 @@ internal static class PointerArgTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"private readonly {validationDelegateName}? evaluation;");
+		writer.WriteLine($"private readonly {validationDelegateFullyQualifiedName}? evaluation;");
 		writer.WriteLine($"private readonly {typeName} value;");
 		writer.WriteLine($"private readonly global::Rocks.ValidationState validation;");
 		writer.WriteLine();
@@ -59,7 +60,7 @@ internal static class PointerArgTypeBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argName}({validationDelegateName} evaluation)");
+		writer.WriteLine($"internal {argName}({validationDelegateFullyQualifiedName} evaluation)");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.evaluation = evaluation;");

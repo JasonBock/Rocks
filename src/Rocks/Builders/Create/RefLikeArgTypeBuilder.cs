@@ -33,12 +33,13 @@ internal static class RefLikeArgTypeBuilder
 		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
 	}
 
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
+	internal static void Build(IndentedTextWriter writer, ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var validationDelegateName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
+		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock);
 		var argName = RefLikeArgTypeBuilder.GetProjectedName(type);
 		var argConstructorName = RefLikeArgTypeBuilder.GetProjectedConstructorName(type);
-		var typeName = type.GetName();
+		var typeName = type.GetReferenceableName();
 
 		writer.WriteLine($"public delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
@@ -49,12 +50,12 @@ internal static class RefLikeArgTypeBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"private readonly {validationDelegateName}? evaluation;");
+		writer.WriteLine($"private readonly {validationDelegateFullyQualifiedName}? evaluation;");
 		writer.WriteLine("private readonly global::Rocks.ValidationState validation;");
 		writer.WriteLine();
 		writer.WriteLine($"internal {argConstructorName}() => this.validation = global::Rocks.ValidationState.None;");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argConstructorName}({validationDelegateName} evaluation)");
+		writer.WriteLine($"internal {argConstructorName}({validationDelegateFullyQualifiedName} evaluation)");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine("this.evaluation = evaluation;");

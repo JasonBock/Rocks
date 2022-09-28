@@ -13,11 +13,11 @@ internal static class MockProjectedArgTypeBuilder
 		{
 			if (type.IsPointer())
 			{
-				PointerArgTypeBuilder.Build(writer, type);
+				PointerArgTypeBuilder.Build(writer, type, information.TypeToMock!.Type);
 			}
 			else
 			{
-				RefLikeArgTypeBuilder.Build(writer, type);
+				RefLikeArgTypeBuilder.Build(writer, type, information.TypeToMock!.Type);
 			}
 		}
 	}

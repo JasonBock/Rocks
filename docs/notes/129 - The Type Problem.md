@@ -61,9 +61,9 @@ var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.Containing
 * DONE - `MockProjectedDelegateBuilder`  
   * DONE - `GetProjectedCallbackDelegateName()` - needs `GetProjectedCallbackDelegateFullyQualifiedName()`
   * DONE - `GetProjectedReturnValueDelegateName()` - needs `GetProjectedReturnValueDelegateFullyQualifiedName()`
-* `PointerArgTypeBuilder`
-  * `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
-  * `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
+* DONE - `PointerArgTypeBuilder`
+  * DONE - `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
+  * DONE - `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
 
 Once these are in and tested, then change in code where a FQN is needed for these projected types.
 
