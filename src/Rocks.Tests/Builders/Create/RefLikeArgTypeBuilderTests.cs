@@ -32,6 +32,30 @@ public static class RefLikeArgTypeBuilderTests
 		Assert.That(RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(type, typeToMock), Is.EqualTo(expectedValue));
 	}
 
+	[TestCase(
+		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
+		"ArgEvaluationForTarget")]
+	[TestCase(
+		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
+		"ArgEvaluationForTargetOfstring")]
+	public static void GetProjectedEvaluationDelegateName(string code, string expectedValue)
+	{
+		var type = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
+		Assert.That(RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateName(type), Is.EqualTo(expectedValue));
+	}
+
+	[TestCase(
+		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
+		"global::Mock.ProjectionsForIMock.ArgEvaluationForTarget")]
+	[TestCase(
+		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
+		"global::Mock.ProjectionsForIMock.ArgEvaluationForTargetOfstring")]
+	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
+	{
+		var (typeToMock, type) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
+		Assert.That(RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock), Is.EqualTo(expectedValue));
+	}
+
 	private static (ITypeSymbol typeToMock, ITypeSymbol type) GetTypeSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);

@@ -14,14 +14,24 @@ internal static class RefLikeArgTypeBuilder
 
 	internal static string GetProjectedFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
-		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ? typeToMock.ContainingNamespace!.ToDisplayString() : "";
+		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ? 
+			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten);
 		return $"global::{containingNamespace}.{projectionsForNamespace}.ArgFor{argForType}";
 	}
 
-	private static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
+	internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
 		$"ArgEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
+
+	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
+	{
+		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ? 
+			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
+		var argForType = type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten);
+		return $"global::{containingNamespace}.{projectionsForNamespace}.ArgEvaluationFor{argForType}";
+	}
 
 	internal static void Build(IndentedTextWriter writer, ITypeSymbol type)
 	{

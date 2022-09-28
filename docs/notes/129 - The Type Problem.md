@@ -56,7 +56,7 @@ var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.Containing
 ```
 
 * `RefLikeArgTypeBuilder`
-  * `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
+  * DONE - `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
   * `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
 * `MockProjectedDelegateBuilder`  
   * `GetProjectedCallbackDelegateName()` - needs `GetProjectedCallbackDelegateFullyQualifiedName()`
@@ -64,7 +64,9 @@ var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.Containing
 * `PointerArgTypeBuilder`
   * `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
   * `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
-  
+
+Once these are in and tested, then change in code where a FQN is needed for these projected types.
+
 Other Issues
 * `ConstructorProperties` can be `internal`, not `public`
 * Invoking an event seems reflection-heavy, can that be simplified?
