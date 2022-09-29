@@ -34,6 +34,9 @@ public static class RecordCreateGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -205,8 +208,8 @@ public static class RecordCreateGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfRecordTestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<RecordTest, global::System.Func<global::System.Type>, global::System.Type> EqualityContract(this global::Rocks.Expectations.PropertyGetterExpectations<RecordTest> self) =>
-						new global::Rocks.PropertyAdornments<RecordTest, global::System.Func<global::System.Type>, global::System.Type>(self.Add<global::System.Type>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.RecordTest, global::System.Func<global::System.Type>, global::System.Type> EqualityContract(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.RecordTest> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.RecordTest, global::System.Func<global::System.Type>, global::System.Type>(self.Add<global::System.Type>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			

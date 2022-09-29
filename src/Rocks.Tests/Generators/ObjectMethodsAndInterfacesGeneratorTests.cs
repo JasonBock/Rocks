@@ -35,6 +35,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -253,6 +256,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests

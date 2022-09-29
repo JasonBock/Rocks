@@ -32,6 +32,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -213,6 +216,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -385,6 +391,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -488,6 +497,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -590,6 +602,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -753,6 +768,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests

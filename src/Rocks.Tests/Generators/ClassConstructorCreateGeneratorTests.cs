@@ -34,6 +34,9 @@ public static class ClassConstructorCreateGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests

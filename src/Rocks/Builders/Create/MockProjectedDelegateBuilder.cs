@@ -12,10 +12,10 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(IMethodSymbol method, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var delegateName = MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{delegateName}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{delegateName}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateName(IMethodSymbol method) =>
@@ -24,10 +24,10 @@ internal static class MockProjectedDelegateBuilder
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(IMethodSymbol method, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var delegateName = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{delegateName}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{delegateName}";
 	}
 
 	internal static string GetProjectedDelegate(IMethodSymbol method, Compilation compilation)

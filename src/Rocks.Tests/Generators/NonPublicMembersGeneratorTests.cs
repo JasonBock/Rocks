@@ -34,6 +34,9 @@ public static class NonPublicMembersGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -250,13 +253,13 @@ public static class NonPublicMembersGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfTestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Test, global::System.Func<string>, string> ProtectedProperty(this global::Rocks.Expectations.PropertyGetterExpectations<Test> self) =>
-						new global::Rocks.PropertyAdornments<Test, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Func<string>, string> ProtectedProperty(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.Test> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfTestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Test, global::System.Action<string>> ProtectedProperty(this global::Rocks.Expectations.PropertySetterExpectations<Test> self, global::Rocks.Argument<string> value) =>
-						new global::Rocks.PropertyAdornments<Test, global::System.Action<string>>(self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Action<string>> ProtectedProperty(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.Test> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Action<string>>(self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 				
 				internal static class MethodAdornmentsOfTestExtensions
@@ -328,6 +331,9 @@ public static class NonPublicMembersGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -542,13 +548,13 @@ public static class NonPublicMembersGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfTestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Test, global::System.Func<string>, string> ProtectedProperty(this global::Rocks.Expectations.PropertyGetterExpectations<Test> self) =>
-						new global::Rocks.PropertyAdornments<Test, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Func<string>, string> ProtectedProperty(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.Test> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfTestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Test, global::System.Action<string>> ProtectedProperty(this global::Rocks.Expectations.PropertySetterExpectations<Test> self, global::Rocks.Argument<string> value) =>
-						new global::Rocks.PropertyAdornments<Test, global::System.Action<string>>(self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Action<string>> ProtectedProperty(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.Test> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Test, global::System.Action<string>>(self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 				
 				internal static class MethodAdornmentsOfTestExtensions

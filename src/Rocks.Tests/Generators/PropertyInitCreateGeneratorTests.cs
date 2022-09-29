@@ -36,6 +36,9 @@ public static class PropertyInitCreateGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -170,14 +173,14 @@ public static class PropertyInitCreateGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<ITest, global::System.Func<int>, int> NonNullableValueType(this global::Rocks.Expectations.PropertyGetterExpectations<ITest> self) =>
-						new global::Rocks.PropertyAdornments<ITest, global::System.Func<int>, int>(self.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.PropertyAdornments<ITest, global::System.Func<int?>, int?> NullableValueType(this global::Rocks.Expectations.PropertyGetterExpectations<ITest> self) =>
-						new global::Rocks.PropertyAdornments<ITest, global::System.Func<int?>, int?>(self.Add<int?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.PropertyAdornments<ITest, global::System.Func<string>, string> NonNullableReferenceType(this global::Rocks.Expectations.PropertyGetterExpectations<ITest> self) =>
-						new global::Rocks.PropertyAdornments<ITest, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.PropertyAdornments<ITest, global::System.Func<string?>, string?> NullableReferenceType(this global::Rocks.Expectations.PropertyGetterExpectations<ITest> self) =>
-						new global::Rocks.PropertyAdornments<ITest, global::System.Func<string?>, string?>(self.Add<string?>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<int>, int> NonNullableValueType(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<int>, int>(self.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<int?>, int?> NullableValueType(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<int?>, int?>(self.Add<int?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string>, string> NonNullableReferenceType(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string>, string>(self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string?>, string?> NullableReferenceType(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string?>, string?>(self.Add<string?>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			

@@ -12,10 +12,10 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	internal static string GetProjectedAdornmentFullyQualifiedNameName(ITypeSymbol type, ITypeSymbol typeToMock, AdornmentType adornment, bool isExplicit)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedHandlerInformationName(ITypeSymbol type) =>
@@ -24,10 +24,10 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	internal static string GetProjectedHandlerInformationFullyQualifiedNameName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedAddExtensionMethodName(ITypeSymbol type) =>
@@ -36,10 +36,10 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	internal static string GetProjectedAddExtensionMethodFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, MockInformation information)
@@ -124,7 +124,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 
 		writer.WriteLine($"internal {isUnsafe}sealed class {handlerName}");
 		writer.Indent++;
-		writer.WriteLine(": HandlerInformation");
+		writer.WriteLine(": global::Rocks.HandlerInformation");
 		writer.Indent--;
 		writer.WriteLine("{");
 		writer.Indent++;
@@ -157,7 +157,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		writer.Indent++;
 		writer.WriteLine($": global::Rocks.IAdornments<{handlerName}>");
 		writer.WriteLine("where T : class");
-		writer.WriteLine("where TCallback : Delegate");
+		writer.WriteLine("where TCallback : global::System.Delegate");
 		writer.Indent--;
 
 		writer.WriteLine("{");

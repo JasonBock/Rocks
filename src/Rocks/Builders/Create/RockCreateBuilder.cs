@@ -50,10 +50,10 @@ internal sealed class RockCreateBuilder
 
 		if (wereTypesProjected)
 		{
-			requiredNamespaces.Add($"using {mockNamespace}.ProjectionsFor{this.information.TypeToMock!.FlattenedName};");
+			requiredNamespaces.Add($"using {(mockNamespace is not null ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.information.TypeToMock!.FlattenedName};");
 		}
 
-		if (!this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+		if (mockNamespace is not null)
 		{
 			indentWriter.Indent--;
 			indentWriter.WriteLine("}");

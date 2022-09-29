@@ -12,10 +12,10 @@ internal static class PointerArgTypeBuilder
 	internal static string GetProjectedFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = PointerArgTypeBuilder.GetProjectedName(type);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateName(ITypeSymbol type) =>
@@ -24,10 +24,10 @@ internal static class PointerArgTypeBuilder
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			typeToMock.ContainingNamespace!.ToDisplayString() : string.Empty;
+			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
 		var argForType = PointerArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
-		return $"global::{containingNamespace}.{projectionsForNamespace}.{argForType}";
+		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, ITypeSymbol type, ITypeSymbol typeToMock)

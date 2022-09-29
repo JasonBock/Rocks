@@ -34,6 +34,9 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -126,13 +129,13 @@ public static class AllowNullGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfIAllowExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<IAllow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<IAllow> self) =>
-						new global::Rocks.PropertyAdornments<IAllow, global::System.Func<string>, string>(self.Add<string>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IAllow> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Func<string>, string>(self.Add<string>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfIAllowExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<IAllow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<IAllow> self, global::Rocks.Argument<string> value) =>
-						new global::Rocks.PropertyAdornments<IAllow, global::System.Action<string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IAllow> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 			}
 			
@@ -232,6 +235,9 @@ public static class AllowNullGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -403,13 +409,13 @@ public static class AllowNullGeneratorTests
 				
 				internal static class PropertyGetterExpectationsOfAllowExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Allow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<Allow> self) =>
-						new global::Rocks.PropertyAdornments<Allow, global::System.Func<string>, string>(self.Add<string>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Allow, global::System.Func<string>, string> NewLine(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.Allow> self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Allow, global::System.Func<string>, string>(self.Add<string>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfAllowExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<Allow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<Allow> self, global::Rocks.Argument<string> value) =>
-						new global::Rocks.PropertyAdornments<Allow, global::System.Action<string>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.Allow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.Allow> self, global::Rocks.Argument<string> value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.Allow, global::System.Action<string>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 				}
 			}
 			
