@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Builders.Create;
 
-internal enum AdornmentType
+public enum AdornmentType
 {
    Method, Property, Indexer
 }

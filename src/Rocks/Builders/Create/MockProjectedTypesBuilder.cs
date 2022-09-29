@@ -9,8 +9,10 @@ namespace Rocks.Builders.Create;
 // other types are gen'd to support "esoteric" types.
 internal static class MockProjectedTypesBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
+	internal static bool Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
+		var wereTypesProjected = false;
+
 		using var projectedWriter = new StringWriter();
 		using var projectedIndentWriter = new IndentedTextWriter(projectedWriter,
 			MockProjectedTypesBuilder.GetTabString(writer));
@@ -36,7 +38,11 @@ internal static class MockProjectedTypesBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 			writer.WriteLine();
+
+			wereTypesProjected = true;
 		}
+
+		return wereTypesProjected;
 	}
 
 	private static IEnumerable<string> GetLines(string code)

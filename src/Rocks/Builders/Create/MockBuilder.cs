@@ -5,9 +5,9 @@ namespace Rocks.Builders.Create;
 
 internal static class MockBuilder
 {
-	internal static void Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
+	internal static bool Build(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 	{
-		MockProjectedTypesBuilder.Build(writer, information, compilation);
+		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, information, compilation);
 
 		writer.WriteLine($"internal static class CreateExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 		writer.WriteLine("{");
@@ -26,5 +26,7 @@ internal static class MockBuilder
 		MethodExpectationsExtensionsBuilder.Build(writer, information);
 		PropertyExpectationsExtensionsBuilder.Build(writer, information);
 		EventExpectationsExtensionsBuilder.Build(writer, information);
+
+		return wereTypesProjected;
 	}
 }

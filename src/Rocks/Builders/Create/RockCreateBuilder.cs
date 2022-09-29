@@ -29,14 +29,29 @@ internal sealed class RockCreateBuilder
 		indentWriter.WriteLine("#nullable enable");
 		indentWriter.WriteLine();
 
-		if (!this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
+		var mockNamespace = this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false ?
+			null : this.information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString();
+
+		if (mockNamespace is not null)
 		{
-			indentWriter.WriteLine($"namespace {this.information.TypeToMock!.Type.ContainingNamespace!.ToDisplayString()}");
+			indentWriter.WriteLine($"namespace {mockNamespace}");
 			indentWriter.WriteLine("{");
 			indentWriter.Indent++;
 		}
 
-		MockBuilder.Build(indentWriter, this.information, this.compilation);
+		var requiredNamespaces = new SortedSet<string>
+		{
+			"using Rocks.Extensions;",
+			"using System.Collections.Generic;",
+			"using System.Collections.Immutable;",
+		};
+
+		var wereTypesProjected = MockBuilder.Build(indentWriter, this.information, this.compilation);
+
+		if (wereTypesProjected)
+		{
+			requiredNamespaces.Add($"using {mockNamespace}.ProjectionsFor{this.information.TypeToMock!.FlattenedName};");
+		}
 
 		if (!this.information.TypeToMock!.Type.ContainingNamespace?.IsGlobalNamespace ?? false)
 		{
@@ -44,7 +59,10 @@ internal sealed class RockCreateBuilder
 			indentWriter.WriteLine("}");
 		}
 
-		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
+		var text = SourceText.From(
+			string.Join(Environment.NewLine,
+				string.Join(Environment.NewLine, requiredNamespaces), writer.ToString()), 
+			Encoding.UTF8);
 		return (this.information.Diagnostics, $"{this.information.TypeToMock!.FlattenedName}_Rock_Create.g.cs", text);
 	}
 

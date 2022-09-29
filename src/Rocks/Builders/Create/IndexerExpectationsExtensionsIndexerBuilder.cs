@@ -14,13 +14,13 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var thisParameter = $"this global::Rocks.Expectations.IndexerGetterExpectations<{mockTypeName}> self";
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(propertyGetMethod) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(property.Parameters, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(propertyGetMethod) : 
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
 			propertyGetMethod.ReturnType.GetReferenceableName();
 		var adornmentsType = propertyGetMethod.ReturnType.IsPointer() ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
@@ -42,7 +42,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var parameters = string.Join(", ", propertyGetMethod.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
 		var addMethod = property.Type.IsPointer() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(property.Type) : 
+			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, result.MockType) : 
 			$"Add<{propertyReturnValue}>";
 		writer.WriteLine($"return {newAdornments}(self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertyGetMethod.Parameters.Length}) {{ {parameters} }}));");
 
@@ -56,10 +56,10 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var mockTypeName = result.MockType.GetReferenceableName();
 		var thisParameter = $"this global::Rocks.Expectations.IndexerSetterExpectations<{mockTypeName}> self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(property.Type, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 

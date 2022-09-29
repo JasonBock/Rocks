@@ -36,12 +36,13 @@ internal static class MockPropertyBuilder
 		writer.Indent++;
 
 		var methodCast = propertyGetMethod.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(propertyGetMethod) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(propertyGetMethod) : propertyGetMethod.ReturnType.GetReferenceableName();
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
+			propertyGetMethod.ReturnType.GetReferenceableName();
 		var handlerName = property.Type.IsPointer() ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(property.Type) :
+			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, result.MockType) :
 			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
 
 		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)() :");
@@ -129,9 +130,9 @@ internal static class MockPropertyBuilder
 			writer.Indent++;
 
 			var argType = property.Type.IsPointer() ?
-				PointerArgTypeBuilder.GetProjectedName(property.Type) :
+				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 					property.Type.IsRefLikeType ?
-						RefLikeArgTypeBuilder.GetProjectedName(property.Type) :
+						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 						$"global::Rocks.Argument<{property.Type.GetReferenceableName()}>";
 
 			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
@@ -145,7 +146,7 @@ internal static class MockPropertyBuilder
 			writer.Indent++;
 
 			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(property.SetMethod!) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
 			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)(value{nullableFlag});");

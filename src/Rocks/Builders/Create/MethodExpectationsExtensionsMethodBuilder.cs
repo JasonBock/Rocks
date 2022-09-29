@@ -23,8 +23,8 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					if (_.Type.IsEsoteric())
 					{
 						var argName = _.Type.IsPointer() ?
-							PointerArgTypeBuilder.GetProjectedName(_.Type) :
-							RefLikeArgTypeBuilder.GetProjectedName(_.Type);
+							PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, result.MockType) :
+							RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, result.MockType);
 						return $"{argName} {_.Name}";
 					}
 					else
@@ -35,18 +35,18 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetReferenceableName()));
 
 		var callbackDelegateTypeName = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, result.MockType) :
 			method.ReturnsVoid ? 
 				DelegateBuilder.Build(method.Parameters) : 
 				DelegateBuilder.Build(method.Parameters, method.ReturnType);
 		var returnType = method.ReturnsVoid ? string.Empty :
 			method.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method) :
+				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, result.MockType) :
 				method.ReturnType.GetReferenceableName();
 		var adornmentsType = method.ReturnsVoid ?
 			$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}>" :
 			method.ReturnType.IsPointer() ?
-				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(method.ReturnType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
+				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, result.MockType, AdornmentType.Method, result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
 				$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 

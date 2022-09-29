@@ -92,12 +92,12 @@ internal static class MockMethodVoidBuilder
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, methodSignature, raiseEvents, shouldThrowDoesNotReturnException);
+				writer, method, result.MockType, methodSignature, raiseEvents, shouldThrowDoesNotReturnException);
 		}
 		else
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, raiseEvents, shouldThrowDoesNotReturnException);
+				writer, method, result.MockType, raiseEvents, shouldThrowDoesNotReturnException);
 		}
 
 		writer.Indent--;
@@ -143,11 +143,12 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents,
+	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, 
+		IMethodSymbol method, ITypeSymbol typeToMock, bool raiseEvents,
 		bool shouldThrowDoesNotReturnException)
 	{
 		writer.WriteLine("var methodHandler = methodHandlers[0];");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)
 		{
@@ -156,7 +157,7 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method,
-		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException)
+		ITypeSymbol typeToMock, string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
 		writer.WriteLine("var foundMatch = false;");
 		writer.WriteLine();
@@ -168,9 +169,9 @@ internal static class MockMethodVoidBuilder
 		{
 			var parameter = method.Parameters[i];
 			var argType = parameter.Type.IsPointer() ?
-				PointerArgTypeBuilder.GetProjectedName(parameter.Type) :
+				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
 					parameter.Type.IsRefLikeType ?
-						RefLikeArgTypeBuilder.GetProjectedName(parameter.Type) :
+						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
 						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>";
 
 			if (i == 0)
@@ -203,7 +204,7 @@ internal static class MockMethodVoidBuilder
 		writer.Indent++;
 		writer.WriteLine("foundMatch = true;");
 		writer.WriteLine();
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -226,10 +227,10 @@ internal static class MockMethodVoidBuilder
 		}
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, bool raiseEvents)
+	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock, bool raiseEvents)
 	{
 		var methodCast = method.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method) :
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters);
 
 		writer.WriteLine(!method.IsGenericMethod ? 
