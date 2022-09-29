@@ -43,12 +43,12 @@ public static class PropertyInitMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
 				{
-					public sealed class ConstructorProperties
+					internal sealed class ConstructorProperties
 					{
-						public int NonNullableValueType { get; init; }
-						public int? NullableValueType { get; init; }
-						public string? NonNullableReferenceType { get; init; }
-						public string? NullableReferenceType { get; init; }
+						internal int NonNullableValueType { get; init; }
+						internal int? NullableValueType { get; init; }
+						internal string? NonNullableReferenceType { get; init; }
+						internal string? NullableReferenceType { get; init; }
 					}
 					
 					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self, ConstructorProperties? constructorProperties) =>
@@ -136,12 +136,12 @@ public static class PropertyInitMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfTestExtensions
 				{
-					public sealed class ConstructorProperties
+					internal sealed class ConstructorProperties
 					{
-						public required int NonNullableValueType { get; init; }
-						public required int? NullableValueType { get; init; }
-						public required string? NonNullableReferenceType { get; init; }
-						public required string? NullableReferenceType { get; init; }
+						internal required int NonNullableValueType { get; init; }
+						internal required int? NullableValueType { get; init; }
+						internal required string? NonNullableReferenceType { get; init; }
+						internal required string? NullableReferenceType { get; init; }
 					}
 					
 					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> self, ConstructorProperties constructorProperties) =>

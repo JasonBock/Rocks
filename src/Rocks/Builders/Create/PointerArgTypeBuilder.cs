@@ -37,9 +37,9 @@ internal static class PointerArgTypeBuilder
 		var argName = PointerArgTypeBuilder.GetProjectedName(type);
 		var typeName = type.GetReferenceableName();
 
-		writer.WriteLine($"public unsafe delegate bool {validationDelegateName}({typeName} value);");
+		writer.WriteLine($"internal unsafe delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
-		writer.WriteLine($"public unsafe sealed class {argName}");
+		writer.WriteLine($"internal unsafe sealed class {argName}");
 		writer.Indent++;
 		writer.WriteLine($": global::Rocks.Argument");
 		writer.Indent--;

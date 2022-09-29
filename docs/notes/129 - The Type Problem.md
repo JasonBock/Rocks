@@ -64,10 +64,33 @@ var projectedTypeName = $"global::{{this.information.TypeToMock!.Type.Containing
 * DONE - `PointerArgTypeBuilder`
   * DONE - `GetProjectedName()` - needs `GetProjectedFullyQualifiedName()`
   * DONE - `GetProjectedEvaluationDelegateName()` - needs `GetProjectedEvaluationDelegateFullyQualifiedName()`
+* DONE - `MockProjectedTypesAdornmentsBuilder`
+  * DONE - `GetProjectedAdornmentName()` - needs `GetProjectedAdornmentFullyQualifiedName()`
+  * DONE - `GetProjectedHandlerInformationName()` - needs `GetProjectedHandlerInformationFullyQualifiedName()`
+  * DONE - `GetProjectedAddExtensionMethodName()` - needs `GetProjectedAddExtensionMethodFullyQualifiedName()`
+  
+Look for where `GetProjectedAdornmentName()` is called, and change it to `GetProjectedAdornmentFullyQualifiedName()`
 
 Once these are in and tested, then change in code where a FQN is needed for these projected types.
 
+* Methods
+  * MockMethodValueBuilder
+  * MockMethodVoidBuilder
+* Properties
+  * ?
+* Indexers
+  * ?
+  
+So....because of extension methods, I think I need to include a couple:
+
+* using System.Collections.Generic; // Because I use an AddOrUpdate extension method.
+* using {mockType.Namespace}.ProjectionsFor{mockTypeName}; // I create extension methods for projected types, and they're in here, but I only need to do this if the projected types are made.
+
+I think this should be OK.  
+
+Finally, success!
+
 Other Issues
+* DONE - The types and members generated in `PointerArgTypeBuilder` and `RefLikeArgTypeBuilder` can probably be `internal`, not `public`
 * `ConstructorProperties` can be `internal`, not `public`
 * Invoking an event seems reflection-heavy, can that be simplified?
-* I put `#nullable enable` in every code-gen'ed file. Should I also put `#nullable restore` at the end?

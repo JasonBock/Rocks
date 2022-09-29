@@ -50,9 +50,9 @@ public static class ProjectedTypesGeneratorTests
 					internal unsafe delegate delegate*<int, void> DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476();
 					internal unsafe delegate void PointerParameterCallback_448273544004536059019999557806138154926952273337(int* value);
 					internal unsafe delegate int* PointerReturnCallback_355763855309704752655277092464969889148092134081();
-					public unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> value);
+					internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> value);
 					
-					public unsafe sealed class ArgumentFordelegatePointerOfint__void
+					internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
@@ -85,9 +85,9 @@ public static class ProjectedTypesGeneratorTests
 								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {{this.validation}}")
 							};
 					}
-					public unsafe delegate bool ArgumentEvaluationForintPointer(int* value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* value);
 					
-					public unsafe sealed class ArgumentForintPointer
+					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
@@ -417,9 +417,9 @@ public static class ProjectedTypesGeneratorTests
 					internal delegate global::System.Span<byte> get_ValuesCallback_609802712345030162120672576179552875459533180788();
 					internal delegate global::System.Span<byte> get_ValuesReturnValue_609802712345030162120672576179552875459533180788();
 					internal delegate void set_ValuesCallback_273510090488501594048307694596437261624168638626(global::System.Span<byte> value);
-					public delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> value);
+					internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> value);
 					
-					public sealed class ArgForSpanOfint
+					internal sealed class ArgForSpanOfint
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfint? evaluation;
@@ -441,9 +441,9 @@ public static class ProjectedTypesGeneratorTests
 								_ => throw new global::System.NotSupportedException("Invalid validation state."),
 							};
 					}
-					public delegate bool ArgEvaluationForSpanOfbyte(global::System.Span<byte> value);
+					internal delegate bool ArgEvaluationForSpanOfbyte(global::System.Span<byte> value);
 					
-					public sealed class ArgForSpanOfbyte
+					internal sealed class ArgForSpanOfbyte
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfbyte? evaluation;

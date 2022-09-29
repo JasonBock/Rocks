@@ -22,7 +22,7 @@ internal static class MockConstructorExtensionsBuilder
 			// Generate the ConstructorProperties class
 			// and generate the object initialization syntax that will be used
 			// in the Instance() methods.
-			writer.WriteLine("public sealed class ConstructorProperties");
+			writer.WriteLine("internal sealed class ConstructorProperties");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -41,7 +41,7 @@ internal static class MockConstructorExtensionsBuilder
 				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
 				var propertyTypeName = requiredInitProperty.Type.GetReferenceableName();
 				writer.WriteLine(
-					$"public {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
+					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 				requiredInitObjectInitializationSyntaxBuilder.AppendLine(
 					$"\t{requiredInitProperty.Name} = constructorProperties.{requiredInitProperty.Name}{propertyAssignment},");
 			}

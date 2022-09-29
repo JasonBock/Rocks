@@ -41,9 +41,9 @@ internal static class RefLikeArgTypeBuilder
 		var argConstructorName = RefLikeArgTypeBuilder.GetProjectedConstructorName(type);
 		var typeName = type.GetReferenceableName();
 
-		writer.WriteLine($"public delegate bool {validationDelegateName}({typeName} value);");
+		writer.WriteLine($"internal delegate bool {validationDelegateName}({typeName} value);");
 		writer.WriteLine();
-		writer.WriteLine($"public sealed class {argName}");
+		writer.WriteLine($"internal sealed class {argName}");
 		writer.Indent++;
 		writer.WriteLine(": global::Rocks.Argument");
 		writer.Indent--;

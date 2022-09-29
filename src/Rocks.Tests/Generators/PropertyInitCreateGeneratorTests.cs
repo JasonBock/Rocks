@@ -51,12 +51,12 @@ public static class PropertyInitCreateGeneratorTests
 					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.ITest> self) =>
 						new(self);
 					
-					public sealed class ConstructorProperties
+					internal sealed class ConstructorProperties
 					{
-						public int NonNullableValueType { get; init; }
-						public int? NullableValueType { get; init; }
-						public string? NonNullableReferenceType { get; init; }
-						public string? NullableReferenceType { get; init; }
+						internal int NonNullableValueType { get; init; }
+						internal int? NullableValueType { get; init; }
+						internal string? NonNullableReferenceType { get; init; }
+						internal string? NullableReferenceType { get; init; }
 					}
 					
 					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self, ConstructorProperties? constructorProperties)
@@ -229,9 +229,9 @@ public static class PropertyInitCreateGeneratorTests
 					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.Test> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.Test> self) =>
 						new(self);
 					
-					public sealed class ConstructorProperties
+					internal sealed class ConstructorProperties
 					{
-						public required string? Data { get; init; }
+						internal required string? Data { get; init; }
 					}
 					
 					internal static global::MockTests.Test Instance(this global::Rocks.Expectations.Expectations<global::MockTests.Test> self, ConstructorProperties constructorProperties)
@@ -360,154 +360,6 @@ public static class PropertyInitCreateGeneratorTests
 			}
 			
 			""";
-			//"""
-			//using Rocks;
-			//using Rocks.Exceptions;
-			//using Rocks.Expectations;
-			//using System;
-			//using System.Collections.Generic;
-			//using System.Collections.Immutable;
-			//using System.Runtime.CompilerServices;
-
-		//#nullable enable
-		//namespace MockTests
-		//{
-		//	internal static class CreateExpectationsOfTestExtensions
-		//	{
-		//		internal static MethodExpectations<Test> Methods(this Expectations<Test> self) =>
-		//			new(self);
-
-		//		public sealed class ConstructorProperties
-		//		{
-		//			public required string? Data { get; init; }
-		//		}
-
-		//		internal static Test Instance(this Expectations<Test> self, ConstructorProperties constructorProperties)
-		//		{
-		//			if (!self.WasInstanceInvoked)
-		//			{
-		//				self.WasInstanceInvoked = true;
-		//				return constructorProperties is null ?
-		//					throw new ArgumentNullException(nameof(constructorProperties)) :
-		//					new RockTest(self)
-		//					{
-		//						Data = constructorProperties.Data,
-		//					};
-		//			}
-		//			else
-		//			{
-		//				throw new NewMockInstanceException("Can only create a new mock once.");
-		//			}
-		//		}
-
-		//		private sealed class RockTest
-		//			: Test
-		//		{
-		//			private readonly Dictionary<int, List<HandlerInformation>> handlers;
-
-		//			public RockTest(Expectations<Test> expectations) =>
-		//				this.handlers = expectations.Handlers;
-
-		//			[MemberIdentifier(0, "bool Equals(object? obj)")]
-		//			public override bool Equals(object? obj)
-		//			{
-		//				if (this.handlers.TryGetValue(0, out var methodHandlers))
-		//				{
-		//					foreach (var methodHandler in methodHandlers)
-		//					{
-		//						if (Unsafe.As<Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
-		//						{
-		//							var result = methodHandler.Method is not null ?
-		//								Unsafe.As<Func<object?, bool>>(methodHandler.Method)(obj) :
-		//								Unsafe.As<HandlerInformation<bool>>(methodHandler).ReturnValue;
-		//							methodHandler.IncrementCallCount();
-		//							return result!;
-		//						}
-		//					}
-
-		//					throw new ExpectationException("No handlers match for bool Equals(object? obj)");
-		//				}
-		//				else
-		//				{
-		//					return base.Equals(obj);
-		//				}
-		//			}
-
-		//			[MemberIdentifier(1, "int GetHashCode()")]
-		//			public override int GetHashCode()
-		//			{
-		//				if (this.handlers.TryGetValue(1, out var methodHandlers))
-		//				{
-		//					var methodHandler = methodHandlers[0];
-		//					var result = methodHandler.Method is not null ?
-		//						Unsafe.As<Func<int>>(methodHandler.Method)() :
-		//						Unsafe.As<HandlerInformation<int>>(methodHandler).ReturnValue;
-		//					methodHandler.IncrementCallCount();
-		//					return result!;
-		//				}
-		//				else
-		//				{
-		//					return base.GetHashCode();
-		//				}
-		//			}
-
-		//			[MemberIdentifier(2, "string? ToString()")]
-		//			public override string? ToString()
-		//			{
-		//				if (this.handlers.TryGetValue(2, out var methodHandlers))
-		//				{
-		//					var methodHandler = methodHandlers[0];
-		//					var result = methodHandler.Method is not null ?
-		//						Unsafe.As<Func<string?>>(methodHandler.Method)() :
-		//						Unsafe.As<HandlerInformation<string?>>(methodHandler).ReturnValue;
-		//					methodHandler.IncrementCallCount();
-		//					return result!;
-		//				}
-		//				else
-		//				{
-		//					return base.ToString();
-		//				}
-		//			}
-
-		//			[MemberIdentifier(3, "void Foo()")]
-		//			public override void Foo()
-		//			{
-		//				if (this.handlers.TryGetValue(3, out var methodHandlers))
-		//				{
-		//					var methodHandler = methodHandlers[0];
-		//					if (methodHandler.Method is not null)
-		//					{
-		//						Unsafe.As<Action>(methodHandler.Method)();
-		//					}
-
-		//					methodHandler.IncrementCallCount();
-		//				}
-		//				else
-		//				{
-		//					base.Foo();
-		//				}
-		//			}
-
-		//		}
-		//	}
-
-		//	internal static class MethodExpectationsOfTestExtensions
-		//	{
-		//		internal static MethodAdornments<Test, Func<object?, bool>, bool> Equals(this MethodExpectations<Test> self, Argument<object?> obj)
-		//		{
-		//			ArgumentNullException.ThrowIfNull(obj);
-		//			return new MethodAdornments<Test, Func<object?, bool>, bool>(self.Add<bool>(0, new List<Argument>(1) { obj }));
-		//		}
-		//		internal static MethodAdornments<Test, Func<int>, int> GetHashCode(this MethodExpectations<Test> self) =>
-		//			new MethodAdornments<Test, Func<int>, int>(self.Add<int>(1, new List<Argument>()));
-		//		internal static MethodAdornments<Test, Func<string?>, string?> ToString(this MethodExpectations<Test> self) =>
-		//			new MethodAdornments<Test, Func<string?>, string?>(self.Add<string?>(2, new List<Argument>()));
-		//		internal static MethodAdornments<Test, Action> Foo(this MethodExpectations<Test> self) =>
-		//			new MethodAdornments<Test, Action>(self.Add(3, new List<Argument>()));
-		//	}
-		//}
-
-		//""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "Test_Rock_Create.g.cs", generatedCode) },
