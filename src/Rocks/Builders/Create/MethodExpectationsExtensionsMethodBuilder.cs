@@ -55,16 +55,21 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : 
 				$"Add<{returnType}>";
 
+		var constraints = method.GetConstraints();
+		var extensionConstraints = constraints.Length > 0 ?
+			method.Parameters.Length == 0 ? $" {string.Join(" ", constraints)} " : $" {string.Join(" ", constraints)}" : 
+			method.Parameters.Length == 0 ? " " : "";
+
 		if (method.Parameters.Length == 0)
 		{
-			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}) =>");
+			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}=>");
 			writer.Indent++;
 			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 			writer.Indent--;
 		}
 		else
 		{
-			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters})");
+			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

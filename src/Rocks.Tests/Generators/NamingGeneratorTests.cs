@@ -421,7 +421,7 @@ public static class NamingGeneratorTests
 				
 				internal static class MethodExpectationsOfIUseConstraintExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::Namespace2.IUseConstraint, global::System.Action<T>> Foo<T>(this global::Rocks.Expectations.MethodExpectations<global::Namespace2.IUseConstraint> self, global::Rocks.Argument<T> value)
+					internal static global::Rocks.MethodAdornments<global::Namespace2.IUseConstraint, global::System.Action<T>> Foo<T>(this global::Rocks.Expectations.MethodExpectations<global::Namespace2.IUseConstraint> self, global::Rocks.Argument<T> value) where T : global::Namespace1.IConstraint
 					{
 						global::System.ArgumentNullException.ThrowIfNull(value);
 						return new global::Rocks.MethodAdornments<global::Namespace2.IUseConstraint, global::System.Action<T>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));

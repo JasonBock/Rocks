@@ -9,7 +9,7 @@ internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, 
 		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
-		string signature, string explicitTypeName)
+		string signature)
 	{
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
@@ -109,7 +109,7 @@ internal static class MockIndexerBuilder
 
 	private static void BuildSetter(IndentedTextWriter writer,
 		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
-		string signature, string explicitTypeName)
+		string signature)
 	{
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
@@ -268,7 +268,7 @@ internal static class MockIndexerBuilder
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildGetter(writer, result, compilation, 
-				memberIdentifier, raiseEvents, signature, explicitTypeName);
+				memberIdentifier, raiseEvents, signature);
 			memberIdentifier++;
 		}
 
@@ -276,7 +276,7 @@ internal static class MockIndexerBuilder
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
 			MockIndexerBuilder.BuildSetter(writer, result, compilation, 
-				memberIdentifier, raiseEvents, signature, explicitTypeName);
+				memberIdentifier, raiseEvents, signature);
 		}
 
 		writer.Indent--;
