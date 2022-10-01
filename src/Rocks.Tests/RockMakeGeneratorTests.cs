@@ -69,7 +69,7 @@ public static class RockMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
 				{
-					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self) =>
+					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> @self) =>
 						new RockITest();
 					
 					private sealed class RockITest
@@ -131,7 +131,7 @@ public static class RockMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
 				{
-					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self) =>
+					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> @self) =>
 						new RockITest();
 					
 					private sealed class RockITest
@@ -139,11 +139,11 @@ public static class RockMakeGeneratorTests
 					{
 						public RockITest() { }
 						
-						public unsafe int* Foo(int* value)
+						public unsafe int* Foo(int* @value)
 						{
 							return default!;
 						}
-						public unsafe delegate*<int, void> FooMethod(delegate*<int, void> value)
+						public unsafe delegate*<int, void> FooMethod(delegate*<int, void> @value)
 						{
 							return default!;
 						}
@@ -157,12 +157,12 @@ public static class RockMakeGeneratorTests
 							get => default!;
 							set { }
 						}
-						public unsafe int* this[int* a]
+						public unsafe int* this[int* @a]
 						{
 							get => default!;
 							set { }
 						}
-						public unsafe delegate*<int, void> this[delegate*<int, void> a]
+						public unsafe delegate*<int, void> this[delegate*<int, void> @a]
 						{
 							get => default!;
 							set { }
@@ -206,7 +206,7 @@ public static class RockMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
 				{
-					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self) =>
+					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> @self) =>
 						new RockITest();
 					
 					private sealed class RockITest
@@ -320,7 +320,7 @@ public static class RockMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfITestExtensions
 				{
-					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> self) =>
+					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> @self) =>
 						new RockITest();
 					
 					private sealed class RockITest

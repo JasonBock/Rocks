@@ -46,11 +46,11 @@ public static class ProjectedTypesGeneratorTests
 			{
 				namespace ProjectionsForIHavePointers
 				{
-					internal unsafe delegate void DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154(delegate*<int, void> value);
+					internal unsafe delegate void DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154(delegate*<int, void> @value);
 					internal unsafe delegate delegate*<int, void> DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476();
-					internal unsafe delegate void PointerParameterCallback_448273544004536059019999557806138154926952273337(int* value);
+					internal unsafe delegate void PointerParameterCallback_448273544004536059019999557806138154926952273337(int* @value);
 					internal unsafe delegate int* PointerReturnCallback_355763855309704752655277092464969889148092134081();
-					internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> value);
+					internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
 					
 					internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 						: global::Rocks.Argument
@@ -61,31 +61,31 @@ public static class ProjectedTypesGeneratorTests
 						
 						internal ArgumentFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> value)
+						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
 						{
-							this.value = value;
+							this.value = @value;
 							this.validation = global::Rocks.ValidationState.Value;
 						}
 						
-						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void evaluation)
+						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 						{
-							this.evaluation = evaluation;
+							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
-						public bool IsValid(delegate*<int, void> value) =>
+						public bool IsValid(delegate*<int, void> @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
 								#pragma warning disable CS8909
-								global::Rocks.ValidationState.Value => value == this.value,
+								global::Rocks.ValidationState.Value => @value == this.value,
 								#pragma warning restore CS8909
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
 								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {{this.validation}}")
 							};
 					}
-					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
 					
 					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
@@ -96,27 +96,27 @@ public static class ProjectedTypesGeneratorTests
 						
 						internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentForintPointer(int* value)
+						internal ArgumentForintPointer(int* @value)
 						{
-							this.value = value;
+							this.value = @value;
 							this.validation = global::Rocks.ValidationState.Value;
 						}
 						
-						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer evaluation)
+						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
 						{
-							this.evaluation = evaluation;
+							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
 						
-						public static implicit operator ArgumentForintPointer(int* value) => new(value);
+						public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
 						
-						public bool IsValid(int* value) =>
+						public bool IsValid(int* @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
-								global::Rocks.ValidationState.Value => value == this.value,
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+								global::Rocks.ValidationState.Value => @value == this.value,
+								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
 								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {{this.validation}}")
 							};
@@ -124,40 +124,40 @@ public static class ProjectedTypesGeneratorTests
 					internal unsafe sealed class HandlerInformationFordelegatePointerOfint__void
 						: global::Rocks.HandlerInformation
 					{
-						internal HandlerInformationFordelegatePointerOfint__void(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)
-							: base(null, expectations) => this.ReturnValue = default;
+						internal HandlerInformationFordelegatePointerOfint__void(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+							: base(null, @expectations) => this.ReturnValue = default;
 						
-						internal HandlerInformationFordelegatePointerOfint__void(global::System.Delegate? method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)
-							: base(method, expectations) => this.ReturnValue = default;
+						internal HandlerInformationFordelegatePointerOfint__void(global::System.Delegate? @method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+							: base(@method, @expectations) => this.ReturnValue = default;
 						
 						internal delegate*<int, void> ReturnValue { get; set; }
 					}
 					internal unsafe sealed class HandlerInformationForintPointer
 						: global::Rocks.HandlerInformation
 					{
-						internal HandlerInformationForintPointer(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)
-							: base(null, expectations) => this.ReturnValue = default;
+						internal HandlerInformationForintPointer(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+							: base(null, @expectations) => this.ReturnValue = default;
 						
-						internal HandlerInformationForintPointer(global::System.Delegate? method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)
-							: base(method, expectations) => this.ReturnValue = default;
+						internal HandlerInformationForintPointer(global::System.Delegate? @method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+							: base(@method, @expectations) => this.ReturnValue = default;
 						
 						internal int* ReturnValue { get; set; }
 					}
 					internal static class ExpectationsExtensions
 					{
-						internal static HandlerInformationFordelegatePointerOfint__void AddFordelegatePointerOfint__void(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> self, int memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> arguments)
+						internal static HandlerInformationFordelegatePointerOfint__void AddFordelegatePointerOfint__void(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @self, int @memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> @arguments)
 						{
-							var information = new HandlerInformationFordelegatePointerOfint__void(arguments.ToImmutableArray());
-							self.Handlers.AddOrUpdate(memberIdentifier,
-								() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { information }, _ => _.Add(information));
-							return information;
+							var @information = new HandlerInformationFordelegatePointerOfint__void(@arguments.ToImmutableArray());
+							@self.Handlers.AddOrUpdate(@memberIdentifier,
+								() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { @information }, _ => _.Add(@information));
+							return @information;
 						}
-						internal static HandlerInformationForintPointer AddForintPointer(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> self, int memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> arguments)
+						internal static HandlerInformationForintPointer AddForintPointer(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @self, int @memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> @arguments)
 						{
-							var information = new HandlerInformationForintPointer(arguments.ToImmutableArray());
-							self.Handlers.AddOrUpdate(memberIdentifier,
-								() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { information }, _ => _.Add(information));
-							return information;
+							var @information = new HandlerInformationForintPointer(@arguments.ToImmutableArray());
+							@self.Handlers.AddOrUpdate(@memberIdentifier,
+								() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { @information }, _ => _.Add(@information));
+							return @information;
 						}
 					}
 					internal sealed class MethodAdornmentsFordelegatePointerOfint__void<T, TCallback>
@@ -165,24 +165,24 @@ public static class ProjectedTypesGeneratorTests
 						where T : class
 						where TCallback : global::System.Delegate
 					{
-						internal MethodAdornmentsFordelegatePointerOfint__void(HandlerInformationFordelegatePointerOfint__void handler) =>
-							this.Handler = handler;
+						internal MethodAdornmentsFordelegatePointerOfint__void(HandlerInformationFordelegatePointerOfint__void @handler) =>
+							this.Handler = @handler;
 						
-						internal MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> CallCount(uint expectedCallCount)
+						internal MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> CallCount(uint @expectedCallCount)
 						{
-							this.Handler.SetExpectedCallCount(expectedCallCount);
+							this.Handler.SetExpectedCallCount(@expectedCallCount);
 							return this;
 						}
 						
-						internal MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> Callback(TCallback callback)
+						internal MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> Callback(TCallback @callback)
 						{
-							this.Handler.SetCallback(callback);
+							this.Handler.SetCallback(@callback);
 							return this;
 						}
 						
-						internal unsafe MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> Returns(delegate*<int, void> returnValue)
+						internal unsafe MethodAdornmentsFordelegatePointerOfint__void<T, TCallback> Returns(delegate*<int, void> @returnValue)
 						{
-							this.Handler.ReturnValue = returnValue;
+							this.Handler.ReturnValue = @returnValue;
 							return this;
 						}
 						
@@ -193,24 +193,24 @@ public static class ProjectedTypesGeneratorTests
 						where T : class
 						where TCallback : global::System.Delegate
 					{
-						internal MethodAdornmentsForintPointer(HandlerInformationForintPointer handler) =>
-							this.Handler = handler;
+						internal MethodAdornmentsForintPointer(HandlerInformationForintPointer @handler) =>
+							this.Handler = @handler;
 						
-						internal MethodAdornmentsForintPointer<T, TCallback> CallCount(uint expectedCallCount)
+						internal MethodAdornmentsForintPointer<T, TCallback> CallCount(uint @expectedCallCount)
 						{
-							this.Handler.SetExpectedCallCount(expectedCallCount);
+							this.Handler.SetExpectedCallCount(@expectedCallCount);
 							return this;
 						}
 						
-						internal MethodAdornmentsForintPointer<T, TCallback> Callback(TCallback callback)
+						internal MethodAdornmentsForintPointer<T, TCallback> Callback(TCallback @callback)
 						{
-							this.Handler.SetCallback(callback);
+							this.Handler.SetCallback(@callback);
 							return this;
 						}
 						
-						internal unsafe MethodAdornmentsForintPointer<T, TCallback> Returns(int* returnValue)
+						internal unsafe MethodAdornmentsForintPointer<T, TCallback> Returns(int* @returnValue)
 						{
-							this.Handler.ReturnValue = returnValue;
+							this.Handler.ReturnValue = @returnValue;
 							return this;
 						}
 						
@@ -220,15 +220,15 @@ public static class ProjectedTypesGeneratorTests
 				
 				internal static class CreateExpectationsOfIHavePointersExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.IHavePointers Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> self)
+					internal static global::MockTests.IHavePointers Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockIHavePointers(self);
+							@self.WasInstanceInvoked = true;
+							return new RockIHavePointers(@self);
 						}
 						else
 						{
@@ -241,104 +241,104 @@ public static class ProjectedTypesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHavePointers(global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockIHavePointers(global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
-						[global::Rocks.MemberIdentifier(0, "void DelegatePointerParameter(delegate*<int, void> value)")]
-						public unsafe void DelegatePointerParameter(delegate*<int, void> value)
+						[global::Rocks.MemberIdentifier(0, "void DelegatePointerParameter(delegate*<int, void> @value)")]
+						public unsafe void DelegatePointerParameter(delegate*<int, void> @value)
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var foundMatch = false;
+								var @foundMatch = false;
 								
-								foreach (var methodHandler in methodHandlers)
+								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void>(methodHandler.Expectations[0]).IsValid(value))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
-										foundMatch = true;
+										@foundMatch = true;
 										
-										if (methodHandler.Method is not null)
+										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154>(methodHandler.Method)(value);
+											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154>(@methodHandler.Method)(@value);
 										}
 										
-										methodHandler.IncrementCallCount();
+										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
 								
-								if (!foundMatch)
+								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void DelegatePointerParameter(delegate*<int, void> value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void DelegatePointerParameter(delegate*<int, void> @value)");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void DelegatePointerParameter(delegate*<int, void> value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void DelegatePointerParameter(delegate*<int, void> @value)");
 							}
 						}
 						
 						[global::Rocks.MemberIdentifier(1, "delegate*<int, void> DelegatePointerReturn()")]
 						public unsafe delegate*<int, void> DelegatePointerReturn()
 						{
-							if (this.handlers.TryGetValue(1, out var methodHandlers))
+							if (this.handlers.TryGetValue(1, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								var result = methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476>(methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.HandlerInformationFordelegatePointerOfint__void>(methodHandler).ReturnValue;
-								methodHandler.IncrementCallCount();
-								return result!;
+								var @methodHandler = @methodHandlers[0];
+								var @result = @methodHandler.Method is not null ?
+									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476>(@methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.HandlerInformationFordelegatePointerOfint__void>(@methodHandler).ReturnValue;
+								@methodHandler.IncrementCallCount();
+								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe delegate*<int, void> DelegatePointerReturn()");
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "void PointerParameter(int* value)")]
-						public unsafe void PointerParameter(int* value)
+						[global::Rocks.MemberIdentifier(2, "void PointerParameter(int* @value)")]
+						public unsafe void PointerParameter(int* @value)
 						{
-							if (this.handlers.TryGetValue(2, out var methodHandlers))
+							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
-								var foundMatch = false;
+								var @foundMatch = false;
 								
-								foreach (var methodHandler in methodHandlers)
+								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer>(methodHandler.Expectations[0]).IsValid(value))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
-										foundMatch = true;
+										@foundMatch = true;
 										
-										if (methodHandler.Method is not null)
+										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337>(methodHandler.Method)(value);
+											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337>(@methodHandler.Method)(@value);
 										}
 										
-										methodHandler.IncrementCallCount();
+										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
 								
-								if (!foundMatch)
+								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void PointerParameter(int* value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void PointerParameter(int* @value)");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void PointerParameter(int* value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void PointerParameter(int* @value)");
 							}
 						}
 						
 						[global::Rocks.MemberIdentifier(3, "int* PointerReturn()")]
 						public unsafe int* PointerReturn()
 						{
-							if (this.handlers.TryGetValue(3, out var methodHandlers))
+							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								var result = methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081>(methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.HandlerInformationForintPointer>(methodHandler).ReturnValue;
-								methodHandler.IncrementCallCount();
-								return result!;
+								var @methodHandler = @methodHandlers[0];
+								var @result = @methodHandler.Method is not null ?
+									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081>(@methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHavePointers.HandlerInformationForintPointer>(@methodHandler).ReturnValue;
+								@methodHandler.IncrementCallCount();
+								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe int* PointerReturn()");
@@ -349,20 +349,20 @@ public static class ProjectedTypesGeneratorTests
 				
 				internal static class MethodExpectationsOfIHavePointersExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154> DelegatePointerParameter(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> self, global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void value)
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154> DelegatePointerParameter(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> @self, global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value)
 					{
-						global::System.ArgumentNullException.ThrowIfNull(value);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						return new global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 					}
-					internal static global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476> DelegatePointerReturn(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> self) =>
-						new global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476>(self.AddFordelegatePointerOfint__void(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337> PointerParameter(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> self, global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer value)
+					internal static global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476> DelegatePointerReturn(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> @self) =>
+						new global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.DelegatePointerReturnCallback_348091753837477554967687149303310703900832221476>(@self.AddFordelegatePointerOfint__void(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337> PointerParameter(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> @self, global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value)
 					{
-						global::System.ArgumentNullException.ThrowIfNull(value);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						return new global::Rocks.MethodAdornments<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337>(@self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 					}
-					internal static global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsForintPointer<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081> PointerReturn(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> self) =>
-						new global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsForintPointer<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081>(self.AddForintPointer(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsForintPointer<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081> PointerReturn(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHavePointers> @self) =>
+						new global::MockTests.ProjectionsForIHavePointers.MethodAdornmentsForintPointer<global::MockTests.IHavePointers, global::MockTests.ProjectionsForIHavePointers.PointerReturnCallback_355763855309704752655277092464969889148092134081>(@self.AddForintPointer(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -412,12 +412,12 @@ public static class ProjectedTypesGeneratorTests
 			{
 				namespace ProjectionsForIHaveInAndOutSpan
 				{
-					internal delegate global::System.Span<int> FooCallback_313462758925781114777251005406226933687057720153(global::System.Span<int> values);
+					internal delegate global::System.Span<int> FooCallback_313462758925781114777251005406226933687057720153(global::System.Span<int> @values);
 					internal delegate global::System.Span<int> FooReturnValue_313462758925781114777251005406226933687057720153();
 					internal delegate global::System.Span<byte> get_ValuesCallback_609802712345030162120672576179552875459533180788();
 					internal delegate global::System.Span<byte> get_ValuesReturnValue_609802712345030162120672576179552875459533180788();
-					internal delegate void set_ValuesCallback_273510090488501594048307694596437261624168638626(global::System.Span<byte> value);
-					internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> value);
+					internal delegate void set_ValuesCallback_273510090488501594048307694596437261624168638626(global::System.Span<byte> @value);
+					internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> @value);
 					
 					internal sealed class ArgForSpanOfint
 						: global::Rocks.Argument
@@ -427,21 +427,21 @@ public static class ProjectedTypesGeneratorTests
 						
 						internal ArgForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgForSpanOfint(global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfint evaluation)
+						internal ArgForSpanOfint(global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfint @evaluation)
 						{
-							this.evaluation = evaluation;
+							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
-						public bool IsValid(global::System.Span<int> value) =>
+						public bool IsValid(global::System.Span<int> @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 								_ => throw new global::System.NotSupportedException("Invalid validation state."),
 							};
 					}
-					internal delegate bool ArgEvaluationForSpanOfbyte(global::System.Span<byte> value);
+					internal delegate bool ArgEvaluationForSpanOfbyte(global::System.Span<byte> @value);
 					
 					internal sealed class ArgForSpanOfbyte
 						: global::Rocks.Argument
@@ -451,17 +451,17 @@ public static class ProjectedTypesGeneratorTests
 						
 						internal ArgForSpanOfbyte() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgForSpanOfbyte(global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfbyte evaluation)
+						internal ArgForSpanOfbyte(global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgEvaluationForSpanOfbyte @evaluation)
 						{
-							this.evaluation = evaluation;
+							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
-						public bool IsValid(global::System.Span<byte> value) =>
+						public bool IsValid(global::System.Span<byte> @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
-								global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 								_ => throw new global::System.NotSupportedException("Invalid validation state."),
 							};
 					}
@@ -469,24 +469,24 @@ public static class ProjectedTypesGeneratorTests
 				
 				internal static class CreateExpectationsOfIHaveInAndOutSpanExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveInAndOutSpan> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveInAndOutSpan> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @self) =>
+						new(@self);
 					
-					internal static global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> Properties(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> Properties(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @self) =>
+						new(@self);
 					
-					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IHaveInAndOutSpan> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IHaveInAndOutSpan> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> @self) =>
+						new(@self);
 					
-					internal static global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IHaveInAndOutSpan> Setters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IHaveInAndOutSpan> Setters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.IHaveInAndOutSpan> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.IHaveInAndOutSpan Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> self)
+					internal static global::MockTests.IHaveInAndOutSpan Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockIHaveInAndOutSpan(self);
+							@self.WasInstanceInvoked = true;
+							return new RockIHaveInAndOutSpan(@self);
 						}
 						else
 						{
@@ -499,79 +499,79 @@ public static class ProjectedTypesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveInAndOutSpan(global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockIHaveInAndOutSpan(global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
-						[global::Rocks.MemberIdentifier(0, "global::System.Span<int> Foo(global::System.Span<int> values)")]
-						public global::System.Span<int> Foo(global::System.Span<int> values)
+						[global::Rocks.MemberIdentifier(0, "global::System.Span<int> Foo(global::System.Span<int> @values)")]
+						public global::System.Span<int> Foo(global::System.Span<int> @values)
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								foreach (var methodHandler in methodHandlers)
+								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint>(methodHandler.Expectations[0]).IsValid(values))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint>(@methodHandler.Expectations[0]).IsValid(@values))
 									{
-										var result = methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153>(methodHandler.Method)(values) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>>(methodHandler).ReturnValue!.Invoke();
-										methodHandler.IncrementCallCount();
-										return result!;
+										var @result = @methodHandler.Method is not null ?
+											global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153>(@methodHandler.Method)(@values) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>>(@methodHandler).ReturnValue!.Invoke();
+										@methodHandler.IncrementCallCount();
+										return @result!;
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Span<int> Foo(global::System.Span<int> values)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Span<int> Foo(global::System.Span<int> @values)");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Span<int> Foo(global::System.Span<int> values)");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Span<int> Foo(global::System.Span<int> @values)");
 						}
 						
 						[global::Rocks.MemberIdentifier(1, "get_Values()")]
-						[global::Rocks.MemberIdentifier(2, "set_Values(value)")]
+						[global::Rocks.MemberIdentifier(2, "set_Values(@value)")]
 						public global::System.Span<byte> Values
 						{
 							get
 							{
-								if (this.handlers.TryGetValue(1, out var methodHandlers))
+								if (this.handlers.TryGetValue(1, out var @methodHandlers))
 								{
-									var methodHandler = methodHandlers[0];
-									var result = methodHandler.Method is not null ?
-										global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788>(methodHandler.Method)() :
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>>(methodHandler).ReturnValue!.Invoke();
-									methodHandler.IncrementCallCount();
-									return result!;
+									var @methodHandler = @methodHandlers[0];
+									var @result = @methodHandler.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788>(@methodHandler.Method)() :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>>(@methodHandler).ReturnValue!.Invoke();
+									@methodHandler.IncrementCallCount();
+									return @result!;
 								}
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Values())");
 							}
 							set
 							{
-								if (this.handlers.TryGetValue(2, out var methodHandlers))
+								if (this.handlers.TryGetValue(2, out var @methodHandlers))
 								{
-									var foundMatch = false;
-									foreach (var methodHandler in methodHandlers)
+									var @foundMatch = false;
+									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte>(methodHandler.Expectations[0]).IsValid(value))
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte>(@methodHandler.Expectations[0]).IsValid(@value))
 										{
-											foundMatch = true;
+											@foundMatch = true;
 											
-											if (methodHandler.Method is not null)
+											if (@methodHandler.Method is not null)
 											{
-												global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626>(methodHandler.Method)(value);
+												global::System.Runtime.CompilerServices.Unsafe.As<global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626>(@methodHandler.Method)(@value);
 											}
 											
-											if (!foundMatch)
+											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Values(value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Values(@value)");
 											}
 											
-											methodHandler.IncrementCallCount();
+											@methodHandler.IncrementCallCount();
 											break;
 										}
 									}
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Values(value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Values(@value)");
 								}
 							}
 						}
@@ -580,22 +580,22 @@ public static class ProjectedTypesGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveInAndOutSpanExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveInAndOutSpan> self, global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint values)
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveInAndOutSpan> @self, global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint @values)
 					{
-						global::System.ArgumentNullException.ThrowIfNull(values);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>(self.Add<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { values }));
+						global::System.ArgumentNullException.ThrowIfNull(@values);
+						return new global::Rocks.MethodAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153, global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>(@self.Add<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @values }));
 					}
 				}
 				
 				internal static class PropertyGetterExpectationsOfIHaveInAndOutSpanExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788> Values(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IHaveInAndOutSpan> self) =>
-						new global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>(self.Add<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788> Values(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.IHaveInAndOutSpan> @self) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesCallback_609802712345030162120672576179552875459533180788, global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>(@self.Add<global::MockTests.ProjectionsForIHaveInAndOutSpan.get_ValuesReturnValue_609802712345030162120672576179552875459533180788>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 				internal static class PropertySetterExpectationsOfIHaveInAndOutSpanExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626> Values(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IHaveInAndOutSpan> self, global::Rocks.Argument<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte> value) =>
-						new global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626> Values(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IHaveInAndOutSpan> @self, global::Rocks.Argument<global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.IHaveInAndOutSpan, global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626>(@self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 				}
 			}
 			

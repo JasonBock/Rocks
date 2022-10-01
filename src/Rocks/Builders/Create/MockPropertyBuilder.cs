@@ -232,7 +232,7 @@ internal static class MockPropertyBuilder
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(value)"")]");
+			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?

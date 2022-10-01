@@ -40,17 +40,17 @@ public static class ClassConstructorMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfBaseCtorExtensions
 				{
-					internal static global::MockTests.BaseCtor Instance(this global::Rocks.MakeGeneration<global::MockTests.BaseCtor> self, int a, ref string b, out string c, params string[] d) =>
-						new RockBaseCtor(a, ref b, out c, d);
+					internal static global::MockTests.BaseCtor Instance(this global::Rocks.MakeGeneration<global::MockTests.BaseCtor> @self, int @a, ref string @b, out string @c, params string[] @d) =>
+						new RockBaseCtor(@a, ref @b, out @c, @d);
 					
 					private sealed class RockBaseCtor
 						: global::MockTests.BaseCtor
 					{
-						public RockBaseCtor(int a, ref string b, out string c, params string[] d)
-							: base(a, ref b, out c, d)
+						public RockBaseCtor(int @a, ref string @b, out string @c, params string[] @d)
+							: base(@a, ref @b, out @c, @d)
 						{ }
 						
-						public override bool Equals(object? obj)
+						public override bool Equals(object? @obj)
 						{
 							return default!;
 						}

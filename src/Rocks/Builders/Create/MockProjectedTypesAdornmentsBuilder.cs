@@ -124,10 +124,10 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			{
 				internal {{handlerName}}(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
 					: base(null, @expectations) => this.ReturnValue = default;
-
+				
 				internal {{handlerName}}(global::System.Delegate? @method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
 					: base(@method, @expectations) => this.ReturnValue = default;
-
+				
 				internal {{type.GetReferenceableName()}} ReturnValue { get; set; }
 			}
 			""");
@@ -147,25 +147,25 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			{
 				internal {{adornmentName}}({{handlerName}} @handler) =>
 					this.Handler = @handler;
-
+				
 				internal {{adornmentName}}<T, TCallback> CallCount(uint @expectedCallCount)
 				{
 					this.Handler.SetExpectedCallCount(@expectedCallCount);
 					return this;
 				}
-
+				
 				internal {{adornmentName}}<T, TCallback> Callback(TCallback @callback)
 				{
 					this.Handler.SetCallback(@callback);
 					return this;
 				}
-
+				
 				internal {{isUnsafe}}{{adornmentName}}<T, TCallback> Returns({{type.GetReferenceableName()}} @returnValue)
 				{
 					this.Handler.ReturnValue = @returnValue;
 					return this;
 				}
-
+				
 				public {{handlerName}} Handler { get; }
 			}
 			""");

@@ -72,15 +72,15 @@ public static class RockCreateGeneratorTests
 			{
 				internal static class CreateExpectationsOfIContainNullableReferencesExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.IContainNullableReferences Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> self)
+					internal static global::MockTests.IContainNullableReferences Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockIContainNullableReferences(self);
+							@self.WasInstanceInvoked = true;
+							return new RockIContainNullableReferences(@self);
 						}
 						else
 						{
@@ -93,31 +93,31 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIContainNullableReferences(global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockIContainNullableReferences(global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
-						[global::Rocks.MemberIdentifier(0, "string? DoSomething(string? a, string b)")]
-						public string? DoSomething(string? a, string b)
+						[global::Rocks.MemberIdentifier(0, "string? DoSomething(string? @a, string @b)")]
+						public string? DoSomething(string? @a, string @b)
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								foreach (var methodHandler in methodHandlers)
+								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(methodHandler.Expectations[0]).IsValid(a) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler.Expectations[1]).IsValid(b))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@a) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
 									{
-										var result = methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?, string, string?>>(methodHandler.Method)(a, b) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
-										methodHandler.IncrementCallCount();
-										return result!;
+										var @result = @methodHandler.Method is not null ?
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?, string, string?>>(@methodHandler.Method)(@a, @b) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+										@methodHandler.IncrementCallCount();
+										return @result!;
 									}
 								}
 								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string? DoSomething(string? a, string b)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string? DoSomething(string? @a, string @b)");
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string? DoSomething(string? a, string b)");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string? DoSomething(string? @a, string @b)");
 						}
 						
 					}
@@ -125,11 +125,11 @@ public static class RockCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfIContainNullableReferencesExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?> DoSomething(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> self, global::Rocks.Argument<string?> a, global::Rocks.Argument<string> b)
+					internal static global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?> DoSomething(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IContainNullableReferences> @self, global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
 					{
-						global::System.ArgumentNullException.ThrowIfNull(a);
-						global::System.ArgumentNullException.ThrowIfNull(b);
-						return new global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?>(self.Add<string?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { a, b }));
+						global::System.ArgumentNullException.ThrowIfNull(@a);
+						global::System.ArgumentNullException.ThrowIfNull(@b);
+						return new global::Rocks.MethodAdornments<global::MockTests.IContainNullableReferences, global::System.Func<string?, string, string?>, string?>(@self.Add<string?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
 					}
 				}
 			}
@@ -177,15 +177,15 @@ public static class RockCreateGeneratorTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockITest(self);
+							@self.WasInstanceInvoked = true;
+							return new RockITest(@self);
 						}
 						else
 						{
@@ -198,21 +198,21 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								if (methodHandler.Method is not null)
+								var @methodHandler = @methodHandlers[0];
+								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
-								methodHandler.IncrementCallCount();
+								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -225,8 +225,8 @@ public static class RockCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -268,15 +268,15 @@ public static class RockCreateGeneratorTests
 			
 			internal static class CreateExpectationsOfITestExtensions
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::ITest> Methods(this global::Rocks.Expectations.Expectations<global::ITest> self) =>
-					new(self);
+				internal static global::Rocks.Expectations.MethodExpectations<global::ITest> Methods(this global::Rocks.Expectations.Expectations<global::ITest> @self) =>
+					new(@self);
 				
-				internal static global::ITest Instance(this global::Rocks.Expectations.Expectations<global::ITest> self)
+				internal static global::ITest Instance(this global::Rocks.Expectations.Expectations<global::ITest> @self)
 				{
-					if (!self.WasInstanceInvoked)
+					if (!@self.WasInstanceInvoked)
 					{
-						self.WasInstanceInvoked = true;
-						return new RockITest(self);
+						@self.WasInstanceInvoked = true;
+						return new RockITest(@self);
 					}
 					else
 					{
@@ -289,21 +289,21 @@ public static class RockCreateGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> expectations) =>
-						this.handlers = expectations.Handlers;
+					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> @expectations) =>
+						this.handlers = @expectations.Handlers;
 					
 					[global::Rocks.MemberIdentifier(0, "void Foo()")]
 					public void Foo()
 					{
-						if (this.handlers.TryGetValue(0, out var methodHandlers))
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
-							var methodHandler = methodHandlers[0];
-							if (methodHandler.Method is not null)
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null)
 							{
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
 							
-							methodHandler.IncrementCallCount();
+							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -316,8 +316,8 @@ public static class RockCreateGeneratorTests
 			
 			internal static class MethodExpectationsOfITestExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::ITest> self) =>
-					new global::Rocks.MethodAdornments<global::ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::ITest> @self) =>
+					new global::Rocks.MethodAdornments<global::ITest, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 			}
 			
 			""";
@@ -364,15 +364,15 @@ public static class RockCreateGeneratorTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockITest(self);
+							@self.WasInstanceInvoked = true;
+							return new RockITest(@self);
 						}
 						else
 						{
@@ -385,21 +385,21 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								if (methodHandler.Method is not null)
+								var @methodHandler = @methodHandlers[0];
+								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
-								methodHandler.IncrementCallCount();
+								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -412,8 +412,8 @@ public static class RockCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -455,15 +455,15 @@ public static class RockCreateGeneratorTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockITest(self);
+							@self.WasInstanceInvoked = true;
+							return new RockITest(@self);
 						}
 						else
 						{
@@ -476,21 +476,21 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								if (methodHandler.Method is not null)
+								var @methodHandler = @methodHandlers[0];
+								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
-								methodHandler.IncrementCallCount();
+								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -503,8 +503,8 @@ public static class RockCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -610,15 +610,15 @@ public static class RockCreateGeneratorTests
 			{
 				internal static class CreateExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> self)
+					internal static global::MockTests.ITest Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITest> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockITest(self);
+							@self.WasInstanceInvoked = true;
+							return new RockITest(@self);
 						}
 						else
 						{
@@ -631,21 +631,21 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								if (methodHandler.Method is not null)
+								var @methodHandler = @methodHandlers[0];
+								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
-								methodHandler.IncrementCallCount();
+								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -658,8 +658,8 @@ public static class RockCreateGeneratorTests
 				
 				internal static class MethodExpectationsOfITestExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITest> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.ITest, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			

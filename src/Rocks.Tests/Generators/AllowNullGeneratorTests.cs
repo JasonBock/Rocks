@@ -75,7 +75,7 @@ public static class AllowNullGeneratorTests
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						[global::Rocks.MemberIdentifier(0, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(1, "set_NewLine(value)")]
+						[global::Rocks.MemberIdentifier(1, "set_NewLine(@value)")]
 						public string NewLine
 						{
 							get
@@ -105,12 +105,12 @@ public static class AllowNullGeneratorTests
 											
 											if (@methodHandler.Method is not null)
 											{
-												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(@methodHandler.Method)(value!);
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(@methodHandler.Method)(@value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(@value)");
 											}
 											
 											methodHandler.IncrementCallCount();
@@ -120,7 +120,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(@value)");
 								}
 							}
 						}
@@ -134,8 +134,8 @@ public static class AllowNullGeneratorTests
 				}
 				internal static class PropertySetterExpectationsOfIAllowExtensions
 				{
-					internal static global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IAllow> @self, global::Rocks.Argument<string> value) =>
-						new global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>> NewLine(this global::Rocks.Expectations.PropertySetterExpectations<global::MockTests.IAllow> @self, global::Rocks.Argument<string> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.IAllow, global::System.Action<string>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 				}
 			}
 			
@@ -340,7 +340,7 @@ public static class AllowNullGeneratorTests
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						[global::Rocks.MemberIdentifier(3, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(4, "set_NewLine(value)")]
+						[global::Rocks.MemberIdentifier(4, "set_NewLine(@value)")]
 						public override string NewLine
 						{
 							get
@@ -461,7 +461,7 @@ public static class AllowNullGeneratorTests
 			{
 				internal static class MakeExpectationsOfAllowExtensions
 				{
-					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> self) =>
+					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> @self) =>
 						new RockAllow();
 					
 					private sealed class RockAllow
@@ -469,7 +469,7 @@ public static class AllowNullGeneratorTests
 					{
 						public RockAllow() { }
 						
-						public override bool Equals(object? obj)
+						public override bool Equals(object? @obj)
 						{
 							return default!;
 						}

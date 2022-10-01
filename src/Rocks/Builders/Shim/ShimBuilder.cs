@@ -21,9 +21,9 @@ internal static class ShimBuilder
 
 		writer.WriteLine($"private readonly {mockTypeName} mock;");
 		writer.WriteLine();
-		writer.WriteLine($"public {shimName}({mockTypeName} mock) =>");
+		writer.WriteLine($"public {shimName}({mockTypeName} @mock) =>");
 		writer.Indent++;
-		writer.WriteLine($"this.mock = mock;");
+		writer.WriteLine($"this.mock = @mock;");
 		writer.Indent--;
 
 		ShimMethodBuilder.Build(writer, shimType, compilation);

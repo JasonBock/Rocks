@@ -65,13 +65,13 @@ internal static class MockEventsBuilder
 
 			void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
 			{
-				var thisType = this.GetType();
-				var eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+				var @thisType = this.GetType();
+				var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
 					global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
-
-				if (eventDelegate is not null)
+				
+				if (@eventDelegate is not null)
 				{
-					foreach (var @handler in eventDelegate.GetInvocationList())
+					foreach (var @handler in @eventDelegate.GetInvocationList())
 					{
 						@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
 					}

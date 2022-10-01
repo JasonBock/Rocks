@@ -43,27 +43,27 @@ internal static class RefLikeArgTypeBuilder
 
 		writer.WriteLines(
 			$$"""
-			internal delegate bool {{validationDelegateName}}({{typeName}} value);
-
+			internal delegate bool {{validationDelegateName}}({{typeName}} @value);
+			
 			internal sealed class {{argName}}
 				: global::Rocks.Argument
 			{
 				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
 				private readonly global::Rocks.ValidationState validation;
-
+				
 				internal {{argConstructorName}}() => this.validation = global::Rocks.ValidationState.None;
-
+				
 				internal {{argConstructorName}}({{validationDelegateFullyQualifiedName}} @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = global::Rocks.ValidationState.Evaluation;
 				}
-
+				
 				public bool IsValid({{typeName}} @value) =>
 					this.validation switch
 					{
 						global::Rocks.ValidationState.None => true,
-						global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+						global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 						_ => throw new global::System.NotSupportedException("Invalid validation state."),
 					};
 			}

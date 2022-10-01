@@ -37,7 +37,7 @@ internal static class PointerArgTypeBuilder
 		var argName = PointerArgTypeBuilder.GetProjectedName(type);
 		var typeName = type.GetReferenceableName();
 
-		writer.WriteLine($"internal unsafe delegate bool {validationDelegateName}({typeName} value);");
+		writer.WriteLine($"internal unsafe delegate bool {validationDelegateName}({typeName} @value);");
 		writer.WriteLine();
 		writer.WriteLine($"internal unsafe sealed class {argName}");
 		writer.Indent++;
@@ -52,18 +52,18 @@ internal static class PointerArgTypeBuilder
 		writer.WriteLine();
 		writer.WriteLine($"internal {argName}() => this.validation = global::Rocks.ValidationState.None;");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argName}({typeName} value)");
+		writer.WriteLine($"internal {argName}({typeName} @value)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("this.value = value;");
+		writer.WriteLine("this.value = @value;");
 		writer.WriteLine("this.validation = global::Rocks.ValidationState.Value;");
 		writer.Indent--;
 		writer.WriteLine("}");
 		writer.WriteLine();
-		writer.WriteLine($"internal {argName}({validationDelegateFullyQualifiedName} evaluation)");
+		writer.WriteLine($"internal {argName}({validationDelegateFullyQualifiedName} @evaluation)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("this.evaluation = evaluation;");
+		writer.WriteLine("this.evaluation = @evaluation;");
 		writer.WriteLine("this.validation = global::Rocks.ValidationState.Evaluation;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -72,11 +72,11 @@ internal static class PointerArgTypeBuilder
 		if (type.Kind != SymbolKind.FunctionPointerType)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"public static implicit operator {argName}({typeName} value) => new(value);");
+			writer.WriteLine($"public static implicit operator {argName}({typeName} @value) => new(@value);");
 			writer.WriteLine();
 		}
 
-		writer.WriteLine($"public bool IsValid({typeName} value) =>");
+		writer.WriteLine($"public bool IsValid({typeName} @value) =>");
 		writer.Indent++;
 		writer.WriteLine("this.validation switch");
 		writer.WriteLine("{");
@@ -88,14 +88,14 @@ internal static class PointerArgTypeBuilder
 			writer.WriteLine("#pragma warning disable CS8909");
 		}
 
-		writer.WriteLine("global::Rocks.ValidationState.Value => value == this.value,");
+		writer.WriteLine("global::Rocks.ValidationState.Value => @value == this.value,");
 
 		if (type.Kind == SymbolKind.FunctionPointerType)
 		{
 			writer.WriteLine("#pragma warning restore CS8909");
 		}
 
-		writer.WriteLine("global::Rocks.ValidationState.Evaluation => this.evaluation!(value),");
+		writer.WriteLine("global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),");
 		writer.WriteLine("global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException(\"Cannot validate an argument value in the ValidationState.DefaultValue state.\"),");
 		writer.WriteLine("_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($\"Invalid value for validation: {{this.validation}}\")");
 		writer.Indent--;
