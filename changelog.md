@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.2] - Not Yet Released
 
 ### Fixed
+- Generated delegates for projected types now use SHA to create the hash code (issue [#194](https://github.com/JasonBock/Rocks/issues/194))
+- Types that use C# keywords for parameters (e.g. `string @namespace`) are now handed by Rocks (issue [#184](https://github.com/JasonBock/Rocks/issues/184))
+- Parameter names will no longer collide with variables created by Rocks (issue [#183](https://github.com/JasonBock/Rocks/issues/183))
+- Constraints on generic parameters from methods are now carried to the extension methods used for setting expectations (issue [#179](https://github.com/JasonBock/Rocks/issues/179))
 - For makes, any `Task<>` or `ValueTask<>` return types are marked with the null-forgiving operator when the return type is not nullable. (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
 - For makes, `[AllowNull]` now shows up on properties when the base property has it defined. (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
 - Constraint ordering has been fixed in certain cases (it was failing when there were `struct` and interface constraints) (issue [#174](https://github.com/JasonBock/Rocks/issues/174))
