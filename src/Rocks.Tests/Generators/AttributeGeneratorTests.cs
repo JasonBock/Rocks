@@ -47,15 +47,15 @@ public static class AttributeGeneratorTests
 			{
 				internal static class CreateExpectationsOfIHaveGenericAttributeExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveGenericAttribute> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveGenericAttribute> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.IHaveGenericAttribute Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> self)
+					internal static global::MockTests.IHaveGenericAttribute Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockIHaveGenericAttribute(self);
+							@self.WasInstanceInvoked = true;
+							return new RockIHaveGenericAttribute(@self);
 						}
 						else
 						{
@@ -68,22 +68,22 @@ public static class AttributeGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveGenericAttribute(global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockIHaveGenericAttribute(global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
 						[global::MockTests.MyAttribute<string>]
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var methodHandler = methodHandlers[0];
-								if (methodHandler.Method is not null)
+								var @methodHandler = @methodHandlers[0];
+								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
-								methodHandler.IncrementCallCount();
+								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -96,8 +96,8 @@ public static class AttributeGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveGenericAttributeExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveGenericAttribute, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveGenericAttribute> self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.IHaveGenericAttribute, global::System.Action>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveGenericAttribute, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveGenericAttribute> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IHaveGenericAttribute, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -153,15 +153,15 @@ public static class AttributeGeneratorTests
 			{
 				internal static class CreateExpectationsOfIHaveMultipleAttributesExtensions
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveMultipleAttributes> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> self) =>
-						new(self);
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveMultipleAttributes> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> @self) =>
+						new(@self);
 					
-					internal static global::MockTests.IHaveMultipleAttributes Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> self)
+					internal static global::MockTests.IHaveMultipleAttributes Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> @self)
 					{
-						if (!self.WasInstanceInvoked)
+						if (!@self.WasInstanceInvoked)
 						{
-							self.WasInstanceInvoked = true;
-							return new RockIHaveMultipleAttributes(self);
+							@self.WasInstanceInvoked = true;
+							return new RockIHaveMultipleAttributes(@self);
 						}
 						else
 						{
@@ -174,40 +174,40 @@ public static class AttributeGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveMultipleAttributes(global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> expectations) =>
-							this.handlers = expectations.Handlers;
+						public RockIHaveMultipleAttributes(global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> @expectations) =>
+							this.handlers = @expectations.Handlers;
 						
-						[global::Rocks.MemberIdentifier(0, "void Foo(string data)")]
-						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string data)
+						[global::Rocks.MemberIdentifier(0, "void Foo(string @data)")]
+						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)
 						{
-							if (this.handlers.TryGetValue(0, out var methodHandlers))
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
-								var foundMatch = false;
+								var @foundMatch = false;
 								
-								foreach (var methodHandler in methodHandlers)
+								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler.Expectations[0]).IsValid(data))
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@data))
 									{
-										foundMatch = true;
+										@foundMatch = true;
 										
-										if (methodHandler.Method is not null)
+										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(methodHandler.Method)(data);
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(@methodHandler.Method)(@data);
 										}
 										
-										methodHandler.IncrementCallCount();
+										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
 								
-								if (!foundMatch)
+								if (!@foundMatch)
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string data)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)");
 								}
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string data)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)");
 							}
 						}
 						
@@ -216,10 +216,10 @@ public static class AttributeGeneratorTests
 				
 				internal static class MethodExpectationsOfIHaveMultipleAttributesExtensions
 				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveMultipleAttributes, global::System.Action<string>> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveMultipleAttributes> self, global::Rocks.Argument<string> data)
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveMultipleAttributes, global::System.Action<string>> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveMultipleAttributes> @self, global::Rocks.Argument<string> @data)
 					{
-						global::System.ArgumentNullException.ThrowIfNull(data);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveMultipleAttributes, global::System.Action<string>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { data }));
+						global::System.ArgumentNullException.ThrowIfNull(@data);
+						return new global::Rocks.MethodAdornments<global::MockTests.IHaveMultipleAttributes, global::System.Action<string>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @data }));
 					}
 				}
 			}

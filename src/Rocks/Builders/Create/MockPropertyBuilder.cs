@@ -135,7 +135,7 @@ internal static class MockPropertyBuilder
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 						$"global::Rocks.Argument<{property.Type.GetReferenceableName()}>";
 
-			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
+			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -149,7 +149,7 @@ internal static class MockPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(value{nullableFlag});");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(@value{nullableFlag});");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -158,7 +158,7 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("if (!@foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(@value)\");");
 			writer.Indent--;
 			writer.WriteLine("}");
 
@@ -192,11 +192,11 @@ internal static class MockPropertyBuilder
 				// https://github.com/dotnet/csharplang/issues/2337
 				var target = property.ContainingType.TypeKind == TypeKind.Interface ?
 					$"this.shimFor{property.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
-				writer.WriteLine($"{target}.{property.Name} = value;");
+				writer.WriteLine($"{target}.{property.Name} = @value;");
 			}
 			else
 			{
-				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
+				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(@value)\");");
 			}
 
 			writer.Indent--;
