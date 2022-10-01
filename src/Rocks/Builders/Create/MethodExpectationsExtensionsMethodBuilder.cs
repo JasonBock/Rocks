@@ -12,10 +12,11 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		var isExplicitImplementation = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
 		var mockTypeName = result.MockType.GetReferenceableName();
 		var containingTypeName = method.ContainingType.GetReferenceableName();
+		var namingContext = new VariableNamingContext(method);
 
 		var thisParameter = isExplicitImplementation ?
-			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> self" :
-			$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> self";
+			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> {namingContext["self"]}" :
+			$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> {namingContext["self"]}";
 		var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 			string.Join(", ", thisParameter,
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -64,7 +65,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		{
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}=>");
 			writer.Indent++;
-			writer.WriteLine($"{newAdornments}(self.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
+			writer.WriteLine($"{newAdornments}({namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 			writer.Indent--;
 		}
 		else
@@ -93,7 +94,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					return _.Name;
 				}
 			}));
-			writer.WriteLine($"return {newAdornments}(self.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({method.Parameters.Length}) {{ {parameters} }}));");
+			writer.WriteLine($"return {newAdornments}({namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({method.Parameters.Length}) {{ {parameters} }}));");
 
 			writer.Indent--;
 			writer.WriteLine("}");

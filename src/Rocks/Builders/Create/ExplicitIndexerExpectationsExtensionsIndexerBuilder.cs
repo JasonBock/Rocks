@@ -9,9 +9,9 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
-
+		var namingContext = new VariableNamingContext(propertyGetMethod);
 		var mockTypeName = result.MockType.GetName();
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<{mockTypeName}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<{mockTypeName}, {containingTypeName}> {namingContext["self"]}";
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
 			propertyGetMethod.ReturnType.IsRefLikeType ?
@@ -45,7 +45,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var addMethod = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, result.MockType) : 
 			$"Add<{propertyReturnValue}>";
-		writer.WriteLine($"return {newAdornments}(self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertyGetMethod.Parameters.Length}) {{ {parameters} }}));");
+		writer.WriteLine($"return {newAdornments}({namingContext["self"]}.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertyGetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -54,19 +54,21 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
+		var propertySetMethod = property.SetMethod!;
+		var namingContext = new VariableNamingContext(propertySetMethod);
 		var mockTypeName = result.MockType.GetName();
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerSetterExpectations<{mockTypeName}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerSetterExpectations<{mockTypeName}, {containingTypeName}> {namingContext["self"]}";
 
-		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
-			DelegateBuilder.Build(property.SetMethod!.Parameters);
-		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate() ?
+		var delegateTypeName = propertySetMethod.RequiresProjectedDelegate() ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, result.MockType) :
+			DelegateBuilder.Build(propertySetMethod.Parameters);
+		var adornmentsType = propertySetMethod.RequiresProjectedDelegate() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		var instanceParameters = string.Join(", ", thisParameter,
-			string.Join(", ", property.SetMethod!.Parameters.Select(_ =>
+			string.Join(", ", propertySetMethod.Parameters.Select(_ =>
 			{
 				return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> {_.Name}";
 			})));
@@ -75,15 +77,15 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		foreach (var parameter in property.SetMethod!.Parameters)
+		foreach (var parameter in propertySetMethod.Parameters)
 		{
 			writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull({parameter.Name});");
 		}
 
 		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
-		var parameters = string.Join(", ", property.SetMethod!.Parameters.Select(
+		var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : _.Name));
-		writer.WriteLine($"return {newAdornments}(self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({property.SetMethod!.Parameters.Length}) {{ {parameters} }}));");
+		writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 		writer.Indent--;
 		writer.WriteLine("}");

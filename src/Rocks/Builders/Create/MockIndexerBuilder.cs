@@ -14,16 +14,17 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var namingContext = new VariableNamingContext(method);
 
 		writer.WriteLine("get");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var {namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+		writer.WriteLine($"foreach (var {namingContext["methodHandler"]} in {namingContext["methodHandlers"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -34,7 +35,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -44,7 +45,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -57,7 +58,8 @@ internal static class MockIndexerBuilder
 		writer.Indent++;
 
 		MockMethodValueBuilder.BuildMethodHandler(
-			writer, method, result.MockType, raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
+			writer, method, result.MockType, namingContext, 
+			raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -114,6 +116,7 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var namingContext = new VariableNamingContext(method);
 
 		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
@@ -125,11 +128,11 @@ internal static class MockIndexerBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var {namingContext["methodHandlers"]}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+			writer.WriteLine($"foreach (var {namingContext["methodHandler"]} in {namingContext["methodHandlers"]})");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -140,7 +143,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -150,7 +153,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -162,7 +165,7 @@ internal static class MockIndexerBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			MockMethodVoidBuilder.BuildMethodHandler(writer, method, result.MockType, raiseEvents);
+			MockMethodVoidBuilder.BuildMethodHandler(writer, method, result.MockType, namingContext, raiseEvents);
 
 			if (shouldThrowDoesNotReturnException)
 			{

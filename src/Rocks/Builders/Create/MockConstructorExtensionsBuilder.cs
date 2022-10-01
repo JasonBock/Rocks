@@ -43,7 +43,7 @@ internal static class MockConstructorExtensionsBuilder
 				writer.WriteLine(
 					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 				requiredInitObjectInitializationSyntaxBuilder.AppendLine(
-					$"\t{requiredInitProperty.Name} = constructorProperties.{requiredInitProperty.Name}{propertyAssignment},");
+					$"\t{requiredInitProperty.Name} = [[constructorProperties]].{requiredInitProperty.Name}{propertyAssignment},");
 			}
 
 			requiredInitObjectInitializationSyntaxBuilder.Append("};");
@@ -72,12 +72,13 @@ internal static class MockConstructorExtensionsBuilder
 	private static void Build(IndentedTextWriter writer, MockedType typeToMock, ImmutableArray<IParameterSymbol> parameters,
 		string requiredInitObjectInitializationSyntax, bool hasRequiredProperties)
 	{
+		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitializationSyntax.Length > 0 ? 
-				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} constructorProperties" : 
+				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} {namingContext["constructorProperties"]}" : 
 				string.Empty;
 		var selfParameter =
-			$"this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> self{constructorPropertiesParameter}";
+			$"this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> {namingContext["self"]}{constructorPropertiesParameter}";
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,
 				string.Join(", ", parameters.Select(_ =>
@@ -92,8 +93,8 @@ internal static class MockConstructorExtensionsBuilder
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
 				})));
 		var isUnsafe = false;
-		var rockInstanceParameters = parameters.Length == 0 ? "self" :
-			string.Join(", ", "self", string.Join(", ", parameters.Select(_ =>
+		var rockInstanceParameters = parameters.Length == 0 ? namingContext["self"] :
+			string.Join(", ", namingContext["self"], string.Join(", ", parameters.Select(_ =>
 			{
 				isUnsafe |= _.Type.IsPointer();
 				var direction = _.RefKind switch
@@ -109,10 +110,10 @@ internal static class MockConstructorExtensionsBuilder
 		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("if (!self.WasInstanceInvoked)");
+		writer.WriteLine($"if (!{namingContext["self"]}.WasInstanceInvoked)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("self.WasInstanceInvoked = true;");
+		writer.WriteLine($"{namingContext["self"]}.WasInstanceInvoked = true;");
 
 		var newMock = $"new Rock{typeToMock.FlattenedName}({rockInstanceParameters})";
 		if(requiredInitObjectInitializationSyntax.Length == 0)
@@ -121,12 +122,12 @@ internal static class MockConstructorExtensionsBuilder
 		}
 		else
 		{
-			writer.WriteLine("return constructorProperties is null ?");
+			writer.WriteLine($"return {namingContext["constructorProperties"]} is null ?");
 			writer.Indent++;
 
 			if(hasRequiredProperties)
 			{
-				writer.WriteLine("throw new global::System.ArgumentNullException(nameof(constructorProperties)) :");
+				writer.WriteLine($"throw new global::System.ArgumentNullException(nameof({namingContext["constructorProperties"]})) :");
 			}
 			else
 			{
@@ -134,7 +135,7 @@ internal static class MockConstructorExtensionsBuilder
 			}
 
 			writer.WriteLine($"{newMock}");
-			writer.WriteLines(requiredInitObjectInitializationSyntax);
+			writer.WriteLines(requiredInitObjectInitializationSyntax.Replace("[[constructorProperties]]", namingContext["constructorProperties"]));
 			writer.Indent--;
 		}
 

@@ -11,9 +11,10 @@ internal static class MockConstructorBuilder
 		ImmutableArray<IParameterSymbol> parameters, ImmutableArray<ITypeSymbol> shims)
 	{
 		var typeToMockName = typeToMock.ReferenceableName;
+		var namingContext = new VariableNamingContext(parameters);
 		var instanceParameters = parameters.Length == 0 ?
-			$"global::Rocks.Expectations.Expectations<{typeToMockName}> expectations" :
-			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> expectations",
+			$"global::Rocks.Expectations.Expectations<{typeToMockName}> {namingContext["expectations"]}" :
+			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> {namingContext["expectations"]}",
 				string.Join(", ", parameters.Select(_ =>
 				{
 					var direction = _.RefKind switch
@@ -46,7 +47,7 @@ internal static class MockConstructorBuilder
 			writer.Indent++;
 			writer.WriteLine($": base({passedParameter}) =>");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, mockTypeName, shims);
+			MockConstructorBuilder.BuildFieldSetters(writer, mockTypeName, namingContext, shims);
 			writer.Indent--;
 			writer.Indent--;
 		}
@@ -54,22 +55,23 @@ internal static class MockConstructorBuilder
 		{
 			writer.WriteLine($"public {mockTypeName}({instanceParameters}) =>");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, mockTypeName, shims);
+			MockConstructorBuilder.BuildFieldSetters(writer, mockTypeName, namingContext, shims);
 			writer.Indent--;
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, string mockTypeName, ImmutableArray<ITypeSymbol> shims)
+	private static void BuildFieldSetters(IndentedTextWriter writer, string mockTypeName, 
+		VariableNamingContext namingContext, ImmutableArray<ITypeSymbol> shims)
 	{
 		if (shims.Length == 0)
 		{
-			writer.WriteLine("this.handlers = expectations.Handlers;");
+			writer.WriteLine($"this.handlers = {namingContext["expectations"]}.Handlers;");
 		}
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new Shim{mockTypeName}(this)"));
-			writer.WriteLine($"(this.handlers, {shimFields}) = (expectations.Handlers, {shimConstructors});");
+			writer.WriteLine($"(this.handlers, {shimFields}) = ({namingContext["expectations"]}.Handlers, {shimConstructors});");
 		}
 	}
 }

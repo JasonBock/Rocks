@@ -85,19 +85,23 @@ internal static class MockMethodVoidBuilder
 			writer.WriteLine($"{outParameter.Name} = default!;");
 		}
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var methodHandlers))");
+		var namingContext = new VariableNamingContext(method);
+
+		writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var {namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, result.MockType, methodSignature, raiseEvents, shouldThrowDoesNotReturnException);
+				writer, method, result.MockType, namingContext,
+				methodSignature, raiseEvents, shouldThrowDoesNotReturnException);
 		}
 		else
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, result.MockType, raiseEvents, shouldThrowDoesNotReturnException);
+				writer, method, result.MockType, namingContext,
+				raiseEvents, shouldThrowDoesNotReturnException);
 		}
 
 		writer.Indent--;
@@ -144,11 +148,11 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, 
-		IMethodSymbol method, ITypeSymbol typeToMock, bool raiseEvents,
-		bool shouldThrowDoesNotReturnException)
+		IMethodSymbol method, ITypeSymbol typeToMock, VariableNamingContext namingContext,
+		bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
-		writer.WriteLine("var methodHandler = methodHandlers[0];");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, raiseEvents);
+		writer.WriteLine($"var {namingContext["methodHandler"]} = {namingContext["methodHandlers"]}[0];");
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)
 		{
@@ -157,11 +161,12 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, IMethodSymbol method,
-		ITypeSymbol typeToMock, string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException)
+		ITypeSymbol typeToMock, VariableNamingContext namingContext, 
+		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
-		writer.WriteLine("var foundMatch = false;");
+		writer.WriteLine($"var {namingContext["foundMatch"]} = false;");
 		writer.WriteLine();
-		writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+		writer.WriteLine($"foreach (var {namingContext["methodHandler"]} in {namingContext["methodHandlers"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -178,8 +183,8 @@ internal static class MockMethodVoidBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if ((({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -190,8 +195,8 @@ internal static class MockMethodVoidBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((methodHandler.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"(({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -202,9 +207,9 @@ internal static class MockMethodVoidBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine("foundMatch = true;");
+		writer.WriteLine($"{namingContext["foundMatch"]} = true;");
 		writer.WriteLine();
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -213,7 +218,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("}");
 
 		writer.WriteLine();
-		writer.WriteLine("if (!foundMatch)");
+		writer.WriteLine($"if (!{namingContext["foundMatch"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
@@ -227,15 +232,16 @@ internal static class MockMethodVoidBuilder
 		}
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock, bool raiseEvents)
+	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock, 
+		VariableNamingContext namingContext, bool raiseEvents)
 	{
 		var methodCast = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters);
 
 		writer.WriteLine(!method.IsGenericMethod ? 
-			"if (methodHandler.Method is not null)" :
-			$"if (methodHandler.Method is not null && methodHandler.Method is {methodCast} method)");
+			$"if ({namingContext["methodHandler"]}.Method is not null)" :
+			$"if ({namingContext["methodHandler"]}.Method is not null && {namingContext["methodHandler"]}.Method is {methodCast} {namingContext["method"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -243,8 +249,8 @@ internal static class MockMethodVoidBuilder
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
 		writer.WriteLine(!method.IsGenericMethod ? 
-			$"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)({methodArguments});" :
-			$"method({methodArguments});");
+			$"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>({namingContext["methodHandler"]}.Method)({methodArguments});" :
+			$"{namingContext["method"]}({methodArguments});");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -252,9 +258,9 @@ internal static class MockMethodVoidBuilder
 
 		if (raiseEvents)
 		{
-			writer.WriteLine("methodHandler.RaiseEvents(this);");
+			writer.WriteLine($"{namingContext["methodHandler"]}.RaiseEvents(this);");
 		}
 
-		writer.WriteLine("methodHandler.IncrementCallCount();");
+		writer.WriteLine($"{namingContext["methodHandler"]}.IncrementCallCount();");
 	}
 }

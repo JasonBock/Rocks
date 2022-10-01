@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Create;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -72,12 +73,13 @@ internal static class MockConstructorExtensionsBuilder
 	private static void Build(IndentedTextWriter writer, MockedType typeToMock, ImmutableArray<IParameterSymbol> parameters,
 		string requiredInitObjectInitializationSyntax, bool hasRequiredProperties)
 	{
+		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitializationSyntax.Length > 0 ?
-				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} constructorProperties" :
+				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} {namingContext["constructorProperties"]}" :
 				string.Empty;
 		var selfParameter =
-			$"this global::Rocks.MakeGeneration<{typeToMock.ReferenceableName}> self{constructorPropertiesParameter}";
+			$"this global::Rocks.MakeGeneration<{typeToMock.ReferenceableName}> {namingContext["self"]}{constructorPropertiesParameter}";
 
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,
@@ -116,12 +118,12 @@ internal static class MockConstructorExtensionsBuilder
 		}
 		else
 		{
-			writer.WriteLine("constructorProperties is null ?");
+			writer.WriteLine($"{namingContext["constructorProperties"]} is null ?");
 			writer.Indent++;
 
 			if (hasRequiredProperties)
 			{
-				writer.WriteLine("throw new global::System.ArgumentNullException(nameof(constructorProperties)) :");
+				writer.WriteLine($"throw new global::System.ArgumentNullException(nameof({namingContext["constructorProperties"]})) :");
 			}
 			else
 			{

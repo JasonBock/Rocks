@@ -6,6 +6,554 @@ namespace Rocks.Tests.Generators;
 public static class NamingGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWithConstructorWithSelfNameAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public class HaveNamingConflicts
+			{
+				public HaveNamingConflicts(string self, string expectations) { }
+				public virtual void Foo() { }
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<HaveNamingConflicts>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::HaveNamingConflicts> Methods(this global::Rocks.Expectations.Expectations<global::HaveNamingConflicts> self) =>
+					new(self);
+				
+				internal static global::HaveNamingConflicts Instance(this global::Rocks.Expectations.Expectations<global::HaveNamingConflicts> self1, string self, string expectations)
+				{
+					if (!self1.WasInstanceInvoked)
+					{
+						self1.WasInstanceInvoked = true;
+						return new RockHaveNamingConflicts(self1, self, expectations);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockHaveNamingConflicts
+					: global::HaveNamingConflicts
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::HaveNamingConflicts> expectations1, string self, string expectations)
+						: base(self, expectations) =>
+							this.handlers = expectations1.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
+					public override bool Equals(object? obj)
+					{
+						if (this.handlers.TryGetValue(0, out var methodHandlers))
+						{
+							foreach (var methodHandler in methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+								{
+									var result = methodHandler.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
+									methodHandler.IncrementCallCount();
+									return result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
+						}
+						else
+						{
+							return base.Equals(obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							var result = methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							var result = methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "void Foo()")]
+					public override void Foo()
+					{
+						if (this.handlers.TryGetValue(3, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							if (methodHandler.Method is not null)
+							{
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+							}
+							
+							methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.Foo();
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::HaveNamingConflicts> self, global::Rocks.Argument<object?> obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(obj);
+					return new global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::HaveNamingConflicts> self) =>
+					new global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::HaveNamingConflicts> self) =>
+					new global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::HaveNamingConflicts> self) =>
+					new global::Rocks.MethodAdornments<global::HaveNamingConflicts, global::System.Action>(self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "HaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenIndexerParameterNamesMatchVariablesAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public interface IHaveNamingConflicts
+			{
+				int this[string methodHandlers, string methodHandler, string result, string result2, string self] { get; }
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<IHaveNamingConflicts>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.Expectations.IndexerExpectations<global::IHaveNamingConflicts> Indexers(this global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> self) =>
+					new(self);
+				
+				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveNamingConflicts> Getters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveNamingConflicts> self) =>
+					new(self);
+				
+				internal static global::IHaveNamingConflicts Instance(this global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> self)
+				{
+					if (!self.WasInstanceInvoked)
+					{
+						self.WasInstanceInvoked = true;
+						return new RockIHaveNamingConflicts(self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIHaveNamingConflicts
+					: global::IHaveNamingConflicts
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> expectations) =>
+						this.handlers = expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "this[string methodHandlers, string methodHandler, string result, string result2, string self]")]
+					public int this[string methodHandlers, string methodHandler, string result, string result2, string self]
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(0, out var methodHandlers1))
+							{
+								foreach (var methodHandler1 in methodHandlers1)
+								{
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[0]).IsValid(methodHandlers) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[1]).IsValid(methodHandler) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[2]).IsValid(result) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[3]).IsValid(result2) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[4]).IsValid(self))
+									{
+										var result1 = methodHandler1.Method is not null ?
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, string, string, string, string, int>>(methodHandler1.Method)(methodHandlers, methodHandler, result, result2, self) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler1).ReturnValue;
+										methodHandler1.IncrementCallCount();
+										return result1!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string methodHandlers, string methodHandler, string result, string result2, string self]");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string methodHandlers, string methodHandler, string result, string result2, string self])");
+						}
+					}
+				}
+			}
+			
+			internal static class IndexerGetterExpectationsOfIHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.IndexerAdornments<global::IHaveNamingConflicts, global::System.Func<string, string, string, string, string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveNamingConflicts> self1, global::Rocks.Argument<string> methodHandlers, global::Rocks.Argument<string> methodHandler, global::Rocks.Argument<string> result, global::Rocks.Argument<string> result2, global::Rocks.Argument<string> self)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(methodHandlers);
+					global::System.ArgumentNullException.ThrowIfNull(methodHandler);
+					global::System.ArgumentNullException.ThrowIfNull(result);
+					global::System.ArgumentNullException.ThrowIfNull(result2);
+					global::System.ArgumentNullException.ThrowIfNull(self);
+					return new global::Rocks.IndexerAdornments<global::IHaveNamingConflicts, global::System.Func<string, string, string, string, string, int>, int>(self1.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(5) { methodHandlers, methodHandler, result, result2, self }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenMethodParameterNamesMatchVariablesAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public interface IHaveNamingConflicts
+			{
+				int Foo(string methodHandlers, string methodHandler, string result, string result2, string self);
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<IHaveNamingConflicts>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::IHaveNamingConflicts> Methods(this global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> self) =>
+					new(self);
+				
+				internal static global::IHaveNamingConflicts Instance(this global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> self)
+				{
+					if (!self.WasInstanceInvoked)
+					{
+						self.WasInstanceInvoked = true;
+						return new RockIHaveNamingConflicts(self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIHaveNamingConflicts
+					: global::IHaveNamingConflicts
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> expectations) =>
+						this.handlers = expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "int Foo(string methodHandlers, string methodHandler, string result, string result2, string self)")]
+					public int Foo(string methodHandlers, string methodHandler, string result, string result2, string self)
+					{
+						if (this.handlers.TryGetValue(0, out var methodHandlers1))
+						{
+							foreach (var methodHandler1 in methodHandlers1)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[0]).IsValid(methodHandlers) &&
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[1]).IsValid(methodHandler) &&
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[2]).IsValid(result) &&
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[3]).IsValid(result2) &&
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(methodHandler1.Expectations[4]).IsValid(self))
+								{
+									var result1 = methodHandler1.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, string, string, string, string, int>>(methodHandler1.Method)(methodHandlers, methodHandler, result, result2, self) :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler1).ReturnValue;
+									methodHandler1.IncrementCallCount();
+									return result1!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int Foo(string methodHandlers, string methodHandler, string result, string result2, string self)");
+						}
+						
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int Foo(string methodHandlers, string methodHandler, string result, string result2, string self)");
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfIHaveNamingConflictsExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::IHaveNamingConflicts, global::System.Func<string, string, string, string, string, int>, int> Foo(this global::Rocks.Expectations.MethodExpectations<global::IHaveNamingConflicts> self1, global::Rocks.Argument<string> methodHandlers, global::Rocks.Argument<string> methodHandler, global::Rocks.Argument<string> result, global::Rocks.Argument<string> result2, global::Rocks.Argument<string> self)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(methodHandlers);
+					global::System.ArgumentNullException.ThrowIfNull(methodHandler);
+					global::System.ArgumentNullException.ThrowIfNull(result);
+					global::System.ArgumentNullException.ThrowIfNull(result2);
+					global::System.ArgumentNullException.ThrowIfNull(self);
+					return new global::Rocks.MethodAdornments<global::IHaveNamingConflicts, global::System.Func<string, string, string, string, string, int>, int>(self1.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(5) { methodHandlers, methodHandler, result, result2, self }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenConstructorHasParameterNameThatMatchesConstructorPropertiesAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public class HasRequiredProperty
+			{
+				public HasRequiredProperty(string constructorProperties) { }
+
+				public virtual void Foo() { }
+
+				public required string Data { get; set; }
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<HasRequiredProperty>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfHasRequiredPropertyExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::HasRequiredProperty> Methods(this global::Rocks.Expectations.Expectations<global::HasRequiredProperty> self) =>
+					new(self);
+				
+				internal sealed class ConstructorProperties
+				{
+					internal required string? Data { get; init; }
+				}
+				
+				internal static global::HasRequiredProperty Instance(this global::Rocks.Expectations.Expectations<global::HasRequiredProperty> self, ConstructorProperties constructorProperties1, string constructorProperties)
+				{
+					if (!self.WasInstanceInvoked)
+					{
+						self.WasInstanceInvoked = true;
+						return constructorProperties1 is null ?
+							throw new global::System.ArgumentNullException(nameof(constructorProperties1)) :
+							new RockHasRequiredProperty(self, constructorProperties)
+							{
+								Data = constructorProperties1.Data!,
+							};
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockHasRequiredProperty
+					: global::HasRequiredProperty
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockHasRequiredProperty(global::Rocks.Expectations.Expectations<global::HasRequiredProperty> expectations, string constructorProperties)
+						: base(constructorProperties) =>
+							this.handlers = expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? obj)")]
+					public override bool Equals(object? obj)
+					{
+						if (this.handlers.TryGetValue(0, out var methodHandlers))
+						{
+							foreach (var methodHandler in methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(methodHandler.Expectations[0]).IsValid(obj))
+								{
+									var result = methodHandler.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(methodHandler.Method)(obj) :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(methodHandler).ReturnValue;
+									methodHandler.IncrementCallCount();
+									return result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? obj)");
+						}
+						else
+						{
+							return base.Equals(obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							var result = methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							var result = methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(methodHandler).ReturnValue;
+							methodHandler.IncrementCallCount();
+							return result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "void Foo()")]
+					public override void Foo()
+					{
+						if (this.handlers.TryGetValue(3, out var methodHandlers))
+						{
+							var methodHandler = methodHandlers[0];
+							if (methodHandler.Method is not null)
+							{
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(methodHandler.Method)();
+							}
+							
+							methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.Foo();
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfHasRequiredPropertyExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::HasRequiredProperty> self, global::Rocks.Argument<object?> obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(obj);
+					return new global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<object?, bool>, bool>(self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::HasRequiredProperty> self) =>
+					new global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<int>, int>(self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::HasRequiredProperty> self) =>
+					new global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Func<string?>, string?>(self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::HasRequiredProperty> self) =>
+					new global::Rocks.MethodAdornments<global::HasRequiredProperty, global::System.Action>(self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "HasRequiredProperty_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWithMultipleNamespacesAsync()
 	{
 		var code =
