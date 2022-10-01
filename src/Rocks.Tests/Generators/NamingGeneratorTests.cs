@@ -6,9 +6,37 @@ namespace Rocks.Tests.Generators;
 public static class NamingGeneratorTests
 {
 	[Test]
-	public static async Task GenerateWithConstructorWithSelfNameAsync()
+	public static async Task GenerateWhenNamesAreKeywordsAsync()
 	{
 		var code =
+			"""
+			using Rocks;
+			
+			public interface IUseKeyword
+			{
+			    void Foo(string @namespace, string @event, string @property);   
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<IUseKeyword>();
+				}
+			}
+			""";
+
+		var generatedCode = "";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseKeyword_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWithConstructorWithSelfNameAsync()
+	{
+		var code = 
 			"""
 			using Rocks;
 			
