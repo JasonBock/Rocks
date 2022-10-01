@@ -83,7 +83,7 @@ public static class AllowNullGeneratorTests
 								if (this.handlers.TryGetValue(0, out var @methodHandlers))
 								{
 									var @methodHandler = @methodHandlers[0];
-									var result = @methodHandler.Method is not null ?
+									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 									@methodHandler.IncrementCallCount();
@@ -113,7 +113,7 @@ public static class AllowNullGeneratorTests
 												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(@value)");
 											}
 											
-											methodHandler.IncrementCallCount();
+											@methodHandler.IncrementCallCount();
 											break;
 										}
 									}
