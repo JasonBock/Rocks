@@ -30,7 +30,7 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine("var result = @methodHandler.Method is not null ?");
+			writer.WriteLine("var @result = @methodHandler.Method is not null ?");
 		}
 
 		writer.Indent++;
@@ -69,7 +69,7 @@ internal static class MockPropertyBuilder
 		}
 		else
 		{
-			writer.WriteLine("return result!;");
+			writer.WriteLine("return @result!;");
 		}
 
 		writer.Indent--;

@@ -93,8 +93,8 @@ internal static class MockConstructorExtensionsBuilder
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
 				})));
 		var isUnsafe = false;
-		var rockInstanceParameters = parameters.Length == 0 ? namingContext["self"] :
-			string.Join(", ", namingContext["self"], string.Join(", ", parameters.Select(_ =>
+		var rockInstanceParameters = parameters.Length == 0 ? $"@{namingContext["self"]}" :
+			string.Join(", ", $"@{namingContext["self"]}", string.Join(", ", parameters.Select(_ =>
 			{
 				isUnsafe |= _.Type.IsPointer();
 				var direction = _.RefKind switch
