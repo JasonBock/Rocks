@@ -35,7 +35,7 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 
@@ -84,7 +84,7 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{_.Name}";
+				return $"{direction}@{_.Name}";
 			}));
 			writer.WriteLine($"this.mock.{method.GetName()}({passedParameters});");
 		}

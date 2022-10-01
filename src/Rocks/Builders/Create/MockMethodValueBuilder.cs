@@ -23,7 +23,7 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
@@ -39,14 +39,14 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 		var methodSignature =
 			$"{isUnsafe}{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
 		var methodException =
-			$"{returnType} {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{{_.Name}}}"))})";
+			$"{returnType} {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
 
 		var attributes = method.GetAttributes();
 
@@ -92,7 +92,7 @@ internal static class MockMethodValueBuilder
 
 		foreach (var outParameter in method.Parameters.Where(_ => _.RefKind == RefKind.Out))
 		{
-			writer.WriteLine($"{outParameter.Name} = default!;");
+			writer.WriteLine($"@{outParameter.Name} = default!;");
 		}
 
 		var namingContext = new VariableNamingContext(method);
@@ -145,7 +145,7 @@ internal static class MockMethodValueBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{_.Name}";
+				return $"{direction}@{_.Name}";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
@@ -201,7 +201,7 @@ internal static class MockMethodValueBuilder
 
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
-				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} {_.Name}" : _.Name));
+				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}" : $"@{_.Name}"));
 		var methodReturnType = method.ReturnType.IsRefLikeType ?
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, typeToMock) : method.ReturnType.GetReferenceableName();
 		var handlerName = method.ReturnType.IsPointer() ?
@@ -295,8 +295,8 @@ internal static class MockMethodValueBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if ((({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if ((({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -307,8 +307,8 @@ internal static class MockMethodValueBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"(({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid({parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"(({namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{

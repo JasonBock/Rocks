@@ -13,7 +13,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		var propertyGetMethod = property.GetMethod!;
 
 		var mockTypeName = result.MockType.GetReferenceableName();
-		var thisParameter = $"this global::Rocks.Expectations.PropertyGetterExpectations<{mockTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.PropertyGetterExpectations<{mockTypeName}> @self";
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
@@ -32,7 +32,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, result.MockType) : 
 			$"Add<{propertyReturnValue}>";
 
-		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
+		writer.WriteLine($"{newAdornments}(@self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 		writer.Indent--;
 	}
 
@@ -47,7 +47,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, result.MockType) :
 			propertyParameterType.GetReferenceableName();
 		var mockTypeName = result.MockType.GetReferenceableName();
-		var thisParameter = $"this global::Rocks.Expectations.PropertySetterExpectations<{mockTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.PropertySetterExpectations<{mockTypeName}> @self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
@@ -56,10 +56,10 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");
+		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> @value) =>");
 		writer.Indent++;
 
-		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ value }}));");
+		writer.WriteLine($"{newAdornments}(@self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ @value }}));");
 		writer.Indent--;
 	}
 

@@ -20,11 +20,11 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var {namingContext["methodHandlers"]}))");
+		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"foreach (var {namingContext["methodHandler"]} in {namingContext["methodHandlers"]})");
+		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -35,7 +35,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -45,7 +45,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -89,7 +89,7 @@ internal static class MockIndexerBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{_.Name}";
+				return $"{direction}@{_.Name}";
 			}));
 			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadonly ? "ref " : string.Empty;
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
@@ -128,11 +128,11 @@ internal static class MockIndexerBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var {namingContext["methodHandlers"]}))");
+			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"foreach (var {namingContext["methodHandler"]} in {namingContext["methodHandlers"]})");
+			writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -143,7 +143,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -153,7 +153,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>({namingContext["methodHandler"]}.Expectations[{i}]).IsValid({parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -205,7 +205,7 @@ internal static class MockIndexerBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{_.Name}";
+					return $"{direction}@{_.Name}";
 				}));
 				var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
 					$"this.shimFor{indexer.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
@@ -298,7 +298,7 @@ internal static class MockIndexerBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 

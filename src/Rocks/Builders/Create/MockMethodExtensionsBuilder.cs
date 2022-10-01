@@ -14,11 +14,12 @@ internal static class MockMethodExtensionsBuilder
 
 			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
-				writer.WriteLine($"internal static global::Rocks.Expectations.MethodExpectations<{typeToMockName}> Methods(this global::Rocks.Expectations.Expectations<{typeToMockName}> self) =>");
-				writer.Indent++;
-				writer.WriteLine($"new(self);");
-				writer.Indent--;
-				writer.WriteLine();
+				writer.WriteLines(
+					$$"""
+					internal static global::Rocks.Expectations.MethodExpectations<{{typeToMockName}}> Methods(this global::Rocks.Expectations.Expectations<{{typeToMockName}}> @self) =>
+						new(@self);
+
+					""");
 			}
 
 			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
@@ -29,11 +30,12 @@ internal static class MockMethodExtensionsBuilder
 				{
 					var containingTypeName = typeGroup.Key.GetReferenceableName();
 					var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-					writer.WriteLine($"internal static global::Rocks.Expectations.ExplicitMethodExpectations<{typeToMockName}, {containingTypeName}> ExplicitMethodsFor{flattenedContainingTypeName}(this global::Rocks.Expectations.Expectations<{typeToMockName}> self) =>");
-					writer.Indent++;
-					writer.WriteLine($"new(self);");
-					writer.Indent--;
-					writer.WriteLine();
+					writer.WriteLines(
+						$$"""
+						internal static global::Rocks.Expectations.ExplicitMethodExpectations<{{typeToMockName}}, {{containingTypeName}}> ExplicitMethodsFor{{flattenedContainingTypeName}}(this global::Rocks.Expectations.Expectations<{{typeToMockName}}> @self) =>
+							new(@self);
+
+						""");
 				}
 			}
 		}

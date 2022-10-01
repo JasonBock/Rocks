@@ -35,7 +35,7 @@ internal static class ShimIndexerBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{_.Name}";
+				return $"{direction}@{_.Name}";
 			}));
 
 			var accessors = indexer.GetAccessors();
@@ -72,7 +72,7 @@ internal static class ShimIndexerBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} {_.Name}{defaultValue}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} @{_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 

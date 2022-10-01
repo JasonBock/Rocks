@@ -24,14 +24,15 @@ internal static class MockEventsBuilder
 		var name = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}.{@event.Value.Name}";
 		var fieldName = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}_{@event.Value.Name}";
 
-		writer.WriteLine($"private {eventType}? {fieldName};");
-		writer.WriteLine($"event {eventType}? {name}");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"add => this.{fieldName} += value;");
-		writer.WriteLine($"remove => this.{fieldName} -= value;");
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			$$"""
+			private {{eventType}}? {{fieldName}};
+			event {{eventType}}? {{name}}
+			{
+				add => this.{{fieldName}} += value;
+				remove => this.{{fieldName}} -= value;
+			}
+			""");
 	}
 
 	internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events,
@@ -58,36 +59,25 @@ internal static class MockEventsBuilder
 			}
 		}
 
-		writer.WriteLine("#pragma warning restore CS0067");
-		writer.WriteLine();
+		writer.WriteLines(
+			"""
+			#pragma warning restore CS0067
 
-		writer.WriteLine("void global::Rocks.IRaiseEvents.Raise(string fieldName, global::System.EventArgs args)");
-		writer.WriteLine("{");
-		writer.Indent++;
+			void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+			{
+				var thisType = this.GetType();
+				var eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+					global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
 
-		writer.WriteLine("var thisType = this.GetType();");
-		writer.WriteLine($"var eventDelegate = (global::System.MulticastDelegate)thisType.GetField(fieldName, ");
-		writer.Indent++;
-		writer.WriteLine($"global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;");
-		writer.Indent--;
-		writer.WriteLine();
-		writer.WriteLine("if (eventDelegate is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
+				if (eventDelegate is not null)
+				{
+					foreach (var @handler in eventDelegate.GetInvocationList())
+					{
+						@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
+					}
+				}
+			}
+			""");
 
-		writer.WriteLine("foreach (var handler in eventDelegate.GetInvocationList())");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("handler.Method.Invoke(handler.Target, new object[]{this, args});");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
 	}
 }

@@ -41,42 +41,32 @@ internal static class RefLikeArgTypeBuilder
 		var argConstructorName = RefLikeArgTypeBuilder.GetProjectedConstructorName(type);
 		var typeName = type.GetReferenceableName();
 
-		writer.WriteLine($"internal delegate bool {validationDelegateName}({typeName} value);");
-		writer.WriteLine();
-		writer.WriteLine($"internal sealed class {argName}");
-		writer.Indent++;
-		writer.WriteLine(": global::Rocks.Argument");
-		writer.Indent--;
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.WriteLines(
+			$$"""
+			internal delegate bool {{validationDelegateName}}({{typeName}} value);
 
-		writer.WriteLine($"private readonly {validationDelegateFullyQualifiedName}? evaluation;");
-		writer.WriteLine("private readonly global::Rocks.ValidationState validation;");
-		writer.WriteLine();
-		writer.WriteLine($"internal {argConstructorName}() => this.validation = global::Rocks.ValidationState.None;");
-		writer.WriteLine();
-		writer.WriteLine($"internal {argConstructorName}({validationDelegateFullyQualifiedName} evaluation)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("this.evaluation = evaluation;");
-		writer.WriteLine($"this.validation = global::Rocks.ValidationState.Evaluation;");
-		writer.Indent--;
-		writer.WriteLine("}");
-		writer.WriteLine();
+			internal sealed class {{argName}}
+				: global::Rocks.Argument
+			{
+				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
+				private readonly global::Rocks.ValidationState validation;
 
-		writer.WriteLine($"public bool IsValid({typeName} value) =>");
-		writer.Indent++;
-		writer.WriteLine("this.validation switch");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("global::Rocks.ValidationState.None => true,");
-		writer.WriteLine("global::Rocks.ValidationState.Evaluation => this.evaluation!(value),");
-		writer.WriteLine("_ => throw new global::System.NotSupportedException(\"Invalid validation state.\"),");
-		writer.Indent--;
-		writer.WriteLine("};");
-		writer.Indent--;
+				internal {{argConstructorName}}() => this.validation = global::Rocks.ValidationState.None;
 
-		writer.Indent--;
-		writer.WriteLine("}");
+				internal {{argConstructorName}}({{validationDelegateFullyQualifiedName}} @evaluation)
+				{
+					this.evaluation = @evaluation;
+					this.validation = global::Rocks.ValidationState.Evaluation;
+				}
+
+				public bool IsValid({{typeName}} @value) =>
+					this.validation switch
+					{
+						global::Rocks.ValidationState.None => true,
+						global::Rocks.ValidationState.Evaluation => this.evaluation!(value),
+						_ => throw new global::System.NotSupportedException("Invalid validation state."),
+					};
+			}
+			""");
 	}
 }

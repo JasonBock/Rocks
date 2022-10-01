@@ -12,7 +12,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetReferenceableName()}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetReferenceableName()}, {containingTypeName}> @self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
@@ -34,7 +34,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, result.MockType) : 
 			$"Add<{propertyReturnValue}>";
 
-		writer.WriteLine($"{newAdornments}(self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
+		writer.WriteLine($"{newAdornments}(@self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 		writer.Indent--;
 	}
 
@@ -42,7 +42,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> @self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
@@ -57,7 +57,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");
 		writer.Indent++;
 
-		writer.WriteLine($"{newAdornments}(self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ value }}));");
+		writer.WriteLine($"{newAdornments}(@self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ value }}));");
 		writer.Indent--;
 	}
 

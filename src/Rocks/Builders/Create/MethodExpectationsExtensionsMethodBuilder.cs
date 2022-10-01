@@ -15,8 +15,8 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		var namingContext = new VariableNamingContext(method);
 
 		var thisParameter = isExplicitImplementation ?
-			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> {namingContext["self"]}" :
-			$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> {namingContext["self"]}";
+			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}" :
+			$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> @{namingContext["self"]}";
 		var instanceParameters = method.Parameters.Length == 0 ? thisParameter :
 			string.Join(", ", thisParameter,
 				string.Join(", ", method.Parameters.Select(_ =>
@@ -26,11 +26,11 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 						var argName = _.Type.IsPointer() ?
 							PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, result.MockType) :
 							RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, result.MockType);
-						return $"{argName} {_.Name}";
+						return $"{argName} @{_.Name}";
 					}
 					else
 					{
-						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> {_.Name}";
+						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
 					}
 				})));
 		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetReferenceableName()));
@@ -65,7 +65,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		{
 			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}=>");
 			writer.Indent++;
-			writer.WriteLine($"{newAdornments}({namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
+			writer.WriteLine($"{newAdornments}(@{namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 			writer.Indent--;
 		}
 		else
@@ -76,14 +76,14 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 
 			foreach(var parameter in method.Parameters)
 			{
-				writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull({parameter.Name});");
+				writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{parameter.Name});");
 			}
 
 			var parameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				if (_.HasExplicitDefaultValue)
 				{
-					return $"{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})";
+					return $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})";
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
@@ -91,10 +91,10 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				}
 				else
 				{
-					return _.Name;
+					return $"@{_.Name}";
 				}
 			}));
-			writer.WriteLine($"return {newAdornments}({namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({method.Parameters.Length}) {{ {parameters} }}));");
+			writer.WriteLine($"return {newAdornments}(@{namingContext["self"]}.{addMethod}({result.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({method.Parameters.Length}) {{ {parameters} }}));");
 
 			writer.Indent--;
 			writer.WriteLine("}");

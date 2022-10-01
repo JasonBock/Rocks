@@ -50,7 +50,7 @@ internal static class EventExpectationsExtensionsBuilder
 			var raisesOn = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
 				$"On{result.Value.ContainingType.GetName(TypeNameOption.Flatten)}";
 
-			writer.WriteLine($"internal static global::Rocks.{extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this global::Rocks.{extensionPrefix}Adornments<{adornments}> self, {argsType} args)");
+			writer.WriteLine($"internal static global::Rocks.{extensionPrefix}Adornments<{adornments}> Raises{result.Value.Name}{raisesOn}<{raises}>(this global::Rocks.{extensionPrefix}Adornments<{adornments}> @self, {argsType} @args)");
 			writer.Indent++;
 			writer.WriteLine($"where {callbackName} : global::System.Delegate");
 			writer.Indent--;
@@ -61,8 +61,8 @@ internal static class EventExpectationsExtensionsBuilder
 			var fieldName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? result.Value.Name :
 				$"{result.Value.ContainingType.GetName(TypeNameOption.NoGenerics)}_{result.Value.Name}";
 
-			writer.WriteLine($"self.Handler.AddRaiseEvent(new(\"{fieldName}\", args));");
-			writer.WriteLine($"return self;");
+			writer.WriteLine($"@self.Handler.AddRaiseEvent(new(\"{fieldName}\", @args));");
+			writer.WriteLine($"return @self;");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

@@ -13,8 +13,8 @@ internal static class MockConstructorBuilder
 		var typeToMockName = typeToMock.ReferenceableName;
 		var namingContext = new VariableNamingContext(parameters);
 		var instanceParameters = parameters.Length == 0 ?
-			$"global::Rocks.Expectations.Expectations<{typeToMockName}> {namingContext["expectations"]}" :
-			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> {namingContext["expectations"]}",
+			$"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}" :
+			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}",
 				string.Join(", ", parameters.Select(_ =>
 				{
 					var direction = _.RefKind switch
@@ -24,7 +24,7 @@ internal static class MockConstructorBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} {_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
 				})));
 
 		var mockTypeName = $"Rock{typeToMock.FlattenedName}";
@@ -40,7 +40,7 @@ internal static class MockConstructorBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{_.Name}";
+				return $"{direction}@{_.Name}";
 			}));
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
@@ -65,13 +65,13 @@ internal static class MockConstructorBuilder
 	{
 		if (shims.Length == 0)
 		{
-			writer.WriteLine($"this.handlers = {namingContext["expectations"]}.Handlers;");
+			writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
 		}
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new Shim{mockTypeName}(this)"));
-			writer.WriteLine($"(this.handlers, {shimFields}) = ({namingContext["expectations"]}.Handlers, {shimConstructors});");
+			writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
 		}
 	}
 }

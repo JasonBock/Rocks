@@ -97,20 +97,16 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 		{
 			var handlerType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 			var methodName = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
-
-			writer.WriteLine($"internal static {handlerType} {methodName}(this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> self, int memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> arguments)");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine($"var information = new {handlerType}(arguments.ToImmutableArray());");
-			writer.WriteLine($"self.Handlers.AddOrUpdate(memberIdentifier,");
-			writer.Indent++;
-			writer.WriteLine("() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { information }, _ => _.Add(information));");
-			writer.Indent--;
-			writer.WriteLine("return information;");
-
-			writer.Indent--;
-			writer.WriteLine("}");
+			writer.WriteLines(
+				$$"""
+				internal static {{handlerType}} {{methodName}}(this global::Rocks.Expectations.Expectations<{{typeToMock.ReferenceableName}}> @self, int @memberIdentifier, global::System.Collections.Generic.List<global::Rocks.Argument> @arguments)
+				{
+					var @information = new {{handlerType}}(@arguments.ToImmutableArray());
+					@self.Handlers.AddOrUpdate(@memberIdentifier,
+						() => new global::System.Collections.Generic.List<global::Rocks.HandlerInformation>(1) { @information }, _ => _.Add(@information));
+					return @information;
+				}
+				""");
 		}
 
 		writer.Indent--;
@@ -121,88 +117,57 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	{
 		var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
 		var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
+		writer.WriteLines(
+			$$"""
+			internal {{isUnsafe}}sealed class {{handlerName}}
+				: global::Rocks.HandlerInformation
+			{
+				internal {{handlerName}}(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+					: base(null, @expectations) => this.ReturnValue = default;
 
-		writer.WriteLine($"internal {isUnsafe}sealed class {handlerName}");
-		writer.Indent++;
-		writer.WriteLine(": global::Rocks.HandlerInformation");
-		writer.Indent--;
-		writer.WriteLine("{");
-		writer.Indent++;
+				internal {{handlerName}}(global::System.Delegate? @method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> @expectations)
+					: base(@method, @expectations) => this.ReturnValue = default;
 
-		writer.WriteLine($"internal {handlerName}(global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)");
-		writer.Indent++;
-		writer.WriteLine(": base(null, expectations) => this.ReturnValue = default;");
-		writer.Indent--;
-
-		writer.WriteLine();
-
-		writer.WriteLine($"internal {handlerName}(global::System.Delegate? method, global::System.Collections.Immutable.ImmutableArray<global::Rocks.Argument> expectations)");
-		writer.Indent++;
-		writer.WriteLine(": base(method, expectations) => this.ReturnValue = default;");
-		writer.Indent--;
-
-		writer.WriteLine();
-		writer.WriteLine($"internal {type.GetReferenceableName()} ReturnValue {{ get; set; }}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
+				internal {{type.GetReferenceableName()}} ReturnValue { get; set; }
+			}
+			""");
 	}
 
 	private static void BuildAdornmentInformationType(IndentedTextWriter writer, ITypeSymbol type, AdornmentType adornment, bool isExplicit)
 	{
 		var adornmentName = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit);
 		var handlerName = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
-
-		writer.WriteLine($"internal sealed class {adornmentName}<T, TCallback>");
-		writer.Indent++;
-		writer.WriteLine($": global::Rocks.IAdornments<{handlerName}>");
-		writer.WriteLine("where T : class");
-		writer.WriteLine("where TCallback : global::System.Delegate");
-		writer.Indent--;
-
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine($"internal {adornmentName}({handlerName} handler) =>");
-		writer.Indent++;
-		writer.WriteLine("this.Handler = handler;");
-		writer.Indent--;
-
-		writer.WriteLine();
-		writer.WriteLine($"internal {adornmentName}<T, TCallback> CallCount(uint expectedCallCount)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("this.Handler.SetExpectedCallCount(expectedCallCount);");
-		writer.WriteLine("return this;");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
-
-		writer.WriteLine($"internal {adornmentName}<T, TCallback> Callback(TCallback callback)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("this.Handler.SetCallback(callback);");
-		writer.WriteLine("return this;");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
-
 		var isUnsafe = type.IsPointer() ? "unsafe " : string.Empty;
-		writer.WriteLine($"internal {isUnsafe}{adornmentName}<T, TCallback> Returns({type.GetReferenceableName()} returnValue)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("this.Handler.ReturnValue = returnValue;");
-		writer.WriteLine("return this;");
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			$$"""
+			internal sealed class {{adornmentName}}<T, TCallback>
+				: global::Rocks.IAdornments<{{handlerName}}>
+				where T : class
+				where TCallback : global::System.Delegate
+			{
+				internal {{adornmentName}}({{handlerName}} @handler) =>
+					this.Handler = @handler;
 
-		writer.WriteLine();
+				internal {{adornmentName}}<T, TCallback> CallCount(uint @expectedCallCount)
+				{
+					this.Handler.SetExpectedCallCount(@expectedCallCount);
+					return this;
+				}
 
-		writer.WriteLine($"public {handlerName} Handler {{ get; }}");
+				internal {{adornmentName}}<T, TCallback> Callback(TCallback @callback)
+				{
+					this.Handler.SetCallback(@callback);
+					return this;
+				}
 
-		writer.Indent--;
-		writer.WriteLine("}");
+				internal {{isUnsafe}}{{adornmentName}}<T, TCallback> Returns({{type.GetReferenceableName()}} @returnValue)
+				{
+					this.Handler.ReturnValue = @returnValue;
+					return this;
+				}
+
+				public {{handlerName}} Handler { get; }
+			}
+			""");
 	}
 }

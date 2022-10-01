@@ -24,14 +24,15 @@ internal static class MockEventsBuilder
 		var name = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}.{@event.Value.Name}";
 		var fieldName = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}_{@event.Value.Name}";
 
-		writer.WriteLine($"private {eventType}? {fieldName};");
-		writer.WriteLine($"event {eventType}? {name}");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"add => this.{fieldName} += value;");
-		writer.WriteLine($"remove => this.{fieldName} -= value;");
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			$$"""
+			private {{eventType}}? {{fieldName}};
+			event {{eventType}}? {{name}}
+			{
+				add => this.{{fieldName}} += value;
+				remove => this.{{fieldName}} -= value;
+			}
+			""");
 	}
 
 	internal static void Build(IndentedTextWriter writer, ImmutableArray<EventMockableResult> events,

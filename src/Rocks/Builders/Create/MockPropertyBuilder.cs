@@ -18,19 +18,19 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine("var methodHandler = methodHandlers[0];");
+		writer.WriteLine("var @methodHandler = @methodHandlers[0];");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
-			writer.WriteLine($"this.rr{result.MemberIdentifier} = methodHandler.Method is not null ?");
+			writer.WriteLine($"this.rr{result.MemberIdentifier} = @methodHandler.Method is not null ?");
 		}
 		else
 		{
-			writer.WriteLine("var result = methodHandler.Method is not null ?");
+			writer.WriteLine("var result = @methodHandler.Method is not null ?");
 		}
 
 		writer.Indent++;
@@ -45,23 +45,23 @@ internal static class MockPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, result.MockType) :
 			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
 
-		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)() :");
+		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)() :");
 		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
 		{
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(methodHandler).ReturnValue;");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@methodHandler).ReturnValue;");
 		}
 		else
 		{
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(methodHandler).ReturnValue!.Invoke();");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@methodHandler).ReturnValue!.Invoke();");
 		}
 		writer.Indent--;
 
 		if (raiseEvents)
 		{
-			writer.WriteLine("methodHandler.RaiseEvents(this);");
+			writer.WriteLine("@methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine($"methodHandler.IncrementCallCount();");
+		writer.WriteLine($"@methodHandler.IncrementCallCount();");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
@@ -120,12 +120,12 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var methodHandlers))");
+			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine("var foundMatch = false;");
-			writer.WriteLine("foreach (var methodHandler in methodHandlers)");
+			writer.WriteLine("var @foundMatch = false;");
+			writer.WriteLine("foreach (var @methodHandler in @methodHandlers)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -135,13 +135,13 @@ internal static class MockPropertyBuilder
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 						$"global::Rocks.Argument<{property.Type.GetReferenceableName()}>";
 
-			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
+			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(value{nullableFlag}))");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine("foundMatch = true;");
+			writer.WriteLine("@foundMatch = true;");
 			writer.WriteLine();
-			writer.WriteLine("if (methodHandler.Method is not null)");
+			writer.WriteLine("if (@methodHandler.Method is not null)");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -149,13 +149,13 @@ internal static class MockPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 				DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(methodHandler.Method)(value{nullableFlag});");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(value{nullableFlag});");
 
 			writer.Indent--;
 			writer.WriteLine("}");
 
 			writer.WriteLine();
-			writer.WriteLine("if (!foundMatch)");
+			writer.WriteLine("if (!@foundMatch)");
 			writer.WriteLine("{");
 			writer.Indent++;
 			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
@@ -165,10 +165,10 @@ internal static class MockPropertyBuilder
 			writer.WriteLine();
 			if (raiseEvents)
 			{
-				writer.WriteLine("methodHandler.RaiseEvents(this);");
+				writer.WriteLine("@methodHandler.RaiseEvents(this);");
 			}
 
-			writer.WriteLine("methodHandler.IncrementCallCount();");
+			writer.WriteLine("@methodHandler.IncrementCallCount();");
 			writer.WriteLine("break;");
 
 			writer.Indent--;
