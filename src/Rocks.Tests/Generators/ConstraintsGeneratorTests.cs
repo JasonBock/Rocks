@@ -1,11 +1,125 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Testing;
+﻿using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
 public static class ConstraintsGeneratorTests
 {
+	[Test]
+	public static async Task GenerateProperNumberOfConstraintsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public interface IValue<TValue>
+			  where TValue : IValue<TValue> { }
+
+			public class Value<TValue>
+			  where TValue : unmanaged, IValue<TValue> { }
+
+			public interface IUnmanagedValue
+			{
+			    void Use<TValue>(Value<TValue> value)
+			        where TValue : unmanaged, IValue<TValue>;
+			}
+
+			public static class Test
+			{
+			  public static void Run()
+			  {
+			    var expectations = Rock.Create<IUnmanagedValue>();
+			  }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIUnmanagedValueExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::IUnmanagedValue> Methods(this global::Rocks.Expectations.Expectations<global::IUnmanagedValue> @self) =>
+					new(@self);
+				
+				internal static global::IUnmanagedValue Instance(this global::Rocks.Expectations.Expectations<global::IUnmanagedValue> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockIUnmanagedValue(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIUnmanagedValue
+					: global::IUnmanagedValue
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIUnmanagedValue(global::Rocks.Expectations.Expectations<global::IUnmanagedValue> @expectations) =>
+						this.handlers = @expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "void Use<TValue>(global::Value<TValue> @value)")]
+					public void Use<TValue>(global::Value<TValue> @value)
+						where TValue : unmanaged, struct, global::IValue<TValue>
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @foundMatch = false;
+							
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::Value<TValue>>>(@methodHandler.Expectations[0]).IsValid(@value))
+								{
+									@foundMatch = true;
+									
+									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<global::Value<TValue>> @method)
+									{
+										@method(@value);
+									}
+									
+									@methodHandler.IncrementCallCount();
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Use<TValue>(global::Value<TValue> @value)");
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Use<TValue>(global::Value<TValue> @value)");
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfIUnmanagedValueExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::IUnmanagedValue, global::System.Action<global::Value<TValue>>> Use<TValue>(this global::Rocks.Expectations.MethodExpectations<global::IUnmanagedValue> @self, global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, struct, global::IValue<TValue>
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@value);
+					return new global::Rocks.MethodAdornments<global::IUnmanagedValue, global::System.Action<global::Value<TValue>>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUnmanagedValue_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task GenerateAsync()
 	{
