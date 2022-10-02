@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.2] - Not Yet Released
 
 ### Fixed
+- Only one of these constraints is now added to the generated mock: `unmanaged`, `notnull`, `class`, or `struct` (issue [#180](https://github.com/JasonBock/Rocks/issues/180))
 - Generated delegates for projected types now use SHA to create the hash code (issue [#194](https://github.com/JasonBock/Rocks/issues/194))
 - Types that use C# keywords for parameters (e.g. `string @namespace`) are now handed by Rocks (issue [#184](https://github.com/JasonBock/Rocks/issues/184))
 - Parameter names will no longer collide with variables created by Rocks (issue [#183](https://github.com/JasonBock/Rocks/issues/183))
