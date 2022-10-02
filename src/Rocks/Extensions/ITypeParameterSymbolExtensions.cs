@@ -13,23 +13,26 @@ internal static class ITypeParameterSymbolExtensions
 		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/where-generic-type-constraint
 		// ...
 		// Things like notnull and unmanaged should go first
-		if (self.HasNotNullConstraint)
-		{
-			constraints.Add("notnull");
-		}
 
+		// According to CS0449, if any of these constraints exist: 
+		// 'class', 'struct', 'unmanaged', 'notnull', and 'default'
+		// they should not be duplicated.
+		// Side note, I don't know how to find if the 'default'
+		// constraint exists.
 		if (self.HasUnmanagedTypeConstraint)
 		{
 			constraints.Add("unmanaged");
 		}
-
+		else if (self.HasNotNullConstraint)
+		{
+			constraints.Add("notnull");
+		}
 		// Then class constraint (HasReferenceTypeConstraint) or struct (HasValueTypeConstraint)
-		if (self.HasReferenceTypeConstraint)
+		else if (self.HasReferenceTypeConstraint)
 		{
 			constraints.Add(self.ReferenceTypeConstraintNullableAnnotation == NullableAnnotation.Annotated ? "class?" : "class");
 		}
-
-		if (self.HasValueTypeConstraint)
+		else if (self.HasValueTypeConstraint)
 		{
 			constraints.Add("struct");
 		}

@@ -51,51 +51,7 @@ internal static class ITypeSymbolExtensions
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat.
 			AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 		return self.ToDisplayString(symbolFormatter);
-
-		/*
-		// TODO: I may just need to do "global::self.ToDisplayString()", except for open generic types.
-		// But "primitive" types, like int and string, should just be like that.
-
-		if (self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType)
-		{
-			return self.ToDisplayString();
-		}
-		// TODO: May need to look at if it's an open or closed generic
-		else if(self.Kind == SymbolKind.TypeParameter)
-		{
-			return $"{self.Name}{(self.NullableAnnotation == NullableAnnotation.Annotated ? "?" : string.Empty)}";
-		}
-		else
-		{
-			return self.IsPrimitive() ? self.ToDisplayString() : $"global::{self.ToDisplayString()}";
-			// TODO: May not need to do this.
-			//var names = new List<string>();
-
-			//var currentSelf = self;
-
-			//while(currentSelf is not null)
-			//{
-			//	names.Insert(0, currentSelf.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat));
-			//	currentSelf = currentSelf.ContainingType;
-			//}
-
-			//return string.Join(".", names);
-		}
-		*/
 	}
-
-	// TODO: I don't think I need this.
-	private static bool IsPrimitive(this ITypeSymbol self) =>
-		self.SpecialType switch
-		{
-			SpecialType.System_Boolean or SpecialType.System_Byte or SpecialType.System_Char or 
-				SpecialType.System_Decimal or SpecialType.System_Double or SpecialType.System_Int16 or
-				SpecialType.System_Int32 or SpecialType.System_Int64 or SpecialType.System_Object or
-				SpecialType.System_SByte or SpecialType.System_Single or SpecialType.System_String or
-				SpecialType.System_UInt16 or SpecialType.System_UInt32 or SpecialType.System_UInt64 or
-				SpecialType.System_Void => true,
-			_ => false
-		};
 
 	// TODO: This method really needs to change.
 	// It's doing WAY too much in too many different contexts.

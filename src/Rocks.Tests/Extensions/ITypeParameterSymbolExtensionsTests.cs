@@ -17,7 +17,7 @@ public static class ITypeParameterSymbolExtensionsTests
 	[TestCase("public class Target<T> where T : class? { }", "where T : class?")]
 	[TestCase("public class Target<T> where T : new() { }", "where T : new()")]
 	[TestCase("public class Target<T> where T : notnull { }", "where T : notnull")]
-	[TestCase("public class Target<T> where T : unmanaged { }", "where T : unmanaged, struct")]
+	[TestCase("public class Target<T> where T : unmanaged { }", "where T : unmanaged")]
 	[TestCase("public class Target<T> where T : struct { }", "where T : struct")]
 	[TestCase("public interface IThing { } public class Target<T> where T : struct, IThing { }", "where T : struct, global::IThing")]
 	[TestCase("public class Thing { } public interface IThing { } public class Target<T> where T : Thing, IThing { }", "where T : global::Thing, global::IThing")]

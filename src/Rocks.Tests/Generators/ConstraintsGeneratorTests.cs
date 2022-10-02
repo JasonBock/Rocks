@@ -68,7 +68,7 @@ public static class ConstraintsGeneratorTests
 					
 					[global::Rocks.MemberIdentifier(0, "void Use<TValue>(global::Value<TValue> @value)")]
 					public void Use<TValue>(global::Value<TValue> @value)
-						where TValue : unmanaged, struct, global::IValue<TValue>
+						where TValue : unmanaged, global::IValue<TValue>
 					{
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
@@ -106,7 +106,7 @@ public static class ConstraintsGeneratorTests
 			
 			internal static class MethodExpectationsOfIUnmanagedValueExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::IUnmanagedValue, global::System.Action<global::Value<TValue>>> Use<TValue>(this global::Rocks.Expectations.MethodExpectations<global::IUnmanagedValue> @self, global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, struct, global::IValue<TValue>
+				internal static global::Rocks.MethodAdornments<global::IUnmanagedValue, global::System.Action<global::Value<TValue>>> Use<TValue>(this global::Rocks.Expectations.MethodExpectations<global::IUnmanagedValue> @self, global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, global::IValue<TValue>
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@value);
 					return new global::Rocks.MethodAdornments<global::IUnmanagedValue, global::System.Action<global::Value<TValue>>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
