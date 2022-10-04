@@ -45,20 +45,18 @@ What types? I don't think any of the extension methods need the annotations, jus
 
 Back up. I think I need `RequiresNullableAnnotation(this IParameterSymbol)` and `RequiresNullForgiving(this IParameterSymbol)` extension methods, and just use those instead of trying to calculate that everywhere, and it can be "optimized" to just look for default `null` values on a parameter that doesn't have the `?` annotation for reference types.
 
+Indexers I'm going to ignore - see [this](https://stackoverflow.com/questions/17229880/indexer-with-default-parameters) for the reason why, CS1066. 
+
 * DONE - `DelegateBuilder`
 * Create
   * DONE - `MockMethodValueBuilder`
   * DONE - `MockMethodVoidBuilder`
   * DONE - `MethodExpectationsExtensionsMethodBuilder`
-  * `MockIndexerBuilder`
-  * `IndexerExpectationsExtensionsIndexerBuilder`
-  * `ExplicitIndexerExpectationsExtensionsIndexerBuilder`
   * `MockConstructorBuilder`
   * `MockConstructorExtensionsBuilder`
 * Make
   * `MockMethodValueBuilder`
   * `MockMethodVoidBuilder`
-  * `MockIndexerBuilder`
   * `MockConstructorBuilder`
   * `MockConstructorExtensionsBuilder`
 

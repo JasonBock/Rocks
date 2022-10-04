@@ -17,6 +17,7 @@ internal static class MockConstructorBuilder
 			string.Join(", ", $"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}",
 				string.Join(", ", parameters.Select(_ =>
 				{
+					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 					var direction = _.RefKind switch
 					{
 						RefKind.Ref => "ref ",
@@ -24,7 +25,7 @@ internal static class MockConstructorBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
 				})));
 
 		var mockTypeName = $"Rock{typeToMock.FlattenedName}";
@@ -33,6 +34,7 @@ internal static class MockConstructorBuilder
 		{
 			var passedParameter = string.Join(", ", parameters.Select(_ =>
 			{
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -40,7 +42,7 @@ internal static class MockConstructorBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");

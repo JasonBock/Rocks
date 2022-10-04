@@ -83,6 +83,7 @@ internal static class MockConstructorExtensionsBuilder
 			string.Join(", ", selfParameter,
 				string.Join(", ", parameters.Select(_ =>
 				{
+					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 					var direction = _.RefKind switch
 					{
 						RefKind.Ref => "ref ",
@@ -90,13 +91,14 @@ internal static class MockConstructorExtensionsBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
 				})));
 		var isUnsafe = false;
 		var rockInstanceParameters = parameters.Length == 0 ? $"@{namingContext["self"]}" :
 			string.Join(", ", $"@{namingContext["self"]}", string.Join(", ", parameters.Select(_ =>
 			{
 				isUnsafe |= _.Type.IsPointer();
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -104,7 +106,7 @@ internal static class MockConstructorExtensionsBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
 		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters})");
