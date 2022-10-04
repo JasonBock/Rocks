@@ -30,10 +30,10 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					}
 					else
 					{
-						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
+						var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
+						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}{requiresNullable}> @{_.Name}";
 					}
 				})));
-		var parameterTypes = string.Join(", ", method.Parameters.Select(_ => _.Type.GetReferenceableName()));
 
 		var callbackDelegateTypeName = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, result.MockType) :
@@ -87,7 +87,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
-					return $"global::Rocks.Arg.Any<{_.Type.GetReferenceableName()}>()";
+					return $"global::Rocks.Arg.Any<{_.Type.GetReferenceableName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}>()";
 				}
 				else
 				{

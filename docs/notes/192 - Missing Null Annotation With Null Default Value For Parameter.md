@@ -43,16 +43,24 @@ So...
 
 What types? I don't think any of the extension methods need the annotations, just the mock implementation. Well...yes, they do. They need to know that a type that was `string` is now going to be declared as `string?`, which means all the `Arg<>` parameters need the right type as well, though they don't need the parameter to be forced to `!` like it will be when a base or shim method is called.
 
+Back up. I think I need `RequiresNullableAnnotation(this IParameterSymbol)` and `RequiresNullForgiving(this IParameterSymbol)` extension methods, and just use those instead of trying to calculate that everywhere, and it can be "optimized" to just look for default `null` values on a parameter that doesn't have the `?` annotation for reference types.
+
+* DONE - `DelegateBuilder`
 * Create
+  * DONE - `MockMethodValueBuilder`
+  * DONE - `MockMethodVoidBuilder`
+  * DONE - `MethodExpectationsExtensionsMethodBuilder`
+  * `MockIndexerBuilder`
+  * `IndexerExpectationsExtensionsIndexerBuilder`
+  * `ExplicitIndexerExpectationsExtensionsIndexerBuilder`
+  * `MockConstructorBuilder`
+  * `MockConstructorExtensionsBuilder`
+* Make
   * `MockMethodValueBuilder`
   * `MockMethodVoidBuilder`
   * `MockIndexerBuilder`
   * `MockConstructorBuilder`
-* Make
-  * DONE - `MockMethodValueBuilder`
-  * `MockMethodVoidBuilder`
-  * `MockIndexerBuilder`
-  * `MockConstructorBuilder`
+  * `MockConstructorExtensionsBuilder`
 
 Things to check
-* `parametersDescription` may not need to be done. It wasn't needed in `MockMethodValueBuilder`.
+* `parametersDescription` may not need to be done. It wasn't needed in `MockMethodValueBuilder`...the Make one, I believe
