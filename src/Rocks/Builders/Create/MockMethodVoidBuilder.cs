@@ -13,6 +13,7 @@ internal static class MockMethodVoidBuilder
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
+			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -20,7 +21,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
@@ -28,6 +29,7 @@ internal static class MockMethodVoidBuilder
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
+			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -36,7 +38,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
@@ -121,6 +123,7 @@ internal static class MockMethodVoidBuilder
 			// "should" not return either, so no extra work necessary for that.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -128,7 +131,7 @@ internal static class MockMethodVoidBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
@@ -173,11 +176,12 @@ internal static class MockMethodVoidBuilder
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
 			var parameter = method.Parameters[i];
+			var requiresNullable = parameter.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 			var argType = parameter.Type.IsPointer() ?
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
 					parameter.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
-						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>";
+						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}{requiresNullable}>";
 
 			if (i == 0)
 			{

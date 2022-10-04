@@ -10,7 +10,8 @@ internal static class DelegateBuilder
 	{
 		if (parameters.Length > 0)
 		{
-			var parameterTypes = string.Join(", ", parameters.Select(_ => _.Type.GetReferenceableName()));
+			var parameterTypes = string.Join(", ", parameters.Select(
+				_ => $"{_.Type.GetReferenceableName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}"));
 			return returnType is not null ?
 				$"global::System.Func<{parameterTypes}, {returnType.GetReferenceableName()}>" :
 				$"global::System.Action<{parameterTypes}>";
