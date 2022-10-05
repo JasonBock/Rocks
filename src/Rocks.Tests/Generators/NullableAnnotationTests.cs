@@ -6,7 +6,7 @@ namespace Rocks.Tests.Generators;
 public static class NullableAnnotationTests
 {
 	[Test]
-	public static async Task GenerateWithConstructorWhenParameterWithNullDefaultIsNotAnnotatedAsync()
+	public static async Task GenerateCreateWithConstructorWhenParameterWithNullDefaultIsNotAnnotatedAsync()
 	{
 		var code =
 			"""
@@ -145,7 +145,66 @@ public static class NullableAnnotationTests
 	}
 
 	[Test]
-	public static async Task GenerateWithMethodsWhenParameterWithNullDefaultIsNotAnnotatedAsync()
+	public static async Task GenerateMakeWithConstructorWhenParameterWithNullDefaultIsNotAnnotatedAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public class NeedNullable
+			{
+				public NeedNullable(object initializationData = null) { }
+			}
+			
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Make<NeedNullable>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfNeedNullableExtensions
+			{
+				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self, object? @initializationData) =>
+					new RockNeedNullable(@initializationData);
+				
+				private sealed class RockNeedNullable
+					: global::NeedNullable
+				{
+					public RockNeedNullable(object? @initializationData)
+						: base(@initializationData!)
+					{ }
+					
+					public override bool Equals(object? @obj)
+					{
+						return default!;
+					}
+					public override int GetHashCode()
+					{
+						return default!;
+					}
+					public override string? ToString()
+					{
+						return default!;
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateCreateWithMethodsWhenParameterWithNullDefaultIsNotAnnotatedAsync()
 	{
 		var code =
 			"""
@@ -349,6 +408,71 @@ public static class NullableAnnotationTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "NeedNullable_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateMakeWithMethodsWhenParameterWithNullDefaultIsNotAnnotatedAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public class NeedNullable
+			{
+			    public virtual int IntReturn(object initializationData = null) => 0;
+			    public virtual void VoidReturn(object initializationData = null) { }
+			}
+			
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Make<NeedNullable>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfNeedNullableExtensions
+			{
+				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self) =>
+					new RockNeedNullable();
+				
+				private sealed class RockNeedNullable
+					: global::NeedNullable
+				{
+					public RockNeedNullable() { }
+					
+					public override bool Equals(object? @obj)
+					{
+						return default!;
+					}
+					public override int GetHashCode()
+					{
+						return default!;
+					}
+					public override string? ToString()
+					{
+						return default!;
+					}
+					public override int IntReturn(object? @initializationData = null)
+					{
+						return default!;
+					}
+					public override void VoidReturn(object? @initializationData = null)
+					{
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

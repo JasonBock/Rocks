@@ -14,6 +14,7 @@ internal static class MockConstructorBuilder
 		{
 			var instanceParameters = string.Join(", ", parameters.Select(_ =>
 			{
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -21,13 +22,14 @@ internal static class MockConstructorBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
 			}));
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}Rock{typeToMock.FlattenedName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine(@$": base({string.Join(", ", parameters.Select(_ =>
 			{
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -35,7 +37,7 @@ internal static class MockConstructorBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}{requiresNullable}";
 			}))})");
 			writer.Indent--;
 			writer.WriteLine("{ }");

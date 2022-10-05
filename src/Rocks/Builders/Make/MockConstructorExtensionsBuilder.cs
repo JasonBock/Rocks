@@ -85,6 +85,7 @@ internal static class MockConstructorExtensionsBuilder
 			string.Join(", ", selfParameter,
 				string.Join(", ", string.Join(", ", parameters.Select(_ =>
 				{
+					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 					var direction = _.RefKind switch
 					{
 						RefKind.Ref => "ref ",
@@ -92,7 +93,7 @@ internal static class MockConstructorExtensionsBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
 				}))));
 		var isUnsafe = false;
 		var rockInstanceParameters = string.Join(", ", string.Join(", ", parameters.Select(_ =>

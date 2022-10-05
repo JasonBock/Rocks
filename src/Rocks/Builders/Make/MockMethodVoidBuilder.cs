@@ -11,22 +11,12 @@ internal static class MockMethodVoidBuilder
 		var method = result.Value;
 
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
-		{
-			var direction = _.RefKind switch
-			{
-				RefKind.Ref => "ref ",
-				RefKind.Out => "out ",
-				RefKind.In => "in ",
-				_ => string.Empty
-			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
-		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
+			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -35,7 +25,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var methodSignature =
