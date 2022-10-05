@@ -2,6 +2,21 @@
 
 namespace Rocks.IntegrationTests;
 
+#nullable disable
+public class NeedNullableAnnotation
+{
+	public NeedNullableAnnotation(object initializationData = null) { }
+
+	public virtual int IntReturn(object initializationData = null) => 
+		initializationData is null ? 1 : 0;
+	public virtual void VoidReturn(object initializationData = null) =>
+		this.VoidReturnData = initializationData;
+#nullable restore
+
+	public object? VoidReturnData { get; private set; }
+}
+
+
 public interface IHaveOptionalArguments
 {
 	void Foo(int a, string b = "b", double c = 3.2);
@@ -17,6 +32,28 @@ public struct OptionalDefault { }
 
 public static class OptionalArgumentsTests
 {
+	[Test]
+	public static void CreateForcedNullableAnnotation()
+	{
+		var expectations = Rock.Create<NeedNullableAnnotation>();
+		expectations.Methods().IntReturn(Arg.Is<object?>(null));
+		expectations.Methods().VoidReturn(Arg.Is<object?>(null));
+
+		var mock = expectations.Instance(Arg.Is<object?>(null));
+		_ = mock.IntReturn();
+		mock.VoidReturn();
+
+		expectations.Verify();
+	}
+
+	[Test]
+	public static void MakeForcedNullableAnnotation()
+	{
+		var mock = Rock.Make<NeedNullableAnnotation>().Instance(Arg.Is<object?>(null));
+		_ = mock.IntReturn();
+		mock.VoidReturn();
+	}
+
 	[Test]
 	public static void CreateMembersWithOptionalDefaultStructArgument()
 	{
