@@ -9,7 +9,8 @@ internal static class TestAssistants
 	internal static async Task RunAsync<T>(string code,
 		IEnumerable<(Type, string, string)> generatedSources,
 		IEnumerable<DiagnosticResult> expectedDiagnostics,
-		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
+		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary,
+		IEnumerable<MetadataReference>? additionalReferences = null)
 		where T : IIncrementalGenerator, new()
 	{
 		var test = new CSharpIncrementalSourceGeneratorVerifier<T>.Test
@@ -28,6 +29,12 @@ internal static class TestAssistants
 		}
 
 		test.TestState.AdditionalReferences.Add(typeof(T).Assembly);
+
+		if(additionalReferences is not null)
+		{
+			test.TestState.AdditionalReferences.AddRange(additionalReferences);
+		}
+
 		test.TestState.ExpectedDiagnostics.AddRange(expectedDiagnostics);
 		await test.RunAsync().ConfigureAwait(false);
 	}
