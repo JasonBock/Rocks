@@ -42,13 +42,13 @@ internal static class MockProjectedArgTypeBuilder
 
 		var types = new HashSet<ITypeSymbol>();
 
-		foreach (var methodResult in information.Methods)
+		foreach (var methodResult in information.Methods.Results)
 		{
 			var method = methodResult.Value;
 			GetEsotericTypes(method.Parameters, method.ReturnsVoid ? null : method.ReturnType, types);
 		}
 
-		foreach (var propertyResult in information.Properties)
+		foreach (var propertyResult in information.Properties.Results)
 		{
 			var property = propertyResult.Value;
 

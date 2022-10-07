@@ -8,11 +8,11 @@ internal static class MockMethodExtensionsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MockInformation information)
 	{
-		if (information.Methods.Length > 0)
+		if (information.Methods.Results.Length > 0)
 		{
 			var typeToMockName = information.TypeToMock!.ReferenceableName;
 
-			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
+			if (information.Methods.Results.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
 				writer.WriteLines(
 					$$"""
@@ -22,9 +22,9 @@ internal static class MockMethodExtensionsBuilder
 					""");
 			}
 
-			if (information.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
+			if (information.Methods.Results.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
 			{
-				foreach (var typeGroup in information.Methods
+				foreach (var typeGroup in information.Methods.Results
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType))
 				{

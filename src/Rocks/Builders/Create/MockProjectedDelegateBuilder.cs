@@ -71,19 +71,19 @@ internal static class MockProjectedDelegateBuilder
 
 		static void BuildProperties(IndentedTextWriter writer, MockInformation information, Compilation compilation)
 		{
-			var getPropertyMethods = information.Properties
+			var getPropertyMethods = information.Properties.Results
 				.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.Value.GetMethod!);
 			BuildDelegates(writer, getPropertyMethods, compilation);
 
-			var setPropertyMethods = information.Properties
+			var setPropertyMethods = information.Properties.Results
 				.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.Value.SetMethod!);
 			BuildDelegates(writer, setPropertyMethods, compilation);
 
-			var explicitGetPropertyMethodGroups = information.Properties
+			var explicitGetPropertyMethodGroups = information.Properties.Results
 				.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 				.GroupBy(_ => _.Value.ContainingType);
@@ -93,7 +93,7 @@ internal static class MockProjectedDelegateBuilder
 				BuildDelegate(writer, explicitGetPropertyMethodGroup.First().Value.GetMethod!, compilation);
 			}
 
-			var explicitSetPropertyMethodGroups = information.Properties
+			var explicitSetPropertyMethodGroups = information.Properties.Results
 				.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 				.GroupBy(_ => _.Value.ContainingType);
@@ -104,15 +104,15 @@ internal static class MockProjectedDelegateBuilder
 			}
 		}
 
-		if (information.Methods.Length > 0)
+		if (information.Methods.Results.Length > 0)
 		{
-			var methods = information.Methods
+			var methods = information.Methods.Results
 				.Where(_ => _.Value.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.Value);
 			BuildDelegates(writer, methods, compilation);
 
-			var explicitMethodGroups = information.Methods
+			var explicitMethodGroups = information.Methods.Results
 				.Where(_ => _.Value.RequiresProjectedDelegate() &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 				.GroupBy(_ => _.Value.ContainingType);
@@ -123,7 +123,7 @@ internal static class MockProjectedDelegateBuilder
 			}
 		}
 
-		if (information.Properties.Length > 0)
+		if (information.Properties.Results.Length > 0)
 		{
 			BuildProperties(writer, information, compilation);
 		}

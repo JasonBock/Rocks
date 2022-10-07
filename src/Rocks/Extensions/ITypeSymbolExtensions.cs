@@ -157,7 +157,7 @@ internal static class ITypeSymbolExtensions
 						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).ToImmutableArray() :
 				Array.Empty<IMethodSymbol>().ToImmutableArray();
 
-	internal static ImmutableArray<EventMockableResult> GetMockableEvents(
+	internal static MockableEvents GetMockableEvents(
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		var events = ImmutableArray.CreateBuilder<EventMockableResult>();
@@ -226,10 +226,10 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return events.ToImmutable();
+		return new(events.ToImmutable(), false);
 	}
 
-	internal static ImmutableArray<MethodMockableResult> GetMockableMethods(
+	internal static MockableMethods GetMockableMethods(
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
 	{
@@ -384,10 +384,10 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return methods.ToImmutable();
+		return new(methods.ToImmutable(), false);
 	}
 
-	internal static ImmutableArray<PropertyMockableResult> GetMockableProperties(
+	internal static MockableProperties GetMockableProperties(
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 		HashSet<ITypeSymbol> shims, ref uint memberIdentifier)
 	{
@@ -550,8 +550,7 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-
-		return properties.ToImmutable();
+		return new(properties.ToImmutable(), false);
 	}
 
 	private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)

@@ -37,7 +37,7 @@ internal static class MockMakeBuilder
 
 		var memberIdentifier = 0u;
 
-		foreach (var method in information.Methods)
+		foreach (var method in information.Methods.Results)
 		{
 			if (method.Value.ReturnsVoid)
 			{
@@ -51,20 +51,20 @@ internal static class MockMakeBuilder
 			memberIdentifier++;
 		}
 
-		foreach (var property in information.Properties.Where(_ => !_.Value.IsIndexer))
+		foreach (var property in information.Properties.Results.Where(_ => !_.Value.IsIndexer))
 		{
 			MockPropertyBuilder.Build(writer, property, compilation);
 		}
 
-		foreach (var indexer in information.Properties.Where(_ => _.Value.IsIndexer))
+		foreach (var indexer in information.Properties.Results.Where(_ => _.Value.IsIndexer))
 		{
 			MockIndexerBuilder.Build(writer, indexer, compilation);
 		}
 
-		if (information.Events.Length > 0)
+		if (information.Events.Results.Length > 0)
 		{
 			writer.WriteLine();
-			MockEventsBuilder.Build(writer, information.Events, compilation);
+			MockEventsBuilder.Build(writer, information.Events.Results, compilation);
 		}
 
 		writer.Indent--;
@@ -73,12 +73,12 @@ internal static class MockMakeBuilder
 
 	private static void BuildRefReturnFields(IndentedTextWriter writer, MockInformation information)
 	{
-		foreach (var method in information.Methods.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+		foreach (var method in information.Methods.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
 			writer.WriteLine($"private {method.Value.ReturnType.GetReferenceableName()} rr{method.MemberIdentifier};");
 		}
 
-		foreach (var property in information.Properties.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+		foreach (var property in information.Properties.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
 			writer.WriteLine($"private {property.Value.Type.GetReferenceableName()} rr{property.MemberIdentifier};");
 		}

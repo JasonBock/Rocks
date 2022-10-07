@@ -9,32 +9,12 @@ namespace Rocks;
 
 internal sealed class MockInformation
 {
-	public MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol,
+	internal MockInformation(ITypeSymbol typeToMock, IAssemblySymbol containingAssemblyOfInvocationSymbol,
 		SemanticModel model, ConfigurationValues configurationValues, BuildType buildType)
 	{
 		(this.ContainingAssemblyOfInvocationSymbol, this.Model, this.ConfigurationValues) =
 			(containingAssemblyOfInvocationSymbol, model, configurationValues);
-		this.Validate(typeToMock, buildType);
-	}
 
-	private static bool HasOpenGenerics(INamedTypeSymbol type)
-	{
-		if (type.TypeArguments.Length > 0)
-		{
-			for (var i = 0; i < type.TypeArguments.Length; i++)
-			{
-				if (type.TypeArguments[i].Equals(type.TypeParameters[i]))
-				{
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	private void Validate(ITypeSymbol typeToMock, BuildType buildType)
-	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
 		if (typeToMock.SpecialType == SpecialType.System_Delegate ||
@@ -76,13 +56,13 @@ internal sealed class MockInformation
 		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
 
-		if (this.Methods.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
-			this.Properties.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
+		if (this.Methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
+			this.Properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{
 			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
 		}
 
-		if (buildType == BuildType.Create && this.Methods.Length == 0 && this.Properties.Length == 0)
+		if (buildType == BuildType.Create && this.Methods.Results.Length == 0 && this.Properties.Results.Length == 0)
 		{
 			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(typeToMock));
 		}
@@ -102,14 +82,30 @@ internal sealed class MockInformation
 		}
 	}
 
-	public ConfigurationValues ConfigurationValues { get; }
-	public ImmutableArray<IMethodSymbol> Constructors { get; private set; }
-	public IAssemblySymbol ContainingAssemblyOfInvocationSymbol { get; }
-	public ImmutableArray<EventMockableResult> Events { get; private set; }
-	public ImmutableArray<Diagnostic> Diagnostics { get; private set; }
-	public ImmutableArray<MethodMockableResult> Methods { get; private set; }
-	public SemanticModel Model { get; }
-	public ImmutableArray<PropertyMockableResult> Properties { get; private set; }
-	public ImmutableArray<ITypeSymbol> Shims { get; private set; }
-	public MockedType? TypeToMock { get; private set; }
+	private static bool HasOpenGenerics(INamedTypeSymbol type)
+	{
+		if (type.TypeArguments.Length > 0)
+		{
+			for (var i = 0; i < type.TypeArguments.Length; i++)
+			{
+				if (type.TypeArguments[i].Equals(type.TypeParameters[i]))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	internal ConfigurationValues ConfigurationValues { get; }
+	internal ImmutableArray<IMethodSymbol> Constructors { get; private set; }
+	internal IAssemblySymbol ContainingAssemblyOfInvocationSymbol { get; }
+	internal MockableEvents Events { get; private set; }
+	internal ImmutableArray<Diagnostic> Diagnostics { get; private set; }
+	internal MockableMethods Methods { get; private set; }
+	internal SemanticModel Model { get; }
+	internal MockableProperties Properties { get; private set; }
+	internal ImmutableArray<ITypeSymbol> Shims { get; private set; }
+	internal MockedType? TypeToMock { get; private set; }
 }

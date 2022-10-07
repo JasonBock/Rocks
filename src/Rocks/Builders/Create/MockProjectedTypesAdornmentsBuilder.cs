@@ -46,7 +46,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 	{
 		var adornmentTypes = new HashSet<(ITypeSymbol type, AdornmentType adornment, bool isExplicit)>();
 
-		foreach (var methodResult in information.Methods)
+		foreach (var methodResult in information.Methods.Results)
 		{
 			var method = methodResult.Value;
 
@@ -57,7 +57,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilder
 			}
 		}
 
-		foreach (var propertyResult in information.Properties)
+		foreach (var propertyResult in information.Properties.Results)
 		{
 			var property = propertyResult.Value;
 

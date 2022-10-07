@@ -8,22 +8,22 @@ internal static class EventExpectationsExtensionsBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MockInformation information)
 	{
-		if (information.Events.Length > 0)
+		if (information.Events.Results.Length > 0)
 		{
-			if (information.Methods.Length > 0)
+			if (information.Methods.Results.Length > 0)
 			{
 				writer.WriteLine();
 				EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Method");
 			}
 
-			if (information.Properties.Length > 0)
+			if (information.Properties.Results.Length > 0)
 			{
-				if (information.Properties.Any(_ => !_.Value.IsIndexer))
+				if (information.Properties.Results.Any(_ => !_.Value.IsIndexer))
 				{
 					writer.WriteLine();
 					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Property");
 				}
-				if (information.Properties.Any(_ => _.Value.IsIndexer))
+				if (information.Properties.Results.Any(_ => _.Value.IsIndexer))
 				{
 					writer.WriteLine();
 					EventExpectationsExtensionsBuilder.BuildAdornments(writer, information, "Indexer");
@@ -73,7 +73,7 @@ internal static class EventExpectationsExtensionsBuilder
 
 		var typeToMockName = information.TypeToMock!.ReferenceableName;
 
-		foreach (var result in information.Events)
+		foreach (var result in information.Events.Results)
 		{
 			var argsType = "global::System.EventArgs";
 
@@ -83,14 +83,14 @@ internal static class EventExpectationsExtensionsBuilder
 				argsType = namedSymbol.DelegateInvokeMethod.Parameters[1].Type.GetReferenceableName();
 			}
 
-			if (information.Methods.Any(_ => !_.Value.ReturnsVoid) ||
-				information.Properties.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
+			if (information.Methods.Results.Any(_ => !_.Value.ReturnsVoid) ||
+				information.Properties.Results.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
 			{
 				BuildRaisesMethod(writer, prefix, typeToMockName, result, argsType, true);
 			}
 
-			if (information.Methods.Any(_ => _.Value.ReturnsVoid) ||
-				information.Properties.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
+			if (information.Methods.Results.Any(_ => _.Value.ReturnsVoid) ||
+				information.Properties.Results.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			{
 				BuildRaisesMethod(writer, prefix, typeToMockName, result, argsType, false);
 			}

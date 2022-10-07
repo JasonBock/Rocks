@@ -23,10 +23,12 @@ $@"public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
+		var result = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(2));
 			var getAndInitProperty = properties.Single(_ => _.Value.Name == "GetAndInit");
 			Assert.That(getAndInitProperty.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
@@ -51,10 +53,12 @@ $@"public abstract class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
+		var result = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(3));
 			var thisIntProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
 				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
@@ -97,10 +101,12 @@ public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
+		var result = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
@@ -135,10 +141,12 @@ public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var properties = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
+		var result = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 			var dataProperty = properties.Single(_ => _.Value.Name == targetPropertyName);
 			Assert.That(dataProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));

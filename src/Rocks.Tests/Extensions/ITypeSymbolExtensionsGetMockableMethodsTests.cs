@@ -35,10 +35,12 @@ public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
@@ -79,10 +81,12 @@ public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
@@ -111,10 +115,12 @@ $@"public interface {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result= typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
@@ -142,10 +148,12 @@ public interface {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseMethod = methods.Single(_ => _.Value.Name == baseMethodName);
 			Assert.That(baseMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
@@ -175,10 +183,12 @@ public interface {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
 			Assert.That(targetMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
@@ -214,10 +224,12 @@ public interface {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 			Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
@@ -257,10 +269,12 @@ public interface {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
 			Assert.That(baseOneMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
@@ -286,10 +300,12 @@ $@"public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
@@ -312,10 +328,12 @@ $@"public class {targetTypeName}
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var methods = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
 
 		Assert.Multiple(() =>
 		{
+			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
