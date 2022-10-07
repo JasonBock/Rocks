@@ -56,6 +56,12 @@ internal sealed class MockInformation
 		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
 
+		if(this.Methods.HasInaccessibleAbstractMembers || this.Properties.HasInaccessibleAbstractMembers ||
+			this.Events.HasInaccessibleAbstractMembers)
+		{
+			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(typeToMock));
+		}
+
 		if (this.Methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
 			this.Properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{
@@ -73,7 +79,6 @@ internal sealed class MockInformation
 		}
 
 		this.Shims = shims.ToImmutableArray();
-
 		this.Diagnostics = diagnostics.ToImmutable();
 
 		if (!this.Diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error))

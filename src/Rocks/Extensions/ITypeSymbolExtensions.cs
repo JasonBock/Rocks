@@ -161,13 +161,21 @@ internal static class ITypeSymbolExtensions
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		var events = ImmutableArray.CreateBuilder<EventMockableResult>();
+		var hasInaccessibleAbstractMembers = false;
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
 			foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
-				.Where(_ => !_.IsStatic && _.CanBeReferencedByName && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				.Where(_ => !_.IsStatic && _.CanBeReferencedByName))
 			{
-				events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No));
+				if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+				{
+					hasInaccessibleAbstractMembers = true;
+				}
+				else
+				{
+					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No));
+				}
 			}
 
 			var baseInterfaceEventsGroups = new List<List<IEventSymbol>>();
@@ -175,25 +183,32 @@ internal static class ITypeSymbolExtensions
 			foreach (var selfBaseInterface in self.AllInterfaces)
 			{
 				foreach (var selfBaseEvent in selfBaseInterface.GetMembers().OfType<IEventSymbol>()
-					.Where(_ => _.CanBeReferencedByName && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => _.CanBeReferencedByName))
 				{
-					if (!events.Any(_ => _.Value.Name == selfBaseEvent.Name))
+					if (!selfBaseEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfaceEventGroup in baseInterfaceEventsGroups)
+						hasInaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (!events.Any(_ => _.Value.Name == selfBaseEvent.Name))
 						{
-							if (baseInterfaceEventGroup.Any(_ => _.Name == selfBaseEvent.Name))
+							var foundMatch = false;
+
+							foreach (var baseInterfaceEventGroup in baseInterfaceEventsGroups)
 							{
-								baseInterfaceEventGroup.Add(selfBaseEvent);
-								foundMatch = true;
-								break;
+								if (baseInterfaceEventGroup.Any(_ => _.Name == selfBaseEvent.Name))
+								{
+									baseInterfaceEventGroup.Add(selfBaseEvent);
+									foundMatch = true;
+									break;
+								}
 							}
-						}
 
-						if (!foundMatch)
-						{
-							baseInterfaceEventsGroups.Add(new List<IEventSymbol>(1) { selfBaseEvent });
+							if (!foundMatch)
+							{
+								baseInterfaceEventsGroups.Add(new List<IEventSymbol>(1) { selfBaseEvent });
+							}
 						}
 					}
 				}
@@ -220,13 +235,20 @@ internal static class ITypeSymbolExtensions
 		{
 			foreach (var selfEvent in self.GetMembers().OfType<IEventSymbol>()
 				.Where(_ => !_.IsStatic && _.CanBeReferencedByName &&
-					(_.IsAbstract || _.IsVirtual) && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					(_.IsAbstract || _.IsVirtual)))
 			{
-				events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+				if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) && selfEvent.IsAbstract)
+				{
+					hasInaccessibleAbstractMembers = true;
+				}
+				else
+				{
+					events.Add(new(selfEvent, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes));
+				}
 			}
 		}
 
-		return new(events.ToImmutable(), false);
+		return new(events.ToImmutable(), hasInaccessibleAbstractMembers);
 	}
 
 	internal static MockableMethods GetMockableMethods(
@@ -234,6 +256,7 @@ internal static class ITypeSymbolExtensions
 		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
 	{
 		var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
+		var hasInaccessibleAbstractMembers = false;
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
@@ -249,23 +272,30 @@ internal static class ITypeSymbolExtensions
 					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
 			foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
-				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 			{
-				var selfMethodRequiresExplicit = objectMethods.Any(
-					_ => _.Match(selfMethod) switch
-					{
-						MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
-						_ => false
-					}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
-				methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
-
-				if (selfMethod.IsVirtual)
+				if(!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
+					selfMethod.IsAbstract)
 				{
-					shims.Add(self);
+					hasInaccessibleAbstractMembers = true;
 				}
+				else
+				{
+					var selfMethodRequiresExplicit = objectMethods.Any(
+						_ => _.Match(selfMethod) switch
+						{
+							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+							_ => false
+						}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
+					methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
 
-				memberIdentifier++;
+					if (selfMethod.IsVirtual)
+					{
+						shims.Add(self);
+					}
+
+					memberIdentifier++;
+				}
 			}
 
 			var baseInterfaceMethodGroups = new List<List<IMethodSymbol>>();
@@ -273,26 +303,32 @@ internal static class ITypeSymbolExtensions
 			foreach (var selfBaseInterface in self.AllInterfaces)
 			{
 				foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 				{
-					if (!methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact))
+					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
+						hasInaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (!methods.Any(_ => _.Value.Match(selfBaseMethod) == MethodMatch.Exact))
 						{
-							if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+							var foundMatch = false;
+
+							foreach (var baseInterfaceMethodGroup in baseInterfaceMethodGroups)
 							{
-								baseInterfaceMethodGroup.Add(selfBaseMethod);
-								foundMatch = true;
-								break;
+								if (baseInterfaceMethodGroup.Any(_ => _.Match(selfBaseMethod) == MethodMatch.Exact))
+								{
+									baseInterfaceMethodGroup.Add(selfBaseMethod);
+									foundMatch = true;
+									break;
+								}
 							}
-						}
 
-						if (!foundMatch)
-						{
-							baseInterfaceMethodGroups.Add(new List<IMethodSymbol>(1) { selfBaseMethod });
+							if (!foundMatch)
+							{
+								baseInterfaceMethodGroups.Add(new List<IMethodSymbol>(1) { selfBaseMethod });
+							}
 						}
 					}
 				}
@@ -354,37 +390,44 @@ internal static class ITypeSymbolExtensions
 			foreach (var hierarchyType in hierarchy)
 			{
 				foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-						!_.IsStatic && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName && !_.IsStatic))
 				{
 					if ((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual) &&
 						(!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
 					{
-						var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact &&
-							!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
-
-						if (methodToRemove is not null)
+						if (!hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
+							hierarchyMethod.IsAbstract)
 						{
-							methods.Remove(methodToRemove);
+							hasInaccessibleAbstractMembers = true;
 						}
-
-						if (!hierarchyMethod.IsSealed)
+						else
 						{
-							methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+							var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact &&
+								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
-							if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
+							if (methodToRemove is not null)
 							{
-								shims.Add(hierarchyMethod.ContainingType);
+								methods.Remove(methodToRemove);
 							}
 
-							memberIdentifier++;
+							if (!hierarchyMethod.IsSealed)
+							{
+								methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+
+								if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
+								{
+									shims.Add(hierarchyMethod.ContainingType);
+								}
+
+								memberIdentifier++;
+							}
 						}
 					}
 				}
 			}
 		}
 
-		return new(methods.ToImmutable(), false);
+		return new(methods.ToImmutable(), hasInaccessibleAbstractMembers);
 	}
 
 	internal static MockableProperties GetMockableProperties(
@@ -413,25 +456,33 @@ internal static class ITypeSymbolExtensions
 		}
 
 		var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
+		var hasInaccessibleAbstractMembers = false;
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
 			foreach (var selfProperty in self.GetMembers().OfType<IPropertySymbol>()
-				.Where(_ => (_.IsIndexer || _.CanBeReferencedByName) && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+				.Where(_ => (_.IsIndexer || _.CanBeReferencedByName)))
 			{
-				var accessors = selfProperty.GetAccessors();
-				properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
-
-				if (selfProperty.IsVirtual)
+				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 				{
-					shims.Add(self);
+					hasInaccessibleAbstractMembers = true;
 				}
-
-				memberIdentifier++;
-
-				if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+				else
 				{
+					var accessors = selfProperty.GetAccessors();
+					properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
+
+					if (selfProperty.IsVirtual)
+					{
+						shims.Add(self);
+					}
+
 					memberIdentifier++;
+
+					if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+					{
+						memberIdentifier++;
+					}
 				}
 			}
 
@@ -440,25 +491,32 @@ internal static class ITypeSymbolExtensions
 			foreach (var selfBaseInterface in self.AllInterfaces)
 			{
 				foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>()
-					.Where(_ => (_.IsIndexer || _.CanBeReferencedByName) && _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => (_.IsIndexer || _.CanBeReferencedByName)))
 				{
-					if (!properties.Any(_ => _.Value.Name == selfBaseProperty.Name))
+					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						var foundMatch = false;
-
-						foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
+						hasInaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (!properties.Any(_ => _.Value.Name == selfBaseProperty.Name))
 						{
-							if (baseInterfacePropertyGroup.Any(_ => _.Name == selfBaseProperty.Name))
+							var foundMatch = false;
+
+							foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
 							{
-								baseInterfacePropertyGroup.Add(selfBaseProperty);
-								foundMatch = true;
-								break;
+								if (baseInterfacePropertyGroup.Any(_ => _.Name == selfBaseProperty.Name))
+								{
+									baseInterfacePropertyGroup.Add(selfBaseProperty);
+									foundMatch = true;
+									break;
+								}
 							}
-						}
 
-						if (!foundMatch)
-						{
-							baseInterfacePropertyGroups.Add(new List<IPropertySymbol>(1) { selfBaseProperty });
+							if (!foundMatch)
+							{
+								baseInterfacePropertyGroups.Add(new List<IPropertySymbol>(1) { selfBaseProperty });
+							}
 						}
 					}
 				}
@@ -514,35 +572,42 @@ internal static class ITypeSymbolExtensions
 			foreach (var hierarchyType in hierarchy)
 			{
 				foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
-					.Where(_ => !_.IsStatic && (_.IsIndexer || _.CanBeReferencedByName) &&
-						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)))
+					.Where(_ => !_.IsStatic && (_.IsIndexer || _.CanBeReferencedByName)))
 				{
-					if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
+					if (!hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
+						hierarchyProperty.IsAbstract)
 					{
-						var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
-							!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
-							AreParametersEqual(_.Value, hierarchyProperty));
-
-						if (propertyToRemove is not null)
+						hasInaccessibleAbstractMembers = true;
+					}
+					else
+					{
+						if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
 						{
-							properties.Remove(propertyToRemove);
-						}
+							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
+								!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
+								AreParametersEqual(_.Value, hierarchyProperty));
 
-						if (!hierarchyProperty.IsSealed)
-						{
-							var accessors = hierarchyProperty.GetAccessors();
-							properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
-
-							if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
+							if (propertyToRemove is not null)
 							{
-								shims.Add(hierarchyProperty.ContainingType);
+								properties.Remove(propertyToRemove);
 							}
 
-							memberIdentifier++;
-
-							if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+							if (!hierarchyProperty.IsSealed)
 							{
+								var accessors = hierarchyProperty.GetAccessors();
+								properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
+
+								if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
+								{
+									shims.Add(hierarchyProperty.ContainingType);
+								}
+
 								memberIdentifier++;
+
+								if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+								{
+									memberIdentifier++;
+								}
 							}
 						}
 					}
@@ -550,7 +615,7 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return new(properties.ToImmutable(), false);
+		return new(properties.ToImmutable(), hasInaccessibleAbstractMembers);
 	}
 
 	private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)

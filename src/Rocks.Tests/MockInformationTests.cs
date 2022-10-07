@@ -11,11 +11,46 @@ namespace Rocks.Tests;
 
 public static class MockInformationTests
 {
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Create, true, true)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Create, true, true)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Create, true, true)]
+	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Create, true, true)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Create, true, true)]
+	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Create, true, true)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Make, true, true)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Make, true, true)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Make, true, true)]
+	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Make, true, true)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Make, true, true)]
+	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Make, true, true)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Create, false, false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Create, false, false)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Create, false, false)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Create, false, false)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Make, false, false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Make, false, false)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Make, false, false)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Make, false, false)]
+	public static void CreateWhenTargetHasInternalAbstractMembers(string code, int buildType, bool hasDiagnostic, bool isMockNull)
+	{
+		var (referencingSymbol, _) = MockInformationTests.GetType("public class Target { }", "Target");
+
+		const string targetTypeName = "InternalTargets";
+		var information = MockInformationTests.GetInformation(code, targetTypeName, (BuildType)buildType,
+			containingAssembly: referencingSymbol.ContainingAssembly);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics.Any(_ => _.Id == TypeHasInaccessibleAbstractMembersDiagnostic.Id), Is.EqualTo(hasDiagnostic));
+			Assert.That(information.TypeToMock is null, Is.EqualTo(isMockNull));
+		});
+	}
+
 	[Test]
 	public static void CreateWhenInterfaceHasStaticAbstractMethod()
 	{
 		const string targetTypeName = "IHaveStaticAbstractMethod";
-		var code = 
+		var code =
 			$$"""
 			public interface {{targetTypeName}} 
 			{ 
@@ -560,10 +595,11 @@ public class {targetTypeName}
 	}
 
 	private static MockInformation GetInformation(string source, string targetTypeName,
-		BuildType buildType, bool treatWarningsAsErrors = false)
+		BuildType buildType, bool treatWarningsAsErrors = false,
+		IAssemblySymbol? containingAssembly = null)
 	{
 		var (typeSymbol, model) = MockInformationTests.GetType(source, targetTypeName);
-		return new MockInformation(typeSymbol, typeSymbol.ContainingAssembly, model,
+		return new MockInformation(typeSymbol, containingAssembly ?? typeSymbol.ContainingAssembly, model,
 			new ConfigurationValues(IndentStyle.Tab, 3, treatWarningsAsErrors), buildType);
 	}
 }
