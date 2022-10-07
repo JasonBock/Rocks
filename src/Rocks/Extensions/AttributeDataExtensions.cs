@@ -86,16 +86,19 @@ internal static class AttributeDataExtensions
 		// * Not visible to the current compilation (e.g. IntrinsicAttribute).
 		// * IteratorStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.iteratorstatemachineattribute#remarks)
 		// * AsyncStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.asyncstatemachineattribute#remarks)
+		// * DynamicAttribute (CS1970 - the error is "Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead." - https://sourceroslyn.io/#Microsoft.CodeAnalysis.CSharp/Symbols/Source/SourcePropertySymbolBase.cs,1276)
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
 		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
 		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
+		var dynamicAttribute = compilation.GetTypeByMetadataName(typeof(DynamicAttribute).FullName);
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
 				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
 				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
-				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
+				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{
