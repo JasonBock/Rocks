@@ -402,7 +402,7 @@ internal static class ITypeSymbolExtensions
 						}
 						else
 						{
-							var methodToRemove = methods.SingleOrDefault(_ => _.Value.Match(hierarchyMethod) == MethodMatch.Exact &&
+							var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
 								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
 							if (methodToRemove is not null)
