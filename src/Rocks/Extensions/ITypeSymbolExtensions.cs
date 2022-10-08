@@ -499,13 +499,17 @@ internal static class ITypeSymbolExtensions
 					}
 					else
 					{
-						if (!properties.Any(_ => _.Value.Name == selfBaseProperty.Name))
+						if (!properties.Any(
+							_ => _.Value.Name == selfBaseProperty.Name && 
+								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type)))
 						{
 							var foundMatch = false;
 
 							foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
 							{
-								if (baseInterfacePropertyGroup.Any(_ => _.Name == selfBaseProperty.Name))
+								if (baseInterfacePropertyGroup.Any(
+									_ => _.Name == selfBaseProperty.Name &&
+										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type)))
 								{
 									baseInterfacePropertyGroup.Add(selfBaseProperty);
 									foundMatch = true;
@@ -526,9 +530,18 @@ internal static class ITypeSymbolExtensions
 			{
 				if (baseInterfacePropertyGroup.Count == 1)
 				{
+					// If there are any properties that have the same name
+					// but different types,
+					// then we must require explicit implementation.
+					var requiresExplicitImplementation = properties.Any(
+						_ => baseInterfacePropertyGroup[0].Name == _.Value.Name && 
+							!SymbolEqualityComparer.Default.Equals(baseInterfacePropertyGroup[0].Type, _.Value.Type)) ?
+							RequiresExplicitInterfaceImplementation.Yes :
+							RequiresExplicitInterfaceImplementation.No;
+
 					var accessors = baseInterfacePropertyGroup[0].GetAccessors();
 					properties.Add(new(baseInterfacePropertyGroup[0], self,
-						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
+						requiresExplicitImplementation, RequiresOverride.No, accessors, memberIdentifier));
 
 					if (baseInterfacePropertyGroup[0].IsVirtual)
 					{

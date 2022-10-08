@@ -356,10 +356,25 @@ public static class HiddenMembersGeneratorTests
 				internal static global::Rocks.Expectations.PropertySetterExpectations<global::ISub> Setters(this global::Rocks.Expectations.PropertyExpectations<global::ISub> @self) =>
 					new(@self);
 				
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> ExplicitPropertiesForIBase(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, IBase> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ISub, IBase> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> @self) =>
+					new(@self);
+				
 				internal static global::Rocks.Expectations.IndexerExpectations<global::ISub> Indexers(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
 					new(@self);
 				
 				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::ISub> Getters(this global::Rocks.Expectations.IndexerExpectations<global::ISub> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitIndexerExpectations<global::ISub, global::IBase> ExplicitIndexersForIBase(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitIndexerGetterExpectations<global::ISub, global::IBase> Getters(this global::Rocks.Expectations.ExplicitIndexerExpectations<global::ISub, global::IBase> @self) =>
 					new(@self);
 				
 				internal static global::ISub Instance(this global::Rocks.Expectations.Expectations<global::ISub> @self)
@@ -468,6 +483,56 @@ public static class HiddenMembersGeneratorTests
 							}
 						}
 					}
+					[global::Rocks.MemberIdentifier(5, "global::IBase.get_Data()")]
+					[global::Rocks.MemberIdentifier(6, "global::IBase.set_Data(@value)")]
+					string global::IBase.Data
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								var @result = @methodHandler.Method is not null ?
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
+								@methodHandler.IncrementCallCount();
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.get_Data())");
+						}
+						set
+						{
+							if (this.handlers.TryGetValue(6, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@value))
+									{
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(@methodHandler.Method)(@value);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IBase.set_Data(@value)");
+										}
+										
+										@methodHandler.IncrementCallCount();
+										break;
+									}
+								}
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.set_Data(@value)");
+							}
+						}
+					}
 					[global::Rocks.MemberIdentifier(4, "this[int @a, string @b]")]
 					public int this[int @a, string @b]
 					{
@@ -483,6 +548,32 @@ public static class HiddenMembersGeneratorTests
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, int>>(@methodHandler.Method)(@a, @b) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+										@methodHandler.IncrementCallCount();
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b]");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b])");
+						}
+					}
+					[global::Rocks.MemberIdentifier(7, "global::IBase.this[int @a, string @b]")]
+					string global::IBase.this[int @a, string @b]
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(7, out var @methodHandlers))
+							{
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
+									{
+										var @result = @methodHandler.Method is not null ?
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, string>>(@methodHandler.Method)(@a, @b) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
@@ -525,6 +616,25 @@ public static class HiddenMembersGeneratorTests
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
 					return new global::Rocks.IndexerAdornments<global::ISub, global::System.Func<int, string, int>, int>(@self.Add<int>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
+				}
+			}
+			internal static class ExplicitPropertyGetterExpectationsOfISubForIBaseExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<ISub, global::System.Func<string>, string> Data(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, IBase> @self) =>
+					new global::Rocks.PropertyAdornments<ISub, global::System.Func<string>, string>(@self.Add<string>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			internal static class ExplicitPropertySetterExpectationsOfISubForIBaseExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<ISub, global::System.Action<string>> Data(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<ISub, IBase> @self, global::Rocks.Argument<string> value) =>
+					new global::Rocks.PropertyAdornments<ISub, global::System.Action<string>>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+			}
+			internal static class ExplicitIndexerGetterExpectationsOfISubForIBaseExtensions
+			{
+				internal static global::Rocks.IndexerAdornments<ISub, global::System.Func<int, string, string>, string> This(this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<ISub, IBase> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@a);
+					global::System.ArgumentNullException.ThrowIfNull(@b);
+					return new global::Rocks.IndexerAdornments<ISub, global::System.Func<int, string, string>, string>(@self.Add<string>(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
 				}
 			}
 			

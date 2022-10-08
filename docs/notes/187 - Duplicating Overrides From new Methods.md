@@ -43,7 +43,7 @@ public class BaseClass
     
     public virtual string Data { get; set; }
     
-    public virtual string this[int a, BaseClass b] { get => "2"; }
+    public virtual string this[int a, string b] { get => "2"; }
 }
 
 public class SubClass : BaseClass
@@ -52,6 +52,32 @@ public class SubClass : BaseClass
 
     public new virtual int Data { get; set; }
     
-    public new virtual int this[int a, BaseClass b] { get => 3; }
+    public new virtual int this[int a, string b] { get => 3; }
 }
 ```
+
+And it works on interfaces as well:
+
+```csharp
+public interface BaseClass
+{
+    void Foo();
+    
+    string Data { get; set; }
+	
+	string this[int a, string b] { get; }
+}
+
+public interface SubClass : BaseClass
+{
+    new int Foo();
+
+    new int Data { get; set; }
+
+	new int this[int a, string b] { get; }
+}
+```
+
+I think the rule is, if a method in a subtype "matches", either by being exact or return type only, if the "base" member is an interface, it needs to be explicitly implemented - otherwise, it needs to be ignored.
+
+For interfaces, if the match is Exact, the subtype implementation is fine. If it's None...it's not shadowing. Only with DifferByReturnTypeOnly should it do an explicit implementation. The method scenario is correct, but the properties and indexers aren't.
