@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.2] - Not Yet Released
 
 ### Fixed
+- Support for types with hidden members have been improved (issue [#187](https://github.com/JasonBock/Rocks/issues/187))
 - Types that have `internal abstract` members are now flagged as being unmockable (issue [#181](https://github.com/JasonBock/Rocks/issues/181))
 - Parameters that do not have nullable annotation and have a `null` optional value are now handled correctly (issue [#192](https://github.com/JasonBock/Rocks/issues/192))
 - Only one of these constraints is now added to the generated mock: `unmanaged`, `notnull`, `class`, or `struct` (issue [#180](https://github.com/JasonBock/Rocks/issues/180))
