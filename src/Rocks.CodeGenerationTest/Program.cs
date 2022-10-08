@@ -1,9 +1,9 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -115,7 +115,7 @@ static void TestWithTypes()
 
 		// TODO: Just referencing this makes a stack overflow occur.
 		// TerraFX.Interop.DirectX.D3D12MA_Allocation
-		//typeof(TerraFX.Interop.DirectX.AudioReverb),
+		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 
 		// TerraFX.Interop.Windows
 		//typeof(TerraFX.Interop.INativeGuid),
@@ -130,7 +130,7 @@ static void TestWithTypes()
 		//typeof(System.Reactive.ExperimentalAttribute),
 
 		// NSubstitute
-		typeof(NSubstitute.Arg),
+		//typeof(NSubstitute.Arg),
 
 		// TODO: Azure.Identity, NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
