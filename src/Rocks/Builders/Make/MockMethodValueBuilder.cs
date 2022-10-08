@@ -52,6 +52,7 @@ internal static class MockMethodValueBuilder
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{isUnsafe}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
+		/*
 		var constraints = method.GetConstraints();
 
 		if (result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
@@ -71,6 +72,7 @@ internal static class MockMethodValueBuilder
 
 			writer.Indent--;
 		}
+		*/
 
 		writer.WriteLine("{");
 		writer.Indent++;
