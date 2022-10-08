@@ -6,29 +6,34 @@ namespace Rocks.Tests.Generators;
 public static class ConstraintsGeneratorTests
 {
 	[Test]
-	public static async Task GenerateCreateWithConstraintThatAreInheritedAsync()
+	public static async Task GenerateCreateTargetingInterfaceAsync()
 	{
 		var code =
 			"""
+			#nullable enable
+
 			using Rocks;
 
-			public class PropertyBuilder { }
-			public class ValueGenerator { }
+			public interface InterfaceConstraint { }
+			public class ClassConstraint { }
 
-			public class HasConstraints
-			{
-				public virtual void Has<TGenerator>(PropertyBuilder builder)
-					 where TGenerator : class { }
-			
-				public virtual PropertyBuilder HasValueGenerator<TGenerator>()
-					 where TGenerator : ValueGenerator => default!;
+			public interface ITypeConstraints
+			{				
+			   void HasUnmanaged<T>() where T : unmanaged;
+			   void HasNotNull<T>() where T : notnull;
+			   void HasClass<T>() where T : class;
+			   void HasStruct<T>() where T : struct;
+			   void HasClassTypeConstraint<T>() where T : ClassConstraint;
+			   void HasInterfaceTypeConstraint<T>() where T : InterfaceConstraint;
+			   void HasConstructorConstraint<T>() where T : new();
+				TData? HasNullableValue<TData>(TData? data);
 			}
-
+			
 			public static class Test
 			{
 				public static void Go()
 				{
-					var expectations = Rock.Create<HasConstraints>();
+					var expectations = Rock.Create<ITypeConstraints>();
 				}
 			}
 			""";
@@ -40,17 +45,17 @@ public static class ConstraintsGeneratorTests
 			using System.Collections.Immutable;
 			#nullable enable
 			
-			internal static class CreateExpectationsOfHasConstraintsExtensions
+			internal static class CreateExpectationsOfITypeConstraintsExtensions
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::HasConstraints> Methods(this global::Rocks.Expectations.Expectations<global::HasConstraints> @self) =>
+				internal static global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> Methods(this global::Rocks.Expectations.Expectations<global::ITypeConstraints> @self) =>
 					new(@self);
 				
-				internal static global::HasConstraints Instance(this global::Rocks.Expectations.Expectations<global::HasConstraints> @self)
+				internal static global::ITypeConstraints Instance(this global::Rocks.Expectations.Expectations<global::ITypeConstraints> @self)
 				{
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockHasConstraints(@self);
+						return new RockITypeConstraints(@self);
 					}
 					else
 					{
@@ -58,12 +63,365 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockHasConstraints
-					: global::HasConstraints
+				private sealed class RockITypeConstraints
+					: global::ITypeConstraints
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockHasConstraints(global::Rocks.Expectations.Expectations<global::HasConstraints> @expectations) =>
+					public RockITypeConstraints(global::Rocks.Expectations.Expectations<global::ITypeConstraints> @expectations) =>
+						this.handlers = @expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "void HasUnmanaged<T>()")]
+					public void HasUnmanaged<T>()
+						where T : unmanaged
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasUnmanaged<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "void HasNotNull<T>()")]
+					public void HasNotNull<T>()
+						where T : notnull
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasNotNull<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "void HasClass<T>()")]
+					public void HasClass<T>()
+						where T : class
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasClass<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "void HasStruct<T>()")]
+					public void HasStruct<T>()
+						where T : struct
+					{
+						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasStruct<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(4, "void HasClassTypeConstraint<T>()")]
+					public void HasClassTypeConstraint<T>()
+						where T : global::ClassConstraint
+					{
+						if (this.handlers.TryGetValue(4, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasClassTypeConstraint<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(5, "void HasInterfaceTypeConstraint<T>()")]
+					public void HasInterfaceTypeConstraint<T>()
+						where T : global::InterfaceConstraint
+					{
+						if (this.handlers.TryGetValue(5, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasInterfaceTypeConstraint<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(6, "void HasConstructorConstraint<T>()")]
+					public void HasConstructorConstraint<T>()
+						where T : new()
+					{
+						if (this.handlers.TryGetValue(6, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void HasConstructorConstraint<T>()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(7, "TData? HasNullableValue<TData>(TData? @data)")]
+					public TData? HasNullableValue<TData>(TData? @data)
+					{
+						if (this.handlers.TryGetValue(7, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+								{
+									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
+										@methodReturn(@data) :
+										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
+											@returnValue.ReturnValue :
+											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+									@methodHandler.IncrementCallCount();
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TData? HasNullableValue<TData>(TData? @data)");
+						}
+						
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for TData? HasNullableValue<TData>(TData? @data)");
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfITypeConstraintsExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasUnmanaged<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : unmanaged =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasNotNull<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : notnull =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasClass<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : class =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasStruct<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : struct =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasClassTypeConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : global::ClassConstraint =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasInterfaceTypeConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : global::InterfaceConstraint =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action> HasConstructorConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self) where T : new() =>
+					new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Action>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Func<TData?, TData?>, TData?> HasNullableValue<TData>(this global::Rocks.Expectations.MethodExpectations<global::ITypeConstraints> @self, global::Rocks.Argument<TData?> @data)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@data);
+					return new global::Rocks.MethodAdornments<global::ITypeConstraints, global::System.Func<TData?, TData?>, TData?>(@self.Add<TData?>(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @data }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ITypeConstraints_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateMakeTargetingInterfaceAsync()
+	{
+		var code =
+			"""
+			#nullable enable
+			
+			using Rocks;
+
+			public interface InterfaceConstraint { }
+			public class ClassConstraint { }
+
+			public interface ITypeConstraints
+			{				
+			   void HasUnmanaged<T>() where T : unmanaged;
+			   void HasNotNull<T>() where T : notnull;
+			   void HasClass<T>() where T : class;
+			   void HasStruct<T>() where T : struct;
+			   void HasClassTypeConstraint<T>() where T : ClassConstraint;
+			   void HasInterfaceTypeConstraint<T>() where T : InterfaceConstraint;
+			   void HasConstructorConstraint<T>() where T : new();
+				TData? HasNullableValue<TData>(TData? data);
+			}
+			
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Make<ITypeConstraints>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfITypeConstraintsExtensions
+			{
+				internal static global::ITypeConstraints Instance(this global::Rocks.MakeGeneration<global::ITypeConstraints> @self) =>
+					new RockITypeConstraints();
+				
+				private sealed class RockITypeConstraints
+					: global::ITypeConstraints
+				{
+					public RockITypeConstraints() { }
+					
+					public void HasUnmanaged<T>()
+						where T : unmanaged
+					{
+					}
+					public void HasNotNull<T>()
+						where T : notnull
+					{
+					}
+					public void HasClass<T>()
+						where T : class
+					{
+					}
+					public void HasStruct<T>()
+						where T : struct
+					{
+					}
+					public void HasClassTypeConstraint<T>()
+						where T : global::ClassConstraint
+					{
+					}
+					public void HasInterfaceTypeConstraint<T>()
+						where T : global::InterfaceConstraint
+					{
+					}
+					public void HasConstructorConstraint<T>()
+						where T : new()
+					{
+					}
+					public TData? HasNullableValue<TData>(TData? @data)
+					{
+						return default!;
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "ITypeConstraints_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateCreateTargetingClassAsync()
+	{
+		var code =
+			"""
+			#nullable enable
+			
+			using Rocks;
+
+			public interface InterfaceConstraint { }
+			public class ClassConstraint { }
+
+			public class TypeConstraints
+			{				
+			   public virtual void HasUnmanaged<T>() where T : unmanaged { }
+			   public virtual void HasNotNull<T>() where T : notnull { }
+			   public virtual void HasClass<T>() where T : class { }
+			   public virtual void HasStruct<T>() where T : struct { }
+			   public virtual void HasClassTypeConstraint<T>() where T : ClassConstraint { }
+			   public virtual void HasInterfaceTypeConstraint<T>() where T : InterfaceConstraint { }
+			   public virtual void HasConstructorConstraint<T>() where T : new() { }
+				public virtual TData? HasNullableValue<TData>(TData? data) => default!;
+			}
+			
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<TypeConstraints>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfTypeConstraintsExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> Methods(this global::Rocks.Expectations.Expectations<global::TypeConstraints> @self) =>
+					new(@self);
+				
+				internal static global::TypeConstraints Instance(this global::Rocks.Expectations.Expectations<global::TypeConstraints> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockTypeConstraints(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockTypeConstraints
+					: global::TypeConstraints
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockTypeConstraints(global::Rocks.Expectations.Expectations<global::TypeConstraints> @expectations) =>
 						this.handlers = @expectations.Handlers;
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
@@ -127,112 +485,238 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(3, "void Has<TGenerator>(global::PropertyBuilder @builder)")]
-					public override void Has<TGenerator>(global::PropertyBuilder @builder)
+					[global::Rocks.MemberIdentifier(3, "void HasUnmanaged<T>()")]
+					public override void HasUnmanaged<T>()
 					{
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
-							var @foundMatch = false;
-							
-							foreach (var @methodHandler in @methodHandlers)
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
-								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::PropertyBuilder>>(@methodHandler.Expectations[0]).IsValid(@builder))
-								{
-									@foundMatch = true;
-									
-									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<global::PropertyBuilder> @method)
-									{
-										@method(@builder);
-									}
-									
-									@methodHandler.IncrementCallCount();
-									break;
-								}
+								@method();
 							}
 							
-							if (!@foundMatch)
-							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Has<TGenerator>(global::PropertyBuilder @builder)");
-							}
+							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
-							base.Has<TGenerator>(@builder);
+							base.HasUnmanaged<T>();
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(4, "global::PropertyBuilder HasValueGenerator<TGenerator>()")]
-					public override global::PropertyBuilder HasValueGenerator<TGenerator>()
+					[global::Rocks.MemberIdentifier(4, "void HasNotNull<T>()")]
+					public override void HasNotNull<T>()
 					{
 						if (this.handlers.TryGetValue(4, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
-							var @result = @methodHandler.Method is not null ?
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::PropertyBuilder>>(@methodHandler.Method)() :
-								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::PropertyBuilder>>(@methodHandler).ReturnValue;
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
 							@methodHandler.IncrementCallCount();
-							return @result!;
 						}
 						else
 						{
-							return base.HasValueGenerator<TGenerator>();
+							base.HasNotNull<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(5, "void HasClass<T>()")]
+					public override void HasClass<T>()
+					{
+						if (this.handlers.TryGetValue(5, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.HasClass<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(6, "void HasStruct<T>()")]
+					public override void HasStruct<T>()
+					{
+						if (this.handlers.TryGetValue(6, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.HasStruct<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(7, "void HasClassTypeConstraint<T>()")]
+					public override void HasClassTypeConstraint<T>()
+					{
+						if (this.handlers.TryGetValue(7, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.HasClassTypeConstraint<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(8, "void HasInterfaceTypeConstraint<T>()")]
+					public override void HasInterfaceTypeConstraint<T>()
+					{
+						if (this.handlers.TryGetValue(8, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.HasInterfaceTypeConstraint<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(9, "void HasConstructorConstraint<T>()")]
+					public override void HasConstructorConstraint<T>()
+					{
+						if (this.handlers.TryGetValue(9, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							{
+								@method();
+							}
+							
+							@methodHandler.IncrementCallCount();
+						}
+						else
+						{
+							base.HasConstructorConstraint<T>();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(10, "TData? HasNullableValue<TData>(TData? @data)")]
+					public override TData? HasNullableValue<TData>(TData? @data)
+						where TData : default
+					{
+						if (this.handlers.TryGetValue(10, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+								{
+									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
+										@methodReturn(@data) :
+										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
+											@returnValue.ReturnValue :
+											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+									@methodHandler.IncrementCallCount();
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TData? HasNullableValue<TData>(TData? @data)");
+						}
+						else
+						{
+							return base.HasNullableValue<TData>(@data);
 						}
 					}
 					
 				}
 			}
 			
-			internal static class MethodExpectationsOfHasConstraintsExtensions
+			internal static class MethodExpectationsOfTypeConstraintsExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::HasConstraints> @self, global::Rocks.Argument<object?> @obj)
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self, global::Rocks.Argument<object?> @obj)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+					return new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
 				}
-				internal static global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::HasConstraints> @self) =>
-					new global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::HasConstraints> @self) =>
-					new global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::HasConstraints, global::System.Action<global::PropertyBuilder>> Has<TGenerator>(this global::Rocks.Expectations.MethodExpectations<global::HasConstraints> @self, global::Rocks.Argument<global::PropertyBuilder> @builder) where TGenerator : class
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasUnmanaged<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : unmanaged =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasNotNull<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : notnull =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasClass<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : class =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasStruct<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : struct =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasClassTypeConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : global::ClassConstraint =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(7, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasInterfaceTypeConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : global::InterfaceConstraint =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action> HasConstructorConstraint<T>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self) where T : new() =>
+					new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Action>(@self.Add(9, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<TData?, TData?>, TData?> HasNullableValue<TData>(this global::Rocks.Expectations.MethodExpectations<global::TypeConstraints> @self, global::Rocks.Argument<TData?> @data)
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@builder);
-					return new global::Rocks.MethodAdornments<global::HasConstraints, global::System.Action<global::PropertyBuilder>>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @builder }));
+					global::System.ArgumentNullException.ThrowIfNull(@data);
+					return new global::Rocks.MethodAdornments<global::TypeConstraints, global::System.Func<TData?, TData?>, TData?>(@self.Add<TData?>(10, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @data }));
 				}
-				internal static global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<global::PropertyBuilder>, global::PropertyBuilder> HasValueGenerator<TGenerator>(this global::Rocks.Expectations.MethodExpectations<global::HasConstraints> @self) where TGenerator : global::ValueGenerator =>
-					new global::Rocks.MethodAdornments<global::HasConstraints, global::System.Func<global::PropertyBuilder>, global::PropertyBuilder>(@self.Add<global::PropertyBuilder>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 			}
 			
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "HasConstraints_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "TypeConstraints_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
 	[Test]
-	public static async Task GenerateMakeWithConstraintThatAreInheritedAsync()
+	public static async Task GenerateMakeTargetingClassAsync()
 	{
 		var code =
 			"""
-			using Rocks;
-
-			public class PropertyBuilder { }
-			public class ValueGenerator { }
-
-			public class HasConstraints
-			{
-				public virtual void Has<TGenerator>(PropertyBuilder builder)
-					 where TGenerator : class { }
+			#nullable enable
 			
-				public virtual PropertyBuilder HasValueGenerator<TGenerator>()
-					 where TGenerator : ValueGenerator => default!;
+			using Rocks;
+			
+			public interface InterfaceConstraint { }
+			public class ClassConstraint { }
+			
+			public class TypeConstraints
+			{				
+			   public virtual void HasUnmanaged<T>() where T : unmanaged { }
+			   public virtual void HasNotNull<T>() where T : notnull { }
+			   public virtual void HasClass<T>() where T : class { }
+			   public virtual void HasStruct<T>() where T : struct { }
+			   public virtual void HasClassTypeConstraint<T>() where T : ClassConstraint { }
+			   public virtual void HasInterfaceTypeConstraint<T>() where T : InterfaceConstraint { }
+			   public virtual void HasConstructorConstraint<T>() where T : new() { }
+				public virtual TData? HasNullableValue<TData>(TData? data) => default!;
 			}
-
+			
 			public static class Test
 			{
 				public static void Go()
 				{
-					var expectations = Rock.Make<HasConstraints>();
+					var expectations = Rock.Make<TypeConstraints>();
 				}
 			}
 			""";
@@ -241,15 +725,15 @@ public static class ConstraintsGeneratorTests
 			"""
 			#nullable enable
 			
-			internal static class MakeExpectationsOfHasConstraintsExtensions
+			internal static class MakeExpectationsOfTypeConstraintsExtensions
 			{
-				internal static global::HasConstraints Instance(this global::Rocks.MakeGeneration<global::HasConstraints> @self) =>
-					new RockHasConstraints();
+				internal static global::TypeConstraints Instance(this global::Rocks.MakeGeneration<global::TypeConstraints> @self) =>
+					new RockTypeConstraints();
 				
-				private sealed class RockHasConstraints
-					: global::HasConstraints
+				private sealed class RockTypeConstraints
+					: global::TypeConstraints
 				{
-					public RockHasConstraints() { }
+					public RockTypeConstraints() { }
 					
 					public override bool Equals(object? @obj)
 					{
@@ -263,10 +747,29 @@ public static class ConstraintsGeneratorTests
 					{
 						return default!;
 					}
-					public override void Has<TGenerator>(global::PropertyBuilder @builder)
+					public override void HasUnmanaged<T>()
 					{
 					}
-					public override global::PropertyBuilder HasValueGenerator<TGenerator>()
+					public override void HasNotNull<T>()
+					{
+					}
+					public override void HasClass<T>()
+					{
+					}
+					public override void HasStruct<T>()
+					{
+					}
+					public override void HasClassTypeConstraint<T>()
+					{
+					}
+					public override void HasInterfaceTypeConstraint<T>()
+					{
+					}
+					public override void HasConstructorConstraint<T>()
+					{
+					}
+					public override TData? HasNullableValue<TData>(TData? @data)
+						where TData : default
 					{
 						return default!;
 					}
@@ -276,7 +779,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "HasConstraints_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "TypeConstraints_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -521,7 +1024,6 @@ public static class ConstraintsGeneratorTests
 						
 						[global::Rocks.MemberIdentifier(3, "global::MockTests.Thing<TTarget> As<TTarget>()")]
 						public override global::MockTests.Thing<TTarget> As<TTarget>()
-							where TTarget : class
 						{
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{

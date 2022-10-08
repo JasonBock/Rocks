@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
+using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -69,8 +70,13 @@ internal static class MockMethodValueBuilder
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
-		/*
-		var constraints = method.GetConstraints();
+		var constraints = ImmutableArray<string>.Empty;
+
+		if(result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+			method.ContainingType.TypeKind == TypeKind.Interface)
+		{
+			constraints = method.GetConstraints();
+		}
 
 		if (result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
 			result.RequiresOverride == RequiresOverride.Yes)
@@ -89,7 +95,6 @@ internal static class MockMethodValueBuilder
 
 			writer.Indent--;
 		}
-		*/
 
 		writer.WriteLine("{");
 		writer.Indent++;
