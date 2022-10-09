@@ -56,7 +56,43 @@ internal sealed class MockInformation
 		this.Events = typeToMock.GetMockableEvents(
 			this.ContainingAssemblyOfInvocationSymbol);
 
-		if(this.Methods.HasInaccessibleAbstractMembers || this.Properties.HasInaccessibleAbstractMembers ||
+		foreach (var constructor in this.Constructors)
+		{
+			if (constructor.Parameters.Any(_ => _.Type.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors))))
+			{
+				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(constructor));
+			}
+		}
+
+		foreach (var method in this.Methods.Results)
+		{
+			if(method.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors))) ||
+				!method.Value.ReturnsVoid && method.Value.ReturnType.GetAttributes().Any(
+					_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+						(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(method.Value));
+			}
+		}
+
+		foreach (var property in this.Properties.Results)
+		{
+			if (property.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors))) || 
+				property.Value.Type.GetAttributes().Any(
+					_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+						(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || this.ConfigurationValues.TreatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(property.Value));
+			}
+		}
+
+		if (this.Methods.HasInaccessibleAbstractMembers || this.Properties.HasInaccessibleAbstractMembers ||
 			this.Events.HasInaccessibleAbstractMembers)
 		{
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(typeToMock));

@@ -11,6 +11,24 @@ namespace Rocks.Tests;
 
 public static class MockInformationTests
 {
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public UsesObsolete(DoNotUse use) { } public virtual void Foo() { } }", ".ctor")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual void ObsoleteMethod(DoNotUse use) { } }", "ObsoleteMethod")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteMethod() => default!; }", "ObsoleteMethod")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }", "ObsoleteProperty")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual DoNotUse ObsoleteProperty { get; } }", "ObsoleteProperty")]
+	[TestCase("using System; [Obsolete(\"Old\", error: true)]public class DoNotUse { } public class UsesObsolete { public virtual int this[DoNotUse value] { get; } }", "this")]
+	public static void CreateWhenMemberUsesObsoleteType(string code, string memberName)
+	{
+		var information = MockInformationTests.GetInformation(code, "UsesObsolete", BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			var diagnostic = information.Diagnostics.First(_ => _.Id == MemberUsesObsoleteTypeDiagnostic.Id);
+			Assert.That(diagnostic.GetMessage(), Does.Contain(memberName));
+			Assert.That(information.TypeToMock, Is.Null);
+		});
+	}
+
 	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Create, true, true)]
 	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Create, true, true)]
 	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Create, true, true)]
