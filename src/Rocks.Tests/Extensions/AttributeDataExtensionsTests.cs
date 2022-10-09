@@ -231,6 +231,24 @@ public interface IA
 		}
 
 		[Test]
+		public static void GetDescriptionWhenAsyncIteratorStateMachineAttributeIsPresent()
+		{
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
+				"""
+				using System;
+				using System.Runtime.CompilerServices;
+
+				public interface IA
+				{
+					[AsyncIteratorStateMachine(typeof(object))]
+					void Foo();
+				}
+				""");
+
+			Assert.That(attributes.GetDescription(compilation), Is.EqualTo(string.Empty));
+		}
+
+		[Test]
 		public static void GetDescriptionWhenAsyncStateMachineAttributeIsPresent()
 		{
 			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(

@@ -94,6 +94,7 @@ internal static class AttributeDataExtensions
 		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
 		var dynamicAttribute = compilation.GetTypeByMetadataName(typeof(DynamicAttribute).FullName);
 		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
+		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
@@ -102,7 +103,8 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default) &&
-				_.AttributeClass.GetReferenceableName() != enumeratorCancellationAttribute).ToImmutableArray();
+				_.AttributeClass.GetReferenceableName() != enumeratorCancellationAttribute &&
+				_.AttributeClass.GetReferenceableName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{
