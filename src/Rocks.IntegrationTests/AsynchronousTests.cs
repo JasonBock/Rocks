@@ -1,6 +1,17 @@
 ﻿using NUnit.Framework;
+using System.Runtime.CompilerServices;
 
 namespace Rocks.IntegrationTests;
+
+public class AsyncEnumeration
+{
+	public virtual async IAsyncEnumerable<string> GetRecordsAsync(
+		[EnumeratorCancellation] CancellationToken cancellationToken = default)
+	{
+		await Task.CompletedTask;
+		yield return "y";
+	}
+}
 
 public interface IAmAsynchronous
 {
@@ -12,6 +23,30 @@ public interface IAmAsynchronous
 
 public static class AsynchronousTests
 {
+	[Test]
+	public static async Task CreateAsyncInteratorAsync()
+	{
+		var expectations = Rock.Create<AsyncEnumeration>();
+		expectations.Methods().GetRecordsAsync(Arg.IsDefault<CancellationToken>());
+
+		var mock = expectations.Instance();
+
+		var values = new List<string>();
+
+		await foreach(var value in mock.GetRecordsAsync())
+		{
+			values.Add(value);
+		}
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(values, Has.Count.EqualTo(1));
+			Assert.That(values[0], Is.EqualTo("y"));
+		});
+
+		expectations.Verify();
+	}
+
 	[Test]
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
