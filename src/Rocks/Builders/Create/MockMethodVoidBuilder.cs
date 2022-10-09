@@ -40,7 +40,8 @@ internal static class MockMethodVoidBuilder
 				_ => string.Empty
 			};
 			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
-			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
+			var attributes = _.GetAttributes().GetDescription(compilation);
+			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
 		var methodSignature =

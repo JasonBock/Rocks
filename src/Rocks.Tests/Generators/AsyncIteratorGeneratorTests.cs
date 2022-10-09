@@ -19,7 +19,7 @@ public static class AsyncIteratorGeneratorTests
 			public class AsyncEnumeration
 			{
 				public virtual async IAsyncEnumerable<string> GetRecordsAsync(
-			        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+					[EnumeratorCancellation] CancellationToken cancellationToken = default)
 				{
 					await Task.CompletedTask;
 					yield return "y";
@@ -130,7 +130,7 @@ public static class AsyncIteratorGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(3, "global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken)")]
-					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync([global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute] global::System.Threading.CancellationToken @cancellationToken = default)
+					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)
 					{
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
@@ -146,7 +146,7 @@ public static class AsyncIteratorGeneratorTests
 								}
 							}
 							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync([global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute] global::System.Threading.CancellationToken @cancellationToken = default)");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)");
 						}
 						else
 						{
@@ -238,7 +238,7 @@ public static class AsyncIteratorGeneratorTests
 					{
 						return default!;
 					}
-					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync([global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute] global::System.Threading.CancellationToken @cancellationToken = default)
+					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)
 					{
 						return default!;
 					}

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.2] - Not Yet Released
 
 ### Fixed
+- Async iterators are now handled correctly (issue [#191](https://github.com/JasonBock/Rocks/issues/191))
 - Members that use obsolete types will flag the type to mock as unmockable (issue [#182](https://github.com/JasonBock/Rocks/issues/182))
 - Constraints are generated correctly, based on the type to mock (issue [#186](https://github.com/JasonBock/Rocks/issues/186))
 - Support for types with hidden members have been improved (issue [#187](https://github.com/JasonBock/Rocks/issues/187))

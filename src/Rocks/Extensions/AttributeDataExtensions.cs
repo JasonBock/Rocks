@@ -87,10 +87,13 @@ internal static class AttributeDataExtensions
 		// * IteratorStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.iteratorstatemachineattribute#remarks)
 		// * AsyncStateMachineAttribute (see https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.asyncstatemachineattribute#remarks)
 		// * DynamicAttribute (CS1970 - the error is "Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead." - https://sourceroslyn.io/#Microsoft.CodeAnalysis.CSharp/Symbols/Source/SourcePropertySymbolBase.cs,1276)
+		// * EnumeratorCancellationAttribute - I can't reference the type because it's not in .NET Standard 2.0 :(, but I have to filter it out.
+
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
 		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
 		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
 		var dynamicAttribute = compilation.GetTypeByMetadataName(typeof(DynamicAttribute).FullName);
+		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
@@ -98,7 +101,8 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&
-				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default)).ToImmutableArray();
+				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default) &&
+				_.AttributeClass.GetReferenceableName() != enumeratorCancellationAttribute).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

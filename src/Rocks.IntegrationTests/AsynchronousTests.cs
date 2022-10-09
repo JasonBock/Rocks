@@ -26,9 +26,14 @@ public static class AsynchronousTests
 	[Test]
 	public static async Task CreateAsyncInteratorAsync()
 	{
-		var expectations = Rock.Create<AsyncEnumeration>();
-		expectations.Methods().GetRecordsAsync(Arg.IsDefault<CancellationToken>());
+		static async IAsyncEnumerable<string> ReturnsAsyncIterator()
+		{
+			await Task.CompletedTask;
+			yield return "x";
+		}
 
+		var expectations = Rock.Create<AsyncEnumeration>();
+		expectations.Methods().GetRecordsAsync(Arg.IsDefault<CancellationToken>()).Returns(ReturnsAsyncIterator());
 		var mock = expectations.Instance();
 
 		var values = new List<string>();
@@ -41,7 +46,7 @@ public static class AsynchronousTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(values, Has.Count.EqualTo(1));
-			Assert.That(values[0], Is.EqualTo("y"));
+			Assert.That(values[0], Is.EqualTo("x"));
 		});
 
 		expectations.Verify();
