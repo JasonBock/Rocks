@@ -1,28 +1,28 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
+		using Microsoft.EntityFrameworkCore.Metadata;
 		using Rocks;
-
-		public interface IHaveNamingConflicts
-		{
-			// If there are any other variables that Rocks create, include them as parameters.
-			int Foo(string methodHandlers, string methodHandler, string result);
-		}
+		using System;
 
 		public static class Test
 		{
-			public static void Run() => Rock.Create<IHaveNamingConflicts>();
+			public static void Go()
+			{
+				var expectations = Rock.Create<INavigation>();
+			}
 		}
-		""");
+		""",
+		new[] { typeof(Microsoft.EntityFrameworkCore.Metadata.INavigation) });
 }
 
 
