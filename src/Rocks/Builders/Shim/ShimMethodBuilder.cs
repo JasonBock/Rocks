@@ -88,7 +88,7 @@ internal static class ShimMethodBuilder
 				};
 				return $"{direction}@{_.Name}";
 			}));
-			writer.WriteLine($"this.mock.{shimMethod.GetName()}({passedParameters});");
+			writer.WriteLine($"(({shimInformation.TypeToMock!.Type.GetReferenceableName()})this.mock).{shimMethod.GetName()}({passedParameters});");
 			writer.Indent--;
 		}
 	}

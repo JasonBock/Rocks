@@ -66,3 +66,7 @@ public static class Test
 ```
 
 Rocks will make a shim that will not implement `IAmADim()` as expected, but it needs to implement `IAmNotADim()`. Otherwise I get `CS0535`. So, I need to look at all the non-DIM members of an interface, and provide "make" implementations of them that do nothing. They will **never** be called by Rocks because will either try to match an handler to the invocation, or throw an exception, so they can essentially do nothing like what happens in a make, but they still need to show up in the shim type.
+
+OK, forget that idea :). That didn't work. All the tests pass, and the one case in EF that isn't working is due to some really weird resolution error between calling a property and calling an extension method. I **could** add a cast to what the thing should be anyway, and that would get rid of it...ok, maybe try that.
+
+FINALLY! Putting the cast in gets rid of the EF error I was seeing, and all tests still pass. I'm done with this for now.

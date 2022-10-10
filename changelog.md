@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.2] - Not Yet Released
 
 ### Fixed
+- Generated shim types to handle DIM invocations have been updated to remove a couple of errors (issue [#188](https://github.com/JasonBock/Rocks/issues/188))
 - If Rocks encounters the `AsyncIteratorStateMachineAttribute`, it will not generate its description in the mock (issue [#185](https://github.com/JasonBock/Rocks/issues/185))
 - Async iterators are now handled correctly (issue [#191](https://github.com/JasonBock/Rocks/issues/191))
 - Members that use obsolete types will flag the type to mock as unmockable (issue [#182](https://github.com/JasonBock/Rocks/issues/182))

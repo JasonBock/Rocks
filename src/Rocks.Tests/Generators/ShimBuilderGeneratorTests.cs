@@ -214,16 +214,16 @@ public static class ShimBuilderGeneratorTests
 							this.mock = @mock;
 						
 						public int IAmNotADim() =>
-							this.mock.IAmNotADim();
+							((global::IHaveDims)this.mock).IAmNotADim();
 						
 						public int NotDim
 						{
-							get => this.mock.NotDim;
+							get => ((global::IHaveDims)this.mock).NotDim;
 						}
 						
 						public int this[string @notDimKey]
 						{
-							get => this.mock[@notDimKey];
+							get => ((global::IHaveDims)this.mock)[@notDimKey];
 						}
 					}
 				}
