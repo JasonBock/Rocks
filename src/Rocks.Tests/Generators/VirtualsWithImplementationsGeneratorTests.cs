@@ -423,7 +423,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
 						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations) =>
-							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimRockIHaveImplementation(this));
+							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
@@ -445,12 +445,12 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						
 						
-						private sealed class ShimRockIHaveImplementation
+						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
 							: global::MockTests.IHaveImplementation
 						{
 							private readonly RockIHaveImplementation mock;
 							
-							public ShimRockIHaveImplementation(RockIHaveImplementation @mock) =>
+							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(RockIHaveImplementation @mock) =>
 								this.mock = @mock;
 						}
 					}
@@ -529,7 +529,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
 						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations) =>
-							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimRockIHaveImplementation(this));
+							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
 						
 						[global::Rocks.MemberIdentifier(0, "int Foo()")]
 						public int Foo()
@@ -550,12 +550,12 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						
 						
-						private sealed class ShimRockIHaveImplementation
+						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
 							: global::MockTests.IHaveImplementation
 						{
 							private readonly RockIHaveImplementation mock;
 							
-							public ShimRockIHaveImplementation(RockIHaveImplementation @mock) =>
+							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(RockIHaveImplementation @mock) =>
 								this.mock = @mock;
 						}
 					}

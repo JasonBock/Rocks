@@ -461,6 +461,38 @@ public interface {targetTypeName}
 	}
 
 	[Test]
+	public static void CreateWhenInterfaceAndBaseInterfaceHasIndexers()
+	{
+		const string targetTypeName = "InterfaceWithMembers";
+		var code =
+			$$"""
+			using System;
+
+			public interface IBase
+			{
+				int this[string key] { get; }
+			}
+
+			public interface {{targetTypeName}}
+				: IBase
+			{
+				int this[string key, int value] { get; }
+			}
+			""";
+		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(information.Constructors, Has.Length.EqualTo(0));
+			Assert.That(information.Methods.Results, Has.Length.EqualTo(0));
+			Assert.That(information.Properties.Results, Has.Length.EqualTo(2));
+			Assert.That(information.Events.Results, Has.Length.EqualTo(0));
+			Assert.That(information.TypeToMock, Is.Not.Null);
+		});
+	}
+
+	[Test]
 	public static void CreateWhenClassHasMethods()
 	{
 		const string targetTypeName = "ClassWithMembers";

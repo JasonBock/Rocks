@@ -499,17 +499,25 @@ internal static class ITypeSymbolExtensions
 					}
 					else
 					{
-						if (!properties.Any(
-							_ => _.Value.Name == selfBaseProperty.Name && 
-								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type)))
+						if (!properties.Any(_ => 
+							(selfBaseProperty.IsIndexer && _.Value.IsIndexer &&
+								(selfBaseProperty.GetMethod is not null && _.Value.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.Value.GetMethod) == MethodMatch.Exact) ||
+								(selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.Value.SetMethod) == MethodMatch.Exact)) ||
+							(!selfBaseProperty.IsIndexer && !_.Value.IsIndexer && 
+								_.Value.Name == selfBaseProperty.Name && 
+								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type))))
 						{
 							var foundMatch = false;
 
 							foreach (var baseInterfacePropertyGroup in baseInterfacePropertyGroups)
 							{
-								if (baseInterfacePropertyGroup.Any(
-									_ => _.Name == selfBaseProperty.Name &&
-										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type)))
+								if (baseInterfacePropertyGroup.Any(_ =>
+									(selfBaseProperty.IsIndexer && _.IsIndexer &&
+										(selfBaseProperty.GetMethod is not null && _.GetMethod is not null && selfBaseProperty.GetMethod.Match(_.GetMethod) == MethodMatch.Exact) ||
+										(selfBaseProperty.SetMethod is not null && _.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod) == MethodMatch.Exact)) ||
+									(!selfBaseProperty.IsIndexer && !_.IsIndexer && 
+										_.Name == selfBaseProperty.Name &&
+										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type))))
 								{
 									baseInterfacePropertyGroup.Add(selfBaseProperty);
 									foundMatch = true;

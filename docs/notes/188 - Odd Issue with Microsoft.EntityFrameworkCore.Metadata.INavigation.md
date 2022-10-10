@@ -40,3 +40,29 @@ I think it might be in `ShimMethodBuilder`. It's not outdenting correctly. And w
 OK, so I think I have two remaining problems:
 * Come up with unique names for a shim type. Use the hashcode technique to do this. Maybe "ShimRock{InterfaceName}{hash code of FQN InterfaceName}"
 * When a shim is created in the constructor, it needs to use the FQN (keep in mind the hashcode name as well)
+
+D'oh, shim types don't need to be FQN-ed, they are nested private classes to the mock type itself.
+
+Oops. So I'm realizing that shims are kind of a mix of a simple mock and a make, especially when the target interface inherits other interfaces.
+
+```csharp
+using Rocks;
+
+public interface IDoNotHaveADim
+{
+	int IAmNotADim();
+}
+
+public interface IHaveADim
+	: IDoNotHaveADim
+{
+	int IAmADim() => 2;
+}
+
+public static class Test
+{
+	public static void Go() => Rock.Create<IHaveADim>();
+}
+```
+
+Rocks will make a shim that will not implement `IAmADim()` as expected, but it needs to implement `IAmNotADim()`. Otherwise I get `CS0535`. So, I need to look at all the non-DIM members of an interface, and provide "make" implementations of them that do nothing. They will **never** be called by Rocks because will either try to match an handler to the invocation, or throw an exception, so they can essentially do nothing like what happens in a make, but they still need to show up in the shim type.

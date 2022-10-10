@@ -6,10 +6,11 @@ namespace Rocks.Builders.Shim;
 
 internal static class ShimPropertyBuilder
 {
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol shimType, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, Compilation compilation, MockInformation shimInformation)
 	{
-		foreach (var property in shimType.GetMembers().OfType<IPropertySymbol>()
-			.Where(_ => !_.IsIndexer && !_.IsVirtual))
+		foreach (var property in shimInformation.Properties.Results
+			.Where(_ => !_.Value.IsIndexer && !_.Value.IsVirtual)
+			.Select(_ => _.Value))
 		{
 			writer.WriteLine();
 

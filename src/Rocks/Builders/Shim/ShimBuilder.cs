@@ -6,12 +6,17 @@ namespace Rocks.Builders.Shim;
 
 internal static class ShimBuilder
 {
-	internal static void Build(IndentedTextWriter writer, ITypeSymbol shimType, string mockTypeName, 
-		Compilation compilation)
+	internal static string GetShimName(ITypeSymbol shimType)
 	{
-		var shimName = $"Shim{mockTypeName}";
+		var shimName = shimType.GetName(TypeNameOption.Flatten);
+		return $"Shim{shimName}{shimName.GetHash()}";
+	}
 
-		// TODO: If type is generic...what happens?
+	internal static void Build(IndentedTextWriter writer, ITypeSymbol shimType, string mockTypeName,
+		Compilation compilation, MockInformation typeToMockInformation)
+	{
+		var shimName = ShimBuilder.GetShimName(shimType);
+
 		writer.WriteLine($"private sealed class {shimName}");
 		writer.Indent++;
 		writer.WriteLine($": {shimType.GetReferenceableName()}");
@@ -26,9 +31,12 @@ internal static class ShimBuilder
 		writer.WriteLine($"this.mock = @mock;");
 		writer.Indent--;
 
-		ShimMethodBuilder.Build(writer, shimType, compilation);
-		ShimPropertyBuilder.Build(writer, shimType, compilation);
-		ShimIndexerBuilder.Build(writer, shimType, compilation);
+		var shimInformation = new MockInformation(shimType, compilation.Assembly, typeToMockInformation.Model,
+			typeToMockInformation.ConfigurationValues, BuildType.Create);
+
+		ShimMethodBuilder.Build(writer, compilation, shimInformation);
+		ShimPropertyBuilder.Build(writer, compilation, shimInformation);
+		ShimIndexerBuilder.Build(writer, compilation, shimInformation);
 
 		writer.Indent--;
 		writer.WriteLine("}");

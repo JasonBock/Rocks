@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Builders.Shim;
 using Rocks.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -72,7 +73,7 @@ internal static class MockConstructorBuilder
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
-			var shimConstructors = string.Join(", ", shims.Select(_ => $"new Shim{mockTypeName}(this)"));
+			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_)}(this)"));
 			writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
 		}
 	}

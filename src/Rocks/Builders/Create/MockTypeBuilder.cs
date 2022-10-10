@@ -83,7 +83,7 @@ internal static class MockTypeBuilder
 		foreach (var shimType in information.Shims)
 		{
 			writer.WriteLine();
-			ShimBuilder.Build(writer, shimType, mockTypeName, compilation);
+			ShimBuilder.Build(writer, shimType, mockTypeName, compilation, information);
 		}
 	}
 
