@@ -1,9 +1,9 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -113,7 +113,6 @@ static void TestWithTypes()
 		// Google.Protobuf
 		//typeof(Google.Protobuf.ByteString),
 
-		// TODO: Just referencing this makes a stack overflow occur.
 		// TerraFX.Interop.DirectX.D3D12MA_Allocation
 		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 
