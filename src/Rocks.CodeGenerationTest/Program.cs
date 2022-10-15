@@ -52,7 +52,7 @@ static void TestWithTypes()
 		// ID2D1TransformMapperFactory will fail because it needs a struct 
 		// that can be unmanaged and implement ID2D1PixelShader. If that's
 		// done, then it works just fine.
-		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
+		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Moq
 		//typeof(Moq.Mock<>),
@@ -79,7 +79,7 @@ static void TestWithTypes()
 		//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
 		// AutoMapper
-		//typeof(AutoMapper.AutoMapAttribute),
+		typeof(AutoMapper.AutoMapAttribute),
 
 		// NUnit
 		//typeof(NUnit.Framework.TestCaseAttribute),
@@ -138,7 +138,8 @@ static void TestWithTypes()
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
-		typeof(System.Linq.Expressions.LambdaExpression)
+		typeof(System.Linq.Expressions.LambdaExpression),
+		typeof(System.Net.Mail.MailMessage),
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();

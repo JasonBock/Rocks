@@ -7,5 +7,7 @@ internal static class MappedTypes
 	internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 		new Dictionary<Type, Dictionary<string, string>>()
 			.AddItems(CslaMappings.GetMappedTypes())
-			.AddItems(ComputeSharpMappings.GetMappedTypes());
+			.AddItems(ComputeSharpMappings.GetMappedTypes())
+			.AddItems(ImageSharpMappings.GetMappedTypes())
+			.AddItems(AutoMapperMappings.GetMappedTypes());
 }
