@@ -1,6 +1,6 @@
-﻿using Csla;
-using Rocks;
+﻿using Rocks;
 using Rocks.CodeGenerationTest;
+using Rocks.CodeGenerationTest.Mappings;
 
 //TestWithCode();
 //TestWithType();
@@ -46,13 +46,13 @@ static void TestWithTypes()
 		//typeof(Csla.DataPortal<>),
 
 		// ComputeSharp
-		typeof(ComputeSharp.AutoConstructorAttribute),
+		//typeof(ComputeSharp.AutoConstructorAttribute),
 
 		// ComputeSharp.D2D1
 		// ID2D1TransformMapperFactory will fail because it needs a struct 
 		// that can be unmanaged and implement ID2D1PixelShader. If that's
 		// done, then it works just fine.
-		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
+		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Moq
 		//typeof(Moq.Mock<>),

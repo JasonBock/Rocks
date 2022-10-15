@@ -6,10 +6,10 @@ using Rocks.Configuration;
 using System.Reflection;
 using System.Runtime.Versioning;
 
-namespace Rocks.CodeGenerationTest
+namespace Rocks.CodeGenerationTest.Extensions
 {
-	internal static class Extensions
-   {
+	internal static class TypeExtensions
+	{
 		internal static string GetTypeDefinition(this Type self,
 			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 		{
@@ -61,7 +61,7 @@ namespace Rocks.CodeGenerationTest
 			}
 		}
 
-		internal static bool IsValidTarget(this Type self, 
+		internal static bool IsValidTarget(this Type self,
 			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings = null)
 		{
 			if (self.GetCustomAttribute<RequiresPreviewFeaturesAttribute>() is null)

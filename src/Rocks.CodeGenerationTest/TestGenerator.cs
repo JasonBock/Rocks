@@ -4,6 +4,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.ComponentModel;
+using Rocks.CodeGenerationTest.Extensions;
 
 namespace Rocks.CodeGenerationTest;
 

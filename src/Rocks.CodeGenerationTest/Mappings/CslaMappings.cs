@@ -1,138 +1,139 @@
 ﻿#pragma warning disable CS0067
 #pragma warning disable CS8618
 
-namespace Rocks.CodeGenerationTest;
+using Csla;
+using Csla.Core;
+using Csla.Rules.CommonRules;
 
-public static class MappedTypes
+namespace Rocks.CodeGenerationTest.Mappings;
+
+internal static class CslaMappings
 {
-	public static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
+	internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 		new()
 		{
-			#region CSLA
 			{
-				typeof(Csla.BusinessListBase<,>), new()
+				typeof(BusinessListBase<,>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedBusinessListBase" },
-					{ "C", "global::Rocks.CodeGenerationTest.MappedEditableListObject" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedBusinessListBase" },
+					{ "C", "global::Rocks.CodeGenerationTest.Mappings.MappedEditableListObject" },
 				}
 			},
 			{
-				typeof(Csla.BusinessBindingListBase<,>), new()
+				typeof(BusinessBindingListBase<,>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedBusinessBindingListBase" },
-					{ "C", "global::Rocks.CodeGenerationTest.MappedEditableBusinessObject" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedBusinessBindingListBase" },
+					{ "C", "global::Rocks.CodeGenerationTest.Mappings.MappedEditableBusinessObject" },
 				}
 			},
 			{
-				typeof(Csla.ReadOnlyBindingListBase<,>), new()
+				typeof(ReadOnlyBindingListBase<,>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedReadOnlyBindingListBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedReadOnlyBindingListBase" },
 					{ "C", "global::System.Object" },
 				}
 			},
 			{
-				typeof(Csla.ReadOnlyBase<>), new()
+				typeof(ReadOnlyBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedReadOnlyBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedReadOnlyBase" },
 				}
 			},
 			{
-				typeof(Csla.DynamicBindingListBase<>), new()
+				typeof(DynamicBindingListBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedBusinessBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedBusinessBase" },
 				}
 			},
 			{
-				typeof(Csla.DynamicListBase<>), new()
+				typeof(DynamicListBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedBusinessBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedBusinessBase" },
 				}
 			},
 			{
-				typeof(Csla.Rules.CommonRules.MaxValue<>), new()
+				typeof(MaxValue<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedComparable" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedComparable" },
 				}
 			},
 			{
-				typeof(Csla.Rules.CommonRules.MinValue<>), new()
+				typeof(MinValue<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedComparable" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedComparable" },
 				}
 			},
 			{
-				typeof(Csla.CriteriaBase<>), new()
+				typeof(CriteriaBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedCriteriaBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedCriteriaBase" },
 				}
 			},
 			{
-				typeof(Csla.BusinessBase<>), new()
+				typeof(BusinessBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedBusinessBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedBusinessBase" },
 				}
 			},
 			{
-				typeof(Csla.CommandBase<>), new()
+				typeof(CommandBase<>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedCommandBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedCommandBase" },
 				}
 			},
 			{
-				typeof(Csla.ReadOnlyListBase<,>), new()
+				typeof(ReadOnlyListBase<,>), new()
 				{
-					{ "T", "global::Rocks.CodeGenerationTest.MappedReadOnlyListBase" },
+					{ "T", "global::Rocks.CodeGenerationTest.Mappings.MappedReadOnlyListBase" },
 					{ "C", "global::System.Object" },
 				}
 			},
-			#endregion 
 		};
 }
 
-#region Mapped Types
-[System.Serializable]
+[Serializable]
 public sealed class MappedReadOnlyListBase
-	: Csla.ReadOnlyListBase<MappedReadOnlyListBase, object>
+	: ReadOnlyListBase<MappedReadOnlyListBase, object>
 { }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedCommandBase
-	: Csla.CommandBase<MappedCommandBase>
+	: CommandBase<MappedCommandBase>
 { }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedCriteriaBase
-	: Csla.CriteriaBase<MappedCriteriaBase>
+	: CriteriaBase<MappedCriteriaBase>
 { }
 
 public sealed class MappedComparable
-	: System.IComparable
+	: IComparable
 {
-   public int CompareTo(object? obj) => throw new NotImplementedException();
+	public int CompareTo(object? obj) => throw new NotImplementedException();
 }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedBusinessBase
-	: Csla.BusinessBase<MappedBusinessBase>
+	: BusinessBase<MappedBusinessBase>
 { }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedDynamicBindingListBase
-	: Csla.DynamicBindingListBase<MappedBusinessBase>
+	: DynamicBindingListBase<MappedBusinessBase>
 { }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedReadOnlyBase
-	: Csla.ReadOnlyBase<MappedReadOnlyBase>
+	: ReadOnlyBase<MappedReadOnlyBase>
 { }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedReadOnlyBindingListBase
-	: Csla.ReadOnlyBindingListBase<MappedReadOnlyBindingListBase, object>
+	: ReadOnlyBindingListBase<MappedReadOnlyBindingListBase, object>
 { }
 
 public sealed class MappedEditableBusinessObject
-	: Csla.Core.IEditableBusinessObject
+	: IEditableBusinessObject
 {
 	public int EditLevelAdded { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -160,7 +161,7 @@ public sealed class MappedEditableBusinessObject
 
 	public bool IsSelfBusy => throw new NotImplementedException();
 
-	public event Csla.Core.BusyChangedEventHandler BusyChanged;
+	public event BusyChangedEventHandler BusyChanged;
 	public event EventHandler<Csla.Core.ErrorEventArgs> UnhandledAsyncException;
 
 	public void AcceptChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
@@ -170,17 +171,17 @@ public sealed class MappedEditableBusinessObject
 	public void CopyState(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 	public void Delete() => throw new NotImplementedException();
 	public void DeleteChild() => throw new NotImplementedException();
-	public void SetParent(Csla.Core.IParent parent) => throw new NotImplementedException();
+	public void SetParent(IParent parent) => throw new NotImplementedException();
 	public void UndoChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedBusinessBindingListBase
-	: Csla.BusinessBindingListBase<MappedBusinessBindingListBase, MappedEditableBusinessObject>
+	: BusinessBindingListBase<MappedBusinessBindingListBase, MappedEditableBusinessObject>
 { }
 
 public sealed class MappedEditableListObject
-	: Csla.Core.IEditableBusinessObject
+	: IEditableBusinessObject
 {
 	public int EditLevelAdded { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -208,7 +209,7 @@ public sealed class MappedEditableListObject
 
 	public bool IsSelfBusy => throw new NotImplementedException();
 
-	public event Csla.Core.BusyChangedEventHandler BusyChanged;
+	public event BusyChangedEventHandler BusyChanged;
 	public event EventHandler<Csla.Core.ErrorEventArgs> UnhandledAsyncException;
 
 	public void AcceptChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
@@ -218,15 +219,14 @@ public sealed class MappedEditableListObject
 	public void CopyState(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 	public void Delete() => throw new NotImplementedException();
 	public void DeleteChild() => throw new NotImplementedException();
-	public void SetParent(Csla.Core.IParent parent) => throw new NotImplementedException();
+	public void SetParent(IParent parent) => throw new NotImplementedException();
 	public void UndoChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 }
 
-[System.Serializable]
+[Serializable]
 public sealed class MappedBusinessListBase
-	: Csla.BusinessListBase<MappedBusinessListBase, MappedEditableListObject>
+	: BusinessListBase<MappedBusinessListBase, MappedEditableListObject>
 { }
-#endregion
 
 #pragma warning restore CS8618
 #pragma warning restore CS0067
