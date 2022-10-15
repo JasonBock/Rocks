@@ -43,10 +43,10 @@ static void TestWithTypes()
 		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// CSLA
-		typeof(Csla.DataPortal<>),
+		//typeof(Csla.DataPortal<>),
 
 		// ComputeSharp
-		//typeof(ComputeSharp.AutoConstructorAttribute),
+		typeof(ComputeSharp.AutoConstructorAttribute),
 
 		// ComputeSharp.D2D1
 		// ID2D1TransformMapperFactory will fail because it needs a struct 

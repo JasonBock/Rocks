@@ -8,6 +8,7 @@ public static class MappedTypes
 	public static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 		new()
 		{
+			#region CSLA
 			{
 				typeof(Csla.BusinessListBase<,>), new()
 				{
@@ -84,6 +85,7 @@ public static class MappedTypes
 					{ "C", "global::System.Object" },
 				}
 			},
+			#endregion 
 		};
 }
 
