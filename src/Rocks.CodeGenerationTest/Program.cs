@@ -1,4 +1,5 @@
-﻿using Rocks;
+﻿using Csla;
+using Rocks;
 using Rocks.CodeGenerationTest;
 
 //TestWithCode();
@@ -31,7 +32,7 @@ static void TestWithType() =>
 	 new[] 
 	 { 
 		 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
-	 });
+	 }, Array.Empty<Type>(), null);
 
 static void TestWithTypes()
 {
@@ -41,6 +42,9 @@ static void TestWithTypes()
 		//typeof(object), typeof(Dictionary<,>),
 		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
+		// CSLA
+		typeof(Csla.DataPortal<>),
+
 		// ComputeSharp
 		//typeof(ComputeSharp.AutoConstructorAttribute),
 
@@ -49,9 +53,6 @@ static void TestWithTypes()
 		// that can be unmanaged and implement ID2D1PixelShader. If that's
 		// done, then it works just fine.
 		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
-
-		// CSLA
-		//typeof(Csla.DataPortal<>),
 
 		// Moq
 		//typeof(Moq.Mock<>),
@@ -140,12 +141,14 @@ static void TestWithTypes()
 		typeof(System.Linq.Expressions.LambdaExpression)
 	};
 
+	var genericTypeMappings = MappedTypes.GetMappedTypes();
+
 	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
-	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies, typesToLoadAssembliesFrom);
+	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
 	Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
-	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies, typesToLoadAssembliesFrom);
+	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
 	Console.WriteLine("Generator testing complete");

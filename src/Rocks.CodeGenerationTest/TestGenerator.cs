@@ -9,7 +9,8 @@ namespace Rocks.CodeGenerationTest;
 
 internal static class TestGenerator
 {
-	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies, params Type[] typesToLoadAssembliesFrom)
+	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies, Type[] typesToLoadAssembliesFrom,
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
 		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
@@ -26,14 +27,15 @@ internal static class TestGenerator
 		}
 
 		var types = discoveredTypes.Keys.ToArray();
-		Generate(generator, types, typesToLoadAssembliesFrom);
+		Generate(generator, types, typesToLoadAssembliesFrom, genericTypeMappings);
 	}
 
-	internal static void Generate(IIncrementalGenerator generator, Type[] targetTypes, params Type[] typesToLoadAssembliesFrom)
+	internal static void Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
 		var isCreate = generator is RockCreateGenerator;
-		var code = GetCode(targetTypes, isCreate);
+		var code = GetCode(targetTypes, isCreate, genericTypeMappings);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -106,7 +108,7 @@ internal static class TestGenerator
 		}
 	}
 
-	internal static void Generate(IIncrementalGenerator generator, string code, params Type[] typesToLoadAssembliesFrom)
+	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -118,7 +120,7 @@ internal static class TestGenerator
 				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
 			});
 
-		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom) 
+		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
 			references = references.Concat(new[]
 			{
@@ -177,7 +179,7 @@ internal static class TestGenerator
 		}
 	}
 
-	static string GetCode(Type[] types, bool isCreate)
+	static string GetCode(Type[] types, bool isCreate, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
@@ -196,7 +198,7 @@ internal static class TestGenerator
 
 		for (var i = 0; i < types.Length; i++)
 		{
-			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition()}>();");
+			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings)}>();");
 		}
 
 		indentWriter.Indent--;
