@@ -9,6 +9,6 @@
 		<Nullable>enable</Nullable>
 		<TargetFramework>net7.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<Version>7.0.0-alpha.2</Version>
+		<Version>7.0.0-alpha.3</Version>
 	</PropertyGroup>
 </Project>
