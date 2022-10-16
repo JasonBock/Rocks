@@ -9,5 +9,7 @@ internal static class MappedTypes
 			.AddItems(CslaMappings.GetMappedTypes())
 			.AddItems(ComputeSharpMappings.GetMappedTypes())
 			.AddItems(ImageSharpMappings.GetMappedTypes())
-			.AddItems(AutoMapperMappings.GetMappedTypes());
+			.AddItems(AutoMapperMappings.GetMappedTypes())
+			.AddItems(EntityFrameworkMappings.GetMappedTypes())
+			.AddItems(FluentAssertionsMappings.GetMappedTypes());
 }

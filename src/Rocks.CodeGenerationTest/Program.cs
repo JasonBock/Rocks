@@ -79,7 +79,7 @@ static void TestWithTypes()
 		//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
 		// AutoMapper
-		typeof(AutoMapper.AutoMapAttribute),
+		//typeof(AutoMapper.AutoMapAttribute),
 
 		// NUnit
 		//typeof(NUnit.Framework.TestCaseAttribute),
@@ -97,7 +97,7 @@ static void TestWithTypes()
 		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
 		// FluentAssertions
-		//typeof(FluentAssertions.AggregateExceptionExtractor),
+		typeof(FluentAssertions.AggregateExceptionExtractor),
 
 		// StackExchange.Redis
 		//typeof(StackExchange.Redis.Aggregate),
@@ -140,6 +140,9 @@ static void TestWithTypes()
 	{
 		typeof(System.Linq.Expressions.LambdaExpression),
 		typeof(System.Net.Mail.MailMessage),
+		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
+		typeof(System.Diagnostics.DiagnosticSource),
+		typeof(System.Transactions.Transaction)
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
