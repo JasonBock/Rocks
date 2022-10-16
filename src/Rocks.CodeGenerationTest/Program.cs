@@ -39,8 +39,8 @@ static void TestWithTypes()
 	var targetAssemblies = new Type[]
 	{
 		// Core .NET types
-		//typeof(object), typeof(Dictionary<,>),
-		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+		typeof(object), typeof(Dictionary<,>),
+		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// CSLA
 		//typeof(Csla.DataPortal<>),
@@ -124,7 +124,7 @@ static void TestWithTypes()
 		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 
 		// MediatR
-		typeof(MediatR.ISender),
+		//typeof(MediatR.ISender),
 
 		// System.Reactive
 		//typeof(System.Reactive.ExperimentalAttribute),

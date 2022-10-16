@@ -13,5 +13,7 @@ internal static class MappedTypes
 			.AddItems(EntityFrameworkMappings.GetMappedTypes())
 			.AddItems(FluentAssertionsMappings.GetMappedTypes())
 			.AddItems(GoogleProtobufMappings.GetMappedTypes())
-			.AddItems(MediatRMappings.GetMappedTypes());
+			.AddItems(MediatRMappings.GetMappedTypes())
+			.AddItems(ReactiveMappings.GetMappedTypes())
+			.AddItems(NSubstituteMappings.GetMappedTypes());
 }
