@@ -97,7 +97,7 @@ static void TestWithTypes()
 		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
 		// FluentAssertions
-		typeof(FluentAssertions.AggregateExceptionExtractor),
+		//typeof(FluentAssertions.AggregateExceptionExtractor),
 
 		// StackExchange.Redis
 		//typeof(StackExchange.Redis.Aggregate),
@@ -124,7 +124,7 @@ static void TestWithTypes()
 		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 
 		// MediatR
-		//typeof(MediatR.ISender),
+		typeof(MediatR.ISender),
 
 		// System.Reactive
 		//typeof(System.Reactive.ExperimentalAttribute),
@@ -142,7 +142,9 @@ static void TestWithTypes()
 		typeof(System.Net.Mail.MailMessage),
 		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
 		typeof(System.Diagnostics.DiagnosticSource),
-		typeof(System.Transactions.Transaction)
+		typeof(System.Transactions.Transaction),
+		typeof(System.Text.Json.JsonSerializerOptions),
+		typeof(System.Uri),
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();

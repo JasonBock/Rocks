@@ -11,5 +11,7 @@ internal static class MappedTypes
 			.AddItems(ImageSharpMappings.GetMappedTypes())
 			.AddItems(AutoMapperMappings.GetMappedTypes())
 			.AddItems(EntityFrameworkMappings.GetMappedTypes())
-			.AddItems(FluentAssertionsMappings.GetMappedTypes());
+			.AddItems(FluentAssertionsMappings.GetMappedTypes())
+			.AddItems(GoogleProtobufMappings.GetMappedTypes())
+			.AddItems(MediatRMappings.GetMappedTypes());
 }
