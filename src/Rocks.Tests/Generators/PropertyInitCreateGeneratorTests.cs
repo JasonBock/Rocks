@@ -191,7 +191,6 @@ public static class PropertyInitCreateGeneratorTests
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
-	[Ignore("Currently having a nullable issue with this ONE TEST.")]
 	[Test]
 	public static async Task GenerateWithRequiredAsync()
 	{
@@ -199,6 +198,8 @@ public static class PropertyInitCreateGeneratorTests
 			"""
 			using Rocks;
 			using System;
+
+			#nullable enable
 
 			namespace MockTests
 			{
@@ -220,6 +221,9 @@ public static class PropertyInitCreateGeneratorTests
 
 		var generatedCode =
 			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
 			#nullable enable
 			
 			namespace MockTests
@@ -270,7 +274,7 @@ public static class PropertyInitCreateGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 									{
 										var @result = @methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(obj) :
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
 										@methodHandler.IncrementCallCount();
 										return @result!;
