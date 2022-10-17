@@ -11,7 +11,7 @@ static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
-		using Microsoft.EntityFrameworkCore.Metadata;
+		using System.Reactive.PlatformServices;
 		using Rocks;
 		using System;
 
@@ -19,11 +19,15 @@ static void TestWithCode()
 		{
 			public static void Go()
 			{
-				var expectations = Rock.Create<INavigation>();
+				var expectations = Rock.Create<CurrentPlatformEnlightenmentProvider>();
 			}
 		}
 		""",
-		new[] { typeof(Microsoft.EntityFrameworkCore.Metadata.INavigation) });
+		new[]
+		{
+			typeof(System.Reactive.PlatformServices.CurrentPlatformEnlightenmentProvider),
+			typeof(System.Net.EndPoint),
+		});
 }
 
 
@@ -39,8 +43,8 @@ static void TestWithTypes()
 	var targetAssemblies = new Type[]
 	{
 		// Core .NET types
-		typeof(object), typeof(Dictionary<,>),
-		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+		//typeof(object), typeof(Dictionary<,>),
+		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// CSLA
 		//typeof(Csla.DataPortal<>),
@@ -49,9 +53,6 @@ static void TestWithTypes()
 		//typeof(ComputeSharp.AutoConstructorAttribute),
 
 		// ComputeSharp.D2D1
-		// ID2D1TransformMapperFactory will fail because it needs a struct 
-		// that can be unmanaged and implement ID2D1PixelShader. If that's
-		// done, then it works just fine.
 		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Moq
@@ -132,7 +133,7 @@ static void TestWithTypes()
 		// NSubstitute
 		//typeof(NSubstitute.Arg),
 
-		// TODO: Azure.Identity, NSubstitute, AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
+		// TODO: AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 	}.Select(_ => _.Assembly).ToHashSet();
 
