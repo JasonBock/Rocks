@@ -20,7 +20,7 @@ internal static class MockEventsBuilder
 
 	private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
 	{
-		var eventType = @event.Value.Type.GetName();
+		var eventType = @event.Value.Type.GetReferenceableName();
 		var name = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}.{@event.Value.Name}";
 		var fieldName = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}_{@event.Value.Name}";
 
