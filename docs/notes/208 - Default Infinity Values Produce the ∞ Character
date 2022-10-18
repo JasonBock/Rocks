@@ -1,0 +1,6 @@
+The infinity shows up:
+* Method definition
+* Exception messages (though not in the member identifier description...?)
+* Expectations extension methods
+
+Though I'm guessing that I fix this once, and that should handle it everywhere.
