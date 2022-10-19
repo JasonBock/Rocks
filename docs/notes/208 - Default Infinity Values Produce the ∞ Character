@@ -4,3 +4,5 @@ The infinity shows up:
 * Expectations extension methods
 
 Though I'm guessing that I fix this once, and that should handle it everywhere.
+
+Looks like I'm going to have to handle all the "special" values on primitive types, compare to them, and return the "literal code" value.
