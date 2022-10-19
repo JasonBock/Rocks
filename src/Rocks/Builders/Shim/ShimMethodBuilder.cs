@@ -29,7 +29,7 @@ internal static class ShimMethodBuilder
 
 			var methodParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
 			{
-				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
+				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",

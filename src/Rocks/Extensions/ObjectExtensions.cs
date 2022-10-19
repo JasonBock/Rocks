@@ -8,28 +8,37 @@ internal static class ObjectExtensions
 	/// This should only be used to get a stringified version of a default value
 	/// that will be put into the call site of an emitted method.
 	/// </summary>
-	internal static string GetDefaultValue(this object? self, bool isValueType = false) =>
-		self switch
+	internal static string GetDefaultValue(this object? self, ITypeSymbol selfType)
+	{
+		if (selfType.TypeKind == TypeKind.Enum)
 		{
-			// TODO: Try to get enum values as "EnumType.EnumValue" here...if possible.
-			// Maybe an override of this method where the type is constrained to an enum?
-			string s => $"\"{s}\"",
-			bool b => $"{(b ? "true" : "false")}",
-			byte b => b.GetByteDefaultValue(),
-			sbyte sb => sb.GetSignedByteDefaultValue(),
-			char c => c.GetCharDefaultValue(),
-			decimal d => d.GetDecimalDefaultValue(),
-			double d => d.GetDoubleDefaultValue(),
-			float f => f.GetFloatDefaultValue(),
-			int i => i.GetIntDefaultValue(),
-			uint ui => ui.GetUnsignedIntDefaultValue(),
-			long l => l.GetLongDefaultValue(),
-			ulong ul => ul.GetUnsignedLongDefaultValue(),
-			short s => s.GetShortDefaultValue(),
-			ushort us => us.GetUnsignedShortDefaultValue(),
-			null => isValueType ? "default" : "null",
-			_ => self.ToString() ?? string.Empty
-		};
+			return $"({selfType.GetReferenceableName()})({self})";
+		}
+		else
+		{
+			return self switch
+			{
+				// TODO: Try to get enum values as "EnumType.EnumValue" here...if possible.
+				// Maybe an override of this method where the type is constrained to an enum?
+				string s => $"\"{s}\"",
+				bool b => $"{(b ? "true" : "false")}",
+				byte b => b.GetByteDefaultValue(),
+				sbyte sb => sb.GetSignedByteDefaultValue(),
+				char c => c.GetCharDefaultValue(),
+				decimal d => d.GetDecimalDefaultValue(),
+				double d => d.GetDoubleDefaultValue(),
+				float f => f.GetFloatDefaultValue(),
+				int i => i.GetIntDefaultValue(),
+				uint ui => ui.GetUnsignedIntDefaultValue(),
+				long l => l.GetLongDefaultValue(),
+				ulong ul => ul.GetUnsignedLongDefaultValue(),
+				short s => s.GetShortDefaultValue(),
+				ushort us => us.GetUnsignedShortDefaultValue(),
+				null => selfType.IsValueType ? "default" : "null",
+				_ => self.ToString() ?? string.Empty
+			};
+		}
+	}
 
 	private static string GetByteDefaultValue(this byte self) =>
 		self switch

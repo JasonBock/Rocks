@@ -83,7 +83,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 			{
 				if (_.HasExplicitDefaultValue)
 				{
-					return $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})";
+					return $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type)})";
 				}
 				else if (_.RefKind == RefKind.Out)
 				{

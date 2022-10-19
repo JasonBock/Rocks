@@ -1,6 +1,7 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
+using StackExchange.Redis;
 
 //TestWithCode();
 //TestWithType();
@@ -150,6 +151,12 @@ static void TestWithTypes()
 		// NSubstitute
 		//typeof(NSubstitute.Arg),
 
+		// Number of types found: 23
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// StackExchange.Redis
+		//typeof(StackExchange.Redis.Aggregate),
+
 
 		// FAILED
 
@@ -207,12 +214,6 @@ static void TestWithTypes()
 		// Make: 3 errors, 0 warnings
 		// FluentAssertions
 		//typeof(FluentAssertions.AggregateExceptionExtractor),
-
-		// Number of types found: 23
-		// Create: 162 errors, 0 warnings
-		// Make: 81 errors, 0 warnings
-		// StackExchange.Redis
-		//typeof(StackExchange.Redis.Aggregate),
 
 		// Number of types found: 41
 		// Create: 2 errors, 0 warnings

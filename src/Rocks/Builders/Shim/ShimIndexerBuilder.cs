@@ -67,7 +67,7 @@ internal static class ShimIndexerBuilder
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
 				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-					$" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)}" : string.Empty;
+					$" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.In => "in ",

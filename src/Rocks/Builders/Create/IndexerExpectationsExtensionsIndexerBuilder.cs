@@ -40,7 +40,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		}
 
 		var parameters = string.Join(", ", propertyGetMethod.Parameters.Select(
-			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : $"@{_.Name}"));
+			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type)})" : $"@{_.Name}"));
 		var addMethod = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, result.MockType) : 
 			$"Add<{propertyReturnValue}>";
@@ -82,7 +82,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 
 		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
-			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type.IsValueType)})" : $"@{_.Name}"));
+			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type)})" : $"@{_.Name}"));
 		writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 		writer.Indent--;
