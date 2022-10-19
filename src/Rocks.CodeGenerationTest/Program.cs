@@ -2,9 +2,9 @@
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -47,6 +47,13 @@ static void TestWithTypes()
 
 
 		// PASSED
+
+		// Number of types found: 373
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// Core .NET types
+		//typeof(object), typeof(Dictionary<,>),
+		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
@@ -156,27 +163,11 @@ static void TestWithTypes()
 		// StackExchange.Redis
 		//typeof(StackExchange.Redis.Aggregate),
 
-
-		// FAILED
-
-		// Number of types found: 373
+		// Number of types found: 213
 		// Create: 0 errors, 0 warnings
 		// Make: 3 errors, 0 warnings
-		// Core .NET types
-		//typeof(object), typeof(Dictionary<,>),
-		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
-
-		// Number of types found: 43
-		// Create: 2 errors, 0 warnings
-		// Make: 7 errors, 0 warnings
-		// Moq
-		//typeof(Moq.Mock<>),
-
-		// Number of types found: 43
-		// Create: 8 errors, 0 warnings
-		// Make: 7 errors, 0 warnings
-		// ImageSharp
-		//typeof(SixLabors.ImageSharp.GraphicsOptions),
+		// FluentAssertions
+		//typeof(FluentAssertions.AggregateExceptionExtractor),
 
 		// Number of types found: 9
 		// Create: 0 errors, 0 warnings
@@ -190,29 +181,38 @@ static void TestWithTypes()
 		// Castle.Core
 		//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 
-		// Number of types found: 118
-		// Create: 2 errors, 3 warnings
-		// Make: 2 errors, 3 warnings
-		// AutoMapper
-		//typeof(AutoMapper.AutoMapAttribute),
-
 		// Number of types found: 63
 		// Create: 0 errors, 0 warnings
 		// Make: 9 errors, 0 warnings
 		// Polly
 		//typeof(Polly.AdvancedCircuitBreakerSyntax),
 
+
+		// FAILED
+
+		// Number of types found: 43
+		// Create: 2 errors, 0 warnings
+		// Make: 1 errors, 0 warnings
+		// Moq
+		//typeof(Moq.Mock<>),
+
+		// Number of types found: 43
+		// Create: 8 errors, 0 warnings
+		// Make: 7 errors, 0 warnings
+		// ImageSharp
+		//typeof(SixLabors.ImageSharp.GraphicsOptions),
+
+		// Number of types found: 118
+		// Create: 2 errors, 3 warnings
+		// Make: 2 errors, 3 warnings
+		// AutoMapper
+		//typeof(AutoMapper.AutoMapAttribute),
+
 		// Number of types found: 748
-		// Create: 528 errors, 20 warnings
-		// Make: 289 errors, 16 warnings
+		// Create: 508 errors, 20 warnings
+		// Make: 125 errors, 16 warnings
 		// EntityFramework
 		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
-
-		// Number of types found: 213
-		// Create: 0 errors, 0 warnings
-		// Make: 3 errors, 0 warnings
-		// FluentAssertions
-		//typeof(FluentAssertions.AggregateExceptionExtractor),
 
 		// Number of types found: 41
 		// Create: 2 errors, 0 warnings
