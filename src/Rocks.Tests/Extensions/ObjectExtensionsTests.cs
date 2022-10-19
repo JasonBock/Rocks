@@ -3,6 +3,8 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
+public enum DefaultValue { One, Two, Three }
+
 public static class ObjectExtensionsTests
 {
 	[TestCase("b", "\"b\"")]
@@ -34,6 +36,22 @@ public static class ObjectExtensionsTests
 	[TestCase(int.MaxValue, "int.MaxValue")]
 	[TestCase(int.MinValue, "int.MinValue")]
 	[TestCase((int)22, "22")]
+	[TestCase(uint.MaxValue, "uint.MaxValue")]
+	[TestCase(uint.MinValue, "uint.MinValue")]
+	[TestCase((uint)22, "22")]
+	[TestCase(long.MaxValue, "long.MaxValue")]
+	[TestCase(long.MinValue, "long.MinValue")]
+	[TestCase((long)22, "22")]
+	[TestCase(ulong.MaxValue, "ulong.MaxValue")]
+	[TestCase(ulong.MinValue, "ulong.MinValue")]
+	[TestCase((ulong)22, "22")]
+	[TestCase(short.MaxValue, "short.MaxValue")]
+	[TestCase(short.MinValue, "short.MinValue")]
+	[TestCase((short)22, "22")]
+	[TestCase(ushort.MaxValue, "ushort.MaxValue")]
+	[TestCase(ushort.MinValue, "ushort.MinValue")]
+	[TestCase((ushort)22, "22")]
+	[TestCase(DefaultValue.Two, "global::Rocks.Tests.Extensions.DefaultValue.Two")]
 	[TestCase(null, "null")]
 	[TestCase(null, "default", true)]
 	public static void GetDefaultValue(object value, string expectedResult, bool isValueType = false) =>

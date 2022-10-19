@@ -1,4 +1,6 @@
-﻿namespace Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+
+namespace Rocks.Extensions;
 
 internal static class ObjectExtensions
 {
@@ -20,6 +22,11 @@ internal static class ObjectExtensions
 			double d => d.GetDoubleDefaultValue(),
 			float f => f.GetFloatDefaultValue(),
 			int i => i.GetIntDefaultValue(),
+			uint ui => ui.GetUnsignedIntDefaultValue(),
+			long l => l.GetLongDefaultValue(),
+			ulong ul => ul.GetUnsignedLongDefaultValue(),
+			short s => s.GetShortDefaultValue(),
+			ushort us => us.GetUnsignedShortDefaultValue(),
 			null => isValueType ? "default" : "null",
 			_ => self.ToString() ?? string.Empty
 		};
@@ -88,6 +95,46 @@ internal static class ObjectExtensions
 		{
 			int.MaxValue => "int.MaxValue",
 			int.MinValue => "int.MinValue",
+			_ => self.ToString()
+		};
+
+	private static string GetUnsignedIntDefaultValue(this uint self) =>
+		self switch
+		{
+			uint.MaxValue => "uint.MaxValue",
+			uint.MinValue => "uint.MinValue",
+			_ => self.ToString()
+		};
+
+	private static string GetLongDefaultValue(this long self) =>
+		self switch
+		{
+			long.MaxValue => "long.MaxValue",
+			long.MinValue => "long.MinValue",
+			_ => self.ToString()
+		};
+
+	private static string GetUnsignedLongDefaultValue(this ulong self) =>
+		self switch
+		{
+			ulong.MaxValue => "ulong.MaxValue",
+			ulong.MinValue => "ulong.MinValue",
+			_ => self.ToString()
+		};
+
+	private static string GetShortDefaultValue(this short self) =>
+		self switch
+		{
+			short.MaxValue => "short.MaxValue",
+			short.MinValue => "short.MinValue",
+			_ => self.ToString()
+		};
+
+	private static string GetUnsignedShortDefaultValue(this ushort self) =>
+		self switch
+		{
+			ushort.MaxValue => "ushort.MaxValue",
+			ushort.MinValue => "ushort.MinValue",
 			_ => self.ToString()
 		};
 }

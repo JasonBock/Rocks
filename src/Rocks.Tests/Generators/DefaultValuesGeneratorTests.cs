@@ -135,7 +135,27 @@ public static class DefaultValuesGeneratorTests
 			}
 			""";
 
-		var generatedCode = "";
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfIUseInfinityExtensions
+			{
+				internal static global::IUseInfinity Instance(this global::Rocks.MakeGeneration<global::IUseInfinity> @self) =>
+					new RockIUseInfinity();
+				
+				private sealed class RockIUseInfinity
+					: global::IUseInfinity
+				{
+					public RockIUseInfinity() { }
+					
+					public void Use(double @value = double.PositiveInfinity)
+					{
+					}
+				}
+			}
+			
+			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode) },
