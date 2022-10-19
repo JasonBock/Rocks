@@ -203,15 +203,15 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					{
 						public RockIMatchObjectOfobject() { }
 						
-						bool IMatchObject<object>.Equals(object? @other)
+						bool global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
 							return default!;
 						}
-						bool IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
+						bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
 							return default!;
 						}
-						object IMatchObject<object>.MemberwiseClone()
+						object global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
 							return default!;
 						}
@@ -424,15 +424,15 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					{
 						public RockIMatchObjectOfobject() { }
 						
-						string IMatchObject<object>.Equals(object? @other)
+						string global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
 							return default!;
 						}
-						int IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
+						int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
 							return default!;
 						}
-						bool IMatchObject<object>.MemberwiseClone()
+						bool global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
 							return default!;
 						}
