@@ -13,7 +13,7 @@ internal static class MockMethodVoidBuilder
 
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
+			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{

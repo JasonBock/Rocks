@@ -12,7 +12,7 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var attributes = indexer.GetAttributes();
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{indexer.ContainingType.GetName(TypeNameOption.IncludeGenerics)}.";
+			string.Empty : $"{indexer.ContainingType.GetReferenceableName()}.";
 
 		if (attributes.Length > 0)
 		{

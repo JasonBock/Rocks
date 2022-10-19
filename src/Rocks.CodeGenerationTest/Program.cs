@@ -1,18 +1,17 @@
 ﻿using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
-using StackExchange.Redis;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
 {
-	TestGenerator.Generate(new RockCreateGenerator(),
+	TestGenerator.Generate(new RockMakeGenerator(),
 		"""
-		using System.Reactive.PlatformServices;
+		using Moq;
 		using Rocks;
 		using System;
 
@@ -20,13 +19,13 @@ static void TestWithCode()
 		{
 			public static void Go()
 			{
-				var expectations = Rock.Create<CurrentPlatformEnlightenmentProvider>();
+				var expectations = Rock.Make<ISetupList>();
 			}
 		}
 		""",
 		new[]
 		{
-			typeof(System.Reactive.PlatformServices.CurrentPlatformEnlightenmentProvider),
+			typeof(Moq.ISetupList),
 			typeof(System.Net.EndPoint),
 		});
 }

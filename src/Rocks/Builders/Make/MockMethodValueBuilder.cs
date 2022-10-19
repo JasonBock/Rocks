@@ -15,7 +15,7 @@ internal static class MockMethodValueBuilder
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
 		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetName(TypeNameOption.IncludeGenerics)}." : string.Empty;
+			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
