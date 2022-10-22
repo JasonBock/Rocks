@@ -4,16 +4,15 @@ using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
 {
-	TestGenerator.Generate(new RockMakeGenerator(),
+	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
-		using Moq;
 		using Rocks;
 		using System;
 
@@ -21,14 +20,13 @@ static void TestWithCode()
 		{
 			public static void Go()
 			{
-				var expectations = Rock.Make<ISetupList>();
+				var expectations = Rock.Create<SixLabors.ImageSharp.Processing.Processors.Dithering.IDither>();
 			}
 		}
 		""",
 		new[]
 		{
-			typeof(Moq.ISetupList),
-			typeof(System.Net.EndPoint),
+			typeof(SixLabors.ImageSharp.Processing.Processors.Dithering.IDither),
 		});
 }
 

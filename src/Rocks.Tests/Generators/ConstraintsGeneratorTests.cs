@@ -6,6 +6,128 @@ namespace Rocks.Tests.Generators;
 public static class ConstraintsGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithDelegateCreationAndConstraintsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public interface IDot<T> { }
+
+			public sealed class Frame<TDot>
+				where TDot : unmanaged, IDot<TDot>
+			{ }
+
+			public interface INeedDelegate
+			{				
+				void Foo<T>(ref int a, Frame<T> frame) where T : unmanaged, IDot<T>;
+			}
+			
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<INeedDelegate>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using ProjectionsForINeedDelegate;
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace ProjectionsForINeedDelegate
+			{
+				internal delegate void FooCallback_191327403400827159052686230025463041183626019740<T>(ref int @a, global::Frame<T> @frame);
+			}
+			
+			internal static class CreateExpectationsOfINeedDelegateExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::INeedDelegate> Methods(this global::Rocks.Expectations.Expectations<global::INeedDelegate> @self) =>
+					new(@self);
+				
+				internal static global::INeedDelegate Instance(this global::Rocks.Expectations.Expectations<global::INeedDelegate> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockINeedDelegate(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockINeedDelegate
+					: global::INeedDelegate
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockINeedDelegate(global::Rocks.Expectations.Expectations<global::INeedDelegate> @expectations) =>
+						this.handlers = @expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "void Foo<T>(ref int @a, global::Frame<T> @frame)")]
+					public void Foo<T>(ref int @a, global::Frame<T> @frame)
+						where T : unmanaged, global::IDot<T>
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @foundMatch = false;
+							
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::Frame<T>>>(@methodHandler.Expectations[1]).IsValid(@frame))
+								{
+									@foundMatch = true;
+									
+									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T> @method)
+									{
+										@method(ref @a, @frame);
+									}
+									
+									@methodHandler.IncrementCallCount();
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Foo<T>(ref int @a, global::Frame<T> @frame)");
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo<T>(ref int @a, global::Frame<T> @frame)");
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfINeedDelegateExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::INeedDelegate, global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T>> Foo<T>(this global::Rocks.Expectations.MethodExpectations<global::INeedDelegate> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@a);
+					global::System.ArgumentNullException.ThrowIfNull(@frame);
+					return new global::Rocks.MethodAdornments<global::INeedDelegate, global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @frame }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "INeedDelegate_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateCreateTargetingInterfaceAsync()
 	{
 		var code =
