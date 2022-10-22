@@ -34,7 +34,8 @@ internal static class ObjectExtensions
 				ulong ul => ul.GetUnsignedLongDefaultValue(),
 				short s => s.GetShortDefaultValue(),
 				ushort us => us.GetUnsignedShortDefaultValue(),
-				null => selfType.IsValueType ? "default" : "null",
+				null => selfType.IsValueType ? "default" :
+					selfType.TypeKind == TypeKind.TypeParameter ? "default!" : "null",
 				_ => self.ToString() ?? string.Empty
 			};
 		}

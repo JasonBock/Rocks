@@ -6,6 +6,163 @@ namespace Rocks.Tests.Generators;
 public static class DefaultValuesGeneratorTests
 {
 	[Test]
+	public static async Task CreateWhenGenericParameterHasOptionalDefaultValueAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			
+			public interface IGenericDefault
+			{
+			  void Setup<T>(T initialValue = default(T));
+			}
+			
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<IGenericDefault>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIGenericDefaultExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::IGenericDefault> Methods(this global::Rocks.Expectations.Expectations<global::IGenericDefault> @self) =>
+					new(@self);
+				
+				internal static global::IGenericDefault Instance(this global::Rocks.Expectations.Expectations<global::IGenericDefault> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockIGenericDefault(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIGenericDefault
+					: global::IGenericDefault
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIGenericDefault(global::Rocks.Expectations.Expectations<global::IGenericDefault> @expectations) =>
+						this.handlers = @expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "void Setup<T>(T @initialValue)")]
+					public void Setup<T>(T @initialValue = default!)
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @foundMatch = false;
+							
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@initialValue) ?? false))
+								{
+									@foundMatch = true;
+									
+									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T> @method)
+									{
+										@method(@initialValue);
+									}
+									
+									@methodHandler.IncrementCallCount();
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Setup<T>(T @initialValue = default!)");
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Setup<T>(T @initialValue = default!)");
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfIGenericDefaultExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::IGenericDefault, global::System.Action<T>> Setup<T>(this global::Rocks.Expectations.MethodExpectations<global::IGenericDefault> @self, global::Rocks.Argument<T> @initialValue)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@initialValue);
+					return new global::Rocks.MethodAdornments<global::IGenericDefault, global::System.Action<T>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initialValue.Transform(default!) }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IGenericDefault_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task MakeWhenGenericParameterHasOptionalDefaultValueAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			
+			public interface IGenericDefault
+			{
+			  void Setup<T>(T initialValue = default(T));
+			}
+			
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Make<IGenericDefault>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfIGenericDefaultExtensions
+			{
+				internal static global::IGenericDefault Instance(this global::Rocks.MakeGeneration<global::IGenericDefault> @self) =>
+					new RockIGenericDefault();
+				
+				private sealed class RockIGenericDefault
+					: global::IGenericDefault
+				{
+					public RockIGenericDefault() { }
+					
+					public void Setup<T>(T @initialValue = default!)
+					{
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithPositiveInfinityAsync()
 	{
 		var code =

@@ -56,6 +56,7 @@ public static class ObjectExtensionsTests
 	[TestCase("public class Test { public void Foo(ushort value = 22) { } }", "22")]
 	[TestCase("public class Test { public void Foo(string? value = null) { } }", "null")]
 	[TestCase("public class Test { public void Foo(int? value = null) { } }", "default")]
+	[TestCase("public class Test { public void Foo<T>(T value = default) { } }", "default!")]
 	[TestCase("public class Test { public void Foo(decimal value = decimal.MaxValue) { } }", "decimal.MaxValue")]
 	[TestCase("public class Test { public void Foo(decimal value = decimal.MinusOne) { } }", "decimal.MinusOne")]
 	[TestCase("public class Test { public void Foo(decimal value = decimal.MinValue) { } }", "decimal.MinValue")]

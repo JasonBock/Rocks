@@ -187,15 +187,15 @@ static void TestWithTypes()
 		// Make: 9 errors, 0 warnings
 		// Polly
 		typeof(Polly.AdvancedCircuitBreakerSyntax),
-#endif
-
-		// FAILED
 
 		// Number of types found: 43
 		// Create: 2 errors, 0 warnings
 		// Make: 1 errors, 0 warnings
 		// Moq
-		//typeof(Moq.Mock<>),
+		typeof(Moq.Mock<>),
+#endif
+
+		// FAILED
 
 		// Number of types found: 43
 		// Create: 8 errors, 0 warnings
@@ -213,7 +213,7 @@ static void TestWithTypes()
 		// Create: 502 errors, 20 warnings
 		// Make: 122 errors, 16 warnings
 		// EntityFramework
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
 		// Number of types found: 41
 		// Create: 2 errors, 0 warnings
