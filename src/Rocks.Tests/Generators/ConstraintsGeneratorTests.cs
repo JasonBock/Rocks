@@ -6,6 +6,179 @@ namespace Rocks.Tests.Generators;
 public static class ConstraintsGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithDefaultConstraintAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			#nullable enable
+
+			public class BaseStuff
+			{
+				public virtual T? GetService<T>(object[] args) where T : class => default!;
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<BaseStuff>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfBaseStuffExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::BaseStuff> Methods(this global::Rocks.Expectations.Expectations<global::BaseStuff> @self) =>
+					new(@self);
+				
+				internal static global::BaseStuff Instance(this global::Rocks.Expectations.Expectations<global::BaseStuff> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockBaseStuff(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockBaseStuff
+					: global::BaseStuff
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockBaseStuff(global::Rocks.Expectations.Expectations<global::BaseStuff> @expectations) =>
+						this.handlers = @expectations.Handlers;
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
+								{
+									var @result = @methodHandler.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+									@methodHandler.IncrementCallCount();
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(@obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							var @result = @methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+							@methodHandler.IncrementCallCount();
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							var @result = @methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+							@methodHandler.IncrementCallCount();
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "T? GetService<T>(object[] @args)")]
+					public override T? GetService<T>(object[] @args)
+						where T : default
+					{
+						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object[]>>(@methodHandler.Expectations[0]).IsValid(@args))
+								{
+									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?> @methodReturn ?
+										@methodReturn(@args) :
+										@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
+											@returnValue.ReturnValue :
+											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
+									@methodHandler.IncrementCallCount();
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for T? GetService<T>(object[] @args)");
+						}
+						else
+						{
+							return base.GetService<T>(@args);
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfBaseStuffExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::BaseStuff> @self, global::Rocks.Argument<object?> @obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@obj);
+					return new global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::BaseStuff> @self) =>
+					new global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::BaseStuff> @self) =>
+					new global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<object[], T?>, T?> GetService<T>(this global::Rocks.Expectations.MethodExpectations<global::BaseStuff> @self, global::Rocks.Argument<object[]> @args) where T : class
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@args);
+					return new global::Rocks.MethodAdornments<global::BaseStuff, global::System.Func<object[], T?>, T?>(@self.Add<T?>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @args }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "BaseStuff_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithDelegateCreationAndConstraintsAsync()
 	{
 		var code =
