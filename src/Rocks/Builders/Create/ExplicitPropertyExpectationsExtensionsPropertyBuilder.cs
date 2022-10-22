@@ -65,17 +65,20 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 	// if I should be doing a "get", "set", or "init", but then I also look at the 
 	// property's accessor value for the member identifier increment. This
 	// doesn't feel "right".
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor, string containingTypeName)
+	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, IAssemblySymbol typeToMockContainingAssembly,
+		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (accessor == PropertyAccessor.Get)
+		if (accessor == PropertyAccessor.Get &&
+			result.Value.GetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
 		{
 			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet)
+			if (result.Accessors == PropertyAccessor.GetAndSet &&
+				result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
 			{
 				memberIdentifier++;
 			}

@@ -12,9 +12,11 @@ internal static class MockPropertyBuilder
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
-
 		var methodName = propertyGetMethod.Name;
-		writer.WriteLine("get");
+		var visibility = result.Value.DeclaredAccessibility != propertyGetMethod.DeclaredAccessibility ?
+			$"{propertyGetMethod.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+
+		writer.WriteLine($"{visibility}get");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -106,17 +108,20 @@ internal static class MockPropertyBuilder
 	private static void BuildSetter(IndentedTextWriter writer,
 		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
 	{
-		var methodName = result.Value.SetMethod!.Name;
+		var propertySetMethod = result.Value.SetMethod!;
+		var methodName = propertySetMethod.Name;
 		var property = result.Value;
+		var visibility = result.Value.DeclaredAccessibility != propertySetMethod.DeclaredAccessibility ?
+			$"{propertySetMethod.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 
 		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine("init { }");
+			writer.WriteLine($"{visibility}init {{ }}");
 		}
 		else
 		{
 			var nullableFlag = allowNull ? "!" : string.Empty;
-			writer.WriteLine("set");
+			writer.WriteLine($"{visibility}set");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -212,6 +217,8 @@ internal static class MockPropertyBuilder
 	{
 		var property = result.Value;
 		var attributes = property.GetAllAttributes();
+		var isGetterVisible = false;
+		var isSetterVisible = false;
 
 		if (attributes.Length > 0)
 		{
@@ -225,14 +232,24 @@ internal static class MockPropertyBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
-			memberIdentifierAttribute++;
+			isGetterVisible = result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+
+			if(isGetterVisible)
+			{
+				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
+				memberIdentifierAttribute++;
+			}
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
+			isSetterVisible = result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+
+			if (isSetterVisible) 
+			{
+				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
+			}
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -247,15 +264,13 @@ internal static class MockPropertyBuilder
 
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
-			result.Accessors == PropertyAccessor.GetAndInit)
+		if (isGetterVisible)
 		{
 			MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet ||
-			result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
+		if (isSetterVisible)
 		{
 			var allowNullAttributeType = compilation.GetTypeByMetadataName("System.Diagnostics.CodeAnalysis.AllowNullAttribute");
 			var allowNull = attributes.Any(_ => _.AttributeClass?.Equals(allowNullAttributeType, SymbolEqualityComparer.Default) ?? false);

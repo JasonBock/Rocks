@@ -14,9 +14,11 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var visibility = result.Value.DeclaredAccessibility != method.DeclaredAccessibility ?
+			$"{method.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine("get");
+		writer.WriteLine($"{visibility}get");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -116,15 +118,17 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var visibility = result.Value.DeclaredAccessibility != method.DeclaredAccessibility ?
+			$"{method.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		var namingContext = new VariableNamingContext(method);
 
 		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine("init { }");
+			writer.WriteLine($"{visibility}init {{ }}");
 		}
 		else
 		{
-			writer.WriteLine("set");
+			writer.WriteLine($"{visibility}set");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -232,6 +236,8 @@ internal static class MockIndexerBuilder
 		var attributes = indexer.GetAttributes();
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			string.Empty : $"{indexer.ContainingType.GetReferenceableName()}.";
+		var isGetterVisible = false;
+		var isSetterVisible = false;
 
 		if (attributes.Length > 0)
 		{
@@ -244,14 +250,24 @@ internal static class MockIndexerBuilder
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
-			memberIdentifierAttribute++;
+			isGetterVisible = result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+
+			if (isGetterVisible)
+			{
+				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+				memberIdentifierAttribute++;
+			}
 		}
 
 		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
 			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 		{
-			writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+			isSetterVisible = result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+
+			if (isSetterVisible)
+			{
+				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+			}
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
@@ -267,16 +283,14 @@ internal static class MockIndexerBuilder
 
 		var memberIdentifier = result.MemberIdentifier;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
-			result.Accessors == PropertyAccessor.GetAndInit)
+		if (isGetterVisible)
 		{
 			MockIndexerBuilder.BuildGetter(writer, result, compilation, 
 				memberIdentifier, raiseEvents, signature);
 			memberIdentifier++;
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.Init ||
-			result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
+		if (isSetterVisible)
 		{
 			MockIndexerBuilder.BuildSetter(writer, result, compilation, 
 				memberIdentifier, raiseEvents, signature);

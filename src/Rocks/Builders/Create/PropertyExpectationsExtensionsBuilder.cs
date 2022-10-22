@@ -41,7 +41,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in typeGroup)
 			{
-				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, PropertyAccessor.Get, typeGroup.Key.GetName());
+				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
+					PropertyAccessor.Get, typeGroup.Key.GetName());
 			}
 
 			writer.Indent--;
@@ -60,7 +61,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in typeGroup)
 			{
-				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, PropertyAccessor.Set, typeGroup.Key.GetName());
+				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
+					PropertyAccessor.Set, typeGroup.Key.GetName());
 			}
 
 			writer.Indent--;
@@ -124,7 +126,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in typeGroup)
 			{
-				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, PropertyAccessor.Get, typeGroup.Key.GetName());
+				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
+					PropertyAccessor.Get, typeGroup.Key.GetName());
 			}
 
 			writer.Indent--;
@@ -143,7 +146,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in typeGroup)
 			{
-				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, PropertyAccessor.Set, containingTypeName);
+				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
+					PropertyAccessor.Set, containingTypeName);
 			}
 
 			writer.Indent--;
@@ -165,7 +169,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
 						_.Accessors == PropertyAccessor.GetAndInit)))
 			{
-				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, PropertyAccessor.Get);
+				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, PropertyAccessor.Get);
 			}
 
 			writer.Indent--;
@@ -183,7 +187,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 				.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
-				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, PropertyAccessor.Set);
+				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, PropertyAccessor.Set);
 			}
 
 			writer.Indent--;

@@ -30,26 +30,35 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
-			result.Accessors == PropertyAccessor.GetAndInit)
+		if ((result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) && 
+			result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
+			var getVisibility = result.Value.DeclaredAccessibility != result.Value.GetMethod!.DeclaredAccessibility ?
+				$"{result.Value.GetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+
 			if (indexer.ReturnsByRef || indexer.ReturnsByRefReadonly)
 			{
-				writer.WriteLine($"get => ref this.rr{result.MemberIdentifier};");
+				writer.WriteLine($"{getVisibility}get => ref this.rr{result.MemberIdentifier};");
 			}
 			else
 			{
-				writer.WriteLine("get => default!;");
+				writer.WriteLine($"{getVisibility}get => default!;");
 			}
 		}
 
-		if (result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet)
+		if ((result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet) && 
+			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
-			writer.WriteLine("set { }");
+			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
+				$"{result.Value.SetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			writer.WriteLine($"{setVisibility}set {{ }}");
 		}
-		else if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
+		else if ((result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit) && 
+			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
-			writer.WriteLine("init { }");
+			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
+				$"{result.Value.SetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			writer.WriteLine($"{setVisibility}init {{ }}");
 		}
 
 		writer.Indent--;

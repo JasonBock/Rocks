@@ -28,7 +28,8 @@ internal static class MockPropertyExtensionsBuilder
 				""");
 
 			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit)))
+				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -39,7 +40,8 @@ internal static class MockPropertyExtensionsBuilder
 			}
 
 			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -64,7 +66,8 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -74,7 +77,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) && 
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -98,7 +102,8 @@ internal static class MockPropertyExtensionsBuilder
 				""");
 
 			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit)))
+				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -109,7 +114,8 @@ internal static class MockPropertyExtensionsBuilder
 			}
 
 			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -134,7 +140,8 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -144,7 +151,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""

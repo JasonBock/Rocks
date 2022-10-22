@@ -1,4 +1,6 @@
-﻿using Rocks;
+﻿//#define INCLUDE_PASSED
+
+using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
@@ -32,9 +34,9 @@ static void TestWithCode()
 
 
 static void TestWithType() =>
-	 TestGenerator.Generate(new RockCreateGenerator(), 
-	 new[] 
-	 { 
+	 TestGenerator.Generate(new RockCreateGenerator(),
+	 new[]
+	 {
 		 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
 	 }, Array.Empty<Type>(), null);
 
@@ -45,148 +47,147 @@ static void TestWithTypes()
 		// TODO: AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
-
 		// PASSED
-
+#if INCLUDE_PASSED
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Core .NET types
-		//typeof(object), typeof(Dictionary<,>),
-		//typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+		typeof(object), typeof(Dictionary<,>),
+		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
 
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// CSLA
-		//typeof(Csla.DataPortal<>),
+		typeof(Csla.DataPortal<>),
 
 		// Number of types found: 0
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// ComputeSharp
-		//typeof(ComputeSharp.AutoConstructorAttribute),
+		typeof(ComputeSharp.AutoConstructorAttribute),
 
 		// Number of types found: 3
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// ComputeSharp.D2D1
-		//typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
+		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Number of types found: 15
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// System.Text.Json
-		//typeof(System.Text.Json.JsonDocument),
+		typeof(System.Text.Json.JsonDocument),
 
 		// Number of types found: 204
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Microsoft.CodeAnalysis.CSharp
-		//typeof(Microsoft.CodeAnalysis.SyntaxTree),
+		typeof(Microsoft.CodeAnalysis.SyntaxTree),
 
 		// Number of types found: 11
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Microsoft.Extensions.Logging
-		//typeof(Microsoft.Extensions.Logging.LogDefineOptions),
+		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 
 		// Number of types found: 38
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Mono.Cecil
-		//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
+		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
 		// Number of types found: 303
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// NUnit
-		//typeof(NUnit.Framework.TestCaseAttribute),
+		typeof(NUnit.Framework.TestCaseAttribute),
 
 		// Number of types found: 6
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// System.Threading.Channels
-		//typeof(System.Threading.Channels.BoundedChannelFullMode),
+		typeof(System.Threading.Channels.BoundedChannelFullMode),
 
 		// Number of types found: 28
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Serilog
-		//typeof(Serilog.Core.IDestructuringPolicy),
+		typeof(Serilog.Core.IDestructuringPolicy),
 
 		// Number of types found: 52
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// IdentityModel
-		//typeof(IdentityModel.Base64Url),
+		typeof(IdentityModel.Base64Url),
 
 		// Number of types found: 9
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// Google.Protobuf
-		//typeof(Google.Protobuf.ByteString),
+		typeof(Google.Protobuf.ByteString),
 
 		// Number of types found: 0
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// TerraFX.Interop.DirectX.D3D12MA_Allocation
-		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
+		typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 
 		// Number of types found: 0
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// TerraFX.Interop.Windows
-		//typeof(TerraFX.Interop.INativeGuid),
+		typeof(TerraFX.Interop.INativeGuid),
 
 		// Number of types found: 75
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// SharpZipLib
-		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
+		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 
 		// Number of types found: 37
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// MediatR
-		//typeof(MediatR.ISender),
+		typeof(MediatR.ISender),
 
 		// Number of types found: 174
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// NSubstitute
-		//typeof(NSubstitute.Arg),
+		typeof(NSubstitute.Arg),
 
 		// Number of types found: 23
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// StackExchange.Redis
-		//typeof(StackExchange.Redis.Aggregate),
+		typeof(StackExchange.Redis.Aggregate),
 
 		// Number of types found: 213
 		// Create: 0 errors, 0 warnings
 		// Make: 3 errors, 0 warnings
 		// FluentAssertions
-		//typeof(FluentAssertions.AggregateExceptionExtractor),
+		typeof(FluentAssertions.AggregateExceptionExtractor),
 
 		// Number of types found: 9
 		// Create: 0 errors, 0 warnings
 		// Make: 3 errors, 0 warnings
 		// Microsoft.Extensions.DependencyInjection
-		//typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
+		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 
 		// Number of types found: 212
 		// Create: 0 errors, 0 warnings
 		// Make: 3 errors, 0 warnings
 		// Castle.Core
-		//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
+		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 
 		// Number of types found: 63
 		// Create: 0 errors, 0 warnings
 		// Make: 9 errors, 0 warnings
 		// Polly
-		//typeof(Polly.AdvancedCircuitBreakerSyntax),
-
+		typeof(Polly.AdvancedCircuitBreakerSyntax),
+#endif
 
 		// FAILED
 
@@ -209,10 +210,10 @@ static void TestWithTypes()
 		//typeof(AutoMapper.AutoMapAttribute),
 
 		// Number of types found: 748
-		// Create: 508 errors, 20 warnings
-		// Make: 125 errors, 16 warnings
+		// Create: 502 errors, 20 warnings
+		// Make: 122 errors, 16 warnings
 		// EntityFramework
-		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
 		// Number of types found: 41
 		// Create: 2 errors, 0 warnings
@@ -235,13 +236,13 @@ static void TestWithTypes()
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
-		typeof(System.Linq.Expressions.LambdaExpression),
-		typeof(System.Net.Mail.MailMessage),
-		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
-		typeof(System.Diagnostics.DiagnosticSource),
-		typeof(System.Transactions.Transaction),
-		typeof(System.Text.Json.JsonSerializerOptions),
-		typeof(System.Uri),
+typeof(System.Linq.Expressions.LambdaExpression),
+typeof(System.Net.Mail.MailMessage),
+typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
+typeof(System.Diagnostics.DiagnosticSource),
+typeof(System.Transactions.Transaction),
+typeof(System.Text.Json.JsonSerializerOptions),
+typeof(System.Uri),
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
