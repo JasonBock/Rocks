@@ -40,7 +40,11 @@ internal static class MockProjectedDelegateBuilder
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
-		return $"internal {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method)}({methodParameters});";
+		var constraints = method.GetConstraints();
+		var methodConstraints = constraints.Length > 0 ?
+			$" {string.Join(" ", constraints)}" : string.Empty;
+
+		return $"internal {isUnsafe}delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedCallbackDelegateName(method)}({methodParameters}){methodConstraints};";
 	}
 
 	internal static string GetProjectedReturnValueDelegate(IMethodSymbol method)

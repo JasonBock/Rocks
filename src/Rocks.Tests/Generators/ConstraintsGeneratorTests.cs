@@ -42,7 +42,7 @@ public static class ConstraintsGeneratorTests
 			
 			namespace ProjectionsForINeedDelegate
 			{
-				internal delegate void FooCallback_191327403400827159052686230025463041183626019740<T>(ref int @a, global::Frame<T> @frame);
+				internal delegate void FooCallback_191327403400827159052686230025463041183626019740<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
 			}
 			
 			internal static class CreateExpectationsOfINeedDelegateExtensions
