@@ -1,12 +1,12 @@
 Types that need to change:
-* GetMockableProperties()
-* Create
-	* MockPropertyBuilder
-	* MockPropertyExtensionsBuilder
-	* MockIndexerBuilder
-	* ExplicitIndexerExpectationsExtensionsIndexerBuilder
-	* ExplicitPropertyExpectationsExtensionsPropertyBuilder
-	* IndexerExpectationsExtensionsIndexerBuilder
-* Make
-	* MockPropertyBuilder
-	* MockIndexerBuilder
+* DONE - GetMockableProperties()
+* DONE - Create
+	* DONE - MockPropertyBuilder
+	* DONE - MockPropertyExtensionsBuilder
+	* DONE - MockIndexerBuilder
+	* DONE - ExplicitIndexerExpectationsExtensionsIndexerBuilder
+	* DONE - ExplicitPropertyExpectationsExtensionsPropertyBuilder
+	* DONE - IndexerExpectationsExtensionsIndexerBuilder
+* DONE - Make
+	* DONE - MockPropertyBuilder
+	*DONE -  MockIndexerBuilder

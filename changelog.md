@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.3] - Not Yet Released
 
 ### Fixed
-- Explicit implementation in makes now use fully-qualified names (issue [#201](https://github.com/JasonBock/Rocks/issues/201))
+- Visibility differences in properties are handled correctly (issue [#203](https://github.com/JasonBock/Rocks/issues/203) and issue [#207](https://github.com/JasonBock/Rocks/issues/207))
 - Default values for optional parameters like `double.PositiveInfinity` will no longer print out the infinity symbol (issue [#208](https://github.com/JasonBock/Rocks/issues/208))
 - Internal members that are not visible will not be included in the mock (issue [#199](https://github.com/JasonBock/Rocks/issues/199))
 
