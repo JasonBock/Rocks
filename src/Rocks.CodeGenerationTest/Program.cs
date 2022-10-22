@@ -1,12 +1,12 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -196,8 +196,8 @@ static void TestWithTypes()
 		// FAILED
 
 		// Number of types found: 43
-		// Create: 8 errors, 0 warnings
-		// Make: 7 errors, 0 warnings
+		// Create: 6 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
 		// ImageSharp
 		//typeof(SixLabors.ImageSharp.GraphicsOptions),
 
