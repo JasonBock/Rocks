@@ -1,4 +1,4 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -217,7 +217,7 @@ static void TestWithTypes()
 		// Create: 364 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 
 		// Number of types found: 41
 		// Create: 2 errors, 0 warnings

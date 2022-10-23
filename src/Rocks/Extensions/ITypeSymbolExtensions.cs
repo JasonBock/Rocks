@@ -612,42 +612,62 @@ internal static class ITypeSymbolExtensions
 			foreach (var hierarchyType in hierarchy)
 			{
 				foreach (var hierarchyProperty in hierarchyType.GetMembers().OfType<IPropertySymbol>()
-					.Where(_ => !_.IsStatic && (_.IsIndexer || _.CanBeReferencedByName)))
+					.Where(_ => (_.IsIndexer || _.CanBeReferencedByName)))
 				{
-					var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+					if (hierarchyProperty.IsStatic && hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					{
+						// This is the case where a class does something like this:
+						// `protected static new int Data { get; }`
+						// We can see it, and it's hiding a property from a class in the hierarchy,
+						// so we have to remove the one that we currently have in the list.
+						// If it "shows up" again in a class lower in hierarchy,
+						// we'll just add it again.
+						var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
+							!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
+							AreParametersEqual(_.Value, hierarchyProperty));
 
-					if (!canBeSeen && hierarchyProperty.IsAbstract)
-					{
-						hasInaccessibleAbstractMembers = true;
-					}
-					else if (canBeSeen)
-					{
-						if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
+						if (propertyToRemove is not null)
 						{
-							var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
-								!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
-								AreParametersEqual(_.Value, hierarchyProperty));
+							properties.Remove(propertyToRemove);
+						}
+					}
+					else if(!hierarchyProperty.IsStatic)
+					{
+						var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 
-							if (propertyToRemove is not null)
+						if (!canBeSeen && hierarchyProperty.IsAbstract)
+						{
+							hasInaccessibleAbstractMembers = true;
+						}
+						else if (canBeSeen)
+						{
+							if (hierarchyProperty.IsAbstract || hierarchyProperty.IsOverride || hierarchyProperty.IsVirtual)
 							{
-								properties.Remove(propertyToRemove);
-							}
+								var propertyToRemove = properties.SingleOrDefault(_ => _.Value.Name == hierarchyProperty.Name &&
+									!_.Value.ContainingType.Equals(hierarchyProperty.ContainingType) &&
+									AreParametersEqual(_.Value, hierarchyProperty));
 
-							if (!hierarchyProperty.IsSealed)
-							{
-								var accessors = hierarchyProperty.GetAccessors();
-								properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
-
-								if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
+								if (propertyToRemove is not null)
 								{
-									shims.Add(hierarchyProperty.ContainingType);
+									properties.Remove(propertyToRemove);
 								}
 
-								memberIdentifier++;
-
-								if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+								if (!hierarchyProperty.IsSealed)
 								{
+									var accessors = hierarchyProperty.GetAccessors();
+									properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
+
+									if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
+									{
+										shims.Add(hierarchyProperty.ContainingType);
+									}
+
 									memberIdentifier++;
+
+									if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+									{
+										memberIdentifier++;
+									}
 								}
 							}
 						}
