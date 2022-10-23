@@ -1,1 +1,3 @@
 In `GetMockableMethods()` (and I'm guessing I'll have to do this for the other `GetMockable...()` methods), at each point in the hiearachy, I need to include static members, because if they match an existing discovered member (definitely `Exact`, though `DifferByReturnTypeOnly` may count as well), then that member must be removed
+
+OK, I fixed `GetMockableMethods()`, so run all tests and the case in EF, and then do the other `Get...()` methods.

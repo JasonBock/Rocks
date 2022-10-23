@@ -392,9 +392,25 @@ internal static class ITypeSymbolExtensions
 			foreach (var hierarchyType in hierarchy)
 			{
 				foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName && !_.IsStatic))
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 				{
-					if ((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual) &&
+					if(hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					{
+						// This is the case where a class does something like this:
+						// `protected static new string ToString()`
+						// We can see it, and it's hiding a method from a class in the hierarchy,
+						// so we have to remove the one that we currently have in the list.
+						// If it "shows up" again in a class lower in hierarchy,
+						// we'll just add it again.
+						var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
+							!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
+
+						if (methodToRemove is not null)
+						{
+							methods.Remove(methodToRemove);
+						}
+					}
+					else if (!hierarchyMethod.IsStatic && (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual) &&
 						(!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
 					{
 						var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);

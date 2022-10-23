@@ -109,24 +109,6 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							}
 						}
 						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
-						public override string? ToString()
-						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
-							{
-								var @methodHandler = @methodHandlers[0];
-								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
-								return @result!;
-							}
-							else
-							{
-								return base.ToString();
-							}
-						}
-						
 					}
 				}
 				
@@ -139,8 +121,6 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 					internal static global::Rocks.MethodAdornments<global::MockTests.StaticToString, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.StaticToString> @self) =>
 						new global::Rocks.MethodAdornments<global::MockTests.StaticToString, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.MethodAdornments<global::MockTests.StaticToString, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.StaticToString> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.StaticToString, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 				}
 			}
 			
@@ -201,14 +181,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							return default!;
 						}
-						public override string? ToString()
-						{
-							return default!;
-						}
 					}
 				}
 			}
-						
+			
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
