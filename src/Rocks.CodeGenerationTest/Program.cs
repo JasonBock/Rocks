@@ -191,6 +191,12 @@ static void TestWithTypes()
 		// Make: 1 errors, 0 warnings
 		// Moq
 		typeof(Moq.Mock<>),
+
+		// Number of types found: 47
+		// Create: 1 errors, 0 warnings
+		// Make: 1 errors, 0 warnings
+		// System.Reactive
+		typeof(System.Reactive.ExperimentalAttribute),
 #endif
 
 		// FAILED
@@ -224,12 +230,6 @@ static void TestWithTypes()
 		// Make: 7 errors, 0 warnings
 		// CsvHelper
 		//typeof(CsvHelper.ArrayHelper),
-
-		// Number of types found: 47
-		// Create: 1 errors, 0 warnings
-		// Make: 1 errors, 0 warnings
-		// System.Reactive
-		//typeof(System.Reactive.ExperimentalAttribute),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]

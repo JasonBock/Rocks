@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.0-alpha.3] - Not Yet Released
 
 ### Fixed
+- Methods on classes with generics that have `class` or `struct` constraints are now emitted on the mock (issue [#210](https://github.com/JasonBock/Rocks/issues/210))
 - Projected delegates now have constraints added (issue [#202](https://github.com/JasonBock/Rocks/issues/202))
 - Parameters with generic types and a `default` optional value are now generated correctly (issue [#200](https://github.com/JasonBock/Rocks/issues/200))
 - Enum value references in optional arguments are handled correctly (issue [#209](https://github.com/JasonBock/Rocks/issues/209))

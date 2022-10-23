@@ -44,7 +44,19 @@ internal static class IMethodSymbolExtensions
 		{
 			foreach (var typeParameter in self.TypeParameters)
 			{
-				if (self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
+				// TODO: This is starting to get convoluted.
+				// Arguably, it would be good to have one method that gets
+				// all constraints for a method, rather than doing it via
+				// GetConstraints() and GetDefaultConstraints().
+				if(typeParameter.HasReferenceTypeConstraint)
+				{
+					builder.Add($"where {typeParameter.GetName()} : class");
+				}
+				else if (typeParameter.HasValueTypeConstraint)
+				{
+					builder.Add($"where {typeParameter.GetName()} : struct");
+				}
+				else if (self.Parameters.Any(_ => _.Type.Equals(typeParameter) && _.NullableAnnotation == NullableAnnotation.Annotated) ||
 					(!self.ReturnsVoid && self.ReturnType.Equals(typeParameter) && self.ReturnType.NullableAnnotation == NullableAnnotation.Annotated))
 				{
 					builder.Add($"where {typeParameter.GetName()} : default");

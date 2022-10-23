@@ -124,7 +124,7 @@ public static class ConstraintsGeneratorTests
 					
 					[global::Rocks.MemberIdentifier(3, "T? GetService<T>(object[] @args)")]
 					public override T? GetService<T>(object[] @args)
-						where T : default
+						where T : class
 					{
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
@@ -782,6 +782,7 @@ public static class ConstraintsGeneratorTests
 					
 					[global::Rocks.MemberIdentifier(3, "void HasUnmanaged<T>()")]
 					public override void HasUnmanaged<T>()
+						where T : struct
 					{
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
@@ -820,6 +821,7 @@ public static class ConstraintsGeneratorTests
 					
 					[global::Rocks.MemberIdentifier(5, "void HasClass<T>()")]
 					public override void HasClass<T>()
+						where T : class
 					{
 						if (this.handlers.TryGetValue(5, out var @methodHandlers))
 						{
@@ -839,6 +841,7 @@ public static class ConstraintsGeneratorTests
 					
 					[global::Rocks.MemberIdentifier(6, "void HasStruct<T>()")]
 					public override void HasStruct<T>()
+						where T : struct
 					{
 						if (this.handlers.TryGetValue(6, out var @methodHandlers))
 						{
@@ -1043,15 +1046,18 @@ public static class ConstraintsGeneratorTests
 						return default!;
 					}
 					public override void HasUnmanaged<T>()
+						where T : struct
 					{
 					}
 					public override void HasNotNull<T>()
 					{
 					}
 					public override void HasClass<T>()
+						where T : class
 					{
 					}
 					public override void HasStruct<T>()
+						where T : struct
 					{
 					}
 					public override void HasClassTypeConstraint<T>()
@@ -1319,6 +1325,7 @@ public static class ConstraintsGeneratorTests
 						
 						[global::Rocks.MemberIdentifier(3, "global::MockTests.Thing<TTarget> As<TTarget>()")]
 						public override global::MockTests.Thing<TTarget> As<TTarget>()
+							where TTarget : class
 						{
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
