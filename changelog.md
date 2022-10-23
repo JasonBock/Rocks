@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.0.0-alpha.3] - Not Yet Released
 
+### Changed
+- Casts in shim member implementation now use `Unsafe.As<>()` (issue [#198](https://github.com/JasonBock/Rocks/issues/198))
+
 ### Fixed
 - Members that are hidden by accessible static members are now removed (issue [#206](https://github.com/JasonBock/Rocks/issues/206))
 - Methods on classes with generics that have `class` or `struct` constraints are now emitted on the mock (issue [#210](https://github.com/JasonBock/Rocks/issues/210))

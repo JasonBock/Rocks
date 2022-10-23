@@ -44,17 +44,17 @@ internal static class ShimIndexerBuilder
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadonly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}(({shimInformation.TypeToMock!.Type.GetReferenceableName()})this.mock)[{parameters}];");
+				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}];");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => (({shimInformation.TypeToMock!.Type.GetReferenceableName()})this.mock)[{parameters}] = value;");
+				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}] = value;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => (({shimInformation.TypeToMock!.Type.GetReferenceableName()})this.mock)[{parameters}] = value;");
+				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}] = value;");
 			}
 
 			writer.Indent--;
