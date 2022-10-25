@@ -7,8 +7,8 @@ namespace Rocks.Builders.Create;
 
 internal static class MockIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, 
-		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
+	private static void BuildGetter(IndentedTextWriter writer,
+		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents,
 		string signature)
 	{
 		var indexer = result.Value;
@@ -60,7 +60,7 @@ internal static class MockIndexerBuilder
 		writer.Indent++;
 
 		MockMethodValueBuilder.BuildMethodHandler(
-			writer, method, result.MockType, namingContext, 
+			writer, method, result.MockType, namingContext,
 			raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -112,7 +112,7 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents, 
+		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents,
 		string signature)
 	{
 		var indexer = result.Value;
@@ -121,115 +121,110 @@ internal static class MockIndexerBuilder
 		var visibility = result.Value.DeclaredAccessibility != method.DeclaredAccessibility ?
 			$"{method.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 		var namingContext = new VariableNamingContext(method);
+		var accessor = result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit ?
+			"init" : "set";
 
-		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
+		writer.WriteLine($"{visibility}{accessor}");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		for (var i = 0; i < method.Parameters.Length; i++)
 		{
-			writer.WriteLine($"{visibility}init {{ }}");
+			var parameter = method.Parameters[i];
+
+			if (i == 0)
+			{
+				writer.WriteLine(
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+			}
+			else
+			{
+				if (i == 1)
+				{
+					writer.Indent++;
+				}
+
+				writer.WriteLine(
+					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+
+				if (i == method.Parameters.Length - 1)
+				{
+					writer.Indent--;
+				}
+			}
+		}
+
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, result.MockType, namingContext, raiseEvents);
+
+		if (shouldThrowDoesNotReturnException)
+		{
+			writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
 		}
 		else
 		{
-			writer.WriteLine($"{visibility}set");
+			writer.WriteLine("return;");
+		}
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.WriteLine();
+		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		if (!indexer.IsAbstract)
+		{
+			writer.WriteLine("else");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			for (var i = 0; i < method.Parameters.Length; i++)
+			// We'll call the base implementation if an expectation wasn't provided.
+			// We'll do this as well for interfaces with a DIM through a shim.
+			// If something like this is added in the future, then I'll revisit this:
+			// https://github.com/dotnet/csharplang/issues/2337
+			var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
 			{
-				var parameter = method.Parameters[i];
-
-				if (i == 0)
+				var direction = _.RefKind switch
 				{
-					writer.WriteLine(
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
-				}
-				else
-				{
-					if (i == 1)
-					{
-						writer.Indent++;
-					}
-
-					writer.WriteLine(
-						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
-
-					if (i == method.Parameters.Length - 1)
-					{
-						writer.Indent--;
-					}
-				}
-			}
-
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			MockMethodVoidBuilder.BuildMethodHandler(writer, method, result.MockType, namingContext, raiseEvents);
-
-			if (shouldThrowDoesNotReturnException)
-			{
-				writer.WriteLine($"throw new global::Rocks.Exceptions.DoesNotReturnException();");
-			}
-			else
-			{
-				writer.WriteLine("return;");
-			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {signature.Replace("\"", "\\\"")}\");");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			if (!indexer.IsAbstract)
-			{
-				writer.WriteLine("else");
-				writer.WriteLine("{");
-				writer.Indent++;
-
-				// We'll call the base implementation if an expectation wasn't provided.
-				// We'll do this as well for interfaces with a DIM through a shim.
-				// If something like this is added in the future, then I'll revisit this:
-				// https://github.com/dotnet/csharplang/issues/2337
-				var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
-				{
-					var direction = _.RefKind switch
-					{
-						RefKind.In => "in ",
-						_ => string.Empty
-					};
-					return $"{direction}@{_.Name}";
-				}));
-				var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
-					$"this.shimFor{indexer.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
-				writer.WriteLine($"{target}[{parameters}] = value;");
-
-				writer.Indent--;
-				writer.WriteLine("}");
-			}
-			else
-			{
-				writer.WriteLine();
-				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
-			}
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}@{_.Name}";
+			}));
+			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
+				$"this.shimFor{indexer.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+			writer.WriteLine($"{target}[{parameters}] = value;");
 
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
+		else
+		{
+			writer.WriteLine();
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
+		}
+
+		writer.Indent--;
+		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer,  
+	internal static void Build(IndentedTextWriter writer,
 		PropertyMockableResult result, bool raiseEvents, Compilation compilation)
 	{
 		var indexer = result.Value;
@@ -285,14 +280,14 @@ internal static class MockIndexerBuilder
 
 		if (isGetterVisible)
 		{
-			MockIndexerBuilder.BuildGetter(writer, result, compilation, 
+			MockIndexerBuilder.BuildGetter(writer, result, compilation,
 				memberIdentifier, raiseEvents, signature);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
-			MockIndexerBuilder.BuildSetter(writer, result, compilation, 
+			MockIndexerBuilder.BuildSetter(writer, result, compilation,
 				memberIdentifier, raiseEvents, signature);
 		}
 

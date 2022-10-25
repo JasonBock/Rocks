@@ -79,7 +79,8 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		else if(accessor == PropertyAccessor.Set &&
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet)
+			if (result.Accessors == PropertyAccessor.GetAndSet ||
+				result.Accessors == PropertyAccessor.GetAndInit)
 			{
 				memberIdentifier++;
 			}

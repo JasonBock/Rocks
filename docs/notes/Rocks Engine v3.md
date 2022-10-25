@@ -37,3 +37,6 @@ MockedType
 This may not be the exact model I end up with; this is more to show the intent of where I want to go with the new version. When `Rock.Create<>()` or `Rock.Make<>()` is invoked, the generator will still go through `MockInformation`, but what that will do is pass the type to `MockedType` and that will visit all the members **once**. It would also generate the code content needed to make a mock. If this ever ended up finding something that would prevent a mock from being made (e.g. a member that is `internal` and `virtual` or `abstract` and exists in another assembly), it would immediately halt all processing (maybe by throwing an exception that the called to `MockInformation` would be expected to handle).
 
 I really don't know if this would be "better", but I think it's a solid enough idea to try it out.
+
+Other clean-ups:
+* Should have `PropertyInitExpectationsOf...Extensions` when it's an `init`

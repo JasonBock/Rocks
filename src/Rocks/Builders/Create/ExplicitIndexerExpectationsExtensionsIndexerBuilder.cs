@@ -108,7 +108,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		}
 		else if(accessor == PropertyAccessor.Set)
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet &&
+			if ((result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
 				result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
 			{
 				memberIdentifier++;

@@ -127,7 +127,7 @@ internal static class MockConstructorBuilder
 
 				writer.WriteLines(
 					$$"""
-					foreach({{forEachType}} in (global::System.Collections.Generic.IEnumerable<{{enumerableType}}>)@{{namingContext["constructorProperties"]}})
+					foreach({{forEachType}} in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<{{enumerableType}}>>(@{{namingContext["constructorProperties"]}}))
 					{
 						 this[{{indexerName}}] = constructorProperties[{{indexerName}}];
 					}

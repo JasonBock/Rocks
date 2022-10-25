@@ -80,6 +80,7 @@ internal static class MockConstructorExtensionsBuilder
 						$$"""
 						internal {{indexer.Type.GetFullyQualifiedName()}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.GetFullyQualifiedName()} {p.Name}"))}}]
 						{
+						    get => this.i{{i}}[{{indexerKey}}];
 						    init => this.i{{i}}[{{indexerKey}}] = value;
 						}
 						""");

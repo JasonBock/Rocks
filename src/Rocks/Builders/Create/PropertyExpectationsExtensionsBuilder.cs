@@ -51,7 +51,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
@@ -93,7 +94,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 		}
 
 		if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 		{
 			writer.WriteLine($"internal static class IndexerSetterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
@@ -101,7 +103,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in information.Properties.Results
 				.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 			{
 				IndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, PropertyAccessor.Set);
 			}
@@ -136,7 +139,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
@@ -177,7 +181,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 		}
 
 		if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 		{
 			writer.WriteLine($"internal static class PropertySetterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
@@ -185,7 +190,8 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in information.Properties.Results
 				.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
+						_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 			{
 				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, PropertyAccessor.Set);
 			}

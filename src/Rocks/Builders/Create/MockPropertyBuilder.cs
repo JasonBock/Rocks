@@ -41,7 +41,7 @@ internal static class MockPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var handlerName = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, result.MockType) :
@@ -113,106 +113,101 @@ internal static class MockPropertyBuilder
 		var property = result.Value;
 		var visibility = result.Value.DeclaredAccessibility != propertySetMethod.DeclaredAccessibility ?
 			$"{propertySetMethod.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+		var accessor = result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit ?
+			"init" : "set";
 
-		if (result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit)
+		var nullableFlag = allowNull ? "!" : string.Empty;
+		writer.WriteLine($"{visibility}{accessor}");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		writer.WriteLine("var @foundMatch = false;");
+		writer.WriteLine("foreach (var @methodHandler in @methodHandlers)");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		var argType = property.Type.IsPointer() ?
+			PointerArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
+				property.Type.IsRefLikeType ?
+					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
+					$"global::Rocks.Argument<{property.Type.GetFullyQualifiedName()}>";
+
+		writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		writer.WriteLine("@foundMatch = true;");
+		writer.WriteLine();
+		writer.WriteLine("if (@methodHandler.Method is not null)");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
+			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
+			DelegateBuilder.Build(property.SetMethod!.Parameters);
+
+		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(@value{nullableFlag});");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.WriteLine();
+		writer.WriteLine("if (!@foundMatch)");
+		writer.WriteLine("{");
+		writer.Indent++;
+		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(@value)\");");
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.WriteLine();
+		if (raiseEvents)
 		{
-			writer.WriteLine($"{visibility}init {{ }}");
+			writer.WriteLine("@methodHandler.RaiseEvents(this);");
+		}
+
+		writer.WriteLine("@methodHandler.IncrementCallCount();");
+		writer.WriteLine("break;");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.WriteLine("else");
+		writer.WriteLine("{");
+		writer.Indent++;
+
+		if (!property.IsAbstract)
+		{
+			// We'll call the base implementation if an expectation wasn't provided.
+			// We'll do this as well for interfaces with a DIM through a shim.
+			// If something like this is added in the future, then I'll revisit this:
+			// https://github.com/dotnet/csharplang/issues/2337
+			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
+				$"this.shimFor{property.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
+			writer.WriteLine($"{target}.{property.Name} = @value;");
 		}
 		else
 		{
-			var nullableFlag = allowNull ? "!" : string.Empty;
-			writer.WriteLine($"{visibility}set");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine("var @foundMatch = false;");
-			writer.WriteLine("foreach (var @methodHandler in @methodHandlers)");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			var argType = property.Type.IsPointer() ?
-				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
-					property.Type.IsRefLikeType ?
-						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
-						$"global::Rocks.Argument<{property.Type.GetFullyQualifiedName()}>";
-
-			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			writer.WriteLine("@foundMatch = true;");
-			writer.WriteLine();
-			writer.WriteLine("if (@methodHandler.Method is not null)");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			var methodCast = property.SetMethod!.RequiresProjectedDelegate() ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
-				DelegateBuilder.Build(property.SetMethod!.Parameters);
-
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(@value{nullableFlag});");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.WriteLine();
-			writer.WriteLine("if (!@foundMatch)");
-			writer.WriteLine("{");
-			writer.Indent++;
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(@value)\");");
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.WriteLine();
-			if (raiseEvents)
-			{
-				writer.WriteLine("@methodHandler.RaiseEvents(this);");
-			}
-
-			writer.WriteLine("@methodHandler.IncrementCallCount();");
-			writer.WriteLine("break;");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.WriteLine("else");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			if (!property.IsAbstract)
-			{
-				// We'll call the base implementation if an expectation wasn't provided.
-				// We'll do this as well for interfaces with a DIM through a shim.
-				// If something like this is added in the future, then I'll revisit this:
-				// https://github.com/dotnet/csharplang/issues/2337
-				var target = property.ContainingType.TypeKind == TypeKind.Interface ?
-					$"this.shimFor{property.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
-				writer.WriteLine($"{target}.{property.Name} = @value;");
-			}
-			else
-			{
-				writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(@value)\");");
-			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
-
-			writer.Indent--;
-			writer.WriteLine("}");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(@value)\");");
 		}
+
+		writer.Indent--;
+		writer.WriteLine("}");
+
+		writer.Indent--;
+		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer, 
+	internal static void Build(IndentedTextWriter writer,
 		PropertyMockableResult result, bool raiseEvents, Compilation compilation)
 	{
 		var property = result.Value;
@@ -234,7 +229,7 @@ internal static class MockPropertyBuilder
 		{
 			isGetterVisible = result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
 
-			if(isGetterVisible)
+			if (isGetterVisible)
 			{
 				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
 				memberIdentifierAttribute++;
@@ -246,7 +241,7 @@ internal static class MockPropertyBuilder
 		{
 			isSetterVisible = result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
 
-			if (isSetterVisible) 
+			if (isSetterVisible)
 			{
 				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
 			}
