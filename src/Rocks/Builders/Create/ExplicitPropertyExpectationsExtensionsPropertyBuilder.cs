@@ -38,11 +38,12 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertySetterExpectations<{result.MockType.GetName()}, {containingTypeName}> @self";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{result.MockType.GetName()}, {containingTypeName}> @self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
@@ -75,7 +76,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		{
 			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
-		else if(accessor == PropertyAccessor.Set)
+		else if(accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init)
 		{
 			if ((result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
 				result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
@@ -83,7 +84,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
+			ExplicitPropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName, accessor);
 		}
 	}
 }

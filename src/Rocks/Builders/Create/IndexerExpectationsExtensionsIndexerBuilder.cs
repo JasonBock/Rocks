@@ -50,13 +50,14 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
 		var mockTypeName = result.MockType.GetFullyQualifiedName();
-		var thisParameter = $"this global::Rocks.Expectations.IndexerSetterExpectations<{mockTypeName}> @{namingContext["self"]}";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var thisParameter = $"this global::Rocks.Expectations.Indexer{accessorName}Expectations<{mockTypeName}> @{namingContext["self"]}";
 		var delegateTypeName = propertySetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, result.MockType) :
 			DelegateBuilder.Build(propertySetMethod.Parameters);
@@ -101,7 +102,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		{
 			IndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, result, memberIdentifier);
 		}
-		else if(accessor == PropertyAccessor.Set)
+		else if(accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init)
 		{
 			if (result.Accessors == PropertyAccessor.GetAndSet ||
 				result.Accessors == PropertyAccessor.GetAndInit)
@@ -109,7 +110,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier);
+			IndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, accessor);
 		}
 	}
 }

@@ -93,8 +93,10 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIContainNullableReferences(global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> @expectations) =>
+						public RockIContainNullableReferences(global::Rocks.Expectations.Expectations<global::MockTests.IContainNullableReferences> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "string? DoSomething(string? @a, string @b)")]
 						public string? DoSomething(string? @a, string @b)
@@ -198,8 +200,10 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
@@ -289,8 +293,10 @@ public static class RockCreateGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> @expectations) =>
+					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Foo()")]
 					public void Foo()
@@ -385,8 +391,10 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
@@ -476,8 +484,10 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
@@ -631,8 +641,10 @@ public static class RockCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()

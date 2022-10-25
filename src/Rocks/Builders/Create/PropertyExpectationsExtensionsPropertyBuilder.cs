@@ -36,7 +36,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
@@ -47,7 +47,8 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, result.MockType) :
 			propertyParameterType.GetFullyQualifiedName();
 		var mockTypeName = result.MockType.GetFullyQualifiedName();
-		var thisParameter = $"this global::Rocks.Expectations.PropertySetterExpectations<{mockTypeName}> @self";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var thisParameter = $"this global::Rocks.Expectations.Property{accessorName}Expectations<{mockTypeName}> @self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
@@ -76,7 +77,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		{
 			PropertyExpectationsExtensionsPropertyBuilder.BuildGetter(writer, result, memberIdentifier);
 		}
-		else if(accessor == PropertyAccessor.Set &&
+		else if((accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init) &&
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
 		{
 			if (result.Accessors == PropertyAccessor.GetAndSet ||
@@ -85,7 +86,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			PropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier);
+			PropertyExpectationsExtensionsPropertyBuilder.BuildSetter(writer, result, memberIdentifier, accessor);
 		}
 	}
 }

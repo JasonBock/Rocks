@@ -57,8 +57,10 @@ public static class DefaultValuesGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIGenericDefault(global::Rocks.Expectations.Expectations<global::IGenericDefault> @expectations) =>
+					public RockIGenericDefault(global::Rocks.Expectations.Expectations<global::IGenericDefault> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Setup<T>(T @initialValue)")]
 					public void Setup<T>(T @initialValue = default!)
@@ -214,8 +216,10 @@ public static class DefaultValuesGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUseInfinity(global::Rocks.Expectations.Expectations<global::IUseInfinity> @expectations) =>
+					public RockIUseInfinity(global::Rocks.Expectations.Expectations<global::IUseInfinity> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Use(double @value)")]
 					public void Use(double @value = double.PositiveInfinity)

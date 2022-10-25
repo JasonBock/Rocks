@@ -61,8 +61,10 @@ public static class ExplicitImplementationGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockISetupList(global::Rocks.Expectations.Expectations<global::ISetupList> @expectations) =>
+					public RockISetupList(global::Rocks.Expectations.Expectations<global::ISetupList> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					
 					[global::Rocks.MemberIdentifier(0, "global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()")]

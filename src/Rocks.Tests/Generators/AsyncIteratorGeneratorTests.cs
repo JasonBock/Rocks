@@ -65,8 +65,10 @@ public static class AsyncIteratorGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockAsyncEnumeration(global::Rocks.Expectations.Expectations<global::AsyncEnumeration> @expectations) =>
+					public RockAsyncEnumeration(global::Rocks.Expectations.Expectations<global::AsyncEnumeration> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)

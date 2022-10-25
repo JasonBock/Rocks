@@ -70,8 +70,10 @@ public static class AllowNullGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIAllow(global::Rocks.Expectations.Expectations<global::MockTests.IAllow> @expectations) =>
+						public RockIAllow(global::Rocks.Expectations.Expectations<global::MockTests.IAllow> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						[global::Rocks.MemberIdentifier(0, "get_NewLine()")]
@@ -274,8 +276,10 @@ public static class AllowNullGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockAllow(global::Rocks.Expectations.Expectations<global::MockTests.Allow> @expectations) =>
+						public RockAllow(global::Rocks.Expectations.Expectations<global::MockTests.Allow> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

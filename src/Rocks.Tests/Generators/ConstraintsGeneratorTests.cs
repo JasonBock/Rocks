@@ -58,8 +58,10 @@ public static class ConstraintsGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockBaseStuff(global::Rocks.Expectations.Expectations<global::BaseStuff> @expectations) =>
+					public RockBaseStuff(global::Rocks.Expectations.Expectations<global::BaseStuff> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -241,8 +243,10 @@ public static class ConstraintsGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockINeedDelegate(global::Rocks.Expectations.Expectations<global::INeedDelegate> @expectations) =>
+					public RockINeedDelegate(global::Rocks.Expectations.Expectations<global::INeedDelegate> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Foo<T>(ref int @a, global::Frame<T> @frame)")]
 					public void Foo<T>(ref int @a, global::Frame<T> @frame)
@@ -363,8 +367,10 @@ public static class ConstraintsGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockITypeConstraints(global::Rocks.Expectations.Expectations<global::ITypeConstraints> @expectations) =>
+					public RockITypeConstraints(global::Rocks.Expectations.Expectations<global::ITypeConstraints> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void HasUnmanaged<T>()")]
 					public void HasUnmanaged<T>()
@@ -716,8 +722,10 @@ public static class ConstraintsGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockTypeConstraints(global::Rocks.Expectations.Expectations<global::TypeConstraints> @expectations) =>
+					public RockTypeConstraints(global::Rocks.Expectations.Expectations<global::TypeConstraints> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -1142,8 +1150,10 @@ public static class ConstraintsGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUnmanagedValue(global::Rocks.Expectations.Expectations<global::IUnmanagedValue> @expectations) =>
+					public RockIUnmanagedValue(global::Rocks.Expectations.Expectations<global::IUnmanagedValue> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Use<TValue>(global::Value<TValue> @value)")]
 					public void Use<TValue>(global::Value<TValue> @value)
@@ -1259,8 +1269,10 @@ public static class ConstraintsGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockThingOfstring(global::Rocks.Expectations.Expectations<global::MockTests.Thing<string>> @expectations) =>
+						public RockThingOfstring(global::Rocks.Expectations.Expectations<global::MockTests.Thing<string>> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

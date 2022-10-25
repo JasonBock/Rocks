@@ -40,13 +40,24 @@ internal static class MockPropertyExtensionsBuilder
 			}
 
 			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet || 
-					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
 				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
 					internal static global::Rocks.Expectations.IndexerSetterExpectations<{{typeToMockName}}> Setters(this global::Rocks.Expectations.IndexerExpectations<{{typeToMockName}}> @self) =>
+						new(@self);
+
+					""");
+			}
+
+			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal static global::Rocks.Expectations.IndexerIniterExpectations<{{typeToMockName}}> Initers(this global::Rocks.Expectations.IndexerExpectations<{{typeToMockName}}> @self) =>
 						new(@self);
 
 					""");
@@ -78,13 +89,23 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) && 
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) && 
 				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
 					internal static global::Rocks.Expectations.ExplicitIndexerSetterExpectations<{{typeToMockName}}, {{containingTypeName}}> Setters(this global::Rocks.Expectations.ExplicitIndexerExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
+						new(@self);
+
+					""");
+			}
+
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal static global::Rocks.Expectations.ExplicitIndexerIniterExpectations<{{typeToMockName}}, {{containingTypeName}}> Initers(this global::Rocks.Expectations.ExplicitIndexerExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
 						new(@self);
 
 					""");
@@ -116,13 +137,24 @@ internal static class MockPropertyExtensionsBuilder
 			}
 
 			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
 				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
 					internal static global::Rocks.Expectations.PropertySetterExpectations<{{typeToMockName}}> Setters(this global::Rocks.Expectations.PropertyExpectations<{{typeToMockName}}> @self) =>
+						new(@self);
+
+					""");
+			}
+
+			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal static global::Rocks.Expectations.PropertyIniterExpectations<{{typeToMockName}}> Initers(this global::Rocks.Expectations.PropertyExpectations<{{typeToMockName}}> @self) =>
 						new(@self);
 
 					""");
@@ -154,13 +186,23 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
 				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
 					internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<{{typeToMockName}}, {{containingTypeName}}> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
+						new(@self);
+
+					""");
+			}
+
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal static global::Rocks.Expectations.ExplicitPropertyIniterExpectations<{{typeToMockName}}, {{containingTypeName}}> Initers(this global::Rocks.Expectations.ExplicitPropertyExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
 						new(@self);
 
 					""");

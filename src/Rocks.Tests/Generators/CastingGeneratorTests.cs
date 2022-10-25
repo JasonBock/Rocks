@@ -65,8 +65,10 @@ public static class CastingGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveOpenGenericsOfGuid(global::Rocks.Expectations.Expectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @expectations) =>
+						public RockIHaveOpenGenericsOfGuid(global::Rocks.Expectations.Expectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void HasGenerics<T>(T @value, string @data, global::System.Guid @information)")]
 						public void HasGenerics<T>(T @value, string @data, global::System.Guid @information)

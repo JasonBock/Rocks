@@ -728,9 +728,11 @@ public static class NamingGeneratorTests
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
 					public RockHasRequiredProperty(global::Rocks.Expectations.Expectations<global::HasRequiredProperty> @expectations, string @constructorProperties)
-						: base(@constructorProperties) =>
-							this.handlers = @expectations.Handlers;
-					
+						: base(@constructorProperties)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+										
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{

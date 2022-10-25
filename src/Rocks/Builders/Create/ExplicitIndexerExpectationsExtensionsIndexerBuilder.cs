@@ -52,13 +52,14 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
 		var mockTypeName = result.MockType.GetName();
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerSetterExpectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexer{accessorName}Expectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}";
 
 		var delegateTypeName = propertySetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, result.MockType) :
@@ -106,7 +107,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		{
 			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildGetter(writer, result, memberIdentifier, containingTypeName);
 		}
-		else if(accessor == PropertyAccessor.Set)
+		else if(accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init)
 		{
 			if ((result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
 				result.Value.SetMethod!.CanBeSeenByContainingAssembly(typeToMockContainingAssembly))
@@ -114,7 +115,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 				memberIdentifier++;
 			}
 
-			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName);
+			ExplicitIndexerExpectationsExtensionsIndexerBuilder.BuildSetter(writer, result, memberIdentifier, containingTypeName, accessor);
 		}
 	}
 }

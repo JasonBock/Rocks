@@ -58,10 +58,10 @@ internal static class MockConstructorExtensionsBuilder
 						$$"""
 						global::System.Collections.Generic.IEnumerator<{{indexerKey}}> global::System.Collections.Generic.IEnumerable<{{indexerKey}}>.GetEnumerator()
 						{
-						    foreach(var key in this.i{{i}}.Keys)
-						    {
-						        yield return key;
-						    }
+							foreach(var key in this.i{{i}}.Keys)
+							{
+								yield return key;
+							}
 						}
 						""");
 				}
@@ -80,8 +80,8 @@ internal static class MockConstructorExtensionsBuilder
 						$$"""
 						internal {{indexer.Type.GetFullyQualifiedName()}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.GetFullyQualifiedName()} {p.Name}"))}}]
 						{
-						    get => this.i{{i}}[{{indexerKey}}];
-						    init => this.i{{i}}[{{indexerKey}}] = value;
+							get => this.i{{i}}[{{indexerKey}}];
+							init => this.i{{i}}[{{indexerKey}}] = value;
 						}
 						""");
 				}

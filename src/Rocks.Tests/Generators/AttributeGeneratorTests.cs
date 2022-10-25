@@ -59,8 +59,10 @@ public static class AttributeGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockHaveDynamic(global::Rocks.Expectations.Expectations<global::HaveDynamic> @expectations) =>
+					public RockHaveDynamic(global::Rocks.Expectations.Expectations<global::HaveDynamic> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -233,8 +235,10 @@ public static class AttributeGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveGenericAttribute(global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> @expectations) =>
+						public RockIHaveGenericAttribute(global::Rocks.Expectations.Expectations<global::MockTests.IHaveGenericAttribute> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::MockTests.MyAttribute<string>]
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
@@ -339,8 +343,10 @@ public static class AttributeGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveMultipleAttributes(global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> @expectations) =>
+						public RockIHaveMultipleAttributes(global::Rocks.Expectations.Expectations<global::MockTests.IHaveMultipleAttributes> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo(string @data)")]
 						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)

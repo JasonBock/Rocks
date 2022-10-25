@@ -51,8 +51,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
@@ -64,6 +63,26 @@ internal static class PropertyExpectationsExtensionsBuilder
 			{
 				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
 					PropertyAccessor.Set, typeGroup.Key.GetName());
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+
+		foreach (var typeGroup in information.Properties.Results
+			.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
+			.GroupBy(_ => _.Value.ContainingType))
+		{
+			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+			writer.WriteLine($"internal static class ExplicitIndexerIniterExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			foreach (var result in typeGroup)
+			{
+				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
+					PropertyAccessor.Init, typeGroup.Key.GetName());
 			}
 
 			writer.Indent--;
@@ -94,8 +113,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 		}
 
 		if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 		{
 			writer.WriteLine($"internal static class IndexerSetterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
@@ -103,10 +121,27 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in information.Properties.Results
 				.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
 				IndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, PropertyAccessor.Set);
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+
+		if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+			 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+		{
+			writer.WriteLine($"internal static class IndexerIniterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			foreach (var result in information.Properties.Results
+				.Where(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+					(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+			{
+				IndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, PropertyAccessor.Init);
 			}
 
 			writer.Indent--;
@@ -139,8 +174,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-					_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
@@ -152,6 +186,26 @@ internal static class PropertyExpectationsExtensionsBuilder
 			{
 				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
 					PropertyAccessor.Set, containingTypeName);
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+
+		foreach (var typeGroup in information.Properties.Results
+			.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit))
+			.GroupBy(_ => _.Value.ContainingType))
+		{
+			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+			writer.WriteLine($"internal static class ExplicitPropertyIniterExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			foreach (var result in typeGroup)
+			{
+				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
+					PropertyAccessor.Init, containingTypeName);
 			}
 
 			writer.Indent--;
@@ -181,8 +235,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 		}
 
 		if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 		{
 			writer.WriteLine($"internal static class PropertySetterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
@@ -190,10 +243,27 @@ internal static class PropertyExpectationsExtensionsBuilder
 
 			foreach (var result in information.Properties.Results
 				.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet ||
-						_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
 			{
 				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, PropertyAccessor.Set);
+			}
+
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
+
+		if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+			 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+		{
+			writer.WriteLine($"internal static class PropertyIniterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			foreach (var result in information.Properties.Results
+				.Where(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+					(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+			{
+				PropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, PropertyAccessor.Init);
 			}
 
 			writer.Indent--;

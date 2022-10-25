@@ -64,8 +64,10 @@ public static class ClassCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockClassTest(global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> @expectations) =>
+						public RockClassTest(global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

@@ -67,8 +67,10 @@ public static class DoesNotReturnGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockClassTest(global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> @expectations) =>
+						public RockClassTest(global::Rocks.Expectations.Expectations<global::MockTests.ClassTest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -340,8 +342,10 @@ public static class DoesNotReturnGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIInterfaceTest(global::Rocks.Expectations.Expectations<global::MockTests.IInterfaceTest> @expectations) =>
+						public RockIInterfaceTest(global::Rocks.Expectations.Expectations<global::MockTests.IInterfaceTest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
 						[global::Rocks.MemberIdentifier(0, "void VoidMethod()")]

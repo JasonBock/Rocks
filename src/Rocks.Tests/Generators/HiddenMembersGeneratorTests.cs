@@ -88,8 +88,10 @@ public static class HiddenMembersGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockSubClass(global::Rocks.Expectations.Expectations<global::SubClass> @expectations) =>
+					public RockSubClass(global::Rocks.Expectations.Expectations<global::SubClass> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -395,8 +397,10 @@ public static class HiddenMembersGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockISub(global::Rocks.Expectations.Expectations<global::ISub> @expectations) =>
+					public RockISub(global::Rocks.Expectations.Expectations<global::ISub> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "int Foo()")]
 					public int Foo()
