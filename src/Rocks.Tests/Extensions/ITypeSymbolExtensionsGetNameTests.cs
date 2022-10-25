@@ -26,7 +26,7 @@ public static class ITypeSymbolExtensionsGetNameTests
 	public static void GetReferenceableName(string code, string expectedName)
 	{
 		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
-		var name = typeSymbol.GetReferenceableName();
+		var name = typeSymbol.GetFullyQualifiedName();
 
 		Assert.That(name, Is.EqualTo(expectedName));
 	}

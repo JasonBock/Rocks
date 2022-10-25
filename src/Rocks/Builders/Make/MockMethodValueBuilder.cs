@@ -13,9 +13,9 @@ internal static class MockMethodValueBuilder
 
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
+		var returnType = $"{returnByRef}{method.ReturnType.GetFullyQualifiedName()}";
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
+			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
@@ -28,7 +28,7 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.GetAttributes().GetDescription(compilation);
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
@@ -111,13 +111,13 @@ internal static class MockMethodValueBuilder
 			{
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
-				writer.WriteLine($"return global::System.Threading.Tasks.Task.FromResult(default({taskReturnType.TypeArguments[0].GetReferenceableName()}){isNullForgiving});");
+				writer.WriteLine($"return global::System.Threading.Tasks.Task.FromResult(default({taskReturnType.TypeArguments[0].GetFullyQualifiedName()}){isNullForgiving});");
 			}
 			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
 			{
 				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
 				var isNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated ? string.Empty : "!";
-				writer.WriteLine($"return new global::System.Threading.Tasks.ValueTask<{taskReturnType.TypeArguments[0].GetReferenceableName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
+				writer.WriteLine($"return new global::System.Threading.Tasks.ValueTask<{taskReturnType.TypeArguments[0].GetFullyQualifiedName()}>(default({taskReturnType.TypeArguments[0].GetName()}){isNullForgiving});");
 			}
 			else
 			{

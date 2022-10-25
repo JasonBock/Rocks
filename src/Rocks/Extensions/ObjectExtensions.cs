@@ -12,7 +12,7 @@ internal static class ObjectExtensions
 	{
 		if (selfType.TypeKind == TypeKind.Enum)
 		{
-			return $"({selfType.GetReferenceableName()})({self})";
+			return $"({selfType.GetFullyQualifiedName()})({self})";
 		}
 		else
 		{

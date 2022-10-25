@@ -11,15 +11,15 @@ internal static class DelegateBuilder
 		if (parameters.Length > 0)
 		{
 			var parameterTypes = string.Join(", ", parameters.Select(
-				_ => $"{_.Type.GetReferenceableName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}"));
+				_ => $"{_.Type.GetFullyQualifiedName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}"));
 			return returnType is not null ?
-				$"global::System.Func<{parameterTypes}, {returnType.GetReferenceableName()}>" :
+				$"global::System.Func<{parameterTypes}, {returnType.GetFullyQualifiedName()}>" :
 				$"global::System.Action<{parameterTypes}>";
 		}
 		else
 		{
 			return returnType is not null ?
-				$"global::System.Func<{returnType.GetReferenceableName()}>" :
+				$"global::System.Func<{returnType.GetFullyQualifiedName()}>" :
 				"global::System.Action";
 		}
 	}

@@ -15,12 +15,12 @@ internal static class MockEventsBuilder
 			$"{@event.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
 
 		writer.WriteLine(
-			$"{isPublic}{isOverride}event {@event.Value.Type.GetReferenceableName()}{declareNullable} {@event.Value.Name};");
+			$"{isPublic}{isOverride}event {@event.Value.Type.GetFullyQualifiedName()}{declareNullable} {@event.Value.Name};");
 	}
 
 	private static void BuildExplicitImplementation(IndentedTextWriter writer, EventMockableResult @event)
 	{
-		var eventType = @event.Value.Type.GetReferenceableName();
+		var eventType = @event.Value.Type.GetFullyQualifiedName();
 		var name = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}.{@event.Value.Name}";
 		var fieldName = $"{@event.Value.ContainingType.GetName(TypeNameOption.Flatten)}_{@event.Value.Name}";
 

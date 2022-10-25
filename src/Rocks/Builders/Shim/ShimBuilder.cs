@@ -19,7 +19,7 @@ internal static class ShimBuilder
 
 		writer.WriteLine($"private sealed class {shimName}");
 		writer.Indent++;
-		writer.WriteLine($": {shimType.GetReferenceableName()}");
+		writer.WriteLine($": {shimType.GetFullyQualifiedName()}");
 		writer.Indent--;
 		writer.WriteLine("{");
 		writer.Indent++;

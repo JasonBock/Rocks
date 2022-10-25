@@ -6,6 +6,67 @@ namespace Rocks.Tests.Generators;
 public static class IndexerInitCreateGeneratorTests
 {
 	[Test]
+	public static async Task CreateWhenTypeHasMultipleIndexersWithInitAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			public interface IHaveIndexersWithInit
+			{
+				double this[uint a] { init; }
+				string this[int a, string b] { init; }
+				int this[string a, int b, Guid c] { init; }
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<IHaveIndexersWithInit>();
+				}
+			}			
+			""";
+
+		var generatedCode = "";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task MakeWhenTypeHasMultipleIndexersWithInitAsync()
+	{
+		var code =
+			"""
+			using System;
+
+			public interface IHaveIndexersWithInit
+			{
+				double this[uint a] { init; }
+				string this[int a, string b] { init; }
+				int this[string a, int b, Guid c] { init; }
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Make<IHaveIndexersWithInit>();
+				}
+			}			
+			""";
+
+		var generatedCode = "";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateAsync()
 	{
 		var code =

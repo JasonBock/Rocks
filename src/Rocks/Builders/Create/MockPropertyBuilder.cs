@@ -42,7 +42,7 @@ internal static class MockPropertyBuilder
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
-			propertyGetMethod.ReturnType.GetReferenceableName();
+			propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var handlerName = property.Type.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, result.MockType) :
 			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
@@ -138,7 +138,7 @@ internal static class MockPropertyBuilder
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 					property.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
-						$"global::Rocks.Argument<{property.Type.GetReferenceableName()}>";
+						$"global::Rocks.Argument<{property.Type.GetFullyQualifiedName()}>";
 
 			writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
 			writer.WriteLine("{");
@@ -227,7 +227,7 @@ internal static class MockPropertyBuilder
 
 		var memberIdentifierAttribute = result.MemberIdentifier;
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{property.ContainingType.GetReferenceableName()}.";
+			string.Empty : $"{property.ContainingType.GetFullyQualifiedName()}.";
 
 		if (result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet ||
 			result.Accessors == PropertyAccessor.GetAndInit)
@@ -258,7 +258,7 @@ internal static class MockPropertyBuilder
 		var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 
 		var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetReferenceableName()} {explicitTypeName}{property.Name}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetFullyQualifiedName()} {explicitTypeName}{property.Name}");
 		writer.WriteLine("{");
 		writer.Indent++;
 

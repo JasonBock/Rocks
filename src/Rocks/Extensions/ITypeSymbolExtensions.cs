@@ -46,7 +46,7 @@ internal static class ITypeSymbolExtensions
 	// that will be used in a parameter name. Note that the name includes "global::"
 	// For example, for "List<Customer?>", this would return
 	// global::System.Collections.Generic<global::CustomerNamespace.Customer?>
-	internal static string GetReferenceableName(this ITypeSymbol self)
+	internal static string GetFullyQualifiedName(this ITypeSymbol self)
 	{
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat.
 			AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);

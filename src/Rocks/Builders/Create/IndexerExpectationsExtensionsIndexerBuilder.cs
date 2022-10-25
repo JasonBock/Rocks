@@ -10,7 +10,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 		var namingContext = new VariableNamingContext(propertyGetMethod);
-		var mockTypeName = result.MockType.GetReferenceableName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var thisParameter = $"this global::Rocks.Expectations.IndexerGetterExpectations<{mockTypeName}> @{namingContext["self"]}";
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
@@ -18,7 +18,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			DelegateBuilder.Build(property.Parameters, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
-			propertyGetMethod.ReturnType.GetReferenceableName();
+			propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var adornmentsType = propertyGetMethod.ReturnType.IsPointer() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
@@ -27,7 +27,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 			{
-				return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
+				return $"global::Rocks.Argument<{_.Type.GetFullyQualifiedName()}> @{_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} This({instanceParameters})");
@@ -55,7 +55,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
-		var mockTypeName = result.MockType.GetReferenceableName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var thisParameter = $"this global::Rocks.Expectations.IndexerSetterExpectations<{mockTypeName}> @{namingContext["self"]}";
 		var delegateTypeName = propertySetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, result.MockType) :
@@ -68,7 +68,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", propertySetMethod.Parameters.Select(_ =>
 			{
-				return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
+				return $"global::Rocks.Argument<{_.Type.GetFullyQualifiedName()}> @{_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} This({instanceParameters})");

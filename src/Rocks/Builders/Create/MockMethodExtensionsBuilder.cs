@@ -28,7 +28,7 @@ internal static class MockMethodExtensionsBuilder
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 					.GroupBy(_ => _.Value.ContainingType))
 				{
-					var containingTypeName = typeGroup.Key.GetReferenceableName();
+					var containingTypeName = typeGroup.Key.GetFullyQualifiedName();
 					var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
 					writer.WriteLines(
 						$$"""

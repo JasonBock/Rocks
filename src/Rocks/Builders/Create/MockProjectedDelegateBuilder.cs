@@ -32,11 +32,11 @@ internal static class MockProjectedDelegateBuilder
 
 	internal static string GetProjectedDelegate(IMethodSymbol method, Compilation compilation)
 	{
-		var returnType = method.ReturnType.GetReferenceableName();
+		var returnType = method.ReturnType.GetFullyQualifiedName();
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()} @{_.Name}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
@@ -49,7 +49,7 @@ internal static class MockProjectedDelegateBuilder
 
 	internal static string GetProjectedReturnValueDelegate(IMethodSymbol method)
 	{
-		var returnType = method.ReturnType.GetReferenceableName();
+		var returnType = method.ReturnType.GetFullyQualifiedName();
 		return $"internal delegate {returnType} {MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateName(method)}();";
 	}
 

@@ -14,7 +14,7 @@ internal static class MockMethodValueBuilder
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnType.GetReferenceableName()}";
+		var returnType = $"{returnByRef}{method.ReturnType.GetFullyQualifiedName()}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
@@ -25,10 +25,10 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
+			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
 		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -42,7 +42,7 @@ internal static class MockMethodValueBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.GetAttributes().GetDescription(compilation);
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
@@ -214,7 +214,7 @@ internal static class MockMethodValueBuilder
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}" : $"@{_.Name}"));
 		var methodReturnType = method.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, typeToMock) : method.ReturnType.GetReferenceableName();
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, typeToMock) : method.ReturnType.GetFullyQualifiedName();
 		var handlerName = method.ReturnType.IsPointer() ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(method.ReturnType, typeToMock) :
 			$"global::Rocks.HandlerInformation<{methodReturnType}>";
@@ -301,7 +301,7 @@ internal static class MockMethodValueBuilder
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
 					parameter.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
-						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}{requiresNullable}>";
+						$"global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}{requiresNullable}>";
 
 			if (i == 0)
 			{

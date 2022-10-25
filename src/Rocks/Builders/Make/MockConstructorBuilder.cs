@@ -22,7 +22,7 @@ internal static class MockConstructorBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
 			}));
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}Rock{typeToMock.FlattenedName}({instanceParameters})");

@@ -37,7 +37,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -47,7 +47,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -147,7 +147,7 @@ internal static class MockIndexerBuilder
 				if (i == 0)
 				{
 					writer.WriteLine(
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 				}
 				else
 				{
@@ -157,7 +157,7 @@ internal static class MockIndexerBuilder
 					}
 
 					writer.WriteLine(
-						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetReferenceableName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 					if (i == method.Parameters.Length - 1)
 					{
@@ -235,7 +235,7 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var attributes = indexer.GetAttributes();
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{indexer.ContainingType.GetReferenceableName()}.";
+			string.Empty : $"{indexer.ContainingType.GetFullyQualifiedName()}.";
 		var isGetterVisible = false;
 		var isSetterVisible = false;
 
@@ -277,7 +277,7 @@ internal static class MockIndexerBuilder
 		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
 
 		var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetReferenceableName()} {indexerSignature}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.GetFullyQualifiedName()} {indexerSignature}");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -312,7 +312,7 @@ internal static class MockIndexerBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()} @{_.Name}{defaultValue}";
 			return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 		}));
 

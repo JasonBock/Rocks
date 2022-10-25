@@ -12,14 +12,14 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 
-		var mockTypeName = result.MockType.GetReferenceableName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var thisParameter = $"this global::Rocks.Expectations.PropertyGetterExpectations<{mockTypeName}> @self";
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
 			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, result.MockType) : 
-			propertyGetMethod.ReturnType.GetReferenceableName();
+			propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var adornmentsType = propertyGetMethod.ReturnType.IsPointer() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {callbackDelegateTypeName}, {propertyReturnValue}>";
@@ -45,8 +45,8 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 				propertyParameterType.IsPointer() ?
 					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, result.MockType) :
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, result.MockType) :
-			propertyParameterType.GetReferenceableName();
-		var mockTypeName = result.MockType.GetReferenceableName();
+			propertyParameterType.GetFullyQualifiedName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var thisParameter = $"this global::Rocks.Expectations.PropertySetterExpectations<{mockTypeName}> @self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :

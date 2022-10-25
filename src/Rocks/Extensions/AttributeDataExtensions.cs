@@ -47,9 +47,9 @@ internal static class AttributeDataExtensions
 			value.Kind switch
 			{
 				TypedConstantKind.Primitive => GetValue(value.Value),
-				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetReferenceableName()})",
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName()})",
 				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
-				TypedConstantKind.Enum => $"({value.Type!.GetReferenceableName()})({value.Value})",
+				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName()})({value.Value})",
 				_ => value.Value?.ToString() ?? string.Empty
 			};
 
@@ -62,7 +62,7 @@ internal static class AttributeDataExtensions
 				_ => value?.ToString() ?? string.Empty
 			};
 
-		var name = self.AttributeClass!.GetReferenceableName();
+		var name = self.AttributeClass!.GetFullyQualifiedName();
 		var argumentParts = new List<string>();
 
 		if (self.ConstructorArguments.Length > 0)
@@ -103,8 +103,8 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default) &&
-				_.AttributeClass.GetReferenceableName() != enumeratorCancellationAttribute &&
-				_.AttributeClass.GetReferenceableName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
+				_.AttributeClass.GetFullyQualifiedName() != enumeratorCancellationAttribute &&
+				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

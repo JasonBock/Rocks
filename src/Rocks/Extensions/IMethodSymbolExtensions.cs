@@ -73,7 +73,7 @@ internal static class IMethodSymbolExtensions
 	internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
 	{
 		var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetReferenceableName()))}>" : string.Empty;
+			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetFullyQualifiedName()))}>" : string.Empty;
 		return $"{self.Name}{extendedName}{generics}";
 	}
 
@@ -152,8 +152,8 @@ internal static class IMethodSymbolExtensions
 				var selfParameter = selfParameters[i];
 				var otherParameter = otherParameters[i];
 
-				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() != 
-					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() ||
+				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() != 
+					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ||
 					!(selfParameter.RefKind == otherParameter.RefKind ||
 						(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
 						(selfParameter.RefKind == RefKind.Out && otherParameter.RefKind == RefKind.Ref)) ||
@@ -163,8 +163,8 @@ internal static class IMethodSymbolExtensions
 				}
 			}
 
-			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() == 
-				other.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetReferenceableName() ?
+			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() == 
+				other.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ?
 				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 		}
 	}

@@ -24,7 +24,7 @@ internal static class ShimMethodBuilder
 			else
 			{
 				var returnByRef = shimMethod.ReturnsByRef ? "ref " : shimMethod.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-				returnType = $"{returnByRef}{shimMethod.ReturnType.GetReferenceableName()}";
+				returnType = $"{returnByRef}{shimMethod.ReturnType.GetFullyQualifiedName()}";
 			}
 
 			var methodParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
@@ -37,7 +37,7 @@ internal static class ShimMethodBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()} @{_.Name}{defaultValue}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()} @{_.Name}{defaultValue}";
 				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
 			}));
 
@@ -89,7 +89,7 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock).{shimMethod.GetName()}({passedParameters});");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{shimMethod.GetName()}({passedParameters});");
 			writer.Indent--;
 		}
 	}

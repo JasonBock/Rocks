@@ -12,7 +12,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetReferenceableName()}, {containingTypeName}> @self";
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetFullyQualifiedName()}, {containingTypeName}> @self";
 		var mockTypeName = result.MockType.GetName();
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
@@ -21,7 +21,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(ImmutableArray<IParameterSymbol>.Empty, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-			delegateTypeName : propertyGetMethod.ReturnType.GetReferenceableName();
+			delegateTypeName : propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var adornmentsType = property.Type.IsEsoteric() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";

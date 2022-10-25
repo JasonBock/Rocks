@@ -10,8 +10,8 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 	{
 		var method = result.Value;
 		var isExplicitImplementation = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
-		var mockTypeName = result.MockType.GetReferenceableName();
-		var containingTypeName = method.ContainingType.GetReferenceableName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
+		var containingTypeName = method.ContainingType.GetFullyQualifiedName();
 		var namingContext = new VariableNamingContext(method);
 
 		var thisParameter = isExplicitImplementation ?
@@ -31,7 +31,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 					else
 					{
 						var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
-						return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}{requiresNullable}> @{_.Name}";
+						return $"global::Rocks.Argument<{_.Type.GetFullyQualifiedName()}{requiresNullable}> @{_.Name}";
 					}
 				})));
 
@@ -43,7 +43,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 		var returnType = method.ReturnsVoid ? string.Empty :
 			method.ReturnType.IsRefLikeType ?
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, result.MockType) :
-				method.ReturnType.GetReferenceableName();
+				method.ReturnType.GetFullyQualifiedName();
 		var adornmentsType = method.ReturnsVoid ?
 			$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}>" :
 			method.ReturnType.IsPointer() ?
@@ -87,7 +87,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
-					return $"global::Rocks.Arg.Any<{_.Type.GetReferenceableName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}>()";
+					return $"global::Rocks.Arg.Any<{_.Type.GetFullyQualifiedName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}>()";
 				}
 				else
 				{

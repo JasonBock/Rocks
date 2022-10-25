@@ -24,7 +24,7 @@ internal static class ShimPropertyBuilder
 			var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 
 			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.GetReferenceableName()} {property.Name}");
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.GetFullyQualifiedName()} {property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -33,17 +33,17 @@ internal static class ShimPropertyBuilder
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = property.ReturnsByRef || property.ReturnsByRefReadonly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock).{property.Name};");
+				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name};");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock).{property.Name} = value;");
+				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name} = value;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock).{property.Name} = value;");
+				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name} = value;");
 			}
 
 			writer.Indent--;

@@ -32,12 +32,12 @@ internal static class MockTypeBuilder
 		{
 			foreach (var constructor in information.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, typeToMock, constructor.Parameters, information.Shims);
+				MockConstructorBuilder.Build(writer, typeToMock, compilation, constructor.Parameters, information.Shims);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, typeToMock, ImmutableArray<IParameterSymbol>.Empty, information.Shims);
+			MockConstructorBuilder.Build(writer, typeToMock, compilation, ImmutableArray<IParameterSymbol>.Empty, information.Shims);
 		}
 
 		writer.WriteLine();
@@ -91,7 +91,7 @@ internal static class MockTypeBuilder
 	{
 		foreach (var shimType in information.Shims)
 		{
-			writer.WriteLine($"private readonly {shimType.GetReferenceableName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
+			writer.WriteLine($"private readonly {shimType.GetFullyQualifiedName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
 		}
 	}
 
@@ -99,12 +99,12 @@ internal static class MockTypeBuilder
 	{
 		foreach (var method in information.Methods.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {method.Value.ReturnType.GetReferenceableName()} rr{method.MemberIdentifier};");
+			writer.WriteLine($"private {method.Value.ReturnType.GetFullyQualifiedName()} rr{method.MemberIdentifier};");
 		}
 
 		foreach (var property in information.Properties.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
 		{
-			writer.WriteLine($"private {property.Value.Type.GetReferenceableName()} rr{property.MemberIdentifier};");
+			writer.WriteLine($"private {property.Value.Type.GetFullyQualifiedName()} rr{property.MemberIdentifier};");
 		}
 	}
 }

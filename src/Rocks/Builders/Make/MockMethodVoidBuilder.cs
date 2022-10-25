@@ -13,7 +13,7 @@ internal static class MockMethodVoidBuilder
 
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
+			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
@@ -26,7 +26,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.GetAttributes().GetDescription(compilation);
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));

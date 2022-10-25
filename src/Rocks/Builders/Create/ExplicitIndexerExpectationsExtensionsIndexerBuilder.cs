@@ -20,7 +20,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, result.MockType) :
 			DelegateBuilder.Build(property.Parameters, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-			delegateTypeName : propertyGetMethod.ReturnType.GetReferenceableName();
+			delegateTypeName : propertyGetMethod.ReturnType.GetFullyQualifiedName();
 		var adornmentsType = propertyGetMethod.RequiresProjectedDelegate() ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, result.MockType, AdornmentType.Indexer, true)}<{mockTypeName}, {delegateTypeName}>" :
 			$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
@@ -29,7 +29,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 			{
-				return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
+				return $"global::Rocks.Argument<{_.Type.GetFullyQualifiedName()}> @{_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} This({instanceParameters})");
@@ -71,7 +71,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var instanceParameters = string.Join(", ", thisParameter,
 			string.Join(", ", propertySetMethod.Parameters.Select(_ =>
 			{
-				return $"global::Rocks.Argument<{_.Type.GetReferenceableName()}> @{_.Name}";
+				return $"global::Rocks.Argument<{_.Type.GetFullyQualifiedName()}> @{_.Name}";
 			})));
 
 		writer.WriteLine($"internal static {returnValue} This({instanceParameters})");

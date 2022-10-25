@@ -22,10 +22,10 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetReferenceableName()}." : string.Empty;
+			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
 		var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -39,7 +39,7 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.GetAttributes().GetDescription(compilation);
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
@@ -189,7 +189,7 @@ internal static class MockMethodVoidBuilder
 				PointerArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
 					parameter.Type.IsRefLikeType ?
 						RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(parameter.Type, typeToMock) :
-						$"global::Rocks.Argument<{parameter.Type.GetReferenceableName()}{requiresNullable}>";
+						$"global::Rocks.Argument<{parameter.Type.GetFullyQualifiedName()}{requiresNullable}>";
 
 			if (i == 0)
 			{

@@ -80,7 +80,7 @@ internal static class EventExpectationsExtensionsBuilder
 			if (result.Value.Type is INamedTypeSymbol namedSymbol &&
 				namedSymbol.DelegateInvokeMethod?.Parameters is { Length: 2 })
 			{
-				argsType = namedSymbol.DelegateInvokeMethod.Parameters[1].Type.GetReferenceableName();
+				argsType = namedSymbol.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName();
 			}
 
 			if (information.Methods.Results.Any(_ => !_.Value.ReturnsVoid) ||

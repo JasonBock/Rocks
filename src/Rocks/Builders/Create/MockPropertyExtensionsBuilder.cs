@@ -57,7 +57,7 @@ internal static class MockPropertyExtensionsBuilder
 				_.Value.IsIndexer)
 			.GroupBy(_ => _.Value.ContainingType))
 		{
-			var containingTypeName = typeGroup.Key.GetReferenceableName();
+			var containingTypeName = typeGroup.Key.GetFullyQualifiedName();
 			var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
 			writer.WriteLines(
 				$$"""

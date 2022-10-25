@@ -25,7 +25,7 @@ internal static class ShimIndexerBuilder
 			var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.GetReferenceableName()} {GetSignature(indexer.Parameters, true, compilation)}");
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.GetFullyQualifiedName()} {GetSignature(indexer.Parameters, true, compilation)}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -44,17 +44,17 @@ internal static class ShimIndexerBuilder
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadonly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}];");
+				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}];");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}] = value;");
+				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}] = value;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetReferenceableName()}>(this.mock)[{parameters}] = value;");
+				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}] = value;");
 			}
 
 			writer.Indent--;

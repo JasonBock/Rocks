@@ -18,7 +18,7 @@ internal static class MockPropertyBuilder
 		}
 
 		var explicitTypeName = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			string.Empty : $"{property.ContainingType.GetReferenceableName()}.";
+			string.Empty : $"{property.ContainingType.GetFullyQualifiedName()}.";
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
@@ -26,7 +26,7 @@ internal static class MockPropertyBuilder
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 
 		var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetReferenceableName()} {explicitTypeName}{property.Name}");
+		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{property.Type.GetFullyQualifiedName()} {explicitTypeName}{property.Name}");
 		writer.WriteLine("{");
 		writer.Indent++;
 

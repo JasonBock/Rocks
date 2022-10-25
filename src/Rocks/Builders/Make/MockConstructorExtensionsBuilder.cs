@@ -40,7 +40,7 @@ internal static class MockConstructorExtensionsBuilder
 					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ?
 						"!" : string.Empty;
 				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
-				var propertyTypeName = requiredInitProperty.Type.GetReferenceableName();
+				var propertyTypeName = requiredInitProperty.Type.GetFullyQualifiedName();
 				writer.WriteLine(
 					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
 				requiredInitObjectInitializationSyntaxBuilder.AppendLine(
@@ -93,7 +93,7 @@ internal static class MockConstructorExtensionsBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetReferenceableName()}{requiresNullable} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
 				}))));
 		var isUnsafe = false;
 		var rockInstanceParameters = string.Join(", ", string.Join(", ", parameters.Select(_ =>

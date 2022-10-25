@@ -7,7 +7,7 @@ internal sealed class MockedType
 {
 	internal MockedType(ITypeSymbol type) =>
 		(this.Type, this.FlattenedName, this.GenericName, this.ReferenceableName) = 
-			(type, type.GetName(TypeNameOption.Flatten), type.GetName(TypeNameOption.IncludeGenerics), type.GetReferenceableName());
+			(type, type.GetName(TypeNameOption.Flatten), type.GetName(TypeNameOption.IncludeGenerics), type.GetFullyQualifiedName());
 
 	internal string GenericName { get; }
 	// TODO: I'm guessing GenericName can eventually go away

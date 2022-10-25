@@ -35,7 +35,7 @@ internal static class PointerArgTypeBuilder
 		var validationDelegateName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateName(type);
 		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock);
 		var argName = PointerArgTypeBuilder.GetProjectedName(type);
-		var typeName = type.GetReferenceableName();
+		var typeName = type.GetFullyQualifiedName();
 
 		writer.WriteLine($"internal unsafe delegate bool {validationDelegateName}({typeName} @value);");
 		writer.WriteLine();

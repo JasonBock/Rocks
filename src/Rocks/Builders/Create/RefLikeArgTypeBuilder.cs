@@ -39,7 +39,7 @@ internal static class RefLikeArgTypeBuilder
 		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock);
 		var argName = RefLikeArgTypeBuilder.GetProjectedName(type);
 		var argConstructorName = RefLikeArgTypeBuilder.GetProjectedConstructorName(type);
-		var typeName = type.GetReferenceableName();
+		var typeName = type.GetFullyQualifiedName();
 
 		writer.WriteLines(
 			$$"""
