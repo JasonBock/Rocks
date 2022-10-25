@@ -609,13 +609,17 @@ public static class ConstraintsGeneratorTests
 			
 			internal static class MakeExpectationsOfITypeConstraintsExtensions
 			{
-				internal static global::ITypeConstraints Instance(this global::Rocks.MakeGeneration<global::ITypeConstraints> @self) =>
-					new RockITypeConstraints();
+				internal static global::ITypeConstraints Instance(this global::Rocks.MakeGeneration<global::ITypeConstraints> @self)
+				{
+					return new RockITypeConstraints();
+				}
 				
 				private sealed class RockITypeConstraints
 					: global::ITypeConstraints
 				{
-					public RockITypeConstraints() { }
+					public RockITypeConstraints()
+					{
+					}
 					
 					public void HasUnmanaged<T>()
 						where T : unmanaged
@@ -1033,13 +1037,17 @@ public static class ConstraintsGeneratorTests
 			
 			internal static class MakeExpectationsOfTypeConstraintsExtensions
 			{
-				internal static global::TypeConstraints Instance(this global::Rocks.MakeGeneration<global::TypeConstraints> @self) =>
-					new RockTypeConstraints();
+				internal static global::TypeConstraints Instance(this global::Rocks.MakeGeneration<global::TypeConstraints> @self)
+				{
+					return new RockTypeConstraints();
+				}
 				
 				private sealed class RockTypeConstraints
 					: global::TypeConstraints
 				{
-					public RockTypeConstraints() { }
+					public RockTypeConstraints()
+					{
+					}
 					
 					public override bool Equals(object? @obj)
 					{

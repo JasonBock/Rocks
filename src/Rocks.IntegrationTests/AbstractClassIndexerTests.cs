@@ -56,7 +56,7 @@ public static class AbstractClassIndexerTests
 		var expectations = Rock.Create<AbstractClassIndexerGetterInit>();
 		expectations.Indexers().Getters().This(3);
 
-		var mock = expectations.Instance();
+		var mock = expectations.Instance(null);
 		var value = mock[3];
 
 		expectations.Verify();

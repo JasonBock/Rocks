@@ -50,7 +50,7 @@ public static class InterfaceIndexerTests
 		var expectations = Rock.Create<IInterfaceIndexerGetterInit>();
 		expectations.Indexers().Getters().This(3);
 
-		var mock = expectations.Instance();
+		var mock = expectations.Instance(null);
 		var value = mock[3];
 
 		expectations.Verify();
@@ -77,7 +77,7 @@ public static class InterfaceIndexerTests
 	[Test]
 	public static void MakeWithOneParameterGetterAndInit()
 	{
-		var mock = Rock.Make<IInterfaceIndexerGetterInit>().Instance();
+		var mock = Rock.Make<IInterfaceIndexerGetterInit>().Instance(null);
 		var value = mock[3];
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -208,7 +208,7 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterInit()
 	{
 		var expectations = Rock.Create<IInterfaceIndexerInit>();
-		Assert.That(expectations.Instance, Throws.Nothing);
+		Assert.That(() => expectations.Instance(null), Throws.Nothing);
 	}
 
 	[Test]

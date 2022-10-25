@@ -135,7 +135,7 @@ internal static class MockConstructorExtensionsBuilder
 				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" :
 				string.Empty;
 		var selfParameter =
-			$"this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> @{namingContext["self"]}{constructorPropertiesParameter}";
+			$"this global::Rocks.MakeGeneration<{typeToMock.ReferenceableName}> @{namingContext["self"]}{constructorPropertiesParameter}";
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,
 				string.Join(", ", parameters.Select(_ =>
@@ -152,10 +152,10 @@ internal static class MockConstructorExtensionsBuilder
 				})));
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
-			$"@{namingContext["constructorProperties"]}" :
-			string.Empty;
-		var rockInstanceParameters = parameters.Length == 0 ? contextParameters :
-			string.Join(", ", contextParameters, string.Join(", ", parameters.Select(_ =>
+			new[] { $"@{namingContext["constructorProperties"]}" } :
+			Array.Empty<string>();
+		var rockInstanceParameters = string.Join(", ",
+			contextParameters.Concat(parameters.Select(_ =>
 			{
 				isUnsafe |= _.Type.IsPointer();
 				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;

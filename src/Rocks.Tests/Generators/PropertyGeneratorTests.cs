@@ -371,13 +371,17 @@ public static class PropertyGeneratorTests
 			
 			internal static class MakeExpectationsOfMixedPropertiesExtensions
 			{
-				internal static global::MixedProperties Instance(this global::Rocks.MakeGeneration<global::MixedProperties> @self) =>
-					new RockMixedProperties();
+				internal static global::MixedProperties Instance(this global::Rocks.MakeGeneration<global::MixedProperties> @self)
+				{
+					return new RockMixedProperties();
+				}
 				
 				private sealed class RockMixedProperties
 					: global::MixedProperties
 				{
-					public RockMixedProperties() { }
+					public RockMixedProperties()
+					{
+					}
 					
 					public override bool Equals(object? @obj)
 					{

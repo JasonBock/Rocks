@@ -413,15 +413,18 @@ public static class NonPublicMembersGeneratorTests
 			
 			internal static class MakeExpectationsOfHasInternalVirtualExtensions
 			{
-				internal static global::HasInternalVirtual Instance(this global::Rocks.MakeGeneration<global::HasInternalVirtual> @self, string @key) =>
-					new RockHasInternalVirtual(@key);
+				internal static global::HasInternalVirtual Instance(this global::Rocks.MakeGeneration<global::HasInternalVirtual> @self, string @key)
+				{
+					return new RockHasInternalVirtual(@key);
+				}
 				
 				private sealed class RockHasInternalVirtual
 					: global::HasInternalVirtual
 				{
 					public RockHasInternalVirtual(string @key)
 						: base(@key)
-					{ }
+					{
+					}
 					
 					public override string? ToString()
 					{
@@ -1092,13 +1095,17 @@ public static class NonPublicMembersGeneratorTests
 			{
 				internal static class MakeExpectationsOfTestExtensions
 				{
-					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> @self) =>
-						new RockTest();
+					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> @self)
+					{
+						return new RockTest();
+					}
 					
 					private sealed class RockTest
 						: global::MockTests.Test
 					{
-						public RockTest() { }
+						public RockTest()
+						{
+						}
 						
 						public override bool Equals(object? @obj)
 						{
@@ -1170,13 +1177,17 @@ public static class NonPublicMembersGeneratorTests
 			{
 				internal static class MakeExpectationsOfTestExtensions
 				{
-					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> @self) =>
-						new RockTest();
+					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> @self)
+					{
+						return new RockTest();
+					}
 					
 					private sealed class RockTest
 						: global::MockTests.Test
 					{
-						public RockTest() { }
+						public RockTest()
+						{
+						}
 						
 						public override bool Equals(object? @obj)
 						{

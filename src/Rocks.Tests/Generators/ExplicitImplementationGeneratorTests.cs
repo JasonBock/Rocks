@@ -149,13 +149,17 @@ public static class ExplicitImplementationGeneratorTests
 			
 			internal static class MakeExpectationsOfISetupListExtensions
 			{
-				internal static global::ISetupList Instance(this global::Rocks.MakeGeneration<global::ISetupList> @self) =>
-					new RockISetupList();
+				internal static global::ISetupList Instance(this global::Rocks.MakeGeneration<global::ISetupList> @self)
+				{
+					return new RockISetupList();
+				}
 				
 				private sealed class RockISetupList
 					: global::ISetupList
 				{
-					public RockISetupList() { }
+					public RockISetupList()
+					{
+					}
 					
 					
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()

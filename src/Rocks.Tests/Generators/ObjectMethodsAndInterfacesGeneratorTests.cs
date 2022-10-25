@@ -167,13 +167,17 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			{
 				internal static class MakeExpectationsOfStaticToStringExtensions
 				{
-					internal static global::MockTests.StaticToString Instance(this global::Rocks.MakeGeneration<global::MockTests.StaticToString> @self) =>
-						new RockStaticToString();
+					internal static global::MockTests.StaticToString Instance(this global::Rocks.MakeGeneration<global::MockTests.StaticToString> @self)
+					{
+						return new RockStaticToString();
+					}
 					
 					private sealed class RockStaticToString
 						: global::MockTests.StaticToString
 					{
-						public RockStaticToString() { }
+						public RockStaticToString()
+						{
+						}
 						
 						public override bool Equals(object? @obj)
 						{
@@ -386,13 +390,17 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			{
 				internal static class MakeExpectationsOfIMatchObjectOfobjectExtensions
 				{
-					internal static global::MockTests.IMatchObject<object> Instance(this global::Rocks.MakeGeneration<global::MockTests.IMatchObject<object>> @self) =>
-						new RockIMatchObjectOfobject();
+					internal static global::MockTests.IMatchObject<object> Instance(this global::Rocks.MakeGeneration<global::MockTests.IMatchObject<object>> @self)
+					{
+						return new RockIMatchObjectOfobject();
+					}
 					
 					private sealed class RockIMatchObjectOfobject
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject() { }
+						public RockIMatchObjectOfobject()
+						{
+						}
 						
 						bool global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
@@ -609,13 +617,17 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			{
 				internal static class MakeExpectationsOfIMatchObjectOfobjectExtensions
 				{
-					internal static global::MockTests.IMatchObject<object> Instance(this global::Rocks.MakeGeneration<global::MockTests.IMatchObject<object>> @self) =>
-						new RockIMatchObjectOfobject();
+					internal static global::MockTests.IMatchObject<object> Instance(this global::Rocks.MakeGeneration<global::MockTests.IMatchObject<object>> @self)
+					{
+						return new RockIMatchObjectOfobject();
+					}
 					
 					private sealed class RockIMatchObjectOfobject
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject() { }
+						public RockIMatchObjectOfobject()
+						{
+						}
 						
 						string global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{

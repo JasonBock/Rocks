@@ -62,7 +62,7 @@ public static class ClassIndexerTests
 		var expectations = Rock.Create<ClassIndexerGetterInit>();
 		expectations.Indexers().Getters().This(3);
 
-		var mock = expectations.Instance();
+		var mock = expectations.Instance(null);
 		var value = mock[3];
 
 		expectations.Verify();
@@ -89,7 +89,7 @@ public static class ClassIndexerTests
 	[Test]
 	public static void MakeWithOneParameterGetterAndInit()
 	{
-		var mock = Rock.Make<ClassIndexerGetterInit>().Instance();
+		var mock = Rock.Make<ClassIndexerGetterInit>().Instance(null);
 		var value = mock[3];
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -220,7 +220,7 @@ public static class ClassIndexerTests
 	public static void CreateWithOneParameterInit()
 	{
 		var expectations = Rock.Create<ClassIndexerInit>();
-		_ = expectations.Instance();
+		_ = expectations.Instance(null);
 		expectations.Verify();
 	}
 
@@ -238,7 +238,7 @@ public static class ClassIndexerTests
 
 	[Test]
 	public static void MakeWithOneParameterInit() => 
-		Assert.That(() => Rock.Make<ClassIndexerInit>().Instance(), Throws.Nothing);
+		Assert.That(() => Rock.Make<ClassIndexerInit>().Instance(null), Throws.Nothing);
 
 	[Test]
 	public static void MakeWithOneParameterSetter()
@@ -320,7 +320,7 @@ public static class ClassIndexerTests
 		var expectations = Rock.Create<ClassIndexerGetterInit>();
 		expectations.Indexers().Getters().This(3, "b");
 
-		var mock = expectations.Instance();
+		var mock = expectations.Instance(null);
 		var value = mock[3, "b"];
 
 		expectations.Verify();
@@ -347,7 +347,7 @@ public static class ClassIndexerTests
 	[Test]
 	public static void MakeWithMultipleParametersGetterAndInit()
 	{
-		var mock = Rock.Make<ClassIndexerGetterInit>().Instance();
+		var mock = Rock.Make<ClassIndexerGetterInit>().Instance(null);
 		var value = mock[3, "b"];
 
 		Assert.That(value, Is.EqualTo(default(int)));

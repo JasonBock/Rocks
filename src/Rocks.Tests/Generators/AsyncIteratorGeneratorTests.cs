@@ -220,13 +220,17 @@ public static class AsyncIteratorGeneratorTests
 			
 			internal static class MakeExpectationsOfAsyncEnumerationExtensions
 			{
-				internal static global::AsyncEnumeration Instance(this global::Rocks.MakeGeneration<global::AsyncEnumeration> @self) =>
-					new RockAsyncEnumeration();
+				internal static global::AsyncEnumeration Instance(this global::Rocks.MakeGeneration<global::AsyncEnumeration> @self)
+				{
+					return new RockAsyncEnumeration();
+				}
 				
 				private sealed class RockAsyncEnumeration
 					: global::AsyncEnumeration
 				{
-					public RockAsyncEnumeration() { }
+					public RockAsyncEnumeration()
+					{
+					}
 					
 					public override bool Equals(object? @obj)
 					{

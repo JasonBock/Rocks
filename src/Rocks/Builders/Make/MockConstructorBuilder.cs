@@ -19,12 +19,10 @@ internal static class MockConstructorBuilder
 		var hasRequiredProperties = requiredInitPropertiesAndIndexers.Any(_ => _.IsRequired);
 
 		var contextParameters = requiredInitPropertiesAndIndexers.Length == 0 ?
-			string.Empty :
-			$"ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}";
-		var instanceParameters = parameters.Length == 0 ?
-			contextParameters :
-			string.Join(", ", contextParameters,
-				string.Join(", ", parameters.Select(_ =>
+			Array.Empty<string>() :
+			new [] { $"ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" };
+		var instanceParameters = 
+			string.Join(", ", contextParameters.Concat(parameters.Select(_ =>
 				{
 					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 					var direction = _.RefKind switch
@@ -79,7 +77,7 @@ internal static class MockConstructorBuilder
 	}
 
 	private static void BuildFieldSetters(IndentedTextWriter writer, ITypeSymbol typeToMock, Compilation compilation,
-		VariableNamingContext namingContext, 
+		VariableNamingContext namingContext,
 		IPropertySymbol[] requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
 	{
 		if (requiredInitPropertiesAndIndexers.Length > 0)

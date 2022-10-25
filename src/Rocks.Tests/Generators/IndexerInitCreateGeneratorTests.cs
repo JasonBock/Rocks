@@ -330,7 +330,7 @@ public static class IndexerInitCreateGeneratorTests
 					}
 				}
 				
-				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
+				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.MakeGeneration<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
 				{
 					return new RockIHaveIndexersWithInit(@constructorProperties);
 				}

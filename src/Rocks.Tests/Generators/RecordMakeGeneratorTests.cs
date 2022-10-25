@@ -40,18 +40,25 @@ public static class RecordMakeGeneratorTests
 			{
 				internal static class MakeExpectationsOfRecordTestExtensions
 				{
-					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self) =>
-						new RockRecordTest();
-					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self, global::MockTests.RecordTest @original) =>
-						new RockRecordTest(@original);
+					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self)
+					{
+						return new RockRecordTest();
+					}
+					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self, global::MockTests.RecordTest @original)
+					{
+						return new RockRecordTest(@original);
+					}
 					
 					private sealed record RockRecordTest
 						: global::MockTests.RecordTest
 					{
-						public RockRecordTest() { }
+						public RockRecordTest()
+						{
+						}
 						public RockRecordTest(global::MockTests.RecordTest @original)
 							: base(@original)
-						{ }
+						{
+						}
 						
 						public override void Foo()
 						{

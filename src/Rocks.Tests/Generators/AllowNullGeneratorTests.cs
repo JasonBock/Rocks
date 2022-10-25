@@ -183,13 +183,17 @@ public static class AllowNullGeneratorTests
 			{
 				internal static class MakeExpectationsOfIAllowExtensions
 				{
-					internal static global::MockTests.IAllow Instance(this global::Rocks.MakeGeneration<global::MockTests.IAllow> @self) =>
-						new RockIAllow();
+					internal static global::MockTests.IAllow Instance(this global::Rocks.MakeGeneration<global::MockTests.IAllow> @self)
+					{
+						return new RockIAllow();
+					}
 					
 					private sealed class RockIAllow
 						: global::MockTests.IAllow
 					{
-						public RockIAllow() { }
+						public RockIAllow()
+						{
+						}
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						public string NewLine
@@ -465,13 +469,17 @@ public static class AllowNullGeneratorTests
 			{
 				internal static class MakeExpectationsOfAllowExtensions
 				{
-					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> @self) =>
-						new RockAllow();
+					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> @self)
+					{
+						return new RockAllow();
+					}
 					
 					private sealed class RockAllow
 						: global::MockTests.Allow
 					{
-						public RockAllow() { }
+						public RockAllow()
+						{
+						}
 						
 						public override bool Equals(object? @obj)
 						{

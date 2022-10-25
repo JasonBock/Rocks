@@ -143,13 +143,17 @@ public static class DefaultValuesGeneratorTests
 			
 			internal static class MakeExpectationsOfIGenericDefaultExtensions
 			{
-				internal static global::IGenericDefault Instance(this global::Rocks.MakeGeneration<global::IGenericDefault> @self) =>
-					new RockIGenericDefault();
+				internal static global::IGenericDefault Instance(this global::Rocks.MakeGeneration<global::IGenericDefault> @self)
+				{
+					return new RockIGenericDefault();
+				}
 				
 				private sealed class RockIGenericDefault
 					: global::IGenericDefault
 				{
-					public RockIGenericDefault() { }
+					public RockIGenericDefault()
+					{
+					}
 					
 					public void Setup<T>(T @initialValue = default!)
 					{
@@ -302,13 +306,17 @@ public static class DefaultValuesGeneratorTests
 			
 			internal static class MakeExpectationsOfIUseInfinityExtensions
 			{
-				internal static global::IUseInfinity Instance(this global::Rocks.MakeGeneration<global::IUseInfinity> @self) =>
-					new RockIUseInfinity();
+				internal static global::IUseInfinity Instance(this global::Rocks.MakeGeneration<global::IUseInfinity> @self)
+				{
+					return new RockIUseInfinity();
+				}
 				
 				private sealed class RockIUseInfinity
 					: global::IUseInfinity
 				{
-					public RockIUseInfinity() { }
+					public RockIUseInfinity()
+					{
+					}
 					
 					public void Use(double @value = double.PositiveInfinity)
 					{

@@ -173,15 +173,18 @@ public static class NullableAnnotationTests
 			
 			internal static class MakeExpectationsOfNeedNullableExtensions
 			{
-				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self, object? @initializationData) =>
-					new RockNeedNullable(@initializationData);
+				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self, object? @initializationData)
+				{
+					return new RockNeedNullable(@initializationData!);
+				}
 				
 				private sealed class RockNeedNullable
 					: global::NeedNullable
 				{
 					public RockNeedNullable(object? @initializationData)
 						: base(@initializationData!)
-					{ }
+					{
+					}
 					
 					public override bool Equals(object? @obj)
 					{
@@ -443,13 +446,17 @@ public static class NullableAnnotationTests
 			
 			internal static class MakeExpectationsOfNeedNullableExtensions
 			{
-				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self) =>
-					new RockNeedNullable();
+				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self)
+				{
+					return new RockNeedNullable();
+				}
 				
 				private sealed class RockNeedNullable
 					: global::NeedNullable
 				{
-					public RockNeedNullable() { }
+					public RockNeedNullable()
+					{
+					}
 					
 					public override bool Equals(object? @obj)
 					{

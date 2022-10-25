@@ -239,13 +239,17 @@ public static class DoesNotReturnGeneratorTests
 			{
 				internal static class MakeExpectationsOfClassTestExtensions
 				{
-					internal static global::MockTests.ClassTest Instance(this global::Rocks.MakeGeneration<global::MockTests.ClassTest> @self) =>
-						new RockClassTest();
+					internal static global::MockTests.ClassTest Instance(this global::Rocks.MakeGeneration<global::MockTests.ClassTest> @self)
+					{
+						return new RockClassTest();
+					}
 					
 					private sealed class RockClassTest
 						: global::MockTests.ClassTest
 					{
-						public RockClassTest() { }
+						public RockClassTest()
+						{
+						}
 						
 						public override bool Equals(object? @obj)
 						{
@@ -442,13 +446,17 @@ public static class DoesNotReturnGeneratorTests
 			{
 				internal static class MakeExpectationsOfIInterfaceTestExtensions
 				{
-					internal static global::MockTests.IInterfaceTest Instance(this global::Rocks.MakeGeneration<global::MockTests.IInterfaceTest> @self) =>
-						new RockIInterfaceTest();
+					internal static global::MockTests.IInterfaceTest Instance(this global::Rocks.MakeGeneration<global::MockTests.IInterfaceTest> @self)
+					{
+						return new RockIInterfaceTest();
+					}
 					
 					private sealed class RockIInterfaceTest
 						: global::MockTests.IInterfaceTest
 					{
-						public RockIInterfaceTest() { }
+						public RockIInterfaceTest()
+						{
+						}
 						
 						[global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute]
 						public void VoidMethod()
