@@ -25,12 +25,12 @@ internal static class MockMakeBuilder
 		{
 			foreach (var constructor in information.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, typeToMock, constructor.Parameters);
+				MockConstructorBuilder.Build(writer, typeToMock, compilation, constructor.Parameters);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, typeToMock, ImmutableArray<IParameterSymbol>.Empty);
+			MockConstructorBuilder.Build(writer, typeToMock, compilation, ImmutableArray<IParameterSymbol>.Empty);
 		}
 
 		writer.WriteLine();

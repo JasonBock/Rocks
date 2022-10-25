@@ -14,21 +14,85 @@ internal static class MockConstructorExtensionsBuilder
 		var requiredInitProperties = information.TypeToMock!.Type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => !_.IsIndexer && (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
 				_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
+		var requiredInitIndexers = information.TypeToMock!.Type.GetMembers().OfType<IPropertySymbol>()
+			.Where(_ => _.IsIndexer && (_.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
+				_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
+		var enumerableTypes = requiredInitIndexers.Select(_ =>
+			_.Parameters.Length == 1 ?
+				_.Parameters[0].Type.GetFullyQualifiedName() :
+				$"({string.Join(", ", _.Parameters.Select(p => p.Type.GetFullyQualifiedName()))})").ToArray();
 
-		var requiredInitObjectInitializationSyntax = string.Empty;
 		var hasRequiredProperties = false;
 
-		if (requiredInitProperties.Length > 0)
+		if (requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0)
 		{
 			// Generate the ConstructorProperties class
 			// and generate the object initialization syntax that will be used
 			// in the Instance() methods.
 			writer.WriteLine("internal sealed class ConstructorProperties");
+
+			if (requiredInitIndexers.Length > 0)
+			{
+				writer.Indent++;
+				writer.WriteLine($": {string.Join(", ", enumerableTypes.Select(_ => $"global::System.Collections.Generic.IEnumerable<{_}>"))}");
+				writer.Indent--;
+			}
+
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var requiredInitObjectInitializationSyntaxBuilder = new StringBuilder();
-			requiredInitObjectInitializationSyntaxBuilder.AppendLine("{");
+			if (requiredInitIndexers.Length > 0)
+			{
+				for (var i = 0; i < requiredInitIndexers.Length; i++)
+				{
+					var indexer = requiredInitIndexers[i];
+					var indexerKey = enumerableTypes[i];
+					writer.WriteLine($"private readonly global::System.Collections.Generic.Dictionary<{indexerKey}, {indexer.Type.GetFullyQualifiedName()}> i{i} = new();");
+				}
+
+				writer.WriteLine();
+
+				for (var i = 0; i < requiredInitIndexers.Length; i++)
+				{
+					var indexer = requiredInitIndexers[i];
+					var indexerKey = enumerableTypes[i];
+					writer.WriteLines(
+						$$"""
+						global::System.Collections.Generic.IEnumerator<{{indexerKey}}> global::System.Collections.Generic.IEnumerable<{{indexerKey}}>.GetEnumerator()
+						{
+							foreach(var key in this.i{{i}}.Keys)
+							{
+								yield return key;
+							}
+						}
+						""");
+				}
+
+				writer.WriteLine();
+				writer.WriteLine($"global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();");
+				writer.WriteLine();
+
+				for (var i = 0; i < requiredInitIndexers.Length; i++)
+				{
+					var indexer = requiredInitIndexers[i];
+					var indexerKey = indexer.Parameters.Length == 1 ?
+						indexer.Parameters[0].Name :
+						$"({string.Join(", ", indexer.Parameters.Select(p => p.Name))})";
+					writer.WriteLines(
+						$$"""
+						internal {{indexer.Type.GetFullyQualifiedName()}} this[{{string.Join(", ", indexer.Parameters.Select(p => $"{p.Type.GetFullyQualifiedName()} {p.Name}"))}}]
+						{
+							get => this.i{{i}}[{{indexerKey}}];
+							init => this.i{{i}}[{{indexerKey}}] = value;
+						}
+						""");
+				}
+			}
+
+			if (requiredInitIndexers.Length > 0 && requiredInitProperties.Length > 0)
+			{
+				writer.WriteLine();
+			}
 
 			foreach (var requiredInitProperty in requiredInitProperties)
 			{
@@ -36,19 +100,11 @@ internal static class MockConstructorExtensionsBuilder
 				var propertyNullability = (requiredInitProperty.NullableAnnotation == NullableAnnotation.None ||
 					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ?
 						"?" : string.Empty;
-				var propertyAssignment = (requiredInitProperty.NullableAnnotation == NullableAnnotation.None ||
-					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ?
-						"!" : string.Empty;
 				var isRequired = requiredInitProperty.IsRequired ? "required " : string.Empty;
 				var propertyTypeName = requiredInitProperty.Type.GetFullyQualifiedName();
 				writer.WriteLine(
 					$"internal {isRequired}{propertyTypeName}{propertyNullability} {requiredInitProperty.Name} {{ get; init; }}");
-				requiredInitObjectInitializationSyntaxBuilder.AppendLine(
-					$"\t{requiredInitProperty.Name} = [[constructorProperties]].{requiredInitProperty.Name}{propertyAssignment},");
 			}
-
-			requiredInitObjectInitializationSyntaxBuilder.Append("};");
-			requiredInitObjectInitializationSyntax = requiredInitObjectInitializationSyntaxBuilder.ToString();
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -60,30 +116,29 @@ internal static class MockConstructorExtensionsBuilder
 			foreach (var constructor in information.Constructors)
 			{
 				MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
-					constructor.Parameters, requiredInitObjectInitializationSyntax, hasRequiredProperties);
+					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties);
 			}
 		}
 		else
 		{
 			MockConstructorExtensionsBuilder.Build(writer, information.TypeToMock!,
-				ImmutableArray<IParameterSymbol>.Empty, requiredInitObjectInitializationSyntax, hasRequiredProperties);
+				ImmutableArray<IParameterSymbol>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties);
 		}
 	}
 
 	private static void Build(IndentedTextWriter writer, MockedType typeToMock, ImmutableArray<IParameterSymbol> parameters,
-		string requiredInitObjectInitializationSyntax, bool hasRequiredProperties)
+		bool requiredInitObjectInitialization, bool hasRequiredProperties)
 	{
 		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
-			requiredInitObjectInitializationSyntax.Length > 0 ?
+			requiredInitObjectInitialization ?
 				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" :
 				string.Empty;
 		var selfParameter =
-			$"this global::Rocks.MakeGeneration<{typeToMock.ReferenceableName}> @{namingContext["self"]}{constructorPropertiesParameter}";
-
+			$"this global::Rocks.Expectations.Expectations<{typeToMock.ReferenceableName}> @{namingContext["self"]}{constructorPropertiesParameter}";
 		var instanceParameters = parameters.Length == 0 ? selfParameter :
 			string.Join(", ", selfParameter,
-				string.Join(", ", string.Join(", ", parameters.Select(_ =>
+				string.Join(", ", parameters.Select(_ =>
 				{
 					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
 					var direction = _.RefKind switch
@@ -94,48 +149,42 @@ internal static class MockConstructorExtensionsBuilder
 						_ => string.Empty
 					};
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
-				}))));
+				})));
 		var isUnsafe = false;
-		var rockInstanceParameters = string.Join(", ", string.Join(", ", parameters.Select(_ =>
-		{
-			isUnsafe |= _.Type.IsPointer();
-			var direction = _.RefKind switch
+		var contextParameters = requiredInitObjectInitialization ?
+			$"@{namingContext["constructorProperties"]}" :
+			string.Empty;
+		var rockInstanceParameters = parameters.Length == 0 ? contextParameters :
+			string.Join(", ", contextParameters, string.Join(", ", parameters.Select(_ =>
 			{
-				RefKind.Ref => "ref ",
-				RefKind.Out => "out ",
-				RefKind.In => "in ",
-				_ => string.Empty
-			};
-			return $"{direction}@{_.Name}";
-		})));
+				isUnsafe |= _.Type.IsPointer();
+				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
+				var direction = _.RefKind switch
+				{
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}@{_.Name}{requiresNullable}";
+			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters}) =>");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {typeToMock.ReferenceableName} Instance({instanceParameters})");
+		writer.WriteLine("{");
 		writer.Indent++;
 
-		var newMock = $"new Rock{typeToMock.FlattenedName}({rockInstanceParameters})";
-		if (requiredInitObjectInitializationSyntax.Length == 0)
+		if (hasRequiredProperties)
 		{
-			writer.WriteLine($"{newMock};");
-		}
-		else
-		{
-			writer.WriteLine($"@{namingContext["constructorProperties"]} is null ?");
+			writer.WriteLine($"if (@{namingContext["constructorProperties"]} is null)");
+			writer.WriteLine("{");
 			writer.Indent++;
-
-			if (hasRequiredProperties)
-			{
-				writer.WriteLine($"throw new global::System.ArgumentNullException(nameof(@{namingContext["constructorProperties"]})) :");
-			}
-			else
-			{
-				writer.WriteLine($"{newMock} :");
-			}
-
-			writer.WriteLine($"{newMock}");
-			writer.WriteLines(requiredInitObjectInitializationSyntax.Replace("[[constructorProperties]]", $"@{namingContext["constructorProperties"]}"));
+			writer.WriteLine($"throw new global::System.ArgumentNullException(nameof(@{namingContext["constructorProperties"]}));");
 			writer.Indent--;
+			writer.WriteLine("}");
 		}
 
+		writer.WriteLine($"return new Rock{typeToMock.FlattenedName}({rockInstanceParameters});");
 		writer.Indent--;
+		writer.WriteLine("}");
 	}
 }

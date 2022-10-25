@@ -257,6 +257,7 @@ public static class IndexerInitCreateGeneratorTests
 	{
 		var code =
 			"""
+			using Rocks;
 			using System;
 
 			public interface IHaveIndexersWithInit
@@ -275,7 +276,103 @@ public static class IndexerInitCreateGeneratorTests
 			}			
 			""";
 
-		var generatedCode = "";
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfIHaveIndexersWithInitExtensions
+			{
+				internal sealed class ConstructorProperties
+					: global::System.Collections.Generic.IEnumerable<uint>, global::System.Collections.Generic.IEnumerable<(int, string)>, global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>
+				{
+					private readonly global::System.Collections.Generic.Dictionary<uint, double> i0 = new();
+					private readonly global::System.Collections.Generic.Dictionary<(int, string), string> i1 = new();
+					private readonly global::System.Collections.Generic.Dictionary<(string, int, global::System.Guid), int> i2 = new();
+					
+					global::System.Collections.Generic.IEnumerator<uint> global::System.Collections.Generic.IEnumerable<uint>.GetEnumerator()
+					{
+						foreach(var key in this.i0.Keys)
+						{
+							yield return key;
+						}
+					}
+					global::System.Collections.Generic.IEnumerator<(int, string)> global::System.Collections.Generic.IEnumerable<(int, string)>.GetEnumerator()
+					{
+						foreach(var key in this.i1.Keys)
+						{
+							yield return key;
+						}
+					}
+					global::System.Collections.Generic.IEnumerator<(string, int, global::System.Guid)> global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>.GetEnumerator()
+					{
+						foreach(var key in this.i2.Keys)
+						{
+							yield return key;
+						}
+					}
+					
+					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();
+					
+					internal double this[uint a]
+					{
+						get => this.i0[a];
+						init => this.i0[a] = value;
+					}
+					internal string this[int a, string b]
+					{
+						get => this.i1[(a, b)];
+						init => this.i1[(a, b)] = value;
+					}
+					internal int this[string a, int b, global::System.Guid c]
+					{
+						get => this.i2[(a, b, c)];
+						init => this.i2[(a, b, c)] = value;
+					}
+				}
+				
+				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
+				{
+					return new RockIHaveIndexersWithInit(@constructorProperties);
+				}
+				
+				private sealed class RockIHaveIndexersWithInit
+					: global::IHaveIndexersWithInit
+				{
+					public RockIHaveIndexersWithInit(ConstructorProperties? @constructorProperties)
+					{
+						if (@constructorProperties is not null)
+						{
+							foreach(var a in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<uint>>(@constructorProperties))
+							{
+								this[a] = constructorProperties[a];
+							}
+							foreach((var a, var b) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(int, string)>>(@constructorProperties))
+							{
+								this[a, b] = constructorProperties[a, b];
+							}
+							foreach((var a, var b, var c) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>>(@constructorProperties))
+							{
+								this[a, b, c] = constructorProperties[a, b, c];
+							}
+						}
+					}
+					
+					public double this[uint @a]
+					{
+						init { }
+					}
+					public string this[int @a, string @b]
+					{
+						init { }
+					}
+					public int this[string @a, int @b, global::System.Guid @c]
+					{
+						init { }
+					}
+				}
+			}
+			
+			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },

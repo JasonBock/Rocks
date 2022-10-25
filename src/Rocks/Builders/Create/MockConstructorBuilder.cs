@@ -39,6 +39,11 @@ internal static class MockConstructorBuilder
 
 		var mockTypeName = $"Rock{typeToMock.FlattenedName}";
 
+		if (hasRequiredProperties)
+		{
+			writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
+		}
+
 		if (parameters.Length > 0)
 		{
 			var passedParameter = string.Join(", ", parameters.Select(_ =>
@@ -56,11 +61,6 @@ internal static class MockConstructorBuilder
 
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 
-			if (hasRequiredProperties)
-			{
-				writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
-			}
-
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine($": base({passedParameter})");
@@ -73,11 +73,6 @@ internal static class MockConstructorBuilder
 		}
 		else
 		{
-			if (hasRequiredProperties)
-			{
-				writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
-			}
-
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
