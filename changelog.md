@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [7.0.0-alpha.3] - Not Yet Released
 
+### Added
+- Indexers with an `init` can now be set up with `ConstructorProperties`, and properties and indexers with an `init` can be set up with expectations (issue [#197](https://github.com/JasonBock/Rocks/issues/197))
+
 ### Changed
-- Casts in shim member implementation now use `Unsafe.As<>()` (issue [#198](https://github.com/JasonBock/Rocks/issues/198))
+- All direct casts now use `Unsafe.As<>()` (issue [#198](https://github.com/JasonBock/Rocks/issues/198))
 
 ### Fixed
 - Members that are hidden by accessible static members are now removed (issue [#206](https://github.com/JasonBock/Rocks/issues/206))

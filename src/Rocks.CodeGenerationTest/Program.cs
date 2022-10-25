@@ -46,6 +46,8 @@ static void TestWithTypes()
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
 		// PASSED
+		// Number of types found: 2192
+
 #if INCLUDE_PASSED
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
