@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -199,6 +199,18 @@ static void TestWithTypes()
 		// Make: 1 errors, 0 warnings
 		// System.Reactive
 		typeof(System.Reactive.ExperimentalAttribute),
+
+		// Number of types found: 41
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// RestSharp
+		typeof(RestSharp.BodyParameter),
+
+		// Number of types found: 144
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// CsvHelper
+		typeof(CsvHelper.ArrayHelper),
 #endif
 
 		// FAILED
@@ -210,8 +222,8 @@ static void TestWithTypes()
 		//typeof(SixLabors.ImageSharp.GraphicsOptions),
 
 		// Number of types found: 118
-		// Create: 2 errors, 3 warnings
-		// Make: 2 errors, 3 warnings
+		// Create: 0 errors, 3 warnings
+		// Make: 0 errors, 3 warnings
 		// AutoMapper
 		//typeof(AutoMapper.AutoMapAttribute),
 
@@ -220,18 +232,6 @@ static void TestWithTypes()
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
 		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
-
-		// Number of types found: 41
-		// Create: 2 errors, 0 warnings
-		// Make: 2 errors, 0 warnings
-		// RestSharp
-		//typeof(RestSharp.BodyParameter),
-
-		// Number of types found: 144
-		// Create: 7 errors, 0 warnings
-		// Make: 7 errors, 0 warnings
-		// CsvHelper
-		//typeof(CsvHelper.ArrayHelper),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
