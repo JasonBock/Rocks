@@ -106,8 +106,10 @@ public static class NonPublicMembersGeneratorTests
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
 					public RockHasInternalVirtual(global::Rocks.Expectations.Expectations<global::HasInternalVirtual> @expectations, string @key)
-						: base(@key) =>
-							this.handlers = @expectations.Handlers;
+						: base(@key)
+					{
+						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "string? ToString()")]
 					public override string? ToString()

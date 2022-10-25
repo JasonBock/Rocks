@@ -65,8 +65,10 @@ public static class ClassConstructorCreateGeneratorTests
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
 						public RockBaseCtor(global::Rocks.Expectations.Expectations<global::MockTests.BaseCtor> @expectations, int @a, ref string @b, out string @c, params string[] @d)
-							: base(@a, ref @b, out @c, @d) =>
-								this.handlers = @expectations.Handlers;
+							: base(@a, ref @b, out @c, @d)
+						{
+							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

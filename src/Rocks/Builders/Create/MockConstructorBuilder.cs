@@ -56,11 +56,13 @@ internal static class MockConstructorBuilder
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
-			writer.WriteLine($": base({passedParameter}) =>");
+			writer.WriteLine($": base({passedParameter})");
+			writer.Indent--;
+			writer.WriteLine("{");
 			writer.Indent++;
 			MockConstructorBuilder.BuildFieldSetters(writer, typeToMock.Type, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
-			writer.Indent--;
+			writer.WriteLine("}");
 		}
 		else
 		{

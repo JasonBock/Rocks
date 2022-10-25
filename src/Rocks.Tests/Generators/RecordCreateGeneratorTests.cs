@@ -91,7 +91,7 @@ public static class RecordCreateGeneratorTests
 						{
 							this.handlers = @expectations.Handlers;
 						}
-												
+						
 						[global::Rocks.MemberIdentifier(2, "void Foo()")]
 						public override void Foo()
 						{

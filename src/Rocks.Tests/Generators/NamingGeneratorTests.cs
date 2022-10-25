@@ -228,8 +228,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUseKeyword(global::Rocks.Expectations.Expectations<global::IUseKeyword> @expectations) =>
+					public RockIUseKeyword(global::Rocks.Expectations.Expectations<global::IUseKeyword> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Foo(string @namespace, string @event, string @property)")]
 					public void Foo(string @namespace, string @event, string @property)
@@ -341,8 +343,10 @@ public static class NamingGeneratorTests
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
 					public RockHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::HaveNamingConflicts> @expectations1, string @self, string @expectations)
-						: base(@self, @expectations) =>
-							this.handlers = @expectations1.Handlers;
+						: base(@self, @expectations)
+					{
+						this.handlers = @expectations1.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -503,8 +507,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> @expectations) =>
+					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "this[string @methodHandlers, string @methodHandler, string @result, string @result2, string @self]")]
 					public int this[string @methodHandlers, string @methodHandler, string @result, string @result2, string @self]
@@ -609,8 +615,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> @expectations) =>
+					public RockIHaveNamingConflicts(global::Rocks.Expectations.Expectations<global::IHaveNamingConflicts> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "int Foo(string @methodHandlers, string @methodHandler, string @result, string @result2, string @self)")]
 					public int Foo(string @methodHandlers, string @methodHandler, string @result, string @result2, string @self)
@@ -900,8 +908,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUsesThing(global::Rocks.Expectations.Expectations<global::IUsesThing> @expectations) =>
+					public RockIUsesThing(global::Rocks.Expectations.Expectations<global::IUsesThing> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Use(global::Namespace2.Thing @thing, global::Namespace1.Stuff @stuff)")]
 					public void Use(global::Namespace2.Thing @thing, global::Namespace1.Stuff @stuff)
@@ -1015,8 +1025,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUseMethodInformation(global::Rocks.Expectations.Expectations<global::IUseMethodInformation> @expectations) =>
+					public RockIUseMethodInformation(global::Rocks.Expectations.Expectations<global::IUseMethodInformation> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "get_Methods()")]
 					public global::MethodInformation[] Methods
@@ -1109,8 +1121,10 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIOperation(global::Rocks.Expectations.Expectations<global::IOperation> @expectations) =>
+					public RockIOperation(global::Rocks.Expectations.Expectations<global::IOperation> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "get_Operations()")]
 					public global::IOperation.OperationList Operations
@@ -1211,8 +1225,10 @@ public static class NamingGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIUseConstraint(global::Rocks.Expectations.Expectations<global::Namespace2.IUseConstraint> @expectations) =>
+						public RockIUseConstraint(global::Rocks.Expectations.Expectations<global::Namespace2.IUseConstraint> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo<T>(T @value)")]
 						public void Foo<T>(T @value)
