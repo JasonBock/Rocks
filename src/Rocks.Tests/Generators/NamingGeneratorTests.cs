@@ -51,12 +51,7 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return @constructorProperties is null ?
-							new RockIHaveDelegate(@self) :
-							new RockIHaveDelegate(@self)
-							{
-								Processor = @constructorProperties.Processor!,
-							};
+						return new RockIHaveDelegate(@self, @constructorProperties);
 					}
 					else
 					{
@@ -69,8 +64,14 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIHaveDelegate(global::Rocks.Expectations.Expectations<global::IHaveDelegate> @expectations) =>
+					public RockIHaveDelegate(global::Rocks.Expectations.Expectations<global::IHaveDelegate> @expectations, ConstructorProperties? @constructorProperties)
+					{
 						this.handlers = @expectations.Handlers;
+						if (@constructorProperties is not null)
+						{
+							this.Processor = @constructorProperties.Processor!;
+						}
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
@@ -714,15 +715,14 @@ public static class NamingGeneratorTests
 				
 				internal static global::HasRequiredProperty Instance(this global::Rocks.Expectations.Expectations<global::HasRequiredProperty> @self, ConstructorProperties @constructorProperties1, string @constructorProperties)
 				{
+					if (@constructorProperties1 is null)
+					{
+						throw new global::System.ArgumentNullException(nameof(@constructorProperties1));
+					}
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return @constructorProperties1 is null ?
-							throw new global::System.ArgumentNullException(nameof(@constructorProperties1)) :
-							new RockHasRequiredProperty(@self, @constructorProperties)
-							{
-								Data = @constructorProperties1.Data!,
-							};
+						return new RockHasRequiredProperty(@self, @constructorProperties1, @constructorProperties);
 					}
 					else
 					{
@@ -735,12 +735,14 @@ public static class NamingGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockHasRequiredProperty(global::Rocks.Expectations.Expectations<global::HasRequiredProperty> @expectations, string @constructorProperties)
+					[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
+					public RockHasRequiredProperty(global::Rocks.Expectations.Expectations<global::HasRequiredProperty> @expectations, ConstructorProperties @constructorProperties1, string @constructorProperties)
 						: base(@constructorProperties)
 					{
 						this.handlers = @expectations.Handlers;
+						this.Data = @constructorProperties1.Data!;
 					}
-										
+					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{

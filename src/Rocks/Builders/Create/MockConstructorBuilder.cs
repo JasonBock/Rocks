@@ -53,7 +53,14 @@ internal static class MockConstructorBuilder
 				};
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
+
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
+
+			if (hasRequiredProperties)
+			{
+				writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
+			}
+
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine($": base({passedParameter})");
@@ -66,6 +73,11 @@ internal static class MockConstructorBuilder
 		}
 		else
 		{
+			if (hasRequiredProperties)
+			{
+				writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
+			}
+
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;

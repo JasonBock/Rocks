@@ -41,7 +41,7 @@ public static class IndexerInitCreateGeneratorTests
 				internal static global::Rocks.Expectations.IndexerExpectations<global::IHaveIndexersWithInit> Indexers(this global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @self) =>
 					new(@self);
 				
-				internal static global::Rocks.Expectations.IndexerIniterExpectations<global::IHaveIndexersWithInit> Initers(this global::Rocks.Expectations.IndexerExpectations<global::IHaveIndexersWithInit> @self) =>
+				internal static global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> Initializers(this global::Rocks.Expectations.IndexerExpectations<global::IHaveIndexersWithInit> @self) =>
 					new(@self);
 				
 				internal sealed class ConstructorProperties
@@ -117,15 +117,15 @@ public static class IndexerInitCreateGeneratorTests
 						{
 							foreach(var a in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<uint>>(@constructorProperties))
 							{
-								 this[a] = constructorProperties[a];
+								this[a] = constructorProperties[a];
 							}
 							foreach((var a, var b) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(int, string)>>(@constructorProperties))
 							{
-								 this[a, b] = constructorProperties[a, b];
+								this[a, b] = constructorProperties[a, b];
 							}
 							foreach((var a, var b, var c) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>>(@constructorProperties))
 							{
-								 this[a, b, c] = constructorProperties[a, b, c];
+								this[a, b, c] = constructorProperties[a, b, c];
 							}
 						}
 					}
@@ -220,22 +220,22 @@ public static class IndexerInitCreateGeneratorTests
 				}
 			}
 			
-			internal static class IndexerIniterExpectationsOfIHaveIndexersWithInitExtensions
+			internal static class IndexerInitializerExpectationsOfIHaveIndexersWithInitExtensions
 			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>> This(this global::Rocks.Expectations.IndexerIniterExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<uint> @a, global::Rocks.Argument<double> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<uint> @a, global::Rocks.Argument<double> @value)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
 					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>> This(this global::Rocks.Expectations.IndexerIniterExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<string> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<string> @value)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
 					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b, @value }));
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>> This(this global::Rocks.Expectations.IndexerIniterExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c, global::Rocks.Argument<int> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c, global::Rocks.Argument<int> @value)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
@@ -517,9 +517,9 @@ public static class IndexerInitCreateGeneratorTests
 						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @a }));
 					}
 				}
-				internal static class IndexerInitalizerExpectationsOfTargetExtensions
+				internal static class IndexerInitializerExpectationsOfTargetExtensions
 				{
-					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerIniterExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<int> @value)
+					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<int> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@value);

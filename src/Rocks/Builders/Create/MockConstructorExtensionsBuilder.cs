@@ -176,7 +176,7 @@ internal static class MockConstructorExtensionsBuilder
 			writer.WriteLine($"if (@{namingContext["constructorProperties"]} is null)");
 			writer.WriteLine("{");
 			writer.Indent++;
-			writer.WriteLine($"throw new global::System.ArgumentNullException(nameof(@{namingContext["constructorProperties"]})) :");
+			writer.WriteLine($"throw new global::System.ArgumentNullException(nameof(@{namingContext["constructorProperties"]}));");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

@@ -51,6 +51,9 @@ public static class PropertyInitCreateGeneratorTests
 					internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.ITest> @self) =>
 						new(@self);
 					
+					internal static global::Rocks.Expectations.PropertyInitializerExpectations<global::MockTests.ITest> Initializers(this global::Rocks.Expectations.PropertyExpectations<global::MockTests.ITest> @self) =>
+						new(@self);
+					
 					internal sealed class ConstructorProperties
 					{
 						internal int NonNullableValueType { get; init; }
@@ -64,15 +67,7 @@ public static class PropertyInitCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return @constructorProperties is null ?
-								new RockITest(@self) :
-								new RockITest(@self)
-								{
-									NonNullableValueType = @constructorProperties.NonNullableValueType,
-									NullableValueType = @constructorProperties.NullableValueType,
-									NonNullableReferenceType = @constructorProperties.NonNullableReferenceType!,
-									NullableReferenceType = @constructorProperties.NullableReferenceType,
-								};
+							return new RockITest(@self, @constructorProperties);
 						}
 						else
 						{
@@ -85,8 +80,17 @@ public static class PropertyInitCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations) =>
+						public RockITest(global::Rocks.Expectations.Expectations<global::MockTests.ITest> @expectations, ConstructorProperties? @constructorProperties)
+						{
 							this.handlers = @expectations.Handlers;
+							if (@constructorProperties is not null)
+							{
+								this.NonNullableValueType = @constructorProperties.NonNullableValueType;
+								this.NullableValueType = @constructorProperties.NullableValueType;
+								this.NonNullableReferenceType = @constructorProperties.NonNullableReferenceType!;
+								this.NullableReferenceType = @constructorProperties.NullableReferenceType;
+							}
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "get_NonNullableValueType()")]
 						[global::Rocks.MemberIdentifier(1, "set_NonNullableValueType(@value)")]
@@ -106,7 +110,37 @@ public static class PropertyInitCreateGeneratorTests
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NonNullableValueType())");
 							}
-							init { }
+							init
+							{
+								if (this.handlers.TryGetValue(1, out var @methodHandlers))
+								{
+									var @foundMatch = false;
+									foreach (var @methodHandler in @methodHandlers)
+									{
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@value))
+										{
+											@foundMatch = true;
+											
+											if (@methodHandler.Method is not null)
+											{
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<int>>(@methodHandler.Method)(@value);
+											}
+											
+											if (!@foundMatch)
+											{
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableValueType(@value)");
+											}
+											
+											@methodHandler.IncrementCallCount();
+											break;
+										}
+									}
+								}
+								else
+								{
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableValueType(@value)");
+								}
+							}
 						}
 						[global::Rocks.MemberIdentifier(2, "get_NullableValueType()")]
 						[global::Rocks.MemberIdentifier(3, "set_NullableValueType(@value)")]
@@ -126,7 +160,37 @@ public static class PropertyInitCreateGeneratorTests
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NullableValueType())");
 							}
-							init { }
+							init
+							{
+								if (this.handlers.TryGetValue(3, out var @methodHandlers))
+								{
+									var @foundMatch = false;
+									foreach (var @methodHandler in @methodHandlers)
+									{
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int?>>(@methodHandler.Expectations[0]).IsValid(@value))
+										{
+											@foundMatch = true;
+											
+											if (@methodHandler.Method is not null)
+											{
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<int?>>(@methodHandler.Method)(@value);
+											}
+											
+											if (!@foundMatch)
+											{
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableValueType(@value)");
+											}
+											
+											@methodHandler.IncrementCallCount();
+											break;
+										}
+									}
+								}
+								else
+								{
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableValueType(@value)");
+								}
+							}
 						}
 						[global::Rocks.MemberIdentifier(4, "get_NonNullableReferenceType()")]
 						[global::Rocks.MemberIdentifier(5, "set_NonNullableReferenceType(@value)")]
@@ -146,7 +210,37 @@ public static class PropertyInitCreateGeneratorTests
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NonNullableReferenceType())");
 							}
-							init { }
+							init
+							{
+								if (this.handlers.TryGetValue(5, out var @methodHandlers))
+								{
+									var @foundMatch = false;
+									foreach (var @methodHandler in @methodHandlers)
+									{
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@value))
+										{
+											@foundMatch = true;
+											
+											if (@methodHandler.Method is not null)
+											{
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string>>(@methodHandler.Method)(@value);
+											}
+											
+											if (!@foundMatch)
+											{
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableReferenceType(@value)");
+											}
+											
+											@methodHandler.IncrementCallCount();
+											break;
+										}
+									}
+								}
+								else
+								{
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableReferenceType(@value)");
+								}
+							}
 						}
 						[global::Rocks.MemberIdentifier(6, "get_NullableReferenceType()")]
 						[global::Rocks.MemberIdentifier(7, "set_NullableReferenceType(@value)")]
@@ -166,7 +260,37 @@ public static class PropertyInitCreateGeneratorTests
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NullableReferenceType())");
 							}
-							init { }
+							init
+							{
+								if (this.handlers.TryGetValue(7, out var @methodHandlers))
+								{
+									var @foundMatch = false;
+									foreach (var @methodHandler in @methodHandlers)
+									{
+										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@value))
+										{
+											@foundMatch = true;
+											
+											if (@methodHandler.Method is not null)
+											{
+												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string?>>(@methodHandler.Method)(@value);
+											}
+											
+											if (!@foundMatch)
+											{
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableReferenceType(@value)");
+											}
+											
+											@methodHandler.IncrementCallCount();
+											break;
+										}
+									}
+								}
+								else
+								{
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableReferenceType(@value)");
+								}
+							}
 						}
 					}
 				}
@@ -181,6 +305,17 @@ public static class PropertyInitCreateGeneratorTests
 						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string>, string>(@self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string?>, string?> NullableReferenceType(this global::Rocks.Expectations.PropertyGetterExpectations<global::MockTests.ITest> @self) =>
 						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Func<string?>, string?>(@self.Add<string?>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				}
+				internal static class PropertyInitializerExpectationsOfITestExtensions
+				{
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<int>> NonNullableValueType(this global::Rocks.Expectations.PropertyInitializerExpectations<global::MockTests.ITest> @self, global::Rocks.Argument<int> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<int>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<int?>> NullableValueType(this global::Rocks.Expectations.PropertyInitializerExpectations<global::MockTests.ITest> @self, global::Rocks.Argument<int?> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<int?>>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<string>> NonNullableReferenceType(this global::Rocks.Expectations.PropertyInitializerExpectations<global::MockTests.ITest> @self, global::Rocks.Argument<string> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<string>>(@self.Add(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+					internal static global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<string?>> NullableReferenceType(this global::Rocks.Expectations.PropertyInitializerExpectations<global::MockTests.ITest> @self, global::Rocks.Argument<string?> @value) =>
+						new global::Rocks.PropertyAdornments<global::MockTests.ITest, global::System.Action<string?>>(@self.Add(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 				}
 			}
 			
@@ -240,15 +375,14 @@ public static class PropertyInitCreateGeneratorTests
 					
 					internal static global::MockTests.Test Instance(this global::Rocks.Expectations.Expectations<global::MockTests.Test> @self, ConstructorProperties @constructorProperties)
 					{
+						if (@constructorProperties is null)
+						{
+							throw new global::System.ArgumentNullException(nameof(@constructorProperties));
+						}
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return @constructorProperties is null ?
-								throw new global::System.ArgumentNullException(nameof(@constructorProperties)) :
-								new RockTest(@self)
-								{
-									Data = @constructorProperties.Data,
-								};
+							return new RockTest(@self, @constructorProperties);
 						}
 						else
 						{
@@ -261,8 +395,12 @@ public static class PropertyInitCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations) =>
+						[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
+						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations, ConstructorProperties @constructorProperties)
+						{
 							this.handlers = @expectations.Handlers;
+							this.Data = @constructorProperties.Data;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
