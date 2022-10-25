@@ -241,8 +241,10 @@ public static class ProjectedTypesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHavePointers(global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @expectations) =>
+						public RockIHavePointers(global::Rocks.Expectations.Expectations<global::MockTests.IHavePointers> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void DelegatePointerParameter(delegate*<int, void> @value)")]
 						public unsafe void DelegatePointerParameter(delegate*<int, void> @value)
@@ -499,8 +501,10 @@ public static class ProjectedTypesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveInAndOutSpan(global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @expectations) =>
+						public RockIHaveInAndOutSpan(global::Rocks.Expectations.Expectations<global::MockTests.IHaveInAndOutSpan> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "global::System.Span<int> Foo(global::System.Span<int> @values)")]
 						public global::System.Span<int> Foo(global::System.Span<int> @values)

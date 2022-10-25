@@ -62,8 +62,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockVoidMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.VoidMethodWithParams> @expectations) =>
+						public RockVoidMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.VoidMethodWithParams> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -246,8 +248,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockValueMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.ValueMethodWithParams> @expectations) =>
+						public RockValueMethodWithParams(global::Rocks.Expectations.Expectations<global::MockTests.ValueMethodWithParams> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -422,8 +426,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations) =>
+						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations)
+						{
 							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
@@ -528,8 +534,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations) =>
+						public RockIHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.IHaveImplementation> @expectations)
+						{
 							(this.handlers, this.shimForIHaveImplementation) = (@expectations.Handlers, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "int Foo()")]
 						public int Foo()
@@ -632,8 +640,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> @expectations) =>
+						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -798,8 +808,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> @expectations) =>
+						public RockHaveImplementation(global::Rocks.Expectations.Expectations<global::MockTests.HaveImplementation> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

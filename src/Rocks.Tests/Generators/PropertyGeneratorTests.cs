@@ -71,8 +71,10 @@ public static class PropertyGeneratorTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockMixedProperties(global::Rocks.Expectations.Expectations<global::MixedProperties> @expectations) =>
+					public RockMixedProperties(global::Rocks.Expectations.Expectations<global::MixedProperties> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)

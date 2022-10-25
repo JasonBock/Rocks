@@ -82,12 +82,16 @@ public static class RecordCreateGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockRecordTest(global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> @expectations) =>
+						public RockRecordTest(global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						public RockRecordTest(global::Rocks.Expectations.Expectations<global::MockTests.RecordTest> @expectations, global::MockTests.RecordTest @original)
-							: base(@original) =>
-								this.handlers = @expectations.Handlers;
-						
+							: base(@original)
+						{
+							this.handlers = @expectations.Handlers;
+						}
+												
 						[global::Rocks.MemberIdentifier(2, "void Foo()")]
 						public override void Foo()
 						{

@@ -1,9 +1,9 @@
 ﻿namespace Rocks.Expectations;
 
-public sealed class ExplicitPropertyIniterExpectations<T, TContainingType>
+public sealed class ExplicitPropertyInitializerExpectations<T, TContainingType>
 	: ExplicitPropertyExpectations<T, TContainingType>
 	where T : class, TContainingType
 {
-	public ExplicitPropertyIniterExpectations(ExplicitPropertyExpectations<T, TContainingType> expectations)
+	public ExplicitPropertyInitializerExpectations(ExplicitPropertyExpectations<T, TContainingType> expectations)
 		: base(expectations ?? throw new ArgumentNullException(nameof(expectations))) { }
 }

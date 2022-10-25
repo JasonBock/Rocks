@@ -76,8 +76,10 @@ public static class ShimBuilderGeneratorTests
 					private readonly global::IHaveDims shimForIHaveDims;
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIHaveDims(global::Rocks.Expectations.Expectations<global::IHaveDims> @expectations) =>
+					public RockIHaveDims(global::Rocks.Expectations.Expectations<global::IHaveDims> @expectations)
+					{
 						(this.handlers, this.shimForIHaveDims) = (@expectations.Handlers, new ShimIHaveDims531557381186657891604647139828315705947108387206(this));
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "int IAmADim()")]
 					public int IAmADim()

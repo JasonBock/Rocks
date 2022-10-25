@@ -527,8 +527,10 @@ public static class NonPublicMembersGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations) =>
+						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -824,8 +826,10 @@ public static class NonPublicMembersGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations) =>
+						public RockTest(global::Rocks.Expectations.Expectations<global::MockTests.Test> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)

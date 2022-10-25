@@ -255,8 +255,10 @@ public static class NullableAnnotationTests
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockNeedNullable(global::Rocks.Expectations.Expectations<global::NeedNullable> @expectations) =>
+					public RockNeedNullable(global::Rocks.Expectations.Expectations<global::NeedNullable> @expectations)
+					{
 						this.handlers = @expectations.Handlers;
+					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)

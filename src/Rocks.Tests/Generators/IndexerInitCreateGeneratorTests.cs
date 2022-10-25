@@ -53,42 +53,42 @@ public static class IndexerInitCreateGeneratorTests
 					
 					global::System.Collections.Generic.IEnumerator<uint> global::System.Collections.Generic.IEnumerable<uint>.GetEnumerator()
 					{
-					    foreach(var key in this.i0.Keys)
-					    {
-					        yield return key;
-					    }
+						foreach(var key in this.i0.Keys)
+						{
+							yield return key;
+						}
 					}
 					global::System.Collections.Generic.IEnumerator<(int, string)> global::System.Collections.Generic.IEnumerable<(int, string)>.GetEnumerator()
 					{
-					    foreach(var key in this.i1.Keys)
-					    {
-					        yield return key;
-					    }
+						foreach(var key in this.i1.Keys)
+						{
+							yield return key;
+						}
 					}
 					global::System.Collections.Generic.IEnumerator<(string, int, global::System.Guid)> global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>.GetEnumerator()
 					{
-					    foreach(var key in this.i2.Keys)
-					    {
-					        yield return key;
-					    }
+						foreach(var key in this.i2.Keys)
+						{
+							yield return key;
+						}
 					}
 					
 					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();
 					
 					internal double this[uint a]
 					{
-					    get => this.i0[a];
-					    init => this.i0[a] = value;
+						get => this.i0[a];
+						init => this.i0[a] = value;
 					}
 					internal string this[int a, string b]
 					{
-					    get => this.i1[(a, b)];
-					    init => this.i1[(a, b)] = value;
+						get => this.i1[(a, b)];
+						init => this.i1[(a, b)] = value;
 					}
 					internal int this[string a, int b, global::System.Guid c]
 					{
-					    get => this.i2[(a, b, c)];
-					    init => this.i2[(a, b, c)] = value;
+						get => this.i2[(a, b, c)];
+						init => this.i2[(a, b, c)] = value;
 					}
 				}
 				
@@ -327,7 +327,7 @@ public static class IndexerInitCreateGeneratorTests
 					internal static global::Rocks.Expectations.IndexerGetterExpectations<global::MockTests.Target> Getters(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> @self) =>
 						new(@self);
 					
-					internal static global::Rocks.Expectations.IndexerIniterExpectations<global::MockTests.Target> Initers(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> @self) =>
+					internal static global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> Initializers(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> @self) =>
 						new(@self);
 					
 					internal sealed class ConstructorProperties
@@ -517,7 +517,7 @@ public static class IndexerInitCreateGeneratorTests
 						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @a }));
 					}
 				}
-				internal static class IndexerIniterExpectationsOfTargetExtensions
+				internal static class IndexerInitalizerExpectationsOfTargetExtensions
 				{
 					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerIniterExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<int> @value)
 					{

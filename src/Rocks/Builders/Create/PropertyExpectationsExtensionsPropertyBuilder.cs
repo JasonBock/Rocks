@@ -47,7 +47,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, result.MockType) :
 			propertyParameterType.GetFullyQualifiedName();
 		var mockTypeName = result.MockType.GetFullyQualifiedName();
-		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 		var thisParameter = $"this global::Rocks.Expectations.Property{accessorName}Expectations<{mockTypeName}> @self";
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :

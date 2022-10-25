@@ -57,7 +57,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal static global::Rocks.Expectations.IndexerIniterExpectations<{{typeToMockName}}> Initers(this global::Rocks.Expectations.IndexerExpectations<{{typeToMockName}}> @self) =>
+					internal static global::Rocks.Expectations.IndexerInitializerExpectations<{{typeToMockName}}> Initializers(this global::Rocks.Expectations.IndexerExpectations<{{typeToMockName}}> @self) =>
 						new(@self);
 
 					""");
@@ -105,7 +105,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal static global::Rocks.Expectations.ExplicitIndexerIniterExpectations<{{typeToMockName}}, {{containingTypeName}}> Initers(this global::Rocks.Expectations.ExplicitIndexerExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
+					internal static global::Rocks.Expectations.ExplicitIndexerInitializerExpectations<{{typeToMockName}}, {{containingTypeName}}> Initializer(this global::Rocks.Expectations.ExplicitIndexerExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
 						new(@self);
 
 					""");
@@ -154,7 +154,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal static global::Rocks.Expectations.PropertyIniterExpectations<{{typeToMockName}}> Initers(this global::Rocks.Expectations.PropertyExpectations<{{typeToMockName}}> @self) =>
+					internal static global::Rocks.Expectations.PropertyInitializerExpectations<{{typeToMockName}}> Initializers(this global::Rocks.Expectations.PropertyExpectations<{{typeToMockName}}> @self) =>
 						new(@self);
 
 					""");
@@ -202,7 +202,7 @@ internal static class MockPropertyExtensionsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal static global::Rocks.Expectations.ExplicitPropertyIniterExpectations<{{typeToMockName}}, {{containingTypeName}}> Initers(this global::Rocks.Expectations.ExplicitPropertyExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
+					internal static global::Rocks.Expectations.ExplicitPropertyInitializerExpectations<{{typeToMockName}}, {{containingTypeName}}> Initializers(this global::Rocks.Expectations.ExplicitPropertyExpectations<{{typeToMockName}}, {{containingTypeName}}> @self) =>
 						new(@self);
 
 					""");

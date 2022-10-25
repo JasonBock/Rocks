@@ -1,9 +1,9 @@
 ﻿namespace Rocks.Expectations;
 
-public sealed class IndexerIniterExpectations<T>
+public sealed class IndexerInitializerExpectations<T>
 	: IndexerExpectations<T>
 	where T : class
 {
-	public IndexerIniterExpectations(IndexerExpectations<T> expectations)
+	public IndexerInitializerExpectations(IndexerExpectations<T> expectations)
 		: base(expectations ?? throw new ArgumentNullException(nameof(expectations))) { }
 }

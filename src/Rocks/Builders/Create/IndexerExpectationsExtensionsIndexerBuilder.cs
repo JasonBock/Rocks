@@ -56,7 +56,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
 		var mockTypeName = result.MockType.GetFullyQualifiedName();
-		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 		var thisParameter = $"this global::Rocks.Expectations.Indexer{accessorName}Expectations<{mockTypeName}> @{namingContext["self"]}";
 		var delegateTypeName = propertySetMethod.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, result.MockType) :

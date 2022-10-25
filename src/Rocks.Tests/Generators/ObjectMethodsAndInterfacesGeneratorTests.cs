@@ -63,8 +63,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockStaticToString(global::Rocks.Expectations.Expectations<global::MockTests.StaticToString> @expectations) =>
+						public RockStaticToString(global::Rocks.Expectations.Expectations<global::MockTests.StaticToString> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
@@ -252,8 +254,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIMatchObjectOfobject(global::Rocks.Expectations.Expectations<global::MockTests.IMatchObject<object>> @expectations) =>
+						public RockIMatchObjectOfobject(global::Rocks.Expectations.Expectations<global::MockTests.IMatchObject<object>> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool global::MockTests.IMatchObject<object>.Equals(object? @other)")]
 						bool global::MockTests.IMatchObject<object>.Equals(object? @other)
@@ -473,8 +477,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					{
 						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 						
-						public RockIMatchObjectOfobject(global::Rocks.Expectations.Expectations<global::MockTests.IMatchObject<object>> @expectations) =>
+						public RockIMatchObjectOfobject(global::Rocks.Expectations.Expectations<global::MockTests.IMatchObject<object>> @expectations)
+						{
 							this.handlers = @expectations.Handlers;
+						}
 						
 						[global::Rocks.MemberIdentifier(0, "string global::MockTests.IMatchObject<object>.Equals(object? @other)")]
 						string global::MockTests.IMatchObject<object>.Equals(object? @other)

@@ -42,7 +42,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 	{
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
-		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initer";
+		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{result.MockType.GetName()}, {containingTypeName}> @self";
 		var mockTypeName = result.MockType.GetName();
 

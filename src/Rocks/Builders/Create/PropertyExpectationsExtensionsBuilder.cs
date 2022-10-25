@@ -75,7 +75,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-			writer.WriteLine($"internal static class ExplicitIndexerIniterExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
+			writer.WriteLine($"internal static class ExplicitIndexerInitializerExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -133,7 +133,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 		if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 			 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 		{
-			writer.WriteLine($"internal static class IndexerIniterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
+			writer.WriteLine($"internal static class IndexerInitializerExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -198,7 +198,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			.GroupBy(_ => _.Value.ContainingType))
 		{
 			var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
-			writer.WriteLine($"internal static class ExplicitPropertyIniterExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
+			writer.WriteLine($"internal static class ExplicitPropertyInitializerExpectationsOf{information.TypeToMock!.FlattenedName}For{containingTypeName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -255,7 +255,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 		if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 			 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
 		{
-			writer.WriteLine($"internal static class PropertyIniterExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
+			writer.WriteLine($"internal static class PropertyInitializerExpectationsOf{information.TypeToMock!.FlattenedName}Extensions");
 			writer.WriteLine("{");
 			writer.Indent++;
 
