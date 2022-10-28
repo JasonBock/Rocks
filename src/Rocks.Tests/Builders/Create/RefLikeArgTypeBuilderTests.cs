@@ -38,6 +38,9 @@ public static class RefLikeArgTypeBuilderTests
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
 		"ArgEvaluationForTargetOfstring")]
+	[TestCase(
+		"public static class Test { public static void Foo<TSource>(System.Span<TSource> t) { } }",
+		"ArgEvaluationForSpan<TSource>")]
 	public static void GetProjectedEvaluationDelegateName(string code, string expectedValue)
 	{
 		var type = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);

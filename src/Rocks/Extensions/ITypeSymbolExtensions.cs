@@ -8,15 +8,13 @@ internal static class ITypeSymbolExtensions
 	// TODO: I think this could be replaced with self.Kind == TypeParameter
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
-		if (self is INamedTypeSymbol namedType)
+		if(self.TypeKind == TypeKind.TypeParameter)
 		{
-			for (var i = 0; i < namedType.TypeParameters.Length; i++)
-			{
-				if (namedType.TypeArguments[i].Name == namedType.TypeParameters[i].Name)
-				{
-					return true;
-				}
-			}
+			return true;
+		}
+		else if (self is INamedTypeSymbol namedType)
+		{
+			return namedType.TypeArguments.Any(_ => _.TypeKind == TypeKind.TypeParameter);
 		}
 
 		return false;

@@ -4,9 +4,9 @@ using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -16,12 +16,19 @@ static void TestWithCode()
 		using Rocks;
 		using System;
 
+		public interface IUseSpanWithOpenGeneric
+		{
+		    void From<TSourcePixel>(
+		        ReadOnlySpan<TSourcePixel> sourcePixels)
+		        where TSourcePixel : unmanaged;
+		}
+
 		public static class Test
 		{
-			public static void Go()
-			{
-				var expectations = Rock.Create<SixLabors.ImageSharp.Processing.Processors.Dithering.IDither>();
-			}
+		    public static void Go()
+		    {
+		        var expectations = Rock.Create<IUseSpanWithOpenGeneric>();
+		    }
 		}
 		""",
 		new[]

@@ -6,6 +6,149 @@ namespace Rocks.Tests.Generators;
 public static class ProjectedTypesGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithRefLikeTypeWithOpenGenericsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			public interface IUseSpanWithOpenGeneric
+			{
+				 void From<TSourcePixel>(
+					  ReadOnlySpan<TSourcePixel> sourcePixels)
+					  where TSourcePixel : unmanaged;
+			}
+
+			public static class Test
+			{
+				 public static void Go()
+				 {
+					  var expectations = Rock.Create<IUseSpanWithOpenGeneric>();
+				 }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using ProjectionsForIUseSpanWithOpenGeneric;
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace ProjectionsForIUseSpanWithOpenGeneric
+			{
+				internal delegate void FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged;
+				internal delegate bool ArgEvaluationForReadOnlySpanOfTSourcePixel(global::System.ReadOnlySpan<TSourcePixel> @value);
+				
+				internal sealed class ArgForReadOnlySpanOfTSourcePixel
+					: global::Rocks.Argument
+				{
+					private readonly global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpanOfTSourcePixel? evaluation;
+					private readonly global::Rocks.ValidationState validation;
+					
+					internal ArgForReadOnlySpanOfTSourcePixel() => this.validation = global::Rocks.ValidationState.None;
+					
+					internal ArgForReadOnlySpanOfTSourcePixel(global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpanOfTSourcePixel @evaluation)
+					{
+						this.evaluation = @evaluation;
+						this.validation = global::Rocks.ValidationState.Evaluation;
+					}
+					
+					public bool IsValid(global::System.ReadOnlySpan<TSourcePixel> @value) =>
+						this.validation switch
+						{
+							global::Rocks.ValidationState.None => true,
+							global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
+							_ => throw new global::System.NotSupportedException("Invalid validation state."),
+						};
+				}
+			}
+			
+			internal static class CreateExpectationsOfIUseSpanWithOpenGenericExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::IUseSpanWithOpenGeneric> Methods(this global::Rocks.Expectations.Expectations<global::IUseSpanWithOpenGeneric> @self) =>
+					new(@self);
+				
+				internal static global::IUseSpanWithOpenGeneric Instance(this global::Rocks.Expectations.Expectations<global::IUseSpanWithOpenGeneric> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockIUseSpanWithOpenGeneric(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIUseSpanWithOpenGeneric
+					: global::IUseSpanWithOpenGeneric
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIUseSpanWithOpenGeneric(global::Rocks.Expectations.Expectations<global::IUseSpanWithOpenGeneric> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)")]
+					public void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)
+						where TSourcePixel : unmanaged
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @foundMatch = false;
+							
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpanOfTSourcePixel>(@methodHandler.Expectations[0]).IsValid(@sourcePixels))
+								{
+									@foundMatch = true;
+									
+									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel> @method)
+									{
+										@method(@sourcePixels);
+									}
+									
+									@methodHandler.IncrementCallCount();
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)");
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)");
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfIUseSpanWithOpenGenericExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::IUseSpanWithOpenGeneric, global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>> From<TSourcePixel>(this global::Rocks.Expectations.MethodExpectations<global::IUseSpanWithOpenGeneric> @self, global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpanOfTSourcePixel @sourcePixels) where TSourcePixel : unmanaged
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
+					return new global::Rocks.MethodAdornments<global::IUseSpanWithOpenGeneric, global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @sourcePixels }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseSpanWithOpenGeneric_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWithPointersAsync()
 	{
 		var code =
