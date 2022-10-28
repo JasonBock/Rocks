@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -238,18 +238,18 @@ static void TestWithTypes()
 		// Create: 364 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
-		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
 	{
-typeof(System.Linq.Expressions.LambdaExpression),
-typeof(System.Net.Mail.MailMessage),
-typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
-typeof(System.Diagnostics.DiagnosticSource),
-typeof(System.Transactions.Transaction),
-typeof(System.Text.Json.JsonSerializerOptions),
-typeof(System.Uri),
+		typeof(System.Linq.Expressions.LambdaExpression),
+		typeof(System.Net.Mail.MailMessage),
+		typeof(Microsoft.Extensions.Caching.Memory.IMemoryCache),
+		typeof(System.Diagnostics.DiagnosticSource),
+		typeof(System.Transactions.Transaction),
+		typeof(System.Text.Json.JsonSerializerOptions),
+		typeof(System.Uri),
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
