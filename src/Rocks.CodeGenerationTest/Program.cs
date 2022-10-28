@@ -1,12 +1,12 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -53,7 +53,7 @@ static void TestWithTypes()
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
 		// PASSED
-		// Number of types found: 2192
+		// Number of types found: 2469
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
@@ -218,15 +218,15 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// CsvHelper
 		typeof(CsvHelper.ArrayHelper),
+
+		// Number of types found: 43
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// ImageSharp
+		typeof(SixLabors.ImageSharp.GraphicsOptions),
 #endif
 
 		// FAILED
-
-		// Number of types found: 43
-		// Create: 6 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// ImageSharp
-		//typeof(SixLabors.ImageSharp.GraphicsOptions),
 
 		// Number of types found: 118
 		// Create: 0 errors, 3 warnings

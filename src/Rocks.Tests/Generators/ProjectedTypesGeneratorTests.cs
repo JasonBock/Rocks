@@ -40,17 +40,17 @@ public static class ProjectedTypesGeneratorTests
 			namespace ProjectionsForIUseSpanWithOpenGeneric
 			{
 				internal delegate void FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged;
-				internal delegate bool ArgEvaluationForReadOnlySpanOfTSourcePixel(global::System.ReadOnlySpan<TSourcePixel> @value);
+				internal delegate bool ArgEvaluationForReadOnlySpan<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @value);
 				
-				internal sealed class ArgForReadOnlySpanOfTSourcePixel
+				internal sealed class ArgForReadOnlySpan<TSourcePixel>
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpanOfTSourcePixel? evaluation;
+					private readonly global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpan<TSourcePixel>? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForReadOnlySpanOfTSourcePixel() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgForReadOnlySpan() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForReadOnlySpanOfTSourcePixel(global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpanOfTSourcePixel @evaluation)
+					internal ArgForReadOnlySpan(global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpan<TSourcePixel> @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -104,7 +104,7 @@ public static class ProjectedTypesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (global::System.Runtime.CompilerServices.Unsafe.As<global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpanOfTSourcePixel>(@methodHandler.Expectations[0]).IsValid(@sourcePixels))
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel>>(@methodHandler.Expectations[0]).IsValid(@sourcePixels))
 								{
 									@foundMatch = true;
 									
@@ -134,7 +134,7 @@ public static class ProjectedTypesGeneratorTests
 			
 			internal static class MethodExpectationsOfIUseSpanWithOpenGenericExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::IUseSpanWithOpenGeneric, global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>> From<TSourcePixel>(this global::Rocks.Expectations.MethodExpectations<global::IUseSpanWithOpenGeneric> @self, global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpanOfTSourcePixel @sourcePixels) where TSourcePixel : unmanaged
+				internal static global::Rocks.MethodAdornments<global::IUseSpanWithOpenGeneric, global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>> From<TSourcePixel>(this global::Rocks.Expectations.MethodExpectations<global::IUseSpanWithOpenGeneric> @self, global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
 					return new global::Rocks.MethodAdornments<global::IUseSpanWithOpenGeneric, global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @sourcePixels }));
