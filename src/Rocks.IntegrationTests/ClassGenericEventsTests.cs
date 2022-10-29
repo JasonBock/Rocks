@@ -11,9 +11,7 @@ public class ClassGenericEvents<T>
 	public virtual void Foo() { }
 #pragma warning disable CA1070 // Do not declare event fields as virtual
 #pragma warning disable CS0067
-#pragma warning disable CA1003 // Use generic event handler instances
-	public virtual event EventHandler<T>? MyEvent;
-#pragma warning restore CA1003 // Use generic event handler instances
+   public virtual event EventHandler<T>? MyEvent;
 #pragma warning restore CS0067
 #pragma warning restore CA1070 // Do not declare event fields as virtual
 }

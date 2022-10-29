@@ -24,22 +24,18 @@ public interface IInterfaceIndexerGetter
 
 public interface IInterfaceIndexerInit
 {
-#pragma warning disable CA1044 // Properties should not be write only
-	int this[int a] { init; }
+   int this[int a] { init; }
 	int this[int a, string b] { init; }
-#pragma warning restore CA1044 // Properties should not be write only
 
-	event EventHandler MyEvent;
+   event EventHandler MyEvent;
 }
 
 public interface IInterfaceIndexerSetter
 {
-#pragma warning disable CA1044 // Properties should not be write only
-	int this[int a] { set; }
+   int this[int a] { set; }
 	int this[int a, string b] { set; }
-#pragma warning restore CA1044 // Properties should not be write only
 
-	event EventHandler MyEvent;
+   event EventHandler MyEvent;
 }
 
 public static class InterfaceIndexerTests

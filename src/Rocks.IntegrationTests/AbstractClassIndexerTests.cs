@@ -24,12 +24,10 @@ public abstract class AbstractClassIndexerGetter
 
 public abstract class AbstractClassIndexerSetter
 {
-#pragma warning disable CA1044 // Properties should not be write only
-	public abstract int this[int a] { set; }
+   public abstract int this[int a] { set; }
 	public abstract int this[int a, string b] { set; }
-#pragma warning restore CA1044 // Properties should not be write only
 
-	public abstract event EventHandler MyEvent;
+   public abstract event EventHandler MyEvent;
 }
 
 public static class AbstractClassIndexerTests

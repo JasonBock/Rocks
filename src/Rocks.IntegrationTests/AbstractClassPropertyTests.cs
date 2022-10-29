@@ -7,11 +7,10 @@ public abstract class AbstractClassProperty
 	public abstract int GetData { get; }
 	public abstract int GetAndInitData { get; init; }
 	public abstract int GetAndSetData { get; set; }
-#pragma warning disable CA1044 // Properties should not be write only
-	public abstract int InitData { init; }
+   public abstract int InitData { init; }
 	public abstract int SetData { set; }
-#pragma warning restore CA1044 // Properties should not be write only
-	public abstract event EventHandler MyEvent;
+
+   public abstract event EventHandler MyEvent;
 }
 
 public static class AbstractClassPropertyTests

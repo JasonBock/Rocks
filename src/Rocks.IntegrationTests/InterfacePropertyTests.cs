@@ -7,12 +7,10 @@ public interface IInterfaceProperty
 	int GetData { get; }
 	int GetAndInitData { get; set; }
 	int GetAndSetData { get; set; }
-#pragma warning disable CA1044 // Properties should not be write only
-	int InitData { set; }
+   int InitData { set; }
 	int SetData { set; }
-#pragma warning restore CA1044 // Properties should not be write only
 
-	event EventHandler MyEvent;
+   event EventHandler MyEvent;
 }
 
 public static class InterfacePropertyTests

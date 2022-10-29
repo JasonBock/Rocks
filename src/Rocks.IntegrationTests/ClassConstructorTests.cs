@@ -18,9 +18,7 @@ public class ClassConstructorWithSpecialParameters
 
 	public string C { get; }
 
-#pragma warning disable CA1819 // Properties should not return arrays
-	public string[] D { get; }
-#pragma warning restore CA1819 // Properties should not return arrays
+   public string[] D { get; }
 }
 
 public class ClassConstructor
