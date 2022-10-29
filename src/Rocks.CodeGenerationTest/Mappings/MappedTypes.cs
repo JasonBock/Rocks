@@ -16,5 +16,6 @@ internal static class MappedTypes
 			.AddItems(MediatRMappings.GetMappedTypes())
 			.AddItems(ReactiveMappings.GetMappedTypes())
 			.AddItems(NSubstituteMappings.GetMappedTypes())
-			.AddItems(AWSSDKCoreMappings.GetMappedTypes());
+			.AddItems(AWSSDKCoreMappings.GetMappedTypes())
+			.AddItems(AngleSharpMappings.GetMappedTypes());
 }

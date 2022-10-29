@@ -49,11 +49,11 @@ static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
-		// TODO: AWSSDK.Core, AngleSharp, MassTransit, Bogus, SkiaSharp,
+		// TODO: AngleSharp, MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
 		// PASSED
-		// Number of types found: 2859
+		// Number of types found: 3130
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
@@ -62,6 +62,12 @@ static void TestWithTypes()
 		// Core .NET types
 		typeof(object), typeof(Dictionary<,>),
 		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// Number of types found: 271
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// AngleSharp
+		typeof(AngleSharp.BrowsingContext),
 
 		// Number of types found: 390
 		// Create: 0 errors, 0 warnings

@@ -6,6 +6,7 @@
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="AngleSharp" Version="0.17.1" />
 		<PackageReference Include="AutoMapper" Version="12.0.0" />
 		<PackageReference Include="AWSSDK.Core" Version="3.7.100.6" />
 		<PackageReference Include="Castle.Core" Version="5.1.0" />
