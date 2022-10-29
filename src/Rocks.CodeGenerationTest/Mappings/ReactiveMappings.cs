@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using System.Reactive.Concurrency;
+﻿using System.Reactive.Concurrency;
 
 namespace Rocks.CodeGenerationTest.Mappings;
 
@@ -43,5 +41,3 @@ public sealed class MappedReactiveComparable
 {
    public int CompareTo(MappedReactiveComparable? other) => throw new NotImplementedException();
 }
-
-#pragma warning restore CS0618 

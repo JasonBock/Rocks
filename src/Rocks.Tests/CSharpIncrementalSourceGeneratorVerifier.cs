@@ -16,9 +16,7 @@ namespace Rocks.Tests
 	public static partial class CSharpIncrementalSourceGeneratorVerifier<TIncrementalGenerator>
 		where TIncrementalGenerator : IIncrementalGenerator, new()
 	{
-#pragma warning disable CA1034 // Nested types should not be visible
 		public class Test : CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>
-#pragma warning restore CA1034 // Nested types should not be visible
 		{
 			public Test() =>
 				this.SolutionTransforms.Add((solution, projectId) =>

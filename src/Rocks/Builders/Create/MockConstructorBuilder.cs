@@ -67,7 +67,7 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, typeToMock.Type, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -76,13 +76,13 @@ internal static class MockConstructorBuilder
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, typeToMock.Type, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, ITypeSymbol typeToMock, Compilation compilation,
+	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
 		VariableNamingContext namingContext, ImmutableArray<ITypeSymbol> shims,
 		IPropertySymbol[] requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
 	{

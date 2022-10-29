@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using FluentAssertions.Collections;
+﻿using FluentAssertions.Collections;
 using FluentAssertions.Data;
 using FluentAssertions.Equivalency;
 using FluentAssertions.Numeric;
@@ -646,4 +644,3 @@ public sealed class MappedMemberInfoAssertions
    {
    }
 }
-#pragma warning restore CS0618

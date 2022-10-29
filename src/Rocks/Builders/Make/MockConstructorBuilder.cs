@@ -61,7 +61,7 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, typeToMock.Type, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -70,13 +70,13 @@ internal static class MockConstructorBuilder
 			writer.WriteLine($"public Rock{typeToMock.FlattenedName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, typeToMock.Type, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, ITypeSymbol typeToMock, Compilation compilation,
+	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
 		VariableNamingContext namingContext,
 		IPropertySymbol[] requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
 	{

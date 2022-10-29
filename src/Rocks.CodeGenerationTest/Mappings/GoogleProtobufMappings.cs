@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using Google.Protobuf;
+﻿using Google.Protobuf;
 using Google.Protobuf.Reflection;
 
 namespace Rocks.CodeGenerationTest.Mappings;
@@ -57,4 +55,3 @@ public sealed class MappedMessage
    public void MergeFrom(CodedInputStream input) => throw new NotImplementedException();
    public void WriteTo(CodedOutputStream output) => throw new NotImplementedException();
 }
-#pragma warning restore CS0618 

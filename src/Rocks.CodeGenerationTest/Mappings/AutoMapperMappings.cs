@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using AutoMapper;
+﻿using AutoMapper;
 using AutoMapper.Configuration;
 using AutoMapper.Features;
 using System.Linq.Expressions;
@@ -97,4 +95,3 @@ public sealed class MappedProjectionExpressionBase
    public MappedProjectionExpressionBase MaxDepth(int depth) => throw new NotImplementedException();
    public MappedProjectionExpressionBase ValidateMemberList(MemberList memberList) => throw new NotImplementedException();
 }
-#pragma warning restore CS0618

@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using NSubstitute.Core.Events;
+﻿using NSubstitute.Core.Events;
 
 namespace Rocks.CodeGenerationTest.Mappings;
 
@@ -17,5 +15,3 @@ internal static class NSubstituteMappings
 			},
 		};
 }
-
-#pragma warning restore CS0618 

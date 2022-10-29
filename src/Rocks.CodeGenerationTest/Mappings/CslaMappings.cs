@@ -1,7 +1,4 @@
-﻿#pragma warning disable CS0067
-#pragma warning disable CS8618
-
-using Csla;
+﻿using Csla;
 using Csla.Core;
 using Csla.Rules.CommonRules;
 
@@ -161,8 +158,10 @@ public sealed class MappedEditableBusinessObject
 
 	public bool IsSelfBusy => throw new NotImplementedException();
 
-	public event BusyChangedEventHandler BusyChanged;
-	public event EventHandler<Csla.Core.ErrorEventArgs> UnhandledAsyncException;
+#pragma warning disable CS0067
+	public event BusyChangedEventHandler? BusyChanged;
+	public event EventHandler<Csla.Core.ErrorEventArgs>? UnhandledAsyncException;
+#pragma warning restore CS0067
 
 	public void AcceptChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 	public void ApplyEdit() => throw new NotImplementedException();
@@ -209,8 +208,10 @@ public sealed class MappedEditableListObject
 
 	public bool IsSelfBusy => throw new NotImplementedException();
 
-	public event BusyChangedEventHandler BusyChanged;
-	public event EventHandler<Csla.Core.ErrorEventArgs> UnhandledAsyncException;
+#pragma warning disable CS0067
+	public event BusyChangedEventHandler? BusyChanged;
+	public event EventHandler<Csla.Core.ErrorEventArgs>? UnhandledAsyncException;
+#pragma warning restore CS0067
 
 	public void AcceptChanges(int parentEditLevel, bool parentBindingEdit) => throw new NotImplementedException();
 	public void ApplyEdit() => throw new NotImplementedException();
@@ -227,6 +228,3 @@ public sealed class MappedEditableListObject
 public sealed class MappedBusinessListBase
 	: BusinessListBase<MappedBusinessListBase, MappedEditableListObject>
 { }
-
-#pragma warning restore CS8618
-#pragma warning restore CS0067

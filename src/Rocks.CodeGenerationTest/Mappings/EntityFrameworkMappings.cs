@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-#pragma warning disable EF1001
-
+﻿#pragma warning disable EF1001
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -240,6 +238,4 @@ public sealed class MappedConventionModelBuilder
 public sealed class MappedDbContext
 	: DbContext
 { }
-
 #pragma warning restore EF1001
-#pragma warning restore CS0618

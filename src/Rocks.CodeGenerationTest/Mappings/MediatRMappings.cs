@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618
-
-using MediatR;
+﻿using MediatR;
 using MediatR.Pipeline;
 using MediatR.Wrappers;
 
@@ -187,5 +185,3 @@ internal static class MediatRMappings
 public sealed class MappedNotification
 	: INotification
 { }
-
-#pragma warning restore CS0618
