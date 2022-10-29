@@ -1,4 +1,4 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -49,11 +49,17 @@ static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
-		// TODO: AngleSharp, MassTransit, Bogus, SkiaSharp,
+		// TODO: MassTransit, Bogus, SkiaSharp,
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
 		// PASSED
 		// Number of types found: 3130
+
+		// Number of types found: ???
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// MassTransit
+		//typeof(MassTransit.AbstractUriException),
 
 #if INCLUDE_PASSED
 		// Number of types found: 373

@@ -2,186 +2,190 @@
 using MediatR.Pipeline;
 using MediatR.Wrappers;
 
-namespace Rocks.CodeGenerationTest.Mappings;
-
-internal static class MediatRMappings
+namespace Rocks.CodeGenerationTest.Mappings
 {
-	internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
-		new()
-		{
+	internal static class MediatRMappings
+	{
+		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
+			new()
 			{
-				typeof(AsyncRequestExceptionAction<>), new()
 				{
-					{ "TRequest", "global::MediatR.IRequest" },
-				}
-			},
-			{
-				typeof(AsyncRequestExceptionHandler<,>), new()
+					typeof(AsyncRequestExceptionAction<>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(AsyncRequestHandler<>), new()
+					typeof(AsyncRequestExceptionHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest" },
-				}
-			},
-			{
-				typeof(INotificationHandler<>), new()
+					typeof(AsyncRequestHandler<>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest" },
+					}
+				},
 				{
-					{ "TNotification", "global::Rocks.CodeGenerationTest.Mappings.MappedNotification" },
-				}
-			},
-			{
-				typeof(IPipelineBehavior<,>), new()
+					typeof(INotificationHandler<>), new()
+					{
+						{ "TNotification", "global::Rocks.CodeGenerationTest.Mappings.MediatR.MappedNotification" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(IRequestExceptionAction<,>), new()
+					typeof(IPipelineBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::System.Object" },
-					{ "TException", "global::System.Exception" },
-				}
-			},
-			{
-				typeof(IRequestExceptionHandler<,>), new()
+					typeof(IRequestExceptionAction<,>), new()
+					{
+						{ "TRequest", "global::System.Object" },
+						{ "TException", "global::System.Exception" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(IRequestExceptionHandler<,,>), new()
+					typeof(IRequestExceptionHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-					{ "TException", "global::System.Exception" },
-				}
-			},
-			{
-				typeof(IRequestHandler<>), new()
+					typeof(IRequestExceptionHandler<,,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+						{ "TException", "global::System.Exception" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::MediatR.Unit>" },
-				}
-			},
-			{
-				typeof(IRequestHandler<,>), new()
+					typeof(IRequestHandler<>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::MediatR.Unit>" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(IRequestPostProcessor<,>), new()
+					typeof(IRequestHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(IStreamPipelineBehavior<,>), new()
+					typeof(IRequestPostProcessor<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(IStreamRequestHandler<,>), new()
+					typeof(IStreamPipelineBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(NotificationHandler<>), new()
+					typeof(IStreamRequestHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TNotification", "global::MediatR.INotification" },
-				}
-			},
-			{
-				typeof(NotificationHandlerWrapperImpl<>), new()
+					typeof(NotificationHandler<>), new()
+					{
+						{ "TNotification", "global::MediatR.INotification" },
+					}
+				},
 				{
-					{ "TNotification", "global::MediatR.INotification" },
-				}
-			},
-			{
-				typeof(RequestExceptionActionProcessorBehavior<,>), new()
+					typeof(NotificationHandlerWrapperImpl<>), new()
+					{
+						{ "TNotification", "global::MediatR.INotification" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestExceptionAction<,>), new()
+					typeof(RequestExceptionActionProcessorBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::System.Object" },
-					{ "TException", "global::System.Exception" },
-				}
-			},
-			{
-				typeof(RequestExceptionHandler<,>), new()
+					typeof(RequestExceptionAction<,>), new()
+					{
+						{ "TRequest", "global::System.Object" },
+						{ "TException", "global::System.Exception" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestExceptionHandler<,,>), new()
+					typeof(RequestExceptionHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-					{ "TException", "global::System.Exception" },
-				}
-			},
-			{
-				typeof(RequestExceptionProcessorBehavior<,>), new()
+					typeof(RequestExceptionHandler<,,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+						{ "TException", "global::System.Exception" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestHandler<>), new()
+					typeof(RequestExceptionProcessorBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest" },
-				}
-			},
-			{
-				typeof(RequestHandler<,>), new()
+					typeof(RequestHandler<>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestHandlerWrapperImpl<,>), new()
+					typeof(RequestHandler<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestPreProcessorBehavior<,>), new()
+					typeof(RequestHandlerWrapperImpl<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-			{
-				typeof(RequestPostProcessorBehavior<,>), new()
+					typeof(RequestPreProcessorBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
 				{
-					{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-					{ "TResponse", "global::System.Object" },
-				}
-			},
-		};
-}
+					typeof(RequestPostProcessorBehavior<,>), new()
+					{
+						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
+			};
+	}
 
-public sealed class MappedNotification
-	: INotification
-{ }
+	namespace MediatR
+	{
+		public sealed class MappedNotification
+			: INotification
+		{ }
+	}
+}
