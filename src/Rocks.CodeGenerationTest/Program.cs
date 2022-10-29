@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -53,7 +53,7 @@ static void TestWithTypes()
 		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
 
 		// PASSED
-		// Number of types found: 2469
+		// Number of types found: 2859
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
@@ -62,6 +62,12 @@ static void TestWithTypes()
 		// Core .NET types
 		typeof(object), typeof(Dictionary<,>),
 		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// Number of types found: 390
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// AWSSDK.Core
+		typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
 
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings

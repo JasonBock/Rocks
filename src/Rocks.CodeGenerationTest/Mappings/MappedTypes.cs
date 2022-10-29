@@ -15,5 +15,6 @@ internal static class MappedTypes
 			.AddItems(GoogleProtobufMappings.GetMappedTypes())
 			.AddItems(MediatRMappings.GetMappedTypes())
 			.AddItems(ReactiveMappings.GetMappedTypes())
-			.AddItems(NSubstituteMappings.GetMappedTypes());
+			.AddItems(NSubstituteMappings.GetMappedTypes())
+			.AddItems(AWSSDKCoreMappings.GetMappedTypes());
 }
