@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -59,7 +59,7 @@ static void TestWithTypes()
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
 		// MassTransit
-		//typeof(MassTransit.AbstractUriException),
+		typeof(MassTransit.AbstractUriException),
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
