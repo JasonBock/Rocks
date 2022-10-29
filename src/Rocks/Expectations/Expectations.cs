@@ -5,9 +5,6 @@ using System.ComponentModel;
 
 namespace Rocks.Expectations;
 
-// TODO: I REALLY do not want to suppress this,
-// but it's so ingrained into things. Eventually
-// I'll address it...once I can think of a suitable name replacement.
 #pragma warning disable CA1724
 public class Expectations<T>
 	: IExpectations

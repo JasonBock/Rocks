@@ -54,7 +54,6 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");
 		writer.Indent++;
 
@@ -62,10 +61,6 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
-	// if I should be doing a "get", "set", or "init", but then I also look at the 
-	// property's accessor value for the member identifier increment. This
-	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, IAssemblySymbol typeToMockContainingAssembly,
 		PropertyAccessor accessor, string containingTypeName)
 	{

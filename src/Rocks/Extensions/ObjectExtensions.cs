@@ -18,8 +18,6 @@ internal static class ObjectExtensions
 		{
 			return self switch
 			{
-				// TODO: Try to get enum values as "EnumType.EnumValue" here...if possible.
-				// Maybe an override of this method where the type is constrained to an enum?
 				string s => $"\"{s}\"",
 				bool b => $"{(b ? "true" : "false")}",
 				byte b => b.GetByteDefaultValue(),

@@ -238,7 +238,7 @@ static void TestWithTypes()
 		// Create: 364 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]

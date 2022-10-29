@@ -81,7 +81,6 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{parameter.Name});");
 		}
 
-		// TODO: This doesn't seem right, the getter has an "add" qualified for projected names.
 		var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
 			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type)})" : $"@{_.Name}"));
 		writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
@@ -90,10 +89,6 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
-	// if I should be doing a "get", "set", or "init", but then I also look at the 
-	// property's accessor value for the member identifier increment. This
-	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;

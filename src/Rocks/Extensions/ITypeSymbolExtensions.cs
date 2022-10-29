@@ -5,7 +5,6 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	// TODO: I think this could be replaced with self.Kind == TypeParameter
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
 		if(self.TypeKind == TypeKind.TypeParameter)
@@ -38,12 +37,6 @@ internal static class ITypeSymbolExtensions
 		return false;
 	}
 
-	// TODO - Before #129 is merged, ensure this implementation is correct,
-	// and then get rid of commented code.
-	// Gets the fully-qualified name (FQN) of the type, useful for getting the name of a type
-	// that will be used in a parameter name. Note that the name includes "global::"
-	// For example, for "List<Customer?>", this would return
-	// global::System.Collections.Generic<global::CustomerNamespace.Customer?>
 	internal static string GetFullyQualifiedName(this ITypeSymbol self)
 	{
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat.
@@ -57,6 +50,7 @@ internal static class ITypeSymbolExtensions
 	// In fact, I think GetReferenceableName() is going to do most of the work,
 	// and this can probably just be "GetFlattenedName()", which is needed
 	// in project type name creation.
+	// If/when I do "Rocks Engine v3", I'll address this.
 	internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 	{
 		static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)

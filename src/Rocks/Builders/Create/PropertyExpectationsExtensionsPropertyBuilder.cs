@@ -64,10 +64,6 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	// TODO: This isn't good. I'm passing in a PropertyAccessor value to state 
-	// if I should be doing a "get", "set", or "init", but then I also look at the 
-	// property's accessor value for the member identifier increment. This
-	// doesn't feel "right".
 	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, IAssemblySymbol typeToMockContainingAssembly, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
