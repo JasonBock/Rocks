@@ -12,8 +12,8 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{result.MockType.GetFullyQualifiedName()}, {containingTypeName}> @self";
-		var mockTypeName = result.MockType.GetName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{mockTypeName}, {containingTypeName}> @self";
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
 			propertyGetMethod.ReturnType.IsRefLikeType ?
@@ -43,8 +43,8 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 		var property = result.Value;
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.GetName();
 		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{result.MockType.GetName()}, {containingTypeName}> @self";
-		var mockTypeName = result.MockType.GetName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
+		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{mockTypeName}, {containingTypeName}> @self";
 
 		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :

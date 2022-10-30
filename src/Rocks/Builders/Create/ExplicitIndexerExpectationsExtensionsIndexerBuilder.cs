@@ -11,7 +11,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 		var namingContext = new VariableNamingContext(propertyGetMethod);
-		var mockTypeName = result.MockType.GetName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}";
 
 		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate() ?
@@ -57,7 +57,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
-		var mockTypeName = result.MockType.GetName();
+		var mockTypeName = result.MockType.GetFullyQualifiedName();
 		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 		var thisParameter = $"this global::Rocks.Expectations.ExplicitIndexer{accessorName}Expectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}";
 

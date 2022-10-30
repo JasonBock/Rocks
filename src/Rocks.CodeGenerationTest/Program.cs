@@ -4,36 +4,32 @@ using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-//TestWithCode();
+TestWithCode();
 //TestWithType();
-TestWithTypes();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
+		using MassTransit;
 		using Rocks;
 		using System;
-
-		public interface IUseSpanWithOpenGeneric
-		{
-		    void From<TSourcePixel>(
-		        ReadOnlySpan<TSourcePixel> sourcePixels)
-		        where TSourcePixel : unmanaged;
-		}
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<IUseSpanWithOpenGeneric>();
+		        var expectations = Rock.Create<BehaviorContext<global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga, global::System.Object>>();
 		    }
 		}
 		""",
 		new[]
 		{
-			typeof(SixLabors.ImageSharp.Processing.Processors.Dithering.IDither),
+			typeof(MassTransit.BehaviorContext<,>),
+			typeof(Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga),
+			typeof(System.Uri),
 		});
 }
 

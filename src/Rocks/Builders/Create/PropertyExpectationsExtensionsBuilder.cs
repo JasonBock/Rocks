@@ -42,7 +42,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
-					PropertyAccessor.Get, typeGroup.Key.GetName());
+					PropertyAccessor.Get, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
@@ -62,7 +62,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
-					PropertyAccessor.Set, typeGroup.Key.GetName());
+					PropertyAccessor.Set, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
@@ -82,7 +82,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitIndexerExpectationsExtensionsIndexerBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
-					PropertyAccessor.Init, typeGroup.Key.GetName());
+					PropertyAccessor.Init, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
@@ -165,7 +165,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
-					PropertyAccessor.Get, typeGroup.Key.GetName());
+					PropertyAccessor.Get, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
@@ -185,7 +185,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol, 
-					PropertyAccessor.Set, containingTypeName);
+					PropertyAccessor.Set, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
@@ -205,7 +205,7 @@ internal static class PropertyExpectationsExtensionsBuilder
 			foreach (var result in typeGroup)
 			{
 				ExplicitPropertyExpectationsExtensionsPropertyBuilder.Build(writer, result, information.ContainingAssemblyOfInvocationSymbol,
-					PropertyAccessor.Init, containingTypeName);
+					PropertyAccessor.Init, typeGroup.Key.GetFullyQualifiedName());
 			}
 
 			writer.Indent--;
