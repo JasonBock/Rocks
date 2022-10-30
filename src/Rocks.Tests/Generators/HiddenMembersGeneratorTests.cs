@@ -358,13 +358,13 @@ public static class HiddenMembersGeneratorTests
 				internal static global::Rocks.Expectations.PropertySetterExpectations<global::ISub> Setters(this global::Rocks.Expectations.PropertyExpectations<global::ISub> @self) =>
 					new(@self);
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> ExplicitPropertiesForIBase(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, global::IBase> ExplicitPropertiesForIBase(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
 					new(@self);
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, IBase> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> @self) =>
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, global::IBase> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, global::IBase> @self) =>
 					new(@self);
 				
-				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ISub, IBase> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, IBase> @self) =>
+				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ISub, global::IBase> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ISub, global::IBase> @self) =>
 					new(@self);
 				
 				internal static global::Rocks.Expectations.IndexerExpectations<global::ISub> Indexers(this global::Rocks.Expectations.Expectations<global::ISub> @self) =>
@@ -624,21 +624,21 @@ public static class HiddenMembersGeneratorTests
 			}
 			internal static class ExplicitPropertyGetterExpectationsOfISubForIBaseExtensions
 			{
-				internal static global::Rocks.PropertyAdornments<ISub, global::System.Func<string>, string> Data(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, IBase> @self) =>
-					new global::Rocks.PropertyAdornments<ISub, global::System.Func<string>, string>(@self.Add<string>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.PropertyAdornments<global::ISub, global::System.Func<string>, string> Data(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ISub, global::IBase> @self) =>
+					new global::Rocks.PropertyAdornments<global::ISub, global::System.Func<string>, string>(@self.Add<string>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
 			}
 			internal static class ExplicitPropertySetterExpectationsOfISubForIBaseExtensions
 			{
-				internal static global::Rocks.PropertyAdornments<ISub, global::System.Action<string>> Data(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<ISub, IBase> @self, global::Rocks.Argument<string> value) =>
-					new global::Rocks.PropertyAdornments<ISub, global::System.Action<string>>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+				internal static global::Rocks.PropertyAdornments<global::ISub, global::System.Action<string>> Data(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ISub, global::IBase> @self, global::Rocks.Argument<string> value) =>
+					new global::Rocks.PropertyAdornments<global::ISub, global::System.Action<string>>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 			}
 			internal static class ExplicitIndexerGetterExpectationsOfISubForIBaseExtensions
 			{
-				internal static global::Rocks.IndexerAdornments<ISub, global::System.Func<int, string, string>, string> This(this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<ISub, IBase> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+				internal static global::Rocks.IndexerAdornments<global::ISub, global::System.Func<int, string, string>, string> This(this global::Rocks.Expectations.ExplicitIndexerGetterExpectations<global::ISub, global::IBase> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
-					return new global::Rocks.IndexerAdornments<ISub, global::System.Func<int, string, string>, string>(@self.Add<string>(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
+					return new global::Rocks.IndexerAdornments<global::ISub, global::System.Func<int, string, string>, string>(@self.Add<string>(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
 				}
 			}
 			
