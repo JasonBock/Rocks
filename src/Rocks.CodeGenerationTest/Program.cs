@@ -1,12 +1,12 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Mappings;
 
-TestWithCode();
+//TestWithCode();
 //TestWithType();
-//TestWithTypes();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
@@ -45,17 +45,11 @@ static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
-		// TODO: MassTransit, Bogus, SkiaSharp,
-		// ClangSharp, LLVMSharp, Silk.NET, System.Reflection.Metadata
+		// TODO: 
+		// System.Reflection.Metadata
 
 		// PASSED
-		// Number of types found: 3130
-
-		// Number of types found: ???
-		// Create: 0 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// MassTransit
-		typeof(MassTransit.AbstractUriException),
+		// Number of types found: 3182
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
@@ -64,6 +58,18 @@ static void TestWithTypes()
 		// Core .NET types
 		typeof(object), typeof(Dictionary<,>),
 		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// Number of types found: 2
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// ClangSharp
+		typeof(ClangSharp.AbstractConditionalOperator),
+
+		// Number of types found: 50
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// Bogus
+		typeof(Bogus.Binder),
 
 		// Number of types found: 271
 		// Create: 0 errors, 0 warnings
@@ -241,6 +247,30 @@ static void TestWithTypes()
 #endif
 
 		// FAILED
+
+		// Number of types found: 11
+		// Create: 10 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// System.Reflection.Metadata
+		//typeof(System.Reflection.Metadata.ArrayShape),
+
+		// Number of types found: 32
+		// Create: 42 errors, 0 warnings
+		// Make: 10 errors, 0 warnings
+		// Silk.NET
+		//typeof(Silk.NET.Core.Attributes.CountAttribute),
+
+		// Number of types found: 38
+		// Create: 29 errors, 0 warnings
+		// Make: 29 errors, 0 warnings
+		// SkiaSharp
+		//typeof(SkiaSharp.GRBackend),
+
+		// Number of types found: 716
+		// Create: 16 errors, 0 warnings
+		// Make: 8 errors, 0 warnings
+		// MassTransit
+		//typeof(MassTransit.AbstractUriException),
 
 		// Number of types found: 118
 		// Create: 0 errors, 3 warnings
