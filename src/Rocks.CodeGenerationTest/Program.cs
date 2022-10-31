@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -13,22 +13,30 @@ static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
-		using MassTransit;
+		//using SkiaSharp;
 		using Rocks;
 		using System;
+		using System.Threading.Tasks;
+
+		public interface IRequest<T>
+		    where T : class
+		{
+		    Task<T> Send(Guid requestId, object values);
+
+		    Task Send(Guid requestId, T message);
+		}
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<BehaviorContext<global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga, global::System.Object>>();
+		        var expectations = Rock.Create<IRequest<object>>();
 		    }
 		}
 		""",
 		new[]
 		{
-			typeof(MassTransit.BehaviorContext<,>),
-			typeof(Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga),
+			typeof(MassTransit.IRequestSendEndpoint<>),
 			typeof(System.Uri),
 		});
 }
@@ -282,7 +290,7 @@ static void TestWithTypes()
 		// Create: 364 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
-		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
