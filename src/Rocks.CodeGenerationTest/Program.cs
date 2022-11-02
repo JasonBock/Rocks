@@ -287,7 +287,7 @@ static void TestWithTypes()
 		//typeof(AutoMapper.AutoMapAttribute),
 
 		// Number of types found: 748
-		// Create: 364 errors, 20 warnings
+		// Create: 338 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
