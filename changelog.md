@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All direct casts now use `Unsafe.As<>()` (issue [#198](https://github.com/JasonBock/Rocks/issues/198))
 
 ### Fixed
+- Named tuple elements no longer cause an issue in the mock (issue [#214](https://github.com/JasonBock/Rocks/issues/214))
 - Projected types using an open generic type are now generated correctly (issue [#211](https://github.com/JasonBock/Rocks/issues/211))
 - Members that are hidden by accessible static members are now removed (issue [#206](https://github.com/JasonBock/Rocks/issues/206))
 - Methods on classes with generics that have `class` or `struct` constraints are now emitted on the mock (issue [#210](https://github.com/JasonBock/Rocks/issues/210))
