@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSED
+﻿//#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -40,7 +40,6 @@ static void TestWithCode()
 			typeof(System.Uri),
 		});
 }
-
 
 static void TestWithType() =>
 	 TestGenerator.Generate(new RockCreateGenerator(),
