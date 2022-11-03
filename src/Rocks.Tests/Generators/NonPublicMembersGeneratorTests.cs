@@ -8,6 +8,219 @@ namespace Rocks.Tests.Generators;
 public static class NonPublicMembersGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithProtectedInternalPropertyAndMixedVisibilityAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			
+			public abstract class VisibilityIssues
+			{
+			  protected internal virtual bool OwnsHandle { get; protected set; }
+			}
+	
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Create<VisibilityIssues>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::VisibilityIssues> Methods(this global::Rocks.Expectations.Expectations<global::VisibilityIssues> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertyExpectations<global::VisibilityIssues> Properties(this global::Rocks.Expectations.Expectations<global::VisibilityIssues> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::VisibilityIssues> Getters(this global::Rocks.Expectations.PropertyExpectations<global::VisibilityIssues> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertySetterExpectations<global::VisibilityIssues> Setters(this global::Rocks.Expectations.PropertyExpectations<global::VisibilityIssues> @self) =>
+					new(@self);
+				
+				internal static global::VisibilityIssues Instance(this global::Rocks.Expectations.Expectations<global::VisibilityIssues> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockVisibilityIssues(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockVisibilityIssues
+					: global::VisibilityIssues
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockVisibilityIssues(global::Rocks.Expectations.Expectations<global::VisibilityIssues> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
+								{
+									var @result = @methodHandler.Method is not null ?
+										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
+										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+									@methodHandler.IncrementCallCount();
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(@obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							var @result = @methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+							@methodHandler.IncrementCallCount();
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							var @result = @methodHandler.Method is not null ?
+								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
+								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+							@methodHandler.IncrementCallCount();
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "get_OwnsHandle()")]
+					[global::Rocks.MemberIdentifier(4, "set_OwnsHandle(@value)")]
+					protected override bool OwnsHandle
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								var @result = @methodHandler.Method is not null ?
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<bool>>(@methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+								@methodHandler.IncrementCallCount();
+								return @result!;
+							}
+							else
+							{
+								return base.OwnsHandle;
+							}
+						}
+						protected set
+						{
+							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<bool>>(@methodHandler.Expectations[0]).IsValid(@value))
+									{
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<bool>>(@methodHandler.Method)(@value);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(@value)");
+										}
+										
+										@methodHandler.IncrementCallCount();
+										break;
+									}
+								}
+							}
+							else
+							{
+								base.OwnsHandle = @value;
+							}
+						}
+					}
+				}
+			}
+			
+			internal static class MethodExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::VisibilityIssues> @self, global::Rocks.Argument<object?> @obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@obj);
+					return new global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::VisibilityIssues> @self) =>
+					new global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::VisibilityIssues> @self) =>
+					new global::Rocks.MethodAdornments<global::VisibilityIssues, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			internal static class PropertyGetterExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::VisibilityIssues, global::System.Func<bool>, bool> OwnsHandle(this global::Rocks.Expectations.PropertyGetterExpectations<global::VisibilityIssues> @self) =>
+					new global::Rocks.PropertyAdornments<global::VisibilityIssues, global::System.Func<bool>, bool>(@self.Add<bool>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			internal static class PropertySetterExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::VisibilityIssues, global::System.Action<bool>> OwnsHandle(this global::Rocks.Expectations.PropertySetterExpectations<global::VisibilityIssues> @self, global::Rocks.Argument<bool> @value) =>
+					new global::Rocks.PropertyAdornments<global::VisibilityIssues, global::System.Action<bool>>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithInternalVirtualMembersAsync()
 	{
 		var sourceCode =
