@@ -1,10 +1,125 @@
-﻿using Microsoft.CodeAnalysis.Testing;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
 public static class AttributeGeneratorTests
 {
+	[Test]
+	public static async Task CreateWithTupleNamesAsync()
+	{
+		// I'm guessing that I actually need to emit this code
+		// in a separate assembly, as [TupleElementName]
+		// doesn't show up by just referencing the syntax tree.
+		var tupleCode =
+			"""
+			public interface IUseTuples
+			{
+				(nint Display, nuint Window)? X11 { get; }
+			}
+			""";
+		var references = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location) as MetadataReference);
+
+		var tupleSyntaxTree = CSharpSyntaxTree.ParseText(tupleCode);
+		var tupleCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { tupleSyntaxTree },
+			references,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		using var tupleStream = new MemoryStream();
+		tupleCompilation.Emit(tupleStream);
+		tupleStream.Position = 0;
+		var tupleReference = MetadataReference.CreateFromStream(tupleStream);
+
+		var code =
+			"""
+			using Rocks;
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<IUseTuples>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIUseTuplesExtensions
+			{
+				internal static global::Rocks.Expectations.PropertyExpectations<global::IUseTuples> Properties(this global::Rocks.Expectations.Expectations<global::IUseTuples> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::IUseTuples> Getters(this global::Rocks.Expectations.PropertyExpectations<global::IUseTuples> @self) =>
+					new(@self);
+				
+				internal static global::IUseTuples Instance(this global::Rocks.Expectations.Expectations<global::IUseTuples> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						return new RockIUseTuples(@self);
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIUseTuples
+					: global::IUseTuples
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIUseTuples(global::Rocks.Expectations.Expectations<global::IUseTuples> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::System.Runtime.CompilerServices.TupleElementNamesAttribute(new[] { "Display", "Window" })]
+					[global::Rocks.MemberIdentifier(0, "get_X11()")]
+					public (nint Display, nuint Window)? X11
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								var @result = @methodHandler.Method is not null ?
+									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<(nint Display, nuint Window)?>>(@methodHandler.Method)() :
+									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<(nint Display, nuint Window)?>>(@methodHandler).ReturnValue;
+								@methodHandler.IncrementCallCount();
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_X11())");
+						}
+					}
+				}
+			}
+			
+			internal static class PropertyGetterExpectationsOfIUseTuplesExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::IUseTuples, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?> X11(this global::Rocks.Expectations.PropertyGetterExpectations<global::IUseTuples> @self) =>
+					new global::Rocks.PropertyAdornments<global::IUseTuples, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?>(@self.Add<(nint Display, nuint Window)?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+		
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>(),
+			additionalReferences: references.Concat(new[] { tupleReference as MetadataReference })).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task GenerateWithDynamicAttributeAsync()
 	{
