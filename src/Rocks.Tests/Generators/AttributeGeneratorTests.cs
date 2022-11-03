@@ -10,9 +10,6 @@ public static class AttributeGeneratorTests
 	[Test]
 	public static async Task CreateWithTupleNamesAsync()
 	{
-		// I'm guessing that I actually need to emit this code
-		// in a separate assembly, as [TupleElementName]
-		// doesn't show up by just referencing the syntax tree.
 		var tupleCode =
 			"""
 			public interface IUseTuples
@@ -84,7 +81,7 @@ public static class AttributeGeneratorTests
 						this.handlers = @expectations.Handlers;
 					}
 					
-					[global::System.Runtime.CompilerServices.TupleElementNamesAttribute(new[] { "Display", "Window" })]
+					
 					[global::Rocks.MemberIdentifier(0, "get_X11()")]
 					public (nint Display, nuint Window)? X11
 					{

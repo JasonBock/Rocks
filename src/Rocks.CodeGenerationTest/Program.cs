@@ -1,4 +1,4 @@
-﻿//#define INCLUDE_PASSED
+﻿#define INCLUDE_PASSED
 
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -263,8 +263,8 @@ static void TestWithTypes()
 		//typeof(System.Reflection.Metadata.ArrayShape),
 
 		// Number of types found: 32
-		// Create: 42 errors, 0 warnings
-		// Make: 10 errors, 0 warnings
+		// Create: 11 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
 		// Silk.NET
 		//typeof(Silk.NET.Core.Attributes.CountAttribute),
 
@@ -290,7 +290,7 @@ static void TestWithTypes()
 		// Create: 338 errors, 20 warnings
 		// Make: 51 errors, 16 warnings
 		// EntityFramework
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 	}.Select(_ => _.Assembly).ToHashSet();
 
 	var typesToLoadAssembliesFrom = new Type[]
