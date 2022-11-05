@@ -8,13 +8,15 @@ namespace Rocks.Builders.Create;
 internal static class MockPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName)
+		PropertyMockableResult result, Compilation compilation, string propertyVisibility,
+		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 		var methodName = propertyGetMethod.Name;
-		var visibility = result.Value.DeclaredAccessibility != propertyGetMethod.DeclaredAccessibility ?
-			$"{propertyGetMethod.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+		var methodVisibility = $"{propertyGetMethod.GetOverridingCodeValue(compilation.Assembly)} ";
+		var visibility = methodVisibility != propertyVisibility ?
+			methodVisibility : string.Empty;
 
 		writer.WriteLine($"{visibility}get");
 		writer.WriteLine("{");
@@ -106,13 +108,15 @@ internal static class MockPropertyBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
+		PropertyMockableResult result, Compilation compilation, string propertyVisibility,
+		uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
 	{
 		var propertySetMethod = result.Value.SetMethod!;
 		var methodName = propertySetMethod.Name;
 		var property = result.Value;
-		var visibility = result.Value.DeclaredAccessibility != propertySetMethod.DeclaredAccessibility ?
-			$"{propertySetMethod.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+		var methodVisibility = $"{propertySetMethod.GetOverridingCodeValue(compilation.Assembly)} ";
+		var visibility = methodVisibility != propertyVisibility ?
+			methodVisibility : string.Empty;
 		var accessor = result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
 
@@ -248,7 +252,7 @@ internal static class MockPropertyBuilder
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
 
@@ -261,7 +265,7 @@ internal static class MockPropertyBuilder
 
 		if (isGetterVisible)
 		{
-			MockPropertyBuilder.BuildGetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName);
+			MockPropertyBuilder.BuildGetter(writer, result, compilation, visibility, memberIdentifier, raiseEvents, explicitTypeName);
 			memberIdentifier++;
 		}
 
@@ -269,7 +273,7 @@ internal static class MockPropertyBuilder
 		{
 			var allowNullAttributeType = compilation.GetTypeByMetadataName("System.Diagnostics.CodeAnalysis.AllowNullAttribute");
 			var allowNull = attributes.Any(_ => _.AttributeClass?.Equals(allowNullAttributeType, SymbolEqualityComparer.Default) ?? false);
-			MockPropertyBuilder.BuildSetter(writer, result, memberIdentifier, raiseEvents, explicitTypeName, allowNull);
+			MockPropertyBuilder.BuildSetter(writer, result, compilation, visibility, memberIdentifier, raiseEvents, explicitTypeName, allowNull);
 		}
 
 		writer.Indent--;

@@ -8,14 +8,15 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents,
-		string signature)
+		PropertyMockableResult result, Compilation compilation, string indexerVisibility, 
+		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		var visibility = result.Value.DeclaredAccessibility != method.DeclaredAccessibility ?
-			$"{method.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+		var methodVisibility = $"{method.GetOverridingCodeValue(compilation.Assembly)} ";
+		var visibility = methodVisibility != indexerVisibility ?
+			methodVisibility : string.Empty;
 		var namingContext = new VariableNamingContext(method);
 
 		writer.WriteLine($"{visibility}get");
@@ -112,14 +113,15 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, Compilation compilation, uint memberIdentifier, bool raiseEvents,
-		string signature)
+		PropertyMockableResult result, Compilation compilation, string indexerVisibility, 
+		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		var visibility = result.Value.DeclaredAccessibility != method.DeclaredAccessibility ?
-			$"{method.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+		var methodVisibility = $"{method.GetOverridingCodeValue(compilation.Assembly)} ";
+		var visibility = methodVisibility != indexerVisibility ?
+			methodVisibility : string.Empty;
 		var namingContext = new VariableNamingContext(method);
 		var accessor = result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
@@ -266,7 +268,7 @@ internal static class MockIndexerBuilder
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
@@ -281,14 +283,14 @@ internal static class MockIndexerBuilder
 		if (isGetterVisible)
 		{
 			MockIndexerBuilder.BuildGetter(writer, result, compilation,
-				memberIdentifier, raiseEvents, signature);
+				visibility, memberIdentifier, raiseEvents, signature);
 			memberIdentifier++;
 		}
 
 		if (isSetterVisible)
 		{
 			MockIndexerBuilder.BuildSetter(writer, result, compilation,
-				memberIdentifier, raiseEvents, signature);
+				visibility, memberIdentifier, raiseEvents, signature);
 		}
 
 		writer.Indent--;

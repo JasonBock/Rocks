@@ -58,7 +58,7 @@ internal static class MockMethodVoidBuilder
 
 		writer.WriteLine($@"[global::Rocks.MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
 		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
 		var constraints = ImmutableArray<string>.Empty;

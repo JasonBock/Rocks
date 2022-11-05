@@ -7,12 +7,12 @@ namespace Rocks.Builders.Create;
 
 internal static class MockEventsBuilder
 {
-	private static void BuildImplementation(IndentedTextWriter writer, EventMockableResult @event)
+	private static void BuildImplementation(IndentedTextWriter writer, EventMockableResult @event, IAssemblySymbol compilationAssembly)
 	{
 		var isOverride = @event.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var declareNullable = @event.Value.Type.NullableAnnotation == NullableAnnotation.Annotated ? string.Empty : "?";
 		var isPublic = @event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{@event.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			$"{@event.Value.GetOverridingCodeValue(compilationAssembly)} " : string.Empty;
 
 		writer.WriteLine(
 			$"{isPublic}{isOverride}event {@event.Value.Type.GetFullyQualifiedName()}{declareNullable} {@event.Value.Name};");
@@ -51,7 +51,7 @@ internal static class MockEventsBuilder
 
 			if (@event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 			{
-				MockEventsBuilder.BuildImplementation(writer, @event);
+				MockEventsBuilder.BuildImplementation(writer, @event, compilation.Assembly);
 			}
 			else
 			{

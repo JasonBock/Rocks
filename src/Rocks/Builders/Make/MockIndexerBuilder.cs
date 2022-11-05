@@ -20,7 +20,7 @@ internal static class MockIndexerBuilder
 		}
 
 		var visibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
 		var isOverriden = result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true, compilation)}";
@@ -34,7 +34,7 @@ internal static class MockIndexerBuilder
 			result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
 			var getVisibility = result.Value.DeclaredAccessibility != result.Value.GetMethod!.DeclaredAccessibility ?
-				$"{result.Value.GetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+				$"{result.Value.GetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 
 			if (indexer.ReturnsByRef || indexer.ReturnsByRefReadonly)
 			{
@@ -50,14 +50,14 @@ internal static class MockIndexerBuilder
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
 			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
-				$"{result.Value.SetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+				$"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 			writer.WriteLine($"{setVisibility}set {{ }}");
 		}
 		else if ((result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit) && 
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
 			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
-				$"{result.Value.SetMethod!.DeclaredAccessibility.GetOverridingCodeValue()} " : string.Empty;
+				$"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 			writer.WriteLine($"{setVisibility}init {{ }}");
 		}
 

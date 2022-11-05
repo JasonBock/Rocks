@@ -13,30 +13,21 @@ static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
-		//using SkiaSharp;
 		using Rocks;
 		using System;
-		using System.Threading.Tasks;
-
-		public interface IRequest<T>
-		    where T : class
-		{
-		    Task<T> Send(Guid requestId, object values);
-
-		    Task Send(Guid requestId, T message);
-		}
+		using SkiaSharp;
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<IRequest<object>>();
+		        var expectations = Rock.Create<SKRegion>();
 		    }
 		}
 		""",
 		new[]
 		{
-			typeof(MassTransit.IRequestSendEndpoint<>),
+			typeof(SkiaSharp.SKRegion),
 			typeof(System.Uri),
 		});
 }
@@ -271,7 +262,7 @@ static void TestWithTypes()
 		// Create: 29 errors, 0 warnings
 		// Make: 29 errors, 0 warnings
 		// SkiaSharp
-		//typeof(SkiaSharp.GRBackend),
+		typeof(SkiaSharp.GRBackend),
 
 		// Number of types found: 716
 		// Create: 16 errors, 0 warnings
@@ -316,3 +307,28 @@ static void TestWithTypes()
 	Console.WriteLine("Generator testing complete");
 }
 #pragma warning restore CS8321 // Local function is declared but never used
+
+public class X : HttpMessageHandler
+{
+	protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) => base.Send(request, cancellationToken);
+	protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => throw new NotImplementedException();
+}
+
+public abstract class HML
+{
+	// We cannot add abstract member to a public class in order to not to break already established contract of this class.
+	// So we add virtual method, override it everywhere internally and provide proper implementation.
+	// Unfortunately we cannot force everyone to implement so in such case we throw NSE.
+	protected internal virtual HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
+	{
+		throw new NotSupportedException();
+	}
+
+	protected internal abstract Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken);
+}
+
+public class Y : HML
+{
+   protected internal override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) => base.Send(request, cancellationToken);
+   protected internal override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => throw new NotImplementedException();
+}
