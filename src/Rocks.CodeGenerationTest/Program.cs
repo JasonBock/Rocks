@@ -47,7 +47,7 @@ static void TestWithTypes()
 		// System.Reflection.Metadata
 
 		// PASSED
-		// Number of types found: 3182
+		// Number of types found: 3220
 
 #if INCLUDE_PASSED
 		// Number of types found: 373
@@ -56,6 +56,12 @@ static void TestWithTypes()
 		// Core .NET types
 		typeof(object), typeof(Dictionary<,>),
 		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// Number of types found: 38
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// SkiaSharp
+		typeof(SkiaSharp.GRBackend),
 
 		// Number of types found: 2
 		// Create: 0 errors, 0 warnings
@@ -257,12 +263,6 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// Silk.NET
 		//typeof(Silk.NET.Core.Attributes.CountAttribute),
-
-		// Number of types found: 38
-		// Create: 29 errors, 0 warnings
-		// Make: 29 errors, 0 warnings
-		// SkiaSharp
-		typeof(SkiaSharp.GRBackend),
 
 		// Number of types found: 716
 		// Create: 16 errors, 0 warnings

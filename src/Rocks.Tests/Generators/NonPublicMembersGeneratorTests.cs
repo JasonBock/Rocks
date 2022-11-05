@@ -221,6 +221,73 @@ public static class NonPublicMembersGeneratorTests
 	}
 
 	[Test]
+	public static async Task MakeWithProtectedInternalPropertyAndMixedVisibilityAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			
+			public abstract class VisibilityIssues
+			{
+				protected internal virtual bool OwnsHandle { get; protected set; }
+			}
+	
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Make<VisibilityIssues>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::VisibilityIssues Instance(this global::Rocks.MakeGeneration<global::VisibilityIssues> @self)
+				{
+					return new RockVisibilityIssues();
+				}
+				
+				private sealed class RockVisibilityIssues
+					: global::VisibilityIssues
+				{
+					public RockVisibilityIssues()
+					{
+					}
+					
+					public override bool Equals(object? @obj)
+					{
+						return default!;
+					}
+					public override int GetHashCode()
+					{
+						return default!;
+					}
+					public override string? ToString()
+					{
+						return default!;
+					}
+					protected internal override bool OwnsHandle
+					{
+						get => default!;
+						protected set { }
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithProtectedInternalPropertyAndMixedVisibilityInDifferentAssemblyAsync()
 	{
 		var source =
@@ -448,6 +515,90 @@ public static class NonPublicMembersGeneratorTests
 			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
+
+	[Test]
+	public static async Task MakeWithProtectedInternalPropertyAndMixedVisibilityInDifferentAssemblyAsync()
+	{
+		var source =
+			"""
+			public abstract class VisibilityIssues
+			{
+				protected internal virtual bool OwnsHandle { get; protected set; }
+			}
+			""";
+		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ =>
+			{
+				var location = _.Location;
+				return MetadataReference.CreateFromFile(location);
+			})
+			.Cast<MetadataReference>()
+			.ToList(); var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { sourceSyntaxTree },
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		sourceReferences.Add(sourceReference);
+
+		var code =
+			"""
+			using Rocks;
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Make<VisibilityIssues>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfVisibilityIssuesExtensions
+			{
+				internal static global::VisibilityIssues Instance(this global::Rocks.MakeGeneration<global::VisibilityIssues> @self)
+				{
+					return new RockVisibilityIssues();
+				}
+				
+				private sealed class RockVisibilityIssues
+					: global::VisibilityIssues
+				{
+					public RockVisibilityIssues()
+					{
+					}
+					
+					public override string? ToString()
+					{
+						return default!;
+					}
+					public override bool Equals(object? @obj)
+					{
+						return default!;
+					}
+					public override int GetHashCode()
+					{
+						return default!;
+					}
+					protected override bool OwnsHandle
+					{
+						get => default!;
+						set { }
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>(),
+			additionalReferences: sourceReferences).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task CreateWithInternalVirtualMembersAsync()
 	{

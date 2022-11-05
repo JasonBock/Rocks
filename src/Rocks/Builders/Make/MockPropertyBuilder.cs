@@ -33,8 +33,9 @@ internal static class MockPropertyBuilder
 		if ((result.Accessors == PropertyAccessor.Get || result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
 			result.Value.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
-			var getVisibility = result.Value.DeclaredAccessibility != result.Value.GetMethod!.DeclaredAccessibility ?
-				$"{result.Value.GetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
+			var methodVisibility = $"{result.Value.GetMethod!.GetOverridingCodeValue(compilation.Assembly)} ";
+			var getVisibility = visibility != methodVisibility ?
+				methodVisibility : string.Empty;
 
 			if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 			{
@@ -49,16 +50,18 @@ internal static class MockPropertyBuilder
 		if ((result.Accessors == PropertyAccessor.Set || result.Accessors == PropertyAccessor.GetAndSet) &&
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
-			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
-				$"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
+			var methodVisibility = $"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} ";
+			var setVisibility = visibility != methodVisibility ?
+				methodVisibility : string.Empty;
 			writer.WriteLine($"{setVisibility}set {{ }}");
 		}
 		else if ((result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit) && 
 			result.Value.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly))
 		{
-			var setVisibility = result.Value.DeclaredAccessibility != result.Value.SetMethod!.DeclaredAccessibility ?
-				$"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
-			writer.WriteLine($"{setVisibility}init {{ }}");
+			var methodVisibility = $"{result.Value.SetMethod!.GetOverridingCodeValue(compilation.Assembly)} ";
+			var initVisibility = visibility != methodVisibility ? 
+				methodVisibility : string.Empty;
+			writer.WriteLine($"{initVisibility}init {{ }}");
 		}
 
 		writer.Indent--;
