@@ -14,7 +14,8 @@ internal static class MockPropertyBuilder
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
 		var methodName = propertyGetMethod.Name;
-		var methodVisibility = $"{propertyGetMethod.GetOverridingCodeValue(compilation.Assembly)} ";
+		var methodVisibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			$"{propertyGetMethod.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
 
@@ -114,7 +115,8 @@ internal static class MockPropertyBuilder
 		var propertySetMethod = result.Value.SetMethod!;
 		var methodName = propertySetMethod.Name;
 		var property = result.Value;
-		var methodVisibility = $"{propertySetMethod.GetOverridingCodeValue(compilation.Assembly)} ";
+		var methodVisibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			$"{propertySetMethod.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
 		var accessor = result.Accessors == PropertyAccessor.Init || result.Accessors == PropertyAccessor.GetAndInit ?

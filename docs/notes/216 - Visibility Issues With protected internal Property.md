@@ -1,0 +1,3 @@
+I think that a `protected internal` only shows up as `protected` is the accessibility value came from a different assembly. If it originated from a member in the compilation assembly, **then** it'll show up as `protected internal`.
+
+That means `AccessibilityExtensions.GetOverridingCodeValue()` needs `IAssembly originationAssembly, IAssembly compilationAssembly`. This method is called in a fair amount of places, so this may be a "fun" change to make.

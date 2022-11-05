@@ -14,7 +14,8 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.GetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		var methodVisibility = $"{method.GetOverridingCodeValue(compilation.Assembly)} ";
+		var methodVisibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			$"{method.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
 		var namingContext = new VariableNamingContext(method);
@@ -119,7 +120,8 @@ internal static class MockIndexerBuilder
 		var indexer = result.Value;
 		var method = indexer.SetMethod!;
 		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		var methodVisibility = $"{method.GetOverridingCodeValue(compilation.Assembly)} ";
+		var methodVisibility = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			$"{method.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
 		var visibility = methodVisibility != indexerVisibility ?
 			methodVisibility : string.Empty;
 		var namingContext = new VariableNamingContext(method);
