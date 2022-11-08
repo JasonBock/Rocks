@@ -277,8 +277,8 @@ static void TestWithTypes()
 		//typeof(AutoMapper.AutoMapAttribute),
 
 		// Number of types found: 748
-		// Create: 338 errors, 20 warnings
-		// Make: 51 errors, 16 warnings
+		// Create: 327 errors, 20 warnings
+		// Make: 40 errors, 16 warnings
 		// EntityFramework
 		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 	}.Select(_ => _.Assembly).ToHashSet();
@@ -307,28 +307,3 @@ static void TestWithTypes()
 	Console.WriteLine("Generator testing complete");
 }
 #pragma warning restore CS8321 // Local function is declared but never used
-
-public class X : HttpMessageHandler
-{
-	protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) => base.Send(request, cancellationToken);
-	protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => throw new NotImplementedException();
-}
-
-public abstract class HML
-{
-	// We cannot add abstract member to a public class in order to not to break already established contract of this class.
-	// So we add virtual method, override it everywhere internally and provide proper implementation.
-	// Unfortunately we cannot force everyone to implement so in such case we throw NSE.
-	protected internal virtual HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken)
-	{
-		throw new NotSupportedException();
-	}
-
-	protected internal abstract Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken);
-}
-
-public class Y : HML
-{
-   protected internal override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) => base.Send(request, cancellationToken);
-   protected internal override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => throw new NotImplementedException();
-}
