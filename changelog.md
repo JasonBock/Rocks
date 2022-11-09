@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [7.0.0-alpha.3] - Not Yet Released
+## [7.0.0-alpha.3] - 2022-11-08
 
 ### Added
 - Indexers with an `init` can now be set up with `ConstructorProperties`, and properties and indexers with an `init` can be set up with expectations (issue [#197](https://github.com/JasonBock/Rocks/issues/197))
