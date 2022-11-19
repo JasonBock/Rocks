@@ -1,4 +1,5 @@
 ﻿using FluentAssertions.Collections;
+using FluentAssertions.Common;
 using FluentAssertions.Data;
 using FluentAssertions.Equivalency;
 using FluentAssertions.Numeric;
@@ -159,6 +160,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(HttpResponseMessageAssertions<>), new()
 					{
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedHttpResponseMessageAssertions" },
+					}
+				},
+				{
+					typeof(ICollectionWrapper<>), new()
+					{
+						{ "TCollection", "global::System.Collections.ICollection" },
 					}
 				},
 				{
@@ -429,7 +436,9 @@ namespace Rocks.CodeGenerationTest.Mappings
 		public sealed class MappedAsyncFunctionAssertions
 			: AsyncFunctionAssertions<Task, MappedAsyncFunctionAssertions>
 		{
-			public MappedAsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor) : base(subject, extractor)
+#pragma warning disable CS0618 // Type or member is obsolete
+			public MappedAsyncFunctionAssertions(Func<Task> subject, IExtractExceptions extractor, IClock clock) : base(subject, extractor, clock)
+#pragma warning restore CS0618 // Type or member is obsolete
 			{
 			}
 		}

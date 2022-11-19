@@ -26,13 +26,13 @@ public interface IAmSimple
 and you use Rocks to create a mock with expectations, along with verifying its usage:
 
 ```csharp
-var mock = Rock.Create<IAmSimple>();
-mock.Methods().TargetAction();
+var expectations = Rock.Create<IAmSimple>();
+expectations.Methods().TargetAction();
 
-var simpleInstance = mock.Instance();
-simpleInstance.TargetAction();
+var mock = mock.Instance();
+mock.TargetAction();
 
-mock.Verify();
+expectations.Verify();
 ```
 
 More details can be found on the [Quickstart page](https://github.com/JasonBock/Rocks/blob/main/docs/Quickstart.md "Quickstart Page"). Note that if you build the code locally, you'll need to build in `Release` mode for the package reference in `Rocks.NuGetHost` to resolve correctly (or unload that project from the solution as it's optional and delete `nuget.config`).
