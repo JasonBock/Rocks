@@ -13,6 +13,7 @@
     - [Optional Arguments](#optional-arguments)
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
+    - [Setting `required` and `init` Properties](#settin-required-and-init-properties)
     - [Mocking Events](#mocking-events)
   - [Using Makes](#using-makes)
   - [Handling Asynchronous Code](#handling-asynchronous-code)
@@ -371,7 +372,7 @@ This will set `InitData` to `"a"` and `RequiredData` to `"b"` on the mock instan
 
 `ConstructorProperties` will contain properties that are both virtual and non-virtual. If there are no `required` properties, the `constructorProperties` parameter will be nullable.
 
-Note, indexers with an `init` cannot be set this way.
+Note that this will work with `init` indexers as well. `required` indexers is currently not possible in C#.
 
 ### Mocking Events
 
