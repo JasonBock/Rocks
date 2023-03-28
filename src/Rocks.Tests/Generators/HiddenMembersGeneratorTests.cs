@@ -75,7 +75,9 @@ public static class HiddenMembersGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockSubClass(@self);
+						var @mock = new RockSubClass(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -384,7 +386,9 @@ public static class HiddenMembersGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockISub(@self);
+						var @mock = new RockISub(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

@@ -51,7 +51,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIHaveDelegate(@self, @constructorProperties);
+						var @mock = new RockIHaveDelegate(@self, @constructorProperties);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -216,7 +218,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUseKeyword(@self);
+						var @mock = new RockIUseKeyword(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -330,7 +334,9 @@ public static class NamingGeneratorTests
 					if (!@self1.WasInstanceInvoked)
 					{
 						@self1.WasInstanceInvoked = true;
-						return new RockHaveNamingConflicts(@self1, @self, @expectations);
+						var @mock = new RockHaveNamingConflicts(@self1, @self, @expectations);
+						@self1.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -495,7 +501,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIHaveNamingConflicts(@self);
+						var @mock = new RockIHaveNamingConflicts(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -603,7 +611,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIHaveNamingConflicts(@self);
+						var @mock = new RockIHaveNamingConflicts(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -722,7 +732,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockHasRequiredProperty(@self, @constructorProperties1, @constructorProperties);
+						var @mock = new RockHasRequiredProperty(@self, @constructorProperties1, @constructorProperties);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -897,7 +909,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUsesThing(@self);
+						var @mock = new RockIUsesThing(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1014,7 +1028,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUseMethodInformation(@self);
+						var @mock = new RockIUseMethodInformation(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1110,7 +1126,9 @@ public static class NamingGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIOperation(@self);
+						var @mock = new RockIOperation(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1214,7 +1232,9 @@ public static class NamingGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIUseConstraint(@self);
+							var @mock = new RockIUseConstraint(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

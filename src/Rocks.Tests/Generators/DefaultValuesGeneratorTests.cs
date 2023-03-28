@@ -44,7 +44,9 @@ public static class DefaultValuesGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIGenericDefault(@self);
+						var @mock = new RockIGenericDefault(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -207,7 +209,9 @@ public static class DefaultValuesGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUseInfinity(@self);
+						var @mock = new RockIUseInfinity(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

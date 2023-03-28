@@ -67,7 +67,9 @@ public static class PropertyInitCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockITest(@self, @constructorProperties);
+							var @mock = new RockITest(@self, @constructorProperties);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -382,7 +384,9 @@ public static class PropertyInitCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockTest(@self, @constructorProperties);
+							var @mock = new RockTest(@self, @constructorProperties);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

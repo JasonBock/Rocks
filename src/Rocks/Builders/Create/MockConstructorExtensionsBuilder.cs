@@ -177,7 +177,7 @@ internal static class MockConstructorExtensionsBuilder
 				$$"""
 				if (@{{namingContext["constructorProperties"]}} is null)
 				{
-					throw new global::System.ArgumentNullException(nameof(@{{namingContext["constructorProperties"]}}));					
+					throw new global::System.ArgumentNullException(nameof(@{{namingContext["constructorProperties"]}}));
 				}
 				""");
 		}
@@ -187,9 +187,9 @@ internal static class MockConstructorExtensionsBuilder
 			if (!@{{namingContext["self"]}}.WasInstanceInvoked)
 			{
 				@{{namingContext["self"]}}.WasInstanceInvoked = true;
-				var mock = new Rock{{typeToMock.FlattenedName}}({{rockInstanceParameters}});
-				@{{namingContext["self"]}}.MockType = mock.GetType();
-				return mock;
+				var @{{namingContext["mock"]}} = new Rock{{typeToMock.FlattenedName}}({{rockInstanceParameters}});
+				@{{namingContext["self"]}}.MockType = @{{namingContext["mock"]}}.GetType();
+				return @{{namingContext["mock"]}};
 			}
 			else
 			{

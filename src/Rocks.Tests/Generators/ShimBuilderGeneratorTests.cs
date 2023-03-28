@@ -62,7 +62,9 @@ public static class ShimBuilderGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIHaveDims(@self);
+						var @mock = new RockIHaveDims(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

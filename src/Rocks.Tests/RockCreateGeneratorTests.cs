@@ -80,7 +80,9 @@ public static class RockCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIContainNullableReferences(@self);
+							var @mock = new RockIContainNullableReferences(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -187,7 +189,9 @@ public static class RockCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockITest(@self);
+							var @mock = new RockITest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -280,7 +284,9 @@ public static class RockCreateGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockITest(@self);
+						var @mock = new RockITest(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -378,7 +384,9 @@ public static class RockCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockITest(@self);
+							var @mock = new RockITest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -471,7 +479,9 @@ public static class RockCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockITest(@self);
+							var @mock = new RockITest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -628,7 +638,9 @@ public static class RockCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockITest(@self);
+							var @mock = new RockITest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

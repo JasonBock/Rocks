@@ -97,7 +97,9 @@ public static class IndexerInitCreateGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIHaveIndexersWithInit(@self, @constructorProperties);
+						var @mock = new RockIHaveIndexersWithInit(@self, @constructorProperties);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -454,7 +456,9 @@ public static class IndexerInitCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockTarget(@self, @constructorProperties);
+							var @mock = new RockTarget(@self, @constructorProperties);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

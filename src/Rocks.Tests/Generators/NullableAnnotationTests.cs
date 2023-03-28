@@ -43,7 +43,9 @@ public static class NullableAnnotationTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockNeedNullable(@self, @initializationData!);
+						var @mock = new RockNeedNullable(@self, @initializationData!);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -247,7 +249,9 @@ public static class NullableAnnotationTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockNeedNullable(@self);
+						var @mock = new RockNeedNullable(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

@@ -55,7 +55,9 @@ public static class NonPublicMembersGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockVisibilityIssues(@self);
+						var @mock = new RockVisibilityIssues(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -350,7 +352,9 @@ public static class NonPublicMembersGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockVisibilityIssues(@self);
+						var @mock = new RockVisibilityIssues(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -684,7 +688,9 @@ public static class NonPublicMembersGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockHasInternalVirtual(@self, @key);
+						var @mock = new RockHasInternalVirtual(@self, @key);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1111,7 +1117,9 @@ public static class NonPublicMembersGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockTest(@self);
+							var @mock = new RockTest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -1410,7 +1418,9 @@ public static class NonPublicMembersGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockTest(@self);
+							var @mock = new RockTest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

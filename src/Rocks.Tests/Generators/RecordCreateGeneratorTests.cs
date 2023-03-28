@@ -57,7 +57,9 @@ public static class RecordCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockRecordTest(@self);
+							var @mock = new RockRecordTest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -69,7 +71,9 @@ public static class RecordCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockRecordTest(@self, @original);
+							var @mock = new RockRecordTest(@self, @original);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

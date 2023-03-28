@@ -52,7 +52,9 @@ public static class CastingGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveOpenGenericsOfGuid(@self);
+							var @mock = new RockIHaveOpenGenericsOfGuid(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

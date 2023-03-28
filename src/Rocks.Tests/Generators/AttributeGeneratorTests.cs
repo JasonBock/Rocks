@@ -63,7 +63,9 @@ public static class AttributeGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUseTuples(@self);
+						var @mock = new RockIUseTuples(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -158,7 +160,9 @@ public static class AttributeGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockHaveDynamic(@self);
+						var @mock = new RockHaveDynamic(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -334,7 +338,9 @@ public static class AttributeGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveGenericAttribute(@self);
+							var @mock = new RockIHaveGenericAttribute(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -442,7 +448,9 @@ public static class AttributeGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveMultipleAttributes(@self);
+							var @mock = new RockIHaveMultipleAttributes(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

@@ -49,7 +49,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockVoidMethodWithParams(@self);
+							var @mock = new RockVoidMethodWithParams(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -235,7 +237,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockValueMethodWithParams(@self);
+							var @mock = new RockValueMethodWithParams(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -412,7 +416,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveImplementation(@self);
+							var @mock = new RockIHaveImplementation(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -520,7 +526,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveImplementation(@self);
+							var @mock = new RockIHaveImplementation(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -627,7 +635,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockHaveImplementation(@self);
+							var @mock = new RockHaveImplementation(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -795,7 +805,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockHaveImplementation(@self);
+							var @mock = new RockHaveImplementation(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

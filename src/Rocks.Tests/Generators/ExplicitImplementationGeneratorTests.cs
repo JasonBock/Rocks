@@ -48,7 +48,9 @@ public static class ExplicitImplementationGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockISetupList(@self);
+						var @mock = new RockISetupList(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

@@ -54,7 +54,9 @@ public static class DoesNotReturnGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockClassTest(@self);
+							var @mock = new RockClassTest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -333,7 +335,9 @@ public static class DoesNotReturnGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIInterfaceTest(@self);
+							var @mock = new RockIInterfaceTest(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

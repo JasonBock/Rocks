@@ -50,7 +50,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockStaticToString(@self);
+							var @mock = new RockStaticToString(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -245,7 +247,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIMatchObjectOfobject(@self);
+							var @mock = new RockIMatchObjectOfobject(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -472,7 +476,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIMatchObjectOfobject(@self);
+							var @mock = new RockIMatchObjectOfobject(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

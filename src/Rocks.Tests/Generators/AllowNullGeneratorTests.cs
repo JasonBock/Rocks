@@ -57,7 +57,9 @@ public static class AllowNullGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIAllow(@self);
+							var @mock = new RockIAllow(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -267,7 +269,9 @@ public static class AllowNullGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockAllow(@self);
+							var @mock = new RockAllow(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

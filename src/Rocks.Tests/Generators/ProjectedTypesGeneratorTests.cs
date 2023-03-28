@@ -76,7 +76,9 @@ public static class ProjectedTypesGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUseSpanWithOpenGeneric(@self);
+						var @mock = new RockIUseSpanWithOpenGeneric(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -371,7 +373,9 @@ public static class ProjectedTypesGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHavePointers(@self);
+							var @mock = new RockIHavePointers(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
@@ -631,7 +635,9 @@ public static class ProjectedTypesGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockIHaveInAndOutSpan(@self);
+							var @mock = new RockIHaveInAndOutSpan(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

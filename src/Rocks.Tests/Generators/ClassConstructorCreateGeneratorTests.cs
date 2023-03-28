@@ -51,7 +51,9 @@ public static class ClassConstructorCreateGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockBaseCtor(@self, @a, ref @b, out @c, @d);
+							var @mock = new RockBaseCtor(@self, @a, ref @b, out @c, @d);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{

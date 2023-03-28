@@ -52,7 +52,9 @@ public static class AsyncIteratorGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockAsyncEnumeration(@self);
+						var @mock = new RockAsyncEnumeration(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{

@@ -45,7 +45,9 @@ public static class ConstraintsGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockBaseStuff(@self);
+						var @mock = new RockBaseStuff(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -230,7 +232,9 @@ public static class ConstraintsGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockINeedDelegate(@self);
+						var @mock = new RockINeedDelegate(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -354,7 +358,9 @@ public static class ConstraintsGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockITypeConstraints(@self);
+						var @mock = new RockITypeConstraints(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -713,7 +719,9 @@ public static class ConstraintsGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockTypeConstraints(@self);
+						var @mock = new RockTypeConstraints(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1145,7 +1153,9 @@ public static class ConstraintsGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockIUnmanagedValue(@self);
+						var @mock = new RockIUnmanagedValue(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
 					}
 					else
 					{
@@ -1264,7 +1274,9 @@ public static class ConstraintsGeneratorTests
 						if (!@self.WasInstanceInvoked)
 						{
 							@self.WasInstanceInvoked = true;
-							return new RockThingOfstring(@self);
+							var @mock = new RockThingOfstring(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
 						}
 						else
 						{
