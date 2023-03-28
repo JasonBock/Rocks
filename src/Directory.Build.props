@@ -2,10 +2,9 @@
 	<PropertyGroup>
 		<AnalysisMode>all</AnalysisMode>
 		<Authors>Jason Bock</Authors>
-		<Copyright>Copyright © 2022</Copyright>
-		<EnablePreviewFeatures>true</EnablePreviewFeatures>
+		<Copyright>Copyright © 2023</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>preview</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net7.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
