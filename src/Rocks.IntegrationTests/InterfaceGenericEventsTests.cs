@@ -7,6 +7,7 @@ public sealed class InterfaceEventArgs
 { }
 
 public interface IInterfaceGenericEvents<T>
+	where T : EventArgs
 {
 	void Foo();
 	event EventHandler<T> MyEvent;

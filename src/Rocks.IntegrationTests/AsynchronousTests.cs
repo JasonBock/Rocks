@@ -8,8 +8,10 @@ public class AsyncEnumeration
 	public virtual async IAsyncEnumerable<string> GetRecordsAsync(
 		[EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
-		await Task.CompletedTask;
-		yield return "y";
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
+	  await Task.CompletedTask;
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
+	  yield return "y";
 	}
 }
 
@@ -28,8 +30,10 @@ public static class AsynchronousTests
 	{
 		static async IAsyncEnumerable<string> ReturnsAsyncIterator()
 		{
-			await Task.CompletedTask;
-			yield return "x";
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
+		 await Task.CompletedTask;
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
+		 yield return "x";
 		}
 
 		var expectations = Rock.Create<AsyncEnumeration>();

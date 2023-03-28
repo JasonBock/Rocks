@@ -22,12 +22,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 						{ "TResponse", "global::System.Object" },
 					}
 				},
-				{
-					typeof(AsyncRequestHandler<>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest" },
-					}
-				},
+				//{
+				//	typeof(AsyncRequestHandler<>), new()
+				//	{
+				//		{ "TRequest", "global::MediatR.IRequest" },
+				//	}
+				//},
 				{
 					typeof(INotificationHandler<>), new()
 					{
@@ -145,19 +145,19 @@ namespace Rocks.CodeGenerationTest.Mappings
 						{ "TResponse", "global::System.Object" },
 					}
 				},
-				{
-					typeof(RequestHandler<>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest" },
-					}
-				},
-				{
-					typeof(RequestHandler<,>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
-					}
-				},
+				//{
+				//	typeof(RequestHandler<>), new()
+				//	{
+				//		{ "TRequest", "global::MediatR.IRequest" },
+				//	}
+				//},
+				//{
+				//	typeof(RequestHandler<,>), new()
+				//	{
+				//		{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
+				//		{ "TResponse", "global::System.Object" },
+				//	}
+				//},
 				{
 					typeof(RequestHandlerWrapperImpl<,>), new()
 					{

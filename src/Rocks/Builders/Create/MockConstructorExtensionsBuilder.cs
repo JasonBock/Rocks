@@ -173,27 +173,29 @@ internal static class MockConstructorExtensionsBuilder
 
 		if (hasRequiredProperties)
 		{
-			writer.WriteLine($"if (@{namingContext["constructorProperties"]} is null)");
-			writer.WriteLine("{");
-			writer.Indent++;
-			writer.WriteLine($"throw new global::System.ArgumentNullException(nameof(@{namingContext["constructorProperties"]}));");
-			writer.Indent--;
-			writer.WriteLine("}");
+			writer.WriteLines(
+				$$"""
+				if (@{{namingContext["constructorProperties"]}} is null)
+				{
+					throw new global::System.ArgumentNullException(nameof(@{{namingContext["constructorProperties"]}}));					
+				}
+				""");
 		}
 
-		writer.WriteLine($"if (!@{namingContext["self"]}.WasInstanceInvoked)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"@{namingContext["self"]}.WasInstanceInvoked = true;");
-		writer.WriteLine($"return new Rock{typeToMock.FlattenedName}({rockInstanceParameters});");
-		writer.Indent--;
-		writer.WriteLine("}");
-		writer.WriteLine("else");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine("throw new global::Rocks.Exceptions.NewMockInstanceException(\"Can only create a new mock once.\");");
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			$$"""
+			if (!@{{namingContext["self"]}}.WasInstanceInvoked)
+			{
+				@{{namingContext["self"]}}.WasInstanceInvoked = true;
+				var mock = new Rock{{typeToMock.FlattenedName}}({{rockInstanceParameters}});
+				@{{namingContext["self"]}}.MockType = mock.GetType();
+				return mock;
+			}
+			else
+			{
+				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+			}
+			""");
 
 		writer.Indent--;
 		writer.WriteLine("}");

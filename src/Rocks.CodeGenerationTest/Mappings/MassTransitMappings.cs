@@ -5,6 +5,7 @@ using MassTransit.Mediator;
 using MassTransit.Middleware;
 using MassTransit.Observables;
 using MassTransit.Transports;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Mime;
 
 namespace Rocks.CodeGenerationTest.Mappings
@@ -791,7 +792,9 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public bool AutoStart { set => throw new NotImplementedException(); }
 
 			public void AddDependency(IReceiveEndpointObserverConnector connector) => throw new NotImplementedException();
-			public void AddDeserializer(ISerializerFactory factory, bool isDefault = false) => throw new NotImplementedException();
+		 public void AddDependency(IReceiveEndpointDependentConnector dependent) => throw new NotImplementedException();
+		 public void AddDependent(IReceiveEndpointObserverConnector dependency) => throw new NotImplementedException();
+		 public void AddDeserializer(ISerializerFactory factory, bool isDefault = false) => throw new NotImplementedException();
 			public void AddEndpointSpecification(IReceiveEndpointSpecification configurator) => throw new NotImplementedException();
 			public void AddPipeSpecification<T>(IPipeSpecification<ConsumeContext<T>> specification) where T : class => throw new NotImplementedException();
 			public void AddPipeSpecification(IPipeSpecification<ConsumeContext> specification) => throw new NotImplementedException();
@@ -911,7 +914,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public T AddOrUpdatePayload<T>(PayloadFactory<T> addFactory, UpdatePayloadFactory<T> updateFactory) where T : class => throw new NotImplementedException();
 			public T GetOrAddPayload<T>(PayloadFactory<T> payloadFactory) where T : class => throw new NotImplementedException();
 			public bool HasPayloadType(Type payloadType) => throw new NotImplementedException();
-			public bool TryGetPayload<T>(out T? payload) where T : class => throw new NotImplementedException();
+			public bool TryGetPayload<T>([NotNullWhen(true)] out T? payload) where T : class => throw new NotImplementedException();
 		}
 
 		public sealed class MappedSaga

@@ -352,6 +352,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 
 			public IElement? PreviousElementSibling => throw new NotImplementedException();
 
+			public string? GivenNamespaceUri => throw new NotImplementedException();
+
 			public void AddEventListener(string type, DomEventHandler? callback = null, bool capture = false) => throw new NotImplementedException();
 			public void After(params INode[] nodes) => throw new NotImplementedException();
 			public void Append(params INode[] nodes) => throw new NotImplementedException();
@@ -389,8 +391,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public void RemoveEventListener(string type, DomEventHandler? callback = null, bool capture = false) => throw new NotImplementedException();
 			public void Replace(params INode[] nodes) => throw new NotImplementedException();
 			public INode ReplaceChild(INode newChild, INode oldChild) => throw new NotImplementedException();
-			public void SetAttribute(string name, string value) => throw new NotImplementedException();
-			public void SetAttribute(string? namespaceUri, string name, string value) => throw new NotImplementedException();
+			public void SetAttribute(string name, string? value) => throw new NotImplementedException();
+			public void SetAttribute(string? namespaceUri, string name, string? value) => throw new NotImplementedException();
 			public void ToHtml(TextWriter writer, IMarkupFormatter formatter) => throw new NotImplementedException();
 		}
 

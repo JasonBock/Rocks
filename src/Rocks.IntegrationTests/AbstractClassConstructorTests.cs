@@ -2,7 +2,9 @@
 
 namespace Rocks.IntegrationTests;
 
+#pragma warning disable CA1012 // Abstract types should not have public constructors
 public abstract class AbstractClassConstructor
+#pragma warning restore CA1012 // Abstract types should not have public constructors
 {
    protected AbstractClassConstructor(string stringData) =>
 		this.StringData = stringData;

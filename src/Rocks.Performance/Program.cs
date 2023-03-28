@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Running;
 using Rocks.Performance;
 
+#pragma warning disable CA1852 // Seal internal types
 BenchmarkRunner.Run<CastingSpeed>();
 
 //var test = new SimpleGeneration();
@@ -9,3 +10,4 @@ BenchmarkRunner.Run<CastingSpeed>();
 //{
 //	_ = test.RunGenerator();
 //}
+#pragma warning restore CA1852 // Seal internal types

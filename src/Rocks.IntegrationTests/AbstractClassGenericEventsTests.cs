@@ -7,6 +7,7 @@ public sealed class AbstractClassEventArgs
 { }
 
 public abstract class AbstractClassGenericEvents<T>
+	where T : EventArgs
 {
 	public abstract void Foo();
 

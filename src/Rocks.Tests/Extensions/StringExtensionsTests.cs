@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Rocks.Extensions;
+using System.Globalization;
 using System.Numerics;
 
 namespace Rocks.Tests.Extensions;
@@ -11,5 +12,5 @@ public static class StringExtensionsTests
 	[TestCase("", "51555898148515146965744933031213250625354807770")]
 	[TestCase(null!, "51555898148515146965744933031213250625354807770")]
 	public static void CreateHash(string input, string expectedData) => 
-		Assert.That(input.GetHash(), Is.EqualTo(BigInteger.Parse(expectedData)));
+		Assert.That(input.GetHash(), Is.EqualTo(BigInteger.Parse(expectedData, CultureInfo.InvariantCulture)));
 }

@@ -1,5 +1,6 @@
 ﻿using Rocks;
 
+#pragma warning disable CA1852 // Seal internal types
 RunITestCase();
 
 static void RunITestCase()
@@ -13,7 +14,10 @@ static void RunITestCase()
 	expectations.Verify();
 }
 
+#pragma warning disable CA1050 // Declare types in namespaces
 public interface ITest
+#pragma warning restore CA1050 // Declare types in namespaces
 {
 	void Foo();
 }
+#pragma warning restore CA1852 // Seal internal types

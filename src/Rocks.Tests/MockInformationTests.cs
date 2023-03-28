@@ -6,6 +6,7 @@ using Rocks.Builders;
 using Rocks.Configuration;
 using Rocks.Diagnostics;
 using Rocks.Extensions;
+using System.Globalization;
 
 namespace Rocks.Tests;
 
@@ -24,7 +25,7 @@ public static class MockInformationTests
 		Assert.Multiple(() =>
 		{
 			var diagnostic = information.Diagnostics.First(_ => _.Id == MemberUsesObsoleteTypeDiagnostic.Id);
-			Assert.That(diagnostic.GetMessage(), Does.Contain(memberName));
+			Assert.That(diagnostic.GetMessage(CultureInfo.InvariantCulture), Does.Contain(memberName));
 			Assert.That(information.TypeToMock, Is.Null);
 		});
 	}
@@ -634,14 +635,16 @@ public class {targetTypeName}
 
 		var descendantNodes = syntaxTree.GetRoot().DescendantNodes(_ => true);
 
-		if (descendantNodes.OfType<BaseTypeDeclarationSyntax>()
+#pragma warning disable CA1851 // Possible multiple enumerations of 'IEnumerable' collection
+	  if (descendantNodes.OfType<BaseTypeDeclarationSyntax>()
 			.SingleOrDefault(_ => _.Identifier.Text == targetTypeName) is not MemberDeclarationSyntax typeSyntax)
 		{
 			typeSyntax = descendantNodes.OfType<DelegateDeclarationSyntax>()
 				.Single(_ => _.Identifier.Text == targetTypeName);
 		}
+#pragma warning restore CA1851 // Possible multiple enumerations of 'IEnumerable' collection
 
-		return ((model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
+	  return ((model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
 	}
 
 	private static MockInformation GetInformation(string source, string targetTypeName,

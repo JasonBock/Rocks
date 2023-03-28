@@ -27,7 +27,7 @@ public static class CannotSpecifyTypeWithOpenGenericParametersDiagnosticTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has an open generic parameter and cannot be mocked"));
+			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has an open generic parameter and cannot be mocked"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));

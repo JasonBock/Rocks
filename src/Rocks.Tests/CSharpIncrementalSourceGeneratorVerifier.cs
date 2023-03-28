@@ -16,7 +16,7 @@ namespace Rocks.Tests
 	public static partial class CSharpIncrementalSourceGeneratorVerifier<TIncrementalGenerator>
 		where TIncrementalGenerator : IIncrementalGenerator, new()
 	{
-		public class Test : CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>
+		internal sealed class Test : CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>
 		{
 			public Test() =>
 				this.SolutionTransforms.Add((solution, projectId) =>

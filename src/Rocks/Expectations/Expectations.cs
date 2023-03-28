@@ -45,9 +45,10 @@ public class Expectations<T>
 				{
 					foreach (var failure in handler.Verify())
 					{
-						var method = typeof(T).GetMemberDescription(pair.Key);
+						var member = this.MockType!.GetMemberDescription(pair.Key);
 
-						failures.Add($"Type: {typeof(T).FullName}, method: {method}, message: {failure}");
+						failures.Add(
+							$"Type: {typeof(T).FullName}, mock type: {this.MockType!.FullName}, member: {member}, message: {failure}");
 					}
 				}
 			}
@@ -63,11 +64,17 @@ public class Expectations<T>
 	/// <summary>
 	/// This property is used by Rocks and is not intented to be used by developers.
 	/// </summary>
-	public Dictionary<int, List<HandlerInformation>> Handlers { get; } 
+	public Dictionary<int, List<HandlerInformation>> Handlers { get; }
 
 	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
 	/// <summary>
-	/// This method is used by Rocks and is not intented to be used by developers.
+	/// This property is used by Rocks and is not intented to be used by developers.
+	/// </summary>
+	public Type? MockType { get; set; }
+
+	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+	/// <summary>
+	/// This property is used by Rocks and is not intented to be used by developers.
 	/// </summary>
 	public bool WasInstanceInvoked { get; set; }
 }

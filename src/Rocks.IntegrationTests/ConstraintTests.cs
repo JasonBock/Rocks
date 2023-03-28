@@ -7,7 +7,9 @@ public class BaseForConstraintCase { }
 public abstract class BaseForConstraintCase<T>
 	: BaseForConstraintCase where T : class
 {
-	public abstract BaseForConstraintCase<TTarget> As<TTarget>() where TTarget : class;
+#pragma warning disable CA1716 // Identifiers should not match keywords
+   public abstract BaseForConstraintCase<TTarget> As<TTarget>() where TTarget : class;
+#pragma warning restore CA1716 // Identifiers should not match keywords
 }
 
 public static class ConstraintTests

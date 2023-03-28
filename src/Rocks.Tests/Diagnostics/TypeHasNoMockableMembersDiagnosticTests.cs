@@ -27,7 +27,7 @@ public static class TypeHasNoMockableMembersDiagnosticTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no members that can be overriden"));
+			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has no members that can be overriden"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));

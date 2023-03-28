@@ -7,12 +7,14 @@ public class ClassProperty
 	public virtual int GetData => default;
 	public virtual int GetAndInitData { get => default; init { } }
 	public virtual int GetAndSetData { get => default; set { } }
+#pragma warning disable CA1044 // Properties should not be write only
    public virtual int InitData { init { } }
-	public virtual int SetData { set { } }
+   public virtual int SetData { set { } }
+#pragma warning restore CA1044 // Properties should not be write only
 
 #pragma warning disable CA1070 // Do not declare event fields as virtual
 #pragma warning disable CS0067
-   public virtual event EventHandler? MyEvent;
+	public virtual event EventHandler? MyEvent;
 #pragma warning restore CS0067
 #pragma warning restore CA1070 // Do not declare event fields as virtual
 }

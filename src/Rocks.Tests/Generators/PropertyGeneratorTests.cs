@@ -58,7 +58,9 @@ public static class PropertyGeneratorTests
 					if (!@self.WasInstanceInvoked)
 					{
 						@self.WasInstanceInvoked = true;
-						return new RockMixedProperties(@self);
+						var mock = new RockMixedProperties(@self);
+						@self.MockType = mock.GetType();
+						return mock;
 					}
 					else
 					{

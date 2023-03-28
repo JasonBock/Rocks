@@ -27,7 +27,7 @@ public static class TypeHasNoAccessibleConstructorsDiagnosticTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X has no constructors that are accessible"));
+			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has no constructors that are accessible"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoAccessibleConstructorsDiagnostic.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoAccessibleConstructorsDiagnostic.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));

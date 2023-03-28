@@ -7,6 +7,7 @@ public sealed class ClassEventArgs
 { }
 
 public class ClassGenericEvents<T>
+	where T : EventArgs
 {
 	public virtual void Foo() { }
 #pragma warning disable CA1070 // Do not declare event fields as virtual

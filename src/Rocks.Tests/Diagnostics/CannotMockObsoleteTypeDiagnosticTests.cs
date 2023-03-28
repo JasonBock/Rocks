@@ -27,7 +27,7 @@ public static class CannotMockObsoleteTypeDiagnosticTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(descriptor.GetMessage(), Is.EqualTo("The type X is obsolete and cannot be mocked"));
+			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is obsolete and cannot be mocked"));
 			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Title));
 			Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
