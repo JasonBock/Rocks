@@ -5,6 +5,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
+// TODO: We should be using VariableNamingContext
+// for things like methodHandlers, methodHandler, etc.
 internal static class MockPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
@@ -28,6 +30,7 @@ internal static class MockPropertyBuilder
 		writer.Indent++;
 
 		writer.WriteLine("var @methodHandler = @methodHandlers[0];");
+		writer.WriteLine("@methodHandler.IncrementCallCount();");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
@@ -65,8 +68,6 @@ internal static class MockPropertyBuilder
 		{
 			writer.WriteLine("@methodHandler.RaiseEvents(this);");
 		}
-
-		writer.WriteLine($"@methodHandler.IncrementCallCount();");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadonly)
 		{
@@ -146,6 +147,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
+		writer.WriteLine("@methodHandler.IncrementCallCount();");
 		writer.WriteLine("@foundMatch = true;");
 		writer.WriteLine();
 		writer.WriteLine("if (@methodHandler.Method is not null)");
@@ -175,7 +177,6 @@ internal static class MockPropertyBuilder
 			writer.WriteLine("@methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine("@methodHandler.IncrementCallCount();");
 		writer.WriteLine("break;");
 
 		writer.Indent--;

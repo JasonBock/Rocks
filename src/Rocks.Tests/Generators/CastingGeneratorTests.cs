@@ -87,12 +87,11 @@ public static class CastingGeneratorTests
 									{
 										@foundMatch = true;
 										
+										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T, string, global::System.Guid> @method)
 										{
 											@method(@value, @data, @information);
 										}
-										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -119,12 +118,12 @@ public static class CastingGeneratorTests
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@data) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::System.Guid>>(@methodHandler.Expectations[2]).IsValid(@information))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T> @methodReturn ?
 											@methodReturn(@value, @data, @information) :
 											@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
 												@returnValue.ReturnValue :
 												throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -149,12 +148,11 @@ public static class CastingGeneratorTests
 									{
 										@foundMatch = true;
 										
+										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<int, string>>(@methodHandler.Method)(@value, @data);
 										}
-										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -180,10 +178,10 @@ public static class CastingGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@value) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@data))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, int>>(@methodHandler.Method)(@value, @data) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}

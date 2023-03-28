@@ -73,10 +73,10 @@ public static class NullableAnnotationTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -95,10 +95,10 @@ public static class NullableAnnotationTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -113,10 +113,10 @@ public static class NullableAnnotationTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -278,10 +278,10 @@ public static class NullableAnnotationTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -300,10 +300,10 @@ public static class NullableAnnotationTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -318,10 +318,10 @@ public static class NullableAnnotationTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -339,10 +339,10 @@ public static class NullableAnnotationTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@initializationData))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, int>>(@methodHandler.Method)(@initializationData) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -368,12 +368,11 @@ public static class NullableAnnotationTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<object?>>(@methodHandler.Method)(@initializationData);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}

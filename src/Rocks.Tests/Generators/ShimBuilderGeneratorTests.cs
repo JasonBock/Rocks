@@ -89,10 +89,10 @@ public static class ShimBuilderGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -107,10 +107,10 @@ public static class ShimBuilderGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						
@@ -125,10 +125,10 @@ public static class ShimBuilderGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -145,10 +145,10 @@ public static class ShimBuilderGeneratorTests
 							if (this.handlers.TryGetValue(4, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -167,10 +167,10 @@ public static class ShimBuilderGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@dimKey) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[1]).IsValid(@dimValue))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, int, int>>(@methodHandler.Method)(@dimKey, @dimValue) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -194,10 +194,10 @@ public static class ShimBuilderGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@notDimKey))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, int>>(@methodHandler.Method)(@notDimKey) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}

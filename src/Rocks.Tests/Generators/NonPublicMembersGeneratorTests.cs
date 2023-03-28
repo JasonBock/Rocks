@@ -84,10 +84,10 @@ public static class NonPublicMembersGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -106,10 +106,10 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -124,10 +124,10 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -145,10 +145,10 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<bool>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -165,6 +165,7 @@ public static class NonPublicMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<bool>>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
+										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
@@ -177,7 +178,6 @@ public static class NonPublicMembersGeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(@value)");
 										}
 										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -378,10 +378,10 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -399,10 +399,10 @@ public static class NonPublicMembersGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -421,10 +421,10 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -442,10 +442,10 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<bool>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -462,6 +462,7 @@ public static class NonPublicMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<bool>>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
+										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
@@ -474,7 +475,6 @@ public static class NonPublicMembersGeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(@value)");
 										}
 										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -715,11 +715,11 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
 							@methodHandler.RaiseEvents(this);
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -737,11 +737,11 @@ public static class NonPublicMembersGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
 									@methodHandler.RaiseEvents(this);
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -760,11 +760,11 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
 							@methodHandler.RaiseEvents(this);
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -779,13 +779,13 @@ public static class NonPublicMembersGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
 							
 							@methodHandler.RaiseEvents(this);
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -801,11 +801,11 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(4, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -825,11 +825,11 @@ public static class NonPublicMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@key))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, string>>(@methodHandler.Method)(@key) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -1146,11 +1146,11 @@ public static class NonPublicMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -1169,11 +1169,11 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(1, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1188,11 +1188,11 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1207,13 +1207,13 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -1230,11 +1230,11 @@ public static class NonPublicMembersGeneratorTests
 								if (this.handlers.TryGetValue(4, out var @methodHandlers))
 								{
 									var @methodHandler = @methodHandlers[0];
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 									@methodHandler.RaiseEvents(this);
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 								else
@@ -1251,6 +1251,7 @@ public static class NonPublicMembersGeneratorTests
 									{
 										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@value))
 										{
+											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
@@ -1264,7 +1265,6 @@ public static class NonPublicMembersGeneratorTests
 											}
 											
 											@methodHandler.RaiseEvents(this);
-											@methodHandler.IncrementCallCount();
 											break;
 										}
 									}
@@ -1447,11 +1447,11 @@ public static class NonPublicMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -1470,11 +1470,11 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(1, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1489,11 +1489,11 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1508,13 +1508,13 @@ public static class NonPublicMembersGeneratorTests
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
 								
 								@methodHandler.RaiseEvents(this);
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -1531,11 +1531,11 @@ public static class NonPublicMembersGeneratorTests
 								if (this.handlers.TryGetValue(4, out var @methodHandlers))
 								{
 									var @methodHandler = @methodHandlers[0];
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
 									@methodHandler.RaiseEvents(this);
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 								
@@ -1550,6 +1550,7 @@ public static class NonPublicMembersGeneratorTests
 									{
 										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@value))
 										{
+											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
@@ -1563,7 +1564,6 @@ public static class NonPublicMembersGeneratorTests
 											}
 											
 											@methodHandler.RaiseEvents(this);
-											@methodHandler.IncrementCallCount();
 											break;
 										}
 									}

@@ -84,10 +84,10 @@ public static class NamingGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -106,10 +106,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -124,10 +124,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -142,12 +142,11 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -253,12 +252,11 @@ public static class NamingGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string, string, string>>(@methodHandler.Method)(@namespace, @event, @property);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}
@@ -364,10 +362,10 @@ public static class NamingGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -386,10 +384,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -404,10 +402,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -422,12 +420,11 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -536,10 +533,10 @@ public static class NamingGeneratorTests
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler1.Expectations[3]).IsValid(@result2) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler1.Expectations[4]).IsValid(@self))
 									{
+										@methodHandler1.IncrementCallCount();
 										var @result1 = @methodHandler1.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, string, string, string, string, int>>(@methodHandler1.Method)(@methodHandlers, @methodHandler, @result, @result2, @self) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler1).ReturnValue;
-										@methodHandler1.IncrementCallCount();
 										return @result1!;
 									}
 								}
@@ -644,10 +641,10 @@ public static class NamingGeneratorTests
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler1.Expectations[3]).IsValid(@result2) &&
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler1.Expectations[4]).IsValid(@self))
 								{
+									@methodHandler1.IncrementCallCount();
 									var @result1 = @methodHandler1.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string, string, string, string, string, int>>(@methodHandler1.Method)(@methodHandlers, @methodHandler, @result, @result2, @self) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler1).ReturnValue;
-									@methodHandler1.IncrementCallCount();
 									return @result1!;
 								}
 							}
@@ -764,10 +761,10 @@ public static class NamingGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -786,10 +783,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -804,10 +801,10 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -822,12 +819,11 @@ public static class NamingGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -943,12 +939,11 @@ public static class NamingGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<global::Namespace2.Thing, global::Namespace1.Stuff>>(@methodHandler.Method)(@thing, @stuff);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}
@@ -1056,10 +1051,10 @@ public static class NamingGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::MethodInformation[]>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MethodInformation[]>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -1154,10 +1149,10 @@ public static class NamingGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::IOperation.OperationList>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::IOperation.OperationList>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -1266,12 +1261,11 @@ public static class NamingGeneratorTests
 									{
 										@foundMatch = true;
 										
+										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T> @method)
 										{
 											@method(@value);
 										}
-										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}

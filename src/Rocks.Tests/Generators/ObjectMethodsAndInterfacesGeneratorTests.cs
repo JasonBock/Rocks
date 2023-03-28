@@ -79,10 +79,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -101,10 +101,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							if (this.handlers.TryGetValue(1, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -276,10 +276,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@other))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@other) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -300,10 +300,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@objA) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[1]).IsValid(@objB))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, object?, bool>>(@methodHandler.Method)(@objA, @objB) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -320,10 +320,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<object>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -505,10 +505,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@other))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, string>>(@methodHandler.Method)(@other) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -529,10 +529,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@objA) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[1]).IsValid(@objB))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, object?, int>>(@methodHandler.Method)(@objA, @objB) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -549,10 +549,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<bool>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							

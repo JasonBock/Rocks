@@ -179,6 +179,8 @@ internal static class MockMethodValueBuilder
 	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock,
 		VariableNamingContext namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
+		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
+
 		var methodCast = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters, method.ReturnType);
@@ -265,8 +267,6 @@ internal static class MockMethodValueBuilder
 		{
 			writer.WriteLine($"@{namingContext["methodHandler"]}.RaiseEvents(this);");
 		}
-
-		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
 
 		if (shouldThrowDoesNotReturnException)
 		{

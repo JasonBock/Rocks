@@ -104,10 +104,10 @@ public static class HiddenMembersGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -126,10 +126,10 @@ public static class HiddenMembersGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -144,10 +144,10 @@ public static class HiddenMembersGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -162,10 +162,10 @@ public static class HiddenMembersGeneratorTests
 						if (this.handlers.TryGetValue(4, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -183,10 +183,10 @@ public static class HiddenMembersGeneratorTests
 							if (this.handlers.TryGetValue(8, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -203,6 +203,7 @@ public static class HiddenMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
+										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
@@ -215,7 +216,6 @@ public static class HiddenMembersGeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(@value)");
 										}
 										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -238,10 +238,10 @@ public static class HiddenMembersGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, int>>(@methodHandler.Method)(@a, @b) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -412,10 +412,10 @@ public static class HiddenMembersGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						
@@ -428,12 +428,11 @@ public static class HiddenMembersGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -450,10 +449,10 @@ public static class HiddenMembersGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -468,6 +467,7 @@ public static class HiddenMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
+										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
@@ -480,7 +480,6 @@ public static class HiddenMembersGeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(@value)");
 										}
 										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -500,10 +499,10 @@ public static class HiddenMembersGeneratorTests
 							if (this.handlers.TryGetValue(5, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							
@@ -518,6 +517,7 @@ public static class HiddenMembersGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@value))
 									{
+										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
@@ -530,7 +530,6 @@ public static class HiddenMembersGeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IBase.set_Data(@value)");
 										}
 										
-										@methodHandler.IncrementCallCount();
 										break;
 									}
 								}
@@ -553,10 +552,10 @@ public static class HiddenMembersGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, int>>(@methodHandler.Method)(@a, @b) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -579,10 +578,10 @@ public static class HiddenMembersGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string, string>>(@methodHandler.Method)(@a, @b) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}

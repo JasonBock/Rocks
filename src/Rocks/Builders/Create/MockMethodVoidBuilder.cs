@@ -247,6 +247,8 @@ internal static class MockMethodVoidBuilder
 	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock, 
 		VariableNamingContext namingContext, bool raiseEvents)
 	{
+		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
+
 		var methodCast = method.RequiresProjectedDelegate() ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters);
@@ -266,13 +268,11 @@ internal static class MockMethodVoidBuilder
 
 		writer.Indent--;
 		writer.WriteLine("}");
-		writer.WriteLine();
 
 		if (raiseEvents)
 		{
+			writer.WriteLine();
 			writer.WriteLine($"@{namingContext["methodHandler"]}.RaiseEvents(this);");
 		}
-
-		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
 	}
 }

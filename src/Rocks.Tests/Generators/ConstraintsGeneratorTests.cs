@@ -74,10 +74,10 @@ public static class ConstraintsGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -96,10 +96,10 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -114,10 +114,10 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -136,12 +136,12 @@ public static class ConstraintsGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object[]>>(@methodHandler.Expectations[0]).IsValid(@args))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?> @methodReturn ?
 										@methodReturn(@args) :
 										@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
 											@returnValue.ReturnValue :
 											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -267,12 +267,11 @@ public static class ConstraintsGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T> @method)
 									{
 										@method(ref @a, @frame);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}
@@ -385,12 +384,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -405,12 +403,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -425,12 +422,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -445,12 +441,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -465,12 +460,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(4, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -485,12 +479,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(5, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -505,12 +498,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(6, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -527,12 +519,12 @@ public static class ConstraintsGeneratorTests
 							{
 								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
 											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -748,10 +740,10 @@ public static class ConstraintsGeneratorTests
 							{
 								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -770,10 +762,10 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(1, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -788,10 +780,10 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(2, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-							@methodHandler.IncrementCallCount();
 							return @result!;
 						}
 						else
@@ -807,12 +799,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -826,12 +817,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(4, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -846,12 +836,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(5, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -866,12 +855,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(6, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -885,12 +873,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(7, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -904,12 +891,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(8, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -923,12 +909,11 @@ public static class ConstraintsGeneratorTests
 						if (this.handlers.TryGetValue(9, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
 							{
 								@method();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -946,12 +931,12 @@ public static class ConstraintsGeneratorTests
 							{
 								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
 								{
+									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
 											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
-									@methodHandler.IncrementCallCount();
 									return @result!;
 								}
 							}
@@ -1187,12 +1172,11 @@ public static class ConstraintsGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<global::Value<TValue>> @method)
 									{
 										@method(@value);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}
@@ -1303,10 +1287,10 @@ public static class ConstraintsGeneratorTests
 								{
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -1325,10 +1309,10 @@ public static class ConstraintsGeneratorTests
 							if (this.handlers.TryGetValue(1, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1343,10 +1327,10 @@ public static class ConstraintsGeneratorTests
 							if (this.handlers.TryGetValue(2, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							else
@@ -1362,10 +1346,10 @@ public static class ConstraintsGeneratorTests
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::MockTests.Thing<TTarget>>>(@methodHandler.Method)() :
 									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>>>(@methodHandler).ReturnValue;
-								@methodHandler.IncrementCallCount();
 								return @result!;
 							}
 							

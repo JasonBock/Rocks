@@ -77,12 +77,11 @@ public static class DefaultValuesGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T> @method)
 									{
 										@method(@initialValue);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}
@@ -242,12 +241,11 @@ public static class DefaultValuesGeneratorTests
 								{
 									@foundMatch = true;
 									
+									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
 										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<double>>(@methodHandler.Method)(@value);
 									}
-									
-									@methodHandler.IncrementCallCount();
 									break;
 								}
 							}

@@ -110,10 +110,10 @@ public static class RockCreateGeneratorTests
 									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@a) &&
 										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b))
 									{
+										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
 											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?, string, string?>>(@methodHandler.Method)(@a, @b) :
 											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
-										@methodHandler.IncrementCallCount();
 										return @result!;
 									}
 								}
@@ -215,12 +215,11 @@ public static class RockCreateGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
-								
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -310,12 +309,11 @@ public static class RockCreateGeneratorTests
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
 							if (@methodHandler.Method is not null)
 							{
 								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 							}
-							
-							@methodHandler.IncrementCallCount();
 						}
 						else
 						{
@@ -410,12 +408,11 @@ public static class RockCreateGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
-								
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -505,12 +502,11 @@ public static class RockCreateGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
-								
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
@@ -664,12 +660,11 @@ public static class RockCreateGeneratorTests
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
 									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
 								}
-								
-								@methodHandler.IncrementCallCount();
 							}
 							else
 							{
