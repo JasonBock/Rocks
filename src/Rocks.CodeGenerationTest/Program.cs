@@ -127,12 +127,6 @@ static void TestWithTypes()
 		// Mono.Cecil
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 
-		// Number of types found: 303
-		// Create: 0 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// NUnit
-		typeof(NUnit.Framework.TestCaseAttribute),
-
 		// Number of types found: 6
 		// Create: 0 errors, 0 warnings
 		// Make: 0 errors, 0 warnings

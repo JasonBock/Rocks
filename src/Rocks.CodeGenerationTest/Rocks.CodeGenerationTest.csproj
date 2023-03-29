@@ -30,11 +30,6 @@
 		<PackageReference Include="Mono.Cecil" />
 		<PackageReference Include="Moq" />
 		<PackageReference Include="NSubstitute" />
-		<PackageReference Include="NUnit" />
-		<PackageReference Include="NUnit3TestAdapter">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 		<PackageReference Include="Polly" />
 		<PackageReference Include="RestSharp" />
 		<PackageReference Include="Serilog" />
