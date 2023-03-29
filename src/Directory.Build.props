@@ -5,6 +5,7 @@
 		<Copyright>Copyright © 2023</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
+		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net7.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>

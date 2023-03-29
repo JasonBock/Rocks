@@ -3,7 +3,7 @@
 		<OutputType>Exe</OutputType>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="BenchmarkDotNet" Version="0.13.5" />
+		<PackageReference Include="BenchmarkDotNet" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />

@@ -1,0 +1,50 @@
+<Project>
+	<ItemGroup>
+		<PackageVersion Include="AngleSharp" Version="1.0.1" />
+		<PackageVersion Include="AutoMapper" Version="12.0.1" />
+		<PackageVersion Include="AWSSDK.Core" Version="3.7.106.6" />
+		<PackageVersion Include="BenchmarkDotNet" Version="0.13.5" />
+		<PackageVersion Include="Bogus" Version="34.0.2" />
+		<PackageVersion Include="Castle.Core" Version="5.1.1" />
+		<PackageVersion Include="ClangSharp" Version="15.0.2" />
+		<PackageVersion Include="ComputeSharp" Version="2.0.3" />
+		<PackageVersion Include="ComputeSharp.D2D1" Version="2.0.3" />
+		<PackageVersion Include="Csla" Version="6.2.2" />
+		<PackageVersion Include="CsvHelper" Version="30.0.1" />
+		<PackageVersion Include="FluentAssertions" Version="6.10.0" />
+		<PackageVersion Include="Google.Protobuf" Version="3.22.1" />
+		<PackageVersion Include="IdentityModel" Version="6.1.0-preview.1" />
+		<PackageVersion Include="MassTransit" Version="8.0.14" />
+		<PackageVersion Include="MediatR" Version="12.0.1" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.5.0" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.5.0" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit" Version="1.1.1" />
+		<PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
+		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+		<PackageVersion Include="Mono.Cecil" Version="0.11.4" />
+		<PackageVersion Include="Moq" Version="4.18.4" />
+		<PackageVersion Include="NSubstitute" Version="5.0.0" />
+		<PackageVersion Include="NUnit" Version="3.13.3" />
+		<PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
+		<PackageVersion Include="NUnit3TestAdapter" Version="4.4.2" />
+		<PackageVersion Include="Polly" Version="7.2.3" />
+		<PackageVersion Include="RestSharp" Version="109.0.1" />
+		<PackageVersion Include="Serilog" Version="2.12.0" />
+		<PackageVersion Include="SharpZipLib" Version="1.4.2" />
+		<PackageVersion Include="Silk.NET" Version="2.16.0" />
+		<PackageVersion Include="SixLabors.ImageSharp" Version="3.0.0" />
+		<PackageVersion Include="SkiaSharp" Version="2.88.3" />
+		<PackageVersion Include="StackExchange.Redis" Version="2.6.96" />
+		<PackageVersion Include="System.Reactive" Version="5.0.0" />
+		<PackageVersion Include="System.Reflection.Metadata" Version="7.0.1" />
+		<PackageVersion Include="System.Text.Json" Version="7.0.2" />
+		<PackageVersion Include="System.Threading.Channels" Version="7.0.0" />
+		<PackageVersion Include="TerraFX.Interop.D3D12MemoryAllocator" Version="2.0.1.3" />
+		<PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.22621.1" />
+	</ItemGroup>
+</Project>
