@@ -5,7 +5,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
-public static class IPropertySymbolExtensionsGetAccessorsTests
+internal static class IPropertySymbolExtensionsGetAccessorsTests
 {
 	[TestCase("public class Target { public int Foo { get; } }", PropertyAccessor.Get)]
 	[TestCase("public class Target { public int Foo { get; set; } }", PropertyAccessor.GetAndSet)]

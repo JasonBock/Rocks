@@ -6,7 +6,7 @@ using Rocks.Builders.Create;
 
 namespace Rocks.Tests.Builders.Create;
 
-public static class MockProjectedTypesAdornmentsBuilderTests
+internal static class MockProjectedTypesAdornmentsBuilderTests
 {
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",

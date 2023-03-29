@@ -6,7 +6,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
-public static class ITypeSymbolExtensionsGetNameTests
+internal static class ITypeSymbolExtensionsGetNameTests
 {
 	[TestCase("public class Target { public unsafe void Foo(int* a) { } }", "int*")]
 	[TestCase("public class Target { public void Foo(string a) { } }", "string")]

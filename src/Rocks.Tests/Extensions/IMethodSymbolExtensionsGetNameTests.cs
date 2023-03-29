@@ -6,7 +6,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
-public static class IMethodSymbolExtensionsGetNameTests
+internal static class IMethodSymbolExtensionsGetNameTests
 {
 	[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.NoGenerics, "Foo")]
 	[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.IncludeGenerics, "Foo<T>")]
