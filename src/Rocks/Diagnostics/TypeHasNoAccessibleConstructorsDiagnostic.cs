@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
-public static class TypeHasNoAccessibleConstructorsDiagnostic
+internal static class TypeHasNoAccessibleConstructorsDiagnostic
 {
 	internal static Diagnostic Create(ITypeSymbol type) =>
 		Diagnostic.Create(new(TypeHasNoAccessibleConstructorsDiagnostic.Id, TypeHasNoAccessibleConstructorsDiagnostic.Title,
@@ -15,7 +15,7 @@ public static class TypeHasNoAccessibleConstructorsDiagnostic
 				TypeHasNoAccessibleConstructorsDiagnostic.Id, TypeHasNoAccessibleConstructorsDiagnostic.Title)),
 			type.Locations.Length > 0 ? type.Locations[0] : null);
 
-	public const string Id = "ROCK4";
-	public const string Message = "The type {0} has no constructors that are accessible";
-	public const string Title = "Type Has No Accessible Constructors";
+	internal const string Id = "ROCK4";
+	internal const string Message = "The type {0} has no constructors that are accessible";
+	internal const string Title = "Type Has No Accessible Constructors";
 }

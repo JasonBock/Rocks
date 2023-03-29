@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
-public static class MemberUsesObsoleteTypeDiagnostic
+internal static class MemberUsesObsoleteTypeDiagnostic
 {
 	internal static Diagnostic Create(ISymbol symbol) =>
 		Diagnostic.Create(new(MemberUsesObsoleteTypeDiagnostic.Id, MemberUsesObsoleteTypeDiagnostic.Title,
@@ -14,7 +14,7 @@ public static class MemberUsesObsoleteTypeDiagnostic
 				MemberUsesObsoleteTypeDiagnostic.Id, MemberUsesObsoleteTypeDiagnostic.Title)),
 			symbol.Locations.Length > 0 ? symbol.Locations[0] : null);
 
-	public const string Id = "ROCK9";
-	public const string Message = "The member {0} uses an obsolete type";
-	public const string Title = "Member Uses Obsolete Type";
+	internal const string Id = "ROCK9";
+	internal const string Message = "The member {0} uses an obsolete type";
+	internal const string Title = "Member Uses Obsolete Type";
 }

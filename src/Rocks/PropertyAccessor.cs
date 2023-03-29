@@ -1,6 +1,6 @@
 ﻿namespace Rocks;
 
-public enum PropertyAccessor
+internal enum PropertyAccessor
 {
 	Get,
 	Set,

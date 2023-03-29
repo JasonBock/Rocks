@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Extensions;
 
-public enum RequiresOverride
+internal enum RequiresOverride
 {
 	No,
 	Yes

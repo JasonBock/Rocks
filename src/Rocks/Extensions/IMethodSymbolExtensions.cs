@@ -31,7 +31,7 @@ internal static class IMethodSymbolExtensions
 	/// <summary>
 	/// This is needed because if a method has a generic parameter that is used 
 	/// either with a method parameter or the return value and declares the type to be nullable,
-	/// the override must create a <code>where T : default</code> constraint.
+	/// the override must create a <c>where T : default</c> constraint.
 	/// Otherwise, CS0508 and CS0453 will occur.
 	/// </summary>
 	/// <param name="self">The target method.</param>

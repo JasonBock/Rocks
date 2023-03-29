@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Diagnostics;
 
-public static class DiagnosticConstants
+internal static class DiagnosticConstants
 {
-	public const string Usage = nameof(DiagnosticConstants.Usage);
+	internal const string Usage = nameof(DiagnosticConstants.Usage);
 }

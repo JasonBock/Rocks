@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
-public static class CannotSpecifyTypeWithOpenGenericParametersDiagnostic
+internal static class CannotSpecifyTypeWithOpenGenericParametersDiagnostic
 {
 	internal static Diagnostic Create(ITypeSymbol type) =>
 		Diagnostic.Create(new(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Id, CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Title,
@@ -15,7 +15,7 @@ public static class CannotSpecifyTypeWithOpenGenericParametersDiagnostic
 				CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Id, CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Title)),
 			type.Locations.Length > 0 ? type.Locations[0] : null);
 
-	public const string Id = "ROCK5";
-	public const string Message = "The type {0} has an open generic parameter and cannot be mocked";
-	public const string Title = "Cannot Specify Type With Open Generic Parameters";
+	internal const string Id = "ROCK5";
+	internal const string Message = "The type {0} has an open generic parameter and cannot be mocked";
+	internal const string Title = "Cannot Specify Type With Open Generic Parameters";
 }

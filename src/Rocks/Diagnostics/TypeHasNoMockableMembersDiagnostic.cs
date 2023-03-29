@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
-public static class TypeHasNoMockableMembersDiagnostic
+internal static class TypeHasNoMockableMembersDiagnostic
 {
 	internal static Diagnostic Create(ITypeSymbol type) =>
 		Diagnostic.Create(new(TypeHasNoMockableMembersDiagnostic.Id, TypeHasNoMockableMembersDiagnostic.Title,
@@ -15,7 +15,7 @@ public static class TypeHasNoMockableMembersDiagnostic
 				TypeHasNoMockableMembersDiagnostic.Id, TypeHasNoMockableMembersDiagnostic.Title)),
 			type.Locations.Length > 0 ? type.Locations[0] : null);
 
-	public const string Id = "ROCK3";
-	public const string Message = "The type {0} has no members that can be overriden";
-	public const string Title = "Type Has No Mockable Members";
+	internal const string Id = "ROCK3";
+	internal const string Message = "The type {0} has no members that can be overriden";
+	internal const string Title = "Type Has No Mockable Members";
 }

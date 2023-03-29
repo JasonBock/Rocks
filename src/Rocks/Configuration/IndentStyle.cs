@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Configuration;
 
-public enum IndentStyle
+internal enum IndentStyle
 {
 	Tab, Space
 }

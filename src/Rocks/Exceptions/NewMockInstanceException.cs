@@ -1,15 +1,18 @@
-﻿using System.Runtime.Serialization;
+﻿namespace Rocks.Exceptions;
 
-namespace Rocks.Exceptions;
-
+/// <summary>
+/// Thrown if an <c>Instance()</c> extension method is called
+/// more than once on an <see cref="Expectations.Expectations{T}"/> instance.
+/// </summary>
 [Serializable]
-public sealed class MockException
+public sealed class NewMockInstanceException
 	: Exception
 {
-	public MockException() { }
-	public MockException(string message) : base(message) { }
-	public MockException(string message, Exception inner) : base(message, inner) { }
-	private MockException(SerializationInfo info, StreamingContext context)
-		: base(info, context)
-	{ }
+	/// <summary>
+	/// Creates a new <see cref="NewMockInstanceException"/> instance
+	/// with the specified message.
+	/// </summary>
+	/// <param name="message">The message.</param>
+	public NewMockInstanceException(string message)
+		: base(message) { }
 }

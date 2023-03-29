@@ -1,6 +1,6 @@
 ﻿namespace Rocks.Extensions;
 
-public enum RequiresExplicitInterfaceImplementation
+internal enum RequiresExplicitInterfaceImplementation
 {
 	No,
 	Yes

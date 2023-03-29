@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
-public static class CannotMockSealedTypeDiagnostic
+internal static class CannotMockSealedTypeDiagnostic
 {
 	internal static Diagnostic Create(ITypeSymbol type) =>
 		Diagnostic.Create(new(CannotMockSealedTypeDiagnostic.Id, CannotMockSealedTypeDiagnostic.Title,
@@ -15,7 +15,7 @@ public static class CannotMockSealedTypeDiagnostic
 				CannotMockSealedTypeDiagnostic.Id, CannotMockSealedTypeDiagnostic.Title)),
 			type.Locations.Length > 0 ? type.Locations[0] : null);
 
-	public const string Id = "ROCK1";
-	public const string Message = "The type {0} is sealed and cannot be mocked";
-	public const string Title = "Cannot Mock Sealed Types";
+	internal const string Id = "ROCK1";
+	internal const string Message = "The type {0} is sealed and cannot be mocked";
+	internal const string Title = "Cannot Mock Sealed Types";
 }
