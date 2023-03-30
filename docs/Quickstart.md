@@ -14,7 +14,6 @@
     - [Optional Arguments](#optional-arguments)
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
-    - [Setting `required` and `init` Properties](#settin-required-and-init-properties)
     - [Mocking Events](#mocking-events)
   - [Using Makes](#using-makes)
   - [Handling Asynchronous Code](#handling-asynchronous-code)
@@ -86,7 +85,7 @@ public interface IHaveParameterExpectations
 }
 ```
 
-You can verify that `Target(`) will be called with an exact value by passing in that value when you set up the expectation:
+You can verify that `Target()` will be called with an exact value by passing in that value when you set up the expectation:
 
 ```csharp
 var expectations = Rock.Create<IHaveParameterExpectations>();
@@ -333,35 +332,6 @@ expectations.Verify();
 
 Note that you can also set up callbacks and expected call counts just like you can with methods.
 
-If you have a property that uses `init`, you can create a mock with that, but you can't set any expectations with it.
-
-### Mocking Indexers
-
-Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks:
-
-```csharp
-public interface IHaveIndexer
-{
-  string this[string a] { get; set; }
-}
-
-// ...
-
-var expectations = Rock.Create<IHaveIndexer>();
-expectations.Indexers().Getters().This(4);
-expectations.Indexers().Setters().This("b", 4);
-
-var mock = expectations.Instance();
-var propertyValue = mock[indexer1];
-mock[indexer1] = indexer1SetValue;
-
-expectations.Verify();
-```
-
-Note that the setter looks like it's taking an extra parameter - that's because the value is passed in as the last argument.
-
-### Setting `required` and `init` Properties
-
 The `init` feature was added with C# 9, and `required` properties were added with C# 11. Starting with Rocks `7.0.0`, there's a way to set these properties when the mock is created. A type called `ConstructorProperties` is created that contains all of the `required` and `init` properties, and an instance of this type can be given as the first argument to the generated `Instance()` methods:
 
 ```csharp
@@ -384,6 +354,31 @@ This will set `InitData` to `"a"` and `RequiredData` to `"b"` on the mock instan
 `ConstructorProperties` will contain properties that are both virtual and non-virtual. If there are no `required` properties, the `constructorProperties` parameter will be nullable.
 
 Note that this will work with `init` indexers as well. `required` indexers is currently not possible in C#.
+
+### Mocking Indexers
+
+Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks:
+
+```csharp
+public interface IHaveIndexer
+{
+  int this[int a] { get; set; }
+}
+
+// ...
+
+var expectations = Rock.Create<IHaveIndexer>();
+expectations.Indexers().Getters().This(3);
+expectations.Indexers().Setters().This(3, 4);
+
+var mock = expectations.Instance();
+var propertyValue = mock[3];
+mock[3] = 4;
+
+expectations.Verify();
+```
+
+Note that the setter looks like it's taking an extra parameter - that's because the value is passed in as the last argument.
 
 ### Mocking Events
 
@@ -509,10 +504,10 @@ public void MyTestMethod()
 {
   using var repository = new RockRepository();
 
-  var firstExpectations = repository.Add(Rock.Create<IFirstRepository>());
+  var firstExpectations = repository.Create<IFirstRepository>();
   firstExpectations.Methods().Foo();
 
-  var secondExpectations = repository.Add(Rock.Create<ISecondRepository>());
+  var secondExpectations = repository.Create<ISecondRepository>();
   secondExpectations.Methods().Bar();
 
   var firstMock = firstExpectations.Instance();
@@ -523,7 +518,7 @@ public void MyTestMethod()
 }
 ```
 
-Before 5.0.0, the repository worked by calling `repository.Create<MyTypeToMock>()`. However, the source generation has to happen within the assembly that needs the mock. Therefore, the call to `Rock.Create()` can't exist within `RockRepository` itself. The "workaround" is just to call `Rock.Create()` and pass the result into `Add()`. Internally, the repository will add that return value to a list and then passes that back as the return value. This list is used in its `Dispose()` implementation to verify all the mocks.
+Internally, the repository will add the new mock to a list and then passes that back as the return value. This list is used in its `Dispose()` implementation to verify all the mocks.
 
 ## `dynamic` Types
 
