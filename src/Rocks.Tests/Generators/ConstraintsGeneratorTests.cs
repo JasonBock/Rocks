@@ -141,7 +141,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@args) :
 										@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for T of type {typeof(T).FullName}.");
 									return @result!;
 								}
 							}
@@ -524,7 +524,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
 									return @result!;
 								}
 							}
@@ -936,7 +936,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
 									return @result!;
 								}
 							}

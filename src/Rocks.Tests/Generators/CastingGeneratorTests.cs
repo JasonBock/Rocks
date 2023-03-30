@@ -123,7 +123,7 @@ public static class CastingGeneratorTests
 											@methodReturn(@value, @data, @information) :
 											@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
 												@returnValue.ReturnValue :
-												throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for T of type {typeof(T).FullName}.");
+												throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for T of type {typeof(T).FullName}.");
 										return @result!;
 									}
 								}

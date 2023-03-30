@@ -5,14 +5,14 @@
 /// in a mock for a member that needs to return a value.
 /// </summary>
 [Serializable]
-public sealed class MockException
+public sealed class NoReturnValueException
 	: Exception
 {
 	/// <summary>
-	/// Creates a new <see cref="MockException"/> instance
+	/// Creates a new <see cref="NoReturnValueException"/> instance
 	/// with the specified message.
 	/// </summary>
 	/// <param name="message">The message.</param>
-	public MockException(string message)
+	public NoReturnValueException(string message)
 		: base(message) { }
 }

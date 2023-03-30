@@ -168,7 +168,7 @@ public static class InterfaceGenericMethodTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(mock.BarReturn<string>, Throws.TypeOf<MockException>());
+		Assert.That(mock.BarReturn<string>, Throws.TypeOf<NoReturnValueException>());
 	}
 
 	[Test]

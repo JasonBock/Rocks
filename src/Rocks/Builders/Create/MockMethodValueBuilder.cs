@@ -238,7 +238,7 @@ internal static class MockMethodValueBuilder
 					$$"""
 					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue :
-						throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+						throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
 					"""
 				);
 			}
@@ -255,7 +255,7 @@ internal static class MockMethodValueBuilder
 					$$"""
 					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue!.Invoke() :
-						throw new global::Rocks.Exceptions.MockException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
+						throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for {{method.ReturnType.Name}} of type {typeof({{method.ReturnType.Name}}).FullName}.");
 					"""
 				);
 			}
