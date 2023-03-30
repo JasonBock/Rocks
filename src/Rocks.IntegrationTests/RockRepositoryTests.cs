@@ -16,6 +16,40 @@ public interface ISecondRepository
 public static class RockRepositoryTests
 {
 	[Test]
+	public static void CreateAfterDisposeWasCalled()
+	{
+		var repository = new RockRepository();
+
+		var expectationsFirst = repository.Create<IFirstRepository>();
+		expectationsFirst.Methods().Foo();
+
+		var mockFirst = expectationsFirst.Instance();
+		mockFirst.Foo();
+
+		repository.Dispose();
+
+		Assert.That(() => _ = repository.Create<IFirstRepository>(), 
+			Throws.TypeOf<ObjectDisposedException>());
+	}
+
+	[Test]
+	public static void DisposeMoreThanOnce()
+	{
+		var repository = new RockRepository();
+
+		var expectationsFirst = repository.Create<IFirstRepository>();
+		expectationsFirst.Methods().Foo();
+
+		var mockFirst = expectationsFirst.Instance();
+		mockFirst.Foo();
+
+		repository.Dispose();
+
+		Assert.That(() => repository.Dispose(),
+			Throws.TypeOf<ObjectDisposedException>());
+	}
+
+	[Test]
 	public static void UseRepository()
 	{
 		using var repository = new RockRepository();

@@ -9,8 +9,9 @@ namespace Rocks;
 /// <see cref="IExpectations.Verify"/> is invoked on every created mock.
 /// </summary>
 public sealed class RockRepository
-	 : IDisposable
+	: IDisposable
 {
+	private bool isDisposed = false;
 	private readonly List<IExpectations> rocks = new();
 
 	/// <summary>
@@ -22,6 +23,11 @@ public sealed class RockRepository
 	public Expectations<T> Create<T>()
 		where T : class
 	{
+		if(this.isDisposed)
+		{
+			throw new ObjectDisposedException(this.GetType().Name);
+		}
+
 		var expectations = new Expectations<T>();
 		this.rocks.Add(expectations);
 		return expectations;
@@ -33,9 +39,16 @@ public sealed class RockRepository
 	/// </summary>
 	public void Dispose()
 	{
+		if (this.isDisposed)
+		{
+			throw new ObjectDisposedException(this.GetType().Name);
+		}
+
 		foreach (var chunk in this.rocks)
 		{
 			chunk.Verify();
 		}
+
+		this.isDisposed = true;
 	}
 }
