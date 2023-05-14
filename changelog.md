@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [7.0.1] - 2023-03-30
 
 ### Fixed
-- If an exception is throw in `Callback()`, the `Verify()` call now works as expected (issue [#220](https://github.com/JasonBock/Rocks/issues/220))
+- If an exception is thrown in `Callback()`, the `Verify()` call now works as expected (issue [#220](https://github.com/JasonBock/Rocks/issues/220))
 - When `Verify()` fails, the resulting exception message now contains the correct member information (issue [#221](https://github.com/JasonBock/Rocks/issues/221))
 - Added XML documentation and changed the visibility on some members that were not used in generated code (issue [#138](https://github.com/JasonBock/Rocks/issues/138))
 - Changed the name of the exception `MockException` to `NoReturnValueException` (issue [#223](https://github.com/JasonBock/Rocks/issues/223))
