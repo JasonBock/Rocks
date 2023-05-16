@@ -13,7 +13,7 @@ internal static class ITypeSymbolExtensions
 		}
 		else if (self is INamedTypeSymbol namedType)
 		{
-			return namedType.TypeArguments.Any(_ => _.TypeKind == TypeKind.TypeParameter);
+			return namedType.HasOpenGenerics();
 		}
 
 		return false;

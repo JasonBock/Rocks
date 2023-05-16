@@ -18,13 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.IntegrationTests", "Rocks.IntegrationTests\Rocks.IntegrationTests.csproj", "{EB1465BD-5400-4226-BFA3-FA59EA14DB02}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.PackageHost", "Rocks.PackageHost\Rocks.PackageHost.csproj", "{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EB8A9F39-002F-4E73-B21A-A64E8B8CC95A} = {EB8A9F39-002F-4E73-B21A-A64E8B8CC95A}
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{B39A3442-A867-4C48-89D7-5006677BF503}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
@@ -45,14 +38,6 @@ Global
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB1465BD-5400-4226-BFA3-FA59EA14DB02}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62A2E423-D6A4-4EFD-8F41-09BF2A81E703}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B39A3442-A867-4C48-89D7-5006677BF503}.Release|Any CPU.ActiveCfg = Release|Any CPU

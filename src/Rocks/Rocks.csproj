@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks</AssemblyName>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
