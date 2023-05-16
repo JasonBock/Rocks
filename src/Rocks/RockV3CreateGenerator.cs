@@ -57,7 +57,7 @@ internal sealed class RockV3CreateGenerator
 			.Where(static _ => _ is not null);
 		var compilationNodes = context.CompilationProvider.Combine(provider.Collect());
 		var output = context.AnalyzerConfigOptionsProvider.Combine(compilationNodes);
-
+		
 		context.RegisterSourceOutput(output,
 			(context, source) => CreateOutput(source.Right.Left, source.Right.Right, source.Left, context));
 	}
@@ -65,6 +65,8 @@ internal sealed class RockV3CreateGenerator
 	private static void CreateOutput(Compilation compilation, ImmutableArray<(SyntaxNode, ITypeSymbol)?> symbols,
 		AnalyzerConfigOptionsProvider options, SourceProductionContext context)
 	{
+		compilation.Options.WithGeneralDiagnosticOption(ReportDiagnostic.Error);
+
 		if (symbols.Length > 0)
 		{
 			var targets = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
