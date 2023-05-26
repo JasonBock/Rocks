@@ -69,7 +69,7 @@ internal sealed class RockCreateGeneratorV3
 
 			if (mock.Type is not null)
 			{
-				var builder = new RockCreateBuilderV3(mock, compilation);
+				var builder = new RockCreateBuilderV3(mock.Type, compilation);
 				context.AddSource(builder.Name, builder.Text);
 			}
 		}

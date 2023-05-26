@@ -1,3 +1,13 @@
-﻿namespace Rocks.Models;
+﻿using Microsoft.CodeAnalysis;
 
-internal record ParameterModel;
+namespace Rocks.Models;
+
+internal record ParameterModel
+{
+	internal ParameterModel(IParameterSymbol parameter)
+	{
+		this.Name = parameter.Name;
+	}
+
+   internal string Name { get; }
+}

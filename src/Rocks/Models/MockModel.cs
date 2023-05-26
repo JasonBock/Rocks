@@ -8,8 +8,13 @@ namespace Rocks.Models;
 
 internal record MockModel
 {
-	internal static MockModel Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
+	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
 	{
+		if(typeToMock.ContainsDiagnostics())
+		{
+			return null;
+		}
+	
 		var compilation = model.Compilation;
 		var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
 
@@ -111,10 +116,9 @@ internal record MockModel
 			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(typeToMock));
 		}
 
-		var isMockable = typeToMock.ContainsDiagnostics() &&
-			!diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
+		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		// Remember to sort all array so "equatable" will work,
+		// TODO: Remember to sort all array so "equatable" will work,
 		// EXCEPT FOR parameter order (including generic parameters).
 		// Those have to stay in the order they exist in the definition.
 		return new(!isMockable ?

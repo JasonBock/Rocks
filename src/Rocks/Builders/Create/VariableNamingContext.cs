@@ -1,17 +1,18 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Models;
 using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
 internal sealed class VariableNamingContext
 {
-	private readonly ImmutableArray<IParameterSymbol> parameters;
+	private readonly ImmutableArray<ParameterModel> parameters;
 	private readonly Dictionary<string, string> variables = new();
 
-	internal VariableNamingContext(IMethodSymbol method) =>
+	internal VariableNamingContext(MethodModel method) =>
 		this.parameters = method.Parameters;
 
-	internal VariableNamingContext(ImmutableArray<IParameterSymbol> parameters) =>
+	internal VariableNamingContext(ImmutableArray<ParameterModel> parameters) =>
 		this.parameters = parameters;
 
 	internal string this[string variableName]

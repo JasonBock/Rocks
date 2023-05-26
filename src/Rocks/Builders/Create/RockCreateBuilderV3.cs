@@ -44,7 +44,7 @@ internal sealed class RockCreateBuilderV3
 			"using System.Collections.Immutable;",
 		};
 
-		var wereTypesProjected = MockBuilder.Build(indentWriter, this.Type, this.Compilation);
+		var wereTypesProjected = MockBuilderV3.Build(indentWriter, this.Type, this.Compilation);
 
 		if (wereTypesProjected)
 		{

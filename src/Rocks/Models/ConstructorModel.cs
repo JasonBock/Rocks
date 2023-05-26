@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
@@ -12,5 +13,10 @@ internal record ConstructorModel
 	/// Creates a new <see cref="MethodMockableResult"/> instance.
 	/// </summary>
 	/// <param name="constructor">The <see cref="IMethodSymbol"/> to obtain information from.</param>
-	internal ConstructorModel(IMethodSymbol constructor) { }
+	internal ConstructorModel(IMethodSymbol constructor) 
+	{
+		this.Parameters = constructor.Parameters.Select(_ => new ParameterModel(_)).ToImmutableArray();
+	}
+
+	internal EquatableArray<ParameterModel> Parameters { get; }
 }
