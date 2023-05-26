@@ -6,9 +6,9 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-internal record MockedInformation
+internal record MockModel
 {
-	internal static MockedInformation Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
+	internal static MockModel Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
 	{
 		var compilation = model.Compilation;
 		var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
@@ -111,37 +111,37 @@ internal record MockedInformation
 			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(typeToMock));
 		}
 
-		return new(!diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error) ?
-			new(ImmutableArray<MockedConstructor>.Empty, ImmutableArray<MockedMethod>.Empty,
-				ImmutableArray<MockedProperty>.Empty, ImmutableArray<MockedIndexer>.Empty,
-				ImmutableArray<MockedEvent>.Empty) : 
-			null, 
+		var isMockable = typeToMock.ContainsDiagnostics() &&
+			!diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
+
+		// Remember to sort all array so "equatable" will work,
+		// EXCEPT FOR parameter order (including generic parameters).
+		// Those have to stay in the order they exist in the definition.
+		return new(!isMockable ?
+			null :
+			new(typeToMock,
+				constructors.Select(_ => 
+					new ConstructorModel(_)).ToImmutableArray(), 
+				methods.Results.Select(_ => 
+					new MethodModel(
+						_.Value, _.RequiresExplicitInterfaceImplementation, 
+						_.RequiresOverride, _.MemberIdentifier)).ToImmutableArray(), 
+				properties.Results.Select(_ =>
+					new PropertyModel(_.Value, _.RequiresExplicitInterfaceImplementation, 
+						_.RequiresOverride, _.Accessors, _.MemberIdentifier)).ToImmutableArray(),
+				events.Results.Select(_ =>
+					new EventModel(_.Value, _.RequiresExplicitInterfaceImplementation, 
+						_.RequiresOverride)).ToImmutableArray()), 
+			typeToMock.GetFullyQualifiedName(),
 			diagnostics.ToImmutable());
 	}
 
-	private MockedInformation(MockedType? type, EquatableArray<Diagnostic> diagnostics) =>
-		(this.Type, this.Diagnostics) = (type, diagnostics);
+	private MockModel(TypeModel? type, string typeFullyQualifiedName, 
+		EquatableArray<Diagnostic> diagnostics) =>
+		(this.Type, this.FullyQualifiedName, this.Diagnostics) = 
+			(type, typeFullyQualifiedName, diagnostics);
 
 	internal EquatableArray<Diagnostic> Diagnostics { get; }
-	internal MockedType? Type { get; }
+	internal string FullyQualifiedName { get; }
+	internal TypeModel? Type { get; }
 }
-
-// Remember to sort all array so "equatable" will work
-internal record MockedType(
-	EquatableArray<MockedConstructor> Constructors, EquatableArray<MockedMethod> Methods,
-	EquatableArray<MockedProperty> Properties, EquatableArray<MockedIndexer> Indexers,
-	EquatableArray<MockedEvent> Events);
-
-internal record MockedConstructor;
-
-internal record MockedMethod;
-
-internal record MockedProperty;
-
-internal record MockedIndexer;
-
-internal record MockedEvent;
-
-internal record MockAttribute;
-
-internal record MockedParameter;
