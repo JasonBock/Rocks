@@ -15,9 +15,9 @@ internal static class MockConstructorBuilderV3
 	{
 		var typeToMockName = type.FullyQualifiedName;
 		var namingContext = new VariableNamingContext(parameters);
-		var hasRequiredProperties = type.RequiredInitPropertiesAndIndexers.Any(_ => _.IsRequired);
+		var hasRequiredProperties = type.ConstructorProperties.Any(_ => _.IsRequired);
 
-		var contextParameters = type.RequiredInitPropertiesAndIndexers.Length == 0 ?
+		var contextParameters = type.ConstructorProperties.Length == 0 ?
 			$"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}" :
 			$"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}, ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}";
 		var instanceParameters = parameters.Length == 0 ?
@@ -25,7 +25,7 @@ internal static class MockConstructorBuilderV3
 			string.Join(", ", contextParameters,
 				string.Join(", ", parameters.Select(_ =>
 				{
-					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
+					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 					var direction = _.RefKind switch
 					{
 						RefKind.Ref => "ref ",
@@ -33,7 +33,7 @@ internal static class MockConstructorBuilderV3
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}";
 				})));
 
 		var mockTypeName = $"Rock{type.FlattenedName}";
@@ -47,7 +47,7 @@ internal static class MockConstructorBuilderV3
 		{
 			var passedParameter = string.Join(", ", parameters.Select(_ =>
 			{
-				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
+				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -58,7 +58,7 @@ internal static class MockConstructorBuilderV3
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 
-			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
+			var isUnsafe = parameters.Any(_ => _.IsPointer) ? "unsafe " : string.Empty;
 
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
@@ -66,7 +66,7 @@ internal static class MockConstructorBuilderV3
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, /*shims, */type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -75,36 +75,38 @@ internal static class MockConstructorBuilderV3
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, shims, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, /*shims, */type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
+	// TODO: revisit shims
 	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
-		VariableNamingContext namingContext, ImmutableArray<ITypeSymbol> shims,
-		IPropertySymbol[] requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
+		VariableNamingContext namingContext, /*ImmutableArray<ITypeSymbol> shims,*/
+		EquatableArray<ConstructorPropertyModel> constructorProperties, bool hasRequiredProperties)
 	{
-		if (shims.Length == 0)
-		{
-			writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
-		}
-		else
-		{
-			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
-			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_)}(this)"));
-			writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
-		}
+		// TODO: revisit shims
+		//if (shims.Length == 0)
+		//{
+		//	writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
+		//}
+		//else
+		//{
+		//	var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
+		//	var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_)}(this)"));
+		//	writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
+		//}
 
-		if(requiredInitPropertiesAndIndexers.Length > 0)
+		if (constructorProperties.Length > 0)
 		{
-			var initIndexers = requiredInitPropertiesAndIndexers.Where(
-				_ => _.IsIndexer && (_.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
-					_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
+			var initIndexers = constructorProperties.Where(
+				_ => _.IsIndexer && (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+					_.CanBeSeenByContainingAssembly).ToArray();
 			var enumerableTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
-					_.Parameters[0].Type.GetFullyQualifiedName() :
-					$"({string.Join(", ", _.Parameters.Select(p => p.Type.GetFullyQualifiedName()))})").ToArray();
+					_.Parameters[0].TypeFullyQualifiedName :
+					$"({string.Join(", ", _.Parameters.Select(p => p.TypeFullyQualifiedName))})").ToArray();
 			var forEachTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
 					$"var {_.Parameters[0].Name}" :
@@ -118,12 +120,12 @@ internal static class MockConstructorBuilderV3
 				writer.Indent++;
 			}
 
-			foreach (var requiredInitProperty in requiredInitPropertiesAndIndexers.Where(_ => !_.IsIndexer))
+			foreach (var constructorProperty in constructorProperties.Where(_ => !_.IsIndexer))
 			{
-				var propertyAssignment = (requiredInitProperty.NullableAnnotation == NullableAnnotation.None ||
-					requiredInitProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && requiredInitProperty.Type.IsReferenceType ?
+				var propertyAssignment = (constructorProperty.NullableAnnotation == NullableAnnotation.None ||
+					constructorProperty.NullableAnnotation == NullableAnnotation.NotAnnotated) && constructorProperty.IsReferenceType ?
 						"!" : string.Empty;
-				writer.WriteLine($"this.{requiredInitProperty.Name} = @{namingContext["constructorProperties"]}.{requiredInitProperty.Name}{propertyAssignment};");
+				writer.WriteLine($"this.{constructorProperty.Name} = @{namingContext["constructorProperties"]}.{constructorProperty.Name}{propertyAssignment};");
 			}
 
 			for (var i = 0; i < initIndexers.Length; i++)

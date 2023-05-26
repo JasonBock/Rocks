@@ -6,16 +6,15 @@ using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
-internal static class MockMethodVoidBuilder
+internal static class MockMethodVoidBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents,
+	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents,
 		Compilation compilation)
 	{
-		var method = result.Value;
-		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
+			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -23,16 +22,16 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
-		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
-		var methodDescription = $"void {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
+		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
+			$"{method.ContainingTypeFullyQualifiedName}." : string.Empty;
+		var methodDescription = $"void {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
-			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
+			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -40,15 +39,15 @@ internal static class MockMethodVoidBuilder
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.GetAttributes().GetDescription(compilation);
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
-		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
+		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 		var methodSignature =
-			$"{isUnsafe}void {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
+			$"{isUnsafe}void {explicitTypeNameDescription}{method.Name}({methodParameters})";
 		var methodException =
-			$"void {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
+			$"void {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
 
 		var attributes = method.GetAttributes();
 
@@ -57,23 +56,23 @@ internal static class MockMethodVoidBuilder
 			writer.WriteLine(attributes.GetDescription(compilation));
 		}
 
-		writer.WriteLine($@"[global::Rocks.MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
-		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
-		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
+		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");
+		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+			$"{method.OverridingCodeValue} " : string.Empty;
+		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
 		var constraints = ImmutableArray<string>.Empty;
 
-		if (result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			method.ContainingType.TypeKind == TypeKind.Interface)
+		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+			method.ContainingTypeKind == TypeKind.Interface)
 		{
-			constraints = method.GetConstraints();
+			constraints = method.Constraints;
 		}
 
-		if (result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
-			result.RequiresOverride == RequiresOverride.Yes)
+		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
+			method.RequiresOverride == RequiresOverride.Yes)
 		{
-			constraints = constraints.AddRange(method.GetDefaultConstraints());
+			constraints = constraints.AddRange(method.DefaultConstraints);
 		}
 
 		if (constraints.Length > 0)
@@ -98,20 +97,20 @@ internal static class MockMethodVoidBuilder
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
+		writer.WriteLine($"if (this.handlers.TryGetValue({method.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, result.MockType, namingContext,
+			MockMethodVoidBuilderV3.BuildMethodValidationHandlerWithParameters(
+				writer, method, method.MockType, namingContext,
 				methodSignature, raiseEvents, shouldThrowDoesNotReturnException);
 		}
 		else
 		{
-			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, result.MockType, namingContext,
+			MockMethodVoidBuilderV3.BuildMethodValidationHandlerNoParameters(
+				writer, method, method.MockType, namingContext,
 				raiseEvents, shouldThrowDoesNotReturnException);
 		}
 
@@ -132,7 +131,7 @@ internal static class MockMethodVoidBuilder
 			// "should" not return either, so no extra work necessary for that.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
+				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -142,9 +141,9 @@ internal static class MockMethodVoidBuilder
 				};
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
-			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
-			writer.WriteLine($"{target}.{method.GetName()}({passedParameter});");
+			var target = method.ContainingTypeKind == TypeKind.Interface ?
+				$"this.shimFor{method.ContainingTypeFlattenedName}" : "base";
+			writer.WriteLine($"{target}.{method.Name}({passedParameter});");
 		}
 		else
 		{

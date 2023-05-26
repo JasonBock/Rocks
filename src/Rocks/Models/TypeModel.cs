@@ -19,10 +19,10 @@ internal record TypeModel
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
 		this.IsRecord = type.IsRecord;
-		this.RequiredInitPropertiesAndIndexers = type.GetMembers().OfType<IPropertySymbol>()
+		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
 				_.CanBeSeenByContainingAssembly(compilation.Assembly))
-			.Select(_ => new RequiredAndInitPropertyModel(_))
+			.Select(_ => new ConstructorPropertyModel(_))
 			.ToImmutableArray();
 	}
 
@@ -31,7 +31,7 @@ internal record TypeModel
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal bool IsRecord { get; }
-   internal EquatableArray<RequiredAndInitPropertyModel> RequiredInitPropertiesAndIndexers { get; }
+   internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
    internal EquatableArray<MethodModel> Methods { get; }
 	internal string? Namespace { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }

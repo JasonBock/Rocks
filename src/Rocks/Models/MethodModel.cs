@@ -16,32 +16,52 @@ internal record MethodModel
 	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="method"/> requires explicit implementation.</param>
 	/// <param name="requiresOverride">Specifies if <paramref name="method"/> requires an override.</param>
 	/// <param name="memberIdentifier">The member identifier.</param>
-	internal MethodModel(IMethodSymbol method,
+	/// <param name="compilation">The compilation.</param>
+	internal MethodModel(IMethodSymbol method, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, uint memberIdentifier)
 	{
 		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
 			 (requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
 
-		if(requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
+		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 		{
 			this.ContainingTypeFullyQualifiedName = method.ContainingType.GetFullyQualifiedName();
 			this.ContainingTypeFlattenedName = method.ContainingType.GetName(TypeNameOption.Flatten);
 		}
+		else
+		{
+			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
+		}
 
+		this.IsAbstract = method.IsAbstract;
+		this.Constraints = method.GetConstraints();
+		this.DefaultConstraints = method.GetDefaultConstraints();
+		this.ContainingTypeKind = method.ContainingType.TypeKind;
+		this.Name = method.GetName();
+		this.IsUnsafe = method.IsUnsafe();
+		this.ShouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_)).ToImmutableArray();
 		this.ReturnsVoid = method.ReturnsVoid;
 	}
 
-   internal string? ContainingTypeFlattenedName { get; }
+	internal bool IsUnsafe { get; }
+	internal string? ContainingTypeFlattenedName { get; }
 	internal string? ContainingTypeFullyQualifiedName { get; }
-	internal EquatableArray<ParameterModel> Parameters { get; }
+   internal bool IsAbstract { get; }
+   internal EquatableArray<string> Constraints { get; }
+   internal EquatableArray<string> DefaultConstraints { get; }
+   internal TypeKind ContainingTypeKind { get; }
+   internal string Name { get; }
+   internal bool ShouldThrowDoesNotReturnException { get; }
+   internal EquatableArray<ParameterModel> Parameters { get; }
 	internal bool ReturnsVoid { get; }
+   internal string? OverridingCodeValue { get; }
 
-	/// <summary>
-	/// Gets the member identifier.
-	/// </summary>
-	internal uint MemberIdentifier { get; }
+   /// <summary>
+   /// Gets the member identifier.
+   /// </summary>
+   internal uint MemberIdentifier { get; }
 
 	/// <summary>
 	/// Gets the <see cref="RequiresExplicitInterfaceImplementation"/> value that specifies if this result

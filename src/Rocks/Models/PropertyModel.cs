@@ -17,10 +17,12 @@ internal record PropertyModel
 	/// <param name="accessors">Specifies the accessors for this property.</param>
 	/// <param name="memberIdentifier">The member identifier.</param>
 	internal PropertyModel(IPropertySymbol value,
-	   RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
-	   PropertyAccessor accessors, uint memberIdentifier) => 
+		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
+		PropertyAccessor accessors, uint memberIdentifier)
+	{
 		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
-		   (requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+			(requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+	}
 
    /// <summary>
    /// Gets the accessors.
