@@ -5,14 +5,13 @@ namespace Rocks.Models;
 
 internal record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter)
+	internal ParameterModel(IParameterSymbol parameter, Compilation compilation)
 	{
 		this.Name = parameter.Name;
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
 		this.IsParams = parameter.IsParams;
-		this.TypeFullyQualifiedName = parameter.Type.GetFullyQualifiedName();
-		this.IsPointer = parameter.Type.IsPointer();
+		this.Type = new TypeReferenceModel(parameter.Type, compilation);
 
 		this.HasExplicitDefaultValue = parameter.HasExplicitDefaultValue;
 
@@ -20,9 +19,11 @@ internal record ParameterModel
 		{
 			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type);
 		}
+
+		this.AttributesDescription = parameter.GetAttributes().GetDescription(compilation);
 	}
 
-	internal bool IsPointer { get; }
+   internal string AttributesDescription { get; }
 	internal bool HasExplicitDefaultValue { get; }
 	internal string? ExplicitDefaultValue { get; }
 	internal string Name { get; }
@@ -31,5 +32,5 @@ internal record ParameterModel
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
 	internal bool IsParams { get; }
-	internal string TypeFullyQualifiedName { get; }
+   internal TypeReferenceModel Type { get; }
 }

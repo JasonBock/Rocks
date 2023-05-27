@@ -50,11 +50,11 @@ internal static class MockTypeBuilderV3
 		{
 			if (method.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, method, canRaiseEvents, compilation);
+				MockMethodVoidBuilderV3.Build(writer, method, canRaiseEvents, compilation);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, method, canRaiseEvents, compilation);
+				MockMethodValueBuilderV3.Build(writer, method, canRaiseEvents, compilation);
 			}
 		}
 

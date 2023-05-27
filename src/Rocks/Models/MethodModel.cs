@@ -41,27 +41,54 @@ internal record MethodModel
 		this.Name = method.GetName();
 		this.IsUnsafe = method.IsUnsafe();
 		this.ShouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_)).ToImmutableArray();
+		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_, compilation)).ToImmutableArray();
+
+		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);
 		this.ReturnsVoid = method.ReturnsVoid;
+		this.ReturnsByRef = method.ReturnsByRef;
+		this.ReturnsByRefReadOnly = method.ReturnsByRefReadonly;
+
+		this.AttributesDescription = method.GetAttributes().GetDescription(compilation);
+		this.RequiresProjectedDelegate = method.RequiresProjectedDelegate();
+
+		if (this.RequiresProjectedDelegate)
+		{
+			this.ProjectedCallbackDelegateName = method.GetName(extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+		}
+
+		this.ReturnTypeIsRefLikeType = method.ReturnType.IsRefLikeType;
+
+		if (this.ReturnTypeIsRefLikeType)
+		{
+			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+		}
 	}
 
+   internal string? ProjectedReturnValueDelegateName { get; }
+   internal string? ProjectedCallbackDelegateName { get; }
+   internal bool RequiresProjectedDelegate { get; }
 	internal bool IsUnsafe { get; }
 	internal string? ContainingTypeFlattenedName { get; }
 	internal string? ContainingTypeFullyQualifiedName { get; }
-   internal bool IsAbstract { get; }
-   internal EquatableArray<string> Constraints { get; }
-   internal EquatableArray<string> DefaultConstraints { get; }
-   internal TypeKind ContainingTypeKind { get; }
-   internal string Name { get; }
-   internal bool ShouldThrowDoesNotReturnException { get; }
-   internal EquatableArray<ParameterModel> Parameters { get; }
-	internal bool ReturnsVoid { get; }
-   internal string? OverridingCodeValue { get; }
+	internal bool IsAbstract { get; }
+	internal EquatableArray<string> Constraints { get; }
+	internal EquatableArray<string> DefaultConstraints { get; }
+	internal TypeKind ContainingTypeKind { get; }
+	internal string Name { get; }
+	internal bool ShouldThrowDoesNotReturnException { get; }
+	internal EquatableArray<ParameterModel> Parameters { get; }
+   internal TypeReferenceModel ReturnType { get; }
+   internal bool ReturnsVoid { get; }
+	internal bool ReturnsByRef { get; }
+	internal bool ReturnsByRefReadOnly { get; }
+	internal bool ReturnTypeIsRefLikeType { get; }
+	internal string AttributesDescription { get; }
+	internal string? OverridingCodeValue { get; }
 
-   /// <summary>
-   /// Gets the member identifier.
-   /// </summary>
-   internal uint MemberIdentifier { get; }
+	/// <summary>
+	/// Gets the member identifier.
+	/// </summary>
+	internal uint MemberIdentifier { get; }
 
 	/// <summary>
 	/// Gets the <see cref="RequiresExplicitInterfaceImplementation"/> value that specifies if this result

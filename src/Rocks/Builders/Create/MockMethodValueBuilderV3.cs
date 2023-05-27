@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -7,17 +8,16 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodValueBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, MethodMockableResult result, bool raiseEvents,
+	internal static void Build(IndentedTextWriter writer, MethodModel method, bool raiseEvents,
 		Compilation compilation)
 	{
-		var method = result.Value;
-		var shouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
+		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
 
-		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnType.GetFullyQualifiedName()}";
+		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+		var returnType = $"{returnByRef}{method.ReturnTypeFullyQualifiedName}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
+			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -25,16 +25,16 @@ internal static class MockMethodValueBuilderV3
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
-		var explicitTypeNameDescription = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingType.GetFullyQualifiedName()}." : string.Empty;
-		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.GetName()}({parametersDescription})";
+		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
+			$"{method.ContainingTypeFullyQualifiedName}." : string.Empty;
+		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
-			var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
-			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
+			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",
@@ -42,47 +42,47 @@ internal static class MockMethodValueBuilderV3
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}{defaultValue}";
-			var attributes = _.GetAttributes().GetDescription(compilation);
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
-		var isUnsafe = method.IsUnsafe() ? "unsafe " : string.Empty;
+		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
 		var methodSignature =
-			$"{isUnsafe}{returnType} {explicitTypeNameDescription}{method.GetName()}({methodParameters})";
+			$"{isUnsafe}{returnType} {explicitTypeNameDescription}{method.Name}({methodParameters})";
 		var methodException =
-			$"{returnType} {explicitTypeNameDescription}{method.GetName()}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
+			$"{returnType} {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
 
-		var attributes = method.GetAttributes();
+		var attributes = method.AttributesDescription;
 
-		if (attributes.Length > 0)
+		if (method.AttributesDescription.Length > 0)
 		{
-			writer.WriteLine(attributes.GetDescription(compilation));
+			writer.WriteLine(method.AttributesDescription);
 		}
 
-		var returnAttributes = method.GetReturnTypeAttributes();
+		var returnAttributes = method.ReturnTypeAttributesDescription;
 
-		if (returnAttributes.Length > 0)
+		if (method.ReturnTypeAttributesDescription.Length > 0)
 		{
-			writer.WriteLine(returnAttributes.GetDescription(compilation, AttributeTargets.ReturnValue));
+			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
-		writer.WriteLine($@"[global::Rocks.MemberIdentifier({result.MemberIdentifier}, ""{methodDescription}"")]");
-		var isPublic = result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-			$"{result.Value.GetOverridingCodeValue(compilation.Assembly)} " : string.Empty;
-		writer.WriteLine($"{isPublic}{(result.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
+		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");
+		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+			$"{method.OverridingCodeValue} " : string.Empty;
+		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
 
 		var constraints = ImmutableArray<string>.Empty;
 
-		if(result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			method.ContainingType.TypeKind == TypeKind.Interface)
+		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+			method.ContainingTypeKind == TypeKind.Interface)
 		{
-			constraints = method.GetConstraints();
+			constraints = method.Constraints;
 		}
 
-		if (result.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
-			result.RequiresOverride == RequiresOverride.Yes)
+		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ||
+			method.RequiresOverride == RequiresOverride.Yes)
 		{
-			constraints = constraints.AddRange(method.GetDefaultConstraints());
+			constraints = constraints.AddRange(method.DefaultConstraints);
 		}
 
 		if (constraints.Length > 0)
@@ -107,21 +107,21 @@ internal static class MockMethodValueBuilderV3
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({result.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
+		writer.WriteLine($"if (this.handlers.TryGetValue({method.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, result.MockType, namingContext,
-				raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
+				writer, method, model.MockType, namingContext,
+				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
 		else
 		{
 			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, result.MockType, namingContext,
-				raiseEvents, shouldThrowDoesNotReturnException, result.MemberIdentifier);
+				writer, method, model.MockType, namingContext,
+				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
 
 		if (method.Parameters.Length > 0)
@@ -158,9 +158,9 @@ internal static class MockMethodValueBuilderV3
 				};
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
-			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
-				$"this.shimFor{method.ContainingType.GetName(TypeNameOption.Flatten)}" : "base";
-			writer.WriteLine($"return {target}.{method.GetName()}({passedParameter});");
+			var target = method.ContainingTypeKind == TypeKind.Interface ?
+				$"this.shimFor{method.ContainingTypeFlattenedName}" : "base";
+			writer.WriteLine($"return {target}.{method.Name}({passedParameter});");
 
 			writer.Indent--;
 			writer.WriteLine("}");
@@ -286,7 +286,7 @@ internal static class MockMethodValueBuilderV3
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer,
-		IMethodSymbol method, ITypeSymbol typeToMock, VariableNamingContext namingContext, 
+		IMethodSymbol method, ITypeSymbol typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");

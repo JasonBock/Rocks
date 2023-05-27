@@ -14,15 +14,15 @@ internal record ConstructorPropertyModel
 	/// Creates a new <see cref="ConstructorPropertyModel"/> instance.
 	/// </summary>
 	/// <param name="value">The <see cref="IPropertySymbol"/> to obtain information from.</param>
-	/// <param name="compilationAssembly">The complation assembly.</param>
-	internal ConstructorPropertyModel(IPropertySymbol value, IAssemblySymbol compilationAssembly) 
+	/// <param name="compilation">The complation.</param>
+	internal ConstructorPropertyModel(IPropertySymbol value, Compilation compilation) 
 	{
 		this.Name = value.Name;
 		this.IsRequired = value.IsRequired;
 		this.IsIndexer = value.IsIndexer;
 		this.Accessors = value.GetAccessors();
-		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilationAssembly);
-		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_)).ToImmutableArray();
+		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilation.Assembly);
+		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, compilation)).ToImmutableArray();
 		this.NullableAnnotation = value.NullableAnnotation;
 		this.IsReferenceType = value.Type.IsReferenceType;
 	}

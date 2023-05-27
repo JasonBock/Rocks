@@ -81,6 +81,11 @@ internal static class AttributeDataExtensions
 
 	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, AttributeTargets? target = null)
 	{
+		if (self.Length == 0)
+		{
+			return string.Empty;
+		}
+
 		// We can't emit attributes that are:
 		// * Compiler-generated
 		// * Not visible to the current compilation (e.g. IntrinsicAttribute).

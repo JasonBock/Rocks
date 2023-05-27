@@ -40,7 +40,7 @@ internal static class MockMethodVoidBuilderV3
 				_ => string.Empty
 			};
 			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
-			var attributes = _.GetAttributes().GetDescription(compilation);
+			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
@@ -49,11 +49,9 @@ internal static class MockMethodVoidBuilderV3
 		var methodException =
 			$"void {explicitTypeNameDescription}{method.Name}({string.Join(", ", method.Parameters.Select(_ => $"{{@{_.Name}}}"))})";
 
-		var attributes = method.GetAttributes();
-
-		if (attributes.Length > 0)
+		if (method.AttributesDescription.Length > 0)
 		{
-			writer.WriteLine(attributes.GetDescription(compilation));
+			writer.WriteLine(method.AttributesDescription);
 		}
 
 		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");

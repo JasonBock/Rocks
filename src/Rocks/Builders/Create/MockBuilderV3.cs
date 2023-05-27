@@ -9,7 +9,7 @@ internal static class MockBuilderV3
 	internal static bool Build(IndentedTextWriter writer, TypeModel type, Compilation compilation)
 	{
 		// TODO: Uncomment as more progress is made.
-		//var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, information, compilation);
+		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, information, compilation);
 
 		writer.WriteLine($"internal static class CreateExpectationsOf{type.FlattenedName}Extensions");
 		writer.WriteLine("{");
@@ -29,7 +29,6 @@ internal static class MockBuilderV3
 		//PropertyExpectationsExtensionsBuilder.Build(writer, information);
 		//EventExpectationsExtensionsBuilder.Build(writer, information);
 
-		return false;
-		//return wereTypesProjected;
+		return wereTypesProjected;
 	}
 }

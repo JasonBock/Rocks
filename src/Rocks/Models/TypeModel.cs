@@ -4,6 +4,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
+// TODO: Maybe this should be called "MockModel"
+// as it's essentially a holder of all the "root" thing.
 internal record TypeModel
 {
 	internal TypeModel(
@@ -14,25 +16,18 @@ internal record TypeModel
 		(this.Constructors, this.Methods, this.Properties, this.Events) =
 			(constructors, methods, properties, events);
 
-		this.Namespace = type.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			null : type.ContainingNamespace!.ToDisplayString();
-		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
-		this.FullyQualifiedName = type.GetFullyQualifiedName();
-		this.IsRecord = type.IsRecord;
+		this.Type = new TypeReferenceModel(type, compilation);
 		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
 				_.CanBeSeenByContainingAssembly(compilation.Assembly))
-			.Select(_ => new ConstructorPropertyModel(_))
+			.Select(_ => new ConstructorPropertyModel(_, compilation))
 			.ToImmutableArray();
 	}
 
+	internal TypeReferenceModel Type { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal EquatableArray<EventModel> Events { get; }
-	internal string FlattenedName { get; }
-	internal string FullyQualifiedName { get; }
-	internal bool IsRecord { get; }
-   internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
+	internal EquatableArray<ConstructorPropertyModel> ConstructorProperties { get; }
    internal EquatableArray<MethodModel> Methods { get; }
-	internal string? Namespace { get; }
 	internal EquatableArray<PropertyModel> Properties { get; }
 }
