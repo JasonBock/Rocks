@@ -18,8 +18,8 @@ internal static class PointerArgTypeBuilderV3
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var containingNamespace = typeModel.MockType.Namespace;
-		var projectionsForNamespace = $"ProjectionsFor{typeModel.MockType.FlattenedName}";
+		var containingNamespace = typeModel.Type.Namespace;
+		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
 		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}

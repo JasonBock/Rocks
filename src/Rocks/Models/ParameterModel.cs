@@ -7,7 +7,7 @@ internal record ParameterModel
 {
 	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation)
 	{
-		this.MockType = mockType
+		this.MockType = mockType;
 		this.Name = parameter.Name;
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
@@ -29,8 +29,6 @@ internal record ParameterModel
 	internal string? ExplicitDefaultValue { get; }
    internal TypeReferenceModel MockType { get; }
    internal string Name { get; }
-
-	// TODO: Should I make my own RefKind? Not sure about that...
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
 	internal bool IsParams { get; }

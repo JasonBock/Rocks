@@ -1,5 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -7,25 +7,23 @@ namespace Rocks.Builders.Shim;
 
 internal static class ShimIndexerBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, Compilation compilation, MockInformation shimInformation)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
-		foreach (var indexer in shimInformation.Properties.Results
-			.Where(_ => _.Value.IsIndexer && !_.Value.IsVirtual)
-			.Select(_ => _.Value))
+		foreach (var indexer in shimType.Properties
+			.Where(_ => _.IsIndexer && !_.IsVirtual)
+			.Select(_ => _))
 		{
 			writer.WriteLine();
 
-			var attributes = indexer.GetAttributes();
-
-			if (attributes.Length > 0)
+			if (indexer.AttributesDescription.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription(compilation));
+				writer.WriteLine(indexer.AttributesDescription);
 			}
 
-			var isUnsafe = indexer.IsUnsafe() ? "unsafe " : string.Empty;
+			var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
 
-			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.GetFullyQualifiedName()} {GetSignature(indexer.Parameters, true, compilation)}");
+			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.FullyQualifiedName} {GetSignature(indexer.Parameters, true)}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -39,42 +37,41 @@ internal static class ShimIndexerBuilderV3
 				return $"{direction}@{_.Name}";
 			}));
 
-			var accessors = indexer.GetAccessors();
+			var accessors = indexer.Accessors;
 			if (accessors == PropertyAccessor.Get || accessors == PropertyAccessor.GetAndInit ||
 				accessors == PropertyAccessor.GetAndSet)
 			{
-				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadonly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}];");
+				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
+				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock)[{parameters}];");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}] = value;");
+				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock)[{parameters}] = value;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock)[{parameters}] = value;");
+				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock)[{parameters}] = value;");
 			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 
-		static string GetSignature(ImmutableArray<IParameterSymbol> parameters, bool includeOptionalParameterValues,
-			Compilation compilation)
+		static string GetSignature(ImmutableArray<ParameterModel> parameters, bool includeOptionalParameterValues)
 		{
 			var methodParameters = string.Join(", ", parameters.Select(_ =>
 			{
 				var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-					$" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
+					$" = {_.ExplicitDefaultValue}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetName()} @{_.Name}{defaultValue}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}{defaultValue}";
+				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
 
 			return $"this[{string.Join(", ", methodParameters)}]";

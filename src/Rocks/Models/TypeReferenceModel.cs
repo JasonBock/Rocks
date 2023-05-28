@@ -17,6 +17,7 @@ internal record TypeReferenceModel
 
 		this.IsPointer = type.IsPointer();
 		this.IsEsoteric = type.IsEsoteric();
+		this.IsRefLikeType = type.IsRefLikeType;
 
 		if (this.IsEsoteric)
 		{
@@ -43,7 +44,8 @@ internal record TypeReferenceModel
 	internal bool IsPointer { get; }
 	internal string FullyQualifiedName { get; }
 	internal bool IsEsoteric { get; }
-	internal string AttributesDescription { get; }
+   internal bool IsRefLikeType { get; }
+   internal string AttributesDescription { get; }
 	internal string FlattenedName { get; }
 	internal bool IsRecord { get; }
 	internal string? Namespace { get; }

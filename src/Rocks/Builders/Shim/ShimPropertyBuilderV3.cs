@@ -1,49 +1,47 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Shim;
 
 internal static class ShimPropertyBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, Compilation compilation, MockInformation shimInformation)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
-		foreach (var property in shimInformation.Properties.Results
-			.Where(_ => !_.Value.IsIndexer && !_.Value.IsVirtual)
-			.Select(_ => _.Value))
+		foreach (var property in shimType.Properties
+			.Where(_ => !_.IsIndexer && !_.IsVirtual)
+			.Select(_ => _))
 		{
 			writer.WriteLine();
 
-			var attributes = property.GetAttributes();
-
-			if (attributes.Length > 0)
+			if (property.AttributesDescription.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription(compilation));
+				writer.WriteLine(property.AttributesDescription);
 			}
 
-			var isUnsafe = property.IsUnsafe() ? "unsafe " : string.Empty;
+			var isUnsafe = property.IsUnsafe ? "unsafe " : string.Empty;
 
-			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.GetFullyQualifiedName()} {property.Name}");
+			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.FullyQualifiedName} {property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			var accessors = property.GetAccessors();
+			var accessors = property.Accessors;
 			if (accessors == PropertyAccessor.Get || accessors == PropertyAccessor.GetAndInit ||
 				accessors == PropertyAccessor.GetAndSet)
 			{
-				var refReturn = property.ReturnsByRef || property.ReturnsByRefReadonly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name};");
+				var refReturn = property.ReturnsByRef || property.ReturnsByRefReadOnly ? "ref " : string.Empty;
+				writer.WriteLine($"get => {refReturn}global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock).{property.Name};");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name} = value;");
+				writer.WriteLine($"set => global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock).{property.Name} = value;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{property.Name} = value;");
+				writer.WriteLine($"init => global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock).{property.Name} = value;");
 			}
 
 			writer.Indent--;

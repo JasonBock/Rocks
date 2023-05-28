@@ -11,7 +11,7 @@ internal static class MockBuilderV3
 		// TODO: Uncomment as more progress is made.
 		var wereTypesProjected = MockProjectedTypesBuilderV3.Build(writer, type);
 
-		writer.WriteLine($"internal static class CreateExpectationsOf{type.MockType.FlattenedName}Extensions");
+		writer.WriteLine($"internal static class CreateExpectationsOf{type.Type.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 

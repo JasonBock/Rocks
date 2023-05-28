@@ -11,7 +11,7 @@ internal static class MockMethodExtensionsBuilderV3
 	{
 		if (type.Methods.Length > 0)
 		{
-			var typeToMockName = type.MockType.FullyQualifiedName;
+			var typeToMockName = type.Type.FullyQualifiedName;
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{

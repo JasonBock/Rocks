@@ -75,7 +75,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 				MockProjectedTypesAdornmentsBuilderV3.BuildHandlerInformationType(writer, handlerType);
 			}
 
-			MockProjectedTypesAdornmentsBuilderV3.BuildAddExtensionMethod(writer, type.MockType, types);
+			MockProjectedTypesAdornmentsBuilderV3.BuildAddExtensionMethod(writer, type.Type, types);
 
 			foreach (var (adornmentType, adornment, isExplicit) in adornmentTypes)
 			{

@@ -1,17 +1,16 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Shim;
 
 internal static class ShimMethodBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, Compilation compilation, MockInformation shimInformation)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
-		foreach (var shimMethod in shimInformation.Methods.Results
-			.Where(_ => _.Value.MethodKind == MethodKind.Ordinary && !_.Value.IsVirtual)
-			.Select(_ => _.Value))
+		foreach (var shimMethod in shimType.Methods
+			.Where(_ => _.MethodKind == MethodKind.Ordinary && !_.IsVirtual)
+			.Select(_ => _))
 		{
 			writer.WriteLine();
 
@@ -23,13 +22,13 @@ internal static class ShimMethodBuilderV3
 			}
 			else
 			{
-				var returnByRef = shimMethod.ReturnsByRef ? "ref " : shimMethod.ReturnsByRefReadonly ? "ref readonly " : string.Empty;
-				returnType = $"{returnByRef}{shimMethod.ReturnType.GetFullyQualifiedName()}";
+				var returnByRef = shimMethod.ReturnsByRef ? "ref " : shimMethod.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+				returnType = $"{returnByRef}{shimMethod.ReturnType.FullyQualifiedName}";
 			}
 
 			var methodParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
 			{
-				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue.GetDefaultValue(_.Type)}" : string.Empty;
+				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -37,29 +36,27 @@ internal static class ShimMethodBuilderV3
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()} @{_.Name}{defaultValue}";
-				return $"{(_.GetAttributes().Length > 0 ? $"{_.GetAttributes().GetDescription(compilation)} " : string.Empty)}{parameter}";
+				var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}{defaultValue}";
+				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
 
-			var attributes = shimMethod.GetAttributes();
-
-			if (attributes.Length > 0)
+			if (shimMethod.AttributesDescription.Length > 0)
 			{
-				writer.WriteLine(attributes.GetDescription(compilation));
+				writer.WriteLine(shimMethod.AttributesDescription);
 			}
 
-			var isUnsafe = shimMethod.IsUnsafe() ? "unsafe " : string.Empty;
+			var isUnsafe = shimMethod.IsUnsafe ? "unsafe " : string.Empty;
 
-			var constraints = shimMethod.GetConstraints();
+			var constraints = shimMethod.Constraints;
 
 			if (constraints.Length == 0)
 			{
-				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.GetName()}({methodParameters}) =>");
+				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.Name}({methodParameters}) =>");
 				writer.Indent++;
 			}
 			else
 			{
-				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.GetName()}({methodParameters})");
+				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.Name}({methodParameters})");
 				writer.Indent++;
 
 				for (var i = 0; i < constraints.Length; i++)
@@ -89,7 +86,7 @@ internal static class ShimMethodBuilderV3
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{shimMethod.GetName()}({passedParameters});");
+			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{shimType.Type.FullyQualifiedName}>(this.mock).{shimMethod.Name}({passedParameters});");
 			writer.Indent--;
 		}
 	}

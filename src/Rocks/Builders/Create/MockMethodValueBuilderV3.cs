@@ -14,7 +14,7 @@ internal static class MockMethodValueBuilderV3
 		var shouldThrowDoesNotReturnException = method.ShouldThrowDoesNotReturnException;
 
 		var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-		var returnType = $"{returnByRef}{method.ReturnTypeFullyQualifiedName}";
+		var returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
 		var parametersDescription = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
@@ -25,7 +25,7 @@ internal static class MockMethodValueBuilderV3
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}";
+			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
 			$"{method.ContainingTypeFullyQualifiedName}." : string.Empty;
@@ -42,7 +42,7 @@ internal static class MockMethodValueBuilderV3
 				RefKind.In => "in ",
 				_ => string.Empty
 			};
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";
 			var attributes = _.AttributesDescription;
 			return $"{(attributes.Length > 0 ? $"{attributes} " : string.Empty)}{parameter}";
 		}));
@@ -59,11 +59,9 @@ internal static class MockMethodValueBuilderV3
 			writer.WriteLine(method.AttributesDescription);
 		}
 
-		var returnAttributes = method.ReturnTypeAttributesDescription;
-
-		if (method.ReturnTypeAttributesDescription.Length > 0)
+		if (method.ReturnType.AttributesDescription.Length > 0)
 		{
-			writer.WriteLine(method.ReturnTypeAttributesDescription);
+			writer.WriteLine(method.ReturnType.AttributesDescription);
 		}
 
 		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");
@@ -105,7 +103,7 @@ internal static class MockMethodValueBuilderV3
 			writer.WriteLine($"@{outParameter.Name} = default!;");
 		}
 
-		var namingContext = new VariableNamingContext(method);
+		var namingContext = new VariableNamingContextV3(method);
 
 		writer.WriteLine($"if (this.handlers.TryGetValue({method.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
 		writer.WriteLine("{");
@@ -113,13 +111,13 @@ internal static class MockMethodValueBuilderV3
 
 		if (method.Parameters.Length > 0)
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
+			MockMethodValueBuilderV3.BuildMethodValidationHandlerWithParameters(
 				writer, method, model.MockType, namingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
 		else
 		{
-			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(
+			MockMethodValueBuilderV3.BuildMethodValidationHandlerNoParameters(
 				writer, method, model.MockType, namingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
@@ -177,7 +175,7 @@ internal static class MockMethodValueBuilderV3
 	}
 
 	internal static void BuildMethodHandler(IndentedTextWriter writer, IMethodSymbol method, ITypeSymbol typeToMock,
-		VariableNamingContext namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
+		VariableNamingContextV3 namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
 		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
 

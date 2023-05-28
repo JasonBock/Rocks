@@ -17,8 +17,8 @@ internal static class RefLikeArgTypeBuilderV3
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var containingNamespace = typeModel.MockType.Namespace;
-		var projectionsForNamespace = $"ProjectionsFor{typeModel.MockType.FlattenedName}";
+		var containingNamespace = typeModel.Type.Namespace;
+		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
 		var argForType = type.RefLikeArgProjectedName;
 		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
 	}

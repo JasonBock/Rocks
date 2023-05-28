@@ -12,7 +12,7 @@ internal static class MethodExpectationsExtensionsMethodBuilderV3
 		var isExplicitImplementation = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
 		var mockTypeName = method.MockType.FullyQualifiedName;
 		var containingTypeName = method.ContainingTypeFullyQualifiedName;
-		var namingContext = new VariableNamingContext(method);
+		var namingContext = new VariableNamingContextV3(method);
 
 		var thisParameter = isExplicitImplementation ?
 			$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}" :
@@ -38,39 +38,39 @@ internal static class MethodExpectationsExtensionsMethodBuilderV3
 		var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilderV3.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
 			method.ReturnsVoid ? 
-				DelegateBuilder.Build(method.Parameters) : 
-				DelegateBuilder.Build(method.Parameters, method.ReturnType);
+				DelegateBuilderV3.Build(method.Parameters) :
+				DelegateBuilderV3.Build(method.Parameters, method.ReturnType);
 		var returnType = method.ReturnsVoid ? string.Empty :
 			method.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-				method.ReturnType.GetFullyQualifiedName();
+				MockProjectedDelegateBuilderV3.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+				method.ReturnType.FullyQualifiedName;
 		var adornmentsType = method.ReturnsVoid ?
 			$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}>" :
-			method.ReturnType.IsPointer() ?
-				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
+			method.ReturnType.IsPointer ?
+				$"{MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
 				$"global::Rocks.MethodAdornments<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 		var addMethod = method.ReturnsVoid ? "Add" :
-			method.ReturnType.IsPointer() ?
-				MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) : 
+			method.ReturnType.IsPointer ?
+				MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodName(method.ReturnType) : 
 				$"Add<{returnType}>";
 
-		var constraints = method.GetConstraints();
+		var constraints = method.Constraints;
 		var extensionConstraints = constraints.Length > 0 ?
 			method.Parameters.Length == 0 ? $" {string.Join(" ", constraints)} " : $" {string.Join(" ", constraints)}" : 
 			method.Parameters.Length == 0 ? " " : "";
 
 		if (method.Parameters.Length == 0)
 		{
-			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}=>");
+			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}){extensionConstraints}=>");
 			writer.Indent++;
 			writer.WriteLine($"{newAdornments}(@{namingContext["self"]}.{addMethod}({method.MemberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
 			writer.Indent--;
 		}
 		else
 		{
-			writer.WriteLine($"internal static {returnValue} {method.GetName()}({instanceParameters}){extensionConstraints}");
+			writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -83,11 +83,11 @@ internal static class MethodExpectationsExtensionsMethodBuilderV3
 			{
 				if (_.HasExplicitDefaultValue)
 				{
-					return $"@{_.Name}.Transform({_.ExplicitDefaultValue.GetDefaultValue(_.Type)})";
+					return $"@{_.Name}.Transform({_.ExplicitDefaultValue})";
 				}
 				else if (_.RefKind == RefKind.Out)
 				{
-					return $"global::Rocks.Arg.Any<{_.Type.GetFullyQualifiedName()}{(_.RequiresForcedNullableAnnotation() ? "?" : string.Empty)}>()";
+					return $"global::Rocks.Arg.Any<{_.Type.FullyQualifiedName}{(_.RequiresNullableAnnotation ? "?" : string.Empty)}>()";
 				}
 				else
 				{

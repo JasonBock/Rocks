@@ -10,15 +10,15 @@ internal static class MockTypeBuilderV3
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation)
 	{
-		var kind = type.MockType.IsRecord ? "record" : "class";
-		var mockTypeName = $"Rock{type.MockType.FlattenedName}";
+		var kind = type.Type.IsRecord ? "record" : "class";
+		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
 		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
 
 		var canRaiseEvents = type.Events.Length > 0;
 
-		writer.WriteLine($": {type.MockType.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
+		writer.WriteLine($": {type.Type.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
 		writer.Indent--;
 
 		writer.WriteLine("{");
@@ -34,12 +34,12 @@ internal static class MockTypeBuilderV3
 		{
 			foreach (var constructor in type.Constructors)
 			{
-				MockConstructorBuilderV3.Build(writer, type, compilation, constructor.Parameters/*, type.Shims*/);
+				MockConstructorBuilderV3.Build(writer, type, compilation, constructor.Parameters, type.Shims);
 			}
 		}
 		else
 		{
-			MockConstructorBuilderV3.Build(writer, type, compilation, ImmutableArray<ParameterModel>.Empty/*, type.Shims*/);
+			MockConstructorBuilderV3.Build(writer, type, compilation, ImmutableArray<ParameterModel>.Empty, type.Shims);
 		}
 
 		writer.WriteLine();
@@ -73,19 +73,18 @@ internal static class MockTypeBuilderV3
 		//	MockEventsBuilder.Build(writer, type.Events, compilation);
 		//}
 
-		MockTypeBuilderV3.BuildShimTypes(writer, type, mockTypeName, compilation);
+		MockTypeBuilderV3.BuildShimTypes(writer, type, mockTypeName);
 
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
-	private static void BuildShimTypes(IndentedTextWriter writer, TypeMockModel type, string mockTypeName,
-		Compilation compilation)
+	private static void BuildShimTypes(IndentedTextWriter writer, TypeMockModel type, string mockTypeName)
 	{
 		foreach (var shimType in type.Shims)
 		{
 			writer.WriteLine();
-			ShimBuilderV3.Build(writer, shimType, mockTypeName, compilation, type);
+			ShimBuilderV3.Build(writer, shimType, mockTypeName);
 		}
 	}
 
@@ -93,7 +92,7 @@ internal static class MockTypeBuilderV3
 	{
 		foreach (var shimType in type.Shims)
 		{
-			writer.WriteLine($"private readonly {shimType.FullyQualifiedName} shimFor{shimType.FlattenedName};");
+			writer.WriteLine($"private readonly {shimType.Type.FullyQualifiedName} shimFor{shimType.Type.FlattenedName};");
 		}
 	}
 

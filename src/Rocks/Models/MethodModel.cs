@@ -37,6 +37,8 @@ internal record MethodModel
 		}
 
 		this.IsAbstract = method.IsAbstract;
+		this.IsVirtual = method.IsVirtual;
+		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints();
 		this.DefaultConstraints = method.GetDefaultConstraints();
 		this.ContainingTypeKind = method.ContainingType.TypeKind;
@@ -58,8 +60,6 @@ internal record MethodModel
 			this.ProjectedCallbackDelegateName = method.GetName(extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
-		this.ReturnTypeIsRefLikeType = method.ReturnType.IsRefLikeType;
-
 		if (this.ReturnTypeIsRefLikeType)
 		{
 			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
@@ -74,7 +74,9 @@ internal record MethodModel
 	internal string? ContainingTypeFlattenedName { get; }
 	internal string? ContainingTypeFullyQualifiedName { get; }
 	internal bool IsAbstract { get; }
-	internal EquatableArray<string> Constraints { get; }
+	internal bool IsVirtual { get; }
+	internal MethodKind MethodKind { get; }
+   internal EquatableArray<string> Constraints { get; }
 	internal EquatableArray<string> DefaultConstraints { get; }
 	internal TypeKind ContainingTypeKind { get; }
 	internal string Name { get; }

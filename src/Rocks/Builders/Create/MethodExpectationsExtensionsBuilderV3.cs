@@ -12,11 +12,11 @@ internal static class MethodExpectationsExtensionsBuilderV3
 		if (type.Methods.Length > 0)
 		{
 			writer.WriteLine();
-			var typeToMock = type.MockType.FlattenedName;
+			var typeToMock = type.Type.FlattenedName;
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
-				writer.WriteLine($"internal static class MethodExpectationsOf{type.MockType.FlattenedName}Extensions");
+				writer.WriteLine($"internal static class MethodExpectationsOf{type.Type.FlattenedName}Extensions");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -30,20 +30,20 @@ internal static class MethodExpectationsExtensionsBuilderV3
 				writer.WriteLine("}");
 			}
 
-			if (type.Methods.Results.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
+			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
 			{
-				foreach (var typeGroup in type.Methods.Results
+				foreach (var typeGroup in type.Methods
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-					.GroupBy(_ => _.Value.ContainingType))
+					.GroupBy(_ => _.ContainingTypeFlattenedName))
 				{
-					var containingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
+					var containingTypeName = typeGroup.Key;
 					writer.WriteLine($"internal static class ExplicitMethodExpectationsOf{typeToMock}For{containingTypeName}Extensions");
 					writer.WriteLine("{");
 					writer.Indent++;
 
 					foreach (var result in typeGroup)
 					{
-						MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
+						MethodExpectationsExtensionsMethodBuilderV3.Build(writer, result);
 					}
 
 					writer.Indent--;

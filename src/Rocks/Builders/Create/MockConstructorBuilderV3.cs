@@ -9,12 +9,11 @@ namespace Rocks.Builders.Create;
 
 internal static class MockConstructorBuilderV3
 {
-	// TODO: revisit shims later.
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation,
-		ImmutableArray<ParameterModel> parameters/*, ImmutableArray<ITypeSymbol> shims*/)
+		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims)
 	{
-		var typeToMockName = type.FullyQualifiedName;
-		var namingContext = new VariableNamingContext(parameters);
+		var typeToMockName = type.Type.FullyQualifiedName;
+		var namingContext = new VariableNamingContextV3(parameters);
 		var hasRequiredProperties = type.ConstructorProperties.Any(_ => _.IsRequired);
 
 		var contextParameters = type.ConstructorProperties.Length == 0 ?
@@ -33,10 +32,10 @@ internal static class MockConstructorBuilderV3
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName}{requiresNullable} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 				})));
 
-		var mockTypeName = $"Rock{type.FlattenedName}";
+		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
 		if (hasRequiredProperties)
 		{
@@ -58,7 +57,7 @@ internal static class MockConstructorBuilderV3
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 
-			var isUnsafe = parameters.Any(_ => _.IsPointer) ? "unsafe " : string.Empty;
+			var isUnsafe = parameters.Any(_ => _.Type.IsPointer) ? "unsafe " : string.Empty;
 
 			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
 			writer.Indent++;
@@ -66,7 +65,7 @@ internal static class MockConstructorBuilderV3
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, /*shims, */type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -75,28 +74,26 @@ internal static class MockConstructorBuilderV3
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, /*shims, */type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	// TODO: revisit shims
 	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
-		VariableNamingContext namingContext, /*ImmutableArray<ITypeSymbol> shims,*/
+		VariableNamingContextV3 namingContext, EquatableArray<TypeMockModel> shims,
 		EquatableArray<ConstructorPropertyModel> constructorProperties, bool hasRequiredProperties)
 	{
-		// TODO: revisit shims
-		//if (shims.Length == 0)
-		//{
-		//	writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
-		//}
-		//else
-		//{
-		//	var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.GetName(TypeNameOption.Flatten)}"));
-		//	var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_)}(this)"));
-		//	writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
-		//}
+		if (shims.Length == 0)
+		{
+			writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
+		}
+		else
+		{
+			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.Type.FlattenedName}"));
+			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilderV3.GetShimName(_.Type)}(this)"));
+			writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
+		}
 
 		if (constructorProperties.Length > 0)
 		{
@@ -105,8 +102,8 @@ internal static class MockConstructorBuilderV3
 					_.CanBeSeenByContainingAssembly).ToArray();
 			var enumerableTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
-					_.Parameters[0].TypeFullyQualifiedName :
-					$"({string.Join(", ", _.Parameters.Select(p => p.TypeFullyQualifiedName))})").ToArray();
+					_.Parameters[0].Type.FullyQualifiedName :
+					$"({string.Join(", ", _.Parameters.Select(p => p.Type.FullyQualifiedName))})").ToArray();
 			var forEachTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
 					$"var {_.Parameters[0].Name}" :

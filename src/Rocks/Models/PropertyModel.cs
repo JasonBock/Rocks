@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
+using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
@@ -25,12 +26,22 @@ internal record PropertyModel
 		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
 			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
 
+		this.Name = property.Name;
+		this.IsVirtual = property.IsVirtual;
 		this.IsIndexer = property.IsIndexer;
+		this.IsUnsafe = property.IsUnsafe();
+		this.Parameters = property.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
+		this.AttributesDescription = property.GetAttributes().GetDescription(compilation);
 		this.ReturnsByRef = property.ReturnsByRef;
 		this.ReturnsByRefReadOnly = property.ReturnsByRefReadonly;
 	}
 
-	internal bool IsIndexer { get; }
+	internal bool IsUnsafe { get; }
+   internal EquatableArray<ParameterModel> Parameters { get; }
+   internal string Name { get; }
+   internal bool IsVirtual { get; }
+   internal bool IsIndexer { get; }
+   internal string AttributesDescription { get; }
    internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
    internal TypeReferenceModel Type { get; }
