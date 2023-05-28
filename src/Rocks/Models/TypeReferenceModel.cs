@@ -8,19 +8,44 @@ internal record TypeReferenceModel
 	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
 	{
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
-		this.IsEsoteric = type.IsEsoteric();
+		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
+
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
-		this.IsPointer = type.IsPointer();
 		this.Namespace = type.ContainingNamespace?.IsGlobalNamespace ?? false ?
 			null : type.ContainingNamespace!.ToDisplayString();
-		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
+		this.Kind = type.Kind;
+
+		this.IsPointer = type.IsPointer();
+		this.IsEsoteric = type.IsEsoteric();
+
+		if (this.IsEsoteric)
+		{
+			this.PointerArgProjectedEvaluationDelegateName = 
+				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
+			this.PointerArgProjectedName = 
+				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
+			this.RefLikeArgProjectedEvaluationDelegateName = 
+				$"ArgEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
+			this.RefLikeArgProjectedName =
+				$"ArgFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
+			this.RefLikeArgConstructorProjectedName =
+				$"ArgFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}";
+		}
 	}
+
+   internal string? PointerArgProjectedEvaluationDelegateName { get; }
+   internal string? PointerArgProjectedName { get; }
+
+	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
+	internal string? RefLikeArgProjectedName { get; }
+	internal string? RefLikeArgConstructorProjectedName { get; }
 
 	internal bool IsPointer { get; }
 	internal string FullyQualifiedName { get; }
 	internal bool IsEsoteric { get; }
-   internal string AttributesDescription { get; }
+	internal string AttributesDescription { get; }
 	internal string FlattenedName { get; }
 	internal bool IsRecord { get; }
 	internal string? Namespace { get; }
+   internal SymbolKind Kind { get; }
 }

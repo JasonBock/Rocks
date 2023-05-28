@@ -10,7 +10,7 @@ namespace Rocks.Builders.Create;
 internal static class MockConstructorBuilderV3
 {
 	// TODO: revisit shims later.
-	internal static void Build(IndentedTextWriter writer, TypeModel type, Compilation compilation,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation,
 		ImmutableArray<ParameterModel> parameters/*, ImmutableArray<ITypeSymbol> shims*/)
 	{
 		var typeToMockName = type.FullyQualifiedName;

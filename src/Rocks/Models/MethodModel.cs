@@ -13,16 +13,18 @@ internal record MethodModel
 	/// Creates a new <see cref="MethodMockableResult"/> instance.
 	/// </summary>
 	/// <param name="method">The <see cref="IMethodSymbol"/> to obtain information from.</param>
+	/// <param name="mockType">The <see cref="ITypeSymbol"/> mock type.</param>
 	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="method"/> requires explicit implementation.</param>
 	/// <param name="requiresOverride">Specifies if <paramref name="method"/> requires an override.</param>
 	/// <param name="memberIdentifier">The member identifier.</param>
 	/// <param name="compilation">The compilation.</param>
-	internal MethodModel(IMethodSymbol method, Compilation compilation,
+	internal MethodModel(IMethodSymbol method, TypeReferenceModel mockType, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, uint memberIdentifier)
 	{
 		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
 			 (requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
+		this.MockType = mockType;
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 		{
@@ -41,7 +43,7 @@ internal record MethodModel
 		this.Name = method.GetName();
 		this.IsUnsafe = method.IsUnsafe();
 		this.ShouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
-		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_, compilation)).ToImmutableArray();
+		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
 
 		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);
 		this.ReturnsVoid = method.ReturnsVoid;
@@ -64,7 +66,8 @@ internal record MethodModel
 		}
 	}
 
-   internal string? ProjectedReturnValueDelegateName { get; }
+	internal TypeReferenceModel MockType { get; }
+	internal string? ProjectedReturnValueDelegateName { get; }
    internal string? ProjectedCallbackDelegateName { get; }
    internal bool RequiresProjectedDelegate { get; }
 	internal bool IsUnsafe { get; }

@@ -12,7 +12,7 @@ internal sealed class RockCreateBuilderV3
 	// for the compilation when I'm building the code.
 	// At this point, all of the needed information should arguably be
 	// in the models.
-	internal RockCreateBuilderV3(TypeModel information, Compilation compilation)
+	internal RockCreateBuilderV3(TypeMockModel information, Compilation compilation)
 	{
 		(this.Type, this.Compilation) = (information, compilation);
 		(this.Name, this.Text) = this.Build();
@@ -67,5 +67,5 @@ internal sealed class RockCreateBuilderV3
 	private Compilation Compilation { get;  }
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
-	private TypeModel Type { get; }
+	private TypeMockModel Type { get; }
 }

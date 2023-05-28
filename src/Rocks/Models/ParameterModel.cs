@@ -5,8 +5,9 @@ namespace Rocks.Models;
 
 internal record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter, Compilation compilation)
+	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation)
 	{
+		this.MockType = mockType
 		this.Name = parameter.Name;
 		this.RefKind = parameter.RefKind;
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
@@ -26,7 +27,8 @@ internal record ParameterModel
    internal string AttributesDescription { get; }
 	internal bool HasExplicitDefaultValue { get; }
 	internal string? ExplicitDefaultValue { get; }
-	internal string Name { get; }
+   internal TypeReferenceModel MockType { get; }
+   internal string Name { get; }
 
 	// TODO: Should I make my own RefKind? Not sure about that...
 	internal RefKind RefKind { get; }

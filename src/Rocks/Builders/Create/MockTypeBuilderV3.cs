@@ -1,6 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Builders.Shim;
-using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -9,25 +8,24 @@ namespace Rocks.Builders.Create;
 
 internal static class MockTypeBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, TypeModel type, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation)
 	{
-		var kind = type.IsRecord ? "record" : "class";
-		var mockTypeName = $"Rock{type.FlattenedName}";
+		var kind = type.MockType.IsRecord ? "record" : "class";
+		var mockTypeName = $"Rock{type.MockType.FlattenedName}";
 
 		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
 
 		var canRaiseEvents = type.Events.Length > 0;
 
-		writer.WriteLine($": {type.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
+		writer.WriteLine($": {type.MockType.FullyQualifiedName}{(canRaiseEvents ? $", global::Rocks.IRaiseEvents" : string.Empty)}");
 		writer.Indent--;
 
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		// TODO: Need to put these back on.
-		//MockTypeBuilder.BuildShimFields(writer, information);
-		//MockTypeBuilder.BuildRefReturnFields(writer, information);
+		MockTypeBuilderV3.BuildShimFields(writer, type);
+		MockTypeBuilderV3.BuildRefReturnFields(writer, type);
 
 		writer.WriteLine($"private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;");
 		writer.WriteLine();
@@ -75,40 +73,40 @@ internal static class MockTypeBuilderV3
 		//	MockEventsBuilder.Build(writer, type.Events, compilation);
 		//}
 
-		//MockTypeBuilder.BuildShimTypes(writer, type, mockTypeName, compilation);
+		MockTypeBuilderV3.BuildShimTypes(writer, type, mockTypeName, compilation);
 
 		writer.Indent--;
 		writer.WriteLine("}");
 	}
 
-	private static void BuildShimTypes(IndentedTextWriter writer, MockInformation information, string mockTypeName,
+	private static void BuildShimTypes(IndentedTextWriter writer, TypeMockModel type, string mockTypeName,
 		Compilation compilation)
 	{
-		foreach (var shimType in information.Shims)
+		foreach (var shimType in type.Shims)
 		{
 			writer.WriteLine();
-			ShimBuilder.Build(writer, shimType, mockTypeName, compilation, information);
+			ShimBuilderV3.Build(writer, shimType, mockTypeName, compilation, type);
 		}
 	}
 
-	private static void BuildShimFields(IndentedTextWriter writer, MockInformation information)
+	private static void BuildShimFields(IndentedTextWriter writer, TypeMockModel type)
 	{
-		foreach (var shimType in information.Shims)
+		foreach (var shimType in type.Shims)
 		{
-			writer.WriteLine($"private readonly {shimType.GetFullyQualifiedName()} shimFor{shimType.GetName(TypeNameOption.Flatten)};");
+			writer.WriteLine($"private readonly {shimType.FullyQualifiedName} shimFor{shimType.FlattenedName};");
 		}
 	}
 
-	private static void BuildRefReturnFields(IndentedTextWriter writer, MockInformation information)
+	private static void BuildRefReturnFields(IndentedTextWriter writer, TypeMockModel type)
 	{
-		foreach (var method in information.Methods.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+		foreach (var method in type.Methods.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
-			writer.WriteLine($"private {method.Value.ReturnType.GetFullyQualifiedName()} rr{method.MemberIdentifier};");
+			writer.WriteLine($"private {method.ReturnType.FullyQualifiedName} rr{method.MemberIdentifier};");
 		}
 
-		foreach (var property in information.Properties.Results.Where(_ => _.Value.ReturnsByRef || _.Value.ReturnsByRefReadonly))
+		foreach (var property in type.Properties.Where(_ => _.ReturnsByRef || _.ReturnsByRefReadOnly))
 		{
-			writer.WriteLine($"private {property.Value.Type.GetFullyQualifiedName()} rr{property.MemberIdentifier};");
+			writer.WriteLine($"private {property.Type.FullyQualifiedName} rr{property.MemberIdentifier};");
 		}
 	}
 }

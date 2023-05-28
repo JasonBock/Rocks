@@ -28,11 +28,11 @@ internal static class MockProjectedDelegateBuilderV3
 	// TODO: this could go on the MethodModel itself.
 	internal static string GetProjectedDelegate(MethodModel method)
 	{
-		var returnType = method.ReturnTypeFullyQualifiedName;
+		var returnType = method.ReturnType.FullyQualifiedName;
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var direction = _.RefKind == RefKind.Ref ? "ref " : _.RefKind == RefKind.Out ? "out " : string.Empty;
-			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.TypeFullyQualifiedName} @{_.Name}";
+			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName} @{_.Name}";
 			return $"{_.AttributesDescription}{parameter}";
 		}));
 		var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
@@ -45,9 +45,9 @@ internal static class MockProjectedDelegateBuilderV3
 
 	// TODO: this could go on the MethodModel itself.
    internal static string GetProjectedReturnValueDelegate(MethodModel method) => 
-		$"internal delegate {method.ReturnTypeFullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
+		$"internal delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
 
-   internal static void Build(IndentedTextWriter writer, TypeModel type)
+   internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		static void BuildDelegate(IndentedTextWriter writer, MethodModel method)
 		{

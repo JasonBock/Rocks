@@ -11,23 +11,34 @@ internal record PropertyModel
 	/// <summary>
 	/// Creates a new <see cref="PropertyModel"/> instance.
 	/// </summary>
-	/// <param name="value">The <see cref="IPropertySymbol"/> to obtain information from.</param>
-	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="value"/> requires explicit implementation.</param>
-	/// <param name="requiresOverride">Specifies if <paramref name="value"/> requires an override.</param>
+	/// <param name="property">The <see cref="IPropertySymbol"/> to obtain information from.</param>
+	/// <param name="compilation">The compilation.</param>
+	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="property"/> requires explicit implementation.</param>
+	/// <param name="requiresOverride">Specifies if <paramref name="property"/> requires an override.</param>
 	/// <param name="accessors">Specifies the accessors for this property.</param>
 	/// <param name="memberIdentifier">The member identifier.</param>
-	internal PropertyModel(IPropertySymbol value,
+	/// <param name="mockType">The mock type.</param>
+	internal PropertyModel(IPropertySymbol property, TypeReferenceModel mockType, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 		PropertyAccessor accessors, uint memberIdentifier)
 	{
-		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
-			(requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
+			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
+
+		this.IsIndexer = property.IsIndexer;
+		this.ReturnsByRef = property.ReturnsByRef;
+		this.ReturnsByRefReadOnly = property.ReturnsByRefReadonly;
 	}
 
-   /// <summary>
-   /// Gets the accessors.
-   /// </summary>
-   internal PropertyAccessor Accessors { get; }
+	internal bool IsIndexer { get; }
+   internal bool ReturnsByRef { get; }
+	internal bool ReturnsByRefReadOnly { get; }
+   internal TypeReferenceModel Type { get; }
+	internal TypeReferenceModel MockType { get; }
+	/// <summary>
+	/// Gets the accessors.
+	/// </summary>
+	internal PropertyAccessor Accessors { get; }
 	/// <summary>
 	/// Gets the member identifier.
 	/// </summary>

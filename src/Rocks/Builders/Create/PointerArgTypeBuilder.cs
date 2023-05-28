@@ -8,7 +8,7 @@ internal static class PointerArgTypeBuilder
 {
 	internal static string GetProjectedName(ITypeSymbol type) =>
 		$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
-
+		
 	internal static string GetProjectedFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
 	{
 		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?

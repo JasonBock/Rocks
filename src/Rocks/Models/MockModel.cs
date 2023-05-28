@@ -6,6 +6,9 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
+/// <summary>
+/// Creates a <see cref="TypeMockModel"/> for a given <see cref="ITypeSymbol"/>. 
+/// </summary>
 internal record MockModel
 {
 	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
@@ -118,34 +121,17 @@ internal record MockModel
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		// TODO: Remember to sort all array so "equatable" will work,
-		// EXCEPT FOR parameter order (including generic parameters).
-		// Those have to stay in the order they exist in the definition.
-		return new(!isMockable ?
-			null :
-			new(typeToMock,
-				constructors.Select(_ => 
-					new ConstructorModel(_)).ToImmutableArray(), 
-				methods.Results.Select(_ => 
-					new MethodModel(
-						_.Value, _.RequiresExplicitInterfaceImplementation, 
-						_.RequiresOverride, _.MemberIdentifier)).ToImmutableArray(), 
-				properties.Results.Select(_ =>
-					new PropertyModel(_.Value, _.RequiresExplicitInterfaceImplementation, 
-						_.RequiresOverride, _.Accessors, _.MemberIdentifier)).ToImmutableArray(),
-				events.Results.Select(_ =>
-					new EventModel(_.Value, _.RequiresExplicitInterfaceImplementation, 
-						_.RequiresOverride)).ToImmutableArray()), 
+		return new(!isMockable ? null : new TypeMockModel(typeToMock, compilation, constructors, methods, properties, events, shims),
 			typeToMock.GetFullyQualifiedName(),
 			diagnostics.ToImmutable());
 	}
 
-	private MockModel(TypeModel? type, string typeFullyQualifiedName, 
+	private MockModel(TypeMockModel? type, string typeFullyQualifiedName, 
 		EquatableArray<Diagnostic> diagnostics) =>
 		(this.Type, this.FullyQualifiedName, this.Diagnostics) = 
 			(type, typeFullyQualifiedName, diagnostics);
 
 	internal EquatableArray<Diagnostic> Diagnostics { get; }
 	internal string FullyQualifiedName { get; }
-	internal TypeModel? Type { get; }
+	internal TypeMockModel? Type { get; }
 }

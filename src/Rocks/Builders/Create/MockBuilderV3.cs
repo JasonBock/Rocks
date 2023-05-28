@@ -6,12 +6,12 @@ namespace Rocks.Builders.Create;
 
 internal static class MockBuilderV3
 {
-	internal static bool Build(IndentedTextWriter writer, TypeModel type, Compilation compilation)
+	internal static bool Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation)
 	{
 		// TODO: Uncomment as more progress is made.
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, information, compilation);
+		var wereTypesProjected = MockProjectedTypesBuilderV3.Build(writer, type);
 
-		writer.WriteLine($"internal static class CreateExpectationsOf{type.FlattenedName}Extensions");
+		writer.WriteLine($"internal static class CreateExpectationsOf{type.MockType.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -25,7 +25,7 @@ internal static class MockBuilderV3
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		MethodExpectationsExtensionsBuilder.Build(writer, information);
+		MethodExpectationsExtensionsBuilderV3.Build(writer, type);
 		//PropertyExpectationsExtensionsBuilder.Build(writer, information);
 		//EventExpectationsExtensionsBuilder.Build(writer, information);
 

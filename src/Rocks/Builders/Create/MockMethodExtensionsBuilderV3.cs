@@ -7,11 +7,11 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodExtensionsBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, TypeModel type)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		if (type.Methods.Length > 0)
 		{
-			var typeToMockName = type.FullyQualifiedName;
+			var typeToMockName = type.MockType.FullyQualifiedName;
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{

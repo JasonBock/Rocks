@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -8,63 +7,63 @@ namespace Rocks.Builders.Create;
 
 internal static class MockProjectedArgTypeBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, TypeModel type)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
-		foreach (var type in GetEsotericTypes(information))
+		foreach (var esotericType in GetEsotericTypes(type))
 		{
-			if (type.IsPointer())
+			if (esotericType.IsPointer)
 			{
-				PointerArgTypeBuilder.Build(writer, type, information.TypeToMock!.Type);
+				PointerArgTypeBuilderV3.Build(writer, esotericType, type);
 			}
 			else
 			{
-				RefLikeArgTypeBuilder.Build(writer, type, information.TypeToMock!.Type);
+				RefLikeArgTypeBuilderV3.Build(writer, esotericType, type);
 			}
 		}
 	}
 
-	private static HashSet<ITypeSymbol> GetEsotericTypes(TypeModel type)
+	private static HashSet<TypeReferenceModel> GetEsotericTypes(TypeMockModel type)
 	{
-		static void GetEsotericTypes(ImmutableArray<IParameterSymbol> parameters, ITypeSymbol? returnType, HashSet<ITypeSymbol> types)
+		static void GetEsotericTypes(ImmutableArray<ParameterModel> parameters, TypeReferenceModel? returnType, HashSet<TypeReferenceModel> types)
 		{
 			foreach (var methodParameter in parameters)
 			{
-				if (methodParameter.Type.IsEsoteric())
+				if (methodParameter.Type.IsEsoteric)
 				{
 					types.Add(methodParameter.Type);
 				}
 			}
 
-			if (returnType is not null && returnType.IsEsoteric())
+			if (returnType is not null && returnType.IsEsoteric)
 			{
 				types.Add(returnType);
 			}
 		}
 
-		var types = new HashSet<ITypeSymbol>();
+		var types = new HashSet<TypeReferenceModel>();
 
 		foreach (var method in type.Methods)
 		{
-			var method = method.Value;
 			GetEsotericTypes(method.Parameters, method.ReturnsVoid ? null : method.ReturnType, types);
 		}
 
-		foreach (var propertyResult in type.Properties.Results)
-		{
-			var property = propertyResult.Value;
+		// TODO: Come back for properties
+		//foreach (var propertyResult in type.Properties.Results)
+		//{
+		//	var property = propertyResult.Value;
 
-			if (property.IsIndexer)
-			{
-				GetEsotericTypes(property.Parameters, property.Type, types);
-			}
-			else
-			{
-				if (property.Type.IsEsoteric())
-				{
-					types.Add(property.Type);
-				}
-			}
-		}
+		//	if (property.IsIndexer)
+		//	{
+		//		GetEsotericTypes(property.Parameters, property.Type, types);
+		//	}
+		//	else
+		//	{
+		//		if (property.Type.IsEsoteric())
+		//		{
+		//			types.Add(property.Type);
+		//		}
+		//	}
+		//}
 
 		return types;
 	}

@@ -9,7 +9,7 @@ namespace Rocks.Builders.Create;
 // other types are gen'd to support "esoteric" types.
 internal static class MockProjectedTypesBuilderV3
 {
-	internal static bool Build(IndentedTextWriter writer, TypeModel type, Compilation compilation)
+	internal static bool Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		var wereTypesProjected = false;
 
@@ -17,19 +17,19 @@ internal static class MockProjectedTypesBuilderV3
 		using var projectedIndentWriter = new IndentedTextWriter(projectedWriter, "\t");
 
 		MockProjectedDelegateBuilderV3.Build(projectedIndentWriter, type);
-		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, type);
-		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, type);
+		MockProjectedArgTypeBuilderV3.Build(projectedIndentWriter, type);
+		MockProjectedTypesAdornmentsBuilderV3.Build(projectedIndentWriter, type);
 
 		var projectedCode = projectedWriter.ToString();
 
-		if(!string.IsNullOrWhiteSpace(projectedCode))
+		if (!string.IsNullOrWhiteSpace(projectedCode))
 		{
-			var projectionsNamespace = $"ProjectionsFor{type.TypeToMock!.FlattenedName}";
+			var projectionsNamespace = $"ProjectionsFor{type.MockType.FlattenedName}";
 			writer.WriteLine($"namespace {projectionsNamespace}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			foreach(var line in MockProjectedTypesBuilder.GetLines(projectedCode))
+			foreach (var line in MockProjectedTypesBuilderV3.GetLines(projectedCode))
 			{
 				writer.WriteLine(line);
 			}
@@ -50,10 +50,9 @@ internal static class MockProjectedTypesBuilderV3
 
 		for (var i = 0; i < lines.Length; i++)
 		{
-			if(i < lines.Length - 1)
+			if (i < lines.Length - 1)
 			{
-				var line = lines[i];
-				yield return line;
+				yield return lines[i];
 			}
 		}
 	}
