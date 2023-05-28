@@ -14,7 +14,9 @@ internal record TypeReferenceModel
 		this.Namespace = type.ContainingNamespace?.IsGlobalNamespace ?? false ?
 			null : type.ContainingNamespace!.ToDisplayString();
 		this.Kind = type.Kind;
+		this.TypeKind = type.TypeKind;
 
+		this.IsReferenceType = type.IsReferenceType;
 		this.IsPointer = type.IsPointer();
 		this.IsEsoteric = type.IsEsoteric();
 		this.IsRefLikeType = type.IsRefLikeType;
@@ -50,4 +52,6 @@ internal record TypeReferenceModel
 	internal bool IsRecord { get; }
 	internal string? Namespace { get; }
    internal SymbolKind Kind { get; }
+   internal TypeKind TypeKind { get; }
+   internal bool IsReferenceType { get; }
 }

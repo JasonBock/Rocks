@@ -14,7 +14,7 @@ internal sealed class RockCreateBuilderV3
 	// in the models.
 	internal RockCreateBuilderV3(TypeMockModel information, Compilation compilation)
 	{
-		(this.Type, this.Compilation) = (information, compilation);
+		(this.MockType, this.Compilation) = (information, compilation);
 		(this.Name, this.Text) = this.Build();
 	}
 
@@ -26,11 +26,11 @@ internal sealed class RockCreateBuilderV3
 		indentWriter.WriteLine("#nullable enable");
 		indentWriter.WriteLine();
 
-		var mockNamespace = this.Type.Namespace;
+		var mockNamespace = this.MockType.Type.Namespace;
 
 		if (mockNamespace is not null)
 		{
-			indentWriter.WriteLine($"namespace {this.Type.Namespace}");
+			indentWriter.WriteLine($"namespace {mockNamespace}");
 			indentWriter.WriteLine("{");
 			indentWriter.Indent++;
 		}
@@ -44,11 +44,11 @@ internal sealed class RockCreateBuilderV3
 			"using System.Collections.Immutable;",
 		};
 
-		var wereTypesProjected = MockBuilderV3.Build(indentWriter, this.Type, this.Compilation);
+		var wereTypesProjected = MockBuilderV3.Build(indentWriter, this.MockType, this.Compilation);
 
 		if (wereTypesProjected)
 		{
-			requiredNamespaces.Add($"using {(mockNamespace is not null ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.Type.FlattenedName};");
+			requiredNamespaces.Add($"using {(mockNamespace is not null ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.MockType.Type.FlattenedName};");
 		}
 
 		if (mockNamespace is not null)
@@ -61,11 +61,11 @@ internal sealed class RockCreateBuilderV3
 			string.Join(Environment.NewLine,
 				string.Join(Environment.NewLine, requiredNamespaces), writer.ToString()), 
 			Encoding.UTF8);
-		return ($"{this.Type.FlattenedName}_Rock_Create.g.cs", text);
+		return ($"{this.MockType.Type.FlattenedName}_Rock_Create.g.cs", text);
 	}
 
 	private Compilation Compilation { get;  }
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
-	private TypeMockModel Type { get; }
+	private TypeMockModel MockType { get; }
 }

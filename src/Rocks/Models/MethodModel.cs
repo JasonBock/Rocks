@@ -38,6 +38,7 @@ internal record MethodModel
 
 		this.IsAbstract = method.IsAbstract;
 		this.IsVirtual = method.IsVirtual;
+		this.IsGenericMethod = method.IsGenericMethod;
 		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints();
 		this.DefaultConstraints = method.GetDefaultConstraints();
@@ -75,7 +76,8 @@ internal record MethodModel
 	internal string? ContainingTypeFullyQualifiedName { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsVirtual { get; }
-	internal MethodKind MethodKind { get; }
+   internal bool IsGenericMethod { get; }
+   internal MethodKind MethodKind { get; }
    internal EquatableArray<string> Constraints { get; }
 	internal EquatableArray<string> DefaultConstraints { get; }
 	internal TypeKind ContainingTypeKind { get; }

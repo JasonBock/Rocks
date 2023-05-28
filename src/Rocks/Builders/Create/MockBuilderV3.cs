@@ -17,10 +17,10 @@ internal static class MockBuilderV3
 
 		MockMethodExtensionsBuilderV3.Build(writer, type);
 		//MockPropertyExtensionsBuilder.Build(writer, information);
-		//MockConstructorExtensionsBuilder.Build(writer, information, compilation);
+		MockConstructorExtensionsBuilderV3.Build(writer, type);
 
 		writer.WriteLine();
-		MockTypeBuilderV3.Build(writer, type, compilation);
+		MockTypeBuilderV3.Build(writer, type);
 
 		writer.Indent--;
 		writer.WriteLine("}");

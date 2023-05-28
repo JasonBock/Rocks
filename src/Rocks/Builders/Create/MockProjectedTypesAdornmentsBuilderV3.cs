@@ -10,25 +10,21 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 	internal static string GetProjectedAdornmentName(TypeReferenceModel type, AdornmentType adornment, bool isExplicit) =>
 		$"{(isExplicit ? "Explicit" : string.Empty)}{adornment}AdornmentsFor{type.FlattenedName}";
 
-	internal static string GetProjectedAdornmentFullyQualifiedNameName(ITypeSymbol type, ITypeSymbol typeToMock, AdornmentType adornment, bool isExplicit)
+	internal static string GetProjectedAdornmentFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock, AdornmentType adornment, bool isExplicit)
 	{
-		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
-		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit);
-		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
+		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentName(type, adornment, isExplicit);
+		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedHandlerInformationName(TypeReferenceModel type) =>
 		$"HandlerInformationFor{type.FlattenedName}";
 
-	internal static string GetProjectedHandlerInformationFullyQualifiedNameName(ITypeSymbol type, ITypeSymbol typeToMock)
+	internal static string GetProjectedHandlerInformationFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
-		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type);
-		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
+		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationName(type);
+		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedAddExtensionMethodName(TypeReferenceModel type) =>

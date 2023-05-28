@@ -9,7 +9,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockConstructorBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation,
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, 
 		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
@@ -65,7 +65,7 @@ internal static class MockConstructorBuilderV3
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
@@ -74,13 +74,13 @@ internal static class MockConstructorBuilderV3
 			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilderV3.BuildFieldSetters(writer, compilation, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
+	private static void BuildFieldSetters(IndentedTextWriter writer, 
 		VariableNamingContextV3 namingContext, EquatableArray<TypeMockModel> shims,
 		EquatableArray<ConstructorPropertyModel> constructorProperties, bool hasRequiredProperties)
 	{

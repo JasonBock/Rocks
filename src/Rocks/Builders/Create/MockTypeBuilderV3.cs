@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockTypeBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		var kind = type.Type.IsRecord ? "record" : "class";
 		var mockTypeName = $"Rock{type.Type.FlattenedName}";
@@ -34,12 +34,12 @@ internal static class MockTypeBuilderV3
 		{
 			foreach (var constructor in type.Constructors)
 			{
-				MockConstructorBuilderV3.Build(writer, type, compilation, constructor.Parameters, type.Shims);
+				MockConstructorBuilderV3.Build(writer, type, constructor.Parameters, type.Shims);
 			}
 		}
 		else
 		{
-			MockConstructorBuilderV3.Build(writer, type, compilation, ImmutableArray<ParameterModel>.Empty, type.Shims);
+			MockConstructorBuilderV3.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims);
 		}
 
 		writer.WriteLine();
@@ -48,11 +48,11 @@ internal static class MockTypeBuilderV3
 		{
 			if (method.ReturnsVoid)
 			{
-				MockMethodVoidBuilderV3.Build(writer, method, canRaiseEvents, compilation);
+				MockMethodVoidBuilderV3.Build(writer, method, canRaiseEvents);
 			}
 			else
 			{
-				MockMethodValueBuilderV3.Build(writer, method, canRaiseEvents, compilation);
+				MockMethodValueBuilderV3.Build(writer, method, canRaiseEvents);
 			}
 		}
 

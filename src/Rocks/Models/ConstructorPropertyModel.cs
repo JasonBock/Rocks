@@ -14,15 +14,17 @@ internal record ConstructorPropertyModel
 	/// Creates a new <see cref="ConstructorPropertyModel"/> instance.
 	/// </summary>
 	/// <param name="value">The <see cref="IPropertySymbol"/> to obtain information from.</param>
+	/// <param name="mockType">The mock type.</param>
 	/// <param name="compilation">The complation.</param>
-	internal ConstructorPropertyModel(IPropertySymbol value, Compilation compilation) 
+	internal ConstructorPropertyModel(IPropertySymbol value, TypeReferenceModel mockType, Compilation compilation) 
 	{
+		this.Type = new TypeReferenceModel(value.Type, compilation);
 		this.Name = value.Name;
 		this.IsRequired = value.IsRequired;
 		this.IsIndexer = value.IsIndexer;
 		this.Accessors = value.GetAccessors();
 		this.CanBeSeenByContainingAssembly = value.CanBeSeenByContainingAssembly(compilation.Assembly);
-		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, compilation)).ToImmutableArray();
+		this.Parameters = value.Parameters.Select(_ => new ParameterModel(_, mockType, compilation)).ToImmutableArray();
 		this.NullableAnnotation = value.NullableAnnotation;
 		this.IsReferenceType = value.Type.IsReferenceType;
 	}
@@ -31,6 +33,7 @@ internal record ConstructorPropertyModel
    internal NullableAnnotation NullableAnnotation { get; }
    internal bool IsReferenceType { get; }
    internal bool CanBeSeenByContainingAssembly { get; }
+   internal TypeReferenceModel Type { get; }
    internal string Name { get; }
    internal bool IsRequired { get; }
    internal bool IsIndexer { get; }
