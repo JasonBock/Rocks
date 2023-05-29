@@ -22,9 +22,10 @@ internal record MethodModel
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, uint memberIdentifier)
 	{
-		(this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
-			 (requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
-		this.MockType = mockType;
+		(this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
+			 (mockType, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
+
+		this.ContainingType = new TypeReferenceModel(method.ContainingType, compilation);
 
 		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 		{
@@ -67,7 +68,14 @@ internal record MethodModel
 		}
 	}
 
-	internal TypeReferenceModel MockType { get; }
+	/// <summary>
+	/// Gets the type that contains the method.
+	/// </summary>
+   internal TypeReferenceModel ContainingType { get; }
+	/// <summary>
+	/// Gets the mock type.
+	/// </summary>
+   internal TypeReferenceModel MockType { get; }
 	internal string? ProjectedReturnValueDelegateName { get; }
    internal string? ProjectedCallbackDelegateName { get; }
    internal bool RequiresProjectedDelegate { get; }

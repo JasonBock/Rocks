@@ -51,14 +51,12 @@ internal sealed class RockCreateGeneratorV3
 		var provider = context.SyntaxProvider
 			.CreateSyntaxProvider(IsSyntaxTargetForGeneration, TransformTargets)
 			.Where(static _ => _ is not null);
-		var compilationNodes = context.CompilationProvider.Combine(provider.Collect());
-
-		context.RegisterSourceOutput(compilationNodes,
-			(context, source) => CreateOutput(source.Left, source.Right, context));
+		var providerNodes = provider.Collect();
+		context.RegisterSourceOutput(providerNodes,
+			(context, source) => CreateOutput(source, context));
 	}
 
-	private static void CreateOutput(Compilation compilation,
-		ImmutableArray<MockModel?> mocks, SourceProductionContext context)
+	private static void CreateOutput(ImmutableArray<MockModel?> mocks, SourceProductionContext context)
 	{
 		foreach (var mock in mocks)
 		{
@@ -69,7 +67,7 @@ internal sealed class RockCreateGeneratorV3
 
 			if (mock.Type is not null)
 			{
-				var builder = new RockCreateBuilderV3(mock.Type, compilation);
+				var builder = new RockCreateBuilderV3(mock.Type);
 				context.AddSource(builder.Name, builder.Text);
 			}
 		}

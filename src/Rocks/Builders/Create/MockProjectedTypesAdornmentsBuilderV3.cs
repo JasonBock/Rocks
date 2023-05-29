@@ -30,13 +30,11 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 	internal static string GetProjectedAddExtensionMethodName(TypeReferenceModel type) =>
 		$"AddFor{type.FlattenedName}";
 
-	internal static string GetProjectedAddExtensionMethodFullyQualifiedName(ITypeSymbol type, ITypeSymbol typeToMock)
+	internal static string GetProjectedAddExtensionMethodFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var containingNamespace = !typeToMock.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			$"{typeToMock.ContainingNamespace!.ToDisplayString()}." : string.Empty;
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.GetName(TypeNameOption.Flatten)}";
-		var argForType = MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type);
-		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
+		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodName(type);
+		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)

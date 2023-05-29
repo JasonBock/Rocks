@@ -26,6 +26,7 @@ internal record PropertyModel
 		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
 			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
 
+		this.ContainingType = new TypeReferenceModel(property.ContainingType, compilation);
 		this.Name = property.Name;
 		this.IsVirtual = property.IsVirtual;
 		this.IsIndexer = property.IsIndexer;
@@ -34,17 +35,57 @@ internal record PropertyModel
 		this.AttributesDescription = property.GetAttributes().GetDescription(compilation);
 		this.ReturnsByRef = property.ReturnsByRef;
 		this.ReturnsByRefReadOnly = property.ReturnsByRefReadonly;
+
+		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)
+		{
+			this.GetMethod = new MethodModel(property.GetMethod!, mockType, compilation,
+				requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
+			this.GetCanBeSeenByContainingAssembly = property.GetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+		}
+
+		if (this.Accessors == PropertyAccessor.Set || this.Accessors == PropertyAccessor.GetAndSet)
+		{
+			this.SetMethod = new MethodModel(property.SetMethod!, mockType, compilation,
+				requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier + 1);
+			this.SetCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+		}
+
+		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
+		{
+			if (this.SetMethod is null)
+			{
+				this.SetMethod = new MethodModel(property.SetMethod!, mockType, compilation,
+					requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier + 1);
+			}
+
+			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
+		}
 	}
 
-	internal bool IsUnsafe { get; }
-   internal EquatableArray<ParameterModel> Parameters { get; }
+	internal MethodModel? SetMethod { get; }
+	internal MethodModel? GetMethod { get; }
+   internal bool GetCanBeSeenByContainingAssembly { get; }
+	internal bool SetCanBeSeenByContainingAssembly { get; }
+	internal bool InitCanBeSeenByContainingAssembly { get; }
+   internal bool IsUnsafe { get; }
+	internal EquatableArray<ParameterModel> Parameters { get; }
+	/// <summary>
+	/// Gets the type that the property was defined on.
+	/// </summary>
+   internal TypeReferenceModel ContainingType { get; }
    internal string Name { get; }
-   internal bool IsVirtual { get; }
-   internal bool IsIndexer { get; }
-   internal string AttributesDescription { get; }
-   internal bool ReturnsByRef { get; }
+	internal bool IsVirtual { get; }
+	internal bool IsIndexer { get; }
+	internal string AttributesDescription { get; }
+	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
-   internal TypeReferenceModel Type { get; }
+	/// <summary>
+	/// Gets the type of the property.
+	/// </summary>
+	internal TypeReferenceModel Type { get; }
+	/// <summary>
+	/// Gets the mock type.
+	/// </summary>
 	internal TypeReferenceModel MockType { get; }
 	/// <summary>
 	/// Gets the accessors.

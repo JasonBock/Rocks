@@ -9,6 +9,9 @@ internal record TypeReferenceModel
 	{
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
+		this.NoGenericsName = type.GetName(TypeNameOption.NoGenerics);
+
+		this.DelegateInvokeMethod = type is INamedTypeSymbol namedType ? namedType.DelegateInvokeMethod : null;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
 		this.Namespace = type.ContainingNamespace?.IsGlobalNamespace ?? false ?
@@ -49,7 +52,9 @@ internal record TypeReferenceModel
    internal bool IsRefLikeType { get; }
    internal string AttributesDescription { get; }
 	internal string FlattenedName { get; }
-	internal bool IsRecord { get; }
+   internal string NoGenericsName { get; }
+   internal IMethodSymbol? DelegateInvokeMethod { get; }
+   internal bool IsRecord { get; }
 	internal string? Namespace { get; }
    internal SymbolKind Kind { get; }
    internal TypeKind TypeKind { get; }

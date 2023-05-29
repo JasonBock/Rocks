@@ -6,28 +6,27 @@ namespace Rocks.Builders.Create;
 
 internal static class MockBuilderV3
 {
-	internal static bool Build(IndentedTextWriter writer, TypeMockModel type, Compilation compilation)
+	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		// TODO: Uncomment as more progress is made.
-		var wereTypesProjected = MockProjectedTypesBuilderV3.Build(writer, type);
+		var wereTypesProjected = MockProjectedTypesBuilderV3.Build(writer, mockType);
 
-		writer.WriteLine($"internal static class CreateExpectationsOf{type.Type.FlattenedName}Extensions");
+		writer.WriteLine($"internal static class CreateExpectationsOf{mockType.Type.FlattenedName}Extensions");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockMethodExtensionsBuilderV3.Build(writer, type);
-		//MockPropertyExtensionsBuilder.Build(writer, information);
-		MockConstructorExtensionsBuilderV3.Build(writer, type);
+		MockMethodExtensionsBuilderV3.Build(writer, mockType);
+		MockPropertyExtensionsBuilderV3.Build(writer, mockType);
+		MockConstructorExtensionsBuilderV3.Build(writer, mockType);
 
 		writer.WriteLine();
-		MockTypeBuilderV3.Build(writer, type);
+		MockTypeBuilderV3.Build(writer, mockType);
 
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		MethodExpectationsExtensionsBuilderV3.Build(writer, type);
-		//PropertyExpectationsExtensionsBuilder.Build(writer, information);
-		//EventExpectationsExtensionsBuilder.Build(writer, information);
+		MethodExpectationsExtensionsBuilderV3.Build(writer, mockType);
+		PropertyExpectationsExtensionsBuilderV3.Build(writer, mockType);
+		EventExpectationsExtensionsBuilderV3.Build(writer, mockType);
 
 		return wereTypesProjected;
 	}

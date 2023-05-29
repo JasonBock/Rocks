@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Text;
+﻿using Microsoft.CodeAnalysis.Text;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Text;
@@ -8,13 +7,9 @@ namespace Rocks.Builders.Create;
 
 internal sealed class RockCreateBuilderV3
 {
-	// TODO: I'm wondering if there really should be a need
-	// for the compilation when I'm building the code.
-	// At this point, all of the needed information should arguably be
-	// in the models.
-	internal RockCreateBuilderV3(TypeMockModel information, Compilation compilation)
+	internal RockCreateBuilderV3(TypeMockModel mockType)
 	{
-		(this.MockType, this.Compilation) = (information, compilation);
+		this.MockType = mockType;
 		(this.Name, this.Text) = this.Build();
 	}
 
@@ -44,7 +39,7 @@ internal sealed class RockCreateBuilderV3
 			"using System.Collections.Immutable;",
 		};
 
-		var wereTypesProjected = MockBuilderV3.Build(indentWriter, this.MockType, this.Compilation);
+		var wereTypesProjected = MockBuilderV3.Build(indentWriter, this.MockType);
 
 		if (wereTypesProjected)
 		{
@@ -64,7 +59,6 @@ internal sealed class RockCreateBuilderV3
 		return ($"{this.MockType.Type.FlattenedName}_Rock_Create.g.cs", text);
 	}
 
-	private Compilation Compilation { get;  }
 	public string Name { get; private set; }
 	public SourceText Text { get; private set; }
 	private TypeMockModel MockType { get; }

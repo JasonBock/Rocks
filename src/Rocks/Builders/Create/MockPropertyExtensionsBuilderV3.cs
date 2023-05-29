@@ -5,15 +5,15 @@ using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
-internal static class MockPropertyExtensionsBuilder
+internal static class MockPropertyExtensionsBuilderV3
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
 		if (mockType.Properties.Length > 0)
 		{
 			var typeToMockName = mockType.Type.FullyQualifiedName;
-			MockPropertyExtensionsBuilder.BuildProperties(writer, mockType, typeToMockName);
-			MockPropertyExtensionsBuilder.BuildIndexers(writer, mockType, typeToMockName);
+			MockPropertyExtensionsBuilderV3.BuildProperties(writer, mockType, typeToMockName);
+			MockPropertyExtensionsBuilderV3.BuildIndexers(writer, mockType, typeToMockName);
 		}
 	}
 
