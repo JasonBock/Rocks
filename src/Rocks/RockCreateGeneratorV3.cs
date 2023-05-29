@@ -51,8 +51,7 @@ internal sealed class RockCreateGeneratorV3
 		var provider = context.SyntaxProvider
 			.CreateSyntaxProvider(IsSyntaxTargetForGeneration, TransformTargets)
 			.Where(static _ => _ is not null);
-		var providerNodes = provider.Collect();
-		context.RegisterSourceOutput(providerNodes,
+		context.RegisterSourceOutput(provider.Collect(),
 			(context, source) => CreateOutput(source, context));
 	}
 

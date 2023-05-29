@@ -37,6 +37,7 @@ internal record MethodModel
 			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
 		}
 
+		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);
 		this.IsAbstract = method.IsAbstract;
 		this.IsVirtual = method.IsVirtual;
 		this.IsGenericMethod = method.IsGenericMethod;
@@ -68,32 +69,33 @@ internal record MethodModel
 		}
 	}
 
+	internal bool IsMarkedWithDoesNotReturn { get; }
 	/// <summary>
 	/// Gets the type that contains the method.
 	/// </summary>
-   internal TypeReferenceModel ContainingType { get; }
+	internal TypeReferenceModel ContainingType { get; }
 	/// <summary>
 	/// Gets the mock type.
 	/// </summary>
-   internal TypeReferenceModel MockType { get; }
+	internal TypeReferenceModel MockType { get; }
 	internal string? ProjectedReturnValueDelegateName { get; }
-   internal string? ProjectedCallbackDelegateName { get; }
-   internal bool RequiresProjectedDelegate { get; }
+	internal string? ProjectedCallbackDelegateName { get; }
+	internal bool RequiresProjectedDelegate { get; }
 	internal bool IsUnsafe { get; }
 	internal string? ContainingTypeFlattenedName { get; }
 	internal string? ContainingTypeFullyQualifiedName { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsVirtual { get; }
-   internal bool IsGenericMethod { get; }
-   internal MethodKind MethodKind { get; }
-   internal EquatableArray<string> Constraints { get; }
+	internal bool IsGenericMethod { get; }
+	internal MethodKind MethodKind { get; }
+	internal EquatableArray<string> Constraints { get; }
 	internal EquatableArray<string> DefaultConstraints { get; }
 	internal TypeKind ContainingTypeKind { get; }
 	internal string Name { get; }
 	internal bool ShouldThrowDoesNotReturnException { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
-   internal TypeReferenceModel ReturnType { get; }
-   internal bool ReturnsVoid { get; }
+	internal TypeReferenceModel ReturnType { get; }
+	internal bool ReturnsVoid { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool ReturnTypeIsRefLikeType { get; }

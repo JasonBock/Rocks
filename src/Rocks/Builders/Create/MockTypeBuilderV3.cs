@@ -56,22 +56,21 @@ internal static class MockTypeBuilderV3
 			}
 		}
 
-		// TODO: Revisit later.
-		//foreach (var property in type.Properties.Where(_ => !_.Value.IsIndexer))
-		//{
-		//	MockPropertyBuilder.Build(writer, property, canRaiseEvents, compilation);
-		//}
+		foreach (var property in type.Properties.Where(_ => !_.IsIndexer))
+		{
+			MockPropertyBuilderV3.Build(writer, property, canRaiseEvents);
+		}
 
-		//foreach (var indexer in type.Properties.Where(_ => _.Value.IsIndexer))
-		//{
-		//	MockIndexerBuilder.Build(writer, indexer, canRaiseEvents, compilation);
-		//}
+		foreach (var indexer in type.Properties.Where(_ => _.IsIndexer))
+		{
+			MockIndexerBuilderV3.Build(writer, indexer, canRaiseEvents);
+		}
 
-		//if (canRaiseEvents)
-		//{
-		//	writer.WriteLine();
-		//	MockEventsBuilder.Build(writer, type.Events, compilation);
-		//}
+		if (canRaiseEvents)
+		{
+			writer.WriteLine();
+			MockEventsBuilderV3.Build(writer, type.Events);
+		}
 
 		MockTypeBuilderV3.BuildShimTypes(writer, type, mockTypeName);
 

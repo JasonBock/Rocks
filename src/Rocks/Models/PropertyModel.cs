@@ -29,12 +29,23 @@ internal record PropertyModel
 		this.ContainingType = new TypeReferenceModel(property.ContainingType, compilation);
 		this.Name = property.Name;
 		this.IsVirtual = property.IsVirtual;
+		this.IsAbstract = property.IsAbstract;
 		this.IsIndexer = property.IsIndexer;
 		this.IsUnsafe = property.IsUnsafe();
 		this.Parameters = property.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
+
+		var allAttributes = property.GetAllAttributes();
+
 		this.AttributesDescription = property.GetAttributes().GetDescription(compilation);
+		this.AllAttributesDescription = allAttributes.GetDescription(compilation);
+
 		this.ReturnsByRef = property.ReturnsByRef;
 		this.ReturnsByRefReadOnly = property.ReturnsByRefReadonly;
+
+		if (this.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+		{
+			this.OverridingCodeValue = property.GetOverridingCodeValue(compilation.Assembly);
+		}
 
 		if (this.Accessors == PropertyAccessor.Get || this.Accessors == PropertyAccessor.GetAndSet || this.Accessors == PropertyAccessor.GetAndInit)
 		{
@@ -57,23 +68,34 @@ internal record PropertyModel
 
 			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
 		}
+
+		if (this.SetMethod is not null)
+		{
+			var allowNullAttributeType = compilation.GetTypeByMetadataName("System.Diagnostics.CodeAnalysis.AllowNullAttribute");
+			this.AllowNull = allAttributes.Any(
+				_ => _.AttributeClass?.Equals(allowNullAttributeType, SymbolEqualityComparer.Default) ?? false);
+		}
 	}
 
+   internal bool AllowNull { get; }
+   internal string? OverridingCodeValue { get; }
 	internal MethodModel? SetMethod { get; }
 	internal MethodModel? GetMethod { get; }
-   internal bool GetCanBeSeenByContainingAssembly { get; }
+	internal bool GetCanBeSeenByContainingAssembly { get; }
 	internal bool SetCanBeSeenByContainingAssembly { get; }
 	internal bool InitCanBeSeenByContainingAssembly { get; }
-   internal bool IsUnsafe { get; }
+	internal bool IsUnsafe { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
 	/// <summary>
 	/// Gets the type that the property was defined on.
 	/// </summary>
-   internal TypeReferenceModel ContainingType { get; }
-   internal string Name { get; }
+	internal TypeReferenceModel ContainingType { get; }
+	internal string Name { get; }
 	internal bool IsVirtual { get; }
-	internal bool IsIndexer { get; }
+   internal bool IsAbstract { get; }
+   internal bool IsIndexer { get; }
 	internal string AttributesDescription { get; }
+	internal string AllAttributesDescription { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
 	/// <summary>
