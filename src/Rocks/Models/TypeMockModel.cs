@@ -48,8 +48,8 @@ internal record TypeMockModel
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride, 
 				_.Accessors, _.MemberIdentifier)).ToImmutableArray();
 		this.Events = events.Results.Select(_ =>
-			new EventModel(_.Value, this.Type, _.RequiresExplicitInterfaceImplementation,
-				_.RequiresOverride)).ToImmutableArray();
+			new EventModel(_.Value, this.Type, compilation,
+				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
 		this.Shims = shims.Select(_ =>
 			MockModel.Create(_, model, BuildType.Create)!.Type!).ToImmutableArray();
 

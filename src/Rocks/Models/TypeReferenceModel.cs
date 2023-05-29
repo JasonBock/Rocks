@@ -10,6 +10,7 @@ internal record TypeReferenceModel
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
 		this.NoGenericsName = type.GetName(TypeNameOption.NoGenerics);
+		this.IncludeGenericsName = type.GetName(TypeNameOption.IncludeGenerics);
 
 		this.DelegateInvokeMethod = type is INamedTypeSymbol namedType ? namedType.DelegateInvokeMethod : null;
 
@@ -53,6 +54,7 @@ internal record TypeReferenceModel
    internal string AttributesDescription { get; }
 	internal string FlattenedName { get; }
    internal string NoGenericsName { get; }
+   internal string IncludeGenericsName { get; }
    internal IMethodSymbol? DelegateInvokeMethod { get; }
    internal bool IsRecord { get; }
 	internal string? Namespace { get; }

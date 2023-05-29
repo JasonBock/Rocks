@@ -52,11 +52,8 @@ internal record PropertyModel
 
 		if (this.Accessors == PropertyAccessor.Init || this.Accessors == PropertyAccessor.GetAndInit)
 		{
-			if (this.SetMethod is null)
-			{
-				this.SetMethod = new MethodModel(property.SetMethod!, mockType, compilation,
-					requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier + 1);
-			}
+			this.SetMethod ??= new MethodModel(property.SetMethod!, mockType, compilation,
+				requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier + 1);
 
 			this.InitCanBeSeenByContainingAssembly = property.SetMethod!.CanBeSeenByContainingAssembly(compilation.Assembly);
 		}

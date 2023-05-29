@@ -1,25 +1,24 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
-using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
 internal static class MockPropertyExtensionsBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, MockInformation information)
 	{
-		if (mockType.Properties.Length > 0)
+		if (information.Properties.Results.Length > 0)
 		{
-			var typeToMockName = mockType.Type.FullyQualifiedName;
-			MockPropertyExtensionsBuilder.BuildProperties(writer, mockType, typeToMockName);
-			MockPropertyExtensionsBuilder.BuildIndexers(writer, mockType, typeToMockName);
+			var typeToMockName = information.TypeToMock!.ReferenceableName;
+			MockPropertyExtensionsBuilder.BuildProperties(writer, information, typeToMockName);
+			MockPropertyExtensionsBuilder.BuildIndexers(writer, information, typeToMockName);
 		}
 	}
 
-	private static void BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string typeToMockName)
+	private static void BuildIndexers(IndentedTextWriter writer, MockInformation information, string typeToMockName)
 	{
-		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
+		if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
 			writer.WriteLines(
 				$$"""
@@ -28,8 +27,9 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.GetCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -39,8 +39,9 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.SetCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -50,8 +51,9 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.InitCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => _.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -62,13 +64,13 @@ internal static class MockPropertyExtensionsBuilder
 			}
 		}
 
-		foreach (var typeGroup in mockType.Properties
+		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				_.IsIndexer)
-			.GroupBy(_ => _.ContainingType))
+				_.Value.IsIndexer)
+			.GroupBy(_ => _.Value.ContainingType))
 		{
-			var containingTypeName = typeGroup.Key.FullyQualifiedName;
-			var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
+			var containingTypeName = typeGroup.Key.GetFullyQualifiedName();
+			var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
 			writer.WriteLines(
 				$$"""
 				internal static global::Rocks.Expectations.ExplicitIndexerExpectations<{{typeToMockName}}, {{containingTypeName}}> ExplicitIndexersFor{{flattenedContainingTypeName}}(this global::Rocks.Expectations.Expectations<{{typeToMockName}}> @self) =>
@@ -76,7 +78,8 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (typeGroup.Any(_ => _.GetCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -86,7 +89,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.SetCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -96,7 +100,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.InitCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -108,9 +113,9 @@ internal static class MockPropertyExtensionsBuilder
 		}
 	}
 
-	private static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string typeToMockName)
+	private static void BuildProperties(IndentedTextWriter writer, MockInformation information, string typeToMockName)
 	{
-		if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
+		if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
 			writer.WriteLines(
 				$$"""
@@ -119,8 +124,9 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.GetCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -130,8 +136,9 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.SetCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -141,8 +148,9 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				_.InitCanBeSeenByContainingAssembly))
+			if (information.Properties.Results.Any(_ => !_.Value.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -153,13 +161,13 @@ internal static class MockPropertyExtensionsBuilder
 			}
 		}
 
-		foreach (var typeGroup in mockType.Properties
+		foreach (var typeGroup in information.Properties.Results
 			.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes &&
-				!_.IsIndexer)
-			.GroupBy(_ => _.ContainingType))
+				!_.Value.IsIndexer)
+			.GroupBy(_ => _.Value.ContainingType))
 		{
-			var containingTypeName = typeGroup.Key.FullyQualifiedName;
-			var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
+			var containingTypeName = typeGroup.Key.GetFullyQualifiedName();
+			var flattenedContainingTypeName = typeGroup.Key.GetName(TypeNameOption.Flatten);
 			writer.WriteLines(
 				$$"""
 				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<{{typeToMockName}}, {{containingTypeName}}> ExplicitPropertiesFor{{flattenedContainingTypeName}}(this global::Rocks.Expectations.Expectations<{{typeToMockName}}> @self) =>
@@ -167,7 +175,8 @@ internal static class MockPropertyExtensionsBuilder
 
 				""");
 
-			if (typeGroup.Any(_ => _.GetCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.GetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -177,7 +186,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.SetCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
@@ -187,7 +197,8 @@ internal static class MockPropertyExtensionsBuilder
 					""");
 			}
 
-			if (typeGroup.Any(_ => _.InitCanBeSeenByContainingAssembly))
+			if (typeGroup.Any(_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.Value.SetMethod!.CanBeSeenByContainingAssembly(information.ContainingAssemblyOfInvocationSymbol)))
 			{
 				writer.WriteLines(
 					$$"""
