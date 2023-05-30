@@ -58,9 +58,9 @@ internal static class MockMethodValueBuilderV3
 			writer.WriteLine(method.AttributesDescription);
 		}
 
-		if (method.ReturnType.AttributesDescription.Length > 0)
+		if (method.ReturnTypeAttributesDescription.Length > 0)
 		{
-			writer.WriteLine(method.ReturnType.AttributesDescription);
+			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
 		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");

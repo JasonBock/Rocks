@@ -56,6 +56,7 @@ internal record MethodModel
 		this.ReturnsByRefReadOnly = method.ReturnsByRefReadonly;
 
 		this.AttributesDescription = method.GetAttributes().GetDescription(compilation);
+		this.ReturnTypeAttributesDescription = method.GetReturnTypeAttributes().GetDescription(compilation);
 		this.RequiresProjectedDelegate = method.RequiresProjectedDelegate();
 
 		if (this.RequiresProjectedDelegate)
@@ -100,7 +101,8 @@ internal record MethodModel
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool ReturnTypeIsRefLikeType { get; }
 	internal string AttributesDescription { get; }
-	internal string? OverridingCodeValue { get; }
+   internal string ReturnTypeAttributesDescription { get; }
+   internal string? OverridingCodeValue { get; }
 
 	/// <summary>
 	/// Gets the member identifier.
