@@ -10,18 +10,16 @@ internal static class PointerArgTypeBuilderV3
 	// TODO: Not sure this method is needed anymore...
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var containingNamespace = typeToMock.Namespace;
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.PointerArgProjectedName;
-		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var containingNamespace = typeModel.Type.Namespace;
 		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
-		return $"global::{containingNamespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{typeModel.Type.Namespace}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)

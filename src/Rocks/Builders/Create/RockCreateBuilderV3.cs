@@ -30,8 +30,6 @@ internal sealed class RockCreateBuilderV3
 			indentWriter.Indent++;
 		}
 
-		// TODO: I'm not sure I need all three here, unless
-		// they are all here for extension methods in these namespaces.
 		var requiredNamespaces = new SortedSet<string>
 		{
 			"using Rocks.Extensions;",

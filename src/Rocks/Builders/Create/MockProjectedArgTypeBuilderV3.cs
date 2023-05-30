@@ -1,5 +1,4 @@
-﻿using Rocks.Extensions;
-using Rocks.Models;
+﻿using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -47,23 +46,20 @@ internal static class MockProjectedArgTypeBuilderV3
 			GetEsotericTypes(method.Parameters, method.ReturnsVoid ? null : method.ReturnType, types);
 		}
 
-		// TODO: Come back for properties
-		//foreach (var propertyResult in type.Properties.Results)
-		//{
-		//	var property = propertyResult.Value;
-
-		//	if (property.IsIndexer)
-		//	{
-		//		GetEsotericTypes(property.Parameters, property.Type, types);
-		//	}
-		//	else
-		//	{
-		//		if (property.Type.IsEsoteric())
-		//		{
-		//			types.Add(property.Type);
-		//		}
-		//	}
-		//}
+		foreach (var property in type.Properties)
+		{
+			if (property.IsIndexer)
+			{
+				GetEsotericTypes(property.Parameters, property.Type, types);
+			}
+			else
+			{
+				if (property.Type.IsEsoteric)
+				{
+					types.Add(property.Type);
+				}
+			}
+		}
 
 		return types;
 	}

@@ -63,41 +63,40 @@ internal static class MockProjectedDelegateBuilderV3
 			}
 		}
 
-		// TODO: Come back for properties
-		//static void BuildProperties(IndentedTextWriter writer, MockInformation information, Compilation compilation)
-		//{
-		//	var getPropertyMethods = information.Properties.Results
-		//		.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
-		//			_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
-		//		.Select(_ => _.Value.GetMethod!);
-		//	BuildDelegates(writer, getPropertyMethods, compilation);
+		static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType)
+		{
+			var getPropertyMethods = mockType.Properties
+				.Where(_ => _.GetMethod is not null && _.GetMethod.RequiresProjectedDelegate &&
+					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+				.Select(_ => _.GetMethod!);
+			BuildDelegates(writer, getPropertyMethods);
 
-		//	var setPropertyMethods = information.Properties.Results
-		//		.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
-		//			_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
-		//		.Select(_ => _.Value.SetMethod!);
-		//	BuildDelegates(writer, setPropertyMethods, compilation);
+			var setPropertyMethods = mockType.Properties
+				.Where(_ => _.SetMethod is not null && _.SetMethod.RequiresProjectedDelegate &&
+					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
+				.Select(_ => _.SetMethod!);
+			BuildDelegates(writer, setPropertyMethods);
 
-		//	var explicitGetPropertyMethodGroups = information.Properties.Results
-		//		.Where(_ => _.Value.GetMethod is not null && _.Value.GetMethod.RequiresProjectedDelegate() &&
-		//			_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-		//		.GroupBy(_ => _.Value.ContainingType);
+			var explicitGetPropertyMethodGroups = mockType.Properties
+				.Where(_ => _.GetMethod is not null && _.GetMethod.RequiresProjectedDelegate &&
+					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
+				.GroupBy(_ => _.ContainingType);
 
-		//	foreach (var explicitGetPropertyMethodGroup in explicitGetPropertyMethodGroups)
-		//	{
-		//		BuildDelegate(writer, explicitGetPropertyMethodGroup.First().Value.GetMethod!, compilation);
-		//	}
+			foreach (var explicitGetPropertyMethodGroup in explicitGetPropertyMethodGroups)
+			{
+				BuildDelegate(writer, explicitGetPropertyMethodGroup.First().GetMethod!);
+			}
 
-		//	var explicitSetPropertyMethodGroups = information.Properties.Results
-		//		.Where(_ => _.Value.SetMethod is not null && _.Value.SetMethod.RequiresProjectedDelegate() &&
-		//			_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-		//		.GroupBy(_ => _.Value.ContainingType);
+			var explicitSetPropertyMethodGroups = mockType.Properties
+				.Where(_ => _.SetMethod is not null && _.SetMethod.RequiresProjectedDelegate &&
+					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
+				.GroupBy(_ => _.ContainingType);
 
-		//	foreach (var explicitSetPropertyMethodGroup in explicitSetPropertyMethodGroups)
-		//	{
-		//		BuildDelegate(writer, explicitSetPropertyMethodGroup.First().Value.SetMethod!, compilation);
-		//	}
-		//}
+			foreach (var explicitSetPropertyMethodGroup in explicitSetPropertyMethodGroups)
+			{
+				BuildDelegate(writer, explicitSetPropertyMethodGroup.First().SetMethod!);
+			}
+		}
 
 		if (type.Methods.Length > 0)
 		{
@@ -117,10 +116,9 @@ internal static class MockProjectedDelegateBuilderV3
 			}
 		}
 
-		// TODO: Come back for properties
-		//if (type.Properties.Length > 0)
-		//{
-		//	BuildProperties(writer, type, compilation);
-		//}
+		if (type.Properties.Length > 0)
+		{
+			BuildProperties(writer, type);
+		}
 	}
 }
