@@ -246,8 +246,8 @@ public static class IndexerInitCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -627,8 +627,8 @@ public static class IndexerInitCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "Target_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "Target_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

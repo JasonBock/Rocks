@@ -23,7 +23,7 @@ internal sealed class RockCreateBuilderV3
 
 		var mockNamespace = this.MockType.Type.Namespace;
 
-		if (mockNamespace is not null)
+		if (mockNamespace.Length > 0)
 		{
 			indentWriter.WriteLine($"namespace {mockNamespace}");
 			indentWriter.WriteLine("{");
@@ -41,10 +41,10 @@ internal sealed class RockCreateBuilderV3
 
 		if (wereTypesProjected)
 		{
-			requiredNamespaces.Add($"using {(mockNamespace is not null ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.MockType.Type.FlattenedName};");
+			requiredNamespaces.Add($"using {(mockNamespace.Length > 0 ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.MockType.Type.FlattenedName};");
 		}
 
-		if (mockNamespace is not null)
+		if (mockNamespace.Length > 0)
 		{
 			indentWriter.Indent--;
 			indentWriter.WriteLine("}");

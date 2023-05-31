@@ -217,8 +217,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -514,8 +514,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
@@ -943,8 +943,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "HasInternalVirtual_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(), 
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
@@ -1358,8 +1358,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "Test_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "Test_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1657,8 +1657,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "Test_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "Test_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

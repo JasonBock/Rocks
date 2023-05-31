@@ -141,7 +141,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@args) :
 										@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for T of type {typeof(T).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T?.");
 									return @result!;
 								}
 							}
@@ -177,8 +177,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "BaseStuff_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "BaseStuff_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -302,8 +302,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "INeedDelegate_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "INeedDelegate_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -524,7 +524,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
 									return @result!;
 								}
 							}
@@ -563,8 +563,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITypeConstraints_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITypeConstraints_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -936,7 +936,7 @@ public static class ConstraintsGeneratorTests
 										@methodReturn(@data) :
 										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for TData of type {typeof(TData).FullName}.");
+											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
 									return @result!;
 								}
 							}
@@ -986,8 +986,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "TypeConstraints_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "TypeConstraints_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1206,8 +1206,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IUnmanagedValue_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "IUnmanagedValue_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1377,8 +1377,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ThingOfstring_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ThingOfstring_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

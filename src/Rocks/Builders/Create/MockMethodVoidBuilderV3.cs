@@ -24,7 +24,7 @@ internal static class MockMethodVoidBuilderV3
 			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingTypeFullyQualifiedName}." : string.Empty;
+			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 		var methodDescription = $"void {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -139,7 +139,7 @@ internal static class MockMethodVoidBuilderV3
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 			var target = method.ContainingTypeKind == TypeKind.Interface ?
-				$"this.shimFor{method.ContainingTypeFlattenedName}" : "base";
+				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
 			writer.WriteLine($"{target}.{method.Name}({passedParameter});");
 		}
 		else

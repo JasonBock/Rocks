@@ -12,14 +12,14 @@ internal static class PointerArgTypeBuilderV3
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.PointerArgProjectedName;
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
-		return $"global::{typeModel.Type.Namespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
@@ -32,36 +32,36 @@ internal static class PointerArgTypeBuilderV3
 		writer.WriteLines(
 			$$"""
 			internal unsafe delegate bool {{validationDelegateName}}({{typeName}} @value);
-
+			
 			internal unsafe sealed class {{argName}}
 				: global::Rocks.Argument
 			{
 				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
 				private readonly {{typeName}} value;
 				private readonly global::Rocks.ValidationState validation;
-
+				
 				internal {{argName}}() => this.validation = global::Rocks.ValidationState.None;
-
+				
 				internal {{argName}}({{typeName}} @value)
 				{
 					this.value = @value;
 					this.validation = global::Rocks.ValidationState.Value;
 				}
-
+				
 				internal {{argName}}({{validationDelegateFullyQualifiedName}} @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = global::Rocks.ValidationState.Evaluation;
 				}
+				
 			""");
 
 		if (type.Kind != SymbolKind.FunctionPointerType)
 		{
 			writer.WriteLines(
 				$$"""
-
 					public static implicit operator {{argName}}({{typeName}} @value) => new(@value);
-
+					
 				""");
 		}
 

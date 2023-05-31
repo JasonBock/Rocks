@@ -68,7 +68,6 @@ public static class ExplicitImplementationGeneratorTests
 						this.handlers = @expectations.Handlers;
 					}
 					
-					
 					[global::Rocks.MemberIdentifier(0, "global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()")]
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()
 					{
@@ -117,8 +116,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ISetupList_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ISetupList_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

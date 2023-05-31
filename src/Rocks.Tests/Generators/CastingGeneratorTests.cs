@@ -123,7 +123,7 @@ public static class CastingGeneratorTests
 											@methodReturn(@value, @data, @information) :
 											@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
 												@returnValue.ReturnValue :
-												throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for T of type {typeof(T).FullName}.");
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T.");
 										return @result!;
 									}
 								}
@@ -228,8 +228,8 @@ public static class CastingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveOpenGenericsOfGuid_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "IHaveOpenGenericsOfGuid_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

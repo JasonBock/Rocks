@@ -27,10 +27,10 @@ internal static class MockMethodExtensionsBuilderV3
 			{
 				foreach (var typeGroup in type.Methods
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-					.GroupBy(_ => (_.ContainingTypeFullyQualifiedName, _.ContainingTypeFlattenedName)))
+					.GroupBy(_ => (_.ContainingType)))
 				{
-					var containingTypeName = typeGroup.Key.ContainingTypeFullyQualifiedName;
-					var flattenedContainingTypeName = typeGroup.Key.ContainingTypeFlattenedName;
+					var containingTypeName = typeGroup.Key.FullyQualifiedName;
+					var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
 					writer.WriteLines(
 						$$"""
 						internal static global::Rocks.Expectations.ExplicitMethodExpectations<{{typeToMockName}}, {{containingTypeName}}> ExplicitMethodsFor{{flattenedContainingTypeName}}(this global::Rocks.Expectations.Expectations<{{typeToMockName}}> @self) =>

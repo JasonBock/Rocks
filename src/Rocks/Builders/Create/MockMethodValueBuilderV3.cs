@@ -27,7 +27,7 @@ internal static class MockMethodValueBuilderV3
 			return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 		}));
 		var explicitTypeNameDescription = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes ?
-			$"{method.ContainingTypeFullyQualifiedName}." : string.Empty;
+			$"{method.ContainingType.FullyQualifiedName}." : string.Empty;
 		var methodDescription = $"{returnType} {explicitTypeNameDescription}{method.Name}({parametersDescription})";
 
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -156,7 +156,7 @@ internal static class MockMethodValueBuilderV3
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
 			var target = method.ContainingTypeKind == TypeKind.Interface ?
-				$"this.shimFor{method.ContainingTypeFlattenedName}" : "base";
+				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
 			writer.WriteLine($"return {target}.{method.Name}({passedParameter});");
 
 			writer.Indent--;
@@ -235,7 +235,7 @@ internal static class MockMethodValueBuilderV3
 					$$"""
 					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue :
-						throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
+						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
 					"""
 				);
 			}
@@ -252,7 +252,7 @@ internal static class MockMethodValueBuilderV3
 					$$"""
 					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue!.Invoke() :
-						throw new global::Rocks.Exceptions.NoReturnValueException($"No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
+						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
 					"""
 				);
 			}

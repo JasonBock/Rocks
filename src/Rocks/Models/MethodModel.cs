@@ -27,12 +27,7 @@ internal record MethodModel
 
 		this.ContainingType = new TypeReferenceModel(method.ContainingType, compilation);
 
-		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-		{
-			this.ContainingTypeFullyQualifiedName = method.ContainingType.GetFullyQualifiedName();
-			this.ContainingTypeFlattenedName = method.ContainingType.GetName(TypeNameOption.Flatten);
-		}
-		else
+		if (requiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 		{
 			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
 		}
@@ -64,7 +59,7 @@ internal record MethodModel
 			this.ProjectedCallbackDelegateName = method.GetName(extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
-		if (this.ReturnTypeIsRefLikeType)
+		if (this.ReturnType.IsRefLikeType)
 		{
 			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
@@ -83,8 +78,6 @@ internal record MethodModel
 	internal string? ProjectedCallbackDelegateName { get; }
 	internal bool RequiresProjectedDelegate { get; }
 	internal bool IsUnsafe { get; }
-	internal string? ContainingTypeFlattenedName { get; }
-	internal string? ContainingTypeFullyQualifiedName { get; }
 	internal bool IsAbstract { get; }
 	internal bool IsVirtual { get; }
 	internal bool IsGenericMethod { get; }
@@ -99,7 +92,6 @@ internal record MethodModel
 	internal bool ReturnsVoid { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
-	internal bool ReturnTypeIsRefLikeType { get; }
 	internal string AttributesDescription { get; }
    internal string ReturnTypeAttributesDescription { get; }
    internal string? OverridingCodeValue { get; }

@@ -11,14 +11,14 @@ internal static class MockProjectedDelegateBuilderV3
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var delegateName = method.ProjectedCallbackDelegateName;
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{delegateName}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var delegateName = method.ProjectedReturnValueDelegateName;
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{delegateName}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}";
 	}
 
 	// TODO: this could go on the MethodModel itself.
@@ -49,7 +49,7 @@ internal static class MockProjectedDelegateBuilderV3
 		{
 			writer.WriteLine(MockProjectedDelegateBuilderV3.GetProjectedDelegate(method));
 
-			if(method.ReturnTypeIsRefLikeType)
+			if(method.ReturnType.IsRefLikeType)
 			{
 				writer.WriteLine(MockProjectedDelegateBuilderV3.GetProjectedReturnValueDelegate(method));
 			}
@@ -108,7 +108,7 @@ internal static class MockProjectedDelegateBuilderV3
 			var explicitMethodGroups = type.Methods
 				.Where(_ => _.RequiresProjectedDelegate &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-				.GroupBy(_ => _.ContainingTypeFullyQualifiedName);
+				.GroupBy(_ => _.ContainingType);
 
 			foreach (var explicitMethodGroup in explicitMethodGroups)
 			{

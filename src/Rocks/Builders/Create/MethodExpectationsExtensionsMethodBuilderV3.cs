@@ -11,7 +11,7 @@ internal static class MethodExpectationsExtensionsMethodBuilderV3
 	{
 		var isExplicitImplementation = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
 		var mockTypeName = method.MockType.FullyQualifiedName;
-		var containingTypeName = method.ContainingTypeFullyQualifiedName;
+		var containingTypeName = method.ContainingType.FullyQualifiedName;
 		var namingContext = new VariableNamingContextV3(method);
 
 		var thisParameter = isExplicitImplementation ?

@@ -41,7 +41,7 @@ internal sealed class RockCreateGeneratorV3
 				if (SymbolEqualityComparer.Default.Equals(rockCreateSymbol, invocationSymbol.ConstructedFrom) ||
 					SymbolEqualityComparer.Default.Equals(rockRepositoryCreateSymbol, invocationSymbol.ConstructedFrom))
 				{
-					return MockModel.Create(invocationSymbol!.TypeArguments[0], model, BuildType.Create);
+					return MockModel.Create(invocationSymbol!.TypeArguments[0], model, BuildType.Create, true);
 				}
 			}
 

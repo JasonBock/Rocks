@@ -83,7 +83,6 @@ public static class AttributeGeneratorTests
 						this.handlers = @expectations.Handlers;
 					}
 					
-					
 					[global::Rocks.MemberIdentifier(0, "get_X11()")]
 					public (nint Display, nuint Window)? X11
 					{
@@ -113,8 +112,8 @@ public static class AttributeGeneratorTests
 			
 			""";
 		
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "IUseTuples_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: references.Concat(new[] { tupleReference as MetadataReference })).ConfigureAwait(false);
 	}
@@ -241,7 +240,6 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					
 					[global::Rocks.MemberIdentifier(3, "dynamic CreateDynamicRecord()")]
 					protected override dynamic CreateDynamicRecord()
 					{
@@ -283,8 +281,8 @@ public static class AttributeGeneratorTests
 		// The diagnostic is coming from the method definition in code,
 		// which we have to have to ensure the generator doesn't emit [Dynamic],
 		// so it's expected to get CS1970.
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "HaveDynamic_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "HaveDynamic_Rock_Create.g.cs", generatedCode) },
 			new[] { DiagnosticResult.CompilerError("CS1970").WithSpan(7, 11, 7, 18) }).ConfigureAwait(false);
 	}
 

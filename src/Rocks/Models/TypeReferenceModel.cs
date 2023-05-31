@@ -16,11 +16,16 @@ internal record TypeReferenceModel
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
-		this.Namespace = type.ContainingNamespace?.IsGlobalNamespace ?? false ?
-			null : type.ContainingNamespace!.ToDisplayString();
+		this.Namespace = type.ContainingNamespace is not null ?
+			!type.ContainingNamespace.IsGlobalNamespace ? 
+				type.ContainingNamespace.ToDisplayString() : 
+				"" :
+			"";
+
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
 
+		this.IsRecord = type.IsRecord;
 		this.IsReferenceType = type.IsReferenceType;
 		this.IsPointer = type.IsPointer();
 		this.IsEsoteric = type.IsEsoteric();
@@ -59,7 +64,7 @@ internal record TypeReferenceModel
    internal IMethodSymbol? DelegateInvokeMethod { get; }
    internal NullableAnnotation NullableAnnotation { get; }
    internal bool IsRecord { get; }
-	internal string? Namespace { get; }
+	internal string Namespace { get; }
    internal SymbolKind Kind { get; }
    internal TypeKind TypeKind { get; }
    internal bool IsReferenceType { get; }

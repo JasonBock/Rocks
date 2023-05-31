@@ -14,7 +14,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentName(type, adornment, isExplicit);
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedHandlerInformationName(TypeReferenceModel type) =>
@@ -24,7 +24,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationName(type);
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedAddExtensionMethodName(TypeReferenceModel type) =>
@@ -34,7 +34,7 @@ internal static partial class MockProjectedTypesAdornmentsBuilderV3
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodName(type);
-		return $"global::{typeToMock.Namespace}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)

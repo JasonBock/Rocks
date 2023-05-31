@@ -34,7 +34,7 @@ internal static class MethodExpectationsExtensionsBuilderV3
 			{
 				foreach (var typeGroup in type.Methods
 					.Where(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
-					.GroupBy(_ => _.ContainingTypeFlattenedName))
+					.GroupBy(_ => _.ContainingType.FlattenedName))
 				{
 					var containingTypeName = typeGroup.Key;
 					writer.WriteLine($"internal static class ExplicitMethodExpectationsOf{typeToMock}For{containingTypeName}Extensions");

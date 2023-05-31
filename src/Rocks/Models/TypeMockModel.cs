@@ -21,9 +21,10 @@ internal record TypeMockModel
 	/// <param name="properties"></param>
 	/// <param name="events"></param>
 	/// <param name="shims"></param>
+	/// <param name="shouldResolveShims"></param>
 	/// <remarks>
 	/// A <see cref="TypeMockModel" /> should only be created from
-	/// <see cref="MockModel.Create(ITypeSymbol, SemanticModel, Builders.BuildType)" />.
+	/// <see cref="MockModel.Create(ITypeSymbol, SemanticModel, Builders.BuildType, bool)" />.
 	/// Note that shims are also <see cref="TypeMockModel" />, and are 
 	/// created within this constructor.
 	/// </remarks>
@@ -31,7 +32,7 @@ internal record TypeMockModel
 		ITypeSymbol type, Compilation compilation, SemanticModel model,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 		MockableProperties properties, MockableEvents events,
-		HashSet<ITypeSymbol> shims)
+		HashSet<ITypeSymbol> shims, bool shouldResolveShims)
 	{
 		this.Type = new TypeReferenceModel(type, compilation);
 
@@ -50,8 +51,10 @@ internal record TypeMockModel
 		this.Events = events.Results.Select(_ =>
 			new EventModel(_.Value, this.Type, compilation,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
-		this.Shims = shims.Select(_ =>
-			MockModel.Create(_, model, BuildType.Create)!.Type!).ToImmutableArray();
+		this.Shims = shouldResolveShims ? 
+			shims.Select(_ =>
+				MockModel.Create(_, model, BuildType.Create, false)!.Type!).ToImmutableArray() :
+			ImmutableArray<TypeMockModel>.Empty;
 
 		this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()
 			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&

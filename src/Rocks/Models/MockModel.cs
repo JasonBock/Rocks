@@ -11,7 +11,7 @@ namespace Rocks.Models;
 /// </summary>
 internal record MockModel
 {
-	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType)
+	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
 		if(typeToMock.ContainsDiagnostics())
 		{
@@ -121,7 +121,7 @@ internal record MockModel
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		return new(!isMockable ? null : new TypeMockModel(typeToMock, compilation, model, constructors, methods, properties, events, shims),
+		return new(!isMockable ? null : new TypeMockModel(typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
 			typeToMock.GetFullyQualifiedName(),
 			diagnostics.ToImmutable());
 	}
