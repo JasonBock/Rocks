@@ -280,8 +280,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ClassTest_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "ClassTest_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -476,8 +476,8 @@ public static class DoesNotReturnGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IInterfaceTest_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "IInterfaceTest_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

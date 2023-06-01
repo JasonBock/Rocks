@@ -164,8 +164,8 @@ public static class DefaultValuesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "IGenericDefault_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -328,8 +328,8 @@ public static class DefaultValuesGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "IUseInfinity_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

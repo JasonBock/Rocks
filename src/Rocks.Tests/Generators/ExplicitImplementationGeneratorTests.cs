@@ -162,7 +162,6 @@ public static class ExplicitImplementationGeneratorTests
 					{
 					}
 					
-					
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()
 					{
 						return default!;
@@ -176,8 +175,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "ISetupList_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

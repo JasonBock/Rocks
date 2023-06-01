@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyMockableResult result, Compilation compilation, string indexerVisibility, 
+		PropertyModelOLD result, Compilation compilation, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var indexer = result.Value;
@@ -114,7 +114,7 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyMockableResult result, Compilation compilation, string indexerVisibility, 
+		PropertyModelOLD result, Compilation compilation, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var indexer = result.Value;
@@ -229,7 +229,7 @@ internal static class MockIndexerBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer,
-		PropertyMockableResult result, bool raiseEvents, Compilation compilation)
+		PropertyModelOLD result, bool raiseEvents, Compilation compilation)
 	{
 		var indexer = result.Value;
 		var attributes = indexer.GetAttributes();

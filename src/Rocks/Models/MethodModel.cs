@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.Collections.Immutable;
+using System.Reflection;
 
 namespace Rocks.Models;
 
@@ -63,9 +64,35 @@ internal record MethodModel
 		{
 			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
+
+		var taskType = compilation.GetTypeByMetadataName(typeof(Task).FullName);
+		var taskOfTType = compilation.GetTypeByMetadataName(typeof(Task<>).FullName);
+		var valueTaskType = compilation.GetTypeByMetadataName(typeof(ValueTask).FullName);
+		var valueTaskOfTType = compilation.GetTypeByMetadataName(typeof(ValueTask<>).FullName);
+
+		if (method.ReturnType.Equals(taskType))
+		{
+			this.ReturnTypeIsTaskType = true;
+		}
+		else if (method.ReturnType.Equals(valueTaskType))
+		{
+			this.ReturnTypeIsValueTaskType = true;
+		}
+		else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
+		{
+			this.ReturnTypeIsTaskOfTType = true;
+		}
+		else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
+		{
+			this.ReturnTypeIsValueTaskOfTType = true;
+		}
 	}
 
-	internal bool IsMarkedWithDoesNotReturn { get; }
+   internal bool ReturnTypeIsTaskType { get; }
+	internal bool ReturnTypeIsValueTaskType { get; }
+	internal bool ReturnTypeIsTaskOfTType { get; }
+	internal bool ReturnTypeIsValueTaskOfTType { get; }
+   internal bool IsMarkedWithDoesNotReturn { get; }
 	/// <summary>
 	/// Gets the type that contains the method.
 	/// </summary>
@@ -93,8 +120,8 @@ internal record MethodModel
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
 	internal string AttributesDescription { get; }
-   internal string ReturnTypeAttributesDescription { get; }
-   internal string? OverridingCodeValue { get; }
+	internal string ReturnTypeAttributesDescription { get; }
+	internal string? OverridingCodeValue { get; }
 
 	/// <summary>
 	/// Gets the member identifier.

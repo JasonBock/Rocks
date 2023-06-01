@@ -92,6 +92,8 @@ internal sealed class RockMakeGenerator
 		ITypeSymbol typeToMock, IAssemblySymbol containingAssemblySymbol, SemanticModel model,
 		ConfigurationValues configurationValues, Compilation compilation)
 	{
+		// TODO: Not that it matters...because this should go away anyway, but...
+		// why is this BuildType.Create?
 		var information = new MockInformation(typeToMock, containingAssemblySymbol, model,
 			configurationValues, BuildType.Create);
 

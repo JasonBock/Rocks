@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;
 
@@ -38,7 +38,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.IncludeGenericsName;
 		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
@@ -60,7 +60,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 		writer.Indent--;
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property,
+	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property,
 		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = property.MemberIdentifier;

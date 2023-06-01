@@ -656,8 +656,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ITypeConstraints_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "ITypeConstraints_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1088,8 +1088,8 @@ public static class ConstraintsGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "TypeConstraints_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "TypeConstraints_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

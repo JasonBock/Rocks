@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class PropertyExpectationsExtensionsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
@@ -36,7 +36,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
@@ -64,7 +64,7 @@ internal static class PropertyExpectationsExtensionsPropertyBuilder
 		writer.Indent--;
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, IAssemblySymbol typeToMockContainingAssembly, PropertyAccessor accessor)
+	internal static void Build(IndentedTextWriter writer, PropertyModelOLD result, IAssemblySymbol typeToMockContainingAssembly, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 

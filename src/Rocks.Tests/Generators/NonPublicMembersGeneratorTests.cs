@@ -284,8 +284,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -597,8 +597,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
@@ -1056,8 +1056,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "HasInternalVirtual_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
@@ -1739,8 +1739,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "Test_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "Test_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1821,8 +1821,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "Test_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "Test_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

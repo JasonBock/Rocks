@@ -6,7 +6,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockPropertyBuilder
 {
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result,
+	internal static void Build(IndentedTextWriter writer, PropertyModelOLD result,
 		Compilation compilation)
 	{
 		var property = result.Value;

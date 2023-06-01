@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilderV3
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var namingContext = new VariableNamingContextV3(propertyGetMethod);
@@ -52,7 +52,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilderV3
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContextV3(propertySetMethod);
@@ -91,7 +91,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilderV3
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property,  
+	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property,  
 		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = property.MemberIdentifier;

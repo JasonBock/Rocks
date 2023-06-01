@@ -327,6 +327,7 @@ public static class IndexerInitCreateGeneratorTests
 						get => this.i2[(a, b, c)];
 						init => this.i2[(a, b, c)] = value;
 					}
+					
 				}
 				
 				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.MakeGeneration<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
@@ -373,8 +374,8 @@ public static class IndexerInitCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
+			new[] { (typeof(RockMakeGeneratorV3), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

@@ -6,7 +6,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier, string containingTypeName)
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
@@ -52,7 +52,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
@@ -92,7 +92,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, IAssemblySymbol typeToMockContainingAssembly, 
+	internal static void Build(IndentedTextWriter writer, PropertyModelOLD result, IAssemblySymbol typeToMockContainingAssembly, 
 		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = result.MemberIdentifier;

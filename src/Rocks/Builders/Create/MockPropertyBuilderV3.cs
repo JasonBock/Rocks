@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create;
 internal static class MockPropertyBuilderV3
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyModel property, string propertyVisibility,
+		Models.PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;
@@ -110,7 +110,7 @@ internal static class MockPropertyBuilderV3
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyModel property, string propertyVisibility,
+		Models.PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
 	{
 		var methodName = property.SetMethod!.Name;
@@ -213,7 +213,7 @@ internal static class MockPropertyBuilderV3
 	}
 
 	internal static void Build(IndentedTextWriter writer,
-		PropertyModel property, bool raiseEvents)
+		Models.PropertyModel property, bool raiseEvents)
 	{
 		var isGetterVisible = false;
 		var isSetterVisible = false;

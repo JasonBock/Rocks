@@ -7,7 +7,7 @@ namespace Rocks.Builders.Make;
 
 internal static class MockIndexerBuilder
 {
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, Compilation compilation)
+	internal static void Build(IndentedTextWriter writer, PropertyModelOLD result, Compilation compilation)
 	{
 		var indexer = result.Value;
 		var attributes = indexer.GetAttributes();

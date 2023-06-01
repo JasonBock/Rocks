@@ -1,20 +1,19 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Builders.Create;
 using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
 namespace Rocks.Builders.Make;
 
-internal static class MockConstructorBuilder
+internal static class MockConstructorBuilderV3
 {
-	internal static void Build(IndentedTextWriter writer, MockedType typeToMock, Compilation compilation,
-		ImmutableArray<IParameterSymbol> parameters)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, 
+		ImmutableArray<ParameterModel> parameters)
 	{
-		var namingContext = new VariableNamingContext(parameters);
-		var requiredInitPropertiesAndIndexers = typeToMock.Type.GetMembers().OfType<IPropertySymbol>()
-			.Where(_ => (_.IsRequired || _.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
-				_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
+		var namingContext = new VariableNamingContextV3(parameters);
+		var requiredInitPropertiesAndIndexers = mockType.ConstructorProperties;
 		var hasRequiredProperties = requiredInitPropertiesAndIndexers.Any(_ => _.IsRequired);
 
 		var contextParameters = requiredInitPropertiesAndIndexers.Length == 0 ?
@@ -23,7 +22,7 @@ internal static class MockConstructorBuilder
 		var instanceParameters = 
 			string.Join(", ", contextParameters.Concat(parameters.Select(_ =>
 				{
-					var requiresNullable = _.RequiresForcedNullableAnnotation() ? "?" : string.Empty;
+					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 					var direction = _.RefKind switch
 					{
 						RefKind.Ref => "ref ",
@@ -31,7 +30,7 @@ internal static class MockConstructorBuilder
 						RefKind.In => "in ",
 						_ => string.Empty
 					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.GetFullyQualifiedName()}{requiresNullable} @{_.Name}";
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 				})));
 
 		if (hasRequiredProperties)
@@ -41,13 +40,13 @@ internal static class MockConstructorBuilder
 
 		if (parameters.Length > 0)
 		{
-			var isUnsafe = parameters.Any(_ => _.Type.IsPointer()) ? "unsafe " : string.Empty;
+			var isUnsafe = parameters.Any(_ => _.Type.IsPointer) ? "unsafe " : string.Empty;
 
-			writer.WriteLine($"public {isUnsafe}Rock{typeToMock.FlattenedName}({instanceParameters})");
+			writer.WriteLine($"public {isUnsafe}Rock{mockType.Type.FlattenedName}({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine(@$": base({string.Join(", ", parameters.Select(_ =>
 			{
-				var requiresNullable = _.RequiresForcedNullableAnnotation() ? "!" : string.Empty;
+				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -60,39 +59,37 @@ internal static class MockConstructorBuilder
 			writer.Indent--;
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 		else
 		{
-			writer.WriteLine($"public Rock{typeToMock.FlattenedName}({instanceParameters})");
+			writer.WriteLine($"public Rock{mockType.Type.FlattenedName}({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
-			MockConstructorBuilder.BuildFieldSetters(writer, compilation, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
+			MockConstructorBuilderV3.BuildFieldSetters(writer, namingContext, requiredInitPropertiesAndIndexers, hasRequiredProperties);
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
 	}
 
-	private static void BuildFieldSetters(IndentedTextWriter writer, Compilation compilation,
-		VariableNamingContext namingContext,
-		IPropertySymbol[] requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
+	private static void BuildFieldSetters(IndentedTextWriter writer, VariableNamingContextV3 namingContext,
+		EquatableArray<ConstructorPropertyModel> requiredInitPropertiesAndIndexers, bool hasRequiredProperties)
 	{
 		if (requiredInitPropertiesAndIndexers.Length > 0)
 		{
 			var initIndexers = requiredInitPropertiesAndIndexers.Where(
-				_ => _.IsIndexer && (_.GetAccessors() == PropertyAccessor.Init || _.GetAccessors() == PropertyAccessor.GetAndInit) &&
-					_.CanBeSeenByContainingAssembly(compilation.Assembly)).ToArray();
+				_ => _.IsIndexer && (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)).ToImmutableArray();
 			var enumerableTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
-					_.Parameters[0].Type.GetFullyQualifiedName() :
-					$"({string.Join(", ", _.Parameters.Select(p => p.Type.GetFullyQualifiedName()))})").ToArray();
+					_.Parameters[0].Type.FullyQualifiedName :
+					$"({string.Join(", ", _.Parameters.Select(p => p.Type.FullyQualifiedName))})").ToImmutableArray();
 			var forEachTypes = initIndexers.Select(_ =>
 				_.Parameters.Length == 1 ?
 					$"var {_.Parameters[0].Name}" :
-					$"({string.Join(", ", _.Parameters.Select(p => $"var {p.Name}"))})").ToArray();
-			var indexerNames = initIndexers.Select(_ => string.Join(", ", _.Parameters.Select(p => p.Name))).ToArray();
+					$"({string.Join(", ", _.Parameters.Select(p => $"var {p.Name}"))})").ToImmutableArray();
+			var indexerNames = initIndexers.Select(_ => string.Join(", ", _.Parameters.Select(p => p.Name))).ToImmutableArray();
 
 			if (!hasRequiredProperties)
 			{

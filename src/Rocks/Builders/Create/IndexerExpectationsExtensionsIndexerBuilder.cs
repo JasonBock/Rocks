@@ -5,7 +5,7 @@ namespace Rocks.Builders.Create;
 
 internal static class IndexerExpectationsExtensionsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier)
 	{
 		var property = result.Value;
 		var propertyGetMethod = property.GetMethod!;
@@ -50,7 +50,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyMockableResult result, uint memberIdentifier, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModelOLD result, uint memberIdentifier, PropertyAccessor accessor)
 	{
 		var property = result.Value;
 		var propertySetMethod = property.SetMethod!;
@@ -89,7 +89,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyMockableResult result, PropertyAccessor accessor)
+	internal static void Build(IndentedTextWriter writer, PropertyModelOLD result, PropertyAccessor accessor)
 	{
 		var memberIdentifier = result.MemberIdentifier;
 

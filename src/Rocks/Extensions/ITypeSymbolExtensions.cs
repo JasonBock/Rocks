@@ -466,7 +466,7 @@ internal static class ITypeSymbolExtensions
 			return false;
 		}
 
-		var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
+		var properties = ImmutableArray.CreateBuilder<PropertyModelOLD>();
 		var hasInaccessibleAbstractMembers = false;
 
 		if (self.TypeKind == TypeKind.Interface)

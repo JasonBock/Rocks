@@ -5,10 +5,10 @@ namespace Rocks.Extensions;
 /// <summary>
 /// Defines a property that can be mocked.
 /// </summary>
-internal sealed class PropertyMockableResult
+internal sealed class PropertyModelOLD
 {
 	/// <summary>
-	/// Creates a new <see cref="PropertyMockableResult"/> instance.
+	/// Creates a new <see cref="PropertyModelOLD"/> instance.
 	/// </summary>
 	/// <param name="value">The <see cref="IPropertySymbol"/> to mock.</param>
 	/// <param name="mockType">The type to mock.</param>
@@ -16,7 +16,7 @@ internal sealed class PropertyMockableResult
 	/// <param name="requiresOverride">Specifies if <paramref name="value"/> requires an override.</param>
 	/// <param name="accessors">Specifies the accessors for this property.</param>
 	/// <param name="memberIdentifier">The member identifier.</param>
-	internal PropertyMockableResult(IPropertySymbol value, ITypeSymbol mockType,
+	internal PropertyModelOLD(IPropertySymbol value, ITypeSymbol mockType,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 		PropertyAccessor accessors, uint memberIdentifier) =>
 		(this.Value, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =

@@ -9,7 +9,7 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilderV3
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		PropertyModel indexer, string indexerVisibility, 
+		Models.PropertyModel indexer, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var method = indexer.GetMethod!;
@@ -114,7 +114,7 @@ internal static class MockIndexerBuilderV3
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		PropertyModel indexer, string indexerVisibility, 
+		Models.PropertyModel indexer, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var method = indexer.SetMethod!;
@@ -228,7 +228,7 @@ internal static class MockIndexerBuilderV3
 	}
 
 	internal static void Build(IndentedTextWriter writer,
-		PropertyModel indexer, bool raiseEvents)
+		Models.PropertyModel indexer, bool raiseEvents)
 	{
 		var explicitTypeName = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			string.Empty : $"{indexer.ContainingType.FullyQualifiedName}.";
