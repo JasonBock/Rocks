@@ -38,13 +38,12 @@ I really need to sort all of the arrays (except method parameters) so equatable 
 Remove all the .ConfigureAwait(false), and disable that in the projects. No need for it.
 
 
-Problems:
+DONE - Problems:
 * DONE - Need to ensure all tests are using the V3 versions for generation (this is what uncovered the next two errors I believe)
 * DONE - In MockMethodValueBuilderV3 for makes, I'm doing "method.ReturnType as INamedTypeSymbol", but that's completely wrong
-* DelegateInvokeMethod on TypeReferenceModel is IMethodSymbol, and that's wrong
+* DONE - DelegateInvokeMethod on TypeReferenceModel is IMethodSymbol, and that's wrong
 
 This could be related to the "GroupBy()" issue - I was using a string for the key, now that I have ContainingType on all the models, probably better to use that. It could also be that the MethodMatch doesn't match for MethodModel values, but I don't think that should affect the methods coming in.
-
 
 Reminders:
 * Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.

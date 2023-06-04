@@ -32,8 +32,20 @@ internal record EventModel
 		{
 			this.OverridingCodeValue = @event.GetOverridingCodeValue(compilation.Assembly);
 		}
+
+		var argsType = "global::System.EventArgs";
+
+		if (@event.Type is INamedTypeSymbol eventNamedType &&
+			eventNamedType.DelegateInvokeMethod is not null &&
+			eventNamedType.DelegateInvokeMethod.Parameters is { Length: 2 })
+		{
+			argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName();
+		}
+
+		this.ArgsType = argsType;
 	}
 
+   internal string ArgsType { get; }
    internal string? OverridingCodeValue { get; }
    internal string Name { get; }
 

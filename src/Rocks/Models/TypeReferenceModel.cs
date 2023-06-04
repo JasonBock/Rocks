@@ -12,7 +12,6 @@ internal record TypeReferenceModel
 		this.NoGenericsName = type.GetName(TypeNameOption.NoGenerics);
 		this.IncludeGenericsName = type.GetName(TypeNameOption.IncludeGenerics);
 
-		this.DelegateInvokeMethod = type is INamedTypeSymbol namedType ? namedType.DelegateInvokeMethod : null;
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
@@ -61,7 +60,6 @@ internal record TypeReferenceModel
 	internal string FlattenedName { get; }
    internal string NoGenericsName { get; }
    internal string IncludeGenericsName { get; }
-   internal IMethodSymbol? DelegateInvokeMethod { get; }
    internal NullableAnnotation NullableAnnotation { get; }
    internal bool IsRecord { get; }
 	internal string Namespace { get; }

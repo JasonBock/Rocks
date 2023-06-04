@@ -76,24 +76,16 @@ internal static class EventExpectationsExtensionsBuilderV3
 
 		foreach (var @event in mockType.Events)
 		{
-			var argsType = "global::System.EventArgs";
-
-			if (@event.Type.DelegateInvokeMethod is not null &&
-				@event.Type.DelegateInvokeMethod.Parameters is { Length: 2 })
-			{
-				argsType = @event.Type.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName();
-			}
-
 			if (mockType.Methods.Any(_ => !_.ReturnsVoid) ||
 				mockType.Properties.Any(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet))
 			{
-				BuildRaisesMethod(writer, prefix, typeToMockName, @event, argsType, true);
+				BuildRaisesMethod(writer, prefix, typeToMockName, @event, @event.ArgsType, true);
 			}
 
 			if (mockType.Methods.Any(_ => _.ReturnsVoid) ||
 				mockType.Properties.Any(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet))
 			{
-				BuildRaisesMethod(writer, prefix, typeToMockName, @event, argsType, false);
+				BuildRaisesMethod(writer, prefix, typeToMockName, @event, @event.ArgsType, false);
 			}
 		}
 
