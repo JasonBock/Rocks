@@ -65,34 +65,53 @@ internal record MethodModel
 			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
-		var taskType = compilation.GetTypeByMetadataName(typeof(Task).FullName);
-		var taskOfTType = compilation.GetTypeByMetadataName(typeof(Task<>).FullName);
-		var valueTaskType = compilation.GetTypeByMetadataName(typeof(ValueTask).FullName);
-		var valueTaskOfTType = compilation.GetTypeByMetadataName(typeof(ValueTask<>).FullName);
+		if (!this.ReturnsVoid)
+		{
+			var taskType = compilation.GetTypeByMetadataName(typeof(Task).FullName);
+			var taskOfTType = compilation.GetTypeByMetadataName(typeof(Task<>).FullName);
+			var valueTaskType = compilation.GetTypeByMetadataName(typeof(ValueTask).FullName);
+			var valueTaskOfTType = compilation.GetTypeByMetadataName(typeof(ValueTask<>).FullName);
 
-		if (method.ReturnType.Equals(taskType))
-		{
-			this.ReturnTypeIsTaskType = true;
+			if (method.ReturnType.Equals(taskType))
+			{
+				this.ReturnTypeIsTaskType = true;
+			}
+			else if (method.ReturnType.Equals(valueTaskType))
+			{
+				this.ReturnTypeIsValueTaskType = true;
+			}
+			else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
+			{
+				this.ReturnTypeIsTaskOfTType = true;
+				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
+				this.ReturnTypeIsTaskOfTTypeAndIsNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated;
+			}
+			else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
+			{
+				this.ReturnTypeIsValueTaskOfTType = true;
+				var taskReturnType = (method.ReturnType as INamedTypeSymbol)!;
+				this.ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving = taskReturnType.TypeArgumentNullableAnnotations[0] == NullableAnnotation.Annotated;
+			}
 		}
-		else if (method.ReturnType.Equals(valueTaskType))
+
+		if (method.ReturnType is INamedTypeSymbol returnType)
 		{
-			this.ReturnTypeIsValueTaskType = true;
+			this.TypeArguments = returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
 		}
-		else if (method.ReturnType.OriginalDefinition.Equals(taskOfTType))
+		else
 		{
-			this.ReturnTypeIsTaskOfTType = true;
-		}
-		else if (method.ReturnType.OriginalDefinition.Equals(valueTaskOfTType))
-		{
-			this.ReturnTypeIsValueTaskOfTType = true;
+			this.TypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
 		}
 	}
 
+	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
+	internal bool ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving { get; }
+   internal bool ReturnTypeIsTaskOfTTypeAndIsNullForgiving { get; }
    internal bool ReturnTypeIsTaskType { get; }
 	internal bool ReturnTypeIsValueTaskType { get; }
 	internal bool ReturnTypeIsTaskOfTType { get; }
 	internal bool ReturnTypeIsValueTaskOfTType { get; }
-   internal bool IsMarkedWithDoesNotReturn { get; }
+	internal bool IsMarkedWithDoesNotReturn { get; }
 	/// <summary>
 	/// Gets the type that contains the method.
 	/// </summary>

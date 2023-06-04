@@ -39,8 +39,8 @@ Remove all the .ConfigureAwait(false), and disable that in the projects. No need
 
 
 Problems:
-* Need to ensure all tests are using the V3 versions for generation (this is what uncovered the next two errors I believe)
-* In MockMethodValueBuilderV3 for makes, I'm doing "method.ReturnType as INamedTypeSymbol", but that's completely wrong
+* DONE - Need to ensure all tests are using the V3 versions for generation (this is what uncovered the next two errors I believe)
+* DONE - In MockMethodValueBuilderV3 for makes, I'm doing "method.ReturnType as INamedTypeSymbol", but that's completely wrong
 * DelegateInvokeMethod on TypeReferenceModel is IMethodSymbol, and that's wrong
 
 This could be related to the "GroupBy()" issue - I was using a string for the key, now that I have ContainingType on all the models, probably better to use that. It could also be that the MethodMatch doesn't match for MethodModel values, but I don't think that should affect the methods coming in.
