@@ -30,7 +30,7 @@ public static class RockCreateGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
@@ -140,8 +140,8 @@ public static class RockCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -239,8 +239,8 @@ public static class RockCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -332,8 +332,8 @@ public static class RockCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -432,8 +432,8 @@ public static class RockCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -526,8 +526,8 @@ public static class RockCreateGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(), OutputKind.ConsoleApplication).ConfigureAwait(false);
 	}
 
@@ -554,7 +554,7 @@ public static class RockCreateGeneratorTests
 
 		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDiagnostic.Id, DiagnosticSeverity.Error)
 			.WithSpan(5, 19, 5, 24);
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);
 	}
@@ -586,7 +586,7 @@ public static class RockCreateGeneratorTests
 
 		var diagnostic = new DiagnosticResult("CS1002", DiagnosticSeverity.Error)
 			.WithSpan(8, 13, 8, 13);
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);
 	}
@@ -686,8 +686,8 @@ public static class RockCreateGeneratorTests
 
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
 			.WithSpan(17, 3, 17, 3);
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
+			new[] { (typeof(RockCreateGeneratorV3), "ITest_Rock_Create.g.cs", generatedCode) },
 			new[] { diagnostic }).ConfigureAwait(false);
 	}
 }
