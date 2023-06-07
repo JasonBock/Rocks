@@ -301,13 +301,10 @@ public static class NonPublicMembersGeneratorTests
 			""";
 		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			})
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Cast<MetadataReference>()
-			.ToList(); var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+			.ToList(); 
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { sourceSyntaxTree },
 			sourceReferences,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));

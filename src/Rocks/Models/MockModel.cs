@@ -7,17 +7,17 @@ using System.Collections.Immutable;
 namespace Rocks.Models;
 
 /// <summary>
-/// Creates a <see cref="TypeMockModel"/> for a given <see cref="ITypeSymbol"/>. 
+/// Creates a <see cref="MockModel"/> for a given <see cref="ITypeSymbol"/>. 
 /// </summary>
 internal record MockModel
 {
 	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
-		if(typeToMock.ContainsDiagnostics())
+		if (typeToMock.ContainsDiagnostics())
 		{
 			return null;
 		}
-	
+
 		var compilation = model.Compilation;
 		var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
 
@@ -107,7 +107,7 @@ internal record MockModel
 			properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{
 			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
-	  }
+		}
 
 		if (buildType == BuildType.Create && methods.Results.Length == 0 && properties.Results.Length == 0)
 		{
@@ -126,9 +126,9 @@ internal record MockModel
 			diagnostics.ToImmutable());
 	}
 
-	private MockModel(TypeMockModel? type, string typeFullyQualifiedName, 
+	private MockModel(TypeMockModel? type, string typeFullyQualifiedName,
 		EquatableArray<Diagnostic> diagnostics) =>
-		(this.Type, this.FullyQualifiedName, this.Diagnostics) = 
+		(this.Type, this.FullyQualifiedName, this.Diagnostics) =
 			(type, typeFullyQualifiedName, diagnostics);
 
 	internal EquatableArray<Diagnostic> Diagnostics { get; }
