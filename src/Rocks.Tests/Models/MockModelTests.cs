@@ -181,10 +181,12 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-[Obsolete(""a"", true)]
-public class {targetTypeName} {{ }}";
+			[Obsolete("a", true)]
+			public class {{targetTypeName}} { }
+			""";
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
@@ -245,12 +247,14 @@ public class {targetTypeName} {{ }}";
 	{
 		const string targetTypeName = "IGeneric";
 		var code =
-$@"public interface IBase<T1, T2> 
-{{
-	void Foo(T1 a, T2 b);
-}}
+			$$"""
+			public interface IBase<T1, T2> 
+			{
+				void Foo(T1 a, T2 b);
+			}
 
-public interface IGeneric<T1> : IBase<T1, string> {{ }}";
+			public interface {{targetTypeName}}<T1> : IBase<T1, string> { }
+			""";
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
@@ -322,12 +326,14 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
-$@"public class {targetTypeName}
-{{
-	public override sealed bool Equals(object? obj) => base.Equals(obj);
-	public override sealed int GetHashCode() => base.GetHashCode();
-	public override sealed string? ToString() => base.ToString();
-}}";
+			$$"""
+			public class {{targetTypeName}}
+			{
+				public override sealed bool Equals(object? obj) => base.Equals(obj);
+				public override sealed int GetHashCode() => base.GetHashCode();
+				public override sealed string? ToString() => base.ToString();
+			}
+			""";
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
@@ -343,12 +349,14 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
-$@"public class {targetTypeName}
-{{
-	public override sealed bool Equals(object? obj) => base.Equals(obj);
-	public override sealed int GetHashCode() => base.GetHashCode();
-	public override sealed string? ToString() => base.ToString();
-}}";
+			$$"""
+			public class {{targetTypeName}}
+			{
+				public override sealed bool Equals(object? obj) => base.Equals(obj);
+				public override sealed int GetHashCode() => base.GetHashCode();
+				public override sealed string? ToString() => base.ToString();
+			}
+			""";
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Make);
 
@@ -394,10 +402,12 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "SealedType";
 		var code =
-$@"public class {targetTypeName} 
-{{
-	private {targetTypeName}() {{ }}
-}}";
+			$$"""
+			public class {{targetTypeName}} 
+			{
+				private {{targetTypeName}}() { }
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -412,12 +422,14 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	void Foo();
-}}";
+			public interface {{targetTypeName}} 
+			{
+				void Foo();
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -435,12 +447,14 @@ public interface {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	string Data {{ get; set; }}
-}}";
+			public interface {{targetTypeName}}
+			{
+				string Data { get; set; }
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -458,13 +472,15 @@ public interface {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	void Foo();
-	event EventHandler TargetEvent;
-}}";
+			public interface {{targetTypeName}}
+			{
+				void Foo();
+				event EventHandler TargetEvent;
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -515,12 +531,14 @@ public interface {targetTypeName}
 		const string fooMethodName = "Foo";
 
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual void {fooMethodName}() {{ }}
-}}";
+			public class {{targetTypeName}}
+			{
+				public virtual void {{fooMethodName}}() { }
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -551,12 +569,14 @@ public class {targetTypeName}
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual string Data {{ get; set; }}
-}}";
+			public class {{targetTypeName}} 
+			{
+				public virtual string Data { get; set; }
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -585,12 +605,14 @@ public class {targetTypeName}
 		const string targetTypeName = "ClassWithMembers";
 
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual event EventHandler TargetEvent;
-}}";
+			public class {{targetTypeName}}
+			{
+				public virtual event EventHandler TargetEvent;
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -618,16 +640,18 @@ public class {targetTypeName}
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public {targetTypeName}() {{ }}
+			public class {{targetTypeName}}
+			{
+				public {{targetTypeName}}() { }
 
-	public {targetTypeName}(string a) {{ }}
+				public {{targetTypeName}}(string a) { }
 
-	public virtual event EventHandler TargetEvent;
-}}";
+				public virtual event EventHandler TargetEvent;
+			}
+			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
