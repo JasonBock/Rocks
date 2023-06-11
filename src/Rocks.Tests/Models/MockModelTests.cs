@@ -63,7 +63,7 @@ public static class MockModelTests
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(new[]
 			{
-				MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location)
+				MetadataReference.CreateFromFile(typeof(RockCreateGeneratorV3).Assembly.Location)
 			})
 			.Cast<MetadataReference>()
 			.ToList();
@@ -681,7 +681,7 @@ public static class MockModelTests
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGenerator).Assembly.Location) });
+			.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockCreateGeneratorV3).Assembly.Location) });
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: generalDiagnosticOption));
 		var model = compilation.GetSemanticModel(syntaxTree, true);

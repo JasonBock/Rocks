@@ -10,9 +10,9 @@ using System.Collections.Immutable;
 
 namespace Rocks;
 
-[Generator]
+//[Generator]
 internal sealed class RockCreateGenerator
-	: IIncrementalGenerator
+	//: IIncrementalGenerator
 {
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{

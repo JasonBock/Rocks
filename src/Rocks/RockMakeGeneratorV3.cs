@@ -56,6 +56,8 @@ internal sealed class RockMakeGeneratorV3
 
 	private static void CreateOutput(ImmutableArray<MockModel?> mocks, SourceProductionContext context)
 	{
+		var targets = new HashSet<TypeMockModel>();
+
 		foreach (var mock in mocks)
 		{
 			foreach (var diagnostic in mock!.Diagnostics)
@@ -63,7 +65,7 @@ internal sealed class RockMakeGeneratorV3
 				context.ReportDiagnostic(diagnostic);
 			}
 
-			if (mock.Type is not null)
+			if (mock.Type is not null && targets.Add(mock.Type))
 			{
 				var builder = new RockMakeBuilderV3(mock.Type);
 				context.AddSource(builder.Name, builder.Text);

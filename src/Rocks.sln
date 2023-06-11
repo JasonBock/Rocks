@@ -18,10 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks", "Rocks\Rocks.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Tests", "Rocks.Tests\Rocks.Tests.csproj", "{7854012F-7AB1-40C5-9D47-EC83C5EE7457}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{B39A3442-A867-4C48-89D7-5006677BF503}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{48A9B91C-4B06-40F5-9456-4CCAD41784FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,14 +32,6 @@ Global
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7854012F-7AB1-40C5-9D47-EC83C5EE7457}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B39A3442-A867-4C48-89D7-5006677BF503}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B39A3442-A867-4C48-89D7-5006677BF503}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B39A3442-A867-4C48-89D7-5006677BF503}.Release|Any CPU.Build.0 = Release|Any CPU
-		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{48A9B91C-4B06-40F5-9456-4CCAD41784FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

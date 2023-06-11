@@ -11,6 +11,10 @@ Or, maybe not? Just make RockV3CreateGenerator. That may be a lot easier.
 
 ContainingAssemblyOfInvocationSymbol => compilation.Assembly. Will need to have every "thing" have a "CanBeSeenByCompilationAssembly"
 
+
+
+Tasks
+
 DONE - `TypeModel mockType` is inconsistent. Should I always name it `mockType`, or `type`? Or change the name of the model to `MockTypeModel`?
 
 
@@ -38,6 +42,12 @@ I really need to sort all of the arrays (except method parameters) so equatable 
 Remove all the .ConfigureAwait(false), and disable that in the projects. No need for it.
 
 
+It may be worth having a dictionary of models when I'm building a MockTypeModel. That way, I'm not calculating a TypeReferenceModel for every string or int I run into. I mention this in Episode 464 (around the 3:00 mark)
+
+
+Write a test that sees if multiple documents are created if there are more than one Rock.Create<IType>() in play.
+
+
 DONE - Problems:
 * DONE - Need to ensure all tests are using the V3 versions for generation (this is what uncovered the next two errors I believe)
 * DONE - In MockMethodValueBuilderV3 for makes, I'm doing "method.ReturnType as INamedTypeSymbol", but that's completely wrong
@@ -59,3 +69,5 @@ Reminders:
 * Add these projects back in:
     * Rocks.IntegrationTests
     * Rocks.CodeGenerationTests
+    * Rocks.Performance
+    * Rocks.PerformanceTests
