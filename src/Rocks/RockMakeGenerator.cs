@@ -12,7 +12,7 @@ namespace Rocks;
 
 //[Generator]
 internal sealed class RockMakeGenerator
-	//: IIncrementalGenerator
+	: IIncrementalGenerator
 {
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{

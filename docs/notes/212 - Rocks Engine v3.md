@@ -45,7 +45,50 @@ Remove all the .ConfigureAwait(false), and disable that in the projects. No need
 It may be worth having a dictionary of models when I'm building a MockTypeModel. That way, I'm not calculating a TypeReferenceModel for every string or int I run into. I mention this in Episode 464 (around the 3:00 mark)
 
 
-Write a test that sees if multiple documents are created if there are more than one Rock.Create<IType>() in play.
+## Integration Test Issues
+
+### IExplicitInterfaceImplementation
+
+Generating event code like this (the name is way off):
+
+```
+			#pragma warning disable CS0067
+			private global::System.EventHandler? IExplicitInterfaceImplementationOne _ C;
+			event global::System.EventHandler? IExplicitInterfaceImplementationOne.C
+			{
+				add => this.IExplicitInterfaceImplementationOne _ C += value;
+				remove => this.IExplicitInterfaceImplementationOne _ C -= value;
+			}
+			private global::System.EventHandler? IExplicitInterfaceImplementationTwo _ C;
+			event global::System.EventHandler? IExplicitInterfaceImplementationTwo.C
+			{
+				add => this.IExplicitInterfaceImplementationTwo _ C += value;
+				remove => this.IExplicitInterfaceImplementationTwo _ C -= value;
+			}
+			#pragma warning restore CS0067
+```
+
+Need tests for event generation, especially when it's for explicit implementation. Use this for definition:
+
+```
+public interface IExplicitInterfaceImplementationOne
+{
+	void A();
+	event EventHandler C;
+}
+
+public interface IExplicitInterfaceImplementationTwo
+{
+	void A();
+	event EventHandler C;
+}
+
+public interface IExplicitInterfaceImplementation
+	: IExplicitInterfaceImplementationOne, IExplicitInterfaceImplementationTwo
+{ }
+```
+
+DONE - Write a test that sees if multiple documents are created if there are more than one Rock.Create<IType>() in play.
 
 
 DONE - Problems:

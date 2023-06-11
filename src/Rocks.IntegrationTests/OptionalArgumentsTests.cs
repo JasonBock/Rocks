@@ -16,7 +16,6 @@ public class NeedNullableAnnotation
 	public object? VoidReturnData { get; private set; }
 }
 
-
 public interface IHaveOptionalArguments
 {
 	void Foo(int a, string b = "b", double c = 3.2);

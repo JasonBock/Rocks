@@ -23,7 +23,7 @@ internal static class MockEventsBuilderV3
 	{
 		var eventType = @event.Type.FullyQualifiedName;
 		var name = $"{@event.ContainingType.FlattenedName}.{@event.Name}";
-		var fieldName = $"{@event.ContainingType.FlattenedName} _ {@event.Name}";
+		var fieldName = $"{@event.ContainingType.FlattenedName}_{@event.Name}";
 
 		writer.WriteLines(
 			$$"""
