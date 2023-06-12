@@ -24,7 +24,7 @@ DONE - Consider having a ContainingType for each model - MethodModel, PropertyMo
 DONE - Address all TODOs
 
 
-Get the Rock.Make() stuff working
+DONE - Get the Rock.Make() stuff working
 
 
 DONE - Not sure that AttributeModel is necessary.
@@ -45,30 +45,7 @@ Remove all the .ConfigureAwait(false), and disable that in the projects. No need
 It may be worth having a dictionary of models when I'm building a MockTypeModel. That way, I'm not calculating a TypeReferenceModel for every string or int I run into. I mention this in Episode 464 (around the 3:00 mark)
 
 
-## Integration Test Issues
-
-### IExplicitInterfaceImplementation
-
-Generating event code like this (the name is way off):
-
-```
-			#pragma warning disable CS0067
-			private global::System.EventHandler? IExplicitInterfaceImplementationOne _ C;
-			event global::System.EventHandler? IExplicitInterfaceImplementationOne.C
-			{
-				add => this.IExplicitInterfaceImplementationOne _ C += value;
-				remove => this.IExplicitInterfaceImplementationOne _ C -= value;
-			}
-			private global::System.EventHandler? IExplicitInterfaceImplementationTwo _ C;
-			event global::System.EventHandler? IExplicitInterfaceImplementationTwo.C
-			{
-				add => this.IExplicitInterfaceImplementationTwo _ C += value;
-				remove => this.IExplicitInterfaceImplementationTwo _ C -= value;
-			}
-			#pragma warning restore CS0067
-```
-
-Need tests for event generation, especially when it's for explicit implementation. Use this for definition:
+DONE - Need tests for event generation, especially when it's for explicit implementation. Use this for definition:
 
 ```
 public interface IExplicitInterfaceImplementationOne
@@ -97,20 +74,24 @@ DONE - Problems:
 * DONE - DelegateInvokeMethod on TypeReferenceModel is IMethodSymbol, and that's wrong
 
 Model tests
-* Need to do MockModelTests like I have MockInformationTests
+* DONE - Need to do MockModelTests like I have MockInformationTests
 * Tests for the remaining models
+
+Do I look at generic constraints, and look at types used in the constraints to see if they have any obsolete members? E.g. ComputeSharp, D2D1TransformMapper<>
 
 Reminders:
 * Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.
 * Use WriteLines() wherever possible. Examples
     * ShimBuilderV3.Build()
 * DONE - The compilation should only be in the models, not the builders.
-* Update all XML doc elements
+* XML comments
+  * Update all XML doc elements in Rocks
+  * Consider generating XML comments (may end up being useful)
 * On all the models, ensure all properties are EquatableArray<>, NOT ImmutableArray<>
 * Remove unnecessary usings everywhere
 * ConfigurationValues should go away
 * Add these projects back in:
-    * Rocks.IntegrationTests
-    * Rocks.CodeGenerationTests
+    * DONE - Rocks.IntegrationTests
+    * DONE - Rocks.CodeGenerationTests
     * Rocks.Performance
     * Rocks.PerformanceTests

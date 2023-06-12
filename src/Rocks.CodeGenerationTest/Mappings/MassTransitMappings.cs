@@ -792,9 +792,11 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public bool AutoStart { set => throw new NotImplementedException(); }
 
 			public void AddDependency(IReceiveEndpointObserverConnector connector) => throw new NotImplementedException();
-		 public void AddDependency(IReceiveEndpointDependentConnector dependent) => throw new NotImplementedException();
-		 public void AddDependent(IReceiveEndpointObserverConnector dependency) => throw new NotImplementedException();
-		 public void AddDeserializer(ISerializerFactory factory, bool isDefault = false) => throw new NotImplementedException();
+			public void AddDependency(IReceiveEndpointDependentConnector dependent) => throw new NotImplementedException();
+			public void AddDependency(IReceiveEndpointDependency dependency) => throw new NotImplementedException();
+			public void AddDependent(IReceiveEndpointObserverConnector dependency) => throw new NotImplementedException();
+			public void AddDependent(IReceiveEndpointDependent dependent) => throw new NotImplementedException();
+			public void AddDeserializer(ISerializerFactory factory, bool isDefault = false) => throw new NotImplementedException();
 			public void AddEndpointSpecification(IReceiveEndpointSpecification configurator) => throw new NotImplementedException();
 			public void AddPipeSpecification<T>(IPipeSpecification<ConsumeContext<T>> specification) where T : class => throw new NotImplementedException();
 			public void AddPipeSpecification(IPipeSpecification<ConsumeContext> specification) => throw new NotImplementedException();

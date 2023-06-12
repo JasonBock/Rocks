@@ -66,7 +66,13 @@ namespace Rocks.CodeGenerationTest.Extensions
 		{
 			if (self.GetCustomAttribute<RequiresPreviewFeaturesAttribute>() is null)
 			{
-				var code = $"public class Foo {{ public {self.GetTypeDefinition(genericTypeMappings)} Data {{ get; }} }}";
+				var code = 
+					$$"""
+					public class Foo 
+					{ 
+						public {{self.GetTypeDefinition(genericTypeMappings)}} Data { get; } 
+					}
+					""";
 				var syntaxTree = CSharpSyntaxTree.ParseText(code);
 				var references = AppDomain.CurrentDomain.GetAssemblies()
 					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -76,13 +82,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 					references, new(OutputKind.DynamicallyLinkedLibrary,
 						allowUnsafe: true,
 						generalDiagnosticOption: ReportDiagnostic.Error,
-						specificDiagnosticOptions: new Dictionary<string, ReportDiagnostic>
-						{
-							{ "CS1701", ReportDiagnostic.Info },
-							{ "SYSLIB0001", ReportDiagnostic.Info },
-							{ "SYSLIB0003", ReportDiagnostic.Info },
-							{ "SYSLIB0017", ReportDiagnostic.Info }
-						}));
+						specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 				var model = compilation.GetSemanticModel(syntaxTree, true);
 
 				var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

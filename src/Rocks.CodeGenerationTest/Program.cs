@@ -1,15 +1,31 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
+using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
+using Rocks.CodeGenerationTest.Extensions;
 using Rocks.CodeGenerationTest.Mappings;
 
+//TestTypeValidity();
 //TestWithCode();
 //TestWithType();
 TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
+static void TestTypeValidity() =>
+	Console.WriteLine(
+		typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<>)
+			.IsValidTarget(new Dictionary<Type, Dictionary<string, string>>
+			{
+				{
+					typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<>), new()
+					{
+						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ComputeSharp.MappedPixelShader" }
+					} 
+				}
+			}));
+
 static void TestWithCode()
 {
 	TestGenerator.Generate(new RockCreateGeneratorV3(),
@@ -37,7 +53,7 @@ static void TestWithType() =>
 	 TestGenerator.Generate(new RockCreateGeneratorV3(),
 		 new[]
 		 {
-			 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
+			 typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<Rocks.CodeGenerationTest.Mappings.ComputeSharp.MappedPixelShader>)
 		 }, Array.Empty<Type>(), null);
 
 static void TestWithTypes()
@@ -45,7 +61,7 @@ static void TestWithTypes()
 	var targetAssemblies = new Type[]
 	{
 		// PASSED
-		// Number of types found: 2996
+		// Number of types found: 2966
 
 #if INCLUDE_PASSING
 		// Number of types found: 373

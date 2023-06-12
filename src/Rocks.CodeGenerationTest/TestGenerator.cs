@@ -5,12 +5,19 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.ComponentModel;
 using Rocks.CodeGenerationTest.Extensions;
-using Amazon.Runtime.Internal.Transform;
 
 namespace Rocks.CodeGenerationTest;
 
 internal static class TestGenerator
 {
+	internal static readonly Dictionary<string, ReportDiagnostic> SpecificDiagnostics = new()
+	{
+		{ "CS1701", ReportDiagnostic.Info },
+		{ "SYSLIB0001", ReportDiagnostic.Info },
+		{ "SYSLIB0003", ReportDiagnostic.Info },
+		{ "SYSLIB0017", ReportDiagnostic.Info }
+	}; 
+	
 	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies, Type[] typesToLoadAssembliesFrom,
 		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
@@ -62,13 +69,7 @@ internal static class TestGenerator
 			references, new(OutputKind.DynamicallyLinkedLibrary, 
 				allowUnsafe: true, 
 				generalDiagnosticOption: ReportDiagnostic.Error,
-				specificDiagnosticOptions: new Dictionary<string, ReportDiagnostic>
-				{
-					{ "CS1701", ReportDiagnostic.Info },
-					{ "SYSLIB0001", ReportDiagnostic.Info },
-					{ "SYSLIB0003", ReportDiagnostic.Info },
-					{ "SYSLIB0017", ReportDiagnostic.Info }
-				}));
+				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
@@ -91,28 +92,6 @@ internal static class TestGenerator
 				Line = _.Location,
 			})
 			.OrderBy(_ => _.Id).ToArray();
-
-		// TODO: I should see if I can do a compilation with warnings as errors, then I wouldn't even try to compile stuff
-		// that has things like obsolete warnings.
-
-		// CS0612 - "'member' is obsolete"
-		// https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs0612
-
-		// CS0618 - "A class member was marked with the Obsolete attribute, such that a warning will be issued when the class member is referenced."
-		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0618
-
-		// CS1701 - "Assuming assembly reference "Assembly Name #1" matches "Assembly Name #2", you may need to supply runtime policy."
-		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs1701
-
-		// SYSLIB0001 - "The UTF-7 encoding is no longer in wide use among applications, and many specs now forbid its use in interchange."
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0001
-
-		// SYSLIB0003 - "Code access security is not supported"
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0003
-
-		// SYSLIB0017 - "Strong-name signing is not supported and throws PlatformNotSupportedException"
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0017
-		//var ignoredWarnings = new[] { "CS0612", "CS0618", "CS1701", "SYSLIB0001", "SYSLIB0003", "SYSLIB0017" };
 
 		var ignoredWarnings = Array.Empty<string>();
 		var warnings = result.Diagnostics
@@ -186,13 +165,7 @@ internal static class TestGenerator
 			references, new(OutputKind.DynamicallyLinkedLibrary, 
 				allowUnsafe: true, 
 				generalDiagnosticOption: ReportDiagnostic.Error,
-				specificDiagnosticOptions: new Dictionary<string, ReportDiagnostic>
-				{
-					{ "CS1701", ReportDiagnostic.Info },
-					{ "SYSLIB0001", ReportDiagnostic.Info },
-					{ "SYSLIB0003", ReportDiagnostic.Info },
-					{ "SYSLIB0017", ReportDiagnostic.Info }
-				}));
+				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
