@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Builders;
-using Rocks.Configuration;
+using Rocks.Models;
 using System.Reflection;
 using System.Runtime.Versioning;
 
@@ -73,20 +73,26 @@ namespace Rocks.CodeGenerationTest.Extensions
 					.Select(_ => MetadataReference.CreateFromFile(_.Location))
 					.Concat(new[] { MetadataReference.CreateFromFile(self.Assembly.Location) });
 				var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
-					references, new(OutputKind.DynamicallyLinkedLibrary));
+					references, new(OutputKind.DynamicallyLinkedLibrary,
+						allowUnsafe: true,
+						generalDiagnosticOption: ReportDiagnostic.Error,
+						specificDiagnosticOptions: new Dictionary<string, ReportDiagnostic>
+						{
+							{ "CS1701", ReportDiagnostic.Info },
+							{ "SYSLIB0001", ReportDiagnostic.Info },
+							{ "SYSLIB0003", ReportDiagnostic.Info },
+							{ "SYSLIB0017", ReportDiagnostic.Info }
+						}));
 				var model = compilation.GetSemanticModel(syntaxTree, true);
 
 				var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 					.OfType<PropertyDeclarationSyntax>().Single();
 				var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
-				var information = new MockInformation(symbol!, compilation.Assembly, model,
-					new ConfigurationValues(IndentStyle.Tab, 3, true), BuildType.Create);
-
-				return information.TypeToMock is not null;
+				var mockModel = MockModel.Create(symbol!, model, BuildType.Create, true);
+				return mockModel is not null && mockModel.Type is not null;
 			}
 
 			return false;
 		}
-
 	}
 }

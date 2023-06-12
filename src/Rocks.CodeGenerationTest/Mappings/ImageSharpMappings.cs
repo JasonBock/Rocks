@@ -1,5 +1,4 @@
-﻿using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
+﻿using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing.Processors;
 using SixLabors.ImageSharp.Processing.Processors.Dithering;
 using SixLabors.ImageSharp.Processing.Processors.Quantization;
@@ -8,7 +7,7 @@ using System.Numerics;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
-	internal static class ImageSharpMappings
+   internal static class ImageSharpMappings
 	{
 		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 			new()
@@ -80,6 +79,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
+					typeof(ISpecializedImageDecoder<>), new()
+					{
+						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedSpecializedDecoderOptions" },
+					}
+				},
+				{
 					typeof(PixelBlender<>), new()
 					{
 						{ "TPixel", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedPixel" },
@@ -91,13 +96,19 @@ namespace Rocks.CodeGenerationTest.Mappings
 						{ "TPixel", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedPixel" },
 					}
 				},
+				{
+					typeof(SpecializedImageDecoder<>), new()
+					{
+						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedSpecializedDecoderOptions" },
+					}
+				},
 			};
 	}
 
 	namespace ImageSharp
-	{
-		public struct MappedPixel
-			: IPixel<MappedPixel>
+   {
+	  public struct MappedPixel
+			 : IPixel<MappedPixel>
 		{
 			public PixelOperations<MappedPixel> CreatePixelOperations() => throw new NotImplementedException();
 			public bool Equals(MappedPixel other) => throw new NotImplementedException();
@@ -119,6 +130,16 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public void ToRgba32(ref Rgba32 dest) => throw new NotImplementedException();
 			public Vector4 ToScaledVector4() => throw new NotImplementedException();
 			public Vector4 ToVector4() => throw new NotImplementedException();
+		}
+
+		public sealed class MappedSpecializedDecoderOptions
+			: ISpecializedDecoderOptions
+		{
+			public DecoderOptions GeneralOptions
+			{
+				get => throw new NotImplementedException();
+				init => throw new NotImplementedException();
+			}
 		}
 	}
 }

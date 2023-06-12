@@ -12,7 +12,7 @@ TestWithTypes();
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestWithCode()
 {
-	TestGenerator.Generate(new RockCreateGenerator(),
+	TestGenerator.Generate(new RockCreateGeneratorV3(),
 		"""
 		using Rocks;
 		using System;
@@ -34,18 +34,18 @@ static void TestWithCode()
 }
 
 static void TestWithType() =>
-	 TestGenerator.Generate(new RockCreateGenerator(),
-	 new[]
-	 {
-		 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
-	 }, Array.Empty<Type>(), null);
+	 TestGenerator.Generate(new RockCreateGeneratorV3(),
+		 new[]
+		 {
+			 typeof(IGrouping<string, Serilog.Parsing.PropertyToken>)
+		 }, Array.Empty<Type>(), null);
 
 static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
 		// PASSED
-		// Number of types found: 3220
+		// Number of types found: 2996
 
 #if INCLUDE_PASSING
 		// Number of types found: 373
@@ -54,6 +54,18 @@ static void TestWithTypes()
 		// Core .NET types
 		typeof(object), typeof(Dictionary<,>),
 		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+
+		// Number of types found: 0
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// ComputeSharp
+		typeof(ComputeSharp.AutoConstructorAttribute),
+
+		// Number of types found: 3
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// ComputeSharp.D2D1
+		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Number of types found: 38
 		// Create: 0 errors, 0 warnings
@@ -90,18 +102,6 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// CSLA
 		typeof(Csla.DataPortal<>),
-
-		// Number of types found: 0
-		// Create: 0 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// ComputeSharp
-		typeof(ComputeSharp.AutoConstructorAttribute),
-
-		// Number of types found: 3
-		// Create: 0 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// ComputeSharp.D2D1
-		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 
 		// Number of types found: 15
 		// Create: 0 errors, 0 warnings
@@ -287,12 +287,12 @@ static void TestWithTypes()
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
 
-	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
-	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
+	Console.WriteLine($"Testing {nameof(RockCreateGeneratorV3)}");
+	TestGenerator.Generate(new RockCreateGeneratorV3(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
-	Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
-	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
+	Console.WriteLine($"Testing {nameof(RockMakeGeneratorV3)}");
+	TestGenerator.Generate(new RockMakeGeneratorV3(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
 	Console.WriteLine("Generator testing complete");
