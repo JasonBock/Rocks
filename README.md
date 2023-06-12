@@ -2,9 +2,9 @@
 
 A mocking library based on the Compiler APIs (Roslyn + Mocks)
 
-## Getting started
+## Getting Started
 
-Reference the `Rocks` NuGet package - that's it.
+Reference the `Rocks` [NuGet package](https://www.nuget.org/packages/Rocks) - that's it.
 
 ### Prerequisites
 
@@ -27,7 +27,7 @@ and you use Rocks to create a mock with expectations, along with verifying its u
 var expectations = Rock.Create<IAmSimple>();
 expectations.Methods().TargetAction();
 
-var mock = mock.Instance();
+var mock = expectations.Instance();
 mock.TargetAction();
 
 expectations.Verify();
@@ -35,8 +35,9 @@ expectations.Verify();
 
 More details can be found on the [Quickstart page](https://github.com/JasonBock/Rocks/blob/main/docs/Quickstart.md).
 
-## Additional documentation
+## Additional Documentation
 
+* [Discord Server](https://discord.com/channels/1035376645864955974/1035376646326321194)
 * [Changelog](https://github.com/JasonBock/Rocks/blob/main/changelog.md)
 * [Unit testing best practices with .NET Core and .NET Standard](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
 * [BenchmarkMockNet](https://github.com/ecoAPM/BenchmarkMockNet)

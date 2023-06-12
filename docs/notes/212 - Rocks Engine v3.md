@@ -77,7 +77,7 @@ Model tests
 * DONE - Need to do MockModelTests like I have MockInformationTests
 * Tests for the remaining models
 
-Do I look at generic constraints, and look at types used in the constraints to see if they have any obsolete members? E.g. ComputeSharp, D2D1TransformMapper<>
+Do I look at generic constraints, and look at types used in the constraints to see if they have any obsolete members? Do I need to? E.g. ComputeSharp, D2D1TransformMapper<>
 
 Reminders:
 * Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.
