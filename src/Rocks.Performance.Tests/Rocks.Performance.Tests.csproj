@@ -11,4 +11,7 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Rocks.Performance\Rocks.Performance.csproj" />
+	</ItemGroup>
 </Project>
