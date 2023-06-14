@@ -81,7 +81,7 @@ Do I look at generic constraints, and look at types used in the constraints to s
 
 Reminders:
 * Determine if ComputeSharpMappings are needed at all
-* Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.
+* DONE - Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.
 * Use WriteLines() wherever possible. Examples
     * ShimBuilderV3.Build()
 * DONE - The compilation should only be in the models, not the builders.

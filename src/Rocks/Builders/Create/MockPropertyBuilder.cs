@@ -53,14 +53,14 @@ internal static class MockPropertyBuilder
 			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, result.MockType) :
 			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
 
-		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)() :");
+		writer.WriteLine($"(({methodCast})@methodHandler.Method)() :");
 		if (propertyGetMethod.ReturnType.IsPointer() || !propertyGetMethod.ReturnType.IsRefLikeType)
 		{
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@methodHandler).ReturnValue;");
+			writer.WriteLine($"(({handlerName})@methodHandler).ReturnValue;");
 		}
 		else
 		{
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@methodHandler).ReturnValue!.Invoke();");
+			writer.WriteLine($"(({handlerName})@methodHandler).ReturnValue!.Invoke();");
 		}
 		writer.Indent--;
 
@@ -143,7 +143,7 @@ internal static class MockPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, result.MockType) :
 					$"global::Rocks.Argument<{property.Type.GetFullyQualifiedName()}>";
 
-		writer.WriteLine($"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
+		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -158,7 +158,7 @@ internal static class MockPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, result.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-		writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@methodHandler.Method)(@value{nullableFlag});");
+		writer.WriteLine($"(({methodCast})@methodHandler.Method)(@value{nullableFlag});");
 
 		writer.Indent--;
 		writer.WriteLine("}");

@@ -85,12 +85,12 @@ public static class PropertyGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
 							}
@@ -111,8 +111,8 @@ public static class PropertyGeneratorTests
 							var @methodHandler = @methodHandlers[0];
 							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
-								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+								((global::System.Func<int>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 							return @result!;
 						}
 						else
@@ -129,8 +129,8 @@ public static class PropertyGeneratorTests
 							var @methodHandler = @methodHandlers[0];
 							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+								((global::System.Func<string?>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 							return @result!;
 						}
 						else
@@ -149,8 +149,8 @@ public static class PropertyGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+									((global::System.Func<string?>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -170,8 +170,8 @@ public static class PropertyGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+									((global::System.Func<string?>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -186,14 +186,14 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string?>>(@methodHandler.Method)(@value);
+											((global::System.Action<string?>)@methodHandler.Method)(@value);
 										}
 										
 										if (!@foundMatch)
@@ -221,14 +221,14 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string?>>(@methodHandler.Method)(@value);
+											((global::System.Action<string?>)@methodHandler.Method)(@value);
 										}
 										
 										if (!@foundMatch)
@@ -257,8 +257,8 @@ public static class PropertyGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+									((global::System.Func<string?>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -273,14 +273,14 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string?>>(@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string?>>(@methodHandler.Method)(@value);
+											((global::System.Action<string?>)@methodHandler.Method)(@value);
 										}
 										
 										if (!@foundMatch)

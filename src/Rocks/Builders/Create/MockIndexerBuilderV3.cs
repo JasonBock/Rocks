@@ -39,7 +39,7 @@ internal static class MockIndexerBuilderV3
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -49,7 +49,7 @@ internal static class MockIndexerBuilderV3
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -146,7 +146,7 @@ internal static class MockIndexerBuilderV3
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -156,7 +156,7 @@ internal static class MockIndexerBuilderV3
 				}
 
 				writer.WriteLine(
-					$"global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{

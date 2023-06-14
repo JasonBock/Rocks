@@ -223,14 +223,14 @@ internal static class MockMethodValueBuilder
 
 		writer.WriteLine(
 			method.ReturnType.TypeKind != TypeKind.TypeParameter ?
-				$"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@{namingContext["methodHandler"]}.Method)({methodArguments}) :" :
+				$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments}) :" :
 				$"@{namingContext["methodReturn"]}({methodArguments}) :");
 
 		if (method.ReturnType.IsPointer() || !method.ReturnType.IsRefLikeType)
 		{
 			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
 			{
-				writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@{namingContext["methodHandler"]}).ReturnValue;");
+				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue;");
 			}
 			else
 			{
@@ -247,7 +247,7 @@ internal static class MockMethodValueBuilder
 		{
 			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
 			{
-				writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{handlerName}>(@{namingContext["methodHandler"]}).ReturnValue!.Invoke();");
+				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue!.Invoke();");
 			}
 			else
 			{
@@ -307,7 +307,7 @@ internal static class MockMethodValueBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
@@ -319,7 +319,7 @@ internal static class MockMethodValueBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)

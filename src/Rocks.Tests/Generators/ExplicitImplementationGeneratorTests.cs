@@ -76,8 +76,8 @@ public static class ExplicitImplementationGeneratorTests
 							var @methodHandler = @methodHandlers[0];
 							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>>(@methodHandler.Method)() :
-								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::System.Collections.Generic.IEnumerator<global::ISetup>>>(@methodHandler).ReturnValue;
+								((global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<global::System.Collections.Generic.IEnumerator<global::ISetup>>)@methodHandler).ReturnValue;
 							return @result!;
 						}
 						
@@ -92,8 +92,8 @@ public static class ExplicitImplementationGeneratorTests
 							var @methodHandler = @methodHandlers[0];
 							@methodHandler.IncrementCallCount();
 							var @result = @methodHandler.Method is not null ?
-								global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Collections.IEnumerator>>(@methodHandler.Method)() :
-								global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::System.Collections.IEnumerator>>(@methodHandler).ReturnValue;
+								((global::System.Func<global::System.Collections.IEnumerator>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<global::System.Collections.IEnumerator>)@methodHandler).ReturnValue;
 							return @result!;
 						}
 						

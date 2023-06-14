@@ -196,7 +196,7 @@ internal static class MockMethodVoidBuilder
 			{
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"if (global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
@@ -208,7 +208,7 @@ internal static class MockMethodVoidBuilder
 
 				writer.WriteLine(
 					parameter.Type.TypeKind != TypeKind.TypeParameter ?
-						$"global::System.Runtime.CompilerServices.Unsafe.As<{argType}>(@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
@@ -264,7 +264,7 @@ internal static class MockMethodVoidBuilder
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}" : $"@{_.Name}"));
 		writer.WriteLine(!method.IsGenericMethod ?
-			$"global::System.Runtime.CompilerServices.Unsafe.As<{methodCast}>(@{namingContext["methodHandler"]}.Method)({methodArguments});" :
+			$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments});" :
 			$"@{namingContext["method"]}({methodArguments});");
 
 		writer.Indent--;

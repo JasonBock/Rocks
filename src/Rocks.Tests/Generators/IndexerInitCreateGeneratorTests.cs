@@ -117,15 +117,15 @@ public static class IndexerInitCreateGeneratorTests
 						this.handlers = @expectations.Handlers;
 						if (@constructorProperties is not null)
 						{
-							foreach(var a in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<uint>>(@constructorProperties))
+							foreach (var a in ((global::System.Collections.Generic.IEnumerable<uint>)@constructorProperties))
 							{
 								this[a] = constructorProperties[a];
 							}
-							foreach((var a, var b) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(int, string)>>(@constructorProperties))
+							foreach ((var a, var b) in ((global::System.Collections.Generic.IEnumerable<(int, string)>)@constructorProperties))
 							{
 								this[a, b] = constructorProperties[a, b];
 							}
-							foreach((var a, var b, var c) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>>(@constructorProperties))
+							foreach ((var a, var b, var c) in ((global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>)@constructorProperties))
 							{
 								this[a, b, c] = constructorProperties[a, b, c];
 							}
@@ -141,13 +141,13 @@ public static class IndexerInitCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<uint>>(@methodHandler.Expectations[0]).IsValid(@a) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<double>>(@methodHandler.Expectations[1]).IsValid(@value))
+									if (((global::Rocks.Argument<uint>)@methodHandler.Expectations[0]).IsValid(@a) &&
+										((global::Rocks.Argument<double>)@methodHandler.Expectations[1]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<uint, double>>(@methodHandler.Method)(@a, @value);
+											((global::System.Action<uint, double>)@methodHandler.Method)(@a, @value);
 										}
 										return;
 									}
@@ -168,14 +168,14 @@ public static class IndexerInitCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[1]).IsValid(@b) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[2]).IsValid(@value))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<int, string, string>>(@methodHandler.Method)(@a, @b, @value);
+											((global::System.Action<int, string, string>)@methodHandler.Method)(@a, @b, @value);
 										}
 										return;
 									}
@@ -196,15 +196,15 @@ public static class IndexerInitCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<string>>(@methodHandler.Expectations[0]).IsValid(@a) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[1]).IsValid(@b) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::System.Guid>>(@methodHandler.Expectations[2]).IsValid(@c) &&
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[3]).IsValid(@value))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@a) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@b) &&
+										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@c) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<string, int, global::System.Guid, int>>(@methodHandler.Method)(@a, @b, @c, @value);
+											((global::System.Action<string, int, global::System.Guid, int>)@methodHandler.Method)(@a, @b, @c, @value);
 										}
 										return;
 									}
@@ -342,15 +342,15 @@ public static class IndexerInitCreateGeneratorTests
 					{
 						if (@constructorProperties is not null)
 						{
-							foreach(var a in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<uint>>(@constructorProperties))
+							foreach (var a in (global::System.Collections.Generic.IEnumerable<uint>)@constructorProperties)
 							{
 								this[a] = constructorProperties[a];
 							}
-							foreach((var a, var b) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(int, string)>>(@constructorProperties))
+							foreach ((var a, var b) in (global::System.Collections.Generic.IEnumerable<(int, string)>)@constructorProperties)
 							{
 								this[a, b] = constructorProperties[a, b];
 							}
-							foreach((var a, var b, var c) in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>>(@constructorProperties))
+							foreach ((var a, var b, var c) in (global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>)@constructorProperties)
 							{
 								this[a, b, c] = constructorProperties[a, b, c];
 							}
@@ -474,7 +474,7 @@ public static class IndexerInitCreateGeneratorTests
 							this.handlers = @expectations.Handlers;
 							if (@constructorProperties is not null)
 							{
-								foreach(var a in global::System.Runtime.CompilerServices.Unsafe.As<global::System.Collections.Generic.IEnumerable<int>>(@constructorProperties))
+								foreach (var a in ((global::System.Collections.Generic.IEnumerable<int>)@constructorProperties))
 								{
 									this[a] = constructorProperties[a];
 								}
@@ -488,12 +488,12 @@ public static class IndexerInitCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
 								}
@@ -514,8 +514,8 @@ public static class IndexerInitCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+									((global::System.Func<int>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -532,8 +532,8 @@ public static class IndexerInitCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+									((global::System.Func<string?>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -552,12 +552,12 @@ public static class IndexerInitCreateGeneratorTests
 								{
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a))
+										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a))
 										{
 											@methodHandler.IncrementCallCount();
 											var @result = @methodHandler.Method is not null ?
-												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, int>>(@methodHandler.Method)(@a) :
-												global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+												((global::System.Func<int, int>)@methodHandler.Method)(@a) :
+												((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 											return @result!;
 										}
 									}
@@ -573,13 +573,13 @@ public static class IndexerInitCreateGeneratorTests
 								{
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@a) &&
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[1]).IsValid(@value))
+										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
+											((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@value))
 										{
 											@methodHandler.IncrementCallCount();
 											if (@methodHandler.Method is not null)
 											{
-												global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<int, int>>(@methodHandler.Method)(@a, @value);
+												((global::System.Action<int, int>)@methodHandler.Method)(@a, @value);
 											}
 											return;
 										}

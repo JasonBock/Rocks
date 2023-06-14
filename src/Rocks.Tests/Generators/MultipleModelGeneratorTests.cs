@@ -81,12 +81,12 @@ public static class MultipleModelGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<int>>(@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int, string>>(@methodHandler.Method)(@value) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
+											((global::System.Func<int, string>)@methodHandler.Method)(@value) :
+											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 										return @result!;
 									}
 								}

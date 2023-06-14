@@ -105,7 +105,7 @@ public static class RecordCreateGeneratorTests
 								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
+									((global::System.Action)@methodHandler.Method)();
 								}
 							}
 							else
@@ -122,8 +122,8 @@ public static class RecordCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string>>(@methodHandler).ReturnValue;
+									((global::System.Func<string>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -139,12 +139,12 @@ public static class RecordCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<global::System.Text.StringBuilder>>(@methodHandler.Expectations[0]).IsValid(@builder))
+									if (((global::Rocks.Argument<global::System.Text.StringBuilder>)@methodHandler.Expectations[0]).IsValid(@builder))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Text.StringBuilder, bool>>(@methodHandler.Method)(@builder) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+											((global::System.Func<global::System.Text.StringBuilder, bool>)@methodHandler.Method)(@builder) :
+											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
 								}
@@ -165,8 +165,8 @@ public static class RecordCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+									((global::System.Func<int>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -185,8 +185,8 @@ public static class RecordCreateGeneratorTests
 									var @methodHandler = @methodHandlers[0];
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<global::System.Type>>(@methodHandler.Method)() :
-										global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<global::System.Type>>(@methodHandler).ReturnValue;
+										((global::System.Func<global::System.Type>)@methodHandler.Method)() :
+										((global::Rocks.HandlerInformation<global::System.Type>)@methodHandler).ReturnValue;
 									return @result!;
 								}
 								else

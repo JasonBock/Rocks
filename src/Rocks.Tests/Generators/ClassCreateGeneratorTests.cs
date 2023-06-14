@@ -78,12 +78,12 @@ public static class ClassCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<object?>>(@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<object?, bool>>(@methodHandler.Method)(@obj) :
-											global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<bool>>(@methodHandler).ReturnValue;
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
 								}
@@ -104,8 +104,8 @@ public static class ClassCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<int>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<int>>(@methodHandler).ReturnValue;
+									((global::System.Func<int>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -122,8 +122,8 @@ public static class ClassCreateGeneratorTests
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
 								var @result = @methodHandler.Method is not null ?
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Func<string?>>(@methodHandler.Method)() :
-									global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.HandlerInformation<string?>>(@methodHandler).ReturnValue;
+									((global::System.Func<string?>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 								return @result!;
 							}
 							else
@@ -141,7 +141,7 @@ public static class ClassCreateGeneratorTests
 								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
+									((global::System.Action)@methodHandler.Method)();
 								}
 							}
 							else

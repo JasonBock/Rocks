@@ -89,7 +89,7 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"global::System.Runtime.CompilerServices.Unsafe.As<{shimInformation.TypeToMock!.Type.GetFullyQualifiedName()}>(this.mock).{shimMethod.GetName()}({passedParameters});");
+			writer.WriteLine($"(({shimInformation.TypeToMock!.Type.GetFullyQualifiedName()})this.mock).{shimMethod.GetName()}({passedParameters});");
 			writer.Indent--;
 		}
 	}

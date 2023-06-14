@@ -237,14 +237,14 @@ public static class DefaultValuesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (global::System.Runtime.CompilerServices.Unsafe.As<global::Rocks.Argument<double>>(@methodHandler.Expectations[0]).IsValid(@value))
+								if (((global::Rocks.Argument<double>)@methodHandler.Expectations[0]).IsValid(@value))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action<double>>(@methodHandler.Method)(@value);
+										((global::System.Action<double>)@methodHandler.Method)(@value);
 									}
 									break;
 								}

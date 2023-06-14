@@ -79,7 +79,7 @@ public static class EventGeneratorTests
 								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
+									((global::System.Action)@methodHandler.Method)();
 								}
 								
 								@methodHandler.RaiseEvents(this);
@@ -223,7 +223,7 @@ public static class EventGeneratorTests
 								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
+									((global::System.Action)@methodHandler.Method)();
 								}
 								
 								@methodHandler.RaiseEvents(this);
@@ -243,7 +243,7 @@ public static class EventGeneratorTests
 								@methodHandler.IncrementCallCount();
 								if (@methodHandler.Method is not null)
 								{
-									global::System.Runtime.CompilerServices.Unsafe.As<global::System.Action>(@methodHandler.Method)();
+									((global::System.Action)@methodHandler.Method)();
 								}
 								
 								@methodHandler.RaiseEvents(this);
