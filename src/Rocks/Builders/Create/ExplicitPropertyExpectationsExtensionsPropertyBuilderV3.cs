@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -8,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 {
-	private static void BuildGetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;
 
@@ -27,18 +26,18 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
-		writer.Indent++;
-
 		var addMethod = property.Type.IsPointer ?
 			MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, property.MockType) : 
 			$"Add<{propertyReturnValue}>";
 
-		writer.WriteLine($"{newAdornments}(@self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
-		writer.Indent--;
+		writer.WriteLines(
+			$$"""
+			internal static {{returnValue}} {{property.Name}}({{thisParameter}}) =>
+				{{newAdornments}}(@self.{{addMethod}}({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.IncludeGenericsName;
 		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
@@ -53,11 +52,11 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilderV3
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> value) =>");
-		writer.Indent++;
-
-		writer.WriteLine($"{newAdornments}(@self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ value }}));");
-		writer.Indent--;
+		writer.WriteLines(
+			$$"""
+			internal static {{returnValue}} {{property.Name}}({{thisParameter}}, global::Rocks.Argument<{{propertyParameterValue}}> value) =>
+				{{newAdornments}}(@self.Add({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+			""");
 	}
 
 	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property,

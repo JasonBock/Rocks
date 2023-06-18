@@ -1,4 +1,5 @@
-﻿using Rocks.Models;
+﻿using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -23,15 +24,15 @@ internal static class PropertyExpectationsExtensionsPropertyBuilderV3
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {callbackDelegateTypeName}, {propertyReturnValue}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}) =>");
-		writer.Indent++;
-
 		var addMethod = property.Type.IsPointer ?
-			MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, property.MockType) : 
+			MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, property.MockType) :
 			$"Add<{propertyReturnValue}>";
 
-		writer.WriteLine($"{newAdornments}(@self.{addMethod}({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));");
-		writer.Indent--;
+		writer.WriteLines(
+			$$"""
+			internal static {{returnValue}} {{property.Name}}({{thisParameter}}) =>
+				{{newAdornments}}(@self.{{addMethod}}({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			""");
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, PropertyAccessor accessor)
@@ -54,11 +55,11 @@ internal static class PropertyExpectationsExtensionsPropertyBuilderV3
 			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
 		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-		writer.WriteLine($"internal static {returnValue} {property.Name}({thisParameter}, global::Rocks.Argument<{propertyParameterValue}> @value) =>");
-		writer.Indent++;
-
-		writer.WriteLine($"{newAdornments}(@self.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) {{ @value }}));");
-		writer.Indent--;
+		writer.WriteLines(
+			$$"""
+			internal static {{returnValue}} {{property.Name}}({{thisParameter}}, global::Rocks.Argument<{{propertyParameterValue}}> @value) =>
+				{{newAdornments}}(@self.Add({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+			""");
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel result, PropertyAccessor accessor)

@@ -11,7 +11,7 @@ namespace Rocks.Builders.Create;
 internal static class MockPropertyBuilderV3
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		Models.PropertyModel property, string propertyVisibility,
+		PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;

@@ -3,7 +3,7 @@ using ComputeSharp.D2D1.Interop;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
-	internal static class ComputeSharpMappings
+   internal static class ComputeSharpMappings
 	{
 		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 			new()
@@ -18,9 +18,9 @@ namespace Rocks.CodeGenerationTest.Mappings
 	}
 
 	namespace ComputeSharp
-	{
+   {
 #pragma warning disable CMPSD2D0058 // Missing [D2DResourceTextureIndex] attribute
-		public partial struct MappedPixelShader
+	  public partial struct MappedPixelShader
 #pragma warning restore CMPSD2D0058 // Missing [D2DResourceTextureIndex] attribute
 			 : ID2D1PixelShader
 		{

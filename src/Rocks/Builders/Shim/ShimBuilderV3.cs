@@ -13,19 +13,18 @@ internal static class ShimBuilderV3
 	{
 		var shimName = ShimBuilderV3.GetShimName(shimType.Type);
 
-		writer.WriteLine($"private sealed class {shimName}");
-		writer.Indent++;
-		writer.WriteLine($": {shimType.Type.FullyQualifiedName}");
-		writer.Indent--;
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.WriteLines(
+			$$"""
+			private sealed class {{shimName}}
+				: {{shimType.Type.FullyQualifiedName}}
+			{
+				private readonly {{mockTypeName}} mock;
+				
+				public {{shimName}}({{mockTypeName}} @mock) =>
+					this.mock = @mock;
+			""");
 
-		writer.WriteLine($"private readonly {mockTypeName} mock;");
-		writer.WriteLine();
-		writer.WriteLine($"public {shimName}({mockTypeName} @mock) =>");
 		writer.Indent++;
-		writer.WriteLine($"this.mock = @mock;");
-		writer.Indent--;
 
 		ShimMethodBuilderV3.Build(writer, shimType);
 		ShimPropertyBuilderV3.Build(writer, shimType);

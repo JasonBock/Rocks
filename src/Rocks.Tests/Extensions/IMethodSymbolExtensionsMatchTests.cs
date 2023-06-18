@@ -159,15 +159,17 @@ public static class IMethodSymbolExtensionsMatchTests
 	public static void MatchWhenMethodsAreExactWithSameModifiers()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(out int a) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(out int a) { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
@@ -177,15 +179,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsAreExactWithRefAndOutModifiers()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(ref int a) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(ref int a) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(out int a) { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.Exact));
@@ -195,15 +199,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsDifferByReturnType()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public int {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public int {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public string {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public string {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.DifferByReturnTypeOnly));
@@ -213,15 +219,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsDoNotMatchByName()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodTwo}() {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodTwo}}() { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodTwo),
 			Is.EqualTo(MethodMatch.None));
@@ -231,15 +239,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsDoNotMatchByParameterCount()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}() {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}() { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
@@ -249,15 +259,17 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsDoNotMatchByParameterType()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(string a) {{ }}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string a) { }
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));
@@ -267,18 +279,20 @@ public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
 	public static void MatchWhenMethodsDoNotMatchByParameterModifier()
 	{
 		var code =
- $@"public class {IMethodSymbolExtensionsMatchTests.ClassOne}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(int a) {{ }}
-}}
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
 
-public class {IMethodSymbolExtensionsMatchTests.ClassTwo}
-{{
-	public void {IMethodSymbolExtensionsMatchTests.MethodOne}(out int a) 
-	{{
-		a = 3;
-	}}
-}}";
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(out int a) 
+				{
+					a = 3;
+				}
+			}
+			""";
 
 		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
 			Is.EqualTo(MethodMatch.None));

@@ -13,20 +13,22 @@ public class PointersGeneration
 	public PointersGeneration()
 	{
 		var code =
-@"using Rocks;
-
-public unsafe interface ITest
-{
-	void DelegatePointerParameter(delegate*<int, void> value);
-	delegate*<int, void> DelegatePointerReturn();
-	int* PointerReturn();
-	void PointerParameter(int* value);
-}
-
-public static class MockTest
-{
-	public static void Create() => Rock.Create<ITest>();
-}";
+			"""
+			using Rocks;
+			
+			public unsafe interface ITest
+			{
+				void DelegatePointerParameter(delegate*<int, void> value);
+				delegate*<int, void> DelegatePointerReturn();
+				int* PointerReturn();
+				void PointerParameter(int* value);
+			}
+			
+			public static class MockTest
+			{
+				public static void Create() => Rock.Create<ITest>();
+			}
+			""";
 		var tree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))

@@ -12,17 +12,19 @@ public static class IPropertySymbolExtensionsGetAllAttributesTests
 	public static void GetAllAttributesOnAbstractProperty()
 	{
 		var code =
-@"using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace MockTests
-{
-	public interface Allow
-	{
-		 [AllowNull]
-		 string NewLine { get; set; }
-	}
-}";
+			"""
+			using System;
+			using System.Diagnostics.CodeAnalysis;
+			
+			namespace MockTests
+			{
+				public interface Allow
+				{
+					[AllowNull]
+					string NewLine { get; set; }
+				}
+			}
+			""";
 
 		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
 		var attributes = propertySymbol.GetAllAttributes();
@@ -38,17 +40,19 @@ namespace MockTests
 	public static void GetAllAttributesOnNonAbstractProperty()
 	{
 		var code =
-@"using System;
-using System.Diagnostics.CodeAnalysis;
-
-namespace MockTests
-{
-	public class Allow
-	{
-		 [AllowNull]
-		 public virtual string NewLine { get; set; }
-	}
-}";
+			"""
+			using System;
+			using System.Diagnostics.CodeAnalysis;
+			
+			namespace MockTests
+			{
+				public class Allow
+				{
+					[AllowNull]
+					public virtual string NewLine { get; set; }
+				}
+			}
+			""";
 
 		var propertySymbol = IPropertySymbolExtensionsGetAllAttributesTests.GetPropertySymbol(code);
 		var attributes = propertySymbol.GetAllAttributes();

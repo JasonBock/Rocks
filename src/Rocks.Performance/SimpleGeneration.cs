@@ -13,17 +13,19 @@ public class SimpleGeneration
 	public SimpleGeneration()
 	{
 		var code =
-@"using Rocks;
-
-public interface ITest
-{
-	void Foo();
-}
-
-public static class MockTest
-{
-	public static void Create() => Rock.Create<ITest>();
-}";
+			"""
+			using Rocks;
+			
+			public interface ITest
+			{
+				void Foo();
+			}
+			
+			public static class MockTest
+			{
+				public static void Create() => Rock.Create<ITest>();
+			}
+			""";
 		var tree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))

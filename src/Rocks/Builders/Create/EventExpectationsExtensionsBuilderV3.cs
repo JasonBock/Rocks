@@ -50,22 +50,18 @@ internal static class EventExpectationsExtensionsBuilderV3
 			var raises = string.Join(", ", raisesTypes);
 			var raisesOn = @event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? string.Empty :
 				$"On{@event.ContainingType.FlattenedName}";
-
-			writer.WriteLine($"internal static global::Rocks.{extensionPrefix}Adornments<{adornments}> Raises{@event.Name}{raisesOn}<{raises}>(this global::Rocks.{extensionPrefix}Adornments<{adornments}> @self, {argsType} @args)");
-			writer.Indent++;
-			writer.WriteLine($"where {callbackName} : global::System.Delegate");
-			writer.Indent--;
-
-			writer.WriteLine("{");
-			writer.Indent++;
-
 			var fieldName = @event.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? @event.Name :
 				$"{@event.ContainingType.NoGenericsName}_{@event.Name}";
 
-			writer.WriteLine($"@self.Handler.AddRaiseEvent(new(\"{fieldName}\", @args));");
-			writer.WriteLine($"return @self;");
-			writer.Indent--;
-			writer.WriteLine("}");
+			writer.WriteLines(
+				$$"""
+				internal static global::Rocks.{{extensionPrefix}}Adornments<{{adornments}}> Raises{{@event.Name}}{{raisesOn}}<{{raises}}>(this global::Rocks.{{extensionPrefix}}Adornments<{{adornments}}> @self, {{argsType}} @args)
+					where {{callbackName}} : global::System.Delegate
+				{
+					@self.Handler.AddRaiseEvent(new("{{fieldName}}", @args));
+					return @self;
+				}
+				""");
 		}
 
 		writer.WriteLine($"internal static class {prefix}AdornmentsOf{mockType.Type.FlattenedName}Extensions");

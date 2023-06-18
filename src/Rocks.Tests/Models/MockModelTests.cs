@@ -7,7 +7,6 @@ using Rocks.Diagnostics;
 using Rocks.Extensions;
 using Rocks.Models;
 using System.Globalization;
-using System.Linq;
 
 namespace Rocks.Tests.Models;
 
