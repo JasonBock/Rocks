@@ -12,10 +12,12 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	public static void CallWhenSymbolIsPublic()
 	{
 		var code =
- @"public class Source
-{
-	public void Foo() { }
-}";
+			"""
+			public class Source
+			{
+				public void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
@@ -25,10 +27,12 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	public static void CallWhenSymbolIsProtected()
 	{
 		var code =
- @"public class Source
-{
-	protected void Foo() { }
-}";
+			"""
+			public class Source
+			{
+				protected void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
@@ -38,10 +42,12 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	public static void CallWhenSymbolIsProtectedInternal()
 	{
 		var code =
- @"public class Source
-{
-	protected internal void Foo() { }
-}";
+			"""
+			public class Source
+			{
+				protected internal void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
@@ -54,10 +60,12 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	public static void CallWhenSymbolIsInternalAndContainingAssemblyEqualsInvocationAssembly()
 	{
 		var code =
- @"public class Source
-{
-	internal void Foo() { }
-}";
+			"""
+			public class Source
+			{
+				internal void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
@@ -71,14 +79,16 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	{
 		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
- @$"using System.Runtime.CompilerServices;
+			$$"""
+			using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo(""{ContainingAssembly}"")]
+			[assembly: InternalsVisibleTo("{{ContainingAssembly}}")]
 
-public class Source
-{{
-	internal void Foo() {{ }}
-}}";
+			public class Source
+			{
+				internal void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
@@ -103,10 +113,12 @@ public class Source
 	{
 		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
- @$"public class Source
-{{
-	internal void Foo() {{ }}
-}}";
+			$$"""
+			public class Source
+			{
+				internal void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
@@ -131,10 +143,12 @@ public class Source
 	{
 		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
- @$"public class Source
-{{
-	private protected void Foo() {{ }}
-}}";
+			$$"""
+			public class Source
+			{
+				private protected void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		Assert.Multiple(() =>
@@ -148,14 +162,16 @@ public class Source
 	{
 		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
- @$"using System.Runtime.CompilerServices;
+			$$"""
+			using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo(""{ContainingAssembly}"")]
+			[assembly: InternalsVisibleTo("{{ContainingAssembly}}")]
 
-public class Source
-{{
-	private protected void Foo() {{ }}
-}}";
+			public class Source
+			{
+				private protected void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
@@ -180,10 +196,12 @@ public class Source
 	{
 		const string ContainingAssembly = nameof(ContainingAssembly);
 		var code =
- @"public class Source
-{
-	private protected void Foo() { }
-}";
+			"""
+			public class Source
+			{
+				private protected void Foo() { }
+			}
+			""";
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");

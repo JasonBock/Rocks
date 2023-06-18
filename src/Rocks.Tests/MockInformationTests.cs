@@ -164,10 +164,12 @@ public static class MockInformationTests
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-[Obsolete(""a"", true)]
-public class {targetTypeName} {{ }}";
+			[Obsolete("a", true)]
+			public class {{targetTypeName}} { }
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
@@ -183,10 +185,12 @@ public class {targetTypeName} {{ }}";
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-[Obsolete(""a"", false)]
-public class {targetTypeName} {{ }}";
+			[Obsolete(""a"", false)]
+			public class {{targetTypeName}} { }
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, true);
 
@@ -202,13 +206,15 @@ public class {targetTypeName} {{ }}";
 	{
 		const string targetTypeName = "ObsoleteType";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-[Obsolete(""a"", false)]
-public class {targetTypeName} 
-{{ 
-	public virtual void Foo() {{ }}
-}}";
+			[Obsolete(""a"", false)]
+			public class {{targetTypeName}} 
+			{
+				public virtual void Foo() { }
+			}
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create, false);
 
@@ -224,12 +230,14 @@ public class {targetTypeName}
 	{
 		const string targetTypeName = "IGeneric";
 		var code =
-$@"public interface IBase<T1, T2> 
-{{
-	void Foo(T1 a, T2 b);
-}}
+			$$"""
+			public interface IBase<T1, T2> 
+			{
+				void Foo(T1 a, T2 b);
+			}
 
-public interface IGeneric<T1> : IBase<T1, string> {{ }}";
+			public interface {{targetTypeName}}<T1> : IBase<T1, string> { }
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
@@ -303,12 +311,14 @@ public interface IGeneric<T1> : IBase<T1, string> {{ }}";
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
-$@"public class {targetTypeName}
-{{
-	public override sealed bool Equals(object? obj) => base.Equals(obj);
-	public override sealed int GetHashCode() => base.GetHashCode();
-	public override sealed string? ToString() => base.ToString();
-}}";
+			$$"""
+			public class {{targetTypeName}}
+			{
+				public override sealed bool Equals(object? obj) => base.Equals(obj);
+				public override sealed int GetHashCode() => base.GetHashCode();
+				public override sealed string? ToString() => base.ToString();
+			}
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
@@ -324,12 +334,14 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "NoMockables";
 		var code =
-$@"public class {targetTypeName}
-{{
-	public override sealed bool Equals(object? obj) => base.Equals(obj);
-	public override sealed int GetHashCode() => base.GetHashCode();
-	public override sealed string? ToString() => base.ToString();
-}}";
+			$$"""
+			public class {{targetTypeName}}
+			{
+				public override sealed bool Equals(object? obj) => base.Equals(obj);
+				public override sealed int GetHashCode() => base.GetHashCode();
+				public override sealed string? ToString() => base.ToString();
+			}
+			""";
 
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Make);
 
@@ -375,10 +387,12 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "SealedType";
 		var code =
-$@"public class {targetTypeName} 
-{{
-	private {targetTypeName}() {{ }}
-}}";
+			$$"""
+			public class {{targetTypeName}} 
+			{
+				private {{targetTypeName}}() { }
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -393,12 +407,14 @@ $@"public class {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	void Foo();
-}}";
+			public interface {{targetTypeName}} 
+			{
+				void Foo();
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -417,12 +433,14 @@ public interface {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	string Data {{ get; set; }}
-}}";
+			public interface {{targetTypeName}} 
+			{
+				string Data { get; set; }
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -441,13 +459,15 @@ public interface {targetTypeName}
 	{
 		const string targetTypeName = "InterfaceWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public interface {targetTypeName} 
-{{
-	void Foo();
-	event EventHandler TargetEvent;
-}}";
+			public interface {{targetTypeName}} 
+			{
+				void Foo();
+				event EventHandler TargetEvent;
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -500,12 +520,14 @@ public interface {targetTypeName}
 		const string fooMethodName = "Foo";
 
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual void {fooMethodName}() {{ }}
-}}";
+			public class {{targetTypeName}} 
+			{
+				public virtual void {{fooMethodName}}() { }
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -513,14 +535,19 @@ public class {targetTypeName}
 			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
 			Assert.That(information.Constructors, Has.Length.EqualTo(1));
 			Assert.That(information.Methods.Results, Has.Length.EqualTo(4));
+			
 			var fooMethod = information.Methods.Results.Single(_ => _.Value.Name == fooMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var getHashCodeMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var equalsMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var toStringMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			Assert.That(information.Properties.Results, Has.Length.EqualTo(0));
 			Assert.That(information.Events.Results, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
@@ -532,12 +559,14 @@ public class {targetTypeName}
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual string Data {{ get; set; }}
-}}";
+			public class {{targetTypeName}}
+			{
+				public virtual string Data { get; set; }
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -545,12 +574,16 @@ public class {targetTypeName}
 			Assert.That(information.Diagnostics, Has.Length.EqualTo(0));
 			Assert.That(information.Constructors, Has.Length.EqualTo(1));
 			Assert.That(information.Methods.Results, Has.Length.EqualTo(3));
+			
 			var getHashCodeMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var equalsMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var toStringMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			Assert.That(information.Properties.Results, Has.Length.EqualTo(1));
 			Assert.That(information.Events.Results, Has.Length.EqualTo(0));
 			Assert.That(information.TypeToMock, Is.Not.Null);
@@ -563,12 +596,14 @@ public class {targetTypeName}
 		const string targetTypeName = "ClassWithMembers";
 
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public virtual event EventHandler TargetEvent;
-}}";
+			public class {{targetTypeName}} 
+			{
+				public virtual event EventHandler TargetEvent;
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -576,12 +611,16 @@ public class {targetTypeName}
 			Assert.That(information.Diagnostics, Is.Empty);
 			Assert.That(information.Constructors, Has.Length.EqualTo(1));
 			Assert.That(information.Methods.Results, Has.Length.EqualTo(3));
+			
 			var getHashCodeMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var equalsMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var toStringMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			Assert.That(information.Properties.Results, Is.Empty);
 			Assert.That(information.Events.Results, Has.Length.EqualTo(1));
 			Assert.That(information.TypeToMock, Is.Not.Null);
@@ -593,16 +632,18 @@ public class {targetTypeName}
 	{
 		const string targetTypeName = "ClassWithMembers";
 		var code =
-$@"using System;
+			$$"""
+			using System;
 
-public class {targetTypeName} 
-{{
-	public {targetTypeName}() {{ }}
+			public class {{targetTypeName}} 
+			{
+				public {{targetTypeName}}() { }
 
-	public {targetTypeName}(string a) {{ }}
+				public {{targetTypeName}}(string a) { }
 
-	public virtual event EventHandler TargetEvent;
-}}";
+				public virtual event EventHandler TargetEvent;
+			}
+			""";
 		var information = MockInformationTests.GetInformation(code, targetTypeName, BuildType.Create);
 
 		Assert.Multiple(() =>
@@ -610,12 +651,16 @@ public class {targetTypeName}
 			Assert.That(information.Diagnostics, Is.Empty);
 			Assert.That(information.Constructors, Has.Length.EqualTo(2));
 			Assert.That(information.Methods.Results, Has.Length.EqualTo(3));
+			
 			var getHashCodeMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var equalsMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			var toStringMethod = information.Methods.Results.Single(_ => _.Value.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
+			
 			Assert.That(information.Properties.Results, Is.Empty);
 			Assert.That(information.Events.Results, Has.Length.EqualTo(1));
 			Assert.That(information.TypeToMock, Is.Not.Null);

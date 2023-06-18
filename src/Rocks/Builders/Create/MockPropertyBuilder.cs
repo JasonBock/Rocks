@@ -238,7 +238,7 @@ internal static class MockPropertyBuilder
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.GetMethod!.Name}}()")]""");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -250,7 +250,7 @@ internal static class MockPropertyBuilder
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.SetMethod!.Name}}(@value)")]""");
 			}
 		}
 

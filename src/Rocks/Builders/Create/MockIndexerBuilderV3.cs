@@ -250,7 +250,7 @@ internal static class MockIndexerBuilderV3
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature}}")]""");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -262,7 +262,7 @@ internal static class MockIndexerBuilderV3
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{signature}"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature}}")]""");
 			}
 		}
 

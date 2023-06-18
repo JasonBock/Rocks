@@ -15,22 +15,24 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 		const string targetTypeName = "Test";
 
 		var code =
-$@"public abstract class CoreClass
-{{
-	public virtual int {targetMethodName}() => 3;
-}}
+			$$"""
+			public abstract class CoreClass
+			{
+				public virtual int {{targetMethodName}}() => 3;
+			}
 
-public abstract class BaseClass
-	: CoreClass
-{{
-	public new abstract int {targetMethodName}();
-}}
+			public abstract class BaseClass
+				: CoreClass
+			{
+				public new abstract int {{targetMethodName}}();
+			}
 
-public class {targetTypeName}
-	: BaseClass
-{{
-	public override int {targetMethodName}() => 3;
-}}";
+			public class {{targetTypeName}}
+				: BaseClass
+			{
+				public override int {{targetMethodName}}() => 3;
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -61,22 +63,24 @@ public class {targetTypeName}
 		const string targetTypeName = "Test";
 
 		var code =
-$@"public abstract class CoreClass
-{{
-	public abstract int {targetMethodName}();
-}}
+			$$"""
+			public abstract class CoreClass
+			{
+				public abstract int {{targetMethodName}}();
+			}
 
-public abstract class BaseClass
-	: CoreClass
-{{
-	public override int {targetMethodName}() => 3;
-}}
+			public abstract class BaseClass
+				: CoreClass
+			{
+				public override int {{targetMethodName}}() => 3;
+			}
 
-public class {targetTypeName}
-	: BaseClass
-{{
-	public override int {targetMethodName}() => base.{targetMethodName}();
-}}";
+			public class {{targetTypeName}}
+				: BaseClass
+			{
+				public override int {{targetMethodName}}() => base.{{targetMethodName}}();
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -107,10 +111,12 @@ public class {targetTypeName}
 		const string targetTypeName = "ITest";
 
 		var code =
-$@"public interface {targetTypeName}
-{{
-	void {targetMethodName}();
-}}";
+			$$"""
+			public interface {{targetTypeName}}
+			{
+				void {{targetMethodName}}();
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -134,16 +140,18 @@ $@"public interface {targetTypeName}
 		const string targetMethodName = "Bar";
 		const string targetTypeName = "Target";
 		var code =
-$@"public interface Base
-{{
-	void {baseMethodName}();
-}}
+			$$"""
+			public interface Base
+			{
+				void {{baseMethodName}}();
+			}
 
-public interface {targetTypeName} 
-	: Base
-{{ 
-	void {targetMethodName}();
-}}";
+			public interface {{targetTypeName}} 
+				: Base
+			{ 
+				void {{targetMethodName}}();
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -169,16 +177,18 @@ public interface {targetTypeName}
 		const string targetMethodName = "Bar";
 		const string targetTypeName = "Target";
 		var code =
-$@"public interface {baseTypeName}
-{{
-	void {targetMethodName}();
-}}
+			$$"""
+			public interface {{baseTypeName}}
+			{
+				void {{targetMethodName}}();
+			}
 
-public interface {targetTypeName} 
-	: {baseTypeName}
-{{ 
-	void {targetMethodName}();
-}}";
+			public interface {{targetTypeName}} 
+				: {{baseTypeName}}
+			{ 
+				void {{targetMethodName}}();
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -205,21 +215,23 @@ public interface {targetTypeName}
 		const string targetTypeName = "Target";
 
 		var code =
-$@"public interface {baseOneTypeName}
-{{
-	void {baseMethodName}();
-}}
+			$$"""
+			public interface {{baseOneTypeName}}
+			{
+				void {{baseMethodName}}();
+			}
 
-public interface {baseTwoTypeName}
-{{
-	void {baseMethodName}();
-}}
+			public interface {{baseTwoTypeName}}
+			{
+				void {{baseMethodName}}();
+			}
 
-public interface {targetTypeName} 
-	: {baseOneTypeName}, {baseTwoTypeName}
-{{ 
-	void {targetMethodName}();
-}}";
+			public interface {{targetTypeName}}
+				: {{baseOneTypeName}}, {{baseTwoTypeName}}
+			{ 
+				void {{targetMethodName}}();
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -252,19 +264,21 @@ public interface {targetTypeName}
 		const string targetTypeName = "Target";
 
 		var code =
-$@"public interface {baseOneTypeName}
-{{
-	void {baseMethodName}();
-}}
+			$$"""
+			public interface {{baseOneTypeName}}
+			{
+				void {{baseMethodName}}();
+			}
 
-public interface {baseTwoTypeName}
-{{
-	void {baseMethodName}();
-}}
+			public interface {{baseTwoTypeName}}
+			{
+				void {{baseMethodName}}();
+			}
 
-public interface {targetTypeName} 
-	: {baseOneTypeName}, {baseTwoTypeName}
-{{ }}";
+			public interface {{targetTypeName}} 
+				: {{baseOneTypeName}}, {{baseTwoTypeName}}
+			{ }
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
@@ -292,10 +306,12 @@ public interface {targetTypeName}
 		const string targetMethodName = "Foo";
 
 		var code =
-$@"public class {targetTypeName}
-{{
-	public virtual void {targetMethodName}() {{ }}
-}}";
+			$$"""
+			public class {{targetTypeName}}
+			{
+				public virtual void {{targetMethodName}}() { }
+			}
+			""";
 
 		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;

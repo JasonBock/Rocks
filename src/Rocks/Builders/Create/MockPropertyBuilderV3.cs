@@ -213,7 +213,7 @@ internal static class MockPropertyBuilderV3
 	}
 
 	internal static void Build(IndentedTextWriter writer,
-		Models.PropertyModel property, bool raiseEvents)
+		PropertyModel property, bool raiseEvents)
 	{
 		var isGetterVisible = false;
 		var isSetterVisible = false;
@@ -234,7 +234,7 @@ internal static class MockPropertyBuilderV3
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.GetMethod!.Name}()"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.GetMethod!.Name}}()")]""");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -246,7 +246,7 @@ internal static class MockPropertyBuilderV3
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($@"[global::Rocks.MemberIdentifier({memberIdentifierAttribute}, ""{explicitTypeName}{property.SetMethod!.Name}(@value)"")]");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.SetMethod!.Name}}(@value)")]""");
 			}
 		}
 

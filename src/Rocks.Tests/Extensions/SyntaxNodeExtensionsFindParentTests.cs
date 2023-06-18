@@ -12,10 +12,12 @@ public static class SyntaxNodeExtensionsFindParentTests
 	public static void FindParentWhenTypeExists()
 	{
 		var code =
-@"public class Test
-{
-	public void Foo() { }
-}";
+			"""
+			public class Test
+			{
+				public void Foo() { }
+			}
+			""";
 		var methodDeclaration = SyntaxNodeExtensionsFindParentTests.GetMethodDeclaration(code);
 
 		Assert.That(methodDeclaration.FindParent<TypeDeclarationSyntax>(), Is.Not.Null);
@@ -25,10 +27,12 @@ public static class SyntaxNodeExtensionsFindParentTests
 	public static void FindParentWhenTypeDoesNotExists()
 	{
 		var code =
-@"public class Test
-{
-	public void Foo() { }
-}";
+			"""
+			public class Test
+			{
+				public void Foo() { }
+			}
+			""";
 		var methodDeclaration = SyntaxNodeExtensionsFindParentTests.GetMethodDeclaration(code);
 
 		Assert.That(methodDeclaration.FindParent<VariableDeclarationSyntax>(), Is.Null);

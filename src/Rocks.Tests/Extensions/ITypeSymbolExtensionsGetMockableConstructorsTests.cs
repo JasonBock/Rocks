@@ -12,10 +12,12 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 	public static void GetMockableConstructorsForClass()
 	{
 		var code =
-@"public class Target 
-{
-	public Target() { }
-}";
+			"""
+			public class Target 
+			{
+				public Target() { }
+			}
+			""";
 		var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 		var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly);
 
@@ -26,10 +28,12 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 	public static void GetMockableConstructorsForClassWhereConstructorCannotBeSeenByInvocationAssembly()
 	{
 		var code =
-@"public class Target 
-{
-	internal Target() { }
-}";
+			"""
+			public class Target 
+			{
+				internal Target() { }
+			}
+			""";
 		var typeSymbol = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");

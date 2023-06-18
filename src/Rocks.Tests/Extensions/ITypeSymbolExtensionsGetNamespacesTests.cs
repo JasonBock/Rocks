@@ -13,10 +13,12 @@ public static class ITypeSymbolExtensionsGetNamespacesTests
 	{
 		var @namespace = "TargetNamespace";
 		var code =
-$@"namespace {@namespace}
-{{
-	public class Target {{ }}
-}}";
+			$$"""
+			namespace {{@namespace}}
+			{
+				public class Target { }
+			}
+			""";
 		var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, "Target");
 		var namespaces = typeSymbol.GetNamespaces();
 
@@ -38,32 +40,34 @@ $@"namespace {@namespace}
 		var theField = "TheField";
 
 		var code =
-$@"using {innerNamespace};
-using {middleNamespace};
-using {outerNamespace};
+			$$"""
+			using {{innerNamespace}};
+			using {{middleNamespace}};
+			using {{outerNamespace}};
 
-namespace {innerNamespace}
-{{
-	public class InnerType {{ }}
-}}
+			namespace {{innerNamespace}}
+			{
+				public class InnerType { }
+			}
 
-namespace {middleNamespace}
-{{
-	public class MiddleType<T> {{ }}
-}}
+			namespace {{middleNamespace}}
+			{
+				public class MiddleType<T> { }
+			}
 
-namespace {outerNamespace}
-{{
-	public class OuterType<MiddleType<T>> {{ }}
-}}
+			namespace {{outerNamespace}}
+			{
+				public class OuterType<MiddleType<T>> { }
+			}
 
-namespace {@namespace}
-{{
-	public class {targetType} 
-	{{ 
-		public OuterType<MiddleType<InnerType>> {theField} {{ get; }}
-	}}
-}}";
+			namespace {{@namespace}}
+			{
+				public class {{targetType}}
+				{ 
+					public OuterType<MiddleType<InnerType>> {{theField}} { get; }
+				}
+			}
+			""";
 		var typeSymbol = ITypeSymbolExtensionsGetNamespacesTests.GetTypeSymbol(code, targetType);
 		var propertySymbol = typeSymbol.GetMembers().Single(_ => _.Name == theField) as IPropertySymbol;
 		var namespaces = propertySymbol!.Type.GetNamespaces();

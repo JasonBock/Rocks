@@ -63,7 +63,7 @@ internal static class MockMethodValueBuilderV3
 			writer.WriteLine(method.ReturnTypeAttributesDescription);
 		}
 
-		writer.WriteLine($@"[global::Rocks.MemberIdentifier({method.MemberIdentifier}, ""{methodDescription}"")]");
+		writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{method.MemberIdentifier}}, "{{methodDescription}}")]""");
 		var isPublic = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{method.OverridingCodeValue} " : string.Empty;
 		writer.WriteLine($"{isPublic}{(method.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty)}{methodSignature}");
