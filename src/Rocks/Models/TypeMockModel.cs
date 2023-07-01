@@ -5,29 +5,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-/// <summary>
-/// Defines a type that can be mocked.
-/// </summary>
-internal record TypeMockModel
+internal sealed record TypeMockModel
 {
-	/// <summary>
-	/// Creates a new <see cref="TypeMockModel" /> instance.
-	/// </summary>
-	/// <param name="type"></param>
-	/// <param name="compilation"></param>
-	/// <param name="model"></param>
-	/// <param name="constructors"></param>
-	/// <param name="methods"></param>
-	/// <param name="properties"></param>
-	/// <param name="events"></param>
-	/// <param name="shims"></param>
-	/// <param name="shouldResolveShims"></param>
-	/// <remarks>
-	/// A <see cref="TypeMockModel" /> should only be created from
-	/// <see cref="MockModel.Create(ITypeSymbol, SemanticModel, Builders.BuildType, bool)" />.
-	/// Note that shims are also <see cref="TypeMockModel" />, and are 
-	/// created within this constructor.
-	/// </remarks>
 	internal TypeMockModel(
 		ITypeSymbol type, Compilation compilation, SemanticModel model,
 		ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,

@@ -6,10 +6,7 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-/// <summary>
-/// Creates a <see cref="MockModel"/> for a given <see cref="ITypeSymbol"/>. 
-/// </summary>
-internal record MockModel
+internal sealed record MockModel
 {
 	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{

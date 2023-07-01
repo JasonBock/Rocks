@@ -3,7 +3,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Models;
 
-internal record TypeReferenceModel
+internal sealed record TypeReferenceModel
 {
 	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
 	{
@@ -18,8 +18,8 @@ internal record TypeReferenceModel
 		this.Namespace = type.ContainingNamespace is not null ?
 			!type.ContainingNamespace.IsGlobalNamespace ? 
 				type.ContainingNamespace.ToDisplayString() : 
-				"" :
-			"";
+				string.Empty :
+			string.Empty;
 
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
@@ -45,25 +45,23 @@ internal record TypeReferenceModel
 		}
 	}
 
-   internal string? PointerArgProjectedEvaluationDelegateName { get; }
-   internal string? PointerArgProjectedName { get; }
-
+	internal string AttributesDescription { get; }
+	internal string FlattenedName { get; }
+	internal string FullyQualifiedName { get; }
+	internal string IncludeGenericsName { get; }
+	internal bool IsEsoteric { get; }
+	internal bool IsPointer { get; }
+	internal bool IsRecord { get; }
+	internal bool IsReferenceType { get; }
+	internal bool IsRefLikeType { get; }
+	internal SymbolKind Kind { get; }
+	internal string Namespace { get; }
+	internal string NoGenericsName { get; }
+	internal NullableAnnotation NullableAnnotation { get; }
+	internal string? PointerArgProjectedEvaluationDelegateName { get; }
+	internal string? PointerArgProjectedName { get; }
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
 	internal string? RefLikeArgProjectedName { get; }
 	internal string? RefLikeArgConstructorProjectedName { get; }
-
-	internal bool IsPointer { get; }
-	internal string FullyQualifiedName { get; }
-	internal bool IsEsoteric { get; }
-   internal bool IsRefLikeType { get; }
-   internal string AttributesDescription { get; }
-	internal string FlattenedName { get; }
-   internal string NoGenericsName { get; }
-   internal string IncludeGenericsName { get; }
-   internal NullableAnnotation NullableAnnotation { get; }
-   internal bool IsRecord { get; }
-	internal string Namespace { get; }
-   internal SymbolKind Kind { get; }
-   internal TypeKind TypeKind { get; }
-   internal bool IsReferenceType { get; }
+	internal TypeKind TypeKind { get; }
 }

@@ -80,10 +80,10 @@ Model tests
 Do I look at generic constraints, and look at types used in the constraints to see if they have any obsolete members? Do I need to? E.g. ComputeSharp, D2D1TransformMapper<>
 
 Reminders:
-* Determine if ComputeSharpMappings are needed at all
+* DONE - Determine if ComputeSharpMappings are needed at all
 * DONE - Remove Unsafe.As<>(). Probably no good reason to have it. Look for "global::System.Runtime.CompilerServices.Unsafe.As". Will cause some churn, but...probably for the best.
-* Use WriteLines() wherever possible. Examples
-    * ShimBuilderV3.Build()
+* DONE - Use WriteLines() wherever possible. Examples
+    * DONE - ShimBuilderV3.Build()
 * DONE - The compilation should only be in the models, not the builders.
 * XML comments
   * Update all XML doc elements in Rocks
@@ -91,8 +91,8 @@ Reminders:
 * On all the models, ensure all properties are EquatableArray<>, NOT ImmutableArray<>
 * Remove unnecessary usings everywhere
 * ConfigurationValues should go away
-* Add these projects back in:
+* DONE - Add these projects back in:
     * DONE - Rocks.IntegrationTests
     * DONE - Rocks.CodeGenerationTests
-    * Rocks.Performance
-    * Rocks.PerformanceTests
+    * DONE - Rocks.Performance
+    * DONE - Rocks.PerformanceTests

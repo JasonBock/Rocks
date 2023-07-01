@@ -3,7 +3,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Models;
 
-internal record ParameterModel
+internal sealed record ParameterModel
 {
 	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation)
 	{
@@ -25,12 +25,12 @@ internal record ParameterModel
 	}
 
    internal string AttributesDescription { get; }
-	internal bool HasExplicitDefaultValue { get; }
 	internal string? ExplicitDefaultValue { get; }
-   internal TypeReferenceModel MockType { get; }
+	internal bool HasExplicitDefaultValue { get; }
+	internal bool IsParams { get; }
+	internal TypeReferenceModel MockType { get; }
    internal string Name { get; }
 	internal RefKind RefKind { get; }
 	internal bool RequiresNullableAnnotation { get; }
-	internal bool IsParams { get; }
    internal TypeReferenceModel Type { get; }
 }

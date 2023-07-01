@@ -4,18 +4,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-/// <summary>
-/// Defines a property that is either required and/or init
-/// and can be set during the construction of a mock.
-/// </summary>
-internal record ConstructorPropertyModel
+internal sealed record ConstructorPropertyModel
 {
-	/// <summary>
-	/// Creates a new <see cref="ConstructorPropertyModel"/> instance.
-	/// </summary>
-	/// <param name="value">The <see cref="IPropertySymbol"/> to obtain information from.</param>
-	/// <param name="mockType">The mock type.</param>
-	/// <param name="compilation">The complation.</param>
 	internal ConstructorPropertyModel(IPropertySymbol value, TypeReferenceModel mockType, Compilation compilation) 
 	{
 		this.Type = new TypeReferenceModel(value.Type, compilation);
@@ -29,13 +19,13 @@ internal record ConstructorPropertyModel
 		this.IsReferenceType = value.Type.IsReferenceType;
 	}
 
+	internal PropertyAccessor Accessors { get; }
+	internal bool CanBeSeenByContainingAssembly { get; }
+	internal bool IsIndexer { get; }
+	internal bool IsReferenceType { get; }
+	internal bool IsRequired { get; }
+	internal string Name { get; }
+	internal NullableAnnotation NullableAnnotation { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
-   internal NullableAnnotation NullableAnnotation { get; }
-   internal bool IsReferenceType { get; }
-   internal bool CanBeSeenByContainingAssembly { get; }
    internal TypeReferenceModel Type { get; }
-   internal string Name { get; }
-   internal bool IsRequired { get; }
-   internal bool IsIndexer { get; }
-   internal PropertyAccessor Accessors { get; }
 }

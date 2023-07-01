@@ -4,20 +4,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-/// <summary>
-/// Defines a method that can be mocked.
-/// </summary>
-internal record MethodModel
+internal sealed record MethodModel
 {
-	/// <summary>
-	/// Creates a new <see cref="MethodMockableResult"/> instance.
-	/// </summary>
-	/// <param name="method">The <see cref="IMethodSymbol"/> to obtain information from.</param>
-	/// <param name="mockType">The <see cref="ITypeSymbol"/> mock type.</param>
-	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="method"/> requires explicit implementation.</param>
-	/// <param name="requiresOverride">Specifies if <paramref name="method"/> requires an override.</param>
-	/// <param name="memberIdentifier">The member identifier.</param>
-	/// <param name="compilation">The compilation.</param>
 	internal MethodModel(IMethodSymbol method, TypeReferenceModel mockType, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, uint memberIdentifier)

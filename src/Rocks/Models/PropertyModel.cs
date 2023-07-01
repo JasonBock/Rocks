@@ -4,21 +4,8 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-/// <summary>
-/// Defines a property that can be mocked.
-/// </summary>
-internal record PropertyModel
+internal sealed record PropertyModel
 {
-	/// <summary>
-	/// Creates a new <see cref="PropertyModel"/> instance.
-	/// </summary>
-	/// <param name="property">The <see cref="IPropertySymbol"/> to obtain information from.</param>
-	/// <param name="compilation">The compilation.</param>
-	/// <param name="requiresExplicitInterfaceImplementation">Specifies if <paramref name="property"/> requires explicit implementation.</param>
-	/// <param name="requiresOverride">Specifies if <paramref name="property"/> requires an override.</param>
-	/// <param name="accessors">Specifies the accessors for this property.</param>
-	/// <param name="memberIdentifier">The member identifier.</param>
-	/// <param name="mockType">The mock type.</param>
 	internal PropertyModel(IPropertySymbol property, TypeReferenceModel mockType, Compilation compilation,
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 		PropertyAccessor accessors, uint memberIdentifier)
