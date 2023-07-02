@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Builders.Create;
+using Rocks.Models;
+using Rocks.Builders;
 
 namespace Rocks.Tests.Builders.Create;
 
@@ -16,8 +18,9 @@ public static class PointerArgTypeBuilderTests
 		"ArgumentForTargetOfstring")]
 	public static void GetProjectedName(string code, string expectedValue)
 	{
-		var type = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(PointerArgTypeBuilder.GetProjectedName(type), Is.EqualTo(expectedValue));
+		var (type, compilation) = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
+		var model = new TypeReferenceModel(type, compilation);
+		Assert.That(model.PointerArgProjectedName, Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -28,8 +31,9 @@ public static class PointerArgTypeBuilderTests
 		"global::Mock.ProjectionsForIMock.ArgumentForTargetOfstring")]
 	public static void GetProjectedFullyQualifiedName(string code, string expectedValue)
 	{
-		var (typeToMock, type) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(PointerArgTypeBuilder.GetProjectedFullyQualifiedName(type, typeToMock), Is.EqualTo(expectedValue));
+		var (typeToMock, type, compilation, _) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
+		Assert.That(PointerArgTypeBuilderV3.GetProjectedFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -40,8 +44,9 @@ public static class PointerArgTypeBuilderTests
 		"ArgumentEvaluationForTargetOfstring")]
 	public static void GetProjectedEvaluationDelegateName(string code, string expectedValue)
 	{
-		var type = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(PointerArgTypeBuilder.GetProjectedEvaluationDelegateName(type), Is.EqualTo(expectedValue));
+		var (type, compilation) = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
+		var model = new TypeReferenceModel(type, compilation);
+		Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -52,11 +57,12 @@ public static class PointerArgTypeBuilderTests
 		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForTargetOfstring")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
-		var (typeToMock, type) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeToMock), Is.EqualTo(expectedValue));
+		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
+		Assert.That(PointerArgTypeBuilderV3.GetProjectedEvaluationDelegateFullyQualifiedName(
+			 new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!), Is.EqualTo(expectedValue));
 	}
 
-	private static (ITypeSymbol typeToMock, ITypeSymbol type) GetTypeSymbols(string source)
+	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -70,10 +76,10 @@ public static class PointerArgTypeBuilderTests
 			.OfType<MethodDeclarationSyntax>().Single();
 		var mockType = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "IMock");
-		return (model.GetDeclaredSymbol(mockType)!, model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type);
+		return (model.GetDeclaredSymbol(mockType)!, model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation, model);
 	}
 
-	private static ITypeSymbol GetTypeSymbolFromParameter(string source)
+	private static (ITypeSymbol typeToMock, Compilation compilation) GetTypeSymbolFromParameter(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -85,6 +91,6 @@ public static class PointerArgTypeBuilderTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type;
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}
 }

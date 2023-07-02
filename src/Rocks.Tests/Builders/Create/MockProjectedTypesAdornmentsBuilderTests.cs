@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Builders.Create;
+using Rocks.Models;
 
 namespace Rocks.Tests.Builders.Create;
 
@@ -26,8 +27,9 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"ExplicitMethodAdornmentsForTargetOfstring")]
 	public static void GetProjectedAdornmentName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
 	{
-		var type = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(type, adornment, isExplicit), Is.EqualTo(expectedValue));
+		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentName(
+			new TypeReferenceModel(type, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -48,8 +50,9 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"global::Mock.ProjectionsForIMock.ExplicitMethodAdornmentsForTargetOfstring")]
 	public static void GetProjectedAdornmentFullyQualifiedNameName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
 	{
-		var (typeToMock, type) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(type, typeToMock, adornment, isExplicit), Is.EqualTo(expectedValue));
+		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentFullyQualifiedNameName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -60,8 +63,9 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"HandlerInformationForTargetOfstring")]
 	public static void GetProjectedHandlerInformationName(string code, string expectedValue)
 	{
-		var type = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(type), Is.EqualTo(expectedValue));
+		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationName(
+			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -72,8 +76,9 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"global::Mock.ProjectionsForIMock.HandlerInformationForTargetOfstring")]
 	public static void GetProjectedHandlerInformationFullyQualifiedNameName(string code, string expectedValue)
 	{
-		var (typeToMock, type) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(type, typeToMock), Is.EqualTo(expectedValue));
+		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationFullyQualifiedNameName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -84,8 +89,9 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"AddForTargetOfstring")]
 	public static void GetProjectedAddExtensionMethodName(string code, string expectedValue)
 	{
-		var type = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(type), Is.EqualTo(expectedValue));
+		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodName(
+			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
@@ -96,11 +102,12 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 		"global::Mock.ProjectionsForIMock.AddForTargetOfstring")]
 	public static void GetProjectedAddExtensionMethodFullyQualifiedName(string code, string expectedValue)
 	{
-		var (typeToMock, type) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(type, typeToMock), Is.EqualTo(expectedValue));
+		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
+		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 
-	private static (ITypeSymbol typeToMock, ITypeSymbol type) GetTypeSymbols(string source)
+	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation) GetTypeSymbols(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -114,10 +121,10 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 			.OfType<MethodDeclarationSyntax>().Single();
 		var mockType = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single(_ => _.Identifier.Text == "IMock");
-		return (model.GetDeclaredSymbol(mockType)!, model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type);
+		return (model.GetDeclaredSymbol(mockType)!, model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}
 
-	private static ITypeSymbol GetTypeSymbolFromParameter(string source)
+	private static (ITypeSymbol, Compilation) GetTypeSymbolFromParameter(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -129,6 +136,6 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type;
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}
 }

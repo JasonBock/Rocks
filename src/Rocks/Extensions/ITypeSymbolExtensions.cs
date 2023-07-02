@@ -466,7 +466,7 @@ internal static class ITypeSymbolExtensions
 			return false;
 		}
 
-		var properties = ImmutableArray.CreateBuilder<PropertyModelOLD>();
+		var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
 		var hasInaccessibleAbstractMembers = false;
 
 		if (self.TypeKind == TypeKind.Interface)
@@ -480,8 +480,9 @@ internal static class ITypeSymbolExtensions
 				}
 				else
 				{
-					var accessors = selfProperty.GetAccessors();
-					properties.Add(new(selfProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, accessors, memberIdentifier));
+					var result = new PropertyMockableResult(selfProperty, self, 
+						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
+					properties.Add(result);
 
 					if (selfProperty.IsVirtual)
 					{
@@ -490,7 +491,7 @@ internal static class ITypeSymbolExtensions
 
 					memberIdentifier++;
 
-					if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+					if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 					{
 						memberIdentifier++;
 					}
@@ -558,9 +559,10 @@ internal static class ITypeSymbolExtensions
 							RequiresExplicitInterfaceImplementation.Yes :
 							RequiresExplicitInterfaceImplementation.No;
 
+					var result = new PropertyMockableResult(baseInterfacePropertyGroup[0], self,
+						requiresExplicitImplementation, RequiresOverride.No, memberIdentifier);
 					var accessors = baseInterfacePropertyGroup[0].GetAccessors();
-					properties.Add(new(baseInterfacePropertyGroup[0], self,
-						requiresExplicitImplementation, RequiresOverride.No, accessors, memberIdentifier));
+					properties.Add(result);
 
 					if (baseInterfacePropertyGroup[0].IsVirtual)
 					{
@@ -569,7 +571,7 @@ internal static class ITypeSymbolExtensions
 
 					memberIdentifier++;
 
-					if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+					if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 					{
 						memberIdentifier++;
 					}
@@ -578,9 +580,10 @@ internal static class ITypeSymbolExtensions
 				{
 					foreach (var baseInterfaceProperty in baseInterfacePropertyGroup)
 					{
+						var result = new PropertyMockableResult(baseInterfaceProperty, self,
+							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
 						var accessors = baseInterfaceProperty.GetAccessors();
-						properties.Add(new(baseInterfaceProperty, self,
-							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, accessors, memberIdentifier));
+						properties.Add(result);
 
 						if (baseInterfaceProperty.IsVirtual)
 						{
@@ -589,7 +592,7 @@ internal static class ITypeSymbolExtensions
 
 						memberIdentifier++;
 
-						if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+						if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 						{
 							memberIdentifier++;
 						}
@@ -646,8 +649,9 @@ internal static class ITypeSymbolExtensions
 
 								if (!hierarchyProperty.IsSealed)
 								{
-									var accessors = hierarchyProperty.GetAccessors();
-									properties.Add(new(hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, accessors, memberIdentifier));
+									var result = new PropertyMockableResult(
+										hierarchyProperty, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier);
+									properties.Add(result);
 
 									if (hierarchyProperty.ContainingType.TypeKind == TypeKind.Interface && hierarchyProperty.IsVirtual)
 									{
@@ -656,7 +660,7 @@ internal static class ITypeSymbolExtensions
 
 									memberIdentifier++;
 
-									if (accessors == PropertyAccessor.GetAndSet || accessors == PropertyAccessor.GetAndInit)
+									if (result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit)
 									{
 										memberIdentifier++;
 									}

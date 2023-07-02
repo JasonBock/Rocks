@@ -24,8 +24,8 @@ public static class PropertyMockableResultTests
 			.OfType<PropertyDeclarationSyntax>().Single();
 		var propertySymbol = model.GetDeclaredSymbol(propertySyntax)!;
 
-		var result = new PropertyModelOLD(propertySymbol, propertySymbol.ContainingType,
-			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, PropertyAccessor.GetAndSet, 3);
+		var result = new PropertyMockableResult(propertySymbol, propertySymbol.ContainingType,
+			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
 
 		Assert.Multiple(() =>
 		{

@@ -30,7 +30,7 @@ public static class ConstructorPropertyModelTests
 			Assert.That(model.IsIndexer, Is.False);
 			Assert.That(model.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
 			Assert.That(model.CanBeSeenByContainingAssembly, Is.True);
-			Assert.That(model.Parameters.Length, Is.EqualTo(0));
+			Assert.That(model.Parameters, Is.Empty);
 			Assert.That(model.NullableAnnotation, Is.EqualTo(NullableAnnotation.None));
 			Assert.That(model.IsReferenceType, Is.True);
 		});
@@ -70,7 +70,7 @@ public static class ConstructorPropertyModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model.IsIndexer, Is.True);
-			Assert.That(model.Parameters.Length, Is.EqualTo(1));
+			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("data"));
 		});
 	}

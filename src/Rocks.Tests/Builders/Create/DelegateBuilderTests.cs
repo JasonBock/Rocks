@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Builders.Create;
+using Rocks.Models;
+using System.Collections.Immutable;
 
 namespace Rocks.Tests.Builders.Create;
 
@@ -16,11 +18,14 @@ public static class DelegateBuilderTests
 	[TestCase("public class Test { public int Foo(string a = null) { } }", "global::System.Func<string?, int>")]
 	public static void Build(string code, string expectedValue)
 	{
-		var method = DelegateBuilderTests.GetMethod(code);
-		Assert.That(DelegateBuilder.Build(method.Parameters, method.ReturnsVoid ? null : method.ReturnType), Is.EqualTo(expectedValue));
+		(var method, var compilation) = DelegateBuilderTests.GetMethod(code);
+		Assert.That(DelegateBuilderV3.Build(
+			method.Parameters.Select(_ => new ParameterModel(_, new TypeReferenceModel(_.ContainingType, compilation), compilation)).ToImmutableArray(),
+				method.ReturnsVoid ? null : new TypeReferenceModel(method.ReturnType, compilation)), 
+			Is.EqualTo(expectedValue));
 	}
 
-	private static IMethodSymbol GetMethod(string source)
+	private static (IMethodSymbol, Compilation) GetMethod(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -30,7 +35,7 @@ public static class DelegateBuilderTests
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		return model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Single())!;
+		return (model.GetDeclaredSymbol(syntaxTree.GetRoot().DescendantNodes(_ => true)
+			.OfType<MethodDeclarationSyntax>().Single())!, compilation);
 	}
 }

@@ -26,7 +26,7 @@ public static class ConstructorModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model.MockType, Is.SameAs(mockType));
-			Assert.That(model.Parameters.Length, Is.EqualTo(1));
+			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
 		});
 	}

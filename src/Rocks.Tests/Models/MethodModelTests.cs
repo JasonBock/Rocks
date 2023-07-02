@@ -43,7 +43,7 @@ public static class MethodModelTests
 			Assert.That(model.MockType, Is.SameAs(mockType));
 			Assert.That(model.Name, Is.EqualTo("Go"));
 			Assert.That(model.OverridingCodeValue, Is.EqualTo("public"));
-			Assert.That(model.Parameters.Length, Is.EqualTo(1));
+			Assert.That(model.Parameters, Has.Length.EqualTo(1));
 			Assert.That(model.Parameters[0].Name, Is.EqualTo("value"));
 			Assert.That(model.ProjectedCallbackDelegateName, Is.Null);
 			Assert.That(model.ProjectedReturnValueDelegateName, Is.Null);
@@ -62,7 +62,105 @@ public static class MethodModelTests
 			Assert.That(model.ReturnsByRef, Is.False);
 			Assert.That(model.ReturnsByRefReadOnly, Is.False);
 			Assert.That(model.ShouldThrowDoesNotReturnException, Is.False);
-			Assert.That(model.TypeArguments, Is.Empty);
+			Assert.That(model.ReturnTypeTypeArguments, Is.Empty);
+		});
+	}
+
+	[Test]
+	public static void CreateWithAttributes()
+	{
+		var code =
+			"""
+			using System;
+
+			public class Target
+			{
+				[CLSCompliant(true)]	
+				public int Go(string value) => default;
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
+
+		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
+	}
+
+	[Test]
+	public static void CreateWithReturnTypeAttributes()
+	{
+		var code =
+			"""
+			using System;
+
+			public class Target
+			{
+				[return: CLSCompliant(true)]	
+				public int Go(string value) => default;
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
+
+		Assert.That(model.ReturnTypeAttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
+	}
+
+	[Test]
+	public static void CreateWithReturnTypeIsRefLike()
+	{
+		var code =
+			"""
+			using System;
+
+			public class Target
+			{
+				public Span<int> Go() => default;
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
+
+		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("GoReturnValue_621102180885560748718300056435181775887076786345"));
+	}
+
+	[Test]
+	public static void CreateWithReturnTypeWithTypeArguments()
+	{
+		var code =
+			"""
+			using System;
+
+			public class Target
+			{
+				public EventArgs<T> Go<T>() => default;
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(model.ReturnTypeTypeArguments, Has.Length.EqualTo(1));
+			Assert.That(model.ReturnTypeTypeArguments[0].FullyQualifiedName, Is.EqualTo("T"));
 		});
 	}
 
@@ -107,8 +205,10 @@ public static class MethodModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model.Constraints.Length, Is.EqualTo(1));
+			Assert.That(model.Constraints, Has.Length.EqualTo(1));
 			Assert.That(model.Constraints[0], Is.EqualTo("where T : class"));
+			Assert.That(model.DefaultConstraints, Has.Length.EqualTo(1));
+			Assert.That(model.DefaultConstraints[0], Is.EqualTo("where T : class"));
 			Assert.That(model.IsGenericMethod, Is.True);
 		});
 	}
@@ -248,6 +348,29 @@ public static class MethodModelTests
 	}
 
 	[Test]
+	public static void CreateWithTaskOfTAndIsNullForgivingReturn()
+	{
+		var code =
+			"""
+			using System.Threading.Tasks;
+
+			public class Target
+			{
+				public Task<string?> Go(string value) => Task.FromResult("value");
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
+
+		Assert.That(model.ReturnTypeIsTaskOfTTypeAndIsNullForgiving, Is.True);
+	}
+
+	[Test]
 	public static void CreateWithValueTaskReturn()
 	{
 		var code =
@@ -291,6 +414,29 @@ public static class MethodModelTests
 			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
 
 		Assert.That(model.ReturnTypeIsValueTaskOfTType, Is.True);
+	}
+
+	[Test]
+	public static void CreateWithValueTaskOfTAndIsNullForgivingReturn()
+	{
+		var code =
+			"""
+			using System.Threading.Tasks;
+
+			public class Target
+			{
+				public ValueTask<int?> Go(string value) => Task.FromResult(1);
+			}
+			""";
+
+		const uint memberIdentifier = 1;
+
+		(var method, var type, var compilation) = MethodModelTests.GetSymbolsCompilation(code);
+		var mockType = new TypeReferenceModel(type, compilation);
+		var model = new MethodModel(method, mockType, compilation,
+			 RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
+
+		Assert.That(model.ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving, Is.True);
 	}
 
 	[Test]

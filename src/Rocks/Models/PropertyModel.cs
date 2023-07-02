@@ -64,51 +64,28 @@ internal sealed record PropertyModel
 		}
 	}
 
-   internal bool AllowNull { get; }
-   internal string? OverridingCodeValue { get; }
-	internal MethodModel? SetMethod { get; }
-	internal MethodModel? GetMethod { get; }
-	internal bool GetCanBeSeenByContainingAssembly { get; }
-	internal bool SetCanBeSeenByContainingAssembly { get; }
-	internal bool InitCanBeSeenByContainingAssembly { get; }
-	internal bool IsUnsafe { get; }
-	internal EquatableArray<ParameterModel> Parameters { get; }
-	/// <summary>
-	/// Gets the type that the property was defined on.
-	/// </summary>
-	internal TypeReferenceModel ContainingType { get; }
-	internal string Name { get; }
-	internal bool IsVirtual { get; }
-   internal bool IsAbstract { get; }
-   internal bool IsIndexer { get; }
-	internal string AttributesDescription { get; }
+	internal PropertyAccessor Accessors { get; }
 	internal string AllAttributesDescription { get; }
+	internal bool AllowNull { get; }
+	internal string AttributesDescription { get; }
+	internal TypeReferenceModel ContainingType { get; }
+	internal bool GetCanBeSeenByContainingAssembly { get; }
+	internal MethodModel? GetMethod { get; }
+	internal bool InitCanBeSeenByContainingAssembly { get; }
+	internal bool IsAbstract { get; }
+	internal bool IsIndexer { get; }
+	internal bool IsUnsafe { get; }
+	internal bool IsVirtual { get; }
+	internal uint MemberIdentifier { get; }
+	internal TypeReferenceModel MockType { get; }
+	internal string Name { get; }
+	internal string? OverridingCodeValue { get; }
+	internal EquatableArray<ParameterModel> Parameters { get; }
+	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
+	internal RequiresOverride RequiresOverride { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
-	/// <summary>
-	/// Gets the type of the property.
-	/// </summary>
+	internal bool SetCanBeSeenByContainingAssembly { get; }
+	internal MethodModel? SetMethod { get; }
 	internal TypeReferenceModel Type { get; }
-	/// <summary>
-	/// Gets the mock type.
-	/// </summary>
-	internal TypeReferenceModel MockType { get; }
-	/// <summary>
-	/// Gets the accessors.
-	/// </summary>
-	internal PropertyAccessor Accessors { get; }
-	/// <summary>
-	/// Gets the member identifier.
-	/// </summary>
-	internal uint MemberIdentifier { get; }
-	/// <summary>
-	/// Gets the <see cref="RequiresExplicitInterfaceImplementation"/> value that specifies if this result
-	/// needs explicit implementation.
-	/// </summary>
-	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
-	/// <summary>
-	/// Gets the <see cref="RequiresOverride"/> value that specifies if this result
-	/// needs an override.
-	/// </summary>
-	internal RequiresOverride RequiresOverride { get; }
 }

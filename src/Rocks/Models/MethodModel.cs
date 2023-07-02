@@ -84,11 +84,11 @@ internal sealed record MethodModel
 
 		if (method.ReturnType is INamedTypeSymbol returnType)
 		{
-			this.TypeArguments = returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
+			this.ReturnTypeTypeArguments = returnType.TypeArguments.Select(_ => new TypeReferenceModel(_, compilation)).ToImmutableArray();
 		}
 		else
 		{
-			this.TypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
+			this.ReturnTypeTypeArguments = ImmutableArray<TypeReferenceModel>.Empty;
 		}
 	}
 
@@ -120,9 +120,9 @@ internal sealed record MethodModel
 	internal bool ReturnTypeIsValueTaskOfTType { get; }
 	internal bool ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving { get; }
 	internal bool ReturnTypeIsValueTaskType { get; }
+	internal EquatableArray<TypeReferenceModel> ReturnTypeTypeArguments { get; }
 	internal bool ReturnsVoid { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
 	internal bool ShouldThrowDoesNotReturnException { get; }
-	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
 }
