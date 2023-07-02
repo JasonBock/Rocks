@@ -21,16 +21,17 @@ internal sealed record MethodModel
 		}
 
 		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);
+		this.ShouldThrowDoesNotReturnException = this.IsMarkedWithDoesNotReturn;
+
 		this.IsAbstract = method.IsAbstract;
 		this.IsVirtual = method.IsVirtual;
 		this.IsGenericMethod = method.IsGenericMethod;
+		this.IsUnsafe = method.IsUnsafe();
+
 		this.MethodKind = method.MethodKind;
 		this.Constraints = method.GetConstraints();
 		this.DefaultConstraints = method.GetDefaultConstraints();
-		this.ContainingTypeKind = method.ContainingType.TypeKind;
 		this.Name = method.GetName();
-		this.IsUnsafe = method.IsUnsafe();
-		this.ShouldThrowDoesNotReturnException = method.IsMarkedWithDoesNotReturn(compilation);
 		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
 
 		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);
@@ -91,58 +92,37 @@ internal sealed record MethodModel
 		}
 	}
 
-	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
-	internal bool ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving { get; }
-   internal bool ReturnTypeIsTaskOfTTypeAndIsNullForgiving { get; }
-   internal bool ReturnTypeIsTaskType { get; }
-	internal bool ReturnTypeIsValueTaskType { get; }
-	internal bool ReturnTypeIsTaskOfTType { get; }
-	internal bool ReturnTypeIsValueTaskOfTType { get; }
-	internal bool IsMarkedWithDoesNotReturn { get; }
-	/// <summary>
-	/// Gets the type that contains the method.
-	/// </summary>
-	internal TypeReferenceModel ContainingType { get; }
-	/// <summary>
-	/// Gets the mock type.
-	/// </summary>
-	internal TypeReferenceModel MockType { get; }
-	internal string? ProjectedReturnValueDelegateName { get; }
-	internal string? ProjectedCallbackDelegateName { get; }
-	internal bool RequiresProjectedDelegate { get; }
-	internal bool IsUnsafe { get; }
-	internal bool IsAbstract { get; }
-	internal bool IsVirtual { get; }
-	internal bool IsGenericMethod { get; }
-	internal MethodKind MethodKind { get; }
+	internal string AttributesDescription { get; }
 	internal EquatableArray<string> Constraints { get; }
+	internal TypeReferenceModel ContainingType { get; }
 	internal EquatableArray<string> DefaultConstraints { get; }
-	internal TypeKind ContainingTypeKind { get; }
+	internal bool IsAbstract { get; }
+	internal bool IsGenericMethod { get; }
+	internal bool IsMarkedWithDoesNotReturn { get; }
+	internal bool IsUnsafe { get; }
+	internal bool IsVirtual { get; }
+	internal uint MemberIdentifier { get; }
+	internal MethodKind MethodKind { get; }
+	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
-	internal bool ShouldThrowDoesNotReturnException { get; }
+	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
+	internal string? ProjectedCallbackDelegateName { get; }
+	internal string? ProjectedReturnValueDelegateName { get; }
+	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
+	internal RequiresOverride RequiresOverride { get; }
+	internal bool RequiresProjectedDelegate { get; }
 	internal TypeReferenceModel ReturnType { get; }
+	internal string ReturnTypeAttributesDescription { get; }
+	internal bool ReturnTypeIsTaskOfTType { get; }
+	internal bool ReturnTypeIsTaskOfTTypeAndIsNullForgiving { get; }
+	internal bool ReturnTypeIsTaskType { get; }
+	internal bool ReturnTypeIsValueTaskOfTType { get; }
+	internal bool ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving { get; }
+	internal bool ReturnTypeIsValueTaskType { get; }
 	internal bool ReturnsVoid { get; }
 	internal bool ReturnsByRef { get; }
 	internal bool ReturnsByRefReadOnly { get; }
-	internal string AttributesDescription { get; }
-	internal string ReturnTypeAttributesDescription { get; }
-	internal string? OverridingCodeValue { get; }
-
-	/// <summary>
-	/// Gets the member identifier.
-	/// </summary>
-	internal uint MemberIdentifier { get; }
-
-	/// <summary>
-	/// Gets the <see cref="RequiresExplicitInterfaceImplementation"/> value that specifies if this result
-	/// needs explicit implementation.
-	/// </summary>
-	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }
-
-	/// <summary>
-	/// Gets the <see cref="RequiresOverride"/> value that specifies if this result
-	/// needs an override.
-	/// </summary>
-	internal RequiresOverride RequiresOverride { get; }
+	internal bool ShouldThrowDoesNotReturnException { get; }
+	internal EquatableArray<TypeReferenceModel> TypeArguments { get; }
 }

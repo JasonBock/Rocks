@@ -61,7 +61,7 @@ internal static class MockMethodVoidBuilderV3
 		var constraints = ImmutableArray<string>.Empty;
 
 		if (method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			method.ContainingTypeKind == TypeKind.Interface)
+			method.ContainingType.TypeKind == TypeKind.Interface)
 		{
 			constraints = method.Constraints;
 		}
@@ -138,7 +138,7 @@ internal static class MockMethodVoidBuilderV3
 				};
 				return $"{direction}@{_.Name}{requiresNullable}";
 			}));
-			var target = method.ContainingTypeKind == TypeKind.Interface ?
+			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
 			writer.WriteLine($"{target}.{method.Name}({passedParameter});");
 		}
