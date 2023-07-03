@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
@@ -23,7 +24,7 @@ internal static class ITypeParameterSymbolExtensions
 		{
 			constraints.Add("unmanaged");
 		}
-		else if (self.HasNotNullConstraint)
+		else if (self.IsNotNullRequired())
 		{
 			constraints.Add("notnull");
 		}
@@ -38,7 +39,7 @@ internal static class ITypeParameterSymbolExtensions
 		}
 
 		// Then type constraints (classes first, then interfaces, then other generic type parameters)
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class) .Select(_ => _.GetFullyQualifiedName()));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class).Select(_ => _.GetFullyQualifiedName()));
 		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Interface).Select(_ => _.GetFullyQualifiedName()));
 		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter).Select(_ => _.GetFullyQualifiedName()));
 
@@ -50,5 +51,41 @@ internal static class ITypeParameterSymbolExtensions
 
 		return constraints.Count == 0 ? string.Empty :
 			$"where {self.Name} : {string.Join(", ", constraints)}";
+	}
+
+	private static bool IsNotNullRequired(this ITypeParameterSymbol self)
+	{
+		if (self.HasNotNullConstraint)
+		{
+			return true;
+		}
+
+		// This gets complicated. I need to look at the original definition, and see if
+		// there are any type parameter constraints on it if it's an interface.
+		// If there are, THEN go look
+		// to see if that is now defined on the type, and if that type doesn't have
+		// nullability on it.
+		var originalSelf = self.OriginalDefinition;
+
+		if (originalSelf.ContainingType.TypeKind == TypeKind.Interface)
+		{
+			foreach (var originalConstraintType in originalSelf.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter))
+			{
+				var selfContainingType = self.ContainingType;
+				var selfContainingTypeParameter = selfContainingType.TypeParameters.SingleOrDefault(_ => _.Name == originalConstraintType.Name);
+
+				if(selfContainingTypeParameter is not null)
+				{
+					var typeParameterIndex = selfContainingType.TypeParameters.IndexOf(selfContainingTypeParameter);
+
+					if (selfContainingType.TypeArguments[typeParameterIndex].NullableAnnotation != NullableAnnotation.Annotated)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 }

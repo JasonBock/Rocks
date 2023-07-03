@@ -256,6 +256,12 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// ImageSharp
 		typeof(SixLabors.ImageSharp.GraphicsOptions),
+
+		// Number of types found: 118
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// AutoMapper
+		typeof(AutoMapper.AutoMapAttribute),
 #endif
 #if INCLUDE_FAILING
 		// Number of types found: 11
