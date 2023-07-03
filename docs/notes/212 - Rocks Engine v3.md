@@ -85,14 +85,50 @@ Reminders:
 * DONE - Use WriteLines() wherever possible. Examples
     * DONE - ShimBuilderV3.Build()
 * DONE - The compilation should only be in the models, not the builders.
-* XML comments
+* DONE - XML comments
   * Update all XML doc elements in Rocks
   * Consider generating XML comments (may end up being useful)
 * On all the models, ensure all properties are EquatableArray<>, NOT ImmutableArray<>
-* Remove unnecessary usings everywhere
-* ConfigurationValues should go away
+* DONE - Remove unnecessary usings everywhere
 * DONE - Add these projects back in:
     * DONE - Rocks.IntegrationTests
     * DONE - Rocks.CodeGenerationTests
     * DONE - Rocks.Performance
     * DONE - Rocks.PerformanceTests
+
+Final work
+* ConfigurationValues should go away
+* Remove all non-V3 classes, and then rename V3 to drop "V3"
+
+Names have to be cleaned up. It's still all over the place.
+
+"global::Mock.ProjectionsForIMock.FooCallback_497363238751704866053452189283926723308443685748"
+
+OK, I'm tired of this, use fully qualified name and a hash code on ALL names. If I need to give something that's a little more descriptive, put a comment in
+
+* MethodModel
+  * ProjectedCallbackDelegateName
+  * ProjectedReturnValueDelegateName
+* TypeReferenceModel
+  * PointerArgProjectedEvaluationDelegateName
+  * PointerArgProjectedName
+  * RefLikeArgProjectedEvaluationDelegateName
+  * RefLikeArgProjectedName
+  * RefLikeArgConstructorProjectedName
+* RefLikeArgTypeBuilderV3
+  * GetProjectedFullyQualifiedName
+  * GetProjectedEvaluationDelegateFullyQualifiedName
+* PointerArgTypeBuilderV3
+  * GetProjectedFullyQualifiedName
+  * GetProjectedEvaluationDelegateFullyQualifiedName
+* MockProjectedDelegateBuilderV3
+  * GetProjectedCallbackDelegateFullyQualifiedName
+  * GetProjectedReturnValueDelegateFullyQualifiedName
+* MockProjectedTypesAdornmentsBuilderV3
+  * GetProjectedAdornmentName
+  * GetProjectedAdornmentFullyQualifiedNameName
+  * GetProjectedHandlerInformationName
+  * GetProjectedHandlerInformationFullyQualifiedNameName
+  * GetProjectedAddExtensionMethodName
+  * GetProjectedAddExtensionMethodFullyQualifiedName
+  
