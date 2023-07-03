@@ -10,59 +10,109 @@ namespace Rocks.Tests.Builders.Create;
 
 public static class RefLikeArgTypeBuilderTests
 {
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }", 
-		"ArgForTarget")]
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }", 
-		"ArgForTargetOfstring")]
-	public static void GetProjectedName(string code, string expectedValue)
+	[Test]
+	public static void GetProjectedName()
 	{
+		var code =
+			"""
+			using System;
+
+			namespace Outer 
+			{ 
+				namespace Inner 
+				{ 
+					public class Target { } 
+				
+					public static class Test 
+					{ 
+						public static void Foo(Span<int> t) { } 
+					}
+				}
+			}
+			""";
 		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
 		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedName, Is.EqualTo(expectedValue));
+		Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgForSpanOfint"));
 	}
 
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgForTarget")]
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgForTargetOfstring")]
-	public static void GetProjectedFullyQualifiedName(string code, string expectedValue)
+	[Test]
+	public static void GetProjectedFullyQualifiedName()
 	{
+		var code =
+			"""
+			using System;
+
+			namespace Mock 
+			{ 
+				public interface IMock { } 
+			} 
+		
+			namespace Outer 
+			{ 
+				namespace Inner 
+				{ 
+					public class Target { } 
+				
+					public static class Test 
+					{ 
+						public static void Foo(Span<int> t) { } 
+					} 
+				} 
+			}
+			""";
 		var (typeToMock, type, compilation, _) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(RefLikeArgTypeBuilderV3.GetProjectedFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
+		var name = RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation));
+		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ArgForSpanOfint"));
 	}
 
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"ArgEvaluationForTarget")]
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"ArgEvaluationForTargetOfstring")]
-	[TestCase(
-		"public static class Test { public static void Foo<TSource>(System.Span<TSource> t) { } }",
-		"ArgEvaluationForSpan<TSource>")]
-	public static void GetProjectedEvaluationDelegateName(string code, string expectedValue)
+	[Test]
+	public static void GetProjectedEvaluationDelegateName()
 	{
+		var code =
+			"""
+			public static class Test 
+			{ 
+				public static void Foo<TSource>(System.Span<TSource> t) { } 
+			}
+			""";
 		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
 		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo(expectedValue));
+		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgEvaluationForSpan<TSource>"));
 	}
 
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgEvaluationForTarget")]
+		"""
+		using System;
+		
+		namespace Mock 
+		{ 
+			public interface IMock 
+			{ 
+				unsafe void Foo(int* t);
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgEvaluationForintPointer")]
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgEvaluationForTargetOfstring")]
+		"""
+		using System;
+		
+		namespace Mock 
+		{ 
+			public interface IMock 
+			{ 
+				void Foo(Span<int> t);
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(RefLikeArgTypeBuilderV3.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!), Is.EqualTo(expectedValue));
+		var name = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!);
+		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)

@@ -28,7 +28,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedAdornmentName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
 	{
 		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(
 			new TypeReferenceModel(type, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
 	}
 
@@ -51,7 +51,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedAdornmentFullyQualifiedNameName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAdornmentFullyQualifiedNameName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
 	}
 
@@ -64,7 +64,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedHandlerInformationName(string code, string expectedValue)
 	{
 		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(
 			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
@@ -77,7 +77,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedHandlerInformationFullyQualifiedNameName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedHandlerInformationFullyQualifiedNameName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 
@@ -90,7 +90,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedAddExtensionMethodName(string code, string expectedValue)
 	{
 		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(
 			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
@@ -103,7 +103,7 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 	public static void GetProjectedAddExtensionMethodFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilderV3.GetProjectedAddExtensionMethodFullyQualifiedName(
+		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 

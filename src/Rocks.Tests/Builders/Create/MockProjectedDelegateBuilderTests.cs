@@ -95,7 +95,7 @@ public static class MockProjectedDelegateBuilderTests
 	public static void GetProjectedCallbackDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
-		var name = MockProjectedDelegateBuilderV3.GetProjectedCallbackDelegateFullyQualifiedName(
+		var name = MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
 				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
@@ -187,7 +187,7 @@ public static class MockProjectedDelegateBuilderTests
 	public static void GetProjectedReturnValueDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
-		var name = MockProjectedDelegateBuilderV3.GetProjectedReturnValueDelegateFullyQualifiedName(
+		var name = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
 				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));

@@ -11,11 +11,37 @@ namespace Rocks.Tests.Builders.Create;
 public static class PointerArgTypeBuilderTests
 {
 	[TestCase(
-		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"ArgumentForTarget")]
+		"""
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target { } 
+				
+				public static class Test 
+				{ 
+					public unsafe static void Foo(Target* t) { } 
+				} 
+			} 
+		}
+		""",
+		"ArgumentForOuter_Inner_TargetPointer")]
 	[TestCase(
-		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"ArgumentForTargetOfstring")]
+		"""
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target<T> { } 
+				
+				public static class Test 
+				{ 
+					public unsafe static void Foo(Target<string>* t) { } 
+				} 
+			} 
+		}
+		""",
+		"ArgumentForOuter_Inner_TargetOfstringPointer")]
 	public static void GetProjectedName(string code, string expectedValue)
 	{
 		var (type, compilation) = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
@@ -24,24 +50,87 @@ public static class PointerArgTypeBuilderTests
 	}
 
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgumentForTarget")]
+		"""
+		namespace Mock 
+		{ 
+			public interface IMock { } 
+		} 
+		
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target { } 
+				
+				public static class Test 
+				{ 
+					public unsafe static void Foo(Target* t) { } 
+				} 
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgumentForOuter_Inner_TargetPointer")]
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgumentForTargetOfstring")]
+		"""
+		namespace Mock 
+		{ 
+			public interface IMock { } 
+		} 
+		
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target<T> { } 
+				
+				public static class Test 
+				{ 
+					public unsafe static void Foo(Target<string>* t) { } 
+				} 
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgumentForOuter_Inner_TargetOfstringPointer")]
 	public static void GetProjectedFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, _) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(PointerArgTypeBuilderV3.GetProjectedFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
+		var name = PointerArgTypeBuilder.GetProjectedFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation));
+		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
-		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"ArgumentEvaluationForTarget")]
+		"""
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target { } 
+				
+				public static class Test 
+				{ 
+					public static unsafe void Foo(Target* t) { } 
+				} 
+			} 
+		}
+		""",
+		"ArgumentEvaluationForOuter_Inner_TargetPointer")]
 	[TestCase(
-		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"ArgumentEvaluationForTargetOfstring")]
+		"""
+		namespace Outer 
+		{ 
+			namespace Inner 
+			{ 
+				public struct Target<T> { } 
+				
+				public static class Test 
+				{ 
+					public static unsafe void Foo(Target<string>* t) { } 
+				} 
+			} 
+		}
+		""",
+		"ArgumentEvaluationForOuter_Inner_TargetOfstringPointer")]
 	public static void GetProjectedEvaluationDelegateName(string code, string expectedValue)
 	{
 		var (type, compilation) = PointerArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
@@ -50,16 +139,37 @@ public static class PointerArgTypeBuilderTests
 	}
 
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForTarget")]
+		"""
+		using System;
+
+		namespace Mock 
+		{ 
+			public interface IMock 
+			{ 
+				unsafe void Foo(int* t);
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
 	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForTargetOfstring")]
+		"""
+		using System;
+
+		namespace Mock 
+		{ 
+			public interface IMock 
+			{ 
+				void Foo(Span<int> t);
+			} 
+		}
+		""",
+		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
-		Assert.That(PointerArgTypeBuilderV3.GetProjectedEvaluationDelegateFullyQualifiedName(
-			 new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!), Is.EqualTo(expectedValue));
+		var name = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
+			new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!);
+		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
 	private static (ITypeSymbol typeToMock, ITypeSymbol type, Compilation compilation, SemanticModel model) GetTypeSymbols(string source)
@@ -69,7 +179,7 @@ public static class PointerArgTypeBuilderTests
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
@@ -86,7 +196,7 @@ public static class PointerArgTypeBuilderTests
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

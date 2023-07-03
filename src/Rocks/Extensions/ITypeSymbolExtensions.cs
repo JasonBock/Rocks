@@ -102,7 +102,7 @@ internal static class ITypeSymbolExtensions
 		{
 			if (self.Kind == SymbolKind.PointerType)
 			{
-				return self.ToDisplayString().Replace(".", "_").Replace("*", "Pointer");
+				return self.ToDisplayString().Replace(".", "_").Replace("<", "Of").Replace(">", string.Empty).Replace("*", "Pointer");
 			}
 			else if (self.Kind == SymbolKind.FunctionPointerType)
 			{

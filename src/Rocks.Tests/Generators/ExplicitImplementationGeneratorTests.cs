@@ -131,8 +131,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IIterableOfstring_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IIterableOfstring_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -247,8 +247,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "ISetupList_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ISetupList_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -306,8 +306,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "ISetupList_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -380,8 +380,8 @@ public static class ExplicitImplementationGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "IIterableOfstring_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "IIterableOfstring_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

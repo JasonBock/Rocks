@@ -174,8 +174,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IHaveDelegate_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveDelegate_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -288,8 +288,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IUseKeyword_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseKeyword_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -452,8 +452,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "HaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "HaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -565,8 +565,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -673,8 +673,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -851,8 +851,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "HasRequiredProperty_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "HasRequiredProperty_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -974,8 +974,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IUsesThing_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUsesThing_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1072,8 +1072,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IUseMethodInformation_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseMethodInformation_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1170,8 +1170,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IOperation_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IOperation_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1296,8 +1296,8 @@ public static class NamingGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IUseConstraint_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IUseConstraint_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

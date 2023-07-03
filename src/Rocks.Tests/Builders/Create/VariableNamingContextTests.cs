@@ -17,7 +17,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -29,7 +29,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
 	}
@@ -41,7 +41,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["a"];
 		Assert.That(variable, Is.EqualTo("a1"));
 	}
@@ -53,7 +53,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		_ = namingContext["b"];
 		var variable = namingContext["b"];
 		Assert.That(variable, Is.EqualTo("b"));
@@ -66,7 +66,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["a"];
 		Assert.That(variable, Is.EqualTo("a2"));
 	}
@@ -78,7 +78,7 @@ public static class VariableNamingContextTests
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
 
-		var namingContext = new VariableNamingContextV3(model);
+		var namingContext = new VariableNamingContext(model);
 		_ = namingContext["a2"];
 		_ = namingContext["a3"];
 		var variable = namingContext["a"];

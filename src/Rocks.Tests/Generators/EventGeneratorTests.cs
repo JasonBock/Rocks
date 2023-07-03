@@ -131,8 +131,8 @@ public static class EventGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IHaveEvents_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IHaveEvents_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -317,8 +317,8 @@ public static class EventGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "IExplicitInterfaceImplementation_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IExplicitInterfaceImplementation_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

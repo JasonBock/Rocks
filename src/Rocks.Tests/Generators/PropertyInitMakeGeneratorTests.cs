@@ -95,8 +95,8 @@ public static class PropertyInitMakeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "ITest_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "ITest_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -188,8 +188,8 @@ public static class PropertyInitMakeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "Test_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "Test_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

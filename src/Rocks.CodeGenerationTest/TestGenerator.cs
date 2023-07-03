@@ -43,7 +43,7 @@ internal static class TestGenerator
 		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var isCreate = generator is RockCreateGeneratorV3;
+		var isCreate = generator is RockCreateGenerator;
 		var code = GetCode(targetTypes, isCreate, genericTypeMappings);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);

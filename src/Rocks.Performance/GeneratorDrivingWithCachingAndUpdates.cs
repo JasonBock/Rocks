@@ -51,7 +51,7 @@ public class GeneratorDrivingWithCachingAndUpdates
 			generators: new ISourceGenerator[] { new RockCreateGenerator().AsSourceGenerator() },
 			driverOptions: new GeneratorDriverOptions(default, trackIncrementalGeneratorSteps: true));
 		this.DriverV3 = CSharpGeneratorDriver.Create(
-			generators: new ISourceGenerator[] { new RockCreateGeneratorV3().AsSourceGenerator() },
+			generators: new ISourceGenerator[] { new RockCreateGenerator().AsSourceGenerator() },
 			driverOptions: new GeneratorDriverOptions(default, trackIncrementalGeneratorSteps: true));
 	}
 

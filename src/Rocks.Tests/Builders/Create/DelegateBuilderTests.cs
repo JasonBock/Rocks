@@ -19,7 +19,7 @@ public static class DelegateBuilderTests
 	public static void Build(string code, string expectedValue)
 	{
 		(var method, var compilation) = DelegateBuilderTests.GetMethod(code);
-		Assert.That(DelegateBuilderV3.Build(
+		Assert.That(DelegateBuilder.Build(
 			method.Parameters.Select(_ => new ParameterModel(_, new TypeReferenceModel(_.ContainingType, compilation), compilation)).ToImmutableArray(),
 				method.ReturnsVoid ? null : new TypeReferenceModel(method.ReturnType, compilation)), 
 			Is.EqualTo(expectedValue));

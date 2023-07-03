@@ -181,8 +181,8 @@ public static class AsyncIteratorGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGeneratorV3>(code,
-			new[] { (typeof(RockCreateGeneratorV3), "AsyncEnumeration_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -255,8 +255,8 @@ public static class AsyncIteratorGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

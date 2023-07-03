@@ -28,7 +28,7 @@ static void TestTypeValidity() =>
 
 static void TestWithCode()
 {
-	TestGenerator.Generate(new RockCreateGeneratorV3(),
+	TestGenerator.Generate(new RockCreateGenerator(),
 		"""
 		using Rocks;
 		using System;
@@ -50,7 +50,7 @@ static void TestWithCode()
 }
 
 static void TestWithType() =>
-	 TestGenerator.Generate(new RockCreateGeneratorV3(),
+	 TestGenerator.Generate(new RockCreateGenerator(),
 		 new[]
 		 {
 			 typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<Rocks.CodeGenerationTest.Mappings.ComputeSharp.MappedPixelShader>)
@@ -303,12 +303,12 @@ static void TestWithTypes()
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
 
-	Console.WriteLine($"Testing {nameof(RockCreateGeneratorV3)}");
-	TestGenerator.Generate(new RockCreateGeneratorV3(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
+	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
+	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
-	Console.WriteLine($"Testing {nameof(RockMakeGeneratorV3)}");
-	TestGenerator.Generate(new RockMakeGeneratorV3(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
+	Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
+	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
 	Console.WriteLine();
 
 	Console.WriteLine("Generator testing complete");

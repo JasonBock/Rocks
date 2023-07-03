@@ -74,8 +74,8 @@ public static class ClassConstructorMakeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGeneratorV3>(code,
-			new[] { (typeof(RockMakeGeneratorV3), "BaseCtor_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "BaseCtor_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }
