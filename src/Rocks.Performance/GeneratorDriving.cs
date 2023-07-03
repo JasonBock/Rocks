@@ -44,7 +44,6 @@ public class GeneratorDriving
 				generalDiagnosticOption: ReportDiagnostic.Error));
 
 		this.Driver = CSharpGeneratorDriver.Create(new RockCreateGenerator());
-		this.DriverV3 = CSharpGeneratorDriver.Create(new RockCreateGenerator());
 	}
 
 	[Benchmark(Baseline = true)]
@@ -55,15 +54,6 @@ public class GeneratorDriving
 		return diagnostics.Length;
 	}
 
-	[Benchmark]
-	public int DriveV3()
-	{
-		this.DriverV3.RunGeneratorsAndUpdateCompilation(
-			this.Compilation, out _, out var diagnostics);
-		return diagnostics.Length;
-	}
-
 	private CSharpCompilation Compilation { get; }
    private CSharpGeneratorDriver Driver { get; }
-	private CSharpGeneratorDriver DriverV3 { get; }
 }
