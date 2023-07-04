@@ -13,6 +13,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 						{ "T", "global::Silk.NET.Core.Native.NativeAPI" },
 					}
 				},
+				{
+					typeof(IComVtbl<>), new()
+					{
+						{ "T", "global::Silk.NET.Core.Native.IComVtbl" },
+					}
+				},
 			};
 	}
 }

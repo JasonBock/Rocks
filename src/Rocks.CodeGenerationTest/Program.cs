@@ -262,6 +262,12 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// AutoMapper
 		typeof(AutoMapper.AutoMapAttribute),
+
+		// Number of types found: 32
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// Silk.NET
+		typeof(Silk.NET.Core.Attributes.CountAttribute),
 #endif
 #if INCLUDE_FAILING
 		// Number of types found: 11
@@ -269,12 +275,6 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// System.Reflection.Metadata
 		typeof(System.Reflection.Metadata.ArrayShape),
-
-		// Number of types found: 32
-		// Create: 11 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// Silk.NET
-		typeof(Silk.NET.Core.Attributes.CountAttribute),
 
 		// Number of types found: 716
 		// Create: 16 errors, 0 warnings
