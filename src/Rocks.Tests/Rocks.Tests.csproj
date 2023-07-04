@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks.Tests</AssemblyName>
 		<RootNamespace>Rocks.Tests</RootNamespace>
 	</PropertyGroup>

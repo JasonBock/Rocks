@@ -5,7 +5,7 @@ namespace Rocks.Models;
 
 internal sealed record TypeReferenceModel
 {
-	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
+	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation, bool isBasedOnTypeParameter = false)
 	{
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
@@ -16,8 +16,8 @@ internal sealed record TypeReferenceModel
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
 		this.Namespace = type.ContainingNamespace is not null ?
-			!type.ContainingNamespace.IsGlobalNamespace ? 
-				type.ContainingNamespace.ToDisplayString() : 
+			!type.ContainingNamespace.IsGlobalNamespace ?
+				type.ContainingNamespace.ToDisplayString() :
 				string.Empty :
 			string.Empty;
 
@@ -32,11 +32,17 @@ internal sealed record TypeReferenceModel
 
 		if (this.IsEsoteric)
 		{
-			this.PointerArgProjectedEvaluationDelegateName = 
+			this.PointerArgProjectedEvaluationDelegateName =
 				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
-			this.PointerArgProjectedName = 
+			this.PointerArgProjectedName =
 				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
-			this.RefLikeArgProjectedEvaluationDelegateName = 
+
+			if (isBasedOnTypeParameter && this.IsPointer)
+			{
+				this.PointerArgParameterType = ((IPointerTypeSymbol)type).PointedAtType.Name;
+			}
+
+			this.RefLikeArgProjectedEvaluationDelegateName =
 				$"ArgEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
 			this.RefLikeArgProjectedName =
 				$"ArgFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}";
@@ -58,6 +64,7 @@ internal sealed record TypeReferenceModel
 	internal string Namespace { get; }
 	internal string NoGenericsName { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
+	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }

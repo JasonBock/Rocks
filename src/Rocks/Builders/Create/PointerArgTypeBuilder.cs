@@ -12,14 +12,16 @@ internal static class PointerArgTypeBuilder
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.PointerArgProjectedName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}{parameterType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
-		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
+		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}{parameterType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
@@ -28,12 +30,13 @@ internal static class PointerArgTypeBuilder
 		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel);
 		var argName = type.PointerArgProjectedName;
 		var typeName = type.FullyQualifiedName;
+		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
 
 		writer.WriteLines(
 			$$"""
-			internal unsafe delegate bool {{validationDelegateName}}({{typeName}} @value);
+			internal unsafe delegate bool {{validationDelegateName}}{{parameterType}}({{typeName}} @value);
 			
-			internal unsafe sealed class {{argName}}
+			internal unsafe sealed class {{argName}}{{parameterType}}
 				: global::Rocks.Argument
 			{
 				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
@@ -60,7 +63,7 @@ internal static class PointerArgTypeBuilder
 		{
 			writer.WriteLines(
 				$$"""
-					public static implicit operator {{argName}}({{typeName}} @value) => new(@value);
+					public static implicit operator {{argName}}{{parameterType}}({{typeName}} @value) => new(@value);
 					
 				""");
 		}

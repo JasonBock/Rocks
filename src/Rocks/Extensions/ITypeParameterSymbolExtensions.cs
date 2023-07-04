@@ -73,7 +73,7 @@ internal static class ITypeParameterSymbolExtensions
 				var selfContainingType = self.ContainingType;
 				var selfContainingTypeParameter = selfContainingType.TypeParameters.SingleOrDefault(_ => _.Name == originalConstraintType.Name);
 
-				if(selfContainingTypeParameter is not null)
+				if (selfContainingTypeParameter is not null)
 				{
 					var typeParameterIndex = selfContainingType.TypeParameters.IndexOf(selfContainingTypeParameter);
 

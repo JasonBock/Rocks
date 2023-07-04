@@ -6,6 +6,158 @@ namespace Rocks.Tests.Generators;
 public static class ProjectedTypesGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithPointersAndGenericsAndUnmanagedConstraintAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public interface ISurface
+			{
+				unsafe void Create<T>(T* allocator) where T : unmanaged;
+			}
+
+			public static class Test
+			{
+				 public static void Go()
+				 {
+					  var expectations = Rock.Create<ISurface>();
+				 }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using ProjectionsForISurface;
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace ProjectionsForISurface
+			{
+				internal unsafe delegate void CreateCallback_197220541663188455981388668427457375357930643021<T>(T* @allocator) where T : unmanaged;
+				internal unsafe delegate bool ArgumentEvaluationForTPointer<T>(T* @value);
+				
+				internal unsafe sealed class ArgumentForTPointer<T>
+					: global::Rocks.Argument
+				{
+					private readonly global::ProjectionsForISurface.ArgumentEvaluationForTPointer<T>? evaluation;
+					private readonly T* value;
+					private readonly global::Rocks.ValidationState validation;
+					
+					internal ArgumentForTPointer() => this.validation = global::Rocks.ValidationState.None;
+					
+					internal ArgumentForTPointer(T* @value)
+					{
+						this.value = @value;
+						this.validation = global::Rocks.ValidationState.Value;
+					}
+					
+					internal ArgumentForTPointer(global::ProjectionsForISurface.ArgumentEvaluationForTPointer<T> @evaluation)
+					{
+						this.evaluation = @evaluation;
+						this.validation = global::Rocks.ValidationState.Evaluation;
+					}
+					
+					public static implicit operator ArgumentForTPointer<T>(T* @value) => new(@value);
+					
+					public bool IsValid(T* @value) =>
+						this.validation switch
+						{
+							global::Rocks.ValidationState.None => true,
+							global::Rocks.ValidationState.Value => @value == this.value,
+							global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
+							global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+							_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {{this.validation}}")
+						};
+				}
+			}
+			
+			internal static class CreateExpectationsOfISurfaceExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::ISurface> Methods(this global::Rocks.Expectations.Expectations<global::ISurface> @self) =>
+					new(@self);
+				
+				internal static global::ISurface Instance(this global::Rocks.Expectations.Expectations<global::ISurface> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockISurface(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockISurface
+					: global::ISurface
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockISurface(global::Rocks.Expectations.Expectations<global::ISurface> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "void Create<T>(T* @allocator)")]
+					public unsafe void Create<T>(T* @allocator)
+						where T : unmanaged
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @foundMatch = false;
+							
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((global::ProjectionsForISurface.ArgumentForTPointer<T>)@methodHandler.Expectations[0]).IsValid(@allocator))
+								{
+									@foundMatch = true;
+									
+									@methodHandler.IncrementCallCount();
+									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForISurface.CreateCallback_197220541663188455981388668427457375357930643021<T> @method)
+									{
+										@method(@allocator);
+									}
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for unsafe void Create<T>(T* @allocator)");
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for unsafe void Create<T>(T* @allocator)");
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfISurfaceExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::ISurface, global::ProjectionsForISurface.CreateCallback_197220541663188455981388668427457375357930643021<T>> Create<T>(this global::Rocks.Expectations.MethodExpectations<global::ISurface> @self, global::ProjectionsForISurface.ArgumentForTPointer<T> @allocator) where T : unmanaged
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@allocator);
+					return new global::Rocks.MethodAdornments<global::ISurface, global::ProjectionsForISurface.CreateCallback_197220541663188455981388668427457375357930643021<T>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @allocator }));
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ISurface_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithRefLikeTypeWithOpenGenericsAsync()
 	{
 		var code =

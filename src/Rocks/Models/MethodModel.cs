@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.Collections.Immutable;
+using System.Data.Common;
+using System.Reflection.Metadata;
 
 namespace Rocks.Models;
 
@@ -32,7 +34,18 @@ internal sealed record MethodModel
 		this.Constraints = method.GetConstraints();
 		this.DefaultConstraints = method.GetDefaultConstraints();
 		this.Name = method.GetName();
-		this.Parameters = method.Parameters.Select(_ => new ParameterModel(_, this.MockType, compilation)).ToImmutableArray();
+
+		this.Parameters = method.Parameters.Select(_ =>
+		{
+			var typeParameterTarget = _.Type.IsPointer() ?
+				_.Type.Kind == SymbolKind.PointerType ?
+					((IPointerTypeSymbol)_.Type).PointedAtType :
+					((IFunctionPointerTypeSymbol)_.Type).BaseType : 
+				_.Type;
+			var isBasedOnTypeParameter = method.TypeParameters.Contains(typeParameterTarget, SymbolEqualityComparer.Default) ||
+				method.ContainingType.TypeParameters.Contains(typeParameterTarget, SymbolEqualityComparer.Default);
+			return new ParameterModel(_, this.MockType, compilation, isBasedOnTypeParameter);
+		}).ToImmutableArray();
 
 		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);
 		this.ReturnsVoid = method.ReturnsVoid;
