@@ -280,6 +280,11 @@ internal static class ITypeSymbolExtensions
 						{
 							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
 							_ => false
+						}) || methods.Any(
+						_ => _.Value.Match(selfMethod) switch
+						{
+							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+							_ => false
 						}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
 					methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
 

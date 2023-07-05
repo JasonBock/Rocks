@@ -14,8 +14,36 @@ public interface IInterfaceGenericMethod<T>
 	TData? NullableValues<TData>(TData? data);
 }
 
+public interface IRequest<T>
+	where T : class
+{
+	Task<T> Send(Guid requestId, object values);
+	Task Send(Guid requestId, T message);
+}
+
 public static class InterfaceGenericMethodTests
 {
+	[Test]
+	public static async Task CreateWhenMatchesOccurAsync()
+	{
+		var requestId = Guid.NewGuid();
+		var values = new object();
+		var message = new object();
+		var result = new object();
+
+		var expectations = Rock.Create<IRequest<object>>();
+		expectations.Methods().Send(requestId, values).Returns(Task.FromResult(result));
+		expectations.ExplicitMethodsForIRequestOfobject().Send(requestId, message).Returns(Task.CompletedTask);
+
+		var mock = expectations.Instance();
+		var sendResult = await mock.Send(requestId, values: values).ConfigureAwait(false);
+		await mock.Send(requestId, message: message).ConfigureAwait(false);
+
+		Assert.That(sendResult, Is.SameAs(result));
+
+		expectations.Verify();
+	}
+
 	[Test]
 	public static void CreateUsingGenericType()
 	{
