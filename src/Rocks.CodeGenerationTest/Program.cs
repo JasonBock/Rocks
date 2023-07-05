@@ -270,17 +270,17 @@ static void TestWithTypes()
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 #endif
 #if INCLUDE_FAILING
-		// Number of types found: 11
-		// Create: 10 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// System.Reflection.Metadata
-		typeof(System.Reflection.Metadata.ArrayShape),
-
 		// Number of types found: 716
 		// Create: 16 errors, 0 warnings
 		// Make: 8 errors, 0 warnings
 		// MassTransit
 		typeof(MassTransit.AbstractUriException),
+
+		// Number of types found: 11
+		// Create: 10 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// System.Reflection.Metadata
+		typeof(System.Reflection.Metadata.ArrayShape),
 
 		// Number of types found: 118
 		// Create: 0 errors, 3 warnings

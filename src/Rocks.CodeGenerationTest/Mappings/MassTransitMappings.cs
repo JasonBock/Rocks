@@ -8,6 +8,7 @@ using MassTransit.Transports;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.Mime;
 
+
 namespace Rocks.CodeGenerationTest.Mappings
 {
 	internal static class MassTransitMappings
@@ -418,6 +419,33 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
+					typeof(IRequestConfigurator<,,>), new()
+					{
+						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
+				{
+					typeof(IRequestConfigurator<,,,>), new()
+					{
+						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+						{ "TResponse2", "global::System.Object" },
+					}
+				},
+				{
+					typeof(IRequestConfigurator<,,,,>), new()
+					{
+						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+						{ "TResponse2", "global::System.Object" },
+						{ "TResponse3", "global::System.Object" },
+					}
+				},
+				{
 					typeof(IQuerySagaRepository<>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
@@ -607,6 +635,33 @@ namespace Rocks.CodeGenerationTest.Mappings
 				},
 				{
 					typeof(Request<,,,,>), new()
+					{
+						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+						{ "TResponse2", "global::System.Object" },
+						{ "TResponse3", "global::System.Object" },
+					}
+				},
+				{
+					typeof(RequestSettings<,,>), new()
+					{
+						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+					}
+				},
+				{
+					typeof(RequestSettings<,,,>), new()
+					{
+						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
+						{ "TRequest", "global::System.Object" },
+						{ "TResponse", "global::System.Object" },
+						{ "TResponse2", "global::System.Object" },
+					}
+				},
+				{
+					typeof(RequestSettings<,,,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
 						{ "TRequest", "global::System.Object" },
