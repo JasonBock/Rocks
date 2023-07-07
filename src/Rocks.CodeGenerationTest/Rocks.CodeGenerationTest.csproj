@@ -21,6 +21,7 @@
 		<PackageReference Include="FluentAssertions" />
 		<PackageReference Include="Google.Protobuf" />
 		<PackageReference Include="IdentityModel" />
+		<PackageReference Include="ILGPU" />
 		<PackageReference Include="MassTransit" />
 		<PackageReference Include="MediatR" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />

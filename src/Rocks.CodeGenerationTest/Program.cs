@@ -276,6 +276,12 @@ static void TestWithTypes()
 		typeof(MassTransit.AbstractUriException),
 #endif
 #if INCLUDE_FAILING
+		// Number of types found: 162
+		// Create: 66 errors, 0 warnings
+		// Make: 66 errors, 0 warnings
+		// ILGPU (mapping issues)
+		typeof(ILGPU.ArrayMode),
+
 		// Number of types found: 11
 		// Create: 10 errors, 0 warnings
 		// Make: 0 errors, 0 warnings
@@ -289,8 +295,8 @@ static void TestWithTypes()
 		typeof(AutoMapper.AutoMapAttribute),
 
 		// Number of types found: 748
-		// Create: 327 errors, 20 warnings
-		// Make: 40 errors, 16 warnings
+		// Create: 363 errors, 0 warnings
+		// Make: 63 errors, 0 warnings
 		// EntityFramework
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 #endif

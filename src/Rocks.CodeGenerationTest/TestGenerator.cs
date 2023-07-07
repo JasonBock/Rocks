@@ -89,7 +89,7 @@ internal static class TestGenerator
 			{
 				_.Id,
 				Description = _.ToString(),
-				Line = _.Location,
+			   _.Location,
 			})
 			.OrderBy(_ => _.Id).ToArray();
 
@@ -100,19 +100,16 @@ internal static class TestGenerator
 			{
 				_.Id,
 				Description = _.ToString(),
-				Line = _.Location,
+				_.Location,
 			})
 			.OrderBy(_ => _.Id).ToArray();
-
-		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
-		var mockCodeLines = mockCode.ToString().Split(Environment.NewLine);
 
 		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
 		Console.WriteLine();
 
 		foreach (var error in errors)
 		{
-			var lineNumber = error.Line.GetLineSpan().StartLinePosition.Line;
+			var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
 			Console.WriteLine(
 				$$"""
 				Error:
@@ -120,14 +117,14 @@ internal static class TestGenerator
 				ID: {{error.Id}}
 				Description: {{error.Description}}
 				Code:
-				{{mockCodeLines[lineNumber]}}
+				{{errorCode}}
 
 				""");
 		}
 
 		foreach (var warning in warnings)
 		{
-			var lineNumber = warning.Line.GetLineSpan().StartLinePosition.Line;
+			var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
 			Console.WriteLine(
 				$$"""
 				Warning:
@@ -135,7 +132,7 @@ internal static class TestGenerator
 				ID: {{warning.Id}}
 				Description: {{warning.Description}}
 				Code:
-				{{mockCodeLines[lineNumber]}}
+				{{warningCode}}
 
 				""");
 		}
