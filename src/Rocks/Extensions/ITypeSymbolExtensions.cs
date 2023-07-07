@@ -7,7 +7,7 @@ internal static class ITypeSymbolExtensions
 {
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
-		if(self.TypeKind == TypeKind.TypeParameter)
+		if (self.TypeKind == TypeKind.TypeParameter)
 		{
 			return true;
 		}
@@ -275,25 +275,32 @@ internal static class ITypeSymbolExtensions
 				}
 				else
 				{
-					var selfMethodRequiresExplicit = objectMethods.Any(
-						_ => _.Match(selfMethod) switch
-						{
-							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
-							_ => false
-						}) || methods.Any(
-						_ => _.Value.Match(selfMethod) switch
-						{
-							MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
-							_ => false
-						}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
-					methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
-
-					if (selfMethod.IsVirtual)
+					// We need to explicitly implement matching methods from the object type,
+					// but if they exactly match from methods on the type itself,
+					// we don't even add it to the list.
+					if (!methods.Any(_ => _.Value.Match(selfMethod) == MethodMatch.Exact))
 					{
-						shims.Add(self);
-					}
+						var selfMethodRequiresExplicit = objectMethods.Any(
+							_ => _.Match(selfMethod) switch
+							{
+								MethodMatch.DifferByReturnTypeOnly or MethodMatch.Exact => true,
+								_ => false
+							}) || methods.Any(
+							_ => _.Value.Match(selfMethod) switch
+							{
+								MethodMatch.DifferByReturnTypeOnly => true,
+								_ => false
+							}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
+						methods.Add(new(selfMethod, self, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
 
-					memberIdentifier++;
+						if (selfMethod.IsVirtual)
+						{
+							shims.Add(self);
+						}
+
+						memberIdentifier++;
+
+					}
 				}
 			}
 
@@ -391,7 +398,7 @@ internal static class ITypeSymbolExtensions
 				foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
 					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 				{
-					if(hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					if (hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
 						// This is the case where a class does something like this:
 						// `protected static new string ToString()`
@@ -485,7 +492,7 @@ internal static class ITypeSymbolExtensions
 				}
 				else
 				{
-					var result = new PropertyMockableResult(selfProperty, self, 
+					var result = new PropertyMockableResult(selfProperty, self,
 						RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, memberIdentifier);
 					properties.Add(result);
 
@@ -631,7 +638,7 @@ internal static class ITypeSymbolExtensions
 							properties.Remove(propertyToRemove);
 						}
 					}
-					else if(!hierarchyProperty.IsStatic)
+					else if (!hierarchyProperty.IsStatic)
 					{
 						var canBeSeen = hierarchyProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 

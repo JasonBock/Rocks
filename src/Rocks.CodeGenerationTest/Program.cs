@@ -62,7 +62,7 @@ static void TestWithTypes()
 	{
 		// PASSED
 		// Number of types found: 2966
-
+		
 #if INCLUDE_PASSING
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
@@ -270,9 +270,9 @@ static void TestWithTypes()
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 #endif
 #if INCLUDE_FAILING
-		// Number of types found: 716
-		// Create: 16 errors, 0 warnings
-		// Make: 8 errors, 0 warnings
+		// Number of types found: 729
+		// Create: 1 error, 0 warnings
+		// Make: 1 error, 0 warnings
 		// MassTransit
 		typeof(MassTransit.AbstractUriException),
 

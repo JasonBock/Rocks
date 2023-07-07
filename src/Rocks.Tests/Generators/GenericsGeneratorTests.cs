@@ -6,7 +6,121 @@ namespace Rocks.Tests.Generators;
 public static class GenericsGeneratorTests
 {
 	[Test]
-	public static async Task GenerateWhenClosedGenericCreatesMethodMatchAsync()
+	public static async Task GenerateWhenClosedGenericCreatesExactMethodMatchAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Threading.Tasks;
+			
+			namespace MockTests
+			{
+				public interface RequestHandle<T>
+					 where T : class { }
+
+				public interface IRequestClient<TRequest>
+					 where TRequest : class
+				{
+					 RequestHandle<TRequest> Create(TRequest message);
+
+					 RequestHandle<TRequest> Create(object values);			
+				}			
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IRequestClient<object>>();
+					}
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace MockTests
+			{
+				internal static class CreateExpectationsOfIRequestClientOfobjectExtensions
+				{
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IRequestClient<object>> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IRequestClient<object>> @self) =>
+						new(@self);
+					
+					internal static global::MockTests.IRequestClient<object> Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IRequestClient<object>> @self)
+					{
+						if (!@self.WasInstanceInvoked)
+						{
+							@self.WasInstanceInvoked = true;
+							var @mock = new RockIRequestClientOfobject(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					private sealed class RockIRequestClientOfobject
+						: global::MockTests.IRequestClient<object>
+					{
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+						
+						public RockIRequestClientOfobject(global::Rocks.Expectations.Expectations<global::MockTests.IRequestClient<object>> @expectations)
+						{
+							this.handlers = @expectations.Handlers;
+						}
+						
+						[global::Rocks.MemberIdentifier(0, "global::MockTests.RequestHandle<object> Create(object @message)")]
+						public global::MockTests.RequestHandle<object> Create(object @message)
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@message))
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null ?
+											((global::System.Func<object, global::MockTests.RequestHandle<object>>)@methodHandler.Method)(@message) :
+											((global::Rocks.HandlerInformation<global::MockTests.RequestHandle<object>>)@methodHandler).ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::MockTests.RequestHandle<object> Create(object @message)");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::MockTests.RequestHandle<object> Create(object @message)");
+						}
+						
+					}
+				}
+				
+				internal static class MethodExpectationsOfIRequestClientOfobjectExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IRequestClient<object>, global::System.Func<object, global::MockTests.RequestHandle<object>>, global::MockTests.RequestHandle<object>> Create(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IRequestClient<object>> @self, global::Rocks.Argument<object> @message)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@message);
+						return new global::Rocks.MethodAdornments<global::MockTests.IRequestClient<object>, global::System.Func<object, global::MockTests.RequestHandle<object>>, global::MockTests.RequestHandle<object>>(@self.Add<global::MockTests.RequestHandle<object>>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @message }));
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IRequestClientOfobject_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenClosedGenericCreatesMethodMatchDifferByReturnTypeAsync()
 	{
 		var code =
 			"""
