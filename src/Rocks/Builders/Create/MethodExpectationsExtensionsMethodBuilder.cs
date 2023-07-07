@@ -81,7 +81,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 
 			var parameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				if (_.HasExplicitDefaultValue)
+				if (_.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				{
 					return $"@{_.Name}.Transform({_.ExplicitDefaultValue})";
 				}

@@ -59,7 +59,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property,
+	internal static void Build(IndentedTextWriter writer, PropertyModel property,
 		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = property.MemberIdentifier;

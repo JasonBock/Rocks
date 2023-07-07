@@ -9,7 +9,7 @@ namespace Rocks.Builders.Create;
 internal static class MockIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,
-		Models.PropertyModel indexer, string indexerVisibility, 
+		PropertyModel indexer, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var method = indexer.GetMethod!;
@@ -106,7 +106,7 @@ internal static class MockIndexerBuilder
 		else
 		{
 			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature})\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {signature.Replace("\"", "\\\"")})\");");
 		}
 
 		writer.Indent--;
@@ -114,7 +114,7 @@ internal static class MockIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		Models.PropertyModel indexer, string indexerVisibility, 
+		PropertyModel indexer, string indexerVisibility, 
 		uint memberIdentifier, bool raiseEvents, string signature)
 	{
 		var method = indexer.SetMethod!;
@@ -228,7 +228,7 @@ internal static class MockIndexerBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer,
-		Models.PropertyModel indexer, bool raiseEvents)
+		PropertyModel indexer, bool raiseEvents)
 	{
 		var explicitTypeName = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			string.Empty : $"{indexer.ContainingType.FullyQualifiedName}.";
@@ -241,7 +241,8 @@ internal static class MockIndexerBuilder
 		}
 
 		var memberIdentifierAttribute = indexer.MemberIdentifier;
-		var signature = MockIndexerBuilder.GetSignature(indexer.Parameters, false);
+		var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
+		var signature = MockIndexerBuilder.GetSignature(indexer.Parameters, includeOptionalParameterValues);
 
 		if (indexer.Accessors == PropertyAccessor.Get || indexer.Accessors == PropertyAccessor.GetAndSet ||
 			indexer.Accessors == PropertyAccessor.GetAndInit)
@@ -250,7 +251,7 @@ internal static class MockIndexerBuilder
 
 			if (isGetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature}}")]""");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature.Replace("\"", "\\\"")}}")]""");
 				memberIdentifierAttribute++;
 			}
 		}
@@ -262,7 +263,7 @@ internal static class MockIndexerBuilder
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature}}")]""");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{signature.Replace("\"", "\\\"")}}")]""");
 			}
 		}
 
@@ -270,7 +271,7 @@ internal static class MockIndexerBuilder
 			$"{indexer.OverridingCodeValue} " : string.Empty;
 		var isOverriden = indexer.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
 		var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
-		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true)}";
+		var indexerSignature = $"{explicitTypeName}{signature}";
 
 		var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.FullyQualifiedName} {indexerSignature}");
@@ -301,7 +302,7 @@ internal static class MockIndexerBuilder
 		var methodParameters = string.Join(", ", parameters.Select(_ =>
 		{
 			var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-					 $" = {_.ExplicitDefaultValue}" : string.Empty;
+				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.In => "in ",

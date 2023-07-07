@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
@@ -40,7 +41,8 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		}
 
 		var parameters = string.Join(", ", propertyGetMethod.Parameters.Select(
-			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
+			_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
 		var addMethod = property.Type.IsPointer ?
 			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, property.MockType) : 
 			$"Add<{propertyReturnValue}>";
@@ -82,7 +84,8 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		}
 
 		var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
-			_ => _.HasExplicitDefaultValue ? $"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
+			_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
 		writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 		writer.Indent--;

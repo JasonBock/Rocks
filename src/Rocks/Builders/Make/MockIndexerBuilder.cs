@@ -22,7 +22,8 @@ internal static class MockIndexerBuilder
 			$"{indexer.OverridingCodeValue} " : string.Empty;
 		var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
 		var isOverriden = indexer.RequiresOverride == RequiresOverride.Yes ? "override " : string.Empty;
-		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, true)}";
+		var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
+		var indexerSignature = $"{explicitTypeName}{MockIndexerBuilder.GetSignature(indexer.Parameters, includeOptionalParameterValues)}";
 
 		var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 		writer.WriteLine($"{visibility}{isUnsafe}{isOverriden}{returnByRef}{indexer.Type.FullyQualifiedName} {indexerSignature}");
@@ -75,7 +76,7 @@ internal static class MockIndexerBuilder
 		var methodParameters = string.Join(", ", parameters.Select(_ =>
 		{
 			var defaultValue = includeOptionalParameterValues && _.HasExplicitDefaultValue ?
-					 $" = {_.ExplicitDefaultValue}" : string.Empty;
+				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.In => "in ",

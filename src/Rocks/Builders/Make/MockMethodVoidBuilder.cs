@@ -17,7 +17,8 @@ internal static class MockMethodVoidBuilder
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-			var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue}" : string.Empty;
+			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
 				RefKind.Ref => "ref ",

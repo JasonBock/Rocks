@@ -110,7 +110,7 @@ internal static class MockPropertyBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer,
-		Models.PropertyModel property, string propertyVisibility,
+		PropertyModel property, string propertyVisibility,
 		uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
 	{
 		var methodName = property.SetMethod!.Name;

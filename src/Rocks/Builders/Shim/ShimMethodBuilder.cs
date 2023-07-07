@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -28,7 +29,8 @@ internal static class ShimMethodBuilder
 
 			var methodParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
 			{
-				var defaultValue = _.HasExplicitDefaultValue ? $" = {_.ExplicitDefaultValue}" : string.Empty;
+				var defaultValue = _.HasExplicitDefaultValue && shimMethod.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+					$" = {_.ExplicitDefaultValue}" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
