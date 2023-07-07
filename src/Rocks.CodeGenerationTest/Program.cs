@@ -268,14 +268,14 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// Silk.NET
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
-#endif
-#if INCLUDE_FAILING
+
 		// Number of types found: 729
-		// Create: 1 error, 0 warnings
-		// Make: 1 error, 0 warnings
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
 		// MassTransit
 		typeof(MassTransit.AbstractUriException),
-
+#endif
+#if INCLUDE_FAILING
 		// Number of types found: 11
 		// Create: 10 errors, 0 warnings
 		// Make: 0 errors, 0 warnings

@@ -529,7 +529,8 @@ internal static class ITypeSymbolExtensions
 								(selfBaseProperty.SetMethod is not null && _.Value.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.Value.SetMethod) == MethodMatch.Exact)) ||
 							(!selfBaseProperty.IsIndexer && !_.Value.IsIndexer &&
 								_.Value.Name == selfBaseProperty.Name &&
-								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type))))
+								SymbolEqualityComparer.Default.Equals(_.Value.Type, selfBaseProperty.Type) &&
+								_.Value.GetAccessors() == selfBaseProperty.GetAccessors())))
 						{
 							var foundMatch = false;
 
@@ -541,7 +542,8 @@ internal static class ITypeSymbolExtensions
 										(selfBaseProperty.SetMethod is not null && _.SetMethod is not null && selfBaseProperty.SetMethod.Match(_.SetMethod) == MethodMatch.Exact)) ||
 									(!selfBaseProperty.IsIndexer && !_.IsIndexer &&
 										_.Name == selfBaseProperty.Name &&
-										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type))))
+										SymbolEqualityComparer.Default.Equals(_.Type, selfBaseProperty.Type) &&
+										_.GetAccessors() == selfBaseProperty.GetAccessors())))
 								{
 									baseInterfacePropertyGroup.Add(selfBaseProperty);
 									foundMatch = true;
@@ -567,7 +569,8 @@ internal static class ITypeSymbolExtensions
 					// then we must require explicit implementation.
 					var requiresExplicitImplementation = properties.Any(
 						_ => baseInterfacePropertyGroup[0].Name == _.Value.Name &&
-							!SymbolEqualityComparer.Default.Equals(baseInterfacePropertyGroup[0].Type, _.Value.Type)) ?
+							(!SymbolEqualityComparer.Default.Equals(baseInterfacePropertyGroup[0].Type, _.Value.Type)) ||
+							baseInterfacePropertyGroup[0].GetAccessors() != _.Value.GetAccessors()) ?
 							RequiresExplicitInterfaceImplementation.Yes :
 							RequiresExplicitInterfaceImplementation.No;
 

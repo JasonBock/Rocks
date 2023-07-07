@@ -3,8 +3,173 @@ using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
+//public interface IMessagePublishTopology
+//{
+//	bool Exclude { get; }
+//}
+
+//public interface IMessagePublishTopologyConfigurator :
+//	 IMessagePublishTopology
+//{
+//	new bool Exclude { get; set; }
+//}
+
+//public class X
+//	: IMessagePublishTopologyConfigurator
+//{
+//   public bool Exclude { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+//   bool IMessagePublishTopology.Exclude => throw new NotImplementedException();
+//}
 public static class PropertyGeneratorTests
 {
+	[Test]
+	public static async Task CreateWithNewDefinitionAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public interface IMessagePublishTopology
+			{
+				bool Exclude { get; }
+			}
+
+			public interface IMessagePublishTopologyConfigurator :
+				IMessagePublishTopology
+			{
+				new bool Exclude { set; }
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<IMessagePublishTopologyConfigurator>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIMessagePublishTopologyConfiguratorExtensions
+			{
+				internal static global::Rocks.Expectations.PropertyExpectations<global::IMessagePublishTopologyConfigurator> Properties(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertySetterExpectations<global::IMessagePublishTopologyConfigurator> Setters(this global::Rocks.Expectations.PropertyExpectations<global::IMessagePublishTopologyConfigurator> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> ExplicitPropertiesForIMessagePublishTopology(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> @self) =>
+					new(@self);
+				
+				internal static global::IMessagePublishTopologyConfigurator Instance(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockIMessagePublishTopologyConfigurator(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIMessagePublishTopologyConfigurator
+					: global::IMessagePublishTopologyConfigurator
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIMessagePublishTopologyConfigurator(global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "set_Exclude(@value)")]
+					public bool Exclude
+					{
+						set
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value))
+									{
+										@methodHandler.IncrementCallCount();
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											((global::System.Action<bool>)@methodHandler.Method)(@value);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Exclude(@value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Exclude(@value)");
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(1, "global::IMessagePublishTopology.get_Exclude()")]
+					bool global::IMessagePublishTopology.Exclude
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<bool>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IMessagePublishTopology.get_Exclude())");
+						}
+					}
+				}
+			}
+			
+			internal static class PropertySetterExpectationsOfIMessagePublishTopologyConfiguratorExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Action<bool>> Exclude(this global::Rocks.Expectations.PropertySetterExpectations<global::IMessagePublishTopologyConfigurator> @self, global::Rocks.Argument<bool> @value) =>
+					new global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Action<bool>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+			}
+			internal static class ExplicitPropertyGetterExpectationsOfIMessagePublishTopologyConfiguratorForIMessagePublishTopologyExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Func<bool>, bool> Exclude(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> @self) =>
+					new global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Func<bool>, bool>(@self.Add<bool>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task CreateWithMixedVisibilityAsync()
 	{
