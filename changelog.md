@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Default values for optional parameters are no longer being emitted for explicit implementations (issue [#225](https://github.com/JasonBock/Rocks/issues/225))
+- Exact matches for methods on an interface are no longer duplicated (issue [#226](https://github.com/JasonBock/Rocks/issues/226))
 - Handled a case where a type parameter value led to matching members (issue [#217](https://github.com/JasonBock/Rocks/issues/217))
 - Fixed an issue with pointer projected types based on a type parameter (issue [#215](https://github.com/JasonBock/Rocks/issues/215))
 - Addressed an issue when a `notnull` constraint was not being emitted (issue [#204](https://github.com/JasonBock/Rocks/issues/204))
