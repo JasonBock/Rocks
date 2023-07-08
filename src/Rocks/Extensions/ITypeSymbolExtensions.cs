@@ -5,6 +5,24 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	{
+		if (self.DeclaredAccessibility == Accessibility.Public)
+		{
+			return true;
+		}
+		else if (self.DeclaredAccessibility == Accessibility.Internal ||
+			self.DeclaredAccessibility == Accessibility.ProtectedOrInternal)
+		{
+			return self.ContainingAssembly.Equals(containingAssemblyOfInvocationSymbol, SymbolEqualityComparer.Default) ||
+				self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	internal static bool IsOpenGeneric(this ITypeSymbol self)
 	{
 		if (self.TypeKind == TypeKind.TypeParameter)
@@ -299,7 +317,6 @@ internal static class ITypeSymbolExtensions
 						}
 
 						memberIdentifier++;
-
 					}
 				}
 			}

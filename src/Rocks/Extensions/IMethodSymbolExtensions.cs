@@ -5,6 +5,11 @@ namespace Rocks.Extensions;
 
 internal static class IMethodSymbolExtensions
 {
+	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) => 
+		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
+			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly)) &&
+			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
+
 	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation)
 	{
 		// I would LOVE to be able to use typeof(...) for DoesNotReturnAttribute
@@ -48,7 +53,7 @@ internal static class IMethodSymbolExtensions
 				// Arguably, it would be good to have one method that gets
 				// all constraints for a method, rather than doing it via
 				// GetConstraints() and GetDefaultConstraints().
-				if(typeParameter.HasReferenceTypeConstraint)
+				if (typeParameter.HasReferenceTypeConstraint)
 				{
 					builder.Add($"where {typeParameter.GetName()} : class");
 				}
@@ -134,7 +139,7 @@ internal static class IMethodSymbolExtensions
 		}
 		else
 		{
-			if(self.TypeParameters.Length != other.TypeParameters.Length)
+			if (self.TypeParameters.Length != other.TypeParameters.Length)
 			{
 				return MethodMatch.None;
 			}
@@ -152,7 +157,7 @@ internal static class IMethodSymbolExtensions
 				var selfParameter = selfParameters[i];
 				var otherParameter = otherParameters[i];
 
-				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() != 
+				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
 					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ||
 					!(selfParameter.RefKind == otherParameter.RefKind ||
 						(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
@@ -163,7 +168,7 @@ internal static class IMethodSymbolExtensions
 				}
 			}
 
-			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() == 
+			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ==
 				other.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ?
 				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 		}
