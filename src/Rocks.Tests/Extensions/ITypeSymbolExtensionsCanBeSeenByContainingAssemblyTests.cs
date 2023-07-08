@@ -42,6 +42,44 @@ public static class ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests
 		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
 	}
 
+	[Test]
+	public static void CallWhenGenericTypeCanBeSeen()
+	{
+		var code =
+			"""
+			using System.Collections.Generic;
+
+			public class Section { }
+			
+			public class Source
+			{
+				public void Foo(List<Section> sections) { }
+			}
+			""";
+		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.True);
+	}
+
+	[Test]
+	public static void CallWhenGenericTypeCannotBeSeen()
+	{
+		var code =
+			"""
+			using System.Collections.Generic;
+			
+			public class Source
+			{
+				public void Foo(List<Section> sections) { }
+
+				protected class Section { }
+			}
+			""";
+		var symbol = ITypeSymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
+
+		Assert.That(symbol.CanBeSeenByContainingAssembly(symbol.ContainingAssembly), Is.False);
+	}
+
 	private static ITypeSymbol GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);

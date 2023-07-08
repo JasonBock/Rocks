@@ -5,6 +5,10 @@ namespace Rocks.Extensions;
 
 internal static class IEventSymbolExtensions
 {
+	internal static bool CanBeSeenByContainingAssembly(this IEventSymbol self, IAssemblySymbol assembly) =>
+		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
+			self.Type.CanBeSeenByContainingAssembly(assembly);
+
 	internal static ImmutableHashSet<INamespaceSymbol> GetNamespaces(this IEventSymbol self)
 	{
 		var namespaces = ImmutableHashSet.CreateBuilder<INamespaceSymbol>();

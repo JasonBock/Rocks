@@ -5,6 +5,11 @@ namespace Rocks.Extensions;
 
 internal static class IPropertySymbolExtensions
 {
+	internal static bool CanBeSeenByContainingAssembly(this IPropertySymbol self, IAssemblySymbol assembly) =>
+		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
+			self.Type.CanBeSeenByContainingAssembly(assembly) &&
+			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly));
+
 	internal static ImmutableArray<AttributeData> GetAllAttributes(this IPropertySymbol self)
 	{
 		var attributes = self.GetAttributes().ToList();

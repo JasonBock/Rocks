@@ -6,7 +6,7 @@ using Rocks.Extensions;
 
 namespace Rocks.Tests.Extensions;
 
-public static class IEventSymbolExtensionsTests
+public static class IEventSymbolGetNamespacesExtensionsTests
 {
 	[Test]
 	public static void GetNamespaces()
@@ -45,7 +45,7 @@ public static class IEventSymbolExtensionsTests
 
 		Assert.Multiple(() =>
 		{
-			var @event = IEventSymbolExtensionsTests.GetEvent(code, typeName);
+			var @event = IEventSymbolGetNamespacesExtensionsTests.GetEvent(code, typeName);
 			var namespaces = @event.GetNamespaces();
 
 			Assert.That(namespaces, Has.Count.EqualTo(3));

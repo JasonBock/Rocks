@@ -7,19 +7,47 @@ internal static class ITypeSymbolExtensions
 {
 	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
-		if (self.DeclaredAccessibility == Accessibility.Public)
+		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
+			self is INamedTypeSymbol namedSelf ?
+				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)) :
+				true;
+
+		if (self.TypeKind == TypeKind.TypeParameter ||
+			self.TypeKind == TypeKind.Dynamic)
 		{
 			return true;
 		}
-		else if (self.DeclaredAccessibility == Accessibility.Internal ||
-			self.DeclaredAccessibility == Accessibility.ProtectedOrInternal)
+		else if (self is IFunctionPointerTypeSymbol functionPointerSymbol)
 		{
-			return self.ContainingAssembly.Equals(containingAssemblyOfInvocationSymbol, SymbolEqualityComparer.Default) ||
-				self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol);
+			var signature = functionPointerSymbol.Signature;
+			return signature.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)) &&
+				(signature.ReturnsVoid || signature.ReturnType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
+		}
+		else if (self is IPointerTypeSymbol pointerSymbol)
+		{
+			return pointerSymbol.PointedAtType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+		}
+		else if (self is IArrayTypeSymbol arraySymbol)
+		{
+			return arraySymbol.ElementType.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 		}
 		else
 		{
-			return false;
+			if (self.DeclaredAccessibility == Accessibility.Public)
+			{
+				return AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol);
+			}
+			else if (self.DeclaredAccessibility == Accessibility.Internal ||
+				self.DeclaredAccessibility == Accessibility.ProtectedOrInternal)
+			{
+				return (self.ContainingAssembly.Equals(containingAssemblyOfInvocationSymbol, SymbolEqualityComparer.Default) ||
+					self.ContainingAssembly.ExposesInternalsTo(containingAssemblyOfInvocationSymbol)) &&
+					AreTypeParametersVisible(self, containingAssemblyOfInvocationSymbol);
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 
