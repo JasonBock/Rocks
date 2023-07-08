@@ -1,7 +1,6 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
-using CsvHelper.Expressions;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -46,7 +45,7 @@ static void TestWithCode()
 		new[]
 		{
 			typeof(SkiaSharp.SKRegion),
-			typeof(System.Uri),
+			typeof(Uri),
 		});
 }
 
@@ -54,8 +53,13 @@ static void TestWithType() =>
 	 TestGenerator.Generate(new RockCreateGenerator(),
 		 new[]
 		 {
-			 typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<Rocks.CodeGenerationTest.Mappings.ComputeSharp.MappedPixelShader>)
-		 }, Array.Empty<Type>(), null);
+			 typeof(System.Linq.Expressions.ExpressionVisitor)
+		 }, 
+		 new []
+		 {
+			typeof(Func<,>),
+			typeof(System.Reflection.PropertyInfo)
+		 }, null);
 
 static void TestWithTypes()
 {
@@ -63,7 +67,7 @@ static void TestWithTypes()
 	{
 		// PASSED
 		// Number of types found: 3852
-		
+
 #if INCLUDE_PASSING
 		// Number of types found: 373
 		// Create: 0 errors, 0 warnings
@@ -290,8 +294,8 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		// Number of types found: 118
-		// Create: 0 errors, 3 warnings
-		// Make: 0 errors, 3 warnings
+		// Create: 9 errors, 0 warnings
+		// Make: 9 errors, 0 warnings
 		// AutoMapper
 		typeof(AutoMapper.AutoMapAttribute),
 
@@ -311,7 +315,9 @@ static void TestWithTypes()
 		typeof(System.Diagnostics.DiagnosticSource),
 		typeof(System.Transactions.Transaction),
 		typeof(System.Text.Json.JsonSerializerOptions),
-		typeof(System.Uri),
+		typeof(Uri),
+		typeof(Func<>),
+		typeof(System.Reflection.ConstructorInfo)
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();

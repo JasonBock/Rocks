@@ -610,12 +610,12 @@ internal static class ITypeSymbolExtensions
 				if (baseInterfacePropertyGroup.Count == 1)
 				{
 					// If there are any properties that have the same name
-					// but different types,
+					// but different types or different accessors.
 					// then we must require explicit implementation.
 					var requiresExplicitImplementation = properties.Any(
 						_ => baseInterfacePropertyGroup[0].Name == _.Value.Name &&
-							(!SymbolEqualityComparer.Default.Equals(baseInterfacePropertyGroup[0].Type, _.Value.Type)) ||
-							baseInterfacePropertyGroup[0].GetAccessors() != _.Value.GetAccessors()) ?
+							(!SymbolEqualityComparer.Default.Equals(baseInterfacePropertyGroup[0].Type, _.Value.Type) ||
+							baseInterfacePropertyGroup[0].GetAccessors() != _.Value.GetAccessors())) ?
 							RequiresExplicitInterfaceImplementation.Yes :
 							RequiresExplicitInterfaceImplementation.No;
 
