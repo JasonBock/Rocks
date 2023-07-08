@@ -19,5 +19,6 @@ internal static class MappedTypes
 			.AddItems(AWSSDKCoreMappings.GetMappedTypes())
 			.AddItems(AngleSharpMappings.GetMappedTypes())
 			.AddItems(MassTransitMappings.GetMappedTypes())
-			.AddItems(SilkMappings.GetMappedTypes());
+			.AddItems(SilkMappings.GetMappedTypes())
+			.AddItems(ILGPUMappings.GetMappedTypes());
 }

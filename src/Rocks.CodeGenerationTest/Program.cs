@@ -1,6 +1,7 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
+using CsvHelper.Expressions;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -280,14 +281,14 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// System.Reflection.Metadata
 		typeof(System.Reflection.Metadata.ArrayShape),
-#endif
-#if INCLUDE_FAILING
-		// Number of types found: 162
-		// Create: 66 errors, 0 warnings
-		// Make: 66 errors, 0 warnings
+
+		// Number of types found: 158
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
 		// ILGPU (mapping issues)
 		typeof(ILGPU.ArrayMode),
-
+#endif
+#if INCLUDE_FAILING
 		// Number of types found: 118
 		// Create: 0 errors, 3 warnings
 		// Make: 0 errors, 3 warnings
