@@ -61,7 +61,7 @@ static void TestWithTypes()
 	var targetAssemblies = new Type[]
 	{
 		// PASSED
-		// Number of types found: 2966
+		// Number of types found: 3852
 		
 #if INCLUDE_PASSING
 		// Number of types found: 373
@@ -274,6 +274,12 @@ static void TestWithTypes()
 		// Make: 0 errors, 0 warnings
 		// MassTransit
 		typeof(MassTransit.AbstractUriException),
+
+		// Number of types found: 9
+		// Create: 0 errors, 0 warnings
+		// Make: 0 errors, 0 warnings
+		// System.Reflection.Metadata
+		typeof(System.Reflection.Metadata.ArrayShape),
 #endif
 #if INCLUDE_FAILING
 		// Number of types found: 162
@@ -281,12 +287,6 @@ static void TestWithTypes()
 		// Make: 66 errors, 0 warnings
 		// ILGPU (mapping issues)
 		typeof(ILGPU.ArrayMode),
-
-		// Number of types found: 11
-		// Create: 10 errors, 0 warnings
-		// Make: 0 errors, 0 warnings
-		// System.Reflection.Metadata
-		typeof(System.Reflection.Metadata.ArrayShape),
 
 		// Number of types found: 118
 		// Create: 0 errors, 3 warnings
