@@ -50,16 +50,16 @@ static void TestWithCode()
 }
 
 static void TestWithType() =>
-	 TestGenerator.Generate(new RockCreateGenerator(),
-		 new[]
-		 {
-			 typeof(System.Linq.Expressions.ExpressionVisitor)
-		 }, 
-		 new []
-		 {
+	TestGenerator.Generate(new RockCreateGenerator(),
+		new[]
+		{
+			typeof(System.Linq.Expressions.ExpressionVisitor)
+		}, 
+		new []
+		{
 			typeof(Func<,>),
 			typeof(System.Reflection.PropertyInfo)
-		 }, null);
+		}, null);
 
 static void TestWithTypes()
 {
