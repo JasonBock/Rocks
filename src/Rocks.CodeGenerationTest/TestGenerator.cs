@@ -104,9 +104,7 @@ internal static class TestGenerator
 			})
 			.OrderBy(_ => _.Id).ToArray();
 
-		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1].ToString()
-			.Replace("\t", "   ", StringComparison.CurrentCulture)
-			.Replace("\r\n", Environment.NewLine, StringComparison.CurrentCulture);
+		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 
 		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
 		Console.WriteLine();

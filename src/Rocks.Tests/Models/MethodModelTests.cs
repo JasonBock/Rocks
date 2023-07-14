@@ -99,7 +99,7 @@ public static class MethodModelTests
 
 			public class Target
 			{
-				[return: CLSCompliant(true)]	
+				[return: CLSCompliant(true)]
 				public int Go(string value) => default;
 			}
 			""";
@@ -111,7 +111,7 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, compilation,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier);
 
-		Assert.That(model.ReturnTypeAttributesDescription, Is.EqualTo("[global::System.CLSCompliantAttribute(true)]"));
+		Assert.That(model.ReturnTypeAttributesDescription, Is.EqualTo("[return: global::System.CLSCompliantAttribute(true)]"));
 	}
 
 	[Test]

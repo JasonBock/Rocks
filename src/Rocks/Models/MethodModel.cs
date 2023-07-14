@@ -53,7 +53,7 @@ internal sealed record MethodModel
 		this.ReturnsByRefReadOnly = method.ReturnsByRefReadonly;
 
 		this.AttributesDescription = method.GetAttributes().GetDescription(compilation);
-		this.ReturnTypeAttributesDescription = method.GetReturnTypeAttributes().GetDescription(compilation);
+		this.ReturnTypeAttributesDescription = method.GetReturnTypeAttributes().GetDescription(compilation, AttributeTargets.ReturnValue);
 		this.RequiresProjectedDelegate = method.RequiresProjectedDelegate();
 
 		if (this.RequiresProjectedDelegate)
