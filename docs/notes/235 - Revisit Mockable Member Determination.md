@@ -72,4 +72,22 @@ public class SubStuff
 
 This will also work if the class is `abstract`.
 
-The issue is...where is this code? I don't think it's in VS proper, as SharpLab seems to use the same functionality (though I don't think it's exactly the same). I found [`AbstractChangeImplementationCodeRefactoringProvider`](https://github.com/dotnet/roslyn/blob/d11caad0ab35ec679716353eead320f92d05e753/src/Features/CSharp/Portable/ImplementInterface/AbstractChangeImplementationCodeRefactoringProvider.cs). Unfortunately, it's `internal`, but maybe I can copy/pasta what I need, or there's another way to get this mapping for classes and interfaces.
+Note that this isn't full-proof. Consider this example of what VS generates in the subtype:
+
+```csharp
+public class StaticToString
+{
+	protected static new string ToString() => "c";
+}
+
+public class X : StaticToString
+{
+   public override bool Equals(object? obj) => base.Equals(obj);
+   public override int GetHashCode() => base.GetHashCode();
+   public override string? ToString() => base.ToString();
+}
+```
+
+This is incorrect. The `ToString()` method cannot be an override. Removing it makes compilation errors go away (side note: I should create a bug for that). If I can figure out how to reuse this functionality, it **has** to be rock-solid. Taking a dependency on that is risky in that if it doesn't work correctly, I have little to no control when the issues would get fixed, if ever.
+
+Also...where is this code? I don't think it's in VS proper, as SharpLab seems to use the same functionality (though I don't think it's exactly the same). I found [`AbstractChangeImplementationCodeRefactoringProvider`](https://github.com/dotnet/roslyn/blob/d11caad0ab35ec679716353eead320f92d05e753/src/Features/CSharp/Portable/ImplementInterface/AbstractChangeImplementationCodeRefactoringProvider.cs). Unfortunately, it's `internal`, but maybe I can copy/pasta what I need, or there's another way to get this mapping for classes and interfaces.
