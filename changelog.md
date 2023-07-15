@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Changed the file name to reduce collisions (issue [#219](https://github.com/JasonBock/Rocks/issues/219))
 - Members with more than 16 parameters are now handled correctly (issue [#234](https://github.com/JasonBock/Rocks/issues/234))
 - `ConditionalAttribute` instances are no longer emitted (issue [#233](https://github.com/JasonBock/Rocks/issues/233))
 - Attributes with a `return:` target are now emmitted correctly (issue [#230](https://github.com/JasonBock/Rocks/issues/230))
