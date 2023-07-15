@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `ConditionalAttribute` instances are no longer emitted (issue [#233](https://github.com/JasonBock/Rocks/issues/233))
 - Attributes with a `return:` target are now emmitted correctly (issue [#230](https://github.com/JasonBock/Rocks/issues/230))
 - Non-accessible types are now considered to determine a member's visibility (issue [#213](https://github.com/JasonBock/Rocks/issues/213))
 - Base properties that are hid and have different accessors are new explicitly implemented (issue [#227](https://github.com/JasonBock/Rocks/issues/227))
