@@ -146,7 +146,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IAllow_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.IAllow_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -434,7 +434,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "Allow_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.Allow_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

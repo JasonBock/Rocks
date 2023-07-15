@@ -916,7 +916,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveGenericAttribute_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1042,7 +1042,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

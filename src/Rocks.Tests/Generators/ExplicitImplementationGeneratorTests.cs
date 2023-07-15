@@ -132,7 +132,7 @@ public static class ExplicitImplementationGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IIterableOfstring_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

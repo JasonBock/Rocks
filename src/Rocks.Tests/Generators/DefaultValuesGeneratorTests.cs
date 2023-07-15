@@ -151,7 +151,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IRequestOfobject_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 

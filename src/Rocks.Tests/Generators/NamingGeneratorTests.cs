@@ -1297,7 +1297,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IUseConstraint_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "Namespace2.IUseConstraint_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

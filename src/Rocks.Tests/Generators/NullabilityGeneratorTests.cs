@@ -91,7 +91,7 @@ public static class NullabilityGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IDestinationOfobject_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

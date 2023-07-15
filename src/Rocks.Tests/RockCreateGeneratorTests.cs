@@ -141,7 +141,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -240,7 +240,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -433,7 +433,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -527,7 +527,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(), OutputKind.ConsoleApplication).ConfigureAwait(false);
 	}
 
@@ -687,7 +687,7 @@ public static class RockCreateGeneratorTests
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
 			.WithSpan(17, 3, 17, 3);
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
 			new[] { diagnostic }).ConfigureAwait(false);
 	}
 }
