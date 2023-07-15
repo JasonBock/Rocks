@@ -110,8 +110,8 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		// Number of types found: 747
-		// Create: 318 errors, 0 warnings
-		// Make: 38 errors, 0 warnings
+		// Create: 315 errors, 0 warnings
+		// Make: 37 errors, 0 warnings
 		// EntityFramework
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 #endif

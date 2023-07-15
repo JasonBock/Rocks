@@ -30,6 +30,7 @@ internal static class IMethodSymbolExtensions
 	}
 
 	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
+		self.Parameters.Length > 16 ||	
 		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsEsoteric()) ||
 			!self.ReturnsVoid && self.ReturnType.IsEsoteric();
 

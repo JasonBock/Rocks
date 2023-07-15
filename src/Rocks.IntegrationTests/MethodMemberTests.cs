@@ -3,6 +3,13 @@ using System.Globalization;
 
 namespace Rocks.IntegrationTests;
 
+public interface IHaveLotsOfParameters
+{
+	void CallThis(int i0, int i1, int i2, int i3, int i4,
+		int i5, int i6, int i7, int i8, int i9,
+		int i10, int i11, int i12, int i13, int i14,
+		int i15, int i16, int i17, int i18, int i19);
+}
 public interface IHaveRefAndOut
 {
 	void RefArgument(ref int a);
@@ -29,6 +36,26 @@ public interface IHaveIn
 
 public static class MethodMemberTests
 {
+	[Test]
+	public static void CreateWithLotsOfParameters()
+	{
+		var expectations = Rock.Create<IHaveLotsOfParameters>();
+		expectations.Methods().CallThis(
+			0, 1, 2, 3, 4,
+			5, 6, 7, 8, 9,
+			10, 11, 12, 13, 14,
+			15, 16, 17, 18, 19);
+
+		var mock = expectations.Instance();
+		mock.CallThis(
+			0, 1, 2, 3, 4,
+			5, 6, 7, 8, 9,
+			10, 11, 12, 13, 14,
+			15, 16, 17, 18, 19);
+
+		expectations.Verify();
+	}
+	
 	[Test]
 	public static void CreateMethodWithRefReturn()
 	{
