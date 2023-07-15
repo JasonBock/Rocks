@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Rocks.Extensions;
@@ -99,6 +100,7 @@ internal static class AttributeDataExtensions
 		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
 		var dynamicAttribute = compilation.GetTypeByMetadataName(typeof(DynamicAttribute).FullName);
 		var tupleElementNamesAttribute = compilation.GetTypeByMetadataName(typeof(TupleElementNamesAttribute).FullName);
+		var conditionalAttribute = compilation.GetTypeByMetadataName(typeof(ConditionalAttribute).FullName);
 		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
 		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
 
@@ -110,6 +112,7 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(asyncStateMachineAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(tupleElementNamesAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(conditionalAttribute, SymbolEqualityComparer.Default) &&
 				_.AttributeClass.GetFullyQualifiedName() != enumeratorCancellationAttribute &&
 				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
 

@@ -1,4 +1,4 @@
-﻿#define INCLUDE_PASSING
+﻿//#define INCLUDE_PASSING
 #define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;

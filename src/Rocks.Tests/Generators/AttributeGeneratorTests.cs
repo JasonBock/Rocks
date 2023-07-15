@@ -2,12 +2,175 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.Tests.Generators;
 
 public static class AttributeGeneratorTests
 {
+	[Test]
+	public static async Task CreateWithConditionalAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System.Diagnostics;
+
+			public class ConventionDispatcher
+			{
+				[Conditional("DEBUG")]
+				public virtual void AssertNoScope() { }
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<ConventionDispatcher>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfConventionDispatcherExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::ConventionDispatcher> Methods(this global::Rocks.Expectations.Expectations<global::ConventionDispatcher> @self) =>
+					new(@self);
+				
+				internal static global::ConventionDispatcher Instance(this global::Rocks.Expectations.Expectations<global::ConventionDispatcher> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockConventionDispatcher(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockConventionDispatcher
+					: global::ConventionDispatcher
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockConventionDispatcher(global::Rocks.Expectations.Expectations<global::ConventionDispatcher> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								{
+									@methodHandler.IncrementCallCount();
+									var @result = @methodHandler.Method is not null ?
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(@obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<int>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<string?>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "void AssertNoScope()")]
+					public override void AssertNoScope()
+					{
+						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							if (@methodHandler.Method is not null)
+							{
+								((global::System.Action)@methodHandler.Method)();
+							}
+						}
+						else
+						{
+							base.AssertNoScope();
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfConventionDispatcherExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::ConventionDispatcher> @self, global::Rocks.Argument<object?> @obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@obj);
+					return new global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::ConventionDispatcher> @self) =>
+					new global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::ConventionDispatcher> @self) =>
+					new global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Action> AssertNoScope(this global::Rocks.Expectations.MethodExpectations<global::ConventionDispatcher> @self) =>
+					new global::Rocks.MethodAdornments<global::ConventionDispatcher, global::System.Action>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ConventionDispatcher_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task CreateWithNotNullIfNotNullAsync()
 	{
@@ -370,7 +533,6 @@ public static class AttributeGeneratorTests
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "NotNullIfNotCases_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
-
 	}
 
 	[Test]

@@ -1,8 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 using Rocks.Extensions;
 using System.Collections.Immutable;
-using System.Data.Common;
-using System.Reflection.Metadata;
 
 namespace Rocks.Models;
 
