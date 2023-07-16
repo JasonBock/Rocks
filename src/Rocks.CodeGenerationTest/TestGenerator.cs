@@ -16,8 +16,8 @@ internal static class TestGenerator
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },
 		{ "SYSLIB0017", ReportDiagnostic.Info }
-	}; 
-	
+	};
+
 	internal static void Generate(IIncrementalGenerator generator, HashSet<Assembly> targetAssemblies, Type[] typesToLoadAssembliesFrom,
 		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
 	{
@@ -66,77 +66,219 @@ internal static class TestGenerator
 		}
 
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
-			references, new(OutputKind.DynamicallyLinkedLibrary, 
-				allowUnsafe: true, 
+			references, new(OutputKind.DynamicallyLinkedLibrary,
+				allowUnsafe: true,
 				generalDiagnosticOption: ReportDiagnostic.Error,
 				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
 		var driver = CSharpGeneratorDriver.Create(generator);
 		driver.RunGeneratorsAndUpdateCompilation(compilation, out var outputCompilation, out var diagnostics);
 
+		var driverHasDiagnostics = diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning);
 		Console.WriteLine($"Number of types found: {targetTypes.Length}");
-		Console.WriteLine(
-			$"Does generator compilation have any warning or error diagnostics? {diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error || _.Severity == DiagnosticSeverity.Warning)}");
+		Console.WriteLine($"Does generator compilation have any warning or error diagnostics? {driverHasDiagnostics}");
 
-		using var outputStream = new MemoryStream();
-		var result = outputCompilation.Emit(outputStream);
-
-		Console.WriteLine($"Was emit successful? {result.Success}");
-
-		var errors = result.Diagnostics
-			.Where(_ => _.Severity == DiagnosticSeverity.Error)
-			.Select(_ => new
-			{
-				_.Id,
-				Description = _.ToString(),
-			   _.Location,
-			})
-			.OrderBy(_ => _.Id).ToArray();
-
-		var ignoredWarnings = Array.Empty<string>();
-		var warnings = result.Diagnostics
-			.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
-			.Select(_ => new
-			{
-				_.Id,
-				Description = _.ToString(),
-				_.Location,
-			})
-			.OrderBy(_ => _.Id).ToArray();
-
-		var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
-
-		Console.WriteLine($"{errors.Length} error{(errors.Length != 1 ? "s" : string.Empty)}, {warnings.Length} warning{(warnings.Length != 1 ? "s" : string.Empty)}");
-		Console.WriteLine();
-
-		foreach (var error in errors)
+		if (driverHasDiagnostics)
 		{
-			var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
-			Console.WriteLine(
-				$$"""
-				Error:
+			var errors = diagnostics
+				.Where(_ => _.Severity == DiagnosticSeverity.Error)
+				.Select(_ => new
+				{
+					_.Id,
+					Description = _.ToString(),
+					_.Location,
+				})
+				.GroupBy(_ => _.Id)
+				.OrderBy(_ => _.Key).ToArray();
 
-				ID: {{error.Id}}
-				Description: {{error.Description}}
-				Code:
-				{{errorCode}}
+			var warnings = diagnostics
+				.Where(_ => _.Severity == DiagnosticSeverity.Warning)
+				.Select(_ => new
+				{
+					_.Id,
+					Description = _.ToString(),
+					_.Location,
+				})
+				.GroupBy(_ => _.Id)
+				.OrderBy(_ => _.Key).ToArray();
 
-				""");
+			Console.WriteLine();
+
+			if (errors.Length > 0)
+			{
+				Console.WriteLine("Error Counts");
+
+				var errorCount = 0;
+
+				foreach (var errorGroup in errors)
+				{
+					var errorGroupCount = errorGroup.Count();
+					errorCount += errorGroupCount;
+					Console.WriteLine($"\tCode: {errorGroup.Key}, Count: {errorGroupCount}");
+				}
+
+				Console.WriteLine($"Total Error Count: {errorCount}");
+				Console.WriteLine();
+			}
+
+			if (warnings.Length > 0)
+			{
+				Console.WriteLine("Warning Counts");
+
+				var warningCount = 0;
+
+				foreach (var warningGroup in warnings)
+				{
+					var warningGroupCount = warningGroup.Count();
+					warningCount += warningGroupCount;
+					Console.WriteLine($"\tCode: {warningGroup.Key}, Count: {warningGroupCount}");
+				}
+
+				Console.WriteLine($"Total Warning Count: {warningCount}");
+				Console.WriteLine();
+			}
+
+			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
+
+			foreach (var errorGroup in errors)
+			{
+				foreach (var error in errorGroup)
+				{
+					var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
+					Console.WriteLine(
+						$$"""
+						Error:
+
+						ID: {{error.Id}}
+						Description: {{error.Description}}
+						Code:
+						{{errorCode}}
+
+						""");
+				}
+			}
+
+			foreach (var warningGroup in warnings)
+			{
+				foreach (var warning in warningGroup)
+				{
+					var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
+					Console.WriteLine(
+						$$"""
+						Warning:
+
+						ID: {{warning.Id}}
+						Description: {{warning.Description}}
+						Code:
+						{{warningCode}}
+
+						""");
+				}
+			}
 		}
-
-		foreach (var warning in warnings)
+		else
 		{
-			var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
-			Console.WriteLine(
-				$$"""
-				Warning:
+			using var outputStream = new MemoryStream();
+			var result = outputCompilation.Emit(outputStream);
 
-				ID: {{warning.Id}}
-				Description: {{warning.Description}}
-				Code:
-				{{warningCode}}
+			Console.WriteLine($"Was emit successful? {result.Success}");
 
-				""");
+			var errors = result.Diagnostics
+				.Where(_ => _.Severity == DiagnosticSeverity.Error)
+				.Select(_ => new
+				{
+					_.Id,
+					Description = _.ToString(),
+					_.Location,
+				})
+				.GroupBy(_ => _.Id)
+				.OrderBy(_ => _.Key).ToArray();
+
+			var ignoredWarnings = Array.Empty<string>();
+			var warnings = result.Diagnostics
+				.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
+				.Select(_ => new
+				{
+					_.Id,
+					Description = _.ToString(),
+					_.Location,
+				})
+				.GroupBy(_ => _.Id)
+				.OrderBy(_ => _.Key).ToArray();
+
+			Console.WriteLine();
+
+			if (errors.Length > 0)
+			{
+				Console.WriteLine("Error Counts");
+
+				var errorCount = 0;
+
+				foreach (var errorGroup in errors)
+				{
+					var errorGroupCount = errorGroup.Count();
+					errorCount += errorGroupCount;
+					Console.WriteLine($"\tCode: {errorGroup.Key}, Count: {errorGroupCount}");
+				}
+
+				Console.WriteLine($"Total Error Count: {errorCount}");
+				Console.WriteLine();
+			}
+
+			if (warnings.Length > 0)
+			{
+				Console.WriteLine("Warning Counts");
+
+				var warningCount = 0;
+
+				foreach (var warningGroup in warnings)
+				{
+					var warningGroupCount = warningGroup.Count();
+					warningCount += warningGroupCount;
+					Console.WriteLine($"\tCode: {warningGroup.Key}, Count: {warningGroupCount}");
+				}
+
+				Console.WriteLine($"Total Warning Count: {warningCount}");
+				Console.WriteLine();
+			}
+
+			var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
+
+			foreach (var errorGroup in errors)
+			{
+				foreach (var error in errorGroup)
+				{
+					var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
+					Console.WriteLine(
+						$$"""
+						Error:
+
+						ID: {{error.Id}}
+						Description: {{error.Description}}
+						Code:
+						{{errorCode}}
+
+						""");
+				}
+			}
+
+			foreach (var warningGroup in warnings)
+			{
+				foreach (var warning in warningGroup)
+				{
+					var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
+					Console.WriteLine(
+						$$"""
+						Warning:
+
+						ID: {{warning.Id}}
+						Description: {{warning.Description}}
+						Code:
+						{{warningCode}}
+
+						""");
+				}
+			}
 		}
 	}
 
@@ -161,8 +303,8 @@ internal static class TestGenerator
 		}
 
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
-			references, new(OutputKind.DynamicallyLinkedLibrary, 
-				allowUnsafe: true, 
+			references, new(OutputKind.DynamicallyLinkedLibrary,
+				allowUnsafe: true,
 				generalDiagnosticOption: ReportDiagnostic.Error,
 				specificDiagnosticOptions: TestGenerator.SpecificDiagnostics));
 
