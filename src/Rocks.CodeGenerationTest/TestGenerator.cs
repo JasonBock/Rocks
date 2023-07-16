@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.ComponentModel;
 using Rocks.CodeGenerationTest.Extensions;
+using Microsoft.CodeAnalysis.Text;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -144,7 +145,9 @@ internal static class TestGenerator
 			{
 				foreach (var error in errorGroup)
 				{
-					var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
+					var errorCode = error.Location != Location.None ?
+						error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan) :
+						null;
 					Console.WriteLine(
 						$$"""
 						Error:
@@ -162,7 +165,9 @@ internal static class TestGenerator
 			{
 				foreach (var warning in warningGroup)
 				{
-					var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
+					var warningCode = warning.Location != Location.None ?
+						warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan) :
+						null;
 					Console.WriteLine(
 						$$"""
 						Warning:
@@ -248,7 +253,9 @@ internal static class TestGenerator
 			{
 				foreach (var error in errorGroup)
 				{
-					var errorCode = error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan);
+					var errorCode = error.Location != Location.None ?
+						error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan) :
+						null;
 					Console.WriteLine(
 						$$"""
 						Error:
@@ -266,7 +273,9 @@ internal static class TestGenerator
 			{
 				foreach (var warning in warningGroup)
 				{
-					var warningCode = warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan);
+					var warningCode = warning.Location != Location.None ? 
+						warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan) : 
+						null;
 					Console.WriteLine(
 						$$"""
 						Warning:

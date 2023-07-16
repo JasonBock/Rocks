@@ -35,6 +35,7 @@
 		<PackageReference Include="RestSharp" />
 		<PackageReference Include="Serilog" />
 		<PackageReference Include="SharpZipLib" />
+		<PackageReference Include="Sigil" />
 		<PackageReference Include="Silk.NET" />
 		<PackageReference Include="SixLabors.ImageSharp" />
 		<PackageReference Include="SkiaSharp" />

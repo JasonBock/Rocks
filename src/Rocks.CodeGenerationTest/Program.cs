@@ -1,5 +1,5 @@
-﻿//#define INCLUDE_PASSING
-#define INCLUDE_FAILING
+﻿#define INCLUDE_PASSING
+//#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -68,8 +68,10 @@ static void TestWithTypes()
 #if INCLUDE_PASSING
 		// PASSED
 		// Number of types found: 3852
-		typeof(object), typeof(Dictionary<,>),
-		typeof(System.Collections.Immutable.ImmutableArray), typeof(HttpMessageHandler),
+		typeof(object), 
+		typeof(Dictionary<,>),
+		typeof(System.Collections.Immutable.ImmutableArray), 
+		typeof(HttpMessageHandler),
 		typeof(ComputeSharp.AutoConstructorAttribute),
 		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 		typeof(SkiaSharp.GRBackend),
@@ -107,13 +109,10 @@ static void TestWithTypes()
 		typeof(System.Reflection.Metadata.ArrayShape),
 		typeof(ILGPU.ArrayMode),
 		typeof(AutoMapper.AutoMapAttribute),
+		typeof(Sigil.CatchBlock),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 #endif
 #if INCLUDE_FAILING
-		// Number of types found: 747
-		// Create: 315 errors, 0 warnings
-		// Make: 37 errors, 0 warnings
-		// EntityFramework
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 #endif
 	}.Select(_ => _.Assembly).ToHashSet();
 

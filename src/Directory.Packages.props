@@ -37,6 +37,7 @@
     <PackageVersion Include="RestSharp" Version="110.2.0" />
     <PackageVersion Include="Serilog" Version="2.12.0" />
     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
+    <PackageVersion Include="Sigil" Version="5.0.0" />
     <PackageVersion Include="Silk.NET" Version="2.17.1" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.0.1" />
     <PackageVersion Include="SkiaSharp" Version="2.88.3" />
