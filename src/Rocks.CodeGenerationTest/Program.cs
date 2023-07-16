@@ -53,7 +53,7 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(ILGPU.Backends.EntryPoints.ArgumentMapper)
+			typeof(Silk.NET.Core.Contexts.IVkSurface)
 		}, 
 		Array.Empty<Type>(), null);
 

@@ -145,9 +145,7 @@ internal static class TestGenerator
 			{
 				foreach (var error in errorGroup)
 				{
-					var errorCode = error.Location != Location.None ?
-						error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan) :
-						null;
+					var errorCode = error.Location.SourceTree?.GetText().GetSubText(error.Location.SourceSpan) ?? null;
 					Console.WriteLine(
 						$$"""
 						Error:
@@ -165,9 +163,7 @@ internal static class TestGenerator
 			{
 				foreach (var warning in warningGroup)
 				{
-					var warningCode = warning.Location != Location.None ?
-						warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan) :
-						null;
+					var warningCode = warning.Location.SourceTree?.GetText().GetSubText(warning.Location.SourceSpan) ?? null;
 					Console.WriteLine(
 						$$"""
 						Warning:
@@ -253,9 +249,7 @@ internal static class TestGenerator
 			{
 				foreach (var error in errorGroup)
 				{
-					var errorCode = error.Location != Location.None ?
-						error.Location.SourceTree!.GetText().GetSubText(error.Location.SourceSpan) :
-						null;
+					var errorCode = error.Location.SourceTree?.GetText().GetSubText(error.Location.SourceSpan) ?? null;
 					Console.WriteLine(
 						$$"""
 						Error:
@@ -273,9 +267,7 @@ internal static class TestGenerator
 			{
 				foreach (var warning in warningGroup)
 				{
-					var warningCode = warning.Location != Location.None ? 
-						warning.Location.SourceTree!.GetText().GetSubText(warning.Location.SourceSpan) : 
-						null;
+					var warningCode = warning.Location.SourceTree?.GetText().GetSubText(warning.Location.SourceSpan) ?? null;
 					Console.WriteLine(
 						$$"""
 						Warning:
