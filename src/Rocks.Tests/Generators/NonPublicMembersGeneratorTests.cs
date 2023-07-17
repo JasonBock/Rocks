@@ -1737,7 +1737,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "Test_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -1819,7 +1819,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "Test_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

@@ -196,7 +196,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "StaticToString_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.StaticToString_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -425,7 +425,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IMatchObjectOfobject_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -654,7 +654,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IMatchObjectOfobject_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

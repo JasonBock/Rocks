@@ -178,7 +178,7 @@ public static class MultipleModelGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ITarget_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.ITarget_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

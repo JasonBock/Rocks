@@ -86,7 +86,7 @@ public static class RecordMakeGeneratorTests
 			""";
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "RecordTest_Rock_Make.g.cs", generatedCode) },
+			new[] { (typeof(RockMakeGenerator), "MockTests.RecordTest_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }
