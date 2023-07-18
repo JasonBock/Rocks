@@ -11,5 +11,5 @@ public interface IRaiseEvents
 	/// </summary>
 	/// <param name="eventName">The name of the event.</param>
 	/// <param name="args">The arguments for the event.</param>
-	void Raise(string eventName, EventArgs args);
+	void Raise(string eventName, object args);
 }

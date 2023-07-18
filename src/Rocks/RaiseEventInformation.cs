@@ -11,13 +11,13 @@ public sealed class RaiseEventInformation
 	/// </summary>
 	/// <param name="fieldName">The field name.</param>
 	/// <param name="args">The event arguments.</param>
-	public RaiseEventInformation(string fieldName, EventArgs args) =>
+	public RaiseEventInformation(string fieldName, object args) =>
 		(this.FieldName, this.Args) = (fieldName, args);
 
 	/// <summary>
 	/// Gets the event arguments.
 	/// </summary>
-	public EventArgs Args { get; }
+	public object Args { get; }
 	/// <summary>
 	/// Gets the field name.
 	/// </summary>

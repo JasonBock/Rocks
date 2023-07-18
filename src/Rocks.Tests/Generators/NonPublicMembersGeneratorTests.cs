@@ -844,7 +844,7 @@ public static class NonPublicMembersGeneratorTests
 					public override event global::System.EventHandler? PublicVirtualEvent;
 					#pragma warning restore CS0067
 					
-					void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+					void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 					{
 						var @thisType = this.GetType();
 						var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
@@ -1277,7 +1277,7 @@ public static class NonPublicMembersGeneratorTests
 						protected override event global::System.EventHandler? ProtectedEvent;
 						#pragma warning restore CS0067
 						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 						{
 							var @thisType = this.GetType();
 							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
@@ -1576,7 +1576,7 @@ public static class NonPublicMembersGeneratorTests
 						protected override event global::System.EventHandler? ProtectedEvent;
 						#pragma warning restore CS0067
 						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 						{
 							var @thisType = this.GetType();
 							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 

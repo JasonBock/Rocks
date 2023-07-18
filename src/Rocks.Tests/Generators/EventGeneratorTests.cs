@@ -6,6 +6,139 @@ namespace Rocks.Tests.Generators;
 public static class EventGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWhenArgsTypeDoesNotDeriveFromEventArgsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			
+			namespace MockTests
+			{
+				public class ServerMaintenanceEvent { }
+
+				public interface IHaveEvents
+				{
+					void A();
+					event EventHandler<ServerMaintenanceEvent> ServerMaintenanceEvent;
+				}
+			
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IHaveEvents>();
+					}
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace MockTests
+			{
+				internal static class CreateExpectationsOfIHaveEventsExtensions
+				{
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveEvents> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveEvents> @self) =>
+						new(@self);
+					
+					internal static global::MockTests.IHaveEvents Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveEvents> @self)
+					{
+						if (!@self.WasInstanceInvoked)
+						{
+							@self.WasInstanceInvoked = true;
+							var @mock = new RockIHaveEvents(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					private sealed class RockIHaveEvents
+						: global::MockTests.IHaveEvents, global::Rocks.IRaiseEvents
+					{
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+						
+						public RockIHaveEvents(global::Rocks.Expectations.Expectations<global::MockTests.IHaveEvents> @expectations)
+						{
+							this.handlers = @expectations.Handlers;
+						}
+						
+						[global::Rocks.MemberIdentifier(0, "void A()")]
+						public void A()
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								if (@methodHandler.Method is not null)
+								{
+									((global::System.Action)@methodHandler.Method)();
+								}
+								
+								@methodHandler.RaiseEvents(this);
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void A()");
+							}
+						}
+						
+						
+						#pragma warning disable CS0067
+						public event global::System.EventHandler<global::MockTests.ServerMaintenanceEvent>? ServerMaintenanceEvent;
+						#pragma warning restore CS0067
+						
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
+						{
+							var @thisType = this.GetType();
+							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+								global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
+							
+							if (@eventDelegate is not null)
+							{
+								foreach (var @handler in @eventDelegate.GetInvocationList())
+								{
+									@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
+								}
+							}
+						}
+					}
+				}
+				
+				internal static class MethodExpectationsOfIHaveEventsExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveEvents, global::System.Action> A(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveEvents> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IHaveEvents, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				}
+				
+				internal static class MethodAdornmentsOfIHaveEventsExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveEvents, TCallback> RaisesServerMaintenanceEvent<TCallback>(this global::Rocks.MethodAdornments<global::MockTests.IHaveEvents, TCallback> @self, global::MockTests.ServerMaintenanceEvent @args)
+						where TCallback : global::System.Delegate
+					{
+						@self.Handler.AddRaiseEvent(new("ServerMaintenanceEvent", @args));
+						return @self;
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateAsync()
 	{
 		var code =
@@ -95,7 +228,7 @@ public static class EventGeneratorTests
 						public event global::System.EventHandler? C;
 						#pragma warning restore CS0067
 						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 						{
 							var @thisType = this.GetType();
 							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
@@ -270,7 +403,7 @@ public static class EventGeneratorTests
 						}
 						#pragma warning restore CS0067
 						
-						void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 						{
 							var @thisType = this.GetType();
 							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 

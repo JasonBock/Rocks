@@ -61,7 +61,7 @@ internal static class MockEventsBuilder
 			"""
 			#pragma warning restore CS0067
 
-			void global::Rocks.IRaiseEvents.Raise(string @fieldName, global::System.EventArgs @args)
+			void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
 			{
 				var @thisType = this.GetType();
 				var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
