@@ -24,10 +24,12 @@ namespace Rocks.IntegrationTests
 {
 	internal static class CreateExpectationsOfITestInterfaceExtensions
 	{
-		internal static global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> Methods(this global::Rocks.Expectations.Expectations<global::Rocks.IntegrationTests.ITestInterface> @self) =>
-			new(@self);
+		internal static global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> Methods(
+            this global::Rocks.Expectations.Expectations<global::Rocks.IntegrationTests.ITestInterface> @self) =>
+			    new(@self);
 		
-		internal static global::Rocks.IntegrationTests.ITestInterface Instance(this global::Rocks.Expectations.Expectations<global::Rocks.IntegrationTests.ITestInterface> @self)
+		internal static global::Rocks.IntegrationTests.ITestInterface Instance(
+            this global::Rocks.Expectations.Expectations<global::Rocks.IntegrationTests.ITestInterface> @self)
 		{
 			if (!@self.WasInstanceInvoked)
 			{
@@ -142,14 +144,23 @@ namespace Rocks.IntegrationTests
 	
 	internal static class MethodExpectationsOfITestInterfaceExtensions
 	{
-		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action> NoParameters(this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self) =>
-			new global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action<int>> OneParameter(this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self, global::Rocks.Argument<int> @a)
+		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action> NoParameters(
+            this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self) =>
+			    new global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action>(
+                    @self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+
+		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action<int>> OneParameter(
+            this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self, 
+            global::Rocks.Argument<int> @a)
 		{
 			global::System.ArgumentNullException.ThrowIfNull(@a);
 			return new global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action<int>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @a }));
 		}
-		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action<int, string>> MultipleParameters(this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+
+		internal static global::Rocks.MethodAdornments<global::Rocks.IntegrationTests.ITestInterface, global::System.Action<int, string>> MultipleParameters(
+            this global::Rocks.Expectations.MethodExpectations<global::Rocks.IntegrationTests.ITestInterface> @self, 
+            global::Rocks.Argument<int> @a, 
+            global::Rocks.Argument<string> @b)
 		{
 			global::System.ArgumentNullException.ThrowIfNull(@a);
 			global::System.ArgumentNullException.ThrowIfNull(@b);
@@ -169,6 +180,7 @@ expectations.Properties().Getters().GetData().Returns(3);
 
 var mock = expectations.Instance();
 mock.NoParameters();
+mock.OneParameter(12);
 var value = mock.GetData;
 
 Assert.That(value, Is.EqualTo(3));
@@ -179,7 +191,7 @@ expectations.Verify();
 What I'd **like** is this:
 
 ```csharp
-var expectations = Rock.Create<ITestInterface>();
+using var expectations = Rock.Create<ITestInterface>().Expectations();
 expectations.NoParameters();
 expectations.OneParameter(12);
 expectations.GetData.Returns(3);
@@ -190,16 +202,21 @@ mock.OneParameter(12);
 var value = mock.GetData;
 
 Assert.That(value, Is.EqualTo(3));
-
-expectations.Verify();
 ```
 
 So, could I generate:
 
 ```csharp
-internal sealed class ExpectationsForITestInterface
-    : Expectations<ITestInterface>
+internal class ExpectationsForITestInterface
+    : Expectations<ITestInterface>, IDisposable
 {
+    internal static ExpectationsForITestInterface Expectations(this Expectations<ITestInterface> self) => new();
+    
+    private ExpectationsForITestInterface() { }
+
+    // It might be better to do this to avoid naming conflicts...
+    //internal static ITestInterface Instance(this ExpectationsForITestInterface self) 
+
     internal ITestInterface Instance()
     {
         if (!this.WasInstanceInvoked)
@@ -222,7 +239,7 @@ internal sealed class ExpectationsForITestInterface
     }
 
     internal Rocks.MethodAdornments<ITestInterface, Action> NoParameters() =>
-        new Rocks.MethodAdornments<ITestInterface, Action>(@this.Add(
+        new Rocks.MethodAdornments<ITestInterface, Action>(this.Add(
             0, new List<Rocks.Argument>()));
 
     internal Rocks.MethodAdornments<ITestInterface, Action<int>> OneParameter(
@@ -242,11 +259,13 @@ internal sealed class ExpectationsForITestInterface
             this.Add(2, new List<Rocks.Argument>(2) { @a, @b }));
     }
 
-    internal static Rocks.PropertyAdornments<ITestInterface, Func<int>, int> GetData
+    internal Rocks.PropertyAdornments<ITestInterface, Func<int>, int> GetData
     {
         get => new Rocks.PropertyAdornments<ITestInterface, Func<int>, int>(
             this.Add<int>(3, new List<Rocks.Argument>()));
-    }    
+    }
+
+    public void Dispose() => this.Verify();
 }
 ```
 
@@ -254,16 +273,67 @@ What I like about this:
 * It makes the gen'd API arguably cleaner and more concise. 
 * It requires less code to be generated. I don't need to make all the static classes for the extension methods.
 
+Note that the above implementation includes resolving this [issue](https://github.com/JasonBock/Rocks/issues/224).
+
+I'm not sure how a setter would fall through with this...need to spec that out.
+
 I may need to implement the `Expectations<>` methods like `Add()` through an explicit interface implementation. This would eliminate any collisions with mock targets that would have a method called `Add()`. All of the calls would be invoked like this:
 
 ```csharp
 internal Rocks.MethodAdornments<ITestInterface, Action> NoParameters() =>
     new Rocks.MethodAdornments<ITestInterface, Action>(
-        ((IExpectations)@this).Add(0, new List<Rocks.Argument>()));
+        ((IExpectations)this).Add(0, new List<Rocks.Argument>()));
 ```
 
 If explicit interface implementation is needed, that would be done on the `Expectations<>` class as well...kind of like what it's currently done, something like `FooForIInterfaceA`. Not quite sure right now.
 
-This may be problematic in that the type to mock may implement `IDisposable`. There's an [issue](https://github.com/JasonBock/Rocks/issues/224) that would potentially collide with this. But...I can (probably) live with that. Actually, that will be perfectly fine, because the custom `Expectations<>` class will not implement anything other than `Expectations<>`, so adding `IDisposable` is fine.
+Actually, I thought of something last night. If explicit interface implementation is needed, I'd create a "wrapper" class, maybe deriving from the gen'd class:
+
+```csharp
+public interface IAmExplicit 
+{ 
+    void ExplicitCall(); 
+}
+
+internal sealed class ExplicitExpectationsForIAmExplicit
+    : ExpectationsForITestInterface
+{
+    private readonly ExpectationsForITestInterface expectations;
+
+    internal ExplicitExpectationsForIAmExplicit(ExpectationsForITestInterface expectations) =>
+        this.expectations = expectations;
+    
+    internal Rocks.MethodAdornments<IAmExplicit, Action> ExplicitCall() =>
+        new Rocks.MethodAdornments<IAmExplicit, Action>(((IExpectations)expectations).Add(
+            0, new List<Rocks.Argument>()));
+}
+```
+
+Then, the custom expectations would expose a property like this:
+
+```csharp
+internal ExplicitExpectationsForIAmExplicit IAmExplicit
+{
+    get => new(this);
+}    
+```
+
+This may lead to a naming conflict, but, the chances are small, and then it would allow this:
+
+```csharp
+var expectations = Rock.Create<ITestInterface>().Expectations();
+expectations.NoParameters();
+expectations.OneParameter(12);
+expectations.GetData.Returns(3);
+expectations.IAmExplicit.ExplicitCall();
+```
+
+If we are really concerned about a naming conflict, the property could be an extension method, so it would look like this:
+
+```csharp
+expectations.IAmExplicit().ExplicitCall();
+```
+
+That way, **if** there was a property called `IAmExplicit`, we wouldn't collide. Generally, explicit implementations are not common, but they do happen, and I should be defensive with that.
 
 This would be a **lot** of work to change Rocks. But this has a lot of potential.
