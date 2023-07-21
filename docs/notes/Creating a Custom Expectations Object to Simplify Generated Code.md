@@ -272,10 +272,11 @@ internal class ExpectationsForITestInterface
 What I like about this:
 * It makes the gen'd API arguably cleaner and more concise. 
 * It requires less code to be generated. I don't need to make all the static classes for the extension methods.
+* It (may) allow us to revisit [issue 213](https://github.com/JasonBock/Rocks/issues/213), because the expectations are on the type itself, and now protected nested types can be "seen".
 
 Note that the above implementation includes resolving this [issue](https://github.com/JasonBock/Rocks/issues/224).
 
-I'm not sure how a setter would fall through with this...need to spec that out.
+I'm not sure how a setter would fall through with this...need to spec that out. May need some modifications to `PropertyAdornments` where we have various combinations of `get` and `set/init` that can be returned from the property and then you can specify a `Returns()` and or a validation of the setter value. Similar concerns with indexers as well.
 
 I may need to implement the `Expectations<>` methods like `Add()` through an explicit interface implementation. This would eliminate any collisions with mock targets that would have a method called `Add()`. All of the calls would be invoked like this:
 
@@ -287,7 +288,7 @@ internal Rocks.MethodAdornments<ITestInterface, Action> NoParameters() =>
 
 If explicit interface implementation is needed, that would be done on the `Expectations<>` class as well...kind of like what it's currently done, something like `FooForIInterfaceA`. Not quite sure right now.
 
-Actually, I thought of something last night. If explicit interface implementation is needed, I'd create a "wrapper" class, maybe deriving from the gen'd class:
+Another thought...if explicit interface implementation is needed, I'd create a "wrapper" class, maybe deriving from the gen'd class:
 
 ```csharp
 public interface IAmExplicit 
