@@ -39,7 +39,7 @@ internal static class ExplicitPropertyExpectationsExtensionsPropertyBuilder
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
-		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.IncludeGenericsName;
+		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.FullyQualifiedName;
 		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 		var mockTypeName = property.MockType.FullyQualifiedName;
 		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{mockTypeName}, {containingTypeName}> @self";

@@ -206,12 +206,12 @@ public static class ExplicitImplementationGeneratorTests
 			}
 			internal static class ExplicitPropertySetterExpectationsOfILeftRightForILeftExtensions
 			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> @self, global::Rocks.Argument<Information> value) =>
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> @self, global::Rocks.Argument<global::Values.Information> value) =>
 					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 			}
 			internal static class ExplicitPropertySetterExpectationsOfILeftRightForIRightExtensions
 			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> @self, global::Rocks.Argument<Information> value) =>
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> @self, global::Rocks.Argument<global::Values.Information> value) =>
 					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
 			}
 			
