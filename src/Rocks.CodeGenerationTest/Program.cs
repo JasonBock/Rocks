@@ -9,8 +9,8 @@ using Rocks.CodeGenerationTest.Mappings;
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
-TestWithTypes();
+TestWithType();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
@@ -53,12 +53,9 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(StackExchange.Redis.IConnectionMultiplexer)
+			typeof(AngleSharp.Html.Dom.IHtmlMediaElement)
 		}, 
-		new[]
-		{
-			typeof(System.Net.EndPoint)
-		}, null);
+		Array.Empty<Type>(), null);
 
 static void TestWithTypes()
 {

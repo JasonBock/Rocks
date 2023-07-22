@@ -390,13 +390,13 @@ public static class EventGeneratorTests
 						
 						#pragma warning disable CS0067
 						private global::System.EventHandler? IExplicitInterfaceImplementationOne_C;
-						event global::System.EventHandler? IExplicitInterfaceImplementationOne.C
+						event global::System.EventHandler? global::MockTests.IExplicitInterfaceImplementationOne.C
 						{
 							add => this.IExplicitInterfaceImplementationOne_C += value;
 							remove => this.IExplicitInterfaceImplementationOne_C -= value;
 						}
 						private global::System.EventHandler? IExplicitInterfaceImplementationTwo_C;
-						event global::System.EventHandler? IExplicitInterfaceImplementationTwo.C
+						event global::System.EventHandler? global::MockTests.IExplicitInterfaceImplementationTwo.C
 						{
 							add => this.IExplicitInterfaceImplementationTwo_C += value;
 							remove => this.IExplicitInterfaceImplementationTwo_C -= value;

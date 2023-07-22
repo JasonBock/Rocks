@@ -22,7 +22,7 @@ internal static class MockEventsBuilder
 	private static void BuildExplicitImplementation(IndentedTextWriter writer, EventModel @event)
 	{
 		var eventType = @event.Type.FullyQualifiedName;
-		var name = $"{@event.ContainingType.FlattenedName}.{@event.Name}";
+		var name = $"{@event.ContainingType.FullyQualifiedName}.{@event.Name}";
 		var fieldName = $"{@event.ContainingType.FlattenedName}_{@event.Name}";
 
 		writer.WriteLines(

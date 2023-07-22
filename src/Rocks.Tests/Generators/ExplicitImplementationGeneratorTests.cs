@@ -6,6 +6,275 @@ namespace Rocks.Tests.Generators;
 public static class ExplicitImplementationGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithExplicitEventsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			namespace EventStuff
+			{
+				public class Event : EventArgs { }
+
+				public delegate void DomEventHandler(object sender, Event ev);
+			}
+
+			namespace GlobalHandlers
+			{
+				public interface IGlobalEventHandlers
+				{
+					event global::EventStuff.DomEventHandler CanPlay;
+				}
+			}
+
+			namespace Controllers
+			{
+				public interface IMediaController
+				{
+					event global::EventStuff.DomEventHandler CanPlay;
+				}
+			}
+
+			namespace MockTests
+			{
+				public interface IHtmlMediaElement
+					: global::GlobalHandlers.IGlobalEventHandlers, global::Controllers.IMediaController
+				{
+					void Foo();
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IHtmlMediaElement>();
+					}
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			namespace MockTests
+			{
+				internal static class CreateExpectationsOfIHtmlMediaElementExtensions
+				{
+					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHtmlMediaElement> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @self) =>
+						new(@self);
+					
+					internal static global::MockTests.IHtmlMediaElement Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @self)
+					{
+						if (!@self.WasInstanceInvoked)
+						{
+							@self.WasInstanceInvoked = true;
+							var @mock = new RockIHtmlMediaElement(@self);
+							@self.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
+					}
+					
+					private sealed class RockIHtmlMediaElement
+						: global::MockTests.IHtmlMediaElement, global::Rocks.IRaiseEvents
+					{
+						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+						
+						public RockIHtmlMediaElement(global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @expectations)
+						{
+							this.handlers = @expectations.Handlers;
+						}
+						
+						[global::Rocks.MemberIdentifier(0, "void Foo()")]
+						public void Foo()
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								if (@methodHandler.Method is not null)
+								{
+									((global::System.Action)@methodHandler.Method)();
+								}
+								
+								@methodHandler.RaiseEvents(this);
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
+							}
+						}
+						
+						
+						#pragma warning disable CS0067
+						private global::EventStuff.DomEventHandler? IGlobalEventHandlers_CanPlay;
+						event global::EventStuff.DomEventHandler? global::GlobalHandlers.IGlobalEventHandlers.CanPlay
+						{
+							add => this.IGlobalEventHandlers_CanPlay += value;
+							remove => this.IGlobalEventHandlers_CanPlay -= value;
+						}
+						private global::EventStuff.DomEventHandler? IMediaController_CanPlay;
+						event global::EventStuff.DomEventHandler? global::Controllers.IMediaController.CanPlay
+						{
+							add => this.IMediaController_CanPlay += value;
+							remove => this.IMediaController_CanPlay -= value;
+						}
+						#pragma warning restore CS0067
+						
+						void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
+						{
+							var @thisType = this.GetType();
+							var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+								global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
+							
+							if (@eventDelegate is not null)
+							{
+								foreach (var @handler in @eventDelegate.GetInvocationList())
+								{
+									@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
+								}
+							}
+						}
+					}
+				}
+				
+				internal static class MethodExpectationsOfIHtmlMediaElementExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHtmlMediaElement> @self) =>
+						new global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				}
+				
+				internal static class MethodAdornmentsOfIHtmlMediaElementExtensions
+				{
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> RaisesCanPlayOnIGlobalEventHandlers<TCallback>(this global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> @self, global::EventStuff.Event @args)
+						where TCallback : global::System.Delegate
+					{
+						@self.Handler.AddRaiseEvent(new("IGlobalEventHandlers_CanPlay", @args));
+						return @self;
+					}
+					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> RaisesCanPlayOnIMediaController<TCallback>(this global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> @self, global::EventStuff.Event @args)
+						where TCallback : global::System.Delegate
+					{
+						@self.Handler.AddRaiseEvent(new("IMediaController_CanPlay", @args));
+						return @self;
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task MakeWithExplicitEventsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			namespace EventStuff
+			{
+				public class Event : EventArgs { }
+
+				public delegate void DomEventHandler(object sender, Event ev);
+			}
+
+			namespace GlobalHandlers
+			{
+				public interface IGlobalEventHandlers
+				{
+					event global::EventStuff.DomEventHandler CanPlay;
+				}
+			}
+
+			namespace Controllers
+			{
+				public interface IMediaController
+				{
+					event global::EventStuff.DomEventHandler CanPlay;
+				}
+			}
+
+			namespace MockTests
+			{
+				public interface IHtmlMediaElement
+					: global::GlobalHandlers.IGlobalEventHandlers, global::Controllers.IMediaController
+				{
+					void Foo();
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Make<IHtmlMediaElement>();
+					}
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			namespace MockTests
+			{
+				internal static class MakeExpectationsOfIHtmlMediaElementExtensions
+				{
+					internal static global::MockTests.IHtmlMediaElement Instance(this global::Rocks.MakeGeneration<global::MockTests.IHtmlMediaElement> @self)
+					{
+						return new RockIHtmlMediaElement();
+					}
+					
+					private sealed class RockIHtmlMediaElement
+						: global::MockTests.IHtmlMediaElement
+					{
+						public RockIHtmlMediaElement()
+						{
+						}
+						
+						public void Foo()
+						{
+						}
+						
+						#pragma warning disable CS0067
+						private global::EventStuff.DomEventHandler? IGlobalEventHandlers_CanPlay;
+						event global::EventStuff.DomEventHandler? global::GlobalHandlers.IGlobalEventHandlers.CanPlay
+						{
+							add => this.IGlobalEventHandlers_CanPlay += value;
+							remove => this.IGlobalEventHandlers_CanPlay -= value;
+						}
+						private global::EventStuff.DomEventHandler? IMediaController_CanPlay;
+						event global::EventStuff.DomEventHandler? global::Controllers.IMediaController.CanPlay
+						{
+							add => this.IMediaController_CanPlay += value;
+							remove => this.IMediaController_CanPlay -= value;
+						}
+						#pragma warning restore CS0067
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithExplicitPropertySetterAsync()
 	{
 		var code =
