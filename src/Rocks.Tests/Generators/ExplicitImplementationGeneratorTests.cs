@@ -6,6 +6,223 @@ namespace Rocks.Tests.Generators;
 public static class ExplicitImplementationGeneratorTests
 {
 	[Test]
+	public static async Task CreateWithExplicitPropertySetterAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			namespace Values
+			{
+				public sealed class Information { }
+			}
+
+			public interface ILeft
+			{
+				Values.Information Value { get; set; }
+			}
+			
+			public interface IRight
+			{
+				Values.Information Value { get; set; }
+			}
+
+			public interface ILeftRight
+				: ILeft, IRight { }
+						
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Create<ILeftRight>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfILeftRightExtensions
+			{
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> ExplicitPropertiesForILeft(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::ILeft> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> ExplicitPropertiesForIRight(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::IRight> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> @self) =>
+					new(@self);
+				
+				internal static global::ILeftRight Instance(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockILeftRight(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockILeftRight
+					: global::ILeftRight
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockILeftRight(global::Rocks.Expectations.Expectations<global::ILeftRight> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "global::ILeft.get_Value()")]
+					[global::Rocks.MemberIdentifier(1, "global::ILeft.set_Value(@value)")]
+					global::Values.Information global::ILeft.Value
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<global::Values.Information>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<global::Values.Information>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.get_Value())");
+						}
+						set
+						{
+							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value))
+									{
+										@methodHandler.IncrementCallCount();
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ILeft.set_Value(@value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.set_Value(@value)");
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(2, "global::IRight.get_Value()")]
+					[global::Rocks.MemberIdentifier(3, "global::IRight.set_Value(@value)")]
+					global::Values.Information global::IRight.Value
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<global::Values.Information>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<global::Values.Information>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.get_Value())");
+						}
+						set
+						{
+							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value))
+									{
+										@methodHandler.IncrementCallCount();
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IRight.set_Value(@value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.set_Value(@value)");
+							}
+						}
+					}
+				}
+			}
+			
+			internal static class ExplicitPropertyGetterExpectationsOfILeftRightForILeftExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information> Value(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::ILeft> @self) =>
+					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information>(@self.Add<global::Values.Information>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			internal static class ExplicitPropertyGetterExpectationsOfILeftRightForIRightExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information> Value(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::IRight> @self) =>
+					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information>(@self.Add<global::Values.Information>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			internal static class ExplicitPropertySetterExpectationsOfILeftRightForILeftExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> @self, global::Rocks.Argument<Information> value) =>
+					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+			}
+			internal static class ExplicitPropertySetterExpectationsOfILeftRightForIRightExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> @self, global::Rocks.Argument<Information> value) =>
+					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithDifferenceInReturnTypeAsync()
 	{
 		var code =
