@@ -53,7 +53,7 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(ILGPU.Backends.EntryPoints.ArgumentMapper)
+			typeof(ComputeSharp.D2D1.ID2D1PixelShader)
 		}, 
 		Array.Empty<Type>(), null);
 
