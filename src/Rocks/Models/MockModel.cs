@@ -60,7 +60,13 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			if (constructor.Parameters.Any(_ => _.Type.GetAttributes().Any(
+			if (constructor.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(constructor));
+			}
+			else if (constructor.Parameters.Any(_ => _.Type.GetAttributes().Any(
 				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))))
 			{
@@ -70,7 +76,13 @@ internal sealed record MockModel
 
 		foreach (var method in methods.Results)
 		{
-			if (method.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
+			if (method.Value.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(method.Value));
+			}
+			else if (method.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
 				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))) ||
 				!method.Value.ReturnsVoid && method.Value.ReturnType.GetAttributes().Any(
@@ -83,7 +95,13 @@ internal sealed record MockModel
 
 		foreach (var property in properties.Results)
 		{
-			if (property.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
+			if (property.Value.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(property.Value));
+			}
+			else if (property.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
 				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))) ||
 				property.Value.Type.GetAttributes().Any(
@@ -91,6 +109,16 @@ internal sealed record MockModel
 						(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
 			{
 				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(property.Value));
+			}
+		}
+
+		foreach (var @event in events.Results)
+		{
+			if (@event.Value.GetAttributes().Any(
+				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+			{
+				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(@event.Value));
 			}
 		}
 

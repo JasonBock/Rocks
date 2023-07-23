@@ -10,18 +10,25 @@ internal static class TestAssistants
 		IEnumerable<(Type, string, string)> generatedSources,
 		IEnumerable<DiagnosticResult> expectedDiagnostics,
 		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary,
-		IEnumerable<MetadataReference>? additionalReferences = null)
+		IEnumerable<MetadataReference>? additionalReferences = null,
+		ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default,
+		List<string>? disabledDiagnostics = null)
 		where T : IIncrementalGenerator, new()
 	{
-		var test = new CSharpIncrementalSourceGeneratorVerifier<T>.Test
+		var test = new CSharpIncrementalSourceGeneratorVerifier<T>.Test(generalDiagnosticOption)
 		{
 			ReferenceAssemblies = TestAssistants.GetNet70(), // ReferenceAssemblies.Net.Net60, // TestAssistants.GetNet60(), /* ReferenceAssemblies.Net.Net50, */
 			TestState =
 			{
 				Sources = { code },
-				OutputKind = outputKind
+				OutputKind = outputKind,
 			},
 		};
+
+		if (disabledDiagnostics is not null)
+		{
+			test.DisabledDiagnostics.AddRange(disabledDiagnostics);
+		}
 
 		foreach (var generatedSource in generatedSources)
 		{

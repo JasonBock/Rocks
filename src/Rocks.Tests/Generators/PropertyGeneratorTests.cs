@@ -3,24 +3,6 @@ using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
-//public interface IMessagePublishTopology
-//{
-//	bool Exclude { get; }
-//}
-
-//public interface IMessagePublishTopologyConfigurator :
-//	 IMessagePublishTopology
-//{
-//	new bool Exclude { get; set; }
-//}
-
-//public class X
-//	: IMessagePublishTopologyConfigurator
-//{
-//   public bool Exclude { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-//   bool IMessagePublishTopology.Exclude => throw new NotImplementedException();
-//}
 public static class PropertyGeneratorTests
 {
 	[Test]

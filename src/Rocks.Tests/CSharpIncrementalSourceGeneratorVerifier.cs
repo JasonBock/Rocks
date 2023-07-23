@@ -18,7 +18,7 @@ namespace Rocks.Tests
 	{
 		internal sealed class Test : CSharpSourceGeneratorTest<EmptySourceGeneratorProvider, NUnitVerifier>
 		{
-			public Test() =>
+			public Test(ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default) =>
 				this.SolutionTransforms.Add((solution, projectId) =>
 				{
 					if (solution is null)
@@ -33,7 +33,8 @@ namespace Rocks.Tests
 
 					var compilationOptions = solution.GetProject(projectId)!.CompilationOptions!;
 					compilationOptions = compilationOptions.WithSpecificDiagnosticOptions(
-					compilationOptions.SpecificDiagnosticOptions.SetItems(CSharpVerifierHelper.NullableWarnings));
+						compilationOptions.SpecificDiagnosticOptions.SetItems(CSharpVerifierHelper.NullableWarnings))
+						.WithGeneralDiagnosticOption(generalDiagnosticOption);
 					solution = solution.WithProjectCompilationOptions(projectId, compilationOptions);
 
 					return solution;
