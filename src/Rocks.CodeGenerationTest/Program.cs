@@ -53,7 +53,7 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(AngleSharp.Html.Dom.IHtmlMediaElement)
+			typeof(ILGPU.Backends.EntryPoints.ArgumentMapper)
 		}, 
 		Array.Empty<Type>(), null);
 
