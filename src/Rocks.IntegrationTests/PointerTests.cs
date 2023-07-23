@@ -3,6 +3,11 @@ using Rocks.Exceptions;
 
 namespace Rocks.IntegrationTests;
 
+public interface ISurface
+{
+	unsafe void Create<T>(T* allocator) where T : unmanaged;
+}
+
 public unsafe interface IHavePointers
 {
 	void DelegatePointerParameter(delegate*<int, void> value);
@@ -13,6 +18,31 @@ public unsafe interface IHavePointers
 
 public unsafe static class PointerTests
 {
+	[Test]
+	public static void CreateWithPointerTypeParameters()
+	{
+		var value = 10;
+		var pValue = &value;
+
+		var expectations = Rock.Create<ISurface>();
+		expectations.Methods().Create<int>(pValue);
+
+		var mock = expectations.Instance();
+		mock.Create(pValue);
+
+		expectations.Verify();
+	}
+
+	[Test]
+	public static void MakeWithPointerTypeParameters()
+	{
+		var value = 10;
+		var pValue = &value;
+
+		var mock = Rock.Make<ISurface>().Instance();
+		mock.Create(pValue);
+	}
+
 	[Test]
 	public static void CreateWithPointerParameterNoReturn()
 	{

@@ -37,10 +37,10 @@ public static class ProjectedTypesGeneratorTests
 			namespace ProjectionsForISurface
 			{
 				internal unsafe delegate void CreateCallback_197220541663188455981388668427457375357930643021<T>(T* @allocator) where T : unmanaged;
-				internal unsafe delegate bool ArgumentEvaluationForTPointer<T>(T* @value);
+				internal unsafe delegate bool ArgumentEvaluationForTPointer<T>(T* @value) where T : unmanaged;
 				
 				internal unsafe sealed class ArgumentForTPointer<T>
-					: global::Rocks.Argument
+					: global::Rocks.Argument where T : unmanaged
 				{
 					private readonly global::ProjectionsForISurface.ArgumentEvaluationForTPointer<T>? evaluation;
 					private readonly T* value;

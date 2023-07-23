@@ -30,14 +30,17 @@ internal static class PointerArgTypeBuilder
 		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel);
 		var argName = type.PointerArgProjectedName;
 		var typeName = type.FullyQualifiedName;
-		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
+		var parameterType = type.PointerArgParameterType is not null ? 
+			$"<{type.PointerArgParameterType}>" : null;
+		var unmanagedConstraint = type.PointerArgParameterType is not null ?
+			$" where {type.PointerArgParameterType} : unmanaged" : null;
 
 		writer.WriteLines(
 			$$"""
-			internal unsafe delegate bool {{validationDelegateName}}{{parameterType}}({{typeName}} @value);
+			internal unsafe delegate bool {{validationDelegateName}}{{parameterType}}({{typeName}} @value){{unmanagedConstraint}};
 			
 			internal unsafe sealed class {{argName}}{{parameterType}}
-				: global::Rocks.Argument
+				: global::Rocks.Argument{{unmanagedConstraint}}
 			{
 				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
 				private readonly {{typeName}} value;

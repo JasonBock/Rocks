@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed a type name when an explicit property setter extension method is made (issue [#229](https://github.com/JasonBock/Rocks/issues/229))
 - Fixed a type name when an explicit event is declared in the mock (issue [#238](https://github.com/JasonBock/Rocks/issues/238))
+- Added unmanaged constraints to type parameters for projected pointer types (issue [#242](https://github.com/JasonBock/Rocks/issues/242))
 
 ## [7.1.1] - 2023-07-23
 
