@@ -2,11 +2,43 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
+using Rocks.Diagnostics;
 
 namespace Rocks.Tests.Generators;
 
 public static class NonPublicMembersGeneratorTests
 {
+	[Test]
+	public static async Task CreateWithInaccesibleTypesUsedOnConstraintsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			
+			public abstract class ArgumentMapper
+			{
+				protected interface ISource { }
+
+				protected abstract void NotUsingSource<T>()
+					where T : struct, ISource;
+			}
+	
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Create<ArgumentMapper>();
+				}
+			}
+			""";
+
+		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
+			.WithSpan(3, 23, 3, 37);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic }).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task CreateWithProtectedInternalPropertyAndMixedVisibilityAsync()
 	{

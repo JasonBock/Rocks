@@ -4,6 +4,12 @@ namespace Rocks.Extensions;
 
 internal static class ITypeParameterSymbolExtensions
 {
+	internal static bool CanBeSeenByContainingAssembly(this ITypeParameterSymbol self, IAssemblySymbol assembly) =>
+		self.ConstraintTypes.Length == 0 ||
+			self.ConstraintTypes
+				.Where(_ => _.TypeKind == TypeKind.Class || _.TypeKind == TypeKind.Interface)
+				.All(_ => _.CanBeSeenByContainingAssembly(assembly));
+
 	internal static string GetConstraints(this ITypeParameterSymbol self)
 	{
 		var constraints = new List<string>();

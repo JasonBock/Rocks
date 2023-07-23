@@ -8,6 +8,7 @@ internal static class IMethodSymbolExtensions
 	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) => 
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly)) &&
+			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
 			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
 
 	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation)
