@@ -1,5 +1,5 @@
 ﻿#define INCLUDE_PASSING
-//#define INCLUDE_FAILING
+#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -9,8 +9,8 @@ using Rocks.CodeGenerationTest.Mappings;
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
-//TestWithTypes();
+//TestWithType();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
