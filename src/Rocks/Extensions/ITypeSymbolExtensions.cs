@@ -471,15 +471,14 @@ internal static class ITypeSymbolExtensions
 							}
 							else if (canBeSeen)
 							{
-								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
-									!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
+								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None));
 
 								if (methodToRemove is not null)
 								{
 									methods.Remove(methodToRemove);
 								}
 
-								if (!hierarchyMethod.IsSealed)
+								if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) && !hierarchyMethod.IsSealed)
 								{
 									methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
 

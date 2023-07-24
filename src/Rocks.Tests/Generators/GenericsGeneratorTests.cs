@@ -6,7 +6,161 @@ namespace Rocks.Tests.Generators;
 public static class GenericsGeneratorTests
 {
 	[Test]
-	public static async Task GenerateWhenClosedGenericCreatesExactMethodMatchAsync()
+	public static async Task GenerateWhenClosedGenericOnClassCreatesExactMethodMatchAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			#nullable enable
+
+			public abstract class ValueComparer
+			{
+				public abstract object? Snapshot(object? instance);
+			}
+
+			public class ValueComparer<T>
+				: ValueComparer
+			{
+				public override object? Snapshot(object? instance) => null;
+
+				public virtual T Snapshot(T instance) => default!;
+			}
+
+			public class GeometryValueComparer<TGeometry>
+				: ValueComparer<TGeometry> { }
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<GeometryValueComparer<object>>();
+				}
+			}	
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfGeometryValueComparerOfobjectExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::GeometryValueComparer<object>> Methods(this global::Rocks.Expectations.Expectations<global::GeometryValueComparer<object>> @self) =>
+					new(@self);
+				
+				internal static global::GeometryValueComparer<object> Instance(this global::Rocks.Expectations.Expectations<global::GeometryValueComparer<object>> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockGeometryValueComparerOfobject(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockGeometryValueComparerOfobject
+					: global::GeometryValueComparer<object>
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockGeometryValueComparerOfobject(global::Rocks.Expectations.Expectations<global::GeometryValueComparer<object>> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								{
+									@methodHandler.IncrementCallCount();
+									var @result = @methodHandler.Method is not null ?
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(@obj);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<int>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<string?>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfGeometryValueComparerOfobjectExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::GeometryValueComparer<object>> @self, global::Rocks.Argument<object?> @obj)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@obj);
+					return new global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+				}
+				internal static global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::GeometryValueComparer<object>> @self) =>
+					new global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::GeometryValueComparer<object>> @self) =>
+					new global::Rocks.MethodAdornments<global::GeometryValueComparer<object>, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "GeometryValueComparerobject_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenClosedGenericOnInterfaceCreatesExactMethodMatchAsync()
 	{
 		var code =
 			"""
