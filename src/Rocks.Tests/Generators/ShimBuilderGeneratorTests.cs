@@ -6,6 +6,233 @@ namespace Rocks.Tests.Generators;
 public static class ShimBuilderGeneratorTests
 {
 	[Test]
+	public static async Task CreateWhenDuplicatesOccurAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Linq;
+			using System.Collections.Generic;
+
+			public interface IReadOnlyProperty 
+			{ 
+				Type ClrType { get; }
+			}
+
+			public interface IProperty
+				: IReadOnlyProperty { }
+
+			public interface IReadOnlyKey
+			{
+				bool IsPrimaryKey() => true;
+
+				IReadOnlyList<IReadOnlyProperty> Properties { get; }
+			}
+
+			public interface IKey
+				: IReadOnlyKey
+			{
+				Type GetKeyType() => Properties.Count > 1 ? typeof(object[]) : Properties.First().ClrType;
+
+				new IReadOnlyList<IProperty> Properties { get; }
+			}
+
+			public interface IRuntimeKey 
+				: IKey { }
+
+			public static class Test
+			{
+				public static void Go() => Rock.Create<IRuntimeKey>();
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfIRuntimeKeyExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> Methods(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertyExpectations<global::IRuntimeKey> Properties(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::IRuntimeKey> Getters(this global::Rocks.Expectations.PropertyExpectations<global::IRuntimeKey> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IRuntimeKey, global::IReadOnlyKey> ExplicitPropertiesForIReadOnlyKey(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
+					new(@self);
+				
+				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IRuntimeKey, global::IReadOnlyKey> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IRuntimeKey, global::IReadOnlyKey> @self) =>
+					new(@self);
+				
+				internal static global::IRuntimeKey Instance(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockIRuntimeKey(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockIRuntimeKey
+					: global::IRuntimeKey
+				{
+					private readonly global::IKey shimForIKey;
+					private readonly global::IReadOnlyKey shimForIReadOnlyKey;
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockIRuntimeKey(global::Rocks.Expectations.Expectations<global::IRuntimeKey> @expectations)
+					{
+						(this.handlers, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations.Handlers, new ShimIKey55018818661256234156060084750235742359064106137(this), new ShimIReadOnlyKey550014593303283198411825442751878980310579223223(this));
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "global::System.Type GetKeyType()")]
+					public global::System.Type GetKeyType()
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<global::System.Type>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<global::System.Type>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return this.shimForIKey.GetKeyType();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "bool IsPrimaryKey()")]
+					public bool IsPrimaryKey()
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<bool>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return this.shimForIReadOnlyKey.IsPrimaryKey();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "get_Properties()")]
+					public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Properties())");
+						}
+					}
+					[global::Rocks.MemberIdentifier(3, "global::IReadOnlyKey.get_Properties()")]
+					global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> global::IReadOnlyKey.Properties
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlyKey.get_Properties())");
+						}
+					}
+					
+					private sealed class ShimIKey55018818661256234156060084750235742359064106137
+						: global::IKey
+					{
+						private readonly RockIRuntimeKey mock;
+						
+						public ShimIKey55018818661256234156060084750235742359064106137(RockIRuntimeKey @mock) =>
+							this.mock = @mock;
+						
+						public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
+						{
+							get => ((global::IKey)this.mock).Properties;
+						}
+						
+						global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> global::IReadOnlyKey.Properties
+						{
+							get => ((global::IKey)this.mock).Properties;
+						}
+					}
+					
+					private sealed class ShimIReadOnlyKey550014593303283198411825442751878980310579223223
+						: global::IReadOnlyKey
+					{
+						private readonly RockIRuntimeKey mock;
+						
+						public ShimIReadOnlyKey550014593303283198411825442751878980310579223223(RockIRuntimeKey @mock) =>
+							this.mock = @mock;
+						
+						public global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> Properties
+						{
+							get => ((global::IReadOnlyKey)this.mock).Properties;
+						}
+					}
+				}
+			}
+			
+			internal static class MethodExpectationsOfIRuntimeKeyExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<global::System.Type>, global::System.Type> GetKeyType(this global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> @self) =>
+					new global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<global::System.Type>, global::System.Type>(@self.Add<global::System.Type>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<bool>, bool> IsPrimaryKey(this global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> @self) =>
+					new global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<bool>, bool>(@self.Add<bool>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			internal static class PropertyGetterExpectationsOfIRuntimeKeyExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties(this global::Rocks.Expectations.PropertyGetterExpectations<global::IRuntimeKey> @self) =>
+					new global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>>(@self.Add<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			internal static class ExplicitPropertyGetterExpectationsOfIRuntimeKeyForIReadOnlyKeyExtensions
+			{
+				internal static global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IRuntimeKey, global::IReadOnlyKey> @self) =>
+					new global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>(@self.Add<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "IRuntimeKey_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateAbstractCreateAsync()
 	{
 		var code =

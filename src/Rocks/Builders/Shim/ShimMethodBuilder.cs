@@ -9,7 +9,7 @@ internal static class ShimMethodBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
-		foreach (var shimMethod in shimType.Methods
+		foreach (var method in shimType.Methods
 			.Where(_ => _.MethodKind == MethodKind.Ordinary && !_.IsVirtual)
 			.Select(_ => _))
 		{
@@ -17,19 +17,19 @@ internal static class ShimMethodBuilder
 
 			var returnType = string.Empty;
 
-			if (shimMethod.ReturnsVoid)
+			if (method.ReturnsVoid)
 			{
 				returnType = "void ";
 			}
 			else
 			{
-				var returnByRef = shimMethod.ReturnsByRef ? "ref " : shimMethod.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-				returnType = $"{returnByRef}{shimMethod.ReturnType.FullyQualifiedName}";
+				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
+				returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
 			}
 
-			var methodParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
+			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var defaultValue = _.HasExplicitDefaultValue && shimMethod.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
 					$" = {_.ExplicitDefaultValue}" : string.Empty;
 				var direction = _.RefKind switch
 				{
@@ -42,23 +42,24 @@ internal static class ShimMethodBuilder
 				return $"{(_.AttributesDescription.Length > 0 ? $"{_.AttributesDescription} " : string.Empty)}{parameter}";
 			}));
 
-			if (shimMethod.AttributesDescription.Length > 0)
+			if (method.AttributesDescription.Length > 0)
 			{
-				writer.WriteLine(shimMethod.AttributesDescription);
+				writer.WriteLine(method.AttributesDescription);
 			}
 
-			var isUnsafe = shimMethod.IsUnsafe ? "unsafe " : string.Empty;
-
-			var constraints = shimMethod.Constraints;
+			var isUnsafe = method.IsUnsafe ? "unsafe " : string.Empty;
+			var constraints = method.Constraints;
+			var (accessibility, explicitName) = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+				("public ", string.Empty) : (string.Empty, $"{method.ContainingType.FullyQualifiedName}.");
 
 			if (constraints.Length == 0)
 			{
-				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.Name}({methodParameters}) =>");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}({methodParameters}) =>");
 				writer.Indent++;
 			}
 			else
 			{
-				writer.WriteLine($"public {isUnsafe}{returnType} {shimMethod.Name}({methodParameters})");
+				writer.WriteLine($"{accessibility}{isUnsafe}{returnType} {explicitName}{method.Name}({methodParameters})");
 				writer.Indent++;
 
 				for (var i = 0; i < constraints.Length; i++)
@@ -76,7 +77,7 @@ internal static class ShimMethodBuilder
 				}
 			}
 
-			var passedParameters = string.Join(", ", shimMethod.Parameters.Select(_ =>
+			var passedParameters = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
 				{
@@ -88,7 +89,7 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{shimMethod.Name}({passedParameters});");
+			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}({passedParameters});");
 			writer.Indent--;
 		}
 	}

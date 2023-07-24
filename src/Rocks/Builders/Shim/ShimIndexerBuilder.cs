@@ -22,10 +22,12 @@ internal static class ShimIndexerBuilder
 			}
 
 			var isUnsafe = indexer.IsUnsafe ? "unsafe " : string.Empty;
-
 			var returnByRef = indexer.ReturnsByRef ? "ref " : indexer.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-			var includeOptionalParameterValues = indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{indexer.Type.FullyQualifiedName} {GetSignature(indexer.Parameters, includeOptionalParameterValues)}");
+			var (accessibility, explicitName, includeOptionalParameterValues) = 
+				indexer.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+					("public ", string.Empty, true) : (string.Empty, $"{indexer.ContainingType.FullyQualifiedName}.", false);
+
+			writer.WriteLine($"{accessibility}{isUnsafe}{returnByRef}{indexer.Type.FullyQualifiedName} {explicitName}{GetSignature(indexer.Parameters, includeOptionalParameterValues)}");
 			writer.WriteLine("{");
 			writer.Indent++;
 

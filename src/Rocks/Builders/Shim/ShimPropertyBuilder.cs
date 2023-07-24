@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -20,9 +21,11 @@ internal static class ShimPropertyBuilder
 			}
 
 			var isUnsafe = property.IsUnsafe ? "unsafe " : string.Empty;
-
 			var returnByRef = property.ReturnsByRef ? "ref " : property.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
-			writer.WriteLine($"public {isUnsafe}{returnByRef}{property.Type.FullyQualifiedName} {property.Name}");
+			var (accessibility, explicitName) = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+				("public ", string.Empty) : (string.Empty, $"{property.ContainingType.FullyQualifiedName}.");
+
+			writer.WriteLine($"{accessibility}{isUnsafe}{returnByRef}{property.Type.FullyQualifiedName} {explicitName}{property.Name}");
 			writer.WriteLine("{");
 			writer.Indent++;
 
