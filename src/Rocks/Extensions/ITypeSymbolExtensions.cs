@@ -297,6 +297,7 @@ internal static class ITypeSymbolExtensions
 	{
 		var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
 		var hasInaccessibleAbstractMembers = false;
+		var hasMatchWithNonVirtual = false;
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
@@ -440,61 +441,25 @@ internal static class ITypeSymbolExtensions
 
 			foreach (var hierarchyType in hierarchy)
 			{
-				foreach (var hierarchyMethod in hierarchyType.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
+				var hierarchyMethods = hierarchyType.GetMembers().OfType<IMethodSymbol>()
+					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName).ToArray();
+
+				if (hierarchyMethods.Length > 0)
 				{
-					if (hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
+					var hierarchyNonMockableMethods = hierarchyType.GetMembers().OfType<IMethodSymbol>()
+						.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
+							!(_.IsAbstract || _.IsOverride || _.IsVirtual)).ToArray();
+
+					foreach (var hierarchyMethod in hierarchyMethods)
 					{
-						// This is the case where a class does something like this:
-						// `protected static new string ToString()`
-						// We can see it, and it's hiding a method from a class in the hierarchy,
-						// so we have to remove the one that we currently have in the list.
-						// If it "shows up" again in a class lower in hierarchy,
-						// we'll just add it again.
-						var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
-							!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
-
-						if (methodToRemove is not null)
+						if (hierarchyMethod.IsStatic && hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 						{
-							methods.Remove(methodToRemove);
-						}
-					}
-					else if (!hierarchyMethod.IsStatic && (!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
-					{
-						if((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual))
-						{
-							var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
-
-							if (!canBeSeen && hierarchyMethod.IsAbstract)
-							{
-								hasInaccessibleAbstractMembers = true;
-							}
-							else if (canBeSeen)
-							{
-								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None));
-
-								if (methodToRemove is not null)
-								{
-									methods.Remove(methodToRemove);
-								}
-
-								if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) && !hierarchyMethod.IsSealed)
-								{
-									methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
-
-									if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
-									{
-										shims.Add(hierarchyMethod.ContainingType);
-									}
-
-									memberIdentifier++;
-								}
-							}
-						}
-						else
-						{
-							// This is an instance method that could be hiding a virtual method in a base class.
-							// If it is, then we need to remove that base method from the list.
+							// This is the case where a class does something like this:
+							// `protected static new string ToString()`
+							// We can see it, and it's hiding a method from a class in the hierarchy,
+							// so we have to remove the one that we currently have in the list.
+							// If it "shows up" again in a class lower in hierarchy,
+							// we'll just add it again.
 							var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
 								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
@@ -503,12 +468,67 @@ internal static class ITypeSymbolExtensions
 								methods.Remove(methodToRemove);
 							}
 						}
+						else if (!hierarchyMethod.IsStatic && (!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
+						{
+							if ((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual))
+							{
+								var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+
+								if (!canBeSeen && hierarchyMethod.IsAbstract)
+								{
+									hasInaccessibleAbstractMembers = true;
+								}
+								else if (canBeSeen)
+								{
+									var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None));
+
+									if (methodToRemove is not null)
+									{
+										methods.Remove(methodToRemove);
+									}
+
+									if(hierarchyNonMockableMethods.Any(_ => _.Match(hierarchyMethod) != MethodMatch.None) &&
+										!hierarchyMethod.IsStatic && hierarchyMethod.IsAbstract)
+									{
+										// This is a case where the mockable method matches a non-virtual method
+										// on the type and it's abstract. This effectively makes the entire type 
+										// not mockable. But I don't want to set hasInaccessibleAbstractMembers either,
+										// that doesn't seem right.
+										hasMatchWithNonVirtual = true;
+									}
+									else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) && 
+										!hierarchyMethod.IsSealed)
+									{
+										methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+
+										if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
+										{
+											shims.Add(hierarchyMethod.ContainingType);
+										}
+
+										memberIdentifier++;
+									}
+								}
+							}
+							else
+							{
+								// This is an instance method that could be hiding a virtual method in a base class.
+								// If it is, then we need to remove that base method from the list.
+								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
+									!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
+
+								if (methodToRemove is not null)
+								{
+									methods.Remove(methodToRemove);
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 
-		return new(methods.ToImmutable(), hasInaccessibleAbstractMembers);
+		return new(methods.ToImmutable(), hasInaccessibleAbstractMembers, hasMatchWithNonVirtual);
 	}
 
 	internal static MockableProperties GetMockableProperties(

@@ -128,6 +128,11 @@ internal sealed record MockModel
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(typeToMock));
 		}
 
+		if (methods.HasMatchWithNonVirtual)
+		{
+			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(typeToMock));
+		}
+
 		if (methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
 			properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{

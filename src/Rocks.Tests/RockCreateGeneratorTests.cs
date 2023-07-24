@@ -532,6 +532,54 @@ public static class RockCreateGeneratorTests
 	}
 
 	[Test]
+	public static async Task GenerateWhenAnExactMatchWithANonVirtualMemberExistsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			public class TypeNode { }
+
+			public interface IIRTypeContext { }
+
+			public interface ITypeConverter<TType>
+				where TType : TypeNode
+			{
+				TypeNode ConvertType<TTypeContext>(TTypeContext typeContext, TType type)
+					where TTypeContext : IIRTypeContext;
+			}
+
+			public abstract class TypeConverter<TType> : ITypeConverter<TypeNode>
+				where TType : TypeNode
+			{
+				protected abstract TypeNode ConvertType<TTypeContext>(
+					TTypeContext typeContext,
+					TType type)
+					where TTypeContext : IIRTypeContext;
+
+				public TypeNode ConvertType<TTypeContext>(
+					TTypeContext typeContext,
+					TypeNode type)
+					where TTypeContext : IIRTypeContext => new();
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<TypeConverter<TypeNode>>();
+				}
+			}
+			""";
+
+		var diagnostic = new DiagnosticResult(TypeHasMatchWithNonVirtualDiagnostic.Id, DiagnosticSeverity.Error)
+			.WithSpan(14, 23, 14, 36);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic }).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWhenTargetTypeIsInvalidAsync()
 	{
 		var code =
