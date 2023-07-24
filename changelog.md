@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Constraints on type parameters that are inaccessible will prevent a mock from being created (issue [#237](https://github.com/JasonBock/Rocks/issues/237))
 - Mockable members that are considered obsolete will prevent a mock from being created (issue [#240](https://github.com/JasonBock/Rocks/issues/240))
 - Methods that hide mockable methods are no longer generated (issue [#239](https://github.com/JasonBock/Rocks/issues/239))
+- Addressed when explicit interface implementations should occur in shims (issue [#231](https://github.com/JasonBock/Rocks/issues/231))
 
 ## [7.1.1] - 2023-07-23
 
