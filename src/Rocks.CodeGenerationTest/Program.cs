@@ -53,7 +53,7 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(ComputeSharp.D2D1.ID2D1PixelShader)
+			typeof(Amazon.Runtime.SSOImmutableCredentials)
 		}, 
 		Array.Empty<Type>(), null);
 

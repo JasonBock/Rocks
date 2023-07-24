@@ -459,35 +459,49 @@ internal static class ITypeSymbolExtensions
 							methods.Remove(methodToRemove);
 						}
 					}
-					else if (!hierarchyMethod.IsStatic && (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual) &&
-						(!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
+					else if (!hierarchyMethod.IsStatic && (!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
 					{
-						var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
+						if((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual))
+						{
+							var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 
-						if (!canBeSeen && hierarchyMethod.IsAbstract)
-						{
-							hasInaccessibleAbstractMembers = true;
+							if (!canBeSeen && hierarchyMethod.IsAbstract)
+							{
+								hasInaccessibleAbstractMembers = true;
+							}
+							else if (canBeSeen)
+							{
+								var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
+									!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
+
+								if (methodToRemove is not null)
+								{
+									methods.Remove(methodToRemove);
+								}
+
+								if (!hierarchyMethod.IsSealed)
+								{
+									methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+
+									if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
+									{
+										shims.Add(hierarchyMethod.ContainingType);
+									}
+
+									memberIdentifier++;
+								}
+							}
 						}
-						else if (canBeSeen)
+						else
 						{
+							// This is an instance method that could be hiding a virtual method in a base class.
+							// If it is, then we need to remove that base method from the list.
 							var methodToRemove = methods.SingleOrDefault(_ => !(_.Value.Match(hierarchyMethod) == MethodMatch.None) &&
 								!_.Value.ContainingType.Equals(hierarchyMethod.ContainingType));
 
 							if (methodToRemove is not null)
 							{
 								methods.Remove(methodToRemove);
-							}
-
-							if (!hierarchyMethod.IsSealed)
-							{
-								methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
-
-								if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
-								{
-									shims.Add(hierarchyMethod.ContainingType);
-								}
-
-								memberIdentifier++;
 							}
 						}
 					}
