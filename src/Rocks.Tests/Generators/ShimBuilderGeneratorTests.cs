@@ -181,12 +181,12 @@ public static class ShimBuilderGeneratorTests
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
 						{
-							get => ((global::IKey)this.mock).Properties;
+							get => ((global::IKey)this.mock).Properties!;
 						}
 						
 						global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> global::IReadOnlyKey.Properties
 						{
-							get => ((global::IKey)this.mock).Properties;
+							get => ((global::IKey)this.mock).Properties!;
 						}
 					}
 					
@@ -200,7 +200,7 @@ public static class ShimBuilderGeneratorTests
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> Properties
 						{
-							get => ((global::IReadOnlyKey)this.mock).Properties;
+							get => ((global::IReadOnlyKey)this.mock).Properties!;
 						}
 					}
 				}
@@ -449,7 +449,7 @@ public static class ShimBuilderGeneratorTests
 						
 						public int NotDim
 						{
-							get => ((global::IHaveDims)this.mock).NotDim;
+							get => ((global::IHaveDims)this.mock).NotDim!;
 						}
 						
 						public int this[string @notDimKey]
