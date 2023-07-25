@@ -105,7 +105,7 @@ internal static class MockMethodValueBuilder
 			else if (method.ReturnTypeIsValueTaskOfTType)
 			{
 				var isNullForgiving = method.ReturnTypeIsValueTaskOfTTypeAndIsNullForgiving ? string.Empty : "!";
-				writer.WriteLine($"return new global::System.Threading.Tasks.ValueTask<{method.ReturnTypeTypeArguments[0].FullyQualifiedName}>(default({method.ReturnTypeTypeArguments[0].IncludeGenericsName}){isNullForgiving});");
+				writer.WriteLine($"return new global::System.Threading.Tasks.ValueTask<{method.ReturnTypeTypeArguments[0].FullyQualifiedName}>(default({method.ReturnTypeTypeArguments[0].FullyQualifiedName}){isNullForgiving});");
 			}
 			else
 			{

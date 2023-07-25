@@ -6,6 +6,77 @@ namespace Rocks.Tests.Generators;
 public static class NamingGeneratorTests
 {
 	[Test]
+	public static async Task MakeWithGenericReturnsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System.Threading.Tasks;
+
+			public class EntityEntry<TEntity>
+				where TEntity : class { }
+
+			public class DbSet<TEntity>
+				where TEntity : class
+			{
+				public virtual ValueTask<EntityEntry<TEntity>> AddAsync() =>
+					new();
+			}
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var expectations = Rock.Make<DbSet<object>>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			#nullable enable
+			
+			internal static class MakeExpectationsOfDbSetOfobjectExtensions
+			{
+				internal static global::DbSet<object> Instance(this global::Rocks.MakeGeneration<global::DbSet<object>> @self)
+				{
+					return new RockDbSetOfobject();
+				}
+				
+				private sealed class RockDbSetOfobject
+					: global::DbSet<object>
+				{
+					public RockDbSetOfobject()
+					{
+					}
+					
+					public override bool Equals(object? @obj)
+					{
+						return default!;
+					}
+					public override int GetHashCode()
+					{
+						return default!;
+					}
+					public override string? ToString()
+					{
+						return default!;
+					}
+					public override global::System.Threading.Tasks.ValueTask<global::EntityEntry<object>> AddAsync()
+					{
+						return new global::System.Threading.Tasks.ValueTask<global::EntityEntry<object>>(default(global::EntityEntry<object>)!);
+					}
+				}
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockMakeGenerator>(code,
+			new[] { (typeof(RockMakeGenerator), "DbSetobject_Rock_Make.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWhenNonVirtualMembersAreNeededAsync()
 	{
 		var code =
