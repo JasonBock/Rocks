@@ -15,13 +15,13 @@ TestWithTypes();
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
 	Console.WriteLine(
-		typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<>)
+		typeof(ILGPU.IR.Types.TypeConverter<>)
 			.IsValidTarget(new Dictionary<Type, Dictionary<string, string>>
 			{
 				{
-					typeof(ComputeSharp.D2D1.Interop.D2D1TransformMapper<>), new()
+					typeof(ILGPU.IR.Types.TypeConverter<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ComputeSharp.MappedPixelShader" }
+						{ "TType", "global::ILGPU.IR.Types.TypeNode" }              
 					} 
 				}
 			}));
@@ -64,9 +64,9 @@ static void TestWithTypes()
 #if INCLUDE_PASSING
 		// PASSED
 		// Number of types found: 3852
-		typeof(object), 
+		typeof(object),
 		typeof(Dictionary<,>),
-		typeof(System.Collections.Immutable.ImmutableArray), 
+		typeof(System.Collections.Immutable.ImmutableArray),
 		typeof(HttpMessageHandler),
 		typeof(ComputeSharp.AutoConstructorAttribute),
 		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),

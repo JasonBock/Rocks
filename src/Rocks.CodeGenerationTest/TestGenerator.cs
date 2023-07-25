@@ -5,7 +5,6 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using System.ComponentModel;
 using Rocks.CodeGenerationTest.Extensions;
-using Microsoft.CodeAnalysis.Text;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -29,7 +28,7 @@ internal static class TestGenerator
 			Parallel.ForEach(assembly.GetTypes()
 				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
 				{
-					if (_.IsValidTarget())
+					if (_.IsValidTarget(genericTypeMappings))
 					{
 						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
 					}
