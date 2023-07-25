@@ -1,5 +1,5 @@
 ﻿#define INCLUDE_PASSING
-#define INCLUDE_FAILING
+//#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -53,7 +53,7 @@ static void TestWithType() =>
 	TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(Amazon.Runtime.SSOImmutableCredentials)
+			typeof(AutoFixture.Kernel.Criterion<>)
 		}, 
 		Array.Empty<Type>(), null);
 
@@ -62,53 +62,63 @@ static void TestWithTypes()
 	var targetAssemblies = new Type[]
 	{
 #if INCLUDE_PASSING
-		// PASSED
-		// Number of types found: 3852
-		typeof(object),
+		// .NET types
 		typeof(Dictionary<,>),
-		typeof(System.Collections.Immutable.ImmutableArray),
 		typeof(HttpMessageHandler),
+		typeof(object),
+		typeof(System.Collections.Immutable.ImmutableArray),
+		typeof(System.Text.Json.JsonDocument),
+		typeof(System.Threading.Channels.BoundedChannelFullMode),
+		// NuGet references
+		typeof(AngleSharp.BrowsingContext),
+		typeof(Autofac.ContainerBuilder),
+		typeof(AutoMapper.AutoMapAttribute),
+		typeof(Avalonia.AppBuilder),
+		typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
+		typeof(Bogus.Binder),
+		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
+		typeof(ClangSharp.AbstractConditionalOperator),
 		typeof(ComputeSharp.AutoConstructorAttribute),
 		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
-		typeof(SkiaSharp.GRBackend),
-		typeof(ClangSharp.AbstractConditionalOperator),
-		typeof(Bogus.Binder),
-		typeof(AngleSharp.BrowsingContext),
-		typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
 		typeof(Csla.DataPortal<>),
-		typeof(System.Text.Json.JsonDocument),
+		typeof(CsvHelper.ArrayHelper),
+		typeof(Dapper.DbString),
+		typeof(FluentAssertions.AggregateExceptionExtractor),
+		typeof(FluentValidation.ApplyConditionTo),
+		typeof(Google.Apis.ETagAction),
+		typeof(Google.Protobuf.ByteString),
+		typeof(Grpc.Core.AuthContext),
+		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
+		typeof(IdentityModel.Base64Url),
+		typeof(ILGPU.ArrayMode),
+		typeof(MassTransit.AbstractUriException),
+		typeof(MathNet.Numerics.AppSwitches),
+		typeof(MediatR.ISender),
+		typeof(MessagePack.FormatterNotRegisteredException),
 		typeof(Microsoft.CodeAnalysis.SyntaxTree),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
-		typeof(System.Threading.Channels.BoundedChannelFullMode),
+		typeof(Moq.Mock<>),
+		typeof(NSubstitute.Arg),
+		typeof(NuGet.Common.ActivityCorrelationId),
+		typeof(Polly.AdvancedCircuitBreakerSyntax),
+		typeof(RestSharp.BodyParameter),
 		typeof(Serilog.Core.IDestructuringPolicy),
-		typeof(IdentityModel.Base64Url),
-		typeof(Google.Protobuf.ByteString),
+		typeof(Sigil.CatchBlock),
+		typeof(Silk.NET.Core.Attributes.CountAttribute),
+		typeof(SixLabors.ImageSharp.GraphicsOptions),
+		typeof(SkiaSharp.GRBackend),
+		typeof(StackExchange.Redis.Aggregate),
+		typeof(System.Reactive.ExperimentalAttribute),
+		typeof(System.Reflection.Metadata.ArrayShape),
 		typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
 		typeof(TerraFX.Interop.INativeGuid),
-		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
-		typeof(MediatR.ISender),
-		typeof(NSubstitute.Arg),
-		typeof(StackExchange.Redis.Aggregate),
-		typeof(FluentAssertions.AggregateExceptionExtractor),
-		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
-		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
-		typeof(Polly.AdvancedCircuitBreakerSyntax),
-		typeof(Moq.Mock<>),
-		typeof(System.Reactive.ExperimentalAttribute),
-		typeof(RestSharp.BodyParameter),
-		typeof(CsvHelper.ArrayHelper),
-		typeof(SixLabors.ImageSharp.GraphicsOptions),
-		typeof(AutoMapper.AutoMapAttribute),
-		typeof(Silk.NET.Core.Attributes.CountAttribute),
-		typeof(MassTransit.AbstractUriException),
-		typeof(System.Reflection.Metadata.ArrayShape),
-		typeof(ILGPU.ArrayMode),
-		typeof(AutoMapper.AutoMapAttribute),
-		typeof(Sigil.CatchBlock),
-		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 #endif
 #if INCLUDE_FAILING
+		typeof(Hangfire.AttemptsExceededAction),
+		typeof(AutoFixture.AutoPropertiesTarget),
 #endif
 	}.Select(_ => _.Assembly).ToHashSet();
 

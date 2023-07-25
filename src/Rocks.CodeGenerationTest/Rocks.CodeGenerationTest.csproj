@@ -9,7 +9,10 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" />
+		<PackageReference Include="Autofac" />
+		<PackageReference Include="AutoFixture" />
 		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Avalonia" />
 		<PackageReference Include="AWSSDK.Core" />
 		<PackageReference Include="Bogus" />
 		<PackageReference Include="Castle.Core" />
@@ -18,12 +21,19 @@
 		<PackageReference Include="ComputeSharp.D2D1" />
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
+		<PackageReference Include="Dapper" />
 		<PackageReference Include="FluentAssertions" />
+		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="Google.Apis" />
 		<PackageReference Include="Google.Protobuf" />
+		<PackageReference Include="Grpc.Core.Api" />
+		<PackageReference Include="Hangfire.Core" />
 		<PackageReference Include="IdentityModel" />
 		<PackageReference Include="ILGPU" />
 		<PackageReference Include="MassTransit" />
+		<PackageReference Include="MathNet.Numerics" />
 		<PackageReference Include="MediatR" />
+		<PackageReference Include="MessagePack" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
@@ -31,6 +41,7 @@
 		<PackageReference Include="Mono.Cecil" />
 		<PackageReference Include="Moq" />
 		<PackageReference Include="NSubstitute" />
+		<PackageReference Include="NuGet.Common" />
 		<PackageReference Include="Polly" />
 		<PackageReference Include="RestSharp" />
 		<PackageReference Include="Serilog" />

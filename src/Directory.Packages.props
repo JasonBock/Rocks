@@ -1,7 +1,10 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="AngleSharp" Version="1.0.4" />
+    <PackageVersion Include="Autofac" Version="7.0.1" />
+    <PackageVersion Include="AutoFixture" Version="4.18.0" />
     <PackageVersion Include="AutoMapper" Version="12.0.1" />
+    <PackageVersion Include="Avalonia" Version="11.0.0" />
     <PackageVersion Include="AWSSDK.Core" Version="3.7.200.4" />
     <PackageVersion Include="BenchmarkDotNet" Version="0.13.6" />
     <PackageVersion Include="Bogus" Version="34.0.2" />
@@ -11,12 +14,19 @@
     <PackageVersion Include="ComputeSharp.D2D1" Version="2.1.0-preview2" />
     <PackageVersion Include="Csla" Version="7.0.0" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
+    <PackageVersion Include="Dapper" Version="2.0.143" />
     <PackageVersion Include="FluentAssertions" Version="6.11.0" />
+    <PackageVersion Include="FluentValidation" Version="11.6.0" />
+    <PackageVersion Include="Google.Apis" Version="1.61.0" />
     <PackageVersion Include="Google.Protobuf" Version="3.23.4" />
+    <PackageVersion Include="Grpc.Core.Api" Version="2.55.0" />
+    <PackageVersion Include="Hangfire.Core" Version="1.8.3" />
     <PackageVersion Include="IdentityModel" Version="6.1.0" />
     <PackageVersion Include="ILGPU" Version="1.4.0" />
     <PackageVersion Include="MassTransit" Version="8.0.16" />
+    <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
     <PackageVersion Include="MediatR" Version="12.1.1" />
+    <PackageVersion Include="MessagePack" Version="2.5.124" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.6.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" />
@@ -30,6 +40,7 @@
     <PackageVersion Include="Mono.Cecil" Version="0.11.5" />
     <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
+    <PackageVersion Include="NuGet.Common" Version="6.6.1" />
     <PackageVersion Include="NUnit" Version="3.13.3" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.6.1" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
