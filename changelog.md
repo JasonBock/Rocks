@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Methods that hide mockable methods are no longer generated (issue [#239](https://github.com/JasonBock/Rocks/issues/239))
 - Addressed when explicit interface implementations should occur in shims (issue [#231](https://github.com/JasonBock/Rocks/issues/231))
 - Correctly detecting when duplicate method signatures exist on the same type (issue [#232](https://github.com/JasonBock/Rocks/issues/232))
+- Abstract members that match an existing non-virtual member will prevent a mock from being made (issue [#247](https://github.com/JasonBock/Rocks/issues/247))
 
 ## [7.1.1] - 2023-07-23
 
