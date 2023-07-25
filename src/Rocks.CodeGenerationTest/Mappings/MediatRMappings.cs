@@ -10,19 +10,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 			new()
 			{
 				{
-					typeof(AsyncRequestExceptionAction<>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest" },
-					}
-				},
-				{
-					typeof(AsyncRequestExceptionHandler<,>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
-					}
-				},
-				{
 					typeof(INotificationHandler<>), new()
 					{
 						{ "TNotification", "global::Rocks.CodeGenerationTest.Mappings.MediatR.MappedNotification" },
@@ -40,13 +27,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					{
 						{ "TRequest", "global::System.Object" },
 						{ "TException", "global::System.Exception" },
-					}
-				},
-				{
-					typeof(IRequestExceptionHandler<,>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
 					}
 				},
 				{
@@ -108,28 +88,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					{
 						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
 						{ "TResponse", "global::System.Object" },
-					}
-				},
-				{
-					typeof(RequestExceptionAction<,>), new()
-					{
-						{ "TRequest", "global::System.Object" },
-						{ "TException", "global::System.Exception" },
-					}
-				},
-				{
-					typeof(RequestExceptionHandler<,>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
-					}
-				},
-				{
-					typeof(RequestExceptionHandler<,,>), new()
-					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
-						{ "TException", "global::System.Exception" },
 					}
 				},
 				{
