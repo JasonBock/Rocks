@@ -16,6 +16,7 @@ internal static class ShimMethodBuilder
 			writer.WriteLine();
 
 			var returnType = string.Empty;
+			var useNullForgiving = string.Empty;
 
 			if (method.ReturnsVoid)
 			{
@@ -25,6 +26,7 @@ internal static class ShimMethodBuilder
 			{
 				var returnByRef = method.ReturnsByRef ? "ref " : method.ReturnsByRefReadOnly ? "ref readonly " : string.Empty;
 				returnType = $"{returnByRef}{method.ReturnType.FullyQualifiedName}";
+				useNullForgiving = "!";
 			}
 
 			var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
@@ -89,7 +91,7 @@ internal static class ShimMethodBuilder
 				return $"{direction}@{_.Name}";
 			}));
 
-			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}({passedParameters});");
+			writer.WriteLine($"(({shimType.Type.FullyQualifiedName})this.mock).{method.Name}({passedParameters}){useNullForgiving};");
 			writer.Indent--;
 		}
 	}

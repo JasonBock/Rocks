@@ -46,17 +46,17 @@ internal static class ShimIndexerBuilder
 				accessors == PropertyAccessor.GetAndSet)
 			{
 				var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
-				writer.WriteLine($"get => {refReturn}(({shimType.Type.FullyQualifiedName})this.mock)[{parameters}];");
+				writer.WriteLine($"get => {refReturn}(({shimType.Type.FullyQualifiedName})this.mock)[{parameters}]!;");
 			}
 
 			if (accessors == PropertyAccessor.Set || accessors == PropertyAccessor.GetAndSet)
 			{
-				writer.WriteLine($"set => (({shimType.Type.FullyQualifiedName})this.mock)[{parameters}] = value;");
+				writer.WriteLine($"set => (({shimType.Type.FullyQualifiedName})this.mock)[{parameters}] = value!;");
 			}
 
 			if (accessors == PropertyAccessor.Init || accessors == PropertyAccessor.GetAndInit)
 			{
-				writer.WriteLine($"init => (({shimType.Type.FullyQualifiedName})this.mock)[{parameters}] = value;");
+				writer.WriteLine($"init => (({shimType.Type.FullyQualifiedName})this.mock)[{parameters}] = value!;");
 			}
 
 			writer.Indent--;
