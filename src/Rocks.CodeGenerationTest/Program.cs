@@ -1,4 +1,4 @@
-﻿//#define INCLUDE_PASSING
+﻿#define INCLUDE_PASSING
 #define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
@@ -6,6 +6,7 @@ using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
 using Rocks.CodeGenerationTest.Mappings;
+using System.Reflection;
 
 //TestTypeValidity();
 //TestWithCode();
@@ -72,6 +73,7 @@ static void TestWithTypes()
 		// NuGet references
 		typeof(AngleSharp.BrowsingContext),
 		typeof(Autofac.ContainerBuilder),
+		typeof(AutoFixture.AutoPropertiesTarget),
 		typeof(AutoMapper.AutoMapAttribute),
 		typeof(Avalonia.AppBuilder),
 		typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
@@ -88,6 +90,7 @@ static void TestWithTypes()
 		typeof(Google.Apis.ETagAction),
 		typeof(Google.Protobuf.ByteString),
 		typeof(Grpc.Core.AuthContext),
+		typeof(Hangfire.AttemptsExceededAction),
 		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 		typeof(IdentityModel.Base64Url),
 		typeof(ILGPU.ArrayMode),
@@ -117,8 +120,6 @@ static void TestWithTypes()
 		typeof(TerraFX.Interop.INativeGuid),
 #endif
 #if INCLUDE_FAILING
-		typeof(Hangfire.AttemptsExceededAction),
-		//typeof(AutoFixture.AutoPropertiesTarget),
 #endif
 	}.Select(_ => _.Assembly).ToHashSet();
 
@@ -136,15 +137,122 @@ static void TestWithTypes()
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();
+	var totalDiscoveredTypeCount = 0;
+	var issues = new List<Issue>();
 
-	Console.WriteLine($"Testing {nameof(RockCreateGenerator)}");
-	TestGenerator.Generate(new RockCreateGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
-	Console.WriteLine();
+	foreach(var targetAssembly in targetAssemblies)
+	{
+		Console.WriteLine($"Getting target types for {targetAssembly.GetName().Name}");
+		var targetAssemblySet = new HashSet<Assembly> { targetAssembly };
+		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings);
+		totalDiscoveredTypeCount += discoveredTypes.Length;
+		Console.WriteLine($"Type count found for {targetAssembly.GetName().Name} - {discoveredTypes.Length}");
 
-	Console.WriteLine($"Testing {nameof(RockMakeGenerator)}");
-	TestGenerator.Generate(new RockMakeGenerator(), targetAssemblies, typesToLoadAssembliesFrom, genericTypeMappings);
-	Console.WriteLine();
+		Console.WriteLine($"Testing {targetAssembly.GetName().Name} - {nameof(RockCreateGenerator)}");
+		issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings));
 
-	Console.WriteLine("Generator testing complete");
+		Console.WriteLine($"Testing {targetAssembly.GetName().Name} - {nameof(RockMakeGenerator)}");
+		issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings));
+
+		Console.WriteLine();
+	}
+
+	Console.WriteLine(
+		$$"""
+		Generator testing complete.
+			Total assembly count is {{targetAssemblies.Count}}
+			Total discovered type count is {{totalDiscoveredTypeCount}}
+		""");
+
+	if (issues.Count > 0)
+	{
+		var currentColor = Console.ForegroundColor;
+
+		var errors = issues
+			.Where(_ => _.Severity == DiagnosticSeverity.Error)
+			.GroupBy(_ => _.Id)
+			.OrderBy(_ => _.Key).ToArray();
+
+		if(errors.Length > 0)
+		{
+			Console.ForegroundColor = ConsoleColor.Red;
+
+			Console.WriteLine("Error Counts");
+
+			var errorCount = 0;
+
+			foreach (var errorGroup in errors)
+			{
+				var errorGroupCount = errorGroup.Count();
+				errorCount += errorGroupCount;
+				Console.WriteLine($"\tCode: {errorGroup.Key}, Count: {errorGroupCount}");
+			}
+
+			Console.WriteLine($"Total Error Count: {errorCount}");
+			Console.WriteLine();
+
+			foreach (var errorGroup in errors)
+			{
+				foreach (var error in errorGroup)
+				{
+					var errorCode = error.Location.SourceTree?.GetText().GetSubText(error.Location.SourceSpan) ?? null;
+					Console.WriteLine(
+						$$"""
+						Error:
+
+						ID: {{error.Id}}
+						Description: {{error.Description}}
+						Code:
+						{{errorCode}}
+
+						""");
+				}
+			}
+		}
+
+		var warnings = issues
+			.Where(_ => _.Severity == DiagnosticSeverity.Warning)
+			.GroupBy(_ => _.Id)
+			.OrderBy(_ => _.Key).ToArray();
+
+		if (warnings.Length > 0)
+		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+
+			Console.WriteLine("Warning Counts");
+
+			var warningCount = 0;
+
+			foreach (var warningGroup in warnings)
+			{
+				var warningGroupCount = warningGroup.Count();
+				warningCount += warningGroupCount;
+				Console.WriteLine($"\tCode: {warningGroup.Key}, Count: {warningGroupCount}");
+			}
+
+			Console.WriteLine($"Total Warning Count: {warningCount}");
+			Console.WriteLine();
+
+			foreach (var warningGrouip in warnings)
+			{
+				foreach (var warning in warningGrouip)
+				{
+					var warningCode = warning.Location.SourceTree?.GetText().GetSubText(warning.Location.SourceSpan) ?? null;
+					Console.WriteLine(
+						$$"""
+						Warning:
+
+						ID: {{warning.Id}}
+						Description: {{warning.Description}}
+						Code:
+						{{warningCode}}
+
+						""");
+				}
+			}
+		}
+
+		Console.ForegroundColor = currentColor;
+	}
 }
 #pragma warning restore CS8321 // Local function is declared but never used
