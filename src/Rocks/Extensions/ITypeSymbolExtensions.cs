@@ -481,7 +481,7 @@ internal static class ITypeSymbolExtensions
 						}
 						else if (!hierarchyMethod.IsStatic && (!self.IsRecord || hierarchyMethod.Name != nameof(object.Equals)))
 						{
-							if ((hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual))
+							if (hierarchyMethod.IsAbstract || hierarchyMethod.IsOverride || hierarchyMethod.IsVirtual)
 							{
 								var canBeSeen = hierarchyMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol);
 
@@ -503,8 +503,7 @@ internal static class ITypeSymbolExtensions
 									{
 										// This is a case where the mockable method matches a non-virtual method
 										// on the type and it's abstract. This effectively makes the entire type 
-										// not mockable. But I don't want to set hasInaccessibleAbstractMembers either,
-										// that doesn't seem right.
+										// not mockable.
 										hasMatchWithNonVirtual = true;
 									}
 									else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
@@ -535,6 +534,11 @@ internal static class ITypeSymbolExtensions
 							}
 						}
 					}
+
+					// One more sweep. If any of the candidates match a non-mockable method, 
+					// we have to remove it.
+					methods.RemoveAll(_ => hierarchyNonMockableMethods.Any(
+						hierarchyNonMockable => !(_.Value.Match(hierarchyNonMockable) == MethodMatch.None)));
 				}
 			}
 		}

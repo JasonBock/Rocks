@@ -3,8 +3,139 @@ using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
+public class Criterion<T> : IEquatable<T>
+{
+	public override int GetHashCode() => base.GetHashCode();
+	public override bool Equals(object? obj) => base.Equals(obj);
+	public bool Equals(T? other) => true;
+}
+
+//public class X : Criterion<object>
+//{
+//   public override bool Equals(object? obj) => Equals(obj);
+//   public override int GetHashCode() => base.GetHashCode();
+//   public override string? ToString() => base.ToString();
+//}
+
 public static class GenericsGeneratorTests
 {
+	[Test]
+	public static async Task GenAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			#nullable enable
+
+			public class Criterion<T> : IEquatable<T>
+			{
+				public override int GetHashCode() => base.GetHashCode();
+				public override bool Equals(object? obj) => base.Equals(obj);
+				public bool Equals(T? other) => true;
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<Criterion<object>>();
+				}
+			}
+			""";
+
+		var generatedCode =
+			"""
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			#nullable enable
+			
+			internal static class CreateExpectationsOfCriterionOfobjectExtensions
+			{
+				internal static global::Rocks.Expectations.MethodExpectations<global::Criterion<object>> Methods(this global::Rocks.Expectations.Expectations<global::Criterion<object>> @self) =>
+					new(@self);
+				
+				internal static global::Criterion<object> Instance(this global::Rocks.Expectations.Expectations<global::Criterion<object>> @self)
+				{
+					if (!@self.WasInstanceInvoked)
+					{
+						@self.WasInstanceInvoked = true;
+						var @mock = new RockCriterionOfobject(@self);
+						@self.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockCriterionOfobject
+					: global::Criterion<object>
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockCriterionOfobject(global::Rocks.Expectations.Expectations<global::Criterion<object>> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<string?>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							var @result = @methodHandler.Method is not null ?
+								((global::System.Func<int>)@methodHandler.Method)() :
+								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+				}
+			}
+			
+			internal static class MethodExpectationsOfCriterionOfobjectExtensions
+			{
+				internal static global::Rocks.MethodAdornments<global::Criterion<object>, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::Criterion<object>> @self) =>
+					new global::Rocks.MethodAdornments<global::Criterion<object>, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				internal static global::Rocks.MethodAdornments<global::Criterion<object>, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::Criterion<object>> @self) =>
+					new global::Rocks.MethodAdornments<global::Criterion<object>, global::System.Func<int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			}
+			
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "Criterionobject_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
 	[Test]
 	public static async Task GenerateWhenClosedGenericOnClassCreatesExactMethodMatchAsync()
 	{
