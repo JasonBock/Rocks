@@ -8,6 +8,58 @@ namespace Rocks.Tests.Generators;
 public static class ObsoleteGeneratorTests
 {
 	[Test]
+	public static async Task CreateWhenGenericContainsObsoleteTypeAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Collections;
+			using System.Collections.Generic;
+			using System.Linq;
+									
+			#nullable enable
+
+			namespace MockTests
+			{
+				[Obsolete("Do not use this", true)]
+				public interface IServerComponent
+				{
+					void Execute();
+				}
+
+				public abstract class JobStorage
+				{
+					public virtual IEnumerable<IServerComponent> GetComponents() =>
+						Enumerable.Empty<IServerComponent>();
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<JobStorage>();
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] 
+			{
+				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
+					.WithSpan(19, 30, 19, 46).WithArguments("MockTests.IServerComponent", "Do not use this"),
+				new DiagnosticResult(MemberUsesObsoleteTypeDiagnostic.Id, DiagnosticSeverity.Error)
+					.WithSpan(19, 48, 19, 61),
+				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
+					.WithSpan(20, 21, 20, 37).WithArguments("MockTests.IServerComponent", "Do not use this"),
+			},
+			generalDiagnosticOption: ReportDiagnostic.Error,
+			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWhenTargetHasObsoleteMembersAsWarningsAndBuildIsErrorAsync()
 	{
 		var code =

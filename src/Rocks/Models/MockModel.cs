@@ -41,7 +41,7 @@ internal sealed record MockModel
 		}
 
 		var attributes = typeToMock.GetAttributes();
-		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
+		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName)!;
 
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 			(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
@@ -60,66 +60,22 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			if (constructor.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(constructor));
-			}
-			else if (constructor.Parameters.Any(_ => _.Type.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))))
-			{
-				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(constructor));
-			}
+			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var method in methods.Results)
 		{
-			if (method.Value.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(method.Value));
-			}
-			else if (method.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))) ||
-				!method.Value.ReturnsVoid && method.Value.ReturnType.GetAttributes().Any(
-					_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-						(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(method.Value));
-			}
+			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var property in properties.Results)
 		{
-			if (property.Value.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(property.Value));
-			}
-			else if (property.Value.Parameters.Any(_ => _.Type.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors))) ||
-				property.Value.Type.GetAttributes().Any(
-					_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-						(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(property.Value));
-			}
+			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var @event in events.Results)
 		{
-			if (@event.Value.GetAttributes().Any(
-				_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-					(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-			{
-				diagnostics.Add(MemberIsObsoleteDiagnostic.Create(@event.Value));
-			}
+			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		if (methods.HasInaccessibleAbstractMembers || properties.HasInaccessibleAbstractMembers ||

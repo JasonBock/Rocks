@@ -5,7 +5,13 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+   internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors) => 
+		self.GetAttributes().Any(
+			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)) ||
+		(self is INamedTypeSymbol namedSelf && namedSelf.TypeArguments.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)));
+
+   internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
 			self is INamedTypeSymbol namedSelf ?
@@ -487,7 +493,7 @@ internal static class ITypeSymbolExtensions
 										methods.Remove(methodToRemove);
 									}
 
-									if(hierarchyNonMockableMethods.Any(_ => _.Match(hierarchyMethod) != MethodMatch.None) &&
+									if (hierarchyNonMockableMethods.Any(_ => _.Match(hierarchyMethod) != MethodMatch.None) &&
 										!hierarchyMethod.IsStatic && hierarchyMethod.IsAbstract)
 									{
 										// This is a case where the mockable method matches a non-virtual method
@@ -496,7 +502,7 @@ internal static class ITypeSymbolExtensions
 										// that doesn't seem right.
 										hasMatchWithNonVirtual = true;
 									}
-									else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) && 
+									else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
 										!hierarchyMethod.IsSealed)
 									{
 										methods.Add(new(hierarchyMethod, self, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));

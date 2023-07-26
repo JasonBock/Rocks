@@ -1,11 +1,33 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Diagnostics;
 using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
 internal static class IMethodSymbolExtensions
 {
-	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) => 
+	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
+		this IMethodSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
+	{
+		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
+
+		if (self.GetAttributes().Any(
+			 _ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
+				 (_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+		{
+			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(self));
+		}
+		else if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
+		{
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(self));
+		}
+
+		return diagnostics.ToImmutable();
+	}
+
+	internal static bool CanBeSeenByContainingAssembly(this IMethodSymbol self, IAssemblySymbol assembly) =>
 		((ISymbol)self).CanBeSeenByContainingAssembly(assembly) &&
 			self.Parameters.All(_ => _.Type.CanBeSeenByContainingAssembly(assembly)) &&
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
@@ -31,7 +53,7 @@ internal static class IMethodSymbolExtensions
 	}
 
 	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
-		self.Parameters.Length > 16 ||	
+		self.Parameters.Length > 16 ||
 		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsEsoteric()) ||
 			!self.ReturnsVoid && self.ReturnType.IsEsoteric();
 
