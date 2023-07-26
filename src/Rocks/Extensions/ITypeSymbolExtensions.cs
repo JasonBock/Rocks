@@ -10,8 +10,11 @@ internal static class ITypeSymbolExtensions
 			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)) ||
 		(self is INamedTypeSymbol namedSelf && 
-			(namedSelf.TypeArguments.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
-			namedSelf.TypeParameters.Any(_ => _.ConstraintTypes.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)))));
+			(namedSelf.TypeArguments.Any(
+				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+			namedSelf.TypeParameters.Any(
+				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.ConstraintTypes.Any(
+					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)))));
 
    internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{

@@ -1,5 +1,5 @@
-﻿#define INCLUDE_PASSING
-//#define INCLUDE_FAILING
+﻿//#define INCLUDE_PASSING
+#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -118,7 +118,7 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		typeof(Hangfire.AttemptsExceededAction),
-		typeof(AutoFixture.AutoPropertiesTarget),
+		//typeof(AutoFixture.AutoPropertiesTarget),
 #endif
 	}.Select(_ => _.Assembly).ToHashSet();
 
