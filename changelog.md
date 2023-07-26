@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added the null forgiving operator for shim members (issue [#246](https://github.com/JasonBock/Rocks/issues/246))
 - Updated type generation for `Task` types in makes to use a FQN (issue [#248](https://github.com/JasonBock/Rocks/issues/248))
 - Expanded the search for obsolete type usage (issue [#250](https://github.com/JasonBock/Rocks/issues/250))
+- Handled another issue with duplicate members on a type (issue [#251](https://github.com/JasonBock/Rocks/issues/251))
 
 ## [7.1.1] - 2023-07-23
 
