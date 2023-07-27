@@ -38,7 +38,7 @@ internal static class Interceptors
 }
 ```
 
-Rocks would have to look for any method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IHandler` (more on that later on).
+Rocks would have to look for any method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on that later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
 
 The problem is that, once the interceptor is fired, what do we do then? The intent would be to do something like this:
 
@@ -66,6 +66,20 @@ internal static class Interceptors
 ```
 
 In other words, we'd want to move the mock validation inside this interception method. Note that if an expectation wasn't set, we'd simply fall back to the "normal" `NotMockable()` invocation. Since that one isn't tracked with an interceptor, it'll execute as it typically would.
+
+With this in place, and, assuming I added in the appropriate handler and adornment machinery for `NotMockable()`, I can do this:
+
+```csharp
+var expectations = Rock.Create<Target>();
+expectations.Methods().Mockable();
+expectations.Methods().NotMockable();
+
+var mock = expectations.Instance();
+mock.Mockable();
+mock.NotMockable();
+
+expectations.Verify();
+```
 
 A more complex example with a method that takes a parameters and returns a value would look like this:
 
@@ -95,39 +109,74 @@ internal static class Interceptors
         }
         else
         {
-            return base.GetLength(@value);
+            return @self.GetLength(@value);
         }
     }
 }
 ```
 
-The only problem is getting a reference to the `private` field, `handlers`. This is typed as `Dictionary<int, List<HandlerInformation>>`. One thought is to create an `IHandler` interfac in Rocks that every mock would explicitly implement:
+The only problem is getting a reference to the `private` field, `handlers`. This is typed as `Dictionary<int, List<HandlerInformation>>`. One thought is to create an `IMock` interfac in Rocks that every mock would explicitly implement:
 
 ```csharp
 // Put all the attributes and comments on this to try
 // and "warn" users not to use this interface or the
 // `Handlers` property.
-public interface IHandler
+public interface IMock
 {
     Dictionary<int, List<HandlerInformation>> Handlers { get; }
 }
 
 private sealed class RockTarget
-    : Target, IHandler
+    : Target, IMock
 {
     public RockTarget(Dictionary<int, List<HandlerInformation>> handlers)
     {
         this.Handlers = handlers;
     }
 
-    Dictionary<int, List<HandlerInformation>> IHandler.Handlers { get; }
+    Dictionary<int, List<HandlerInformation>> IMock.Handlers { get; }
 }
 ```
 
- Then all the interceptor would need to do is cast to `IHandler`:
+ Then all the interceptor would need to do is cast to `IMock`:
 
 ```csharp
-if (((IHandler)@self).Handlers.TryGetValue(4, out var @methodHandlers))
+if (((IMock)@self).Handlers.TryGetValue(4, out var @methodHandlers))
 ```
 
 If I do this, I should probably make the type an `ImmutableDictionary<int, ImmutableList<HandlerInformation>>`, just in case someone would try to do weird things with the information in the collection.
+
+One other interesting aspect to interceptors: you can intercept static calls. Let's say I added this static factory method to `Person`:
+
+```csharp
+public static Person Create(string name, uint age) => new(name, age);
+```
+
+I use it to create a new `Person`:
+
+```csharp
+var createPerson = Person.Create("Joe", 30);
+Console.WriteLine(createPerson.Compose());
+```
+
+I can intercept this:
+
+```csharp
+[InterceptsLocation(@"C:\SomeDirectory\SomeTestClass.cs", line: 8, column: 27)]
+public static Person Create(string name, uint age) => new("Intercepted", 21);
+```
+
+Rocks has never had any support for mocking statics (note that static abstract members in interfaces (SAMIs) is something that can't be done in Rocks because you can't pass an interface with SAMs to a type parameter). So...I **could** consider adding static methods now in Rocks, though I'm not sure how that would happen. For example:
+
+```csharp
+var expectations = Rock.Create<Target>();
+expectations.Methods().Create();
+
+var mock = expectations.Instance();
+// How do I know this should be intercepted?
+Person.Create();
+
+expectations.Verify();
+```
+
+Since `Create()` is defined on `Person`, I can't check at the call site that it implements `IMock`. How do I know for certain that this invocation should be intercepted? I'm guessing I would need some kind of "scope" to do this. I have considered having `Expectations<T>` implement `IDisposable` ([issue #224](https://github.com/JasonBock/Rocks/issues/224)), so that might have some use here. But...I'm also considering changing the creation of an expectations object (notes are [here](https://github.com/JasonBock/Rocks/blob/main/docs/notes/Creating%20a%20Custom%20Expectations%20Object%20to%20Simplify%20Generated%20Code.md)). That may not work well with setting expectations on static methods.
