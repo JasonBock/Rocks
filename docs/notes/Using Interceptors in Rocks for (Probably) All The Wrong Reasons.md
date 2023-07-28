@@ -1,6 +1,6 @@
 # Using Interceptors in Rocks for (Probably) All The Wrong Reasons
 
-In a future C# version, there will be a feature called interceptors (maybe, unless it gets pulled). Details about it can be found [here](https://github.com/dotnet/csharplang/issues/7009) and [here](https://github.com/dotnet/roslyn/blob/main/docs/features/interceptors.md#interceptslocationattribute). It's currently an experimental feature, and there is no guarantee that it'll ever ship. In the interim, let's see if it's useful in Rocks.
+In a future C# version, there will be a feature called interceptors (maybe, unless it gets pulled). Details about it can be found [here](https://github.com/dotnet/csharplang/issues/7009) and [here](https://github.com/dotnet/roslyn/blob/main/docs/features/interceptors.md#interceptslocationattribute). It's currently an experimental feature, and there is no guarantee that it'll ever ship. In the interim, let's see if it might be useful in Rocks.
 
 Currently, you can only mock instance members that are virtual or abstract:
 
@@ -38,7 +38,7 @@ internal static class Interceptors
 }
 ```
 
-Rocks would have to look for any method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on that later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
+Rocks would have to look for any method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on this new interface later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
 
 The problem is that, once the interceptor is fired, what do we do then? The intent would be to do something like this:
 
@@ -115,7 +115,7 @@ internal static class Interceptors
 }
 ```
 
-The only problem is getting a reference to the `private` field, `handlers`. This is typed as `Dictionary<int, List<HandlerInformation>>`. One thought is to create an `IMock` interfac in Rocks that every mock would explicitly implement:
+The only problem is getting a reference to the `private` field, `handlers`. This is typed as `Dictionary<int, List<HandlerInformation>>`. One thought is to create an `IMock` interface in Rocks that every mock would explicitly implement:
 
 ```csharp
 // Put all the attributes and comments on this to try
@@ -179,4 +179,6 @@ Person.Create();
 expectations.Verify();
 ```
 
-Since `Create()` is defined on `Person`, I can't check at the call site that it implements `IMock`. How do I know for certain that this invocation should be intercepted? I'm guessing I would need some kind of "scope" to do this. I have considered having `Expectations<T>` implement `IDisposable` ([issue #224](https://github.com/JasonBock/Rocks/issues/224)), so that might have some use here. But...I'm also considering changing the creation of an expectations object (notes are [here](https://github.com/JasonBock/Rocks/blob/main/docs/notes/Creating%20a%20Custom%20Expectations%20Object%20to%20Simplify%20Generated%20Code.md)). That may not work well with setting expectations on static methods.
+Since `Create()` is defined on `Person`, I can't check at the call site that it implements `IMock`. How do I know for certain that this invocation should be intercepted? I'm guessing I would need some kind of "scope" to do this. I have considered having `Expectations<T>` implement `IDisposable` ([issue #224](https://github.com/JasonBock/Rocks/issues/224)), so that might have some use here. But...I'm also considering changing the creation of an expectations object (notes are [here](https://github.com/JasonBock/Rocks/blob/main/docs/notes/Creating%20a%20Custom%20Expectations%20Object%20to%20Simplify%20Generated%20Code.md)). That may not work well with setting expectations on static methods. If I wanted to use interceptors now, I would probably defer handling statics until I had a design in place that I'm comfortable with.
+
+Overall, I think interceptors provide a novel way to handle members in Rocks that couldn't be addressed before. In fact, it may be possible to do **everything** with interceptors instead of generating a custom mock type. I'm not sure I think that's the right thing to do, though it would be interesting to see if performance would be slightly better with using interceptors everywhere.
