@@ -181,4 +181,35 @@ expectations.Verify();
 
 Since `Create()` is defined on `Person`, I can't check at the call site that it implements `IMock`. How do I know for certain that this invocation should be intercepted? I'm guessing I would need some kind of "scope" to do this. I have considered having `Expectations<T>` implement `IDisposable` ([issue #224](https://github.com/JasonBock/Rocks/issues/224)), so that might have some use here. But...I'm also considering changing the creation of an expectations object (notes are [here](https://github.com/JasonBock/Rocks/blob/main/docs/notes/Creating%20a%20Custom%20Expectations%20Object%20to%20Simplify%20Generated%20Code.md)). That may not work well with setting expectations on static methods. If I wanted to use interceptors now, I would probably defer handling statics until I had a design in place that I'm comfortable with.
 
+One interesting consequence if I use interceptors in Rocks is, would it be able to mock sealed and struct types? Here's an example:
+
+```csharp
+public struct Pairs
+{
+    public Pairs(int x, int y) =>
+        (this.X, this.Y) = (x, y);
+
+    public int Calculate() => this.X + this.Y;
+    
+    public int X { get; }
+    public int Y { get; }
+}
+```
+
+`Pairs` has one method that could be intercepted. Assuming that I relax the checks in Rocks to allow sealed and struct types to be mocked, I could do this:
+
+```csharp
+var expectations = Rock.Create<Pairs>();
+expectations.Methods().Calculate().Returns(42);
+
+var mock = expectations.Instance(3, 4);
+Assert.That(mock.Calculate(), Is.EqualTo(42));
+
+expectations.Verify();
+```
+
+The `Instance()` methods would just return an instance of the given type to mock. In this case, it would be `Pairs`. The trick would be that I can't look at the method invocation on `mock.Calculate()` to see if it's done on something that was **intended** to be mocked. This is somewhat similar to the issue with a static method, in that I need some kind of "scope" to determine which calls should be intercepted. If there was a way to say, "if the instance that `Calculate()` is being called on came from an invocation of an `Instance()` method, then put in an interceptor". However, the other, bigger problem with this is that, I don't have any way to reference the handlers if the return value from `Instance()` does not implement `IMock`.
+
+So, allowing sealed or struct types may not be doable. I'm not shutting the idea down; I just can't think of a way to do it cleanly.
+
 Overall, I think interceptors provide a novel way to handle members in Rocks that couldn't be addressed before. In fact, it may be possible to do **everything** with interceptors instead of generating a custom mock type. I'm not sure I think that's the right thing to do, though it would be interesting to see if performance would be slightly better with using interceptors everywhere.
