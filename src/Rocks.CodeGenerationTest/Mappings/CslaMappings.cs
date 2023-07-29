@@ -27,7 +27,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ReadOnlyBindingListBase<,>), new()
 					{
 						{ "T", "global::Rocks.CodeGenerationTest.Mappings.Csla.MappedReadOnlyBindingListBase" },
-						{ "C", "global::System.Object" },
+						{ "C", "object" },
 					}
 				},
 				{
@@ -51,13 +51,13 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(MaxValue<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.Csla.MappedComparable" },
+						{ "T", "global::System.IComparable" },
 					}
 				},
 				{
 					typeof(MinValue<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.Csla.MappedComparable" },
+						{ "T", "global::System.IComparable" },
 					}
 				},
 				{
@@ -82,7 +82,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ReadOnlyListBase<,>), new()
 					{
 						{ "T", "global::Rocks.CodeGenerationTest.Mappings.Csla.MappedReadOnlyListBase" },
-						{ "C", "global::System.Object" },
+						{ "C", "object" },
 					}
 				},
 			};
@@ -105,20 +105,9 @@ namespace Rocks.CodeGenerationTest.Mappings
 			: CriteriaBase<MappedCriteriaBase>
 		{ }
 
-		public sealed class MappedComparable
-			: IComparable
-		{
-			public int CompareTo(object? obj) => throw new NotImplementedException();
-		}
-
 		[Serializable]
 		public sealed class MappedBusinessBase
 			: BusinessBase<MappedBusinessBase>
-		{ }
-
-		[Serializable]
-		public sealed class MappedDynamicBindingListBase
-			: DynamicBindingListBase<MappedBusinessBase>
 		{ }
 
 		[Serializable]

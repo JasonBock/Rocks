@@ -12,28 +12,28 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(INotificationHandler<>), new()
 					{
-						{ "TNotification", "global::Rocks.CodeGenerationTest.Mappings.MediatR.MappedNotification" },
+						{ "TNotification", "global::MediatR.INotification" },
 					}
 				},
 				{
 					typeof(IPipelineBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(IRequestExceptionAction<,>), new()
 					{
-						{ "TRequest", "global::System.Object" },
+						{ "TRequest", "object" },
 						{ "TException", "global::System.Exception" },
 					}
 				},
 				{
 					typeof(IRequestExceptionHandler<,,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 						{ "TException", "global::System.Exception" },
 					}
 				},
@@ -46,29 +46,29 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IRequestHandler<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(IRequestPostProcessor<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(IStreamPipelineBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IStreamRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(IStreamRequestHandler<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IStreamRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IStreamRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
@@ -86,15 +86,15 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(RequestExceptionActionProcessorBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(RequestExceptionProcessorBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
@@ -106,31 +106,24 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(RequestHandlerWrapperImpl<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(RequestPreProcessorBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(RequestPostProcessorBehavior<,>), new()
 					{
-						{ "TRequest", "global::MediatR.IRequest<global::System.Object>" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "global::MediatR.IRequest<object>" },
+						{ "TResponse", "object" },
 					}
 				},
 			};
-	}
-
-	namespace MediatR
-	{
-		public sealed class MappedNotification
-			: INotification
-		{ }
 	}
 }

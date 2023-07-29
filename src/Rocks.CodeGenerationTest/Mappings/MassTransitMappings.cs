@@ -19,16 +19,16 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(AdjacencyList<,>), new()
 					{
-						{ "T", "global::System.Object" },
-						{ "TNode", "global::MassTransit.Internals.GraphValidation.Node<global::System.Object>" },
+						{ "T", "object" },
+						{ "TNode", "global::MassTransit.Internals.GraphValidation.Node<object>" },
 					}
 				},
 				{
 					typeof(ActivityDefinition<,,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedActivity" },
-						{ "TLog", "global::System.Object" },
-						{ "TArguments", "global::System.Object" },
+						{ "TLog", "object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
@@ -52,7 +52,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(BehaviorContext<,>), new()
 					{
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
 					}
 				},
@@ -68,14 +68,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 					{
 						{ "TException", "global::System.Exception" },
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
 					typeof(BindContext<,>), new()
 					{
 						{ "TLeft", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedPipeContext" },
-						{ "TRight", "global::System.Object" },
+						{ "TRight", "object" },
 					}
 				},
 				{
@@ -94,14 +94,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(CompensateActivityContext<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedCompensateActivity" },
-						{ "TLog", "global::System.Object" },
+						{ "TLog", "object" },
 					}
 				},
 				{
 					typeof(CompensateActivityEndpointDefinition<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedCompensateActivity" },
-						{ "TLog", "global::System.Object" },
+						{ "TLog", "object" },
 					}
 				},
 				{
@@ -138,7 +138,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(EventCorrelation<,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TData", "global::System.Object" },
+						{ "TData", "object" },
 					}
 				},
 				{
@@ -151,21 +151,21 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ExecuteActivityContext<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(ExecuteActivityDefinition<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(ExecuteActivityEndpointDefinition<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
@@ -202,24 +202,24 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IActivityDefinition<,,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedActivity" },
-						{ "TLog", "global::System.Object" },
-						{ "TArguments", "global::System.Object" },
+						{ "TLog", "object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(IActivityFactory<,,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedActivity" },
-						{ "TLog", "global::System.Object" },
-						{ "TArguments", "global::System.Object" },
+						{ "TLog", "object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(IActivityRegistrationConfigurator<,,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedActivity" },
-						{ "TArguments", "global::System.Object" },
-						{ "TLog", "global::System.Object" },
+						{ "TArguments", "object" },
+						{ "TLog", "object" },
 					}
 				},
 				{
@@ -232,7 +232,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IBehavior<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -244,21 +244,21 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IBusFactoryConfigurator<>), new()
 					{
-						{ "TEndpointConfigurator", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedReceiveEndpointConfigurator" },
+						{ "TEndpointConfigurator", "global::MassTransit.IReceiveEndpointConfigurator" },
 					}
 				},
 				{
 					typeof(ICompensateActivityConfigurator<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedCompensateActivity" },
-						{ "TLog", "global::System.Object" },
+						{ "TLog", "object" },
 					}
 				},
 				{
 					typeof(ICompensateActivityFactory<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedCompensateActivity" },
-						{ "TLog", "global::System.Object" },
+						{ "TLog", "object" },
 					}
 				},
 				{
@@ -277,7 +277,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IEventCorrelationConfigurator<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -290,28 +290,28 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IExecuteActivityConfigurator<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(IExecuteActivityDefinition<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(IExecuteActivityFactory<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
 					typeof(IExecuteActivityRegistrationConfigurator<,>), new()
 					{
 						{ "TActivity", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedExecuteActivity" },
-						{ "TArguments", "global::System.Object" },
+						{ "TArguments", "object" },
 					}
 				},
 				{
@@ -354,7 +354,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IMissingInstanceConfigurator<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -409,40 +409,40 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IReceiveConfigurator<>), new()
 					{
-						{ "TEndpointConfigurator", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedReceiveEndpointConfigurator" },
+						{ "TEndpointConfigurator", "global::MassTransit.IReceiveEndpointConfigurator" },
 					}
 				},
 				{
 					typeof(IReceiveConnector<>), new()
 					{
-						{ "TEndpointConfigurator", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedReceiveEndpointConfigurator" },
+						{ "TEndpointConfigurator", "global::MassTransit.IReceiveEndpointConfigurator" },
 					}
 				},
 				{
 					typeof(IRequestConfigurator<,,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(IRequestConfigurator<,,,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
 					}
 				},
 				{
 					typeof(IRequestConfigurator<,,,,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
-						{ "TResponse3", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
+						{ "TResponse3", "object" },
 					}
 				},
 				{
@@ -467,13 +467,13 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ISagaFactory<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
 					typeof(ISagaMessageConfigurator<,>), new()
 					{
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
 					}
 				},
@@ -481,7 +481,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ISagaPolicy<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -494,7 +494,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(ISagaQueryFactory<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -507,13 +507,13 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IScheduleConfigurator<,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
 					typeof(IServiceInstanceConfigurator<>), new()
 					{
-						{ "TEndpointConfigurator", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedReceiveEndpointConfigurator" },
+						{ "TEndpointConfigurator", "global::MassTransit.IReceiveEndpointConfigurator" },
 					}
 				},
 				{
@@ -544,7 +544,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IStateMachineActivity<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -581,7 +581,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(MediatorRequestHandler<,>), new()
 					{
 						{ "TRequest", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedRequest" },
-						{ "TResponse", "global::System.Object" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
@@ -594,8 +594,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(NodeList<,>), new()
 					{
-						{ "T", "global::System.Object" },
-						{ "TNode", "global::MassTransit.Internals.GraphValidation.Node<global::System.Object>" },
+						{ "T", "object" },
+						{ "TNode", "global::MassTransit.Internals.GraphValidation.Node<object>" },
 					}
 				},
 				{
@@ -620,54 +620,54 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(Request<,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(Request<,,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
 					}
 				},
 				{
 					typeof(Request<,,,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
-						{ "TResponse3", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
+						{ "TResponse3", "object" },
 					}
 				},
 				{
 					typeof(RequestSettings<,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
 					}
 				},
 				{
 					typeof(RequestSettings<,,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
 					}
 				},
 				{
 					typeof(RequestSettings<,,,,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TRequest", "global::System.Object" },
-						{ "TResponse", "global::System.Object" },
-						{ "TResponse2", "global::System.Object" },
-						{ "TResponse3", "global::System.Object" },
+						{ "TRequest", "object" },
+						{ "TResponse", "object" },
+						{ "TResponse2", "object" },
+						{ "TResponse3", "object" },
 					}
 				},
 				{
@@ -680,7 +680,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(SagaConsumeContext<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSaga" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -711,14 +711,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(Schedule<,>), new()
 					{
 						{ "TSaga", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
 					typeof(ScheduleSettings<,>), new()
 					{
 						{ "TInstance", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedSagaStateMachineInstance" },
-						{ "TMessage", "global::System.Object" },
+						{ "TMessage", "object" },
 					}
 				},
 				{
@@ -756,14 +756,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(Tarjan<,>), new()
 					{
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 						{ "TNode", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedTarjanNodeProperties" },
 					}
 				},
 				{
 					typeof(TopologicalSort<,>), new()
 					{
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 						{ "TNode", "global::Rocks.CodeGenerationTest.Mappings.MassTransit.MappedTopologicalSortNodeProperties" },
 					}
 				},
@@ -831,56 +831,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public Task Publish<T>(object values, CancellationToken cancellationToken = default) where T : class => throw new NotImplementedException();
 			public Task Publish<T>(object values, IPipe<PublishContext<T>> publishPipe, CancellationToken cancellationToken = default) where T : class => throw new NotImplementedException();
 			public Task Publish<T>(object values, IPipe<PublishContext> publishPipe, CancellationToken cancellationToken = default) where T : class => throw new NotImplementedException();
-		}
-
-		public sealed class MappedReceiveEndpointConfigurator
-			 : IReceiveEndpointConfigurator
-		{
-			public Uri InputAddress => throw new NotImplementedException();
-
-			public bool ConfigureConsumeTopology { set => throw new NotImplementedException(); }
-			public bool PublishFaults { set => throw new NotImplementedException(); }
-			public int PrefetchCount { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-			public int? ConcurrentMessageLimit { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-			public ContentType DefaultContentType { set => throw new NotImplementedException(); }
-			public ContentType SerializerContentType { set => throw new NotImplementedException(); }
-			public bool AutoStart { set => throw new NotImplementedException(); }
-
-			public void AddDependency(IReceiveEndpointObserverConnector connector) => throw new NotImplementedException();
-			public void AddDependency(IReceiveEndpointDependentConnector dependent) => throw new NotImplementedException();
-			public void AddDependency(IReceiveEndpointDependency dependency) => throw new NotImplementedException();
-			public void AddDependent(IReceiveEndpointObserverConnector dependency) => throw new NotImplementedException();
-			public void AddDependent(IReceiveEndpointDependent dependent) => throw new NotImplementedException();
-			public void AddDeserializer(ISerializerFactory factory, bool isDefault = false) => throw new NotImplementedException();
-			public void AddEndpointSpecification(IReceiveEndpointSpecification configurator) => throw new NotImplementedException();
-			public void AddPipeSpecification<T>(IPipeSpecification<ConsumeContext<T>> specification) where T : class => throw new NotImplementedException();
-			public void AddPipeSpecification(IPipeSpecification<ConsumeContext> specification) => throw new NotImplementedException();
-			public void AddPrePipeSpecification(IPipeSpecification<ConsumeContext> specification) => throw new NotImplementedException();
-			public void AddSerializer(ISerializerFactory factory, bool isSerializer = true) => throw new NotImplementedException();
-			public void ClearSerialization() => throw new NotImplementedException();
-			public void ConfigureDeadLetter(Action<IPipeConfigurator<ReceiveContext>> callback) => throw new NotImplementedException();
-			public void ConfigureError(Action<IPipeConfigurator<ExceptionReceiveContext>> callback) => throw new NotImplementedException();
-			public void ConfigureMessageTopology<T>(bool enabled = true) where T : class => throw new NotImplementedException();
-			public void ConfigurePublish(Action<IPublishPipeConfigurator> callback) => throw new NotImplementedException();
-			public void ConfigureReceive(Action<IReceivePipeConfigurator> callback) => throw new NotImplementedException();
-			public void ConfigureSend(Action<ISendPipeConfigurator> callback) => throw new NotImplementedException();
-			public void ConfigureTransport(Action<ITransportConfigurator> callback) => throw new NotImplementedException();
-			public ConnectHandle ConnectActivityConfigurationObserver(IActivityConfigurationObserver observer) => throw new NotImplementedException();
-			public ConnectHandle ConnectConsumerConfigurationObserver(IConsumerConfigurationObserver observer) => throw new NotImplementedException();
-			public ConnectHandle ConnectHandlerConfigurationObserver(IHandlerConfigurationObserver observer) => throw new NotImplementedException();
-			public ConnectHandle ConnectReceiveEndpointObserver(IReceiveEndpointObserver observer) => throw new NotImplementedException();
-			public ConnectHandle ConnectSagaConfigurationObserver(ISagaConfigurationObserver observer) => throw new NotImplementedException();
-			public void ConsumerConfigured<TConsumer>(IConsumerConfigurator<TConsumer> configurator) where TConsumer : class => throw new NotImplementedException();
-			public void ConsumerMessageConfigured<TConsumer, TMessage>(IConsumerMessageConfigurator<TConsumer, TMessage> configurator)
-			  where TConsumer : class
-			  where TMessage : class => throw new NotImplementedException();
-			public void HandlerConfigured<TMessage>(IHandlerConfigurator<TMessage> configurator) where TMessage : class => throw new NotImplementedException();
-			void IActivityConfigurationObserver.ActivityConfigured<TActivity, TArguments>(IExecuteActivityConfigurator<TActivity, TArguments> configurator, Uri compensateAddress) => throw new NotImplementedException();
-			void IActivityConfigurationObserver.CompensateActivityConfigured<TActivity, TLog>(ICompensateActivityConfigurator<TActivity, TLog> configurator) => throw new NotImplementedException();
-			void IActivityConfigurationObserver.ExecuteActivityConfigured<TActivity, TArguments>(IExecuteActivityConfigurator<TActivity, TArguments> configurator) => throw new NotImplementedException();
-			void ISagaConfigurationObserver.SagaConfigured<TSaga>(ISagaConfigurator<TSaga> configurator) => throw new NotImplementedException();
-			void ISagaConfigurationObserver.SagaMessageConfigured<TSaga, TMessage>(ISagaMessageConfigurator<TSaga, TMessage> configurator) => throw new NotImplementedException();
-			void ISagaConfigurationObserver.StateMachineSagaConfigured<TInstance>(ISagaConfigurator<TInstance> configurator, SagaStateMachine<TInstance> stateMachine) => throw new NotImplementedException();
 		}
 
 		public sealed class MappedActivity

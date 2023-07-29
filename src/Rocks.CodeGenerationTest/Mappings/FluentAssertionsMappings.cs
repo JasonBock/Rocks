@@ -40,7 +40,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(ComparableTypeAssertions<,>), new()
 					{
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedComparableTypeAssertions" },
 					}
 				},
@@ -121,32 +121,32 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(GenericCollectionAssertions<,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.List<global::System.Object>" },
-						{ "T", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.List<object>" },
+						{ "T", "object" },
 					}
 				},
 				{
 					typeof(GenericCollectionAssertions<,,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.List<global::System.Object>" },
-						{ "T", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.List<object>" },
+						{ "T", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedGenericCollectionAssertions" },
 					}
 				},
 				{
 					typeof(GenericDictionaryAssertions<,,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.Dictionary<global::System.Object, global::System.Object>" },
-						{ "TKey", "global::System.Object" },
-						{ "TValue", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.Dictionary<object, object>" },
+						{ "TKey", "object" },
+						{ "TValue", "object" },
 					}
 				},
 				{
 					typeof(GenericDictionaryAssertions<,,,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.Dictionary<global::System.Object, global::System.Object>" },
-						{ "TKey", "global::System.Object" },
-						{ "TValue", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.Dictionary<object, object>" },
+						{ "TKey", "object" },
+						{ "TValue", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedGenericDictionaryAssertions" },
 					}
 				},
@@ -254,14 +254,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(ObjectAssertions<,>), new()
 					{
-						{ "TSubject", "global::System.Object" },
+						{ "TSubject", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedObjectAssertions" },
 					}
 				},
 				{
 					typeof(ReferenceTypeAssertions<,>), new()
 					{
-						{ "TSubject", "global::System.Object" },
+						{ "TSubject", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedReferenceTypeAssertions" },
 					}
 				},
@@ -306,15 +306,15 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(SubsequentOrderingGenericCollectionAssertions<,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.List<global::System.Object>" },
-						{ "T", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.List<object>" },
+						{ "T", "object" },
 					}
 				},
 				{
 					typeof(SubsequentOrderingGenericCollectionAssertions<,,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.List<global::System.Object>" },
-						{ "T", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.List<object>" },
+						{ "T", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedSubsequentOrderingGenericCollectionAssertions" },
 					}
 				},
@@ -327,9 +327,9 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(WhoseValueConstraint<,,,>), new()
 					{
-						{ "TCollection", "global::System.Collections.Generic.Dictionary<global::System.Object, global::System.Object>" },
-						{ "TKey", "global::System.Object" },
-						{ "TValue", "global::System.Object" },
+						{ "TCollection", "global::System.Collections.Generic.Dictionary<object, object>" },
+						{ "TKey", "object" },
+						{ "TValue", "object" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedGenericDictionaryAssertions" },
 					}
 				},

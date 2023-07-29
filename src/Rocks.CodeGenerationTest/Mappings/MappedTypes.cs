@@ -11,7 +11,6 @@ internal static class MappedTypes
 			.AddItems(AvaloniaMappings.GetMappedTypes())
 			.AddItems(AutofacMappings.GetMappedTypes())
 			.AddItems(AWSSDKCoreMappings.GetMappedTypes())
-			.AddItems(ComputeSharpMappings.GetMappedTypes())
 			.AddItems(CslaMappings.GetMappedTypes())
 			.AddItems(EntityFrameworkMappings.GetMappedTypes())
 			.AddItems(FluentAssertionsMappings.GetMappedTypes())

@@ -69,7 +69,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(GlobalFixPointAnalysis<,,>), new()
 					{
-						{ "TMethodData", "global::System.Object" },
+						{ "TMethodData", "object" },
 						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedEquatableStruct" },
 						{ "TDirection", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedControlFlowDirection" },
 					}
@@ -131,7 +131,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IFixPointAnalysisContext<,>), new()
 					{
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 						{ "TNode", "global::ILGPU.IR.Node" },
 					}
 				},
@@ -144,7 +144,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IGlobalFixPointAnalysisContext<,>), new()
 					{
-						{ "TMethodData", "global::System.Object" },
+						{ "TMethodData", "object" },
 						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedEquatable" },
 					}
 				},
@@ -192,7 +192,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(IRewriterContextProvider<,>), new()
 					{
 						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedRewriterContext" },
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 					}
 				},
 				{
@@ -271,7 +271,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(Movement<>), new()
 					{
-						{ "TScope", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedMovementScope" },
+						{ "TScope", "global::ILGPU.IR.Analyses.IMovementScope" },
 					}
 				},
 				{
@@ -286,8 +286,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 					{
 						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedRewriterContext" },
 						{ "TContextProvider", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedRewriterContextProvider" },
-						{ "TContextData", "global::System.Object" },
-						{ "T", "global::System.Object" },
+						{ "TContextData", "object" },
+						{ "T", "object" },
 					}
 				},
 				{
@@ -300,7 +300,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(SSARewriter<,>), new()
 					{
 						{ "TVariable", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedEquatable" },
-						{ "T", "global::System.Object" },
+						{ "T", "object" },
 					}
 				},
 				{
@@ -325,7 +325,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(ValueBuilder<>), new()
 					{
-						{ "TBuilder", "global::Rocks.CodeGenerationTest.Mappings.ILGPU.MappedValueBuilder" },
+						{ "TBuilder", "global::ILGPU.IR.IValueBuilder" },
 					}
 				},
 				{
@@ -429,12 +429,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 		public sealed class MappedIntrinsicImplementation
 			  : IIntrinsicImplementation
 		{ }
-
-		public sealed class MappedMovementScope
-			: IMovementScope
-		{
-			public bool TryFindFirstValueOf<T>(BasicBlock basicBlock, Predicate<T> predicate, out (int Index, T Value) entry) where T : Value => throw new NotImplementedException();
-		}
 
 		public struct MappedPlacementStrategy
 			: CodePlacement.IPlacementStrategy
@@ -571,23 +565,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public MappedIntIndex ReconstructFromElementIndex(int elementIndex) => throw new NotImplementedException();
 			public MappedLongIndex ReconstructFromElementIndex(long elementIndex) => throw new NotImplementedException();
 			public Stride1D.General To1DStride() => throw new NotImplementedException();
-		}
-
-		public sealed class MappedValueBuilder
-			: IValueBuilder
-		{
-#pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
-			public ValueReference this[FieldAccess access] => throw new NotImplementedException();
-#pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
-
-			public IRBuilder IRBuilder => throw new NotImplementedException();
-
-			public Location Location => throw new NotImplementedException();
-
-			public int Count => throw new NotImplementedException();
-
-			public void Add(Value value) => throw new NotImplementedException();
-			public ValueReference Seal() => throw new NotImplementedException();
 		}
 	}
 }

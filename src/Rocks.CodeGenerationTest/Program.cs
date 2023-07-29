@@ -80,8 +80,6 @@ static void TestWithTypes()
 		typeof(Bogus.Binder),
 		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 		typeof(ClangSharp.AbstractConditionalOperator),
-		typeof(ComputeSharp.AutoConstructorAttribute),
-		typeof(ComputeSharp.D2D1.D2DCompileOptionsAttribute),
 		typeof(Csla.DataPortal<>),
 		typeof(CsvHelper.ArrayHelper),
 		typeof(Dapper.DbString),

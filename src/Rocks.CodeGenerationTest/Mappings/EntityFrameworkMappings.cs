@@ -24,74 +24,74 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(AnnotatableBuilder<,>), new()
 					{
-						{ "TMetadata", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedConventionAnnotatable" },
-						{ "TModelBuilder", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedConventionModelBuilder" },
+						{ "TMetadata", "global::Microsoft.EntityFrameworkCore.Infrastructure.ConventionAnnotatable" },
+						{ "TModelBuilder", "global::Microsoft.EntityFrameworkCore.Metadata.Builders.IConventionModelBuilder" },
 					}
 				},
 				{
 					typeof(ClrICollectionAccessor<,,>), new()
 					{
-						{ "TEntity", "global::System.Object" },
-						{ "TCollection", "global::System.Collections.Generic.List<global::System.Object>" },
-						{ "TElement", "global::System.Object" },
+						{ "TEntity", "object" },
+						{ "TCollection", "global::System.Collections.Generic.List<object>" },
+						{ "TElement", "object" },
 					}
 				},
 				{
 					typeof(CompiledAsyncEnumerableQuery<,>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
-						{ "TResult", "global::System.Object" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
+						{ "TResult", "object" },
 					}
 				},
 				{
 					typeof(CompiledAsyncTaskQuery<,>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
-						{ "TResult", "global::System.Object" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
+						{ "TResult", "object" },
 					}
 				},
 				{
 					typeof(CompiledQuery<,>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
-						{ "TResult", "global::System.Object" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
+						{ "TResult", "object" },
 					}
 				},
 				{
 					typeof(CompiledQueryBase<,>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
-						{ "TResult", "global::System.Object" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
+						{ "TResult", "object" },
 					}
 				},
 				{
 					typeof(DatabaseProvider<>), new()
 					{
-						{ "TOptionsExtension", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContextOptionsExtension" },
+						{ "TOptionsExtension", "global::Microsoft.EntityFrameworkCore.Infrastructure.IDbContextOptionsExtension" },
 					}
 				},
 				{
 					typeof(DbContextFactory<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(DbContextFactorySource<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(DbContextOptions<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(DbContextOptionsBuilder<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
@@ -115,25 +115,25 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IDbContextFactory<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(IDbContextFactorySource<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(IDbContextPool<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(IDesignTimeDbContextFactory<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
@@ -145,13 +145,13 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IScopedDbContextLease<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
 					typeof(InterceptorAggregator<>), new()
 					{
-						{ "TInterceptor", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedInterceptor" },
+						{ "TInterceptor", "global::Microsoft.EntityFrameworkCore.Diagnostics.IInterceptor" },
 					}
 				},
 				{
@@ -169,7 +169,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(PooledDbContextFactory<>), new()
 					{
-						{ "TContext", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedDbContext" },
+						{ "TContext", "global::Microsoft.EntityFrameworkCore.DbContext" },
 					}
 				},
 				{
@@ -183,62 +183,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 
 	namespace EntityFramework
 	{
-		public sealed class MappedDbContextOptionsExtension
-			: IDbContextOptionsExtension
-		{
-			public DbContextOptionsExtensionInfo Info => throw new NotImplementedException();
-
-			public void ApplyServices(IServiceCollection services) => throw new NotImplementedException();
-			public void Validate(IDbContextOptions options) => throw new NotImplementedException();
-		}
-
-		public sealed class MappedInterceptor
-			: IInterceptor
-		{ }
-
-		public sealed class MappedConventionAnnotatable
-			: ConventionAnnotatable
-		{ }
-
 		public sealed class MappedLoggerCategory
 			: LoggerCategory<MappedLoggerCategory>
-		{ }
-
-		public sealed class MappedConventionModelBuilder
-			: IConventionModelBuilder
-		{
-			public IConventionModel Metadata => throw new NotImplementedException();
-
-			public IConventionModelBuilder ModelBuilder => throw new NotImplementedException();
-
-			IConventionAnnotatable IConventionAnnotatableBuilder.Metadata => throw new NotImplementedException();
-
-			public bool CanIgnore([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool CanIgnore(string typeName, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool CanRemoveAnnotation(string name, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool CanSetAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool CanSetChangeTrackingStrategy(ChangeTrackingStrategy? changeTrackingStrategy, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool CanSetPropertyAccessMode(PropertyAccessMode? propertyAccessMode, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionEntityTypeBuilder? Entity(string name, bool? shouldBeOwned = false, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionEntityTypeBuilder? Entity([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool? shouldBeOwned = false, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionEntityTypeBuilder? Entity(string name, string definingNavigationName, IConventionEntityType definingEntityType, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionEntityTypeBuilder? Entity([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, string definingNavigationName, IConventionEntityType definingEntityType, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionAnnotatableBuilder? HasAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionModelBuilder? HasChangeTrackingStrategy(ChangeTrackingStrategy? changeTrackingStrategy, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionAnnotatableBuilder? HasNoAnnotation(string name, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionModelBuilder? HasNoEntityType(IConventionEntityType entityType, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionAnnotatableBuilder? HasNonNullAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionModelBuilder? Ignore([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionModelBuilder? Ignore(string typeName, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool IsIgnored([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public bool IsIgnored(string typeName, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionOwnedEntityTypeBuilder? Owned([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionEntityTypeBuilder? SharedTypeEntity(string name, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors | DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.NonPublicFields | DynamicallyAccessedMemberTypes.PublicProperties | DynamicallyAccessedMemberTypes.NonPublicProperties | DynamicallyAccessedMemberTypes.Interfaces)] Type type, bool? shouldBeOwned = false, bool fromDataAnnotation = false) => throw new NotImplementedException();
-			public IConventionModelBuilder? UsePropertyAccessMode(PropertyAccessMode? propertyAccessMode, bool fromDataAnnotation = false) => throw new NotImplementedException();
-		}
-
-		public sealed class MappedDbContext
-			: DbContext
 		{ }
 	}
 }

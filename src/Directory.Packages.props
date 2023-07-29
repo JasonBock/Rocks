@@ -10,8 +10,6 @@
     <PackageVersion Include="Bogus" Version="34.0.2" />
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="ClangSharp" Version="16.0.0" />
-    <PackageVersion Include="ComputeSharp" Version="2.1.0-preview2" />
-    <PackageVersion Include="ComputeSharp.D2D1" Version="2.1.0-preview2" />
     <PackageVersion Include="Csla" Version="7.0.0" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
     <PackageVersion Include="Dapper" Version="2.0.143" />

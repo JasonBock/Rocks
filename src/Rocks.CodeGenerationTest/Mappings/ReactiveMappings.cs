@@ -23,14 +23,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(VirtualTimeScheduler<,>), new()
 					{
 						{ "TAbsolute", "global::Rocks.CodeGenerationTest.Mappings.Reactive.MappedReactiveComparable" },
-						{ "TRelative", "global::System.Object" },
+						{ "TRelative", "object" },
 					}
 				},
 				{
 					typeof(VirtualTimeSchedulerBase<,>), new()
 					{
 						{ "TAbsolute", "global::Rocks.CodeGenerationTest.Mappings.Reactive.MappedReactiveComparable" },
-						{ "TRelative", "global::System.Object" },
+						{ "TRelative", "object" },
 					}
 				},
 			};

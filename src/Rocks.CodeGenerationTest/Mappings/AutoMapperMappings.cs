@@ -13,32 +13,32 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IMappingExpressionBase<,,>), new()
 					{
-						{ "TSource", "global::System.Object" },
-						{ "TDestination", "global::System.Object" },
+						{ "TSource", "object" },
+						{ "TDestination", "object" },
 						{ "TMappingExpression", "global::Rocks.CodeGenerationTest.Mappings.AutoMapper.MappedMappingExpressionBase" },
 					}
 				},
 				{
 					typeof(IProjectionExpression<,,>), new()
 					{
-						{ "TSource", "global::System.Object" },
-						{ "TDestination", "global::System.Object" },
+						{ "TSource", "object" },
+						{ "TDestination", "object" },
 						{ "TMappingExpression", "global::Rocks.CodeGenerationTest.Mappings.AutoMapper.MappedProjectionExpressionBase" },
 					}
 				},
 				{
 					typeof(IProjectionExpressionBase<,,>), new()
 					{
-						{ "TSource", "global::System.Object" },
-						{ "TDestination", "global::System.Object" },
+						{ "TSource", "object" },
+						{ "TDestination", "object" },
 						{ "TMappingExpression", "global::Rocks.CodeGenerationTest.Mappings.AutoMapper.MappedProjectionExpressionBase" },
 					}
 				},
 				{
 					typeof(MappingExpressionBase<,,>), new()
 					{
-						{ "TSource", "global::System.Object" },
-						{ "TDestination", "global::System.Object" },
+						{ "TSource", "object" },
+						{ "TDestination", "object" },
 						{ "TMappingExpression", "global::Rocks.CodeGenerationTest.Mappings.AutoMapper.MappedMappingExpressionBase" },
 					}
 				},

@@ -81,7 +81,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(ISpecializedImageDecoder<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedSpecializedDecoderOptions" },
+						{ "T", "global::SixLabors.ImageSharp.Formats.ISpecializedDecoderOptions" },
 					}
 				},
 				{
@@ -99,7 +99,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(SpecializedImageDecoder<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.ImageSharp.MappedSpecializedDecoderOptions" },
+						{ "T", "global::SixLabors.ImageSharp.Formats.ISpecializedDecoderOptions" },
 					}
 				},
 			};
@@ -130,16 +130,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public void ToRgba32(ref Rgba32 dest) => throw new NotImplementedException();
 			public Vector4 ToScaledVector4() => throw new NotImplementedException();
 			public Vector4 ToVector4() => throw new NotImplementedException();
-		}
-
-		public sealed class MappedSpecializedDecoderOptions
-			: ISpecializedDecoderOptions
-		{
-			public DecoderOptions GeneralOptions
-			{
-				get => throw new NotImplementedException();
-				init => throw new NotImplementedException();
-			}
 		}
 	}
 }

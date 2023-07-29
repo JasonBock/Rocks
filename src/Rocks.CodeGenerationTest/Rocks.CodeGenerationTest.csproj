@@ -17,8 +17,6 @@
 		<PackageReference Include="Bogus" />
 		<PackageReference Include="Castle.Core" />
 		<PackageReference Include="ClangSharp" />
-		<PackageReference Include="ComputeSharp" />
-		<PackageReference Include="ComputeSharp.D2D1" />
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
 		<PackageReference Include="Dapper" />

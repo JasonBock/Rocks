@@ -16,8 +16,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(DictionaryUnmarshaller<,,,>), new()
 					{
-						{ "TKey", "global::System.Object" },
-						{ "TValue", "global::System.Object" },
+						{ "TKey", "object" },
+						{ "TValue", "object" },
 						{ "TKeyUnmarshaller", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedUnmarshaller" },
 						{ "TValueUnmarshaller", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedUnmarshaller" },
 					}
@@ -25,8 +25,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(KeyValueUnmarshaller<,,,>), new()
 					{
-						{ "K", "global::System.Object" },
-						{ "V", "global::System.Object" },
+						{ "K", "object" },
+						{ "V", "object" },
 						{ "KUnmarshaller", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedUnmarshaller" },
 						{ "VUnmarshaller", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedUnmarshaller" },
 					}
@@ -34,14 +34,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(EventStream<,>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamEvent" },
+						{ "T", "global::Amazon.Runtime.EventStreams.Internal.IEventStreamEvent" },
 						{ "TE", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamException" },
 					}
 				},
 				{
 					typeof(EventStreamEventReceivedArgs<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamEvent" },
+						{ "T", "global::Amazon.Runtime.EventStreams.Internal.IEventStreamEvent" },
 					}
 				},
 				{
@@ -53,14 +53,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(EnumerableEventStream<,>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamEvent" },
+						{ "T", "global::Amazon.Runtime.EventStreams.Internal.IEventStreamEvent" },
 						{ "TE", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamException" },
 					}
 				},
 				{
 					typeof(ListUnmarshaller<,>), new()
 					{
-						{ "I", "global::System.Object" },
+						{ "I", "object" },
 						{ "IUnmarshaller", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedUnmarshaller" },
 					}
 				},
@@ -73,14 +73,14 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(IEventStream<,>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamEvent" },
+						{ "T", "global::global::Amazon.Runtime.EventStreams.Internal.IEventStreamEvent" },
 						{ "TE", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamException" },
 					}
 				},
 				{
 					typeof(IRequestMarshaller<,>), new()
 					{
-						{ "R", "global::System.Object" },
+						{ "R", "object" },
 						{ "T", "global::Amazon.Runtime.Internal.Transform.MarshallerContext" },
 					}
 				},
@@ -93,13 +93,13 @@ namespace Rocks.CodeGenerationTest.Mappings
 				{
 					typeof(EventStreamExceptionReceivedArgs<>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamException" },
+						{ "T", "global::Amazon.Runtime.EventStreams.Internal.EventStreamException" },
 					}
 				},
 				{
 					typeof(IEnumerableEventStream<,>), new()
 					{
-						{ "T", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamEvent" },
+						{ "T", "global::global::Amazon.Runtime.EventStreams.Internal.IEventStreamEvent" },
 						{ "TE", "global::Rocks.CodeGenerationTest.Mappings.AWSSDKCore.MappedEventStreamException" },
 					}
 				},
@@ -157,10 +157,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 			public void Reset() => throw new NotImplementedException();
 			public void SetEncryptionData(byte[] key, byte[] IV) => throw new NotImplementedException();
 		}
-
-		public sealed class MappedEventStreamEvent
-			: IEventStreamEvent
-		{ }
 
 		public sealed class MappedEventStreamException
 			: EventStreamException
