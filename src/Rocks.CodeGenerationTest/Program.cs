@@ -1,5 +1,5 @@
-﻿#define INCLUDE_PASSING
-//#define INCLUDE_FAILING
+﻿//#define INCLUDE_PASSING
+#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -141,7 +141,7 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		typeof(Npgsql.ArrayNullabilityMode),
-		typeof(NServiceBus.AddressMode),
+		//typeof(NServiceBus.AddressMode),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 
@@ -167,7 +167,8 @@ static void TestWithTypes()
 	{
 		Console.WriteLine($"Getting target types for {targetAssembly.GetName().Name}");
 		var targetAssemblySet = new HashSet<Assembly> { targetAssembly };
-		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings);
+		var typesToIgnore = new[] { typeof(Npgsql.Internal.TypeHandlers.NumericHandlers.Int64Handler) };
+		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, typesToIgnore);
 		totalDiscoveredTypeCount += discoveredTypes.Length;
 		Console.WriteLine($"Type count found for {targetAssembly.GetName().Name} - {discoveredTypes.Length}");
 

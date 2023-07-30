@@ -19,14 +19,15 @@ internal static class TestGenerator
 		{ "SYSLIB0017", ReportDiagnostic.Info }
 	};
 
-	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
+	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies, 
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, Type[] typesToIgnore)
 	{
 		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
 		foreach (var assembly in targetAssemblies)
 		{
 			Parallel.ForEach(assembly.GetTypes()
-				.Where(_ => _.IsPublic && !_.IsSealed), _ =>
+				.Where(_ => _.IsPublic && !_.IsSealed && !typesToIgnore.Contains(_)), _ =>
 				{
 					if (_.IsValidTarget(genericTypeMappings))
 					{
