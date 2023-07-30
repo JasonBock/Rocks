@@ -9,6 +9,7 @@ using Rocks.CodeGenerationTest.Extensions;
 using Rocks.CodeGenerationTest.Mappings;
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Xml.Linq;
 
 //TestTypeValidity();
 //TestWithCode();
@@ -56,22 +57,9 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(Npgsql.Internal.TypeHandling.NpgsqlSimpleTypeHandlerWithPsv<,>)
+			typeof(NServiceBus.LearningTransport)
 		},
-		new[]
-		{
-			typeof(System.Data.DbType)
-		},
-		new()
-		{
-			{
-				typeof(Npgsql.Internal.TypeHandling.NpgsqlSimpleTypeHandlerWithPsv<,>), new()
-				{
-					{ "TDefault", "object" },
-					{ "TPsv", "object" },
-				}
-			}
-		}));
+		Array.Empty<Type>(), null));
 
 static void TestWithTypes()
 {
@@ -80,77 +68,82 @@ static void TestWithTypes()
 #if INCLUDE_PASSING
 		// .NET types
 
-		//typeof(Dictionary<,>),
-		//typeof(HttpMessageHandler),
-		//typeof(object),
-		//typeof(System.Collections.Immutable.ImmutableArray),
-		//typeof(System.Text.Json.JsonDocument),
-		//typeof(System.Threading.Channels.BoundedChannelFullMode),
+		typeof(Dictionary<,>),
+		typeof(HttpMessageHandler),
+		typeof(object),
+		typeof(System.Collections.Immutable.ImmutableArray),
+		typeof(System.Text.Json.JsonDocument),
+		typeof(System.Threading.Channels.BoundedChannelFullMode),
 
 		// NuGet references
 
-		//typeof(AngleSharp.BrowsingContext),
-		//typeof(Autofac.ContainerBuilder),
-		//typeof(AutoFixture.AutoPropertiesTarget),
-		//typeof(AutoMapper.AutoMapAttribute),
-		//typeof(Avalonia.AppBuilder),
-		//typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
-		//typeof(Azure.Core.AccessToken),
-		//typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions),
-		//typeof(Azure.Storage.Blobs.BlobClient),
-		//typeof(Azure.Storage.Queues.QueueClient),
-		//typeof(Bogus.Binder),
-		//typeof(Castle.DynamicProxy.ProxyGenerationOptions),
-		//typeof(ClangSharp.AbstractConditionalOperator),
-		//typeof(Confluent.Kafka.Acks),
-		//typeof(Csla.DataPortal<>),
-		//typeof(CsvHelper.ArrayHelper),
-		//typeof(Dapper.DbString),
-		//typeof(DnsClient.DnsDatagramReader),
-		//typeof(Elasticsearch.Net.ApiCallDetails),
-		//typeof(FluentAssertions.AggregateExceptionExtractor),
-		//typeof(FluentValidation.ApplyConditionTo),
-		//typeof(Google.Apis.ETagAction),
-		//typeof(Google.Protobuf.ByteString),
-		//typeof(Grpc.Core.AuthContext),
-		//typeof(Hangfire.AttemptsExceededAction),
-		//typeof(Humanizer.ByteSizeExtensions),
-		//typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
-		//typeof(IdentityModel.Base64Url),
-		//typeof(ILGPU.ArrayMode),
-		//typeof(MassTransit.AbstractUriException),
-		//typeof(MathNet.Numerics.AppSwitches),
-		//typeof(MediatR.ISender),
-		//typeof(MessagePack.FormatterNotRegisteredException),
-		//typeof(Microsoft.CodeAnalysis.SyntaxTree),
-		//typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
-		//typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
-		//typeof(Microsoft.Extensions.Logging.LogDefineOptions),
-		//typeof(Mono.Cecil.FixedSysStringMarshalInfo),
-		//typeof(Moq.Mock<>),
-		//typeof(Ninject.ActivationException),
-		//typeof(NodaTime.AmbiguousTimeException),
-		//typeof(NSubstitute.Arg),
-		//typeof(NuGet.Common.ActivityCorrelationId),
-		//typeof(Polly.AdvancedCircuitBreakerSyntax),
-		//typeof(RabbitMQ.Client.AmqpTcpEndpoint),
-		//typeof(RestSharp.BodyParameter),
-		//typeof(Serilog.Core.IDestructuringPolicy),
-		//typeof(Sigil.CatchBlock),
-		//typeof(Silk.NET.Core.Attributes.CountAttribute),
+		typeof(AngleSharp.BrowsingContext),
+		typeof(Autofac.ContainerBuilder),
+		typeof(AutoFixture.AutoPropertiesTarget),
+		typeof(AutoMapper.AutoMapAttribute),
+		typeof(Avalonia.AppBuilder),
+		typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper),
+		typeof(Azure.Core.AccessToken),
+		typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions),
+		typeof(Azure.Storage.Blobs.BlobClient),
+		typeof(Azure.Storage.Queues.QueueClient),
+		typeof(Bogus.Binder),
+		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
+		typeof(ClangSharp.AbstractConditionalOperator),
+		typeof(Confluent.Kafka.Acks),
+		typeof(Csla.DataPortal<>),
+		typeof(CsvHelper.ArrayHelper),
+		typeof(Dapper.DbString),
+		typeof(DnsClient.DnsDatagramReader),
+		typeof(Elasticsearch.Net.ApiCallDetails),
+		typeof(FluentAssertions.AggregateExceptionExtractor),
+		typeof(FluentValidation.ApplyConditionTo),
+		typeof(Google.Apis.ETagAction),
+		typeof(Google.Protobuf.ByteString),
+		typeof(Grpc.Core.AuthContext),
+		typeof(HandlebarsDotNet.Arguments),
+		typeof(Hangfire.AttemptsExceededAction),
+		typeof(Humanizer.ByteSizeExtensions),
+		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
+		typeof(IdentityModel.Base64Url),
+		typeof(ILGPU.ArrayMode),
+		typeof(MassTransit.AbstractUriException),
+		typeof(MathNet.Numerics.AppSwitches),
+		typeof(MediatR.ISender),
+		typeof(MessagePack.FormatterNotRegisteredException),
+		typeof(Microsoft.CodeAnalysis.SyntaxTree),
+		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
+		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
+		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
+		typeof(Moq.Mock<>),
+		typeof(Ninject.ActivationException),
+		typeof(NodaTime.AmbiguousTimeException),
+		typeof(NSubstitute.Arg),
+		typeof(NuGet.Common.ActivityCorrelationId),
+		typeof(Polly.AdvancedCircuitBreakerSyntax),
+		typeof(RabbitMQ.Client.AmqpTcpEndpoint),
+		typeof(RestSharp.BodyParameter),
+		typeof(Serilog.Core.IDestructuringPolicy),
+		typeof(Shouldly.ActualFilteredWithPredicateShouldlyMessage),
+		typeof(Sigil.CatchBlock),
+		typeof(Silk.NET.Core.Attributes.CountAttribute),
 		typeof(SimpleInjector.ActivationException),
-		//typeof(SixLabors.ImageSharp.GraphicsOptions),
-		//typeof(SkiaSharp.GRBackend),
-		//typeof(StackExchange.Redis.Aggregate),
-		//typeof(System.Reactive.ExperimentalAttribute),
-		//typeof(System.Reflection.Metadata.ArrayShape),
-		//typeof(System.Text.Json.JsonCommentHandling),
-		//typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
-		//typeof(TerraFX.Interop.INativeGuid),
-		//typeof(Twilio.Base.Page<>),
+		typeof(SixLabors.ImageSharp.GraphicsOptions),
+		typeof(SkiaSharp.GRBackend),
+		typeof(StackExchange.Redis.Aggregate),
+		typeof(System.Reactive.ExperimentalAttribute),
+		typeof(System.Reflection.Metadata.ArrayShape),
+		typeof(System.Text.Json.JsonCommentHandling),
+		typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation),
+		typeof(TerraFX.Interop.INativeGuid),
+		typeof(Topshelf.Credentials),
+		typeof(Twilio.Base.Page<>),
 #endif
 #if INCLUDE_FAILING
 		typeof(Npgsql.ArrayNullabilityMode),
+		typeof(Stripe.Account),
+		typeof(NServiceBus.AddressMode),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 
@@ -164,7 +157,8 @@ static void TestWithTypes()
 		typeof(System.Text.Json.JsonSerializerOptions),
 		typeof(Uri),
 		typeof(Func<>),
-		typeof(System.Reflection.ConstructorInfo)
+		typeof(System.Reflection.ConstructorInfo),
+		typeof(System.Xml.Linq.SaveOptions),
 	};
 
 	var genericTypeMappings = MappedTypes.GetMappedTypes();

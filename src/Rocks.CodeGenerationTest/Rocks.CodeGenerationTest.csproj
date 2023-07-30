@@ -32,6 +32,7 @@
 		<PackageReference Include="Google.Apis" />
 		<PackageReference Include="Google.Protobuf" />
 		<PackageReference Include="Grpc.Core.Api" />
+		<PackageReference Include="Handlebars.Net" />
 		<PackageReference Include="Hangfire.Core" />
 		<PackageReference Include="Humanizer" />
 		<PackageReference Include="IdentityModel" />
@@ -49,6 +50,7 @@
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="Npgsql" />
+		<PackageReference Include="NServiceBus" />
 		<PackageReference Include="NSubstitute" />
 		<PackageReference Include="NuGet.Common" />
 		<PackageReference Include="Polly" />
@@ -56,18 +58,21 @@
 		<PackageReference Include="RestSharp" />
 		<PackageReference Include="Serilog" />
 		<PackageReference Include="SharpZipLib" />
+		<PackageReference Include="Shouldly" />
 		<PackageReference Include="Sigil" />
 		<PackageReference Include="Silk.NET" />
 		<PackageReference Include="SimpleInjector" />
 		<PackageReference Include="SixLabors.ImageSharp" />
 		<PackageReference Include="SkiaSharp" />
 		<PackageReference Include="StackExchange.Redis" />
+		<PackageReference Include="Stripe.net" />
 		<PackageReference Include="System.Reactive" />
 		<PackageReference Include="System.Reflection.Metadata" />
 		<PackageReference Include="System.Text.Json" />
 		<PackageReference Include="System.Threading.Channels" />
 		<PackageReference Include="TerraFX.Interop.D3D12MemoryAllocator" />
 		<PackageReference Include="TerraFX.Interop.Windows" />
+		<PackageReference Include="Topshelf" />
 		<PackageReference Include="Twilio" />
 	</ItemGroup>
 </Project>
