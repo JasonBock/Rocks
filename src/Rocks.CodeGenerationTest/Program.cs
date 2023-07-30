@@ -117,6 +117,7 @@ static void TestWithTypes()
 		typeof(Moq.Mock<>),
 		typeof(Ninject.ActivationException),
 		typeof(NodaTime.AmbiguousTimeException),
+		typeof(NServiceBus.AddressMode),
 		typeof(NSubstitute.Arg),
 		typeof(NuGet.Common.ActivityCorrelationId),
 		typeof(Polly.AdvancedCircuitBreakerSyntax),
@@ -141,7 +142,6 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		typeof(Npgsql.ArrayNullabilityMode),
-		//typeof(NServiceBus.AddressMode),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 
@@ -167,7 +167,11 @@ static void TestWithTypes()
 	{
 		Console.WriteLine($"Getting target types for {targetAssembly.GetName().Name}");
 		var targetAssemblySet = new HashSet<Assembly> { targetAssembly };
-		var typesToIgnore = new[] { typeof(Npgsql.Internal.TypeHandlers.NumericHandlers.Int64Handler) };
+		var typesToIgnore = new[] 
+		{ 
+			typeof(Npgsql.Internal.TypeHandlers.NumericHandlers.Int64Handler),
+			typeof(NServiceBus.LearningTransport),
+		};
 		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, typesToIgnore);
 		totalDiscoveredTypeCount += discoveredTypes.Length;
 		Console.WriteLine($"Type count found for {targetAssembly.GetName().Name} - {discoveredTypes.Length}");
