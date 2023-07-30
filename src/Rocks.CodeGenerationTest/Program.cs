@@ -1,7 +1,6 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
-using Autofac.Features.Scanning;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -9,7 +8,6 @@ using Rocks.CodeGenerationTest.Extensions;
 using Rocks.CodeGenerationTest.Mappings;
 using System.Collections.Immutable;
 using System.Reflection;
-using System.Xml.Linq;
 
 //TestTypeValidity();
 //TestWithCode();
@@ -132,6 +130,7 @@ static void TestWithTypes()
 		typeof(SixLabors.ImageSharp.GraphicsOptions),
 		typeof(SkiaSharp.GRBackend),
 		typeof(StackExchange.Redis.Aggregate),
+		typeof(Stripe.Account),
 		typeof(System.Reactive.ExperimentalAttribute),
 		typeof(System.Reflection.Metadata.ArrayShape),
 		typeof(System.Text.Json.JsonCommentHandling),
@@ -142,7 +141,6 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		typeof(Npgsql.ArrayNullabilityMode),
-		typeof(Stripe.Account),
 		typeof(NServiceBus.AddressMode),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
