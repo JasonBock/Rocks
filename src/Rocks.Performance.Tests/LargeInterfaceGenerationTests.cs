@@ -3,12 +3,12 @@ using NUnit.Framework;
 
 namespace Rocks.Performance.Tests;
 
-public static class PointersGenerationTests
+public static class LargeInterfaceGenerationTests
 {
 	[Test]
 	public static void Run()
 	{
-		var benchmarks = new PointersGeneration();
+		var benchmarks = new LargeInterfaceGeneration();
 		var compilation = benchmarks.RunGenerator();
 
 		Assert.Multiple(() =>

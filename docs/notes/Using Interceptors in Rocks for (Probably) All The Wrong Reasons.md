@@ -31,19 +31,19 @@ expectations.Verify();
 With interceptors, it **might** be possible to provide a hook for `NotMockable()` (note that right now, only methods can be intercepted):
 
 ```csharp
-internal static class Interceptors
+internal partial static class Interceptors
 {
     [InterceptsLocation(@"C:\SomeDirectory\SomeTestClass.cs", line: 24, column: 6)]
     public static void NotMockable(this Target self) =>  /* now what?? */;
 }
 ```
 
-Rocks would have to look for any method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on this new interface later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
+Rocks would have to look for any non-virtual, instance method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on this new interface later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
 
 The problem is that, once the interceptor is fired, what do we do then? The intent would be to do something like this:
 
 ```csharp
-internal static class Interceptors
+internal partial static class Interceptors
 {
     [InterceptsLocation(@"C:\SomeDirectory\SomeTestClass.cs", line: 24, column: 6)]
     public static void NotMockable(this Target @self)

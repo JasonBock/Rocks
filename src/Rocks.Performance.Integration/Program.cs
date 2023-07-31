@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Running;
-using Rocks.Performance;
+using Rocks.Performance.Integration;
 
 #pragma warning disable CA1852 // Seal internal types
 BenchmarkRunner.Run<LargeInterfaceGeneration>();
