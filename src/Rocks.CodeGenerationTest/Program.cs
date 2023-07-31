@@ -1,4 +1,4 @@
-﻿//#define INCLUDE_PASSING
+﻿#define INCLUDE_PASSING
 #define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
@@ -117,6 +117,7 @@ static void TestWithTypes()
 		typeof(Moq.Mock<>),
 		typeof(Ninject.ActivationException),
 		typeof(NodaTime.AmbiguousTimeException),
+		typeof(Npgsql.ArrayNullabilityMode),
 		typeof(NServiceBus.AddressMode),
 		typeof(NSubstitute.Arg),
 		typeof(NuGet.Common.ActivityCorrelationId),
@@ -141,7 +142,6 @@ static void TestWithTypes()
 		typeof(Twilio.Base.Page<>),
 #endif
 #if INCLUDE_FAILING
-		typeof(Npgsql.ArrayNullabilityMode),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 

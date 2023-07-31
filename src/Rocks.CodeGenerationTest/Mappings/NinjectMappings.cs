@@ -1,5 +1,4 @@
-﻿using Ninject;
-using Ninject.Planning.Directives;
+﻿using Npgsql.Internal.TypeHandling;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
@@ -9,16 +8,10 @@ namespace Rocks.CodeGenerationTest.Mappings
 			new()
 			{
 				{
-					typeof(GlobalKernelRegistrationModule<>), new()
+					typeof(NpgsqlSimpleTypeHandlerWithPsv<,>), new()
 					{
-						{ "TGlobalKernelRegistry", "global::Ninject.GlobalKernelRegistration" },
-					}
-				},
-				{
-					typeof(MethodInjectionDirectiveBase<,>), new()
-					{
-						{ "TMethod", "global::System.Reflection.MethodBase" },
-						{ "TInjector", "object" },
+						{ "TDefault", "string" },
+						{ "TPsv", "object" },
 					}
 				},
 			};

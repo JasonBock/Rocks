@@ -23,6 +23,7 @@ internal static class MappedTypes
 			.AddItems(MassTransitMappings.GetMappedTypes())
 			.AddItems(MediatRMappings.GetMappedTypes())
 			.AddItems(MessagePackMappings.GetMappedTypes())
+			.AddItems(NpgsqlMappings.GetMappedTypes())
 			.AddItems(NinjectMappings.GetMappedTypes())
 			.AddItems(NServiceBusMappings.GetMappedTypes())
 			.AddItems(NSubstituteMappings.GetMappedTypes())
