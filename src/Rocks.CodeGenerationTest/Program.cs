@@ -17,16 +17,8 @@ TestWithTypes();
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
 	Console.WriteLine(
-		typeof(ILGPU.IR.Types.TypeConverter<>)
-			.IsValidTarget(new Dictionary<Type, Dictionary<string, string>>
-			{
-				{
-					typeof(ILGPU.IR.Types.TypeConverter<>), new()
-					{
-						{ "TType", "global::ILGPU.IR.Types.TypeNode" }
-					}
-				}
-			}));
+		typeof(SixLabors.ImageSharp.ImageFormatException)
+			.IsValidTarget(null));
 
 static void TestWithCode()
 {
@@ -55,7 +47,7 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(NServiceBus.LearningTransport)
+			typeof(SixLabors.ImageSharp.ImageFormatException)
 		},
 		Array.Empty<Type>(), null));
 
@@ -97,14 +89,11 @@ static void TestWithTypes()
 		typeof(FluentAssertions.AggregateExceptionExtractor),
 		typeof(FluentValidation.ApplyConditionTo),
 		typeof(Google.Apis.ETagAction),
-		typeof(Google.Protobuf.ByteString),
 		typeof(Grpc.Core.AuthContext),
 		typeof(HandlebarsDotNet.Arguments),
-		typeof(Hangfire.AttemptsExceededAction),
 		typeof(Humanizer.ByteSizeExtensions),
 		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 		typeof(IdentityModel.Base64Url),
-		typeof(ILGPU.ArrayMode),
 		typeof(MassTransit.AbstractUriException),
 		typeof(MathNet.Numerics.AppSwitches),
 		typeof(MediatR.ISender),
@@ -114,18 +103,12 @@ static void TestWithTypes()
 		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
-		typeof(Moq.Mock<>),
 		typeof(Ninject.ActivationException),
 		typeof(NodaTime.AmbiguousTimeException),
-		typeof(Npgsql.ArrayNullabilityMode),
-		typeof(NServiceBus.AddressMode),
-		typeof(NSubstitute.Arg),
 		typeof(NuGet.Common.ActivityCorrelationId),
-		typeof(Polly.AdvancedCircuitBreakerSyntax),
 		typeof(RabbitMQ.Client.AmqpTcpEndpoint),
 		typeof(RestSharp.BodyParameter),
 		typeof(Serilog.Core.IDestructuringPolicy),
-		typeof(Shouldly.ActualFilteredWithPredicateShouldlyMessage),
 		typeof(Sigil.CatchBlock),
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 		typeof(SimpleInjector.ActivationException),
@@ -167,11 +150,7 @@ static void TestWithTypes()
 	{
 		Console.WriteLine($"Getting target types for {targetAssembly.GetName().Name}");
 		var targetAssemblySet = new HashSet<Assembly> { targetAssembly };
-		var typesToIgnore = new[] 
-		{ 
-			typeof(Npgsql.Internal.TypeHandlers.NumericHandlers.Int64Handler),
-			typeof(NServiceBus.LearningTransport),
-		};
+		var typesToIgnore = Array.Empty<Type>();
 		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, typesToIgnore);
 		totalDiscoveredTypeCount += discoveredTypes.Length;
 		Console.WriteLine($"Type count found for {targetAssembly.GetName().Name} - {discoveredTypes.Length}");
