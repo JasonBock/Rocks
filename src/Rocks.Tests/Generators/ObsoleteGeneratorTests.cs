@@ -8,6 +8,106 @@ namespace Rocks.Tests.Generators;
 public static class ObsoleteGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWhenAMethodAndItsPartsAreObsoleteAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Collections;
+			using System.Collections.Generic;
+			using System.Linq;
+									
+			#nullable enable
+
+			namespace MockTests
+			{
+				[Obsolete("Do not use this type", true)]
+				public interface IAmObsolete
+				{
+					void Execute();
+				}
+
+				public interface IAmAlsoObsolete
+				{
+					[Obsolete("Do not use this method", true)]
+					void Use(IAmObsolete old);
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IAmAlsoObsolete>();
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[]
+			{
+				new DiagnosticResult("ROCK10", DiagnosticSeverity.Error)
+					.WithSpan(20, 8, 20, 11),
+				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
+					.WithSpan(20, 8, 20, 11)
+			},
+			generalDiagnosticOption: ReportDiagnostic.Error,
+			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenAPropertyAndItsTypeAreObsoleteAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+			using System.Collections;
+			using System.Collections.Generic;
+			using System.Linq;
+									
+			#nullable enable
+
+			namespace MockTests
+			{
+				[Obsolete("Do not use this type", true)]
+				public interface IAmObsolete
+				{
+					void Execute();
+				}
+
+				public interface IAmAlsoObsolete
+				{
+					[Obsolete("Do not use this method", true)]
+					IAmObsolete Use { get; }
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IAmAlsoObsolete>();
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[]
+			{
+				new DiagnosticResult("ROCK10", DiagnosticSeverity.Error)
+					.WithSpan(20, 15, 20, 18),
+				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
+					.WithSpan(20, 15, 20, 18)
+			},
+			generalDiagnosticOption: ReportDiagnostic.Error,
+			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWhenGenericContainsObsoleteTypeAsync()
 	{
 		var code =

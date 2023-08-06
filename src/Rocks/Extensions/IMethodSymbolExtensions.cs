@@ -17,7 +17,8 @@ internal static class IMethodSymbolExtensions
 		{
 			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(self));
 		}
-		else if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+		
+		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
 		{

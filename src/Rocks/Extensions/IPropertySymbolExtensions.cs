@@ -17,7 +17,8 @@ internal static class IPropertySymbolExtensions
 		{
 			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(self));
 		}
-		else if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+		
+		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			self.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
 		{
 			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(self));

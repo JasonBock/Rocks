@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Put the "auto-generated" comment in the generated code (issue [#260](https://github.com/JasonBock/Rocks/issues/260))
+- Adding separate checks for obsolete usage (issue [#249](https://github.com/JasonBock/Rocks/issues/249))
 
 ## [7.1.3] - 2023-07-30
 
