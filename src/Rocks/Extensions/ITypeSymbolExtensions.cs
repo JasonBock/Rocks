@@ -5,18 +5,18 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-   internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors) => 
+	internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors) =>
 		self.GetAttributes().Any(
 			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)) ||
-		(self is INamedTypeSymbol namedSelf && 
+		(self is INamedTypeSymbol namedSelf &&
 			(namedSelf.TypeArguments.Any(
 				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			namedSelf.TypeParameters.Any(
 				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.ConstraintTypes.Any(
 					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)))));
 
-   internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
 			self is INamedTypeSymbol namedSelf ?
@@ -210,7 +210,7 @@ internal static class ITypeSymbolExtensions
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		var events = ImmutableArray.CreateBuilder<EventMockableResult>();
-		var hasInaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = ImmutableArray.CreateBuilder<IEventSymbol>();
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
@@ -219,7 +219,7 @@ internal static class ITypeSymbolExtensions
 			{
 				if (!selfEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 				{
-					hasInaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfEvent);
 				}
 				else
 				{
@@ -236,7 +236,7 @@ internal static class ITypeSymbolExtensions
 				{
 					if (!selfBaseEvent.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						hasInaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(selfBaseEvent);
 					}
 					else
 					{
@@ -290,7 +290,7 @@ internal static class ITypeSymbolExtensions
 
 				if (!canBeSeen && selfEvent.IsAbstract)
 				{
-					hasInaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfEvent);
 				}
 				else if (canBeSeen)
 				{
@@ -299,7 +299,7 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return new(events.ToImmutable(), hasInaccessibleAbstractMembers);
+		return new(events.ToImmutable(), inaccessibleAbstractMembers.ToImmutable());
 	}
 
 	internal static MockableMethods GetMockableMethods(
@@ -307,7 +307,7 @@ internal static class ITypeSymbolExtensions
 		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
 	{
 		var methods = ImmutableArray.CreateBuilder<MethodMockableResult>();
-		var hasInaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = ImmutableArray.CreateBuilder<IMethodSymbol>();
 		var hasMatchWithNonVirtual = false;
 
 		if (self.TypeKind == TypeKind.Interface)
@@ -329,7 +329,7 @@ internal static class ITypeSymbolExtensions
 				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
 					selfMethod.IsAbstract)
 				{
-					hasInaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfMethod);
 				}
 				else
 				{
@@ -370,7 +370,7 @@ internal static class ITypeSymbolExtensions
 				{
 					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						hasInaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(selfBaseMethod);
 					}
 					else
 					{
@@ -487,7 +487,7 @@ internal static class ITypeSymbolExtensions
 
 								if (!canBeSeen && hierarchyMethod.IsAbstract)
 								{
-									hasInaccessibleAbstractMembers = true;
+									inaccessibleAbstractMembers.Add(hierarchyMethod);
 								}
 								else if (canBeSeen)
 								{
@@ -543,7 +543,7 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return new(methods.ToImmutable(), hasInaccessibleAbstractMembers, hasMatchWithNonVirtual);
+		return new(methods.ToImmutable(), inaccessibleAbstractMembers.ToImmutable(), hasMatchWithNonVirtual);
 	}
 
 	internal static MockableProperties GetMockableProperties(
@@ -572,7 +572,7 @@ internal static class ITypeSymbolExtensions
 		}
 
 		var properties = ImmutableArray.CreateBuilder<PropertyMockableResult>();
-		var hasInaccessibleAbstractMembers = false;
+		var inaccessibleAbstractMembers = ImmutableArray.CreateBuilder<IPropertySymbol>();
 
 		if (self.TypeKind == TypeKind.Interface)
 		{
@@ -581,7 +581,7 @@ internal static class ITypeSymbolExtensions
 			{
 				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 				{
-					hasInaccessibleAbstractMembers = true;
+					inaccessibleAbstractMembers.Add(selfProperty);
 				}
 				else
 				{
@@ -612,7 +612,7 @@ internal static class ITypeSymbolExtensions
 				{
 					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
-						hasInaccessibleAbstractMembers = true;
+						inaccessibleAbstractMembers.Add(selfBaseProperty);
 					}
 					else
 					{
@@ -740,7 +740,7 @@ internal static class ITypeSymbolExtensions
 
 						if (!canBeSeen && hierarchyProperty.IsAbstract)
 						{
-							hasInaccessibleAbstractMembers = true;
+							inaccessibleAbstractMembers.Add(hierarchyProperty);
 						}
 						else if (canBeSeen)
 						{
@@ -780,7 +780,7 @@ internal static class ITypeSymbolExtensions
 			}
 		}
 
-		return new(properties.ToImmutable(), hasInaccessibleAbstractMembers);
+		return new(properties.ToImmutable(), inaccessibleAbstractMembers.ToImmutable());
 	}
 
 	private static ImmutableArray<ITypeSymbol> GetInheritanceHierarchy(this ITypeSymbol self)

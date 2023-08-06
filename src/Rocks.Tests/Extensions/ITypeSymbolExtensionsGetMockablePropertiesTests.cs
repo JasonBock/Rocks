@@ -29,7 +29,7 @@ public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(2));
 
@@ -63,7 +63,7 @@ public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(3));
 
@@ -116,7 +116,7 @@ public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 
@@ -159,7 +159,7 @@ public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var properties = result.Results;
 			Assert.That(properties, Has.Length.EqualTo(1));
 

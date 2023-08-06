@@ -41,7 +41,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -89,7 +89,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -125,7 +125,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
@@ -160,7 +160,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseMethod = methods.Single(_ => _.Value.Name == baseMethodName);
@@ -197,7 +197,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(1));
 			var targetMethod = methods.Single(_ => _.Value.Name == targetMethodName && _.Value.ContainingType.Name == targetTypeName);
@@ -240,7 +240,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
@@ -287,7 +287,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(2));
 			var baseOneMethod = methods.Single(_ => _.Value.Name == baseMethodName && _.Value.ContainingType.Name == baseOneTypeName);
@@ -320,7 +320,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
@@ -348,7 +348,7 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
 			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
