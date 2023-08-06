@@ -40,6 +40,8 @@ internal partial static class Interceptors
 
 Rocks would have to look for any non-virtual, instance method invocation on a mock to determine if it needs interception. If so, it would generate a partial class with a unique name with a method that would wire up the interception. One way it can do this is to see, at the call site, if the `IMethodSymbol` is on a type that implements `IMock` (more on this new interface later on). I'm not entirely sure I can do this in Rocks' incremental generator - I'll have to do some work to see if I can determine that through symbols. I think I can, and then finding the location and the file should hopefully be straightforward. Note that since the calls to the non-virtual methods on a mock would happen in the project (typically a test project), finding this invocation location information is doable.
 
+To see if an invocation is done on a type that implements `IMock`, I may need to make the mock type accessible. That means it'll no longer be a `private` nested type; it'll be an `internal` type. I may keep it nested, because I'd like to keep the constructor `private`. But, if I make the mock type accessible, then I should be able to determine that the type making a non-virtual invocation implements `IMock`, though, again, I'll need to test this out to make sure this will work before I continue on with this general idea.
+
 The problem is that, once the interceptor is fired, what do we do then? The intent would be to do something like this:
 
 ```csharp
