@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [8.0.0] - Not Released Yet
 
+### Fixed
+- Ensured members that have `[DoesNotReturn]` generate code with no returns (issue [#175](https://github.com/JasonBock/Rocks/issues/175))
+
 ### Added
 
 - Put the "auto-generated" comment in the generated code (issue [#260](https://github.com/JasonBock/Rocks/issues/260))
