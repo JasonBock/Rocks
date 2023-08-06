@@ -30,7 +30,7 @@ internal static class MockMethodVoidBuilder
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -125,8 +125,8 @@ internal static class MockMethodVoidBuilder
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
-			// Note that if the method has [DoesNotReturn], calling the base method
-			// "should" not return either, so no extra work necessary for that.
+			// Note that if the method has [DoesNotReturn], we'll throw DoesNotReturnException
+			// if the base method didn't throw an exception.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
@@ -141,7 +141,16 @@ internal static class MockMethodVoidBuilder
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"{target}.{method.Name}({passedParameter});");
+
+			if (shouldThrowDoesNotReturnException)
+			{
+				writer.WriteLine($"{target}.{method.Name}({passedParameter});");
+				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
+			}
+			else
+			{
+				writer.WriteLine($"{target}.{method.Name}({passedParameter});");
+			}
 		}
 		else
 		{

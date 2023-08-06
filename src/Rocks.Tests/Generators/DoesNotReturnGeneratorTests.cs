@@ -155,6 +155,7 @@ public static class DoesNotReturnGeneratorTests
 							else
 							{
 								base.VoidMethod();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 						}
 						
@@ -173,7 +174,8 @@ public static class DoesNotReturnGeneratorTests
 							}
 							else
 							{
-								return base.IntMethod();
+								_ = base.IntMethod();
+								throw new global::Rocks.Exceptions.DoesNotReturnException();
 							}
 						}
 						

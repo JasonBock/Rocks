@@ -141,9 +141,9 @@ internal static class MockMethodValueBuilder
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
-			// Note that if the method has [DoesNotReturn], calling the base method
-			// and returning its' value should not trip a compiler warning,
-			// as the base method is responsible for not returning.
+			// Note that if the method has [DoesNotReturn], we'll disregard
+			// the return value and throw DoesNotReturnException
+			// if the base method didn't throw an exception.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
@@ -158,7 +158,16 @@ internal static class MockMethodValueBuilder
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"return {target}.{method.Name}({passedParameter});");
+
+			if(shouldThrowDoesNotReturnException)
+			{
+				writer.WriteLine($"_ = {target}.{method.Name}({passedParameter});");
+				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
+			}
+			else
+			{
+				writer.WriteLine($"return {target}.{method.Name}({passedParameter});");
+			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
