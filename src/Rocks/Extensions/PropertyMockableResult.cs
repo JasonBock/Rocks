@@ -1,7 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Rocks.Extensions;
 
+[DebuggerDisplay("Value = {Value}")]
 internal sealed class PropertyMockableResult
 {
 	internal PropertyMockableResult(IPropertySymbol value, ITypeSymbol mockType,

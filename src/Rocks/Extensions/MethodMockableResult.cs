@@ -1,7 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
+using System.Diagnostics;
 
 namespace Rocks.Extensions;
 
+[DebuggerDisplay("Value = {Value}")]
 internal sealed class MethodMockableResult
 {
 	internal MethodMockableResult(IMethodSymbol value, ITypeSymbol mockType,
