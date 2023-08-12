@@ -22,8 +22,8 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
-		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.True);
+		var method = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
+		Assert.That(method.IsMarkedWithDoesNotReturn(), Is.True);
 	}
 
 	[Test]
@@ -37,11 +37,11 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 			}
 			""";
 
-		var (method, compilation) = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
-		Assert.That(method.IsMarkedWithDoesNotReturn(compilation), Is.False);
+		var method = IMethodSymbolExtensionsMarkedWithDoesNotReturnTests.GetMethodSymbol(code);
+		Assert.That(method.IsMarkedWithDoesNotReturn(), Is.False);
 	}
 
-	private static (IMethodSymbol, Compilation) GetMethodSymbol(string source)
+	private static IMethodSymbol GetMethodSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -53,6 +53,6 @@ public static class IMethodSymbolExtensionsMarkedWithDoesNotReturnTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
-		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
+		return model.GetDeclaredSymbol(methodSyntax)!;
 	}
 }

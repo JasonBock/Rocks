@@ -6,6 +6,9 @@ namespace Rocks.Extensions;
 
 internal static class IMethodSymbolExtensions
 {
+	private const string DoesNotReturnAttributeName =
+		"global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
+
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
 		this IMethodSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
 	{
@@ -34,26 +37,11 @@ internal static class IMethodSymbolExtensions
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
 			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
 
-	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation)
-	{
-		// I would LOVE to be able to use typeof(...) for DoesNotReturnAttribute
-		// but...it shows up as internal in a NS 2.0 project. Ugh.
-		var doesNotReturnAttributeType = Type.GetType("System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute", false);
+   internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self) => 
+		self.GetAttributes().Any(
+		   _ => _.AttributeClass?.GetFullyQualifiedName() == IMethodSymbolExtensions.DoesNotReturnAttributeName);
 
-		if (doesNotReturnAttributeType is not null)
-		{
-			var doesNotReturnAttribute = compilation.GetTypeByMetadataName(doesNotReturnAttributeType.FullName);
-
-			return self.GetAttributes().Any(
-				_ => _.AttributeClass?.Equals(doesNotReturnAttribute, SymbolEqualityComparer.Default) ?? false);
-		}
-		else
-		{
-			return false;
-		}
-	}
-
-	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
+   internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
 		self.Parameters.Length > 16 ||
 		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsEsoteric()) ||
 			!self.ReturnsVoid && self.ReturnType.IsEsoteric();

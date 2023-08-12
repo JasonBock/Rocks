@@ -20,7 +20,7 @@ internal sealed record MethodModel
 			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
 		}
 
-		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);
+		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn();
 		this.ShouldThrowDoesNotReturnException = this.IsMarkedWithDoesNotReturn;
 
 		this.IsAbstract = method.IsAbstract;
