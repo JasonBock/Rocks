@@ -212,6 +212,47 @@ expectations.Verify();
 
 The `Instance()` methods would just return an instance of the given type to mock. In this case, it would be `Pairs`. The trick would be that I can't look at the method invocation on `mock.Calculate()` to see if it's done on something that was **intended** to be mocked. This is somewhat similar to the issue with a static method, in that I need some kind of "scope" to determine which calls should be intercepted. If there was a way to say, "if the instance that `Calculate()` is being called on came from an invocation of an `Instance()` method, then put in an interceptor". However, the other, bigger problem with this is that, I don't have any way to reference the handlers if the return value from `Instance()` does not implement `IMock`.
 
-So, allowing sealed or struct types may not be doable. I'm not shutting the idea down; I just can't think of a way to do it cleanly.
+One possible way to handle this is to use data flow analysis to determine if a variable within a `using` block created by `Rock.Create<>().Expectations()` that was instantiated with an `Instance(...)` call has any method invocations (or maybe just the invocations on a particular variable, though doing reassignments and having a private helper method to create the mock may complicate things). This may be complicated to do, but there is data flow analysis in Roslyn:
+
+* [Writing dataflow analysis based analyzers](https://github.com/dotnet/roslyn-analyzers/blob/main/docs/Writing%20dataflow%20analysis%20based%20analyzers.md)
+* [Learn Roslyn Now: Part 8 Data Flow Analysis](https://joshvarty.com/2015/02/05/learn-roslyn-now-part-8-data-flow-analysis/)
+
+I haven't worked with this API before, so I'll need to do some POCs to see how this works. Even if it does, I'll need to create some kind of static `Dictionary<object, handler-dictionary>` property off of `Rock` (or somewhere else). When `Instance(...)` is called, it squirrels away the returned instance along with its set of expectations into this dictionary. Any method invocations on this instance will be intercepted, and the interception code would look for the handlers within this static dictionary:
+
+```csharp
+public int GetLength(string value) => value.Length;
+
+internal static class Interceptors
+{
+    [InterceptsLocation(@"C:\SomeDirectory\SomeTestClass.cs", line: 24, column: 6)]
+    public static int GetLength(this Target @self, string @value)
+    {
+        if (Rock.Handlers[@self].TryGetValue(4, out var @methodHandlers))
+        {
+            foreach (var @methodHandler in @methodHandlers)
+            {
+                if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value))
+                {
+                    @methodHandler.IncrementCallCount();
+                    var @result = @methodHandler.Method is not null ?
+                        ((global::System.Func<string, int>)@methodHandler.Method)(@value) :
+                        ((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+                    return @result!;
+                }
+            }
+            
+            throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int GetLength(string @value)");
+        }
+        else
+        {
+            return @self.GetLength(@value);
+        }
+    }
+}
+```
+
+Note that the handlers are now retrieved from `Rock.Handlers[@self]`.
+
+Once `Dispose()`, or, more precisely, `Verify()` is called, it'll remove the dictionary entry. This isn't ideal and I don't like having a global, static location for this stuff, but this **might** let me capture invocations on an instance from a sealed type. And I wouldn't do this for types that are not sealed; they would use the handlers within the mock as it currently works.
 
 Overall, I think interceptors provide a novel way to handle members in Rocks that couldn't be addressed before. In fact, it may be possible to do **everything** with interceptors instead of generating a custom mock type. I'm not sure I think that's the right thing to do, though it would be interesting to see if performance would be slightly better with using interceptors everywhere.
