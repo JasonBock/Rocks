@@ -60,7 +60,7 @@ internal static class ObjectExtensions
 		{
 			char.MaxValue => "char.MaxValue",
 			char.MinValue => "char.MinValue",
-			_ => self.ToString()
+			_ => $"'{self}'"
 		};
 
 	private static string GetDecimalDefaultValue(this decimal self) =>

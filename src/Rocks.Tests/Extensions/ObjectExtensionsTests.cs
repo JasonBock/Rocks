@@ -21,7 +21,7 @@ public static class ObjectExtensionsTests
 	[TestCase("public class Test { public void Foo(sbyte value = 22) { } }", "22")]
 	[TestCase("public class Test { public void Foo(char value = char.MaxValue) { } }", "char.MaxValue")]
 	[TestCase("public class Test { public void Foo(char value = char.MinValue) { } }", "char.MinValue")]
-	[TestCase("public class Test { public void Foo(char value = 'A') { } }", "A")]
+	[TestCase("public class Test { public void Foo(char value = 'A') { } }", "'A'")]
 	[TestCase("public class Test { public void Foo(double value = double.PositiveInfinity) { } }", "double.PositiveInfinity")]
 	[TestCase("public class Test { public void Foo(double value = double.NegativeInfinity) { } }", "double.NegativeInfinity")]
 	[TestCase("public class Test { public void Foo(double value = double.MaxValue) { } }", "double.MaxValue")]
