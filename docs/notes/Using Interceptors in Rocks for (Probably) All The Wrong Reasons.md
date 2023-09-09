@@ -256,3 +256,25 @@ Note that the handlers are now retrieved from `Rock.Handlers[@self]`.
 Once `Dispose()`, or, more precisely, `Verify()` is called, it'll remove the dictionary entry. This isn't ideal and I don't like having a global, static location for this stuff, but this **might** let me capture invocations on an instance from a sealed type. And I wouldn't do this for types that are not sealed; they would use the handlers within the mock as it currently works.
 
 Overall, I think interceptors provide a novel way to handle members in Rocks that couldn't be addressed before. In fact, it may be possible to do **everything** with interceptors instead of generating a custom mock type. I'm not sure I think that's the right thing to do, though it would be interesting to see if performance would be slightly better with using interceptors everywhere.
+
+## Update: 2023.09.09
+
+The more I think about this, the less I think this is something I should use in Rocks. Here's why.
+
+Recall the original idea:
+
+```csharp
+var expectations = Rock.Create<Target>();
+expectations.Methods().Mockable();
+expectations.Methods().NotMockable();
+
+var mock = expectations.Instance();
+mock.Mockable();
+mock.NotMockable();
+
+expectations.Verify();
+```
+
+The problem is that it's pretty atypical that a developer will call the method directly. That is, the mock is usually passed to something else, and that's where the invocation occurs. Moreover, it's not uncommon (in fact I might argue that this is the norm) for that invocation to occur in a different library, and then there's no way to specify a location to intercept.
+
+Therefore, I really don't know how much value I'll get in using interceptors in Rocks. Even if I can do it within the test library and I document this limitation, this will still confuse users with the inconsistency.
