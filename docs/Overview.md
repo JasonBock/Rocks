@@ -15,28 +15,28 @@
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
     - [Mocking Events](#mocking-events)
+    - [Handling Asynchronous Code](#handling-asynchronous-code)
+    - [`dynamic` Types](#dynamic-types)
+    - ["Special" Types](#special-types)
   - [Using Makes](#using-makes)
-  - [Handling Asynchronous Code](#handling-asynchronous-code)
   - [Managing Multiple Mocks](#managing-multiple-mocks)
-  - [`dynamic` Types](#dynamic-types)
-  - ["Special" Types](#special-types)
 - [Conclusion](#conclusion)
   
 # Introduction
 
-New to Rocks? In this page, we'll cover the essentials of what Rocks can do so you can get up to speed on the API with little effort. We'll go through creating mocks and how you handle methods, properties and events. We'll show what "makes" are and where they're useful. We'll illustrate how you can use options with your mocks to debug the generated code. We'll also demonstrate how you can test asynchronous code.
+New to Rocks? In this page, we'll cover the essentials of what Rocks can do so you can get up to speed on the API with little effort. We'll go through creating mocks and how you handle methods, properties and events.  We'll demonstrate how you can test asynchronous code, and use `dynamic` and "special" types. We'll show what "makes" are and where they're useful.
 
-Remember that this is just a quickstart. You can always browse the tests in source to see specific examples of a case that may not be covered in detail here.
+If something is unclear after reading the documentation, you can always browse the tests in source to see specific examples of a case that may not be covered in detail here. If you are still unable to determine how something works, feel free to drop a message in the [Discord channel](https://discord.com/channels/1035376645864955974/1035376646326321194), or add an issue [here](https://github.com/JasonBock/Rocks/issues).
 
 ## Background and History
 
 There are great mocking libraries out there, like [Moq](https://github.com/moq/moq "Moq mocking framework on GitHub") and [NSubstitute](http://nsubstitute.github.io/ "NSubstitute: A friendly substitute for .NET mocking libraries"), so why did I decide to create YAML (yet another mocking library) in 2015? There are essentially two reasons.
 
-The first reason relates to how code generation was done with mocking libraries. Most (if not all) used an approach that ends up using `System.Reflection.Emit`, which requires knowledge of IL. This is not a trivial endeavour. Furthermore, the generated code can't be stepped into during a debugging process. I wanted to write a mocking library with the new Compiler APIs (Roslyn) to see if I could make the code generation process for the mock much easier and allow a developer to step into that code if necessary.
+The first reason relates to how code generation was done with mocking libraries. Most (if not all) used an approach that ends up using `System.Reflection.Emit` to create a mock type on the fly, which requires knowledge of IL, or a library like [`Castle.DynamicProxy`](https://github.com/castleproject/Core) to facilitate the mock generation with IL. This is not a trivial endeavour. Furthermore, the generated code can't be stepped into during a debugging process. I wanted to write a mocking library with the new Compiler APIs (Roslyn) to see if I could make the code generation process for the mock much easier and allow a developer to step into that code if necessary.
 
 The other reason was being able to pre-generate the mocks for a given assembly, rather than dynamically generate them in a test. This is what the [Microsoft Fakes Library](https://docs.microsoft.com/en-us/visualstudio/test/code-generation-compilation-and-naming-conventions-in-microsoft-fakes?view=vs-2019 "Microsoft Fakes: Generate & compile code; naming conventions - Visual Studio (Windows) | Microsoft Docs") can do, but I wanted to be able to do it where I could easily modify a project file and automatically generate those mocks.
 
-This is what Rocks can do. Mocks are created by generating C# code on the fly and compiling it with the Compiler APIs. This makes it trivial to step into the mock code. Before the 5.0.0 version, this code generation step took place at runtime, but with source generators in C# 9, this generation happens as soon as you state that you want to create a mock of a particular type. So, feel free to test Rocks out, and see what you think. Even if you don't use it as your primary mocking library, you may see just how easy it to generate code on the fly with the new Compiler APIs. Enjoy!
+This is what Rocks can do. Mocks are created by generating C# code on the fly and compiling it with the Compiler APIs. This makes it trivial to step into the mock code. Before the 5.0.0 version, this code generation step took place at runtime, but with source generators in C# 9, this generation happens as soon as you state that you want to create a mock of a particular type. Moreover, since the mock is generated C# code, **any** language feature in C# can be supported, such as optional parameters and pointer values. So, feel free to test Rocks out, and see what you think. Even if you don't use it as your primary mocking library, you may see just how easy it to generate code on the fly with the new Compiler APIs. Enjoy!
 
 ## Creating Mocks
 
@@ -44,7 +44,7 @@ There's a lot of scenarios that can be encountered when you want to create a moc
 
 ### API Generation
 
-With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/ "Introducing C# Source Generators - Microsoft"). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of extension methods are generated that group the members you can set expectations on. You'll see in this document references in code to `.Methods()`, `.Properties()`, and `.Indexers()`. You use these extension methods to set expectations on specific members. This should become clear as you read on and look at the examples.
+With Rocks 5.0.0 and above, all of the mocks are created using [C# 9.0's source generation feature](https://devblogs.microsoft.com/dotnet/introducing-c-source-generators/ "Introducing C# Source Generators - Microsoft"). This means that you must be targeting .NET 5.0 to use Rocks. With source generation, you have a lot of freedom to generate what you want, and this is exactly what Rocks takes advantage of. When you want to create a mock, a number of extension methods are generated that group the members you can set expectations on. You'll see in this document references in code to `.Methods()`, `.Properties()`, and `.Indexers()`. For example, if the type you want to mock has methods that can have expectations set on them, you'll see `.Methods()` show up. Similarly, mockable properties can be found from the `.Properties()` invocation. You use these extension methods to set expectations on specific members. This should become clear as you read on and look at the examples.
 
 ### Mocking Simple Methods
 
@@ -72,7 +72,11 @@ var result = mock.TargetFunc();
 expectations.Verify();
 ```
 
-Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail.
+The mocking process starts by getting an `Expectations<>` object. This is done by calling `Rock.Create<>()`. When this method is called, Rocks will interrogate the type provided in the generic parameter of `Rock.Create<>()`. It will then create a number of extension methods for each mockable member. In the example, you can call `.Methods().TargetAction()` and `.Methods().TargetFunc()` to state that you expect these members to be called. For `TargetFunc()`, you can also specify the return value via the `Returns()` method.
+
+Once you set your expectations, you can create an instance of the mock from the generated `Instance()` method. If the target type has multiple constructors with different parameters, `Instace()` methods will generated for those constructor - constructors will be covered in detail in [this section](#passing-constructor-arguments-to-a-mock).
+
+Note that all mocks generated with Rocks are strict. That is, if you didn't set up an expectation for the `TargetAction()` call, the `Verify()` call would fail with a `VerificationException`. This exception type provided details on why verification failed.
 
 ### Parameter Verification
 
@@ -90,11 +94,7 @@ You can verify that `Target()` will be called with an exact value by passing in 
 ```csharp
 var expectations = Rock.Create<IHaveParameterExpectations>();
 expectations.Methods().Target(44);
-```
 
-You create an instance of the mock with the `Instance()` method:
-
-```csharp
 var mock = expectations.Instance();
 mock.Target(44);
 
@@ -105,7 +105,7 @@ If you don't care what the value is, you use `Arg.Any<>()`:
 
 ```csharp
 var expectations = Rock.Create<IHaveParameterExpectations>();
-expectations.Methods().Target(Arg.IsAny<int>());
+expectations.Methods().Target(Arg.Any<int>());
 
 var mock = expectations.Instance();
 mock.Target(44);
@@ -141,7 +141,7 @@ expectations.Verify();
 
 ### Method Call Counts
 
-You may want to verify that code under test calls a method a specific number of times. You can do that by specifying an expected call count:
+You may want to verify that code under test calls a method a specific number of times. You can do that by specifying an expected call count via `CallCount()`:
 
 ```csharp
 var expectations = Rock.Create<IAmSimple>();
@@ -171,11 +171,11 @@ mock.Target(22);
 expectations.Verify();
 ```
 
-We haven't covered properties yet, but this works with them as well.
+We haven't covered properties yet, but the same process is in place with them as well.
 
 ### Implementing Handled Methods
 
-You can provide a lambda that will be called when a method is invoked so you can do things like capture method argument values:
+You can provide a lambda via the `Callback()` method that will be called when a method is invoked so you can do things like capture method argument values:
 
 ```csharp
 var value = 0;
@@ -307,7 +307,7 @@ expectations.Verify();
 
 ### Mocking Properties
 
-Mocking properties is a breeze in Rocks. `Get` and `Set` extension methods are generated for you that are available from the `Properties()` extension method:
+Mocking properties is a breeze in Rocks. `Getters()` and `Setters()` extension methods are generated for you that are available from the `Properties()` extension method:
 
 ```csharp
 public interface IHaveAProperty
@@ -357,7 +357,7 @@ Note that this will work with `init` indexers as well. `required` indexers is cu
 
 ### Mocking Indexers
 
-Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks:
+Indexers are not something a lot of .NET developers use, but if you do, you can mock them in Rocks. An `Indexers()` extension method is created to set indexer get and set expectations. Following the naming convention of an indexer in C#, the `This()` extension method allows you to set the expectations:
 
 ```csharp
 public interface IHaveIndexer
@@ -408,50 +408,7 @@ mock.Target(1);
 expectations.Verify();
 ```
 
-## Using Makes
-
-There are times where your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you always do `Rock.Create()`, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" via a call to `Rock.Make()`:
-
-```csharp
-public interface IValue { }
-
-public interface IProduceValue
-{
-  IValue Produce();
-}
-
-public class UsesProducer
-{
-  private readonly IProduceValue producer;
-
-  public UsesProducer(IProduceValue producer)
-  {
-    this.producer = producer;
-  }
-
-  public IValue GetValue()
-  {
-    return this.producer.Produce();
-  }
-}
-
-// ...
-
-var valueMock = Rock.Make<IValue>().Instance();
-
-var produceExpectations = Rock.Create<IProduceValue>();
-produceExpectations.Methods().Produce().Returns(valueMock);
-
-var uses = new UsesProducer(produceExpectations.Instance());
-
-var producedValue = uses.GetValue();
-
-// producedValue and valueMock are the same references.
-```
-
-Note that makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type (same thing applies for getters on properties and indexers).
-
-## Handling Asynchronous Code
+### Handling Asynchronous Code
 
 If your mock returns a `Task`, `Task<T>`, `ValueTask`, or a `ValueTask<T>`, or you're using that returned value with `async/await`, you can create mocks that will allow you to test it:
 
@@ -485,42 +442,7 @@ await uses.RunGoAsync().ConfigureAwait(false);
 expectations.Verify();
 ```
 
-## Managing Multiple Mocks
-
-If you need to create a number of mocks within a test, you can use `RockRepository` to call `Verify()` on all of them once the test completes. Here's an example of how it works:
-
-```csharp
-public interface IFirstRepository
-{
-  void Foo();
-}
-
-public interface ISecondRepository
-{
-  void Bar();
-}
-
-public void MyTestMethod()
-{
-  using var repository = new RockRepository();
-
-  var firstExpectations = repository.Create<IFirstRepository>();
-  firstExpectations.Methods().Foo();
-
-  var secondExpectations = repository.Create<ISecondRepository>();
-  secondExpectations.Methods().Bar();
-
-  var firstMock = firstExpectations.Instance();
-  firstMock.Foo();
-
-  var secondMock = secondExpectations.Instance();
-  secondMock.Bar();
-}
-```
-
-Internally, the repository will add the new mock to a list and then passes that back as the return value. This list is used in its `Dispose()` implementation to verify all the mocks.
-
-## `dynamic` Types
+### `dynamic` Types
 
 It's not a common thing to see `dynamic` used, but Rocks supports it just fine:
 
@@ -565,6 +487,84 @@ expectations.Verify();
 ```
 
 Note that `value` would be equal to 20 after `PointerParameter()` is called.
+
+### Using Makes
+
+There are times when your mock needs to return a value where you want to ensure that the return value is a specific instance. As you've seen with these Rocks examples, you always do `Rock.Create()`, set up expectations, and then call `Instance()`. If you need a mock with no expectations, you create a "make" via a call to `Rock.Make()`:
+
+```csharp
+public interface IValue { }
+
+public interface IProduceValue
+{
+  IValue Produce();
+}
+
+public class UsesProducer
+{
+  private readonly IProduceValue producer;
+
+  public UsesProducer(IProduceValue producer)
+  {
+    this.producer = producer;
+  }
+
+  public IValue GetValue()
+  {
+    return this.producer.Produce();
+  }
+}
+
+// ...
+
+var valueMock = Rock.Make<IValue>().Instance();
+
+var produceExpectations = Rock.Create<IProduceValue>();
+produceExpectations.Methods().Produce().Returns(valueMock);
+
+var uses = new UsesProducer(produceExpectations.Instance());
+
+var producedValue = uses.GetValue();
+
+// producedValue and valueMock are the same references.
+```
+
+Note that makes do no have any expectations set up on them so they can't be verified. If you call a method on a make that returns a value, it'll return the default value of the return type (same thing applies for getters on properties and indexers).
+
+## Managing Multiple Mocks
+
+If you need to create a number of mocks within a test, you can use `RockRepository` to call `Verify()` on all of them once the test completes. Here's an example of how it works:
+
+```csharp
+public interface IFirstRepository
+{
+  void Foo();
+}
+
+public interface ISecondRepository
+{
+  void Bar();
+}
+
+public void MyTestMethod()
+{
+  using var repository = new RockRepository();
+
+  var firstExpectations = repository.Create<IFirstRepository>();
+  firstExpectations.Methods().Foo();
+
+  var secondExpectations = repository.Create<ISecondRepository>();
+  secondExpectations.Methods().Bar();
+
+  var firstMock = firstExpectations.Instance();
+  firstMock.Foo();
+
+  var secondMock = secondExpectations.Instance();
+  secondMock.Bar();
+}
+```
+
+Internally, the repository will add the new mock to a list and then passes that back as the return value. This list is used in its `Dispose()` implementation to verify all the mocks.
 
 # Conclusion
 

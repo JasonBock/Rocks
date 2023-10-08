@@ -33,7 +33,7 @@ mock.TargetAction();
 expectations.Verify();
 ```
 
-More details can be found on the [Quickstart page](https://github.com/JasonBock/Rocks/blob/main/docs/Quickstart.md).
+More details can be found on the [Overview page](https://github.com/JasonBock/Rocks/blob/main/docs/Overview.md).
 
 ## Additional Documentation
 
