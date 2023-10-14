@@ -6,7 +6,7 @@ namespace Rocks.Tests.Generators;
 public static class MethodGeneratorTests
 {
 	[Test]
-	public static async Task GenerateWhenOptionalArgumentsExist()
+	public static async Task GenerateWhenOptionalArgumentsExistAsync()
 	{
 		var code =
 			"""

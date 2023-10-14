@@ -115,17 +115,17 @@ public static class OptionalArgumentsTests
 	[Test]
 	public static void CreateMembersWithOptionalArgumentsNotSpecifiedUsingOverload()
 	{
-		//var returnValue = 3;
+		var returnValue = 3;
 		var expectations = Rock.Create<IHaveOptionalArguments>();
 		expectations.Methods().Foo(1);
-		//expectations.Indexers().Getters().This(1).Returns(returnValue);
+		expectations.Indexers().Getters().This(1).Returns(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
-		//var value = mock[1];
+		var value = mock[1];
 
 		expectations.Verify();
 
-		//Assert.That(value, Is.EqualTo(returnValue));
+		Assert.That(value, Is.EqualTo(returnValue));
 	}
 }
