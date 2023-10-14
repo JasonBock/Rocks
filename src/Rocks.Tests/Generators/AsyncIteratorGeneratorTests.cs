@@ -180,6 +180,8 @@ public static class AsyncIteratorGeneratorTests
 					global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
 					return new global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>(@self.Add<global::System.Collections.Generic.IAsyncEnumerable<string>>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @cancellationToken.Transform(default) }));
 				}
+				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self, global::System.Threading.CancellationToken @cancellationToken = default) =>
+					@self.GetRecordsAsync(global::Rocks.Arg.Is(@cancellationToken));
 			}
 			
 			""";

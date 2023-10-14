@@ -139,6 +139,8 @@ public static class DefaultValuesGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 						return new global::Rocks.MethodAdornments<global::MockTests.IRequest<object>, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>>(@self.Add<global::System.Threading.Tasks.Task<object>>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @values, @someStruct.Transform(default) }));
 					}
+					internal static global::Rocks.MethodAdornments<global::MockTests.IRequest<object>, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>> Send(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IRequest<object>> @self, global::Rocks.Argument<object> @values, global::MockTests.SomeStruct @someStruct = default) =>
+						@self.Send(@values, global::Rocks.Arg.Is(@someStruct));
 				}
 				internal static class ExplicitMethodExpectationsOfIRequestOfobjectForIRequestOfobjectExtensions
 				{
@@ -148,6 +150,8 @@ public static class DefaultValuesGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 						return new global::Rocks.MethodAdornments<global::MockTests.IRequest<object>, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>(@self.Add<global::System.Threading.Tasks.Task>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @message, @someStruct }));
 					}
+					internal static global::Rocks.MethodAdornments<global::MockTests.IRequest<object>, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task> Send(this global::Rocks.Expectations.ExplicitMethodExpectations<global::MockTests.IRequest<object>, global::MockTests.IRequest<object>> @self, global::Rocks.Argument<object> @message, global::MockTests.SomeStruct @someStruct = default) =>
+						@self.Send(@message, global::Rocks.Arg.Is(@someStruct));
 				}
 			}
 			
@@ -263,6 +267,8 @@ public static class DefaultValuesGeneratorTests
 					global::System.ArgumentNullException.ThrowIfNull(@initialValue);
 					return new global::Rocks.MethodAdornments<global::IGenericDefault, global::System.Action<T>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initialValue.Transform(default!) }));
 				}
+				internal static global::Rocks.MethodAdornments<global::IGenericDefault, global::System.Action<T>> Setup<T>(this global::Rocks.Expectations.MethodExpectations<global::IGenericDefault> @self, T @initialValue = default!) =>
+					@self.Setup<T>(global::Rocks.Arg.Is(@initialValue));
 			}
 			
 			""";
@@ -432,6 +438,8 @@ public static class DefaultValuesGeneratorTests
 					global::System.ArgumentNullException.ThrowIfNull(@value);
 					return new global::Rocks.MethodAdornments<global::IUseInfinity, global::System.Action<double>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value.Transform(double.PositiveInfinity) }));
 				}
+				internal static global::Rocks.MethodAdornments<global::IUseInfinity, global::System.Action<double>> Use(this global::Rocks.Expectations.MethodExpectations<global::IUseInfinity> @self, double @value = double.PositiveInfinity) =>
+					@self.Use(global::Rocks.Arg.Is(@value));
 			}
 			
 			""";

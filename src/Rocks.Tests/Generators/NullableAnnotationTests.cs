@@ -415,11 +415,15 @@ public static class NullableAnnotationTests
 					global::System.ArgumentNullException.ThrowIfNull(@initializationData);
 					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initializationData.Transform(null) }));
 				}
+				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, int>, int> IntReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, object? @initializationData = null) =>
+					@self.IntReturn(global::Rocks.Arg.Is(@initializationData));
 				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>> VoidReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, global::Rocks.Argument<object?> @initializationData)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@initializationData);
 					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initializationData.Transform(null) }));
 				}
+				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>> VoidReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, object? @initializationData = null) =>
+					@self.VoidReturn(global::Rocks.Arg.Is(@initializationData));
 			}
 			
 			""";

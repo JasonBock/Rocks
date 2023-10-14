@@ -41,9 +41,9 @@ internal static class MethodExpectationsExtensionsBuilder
 					writer.WriteLine("{");
 					writer.Indent++;
 
-					foreach (var result in typeGroup)
+					foreach (var method in typeGroup)
 					{
-						MethodExpectationsExtensionsMethodBuilder.Build(writer, result);
+						MethodExpectationsExtensionsMethodBuilder.Build(writer, method);
 					}
 
 					writer.Indent--;
