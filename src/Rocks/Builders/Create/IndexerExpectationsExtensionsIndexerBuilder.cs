@@ -49,7 +49,8 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
-					p => p.HasExplicitDefaultValue ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					p => p.HasExplicitDefaultValue ?
+						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine($"@{namingContext["self"]}.This({parameterValues});");
@@ -113,7 +114,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 
 					if (isGeneratedWithDefaults && _.HasExplicitDefaultValue)
 					{
-						return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+						return $"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({_.ExplicitDefaultValue})] {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 					}
 
 					if (!isGeneratedWithDefaults)
@@ -128,7 +129,8 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", propertySetMethod.Parameters.Select(
-					p => p.HasExplicitDefaultValue ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					p => p.HasExplicitDefaultValue ? 
+						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine($"@{namingContext["self"]}.This({parameterValues});");

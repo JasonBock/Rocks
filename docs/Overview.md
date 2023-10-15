@@ -291,19 +291,45 @@ If your method has optional arguments, you can handle them just like other argum
 ```csharp
 public interface IHaveOptionalArguments
 {
-  void Target(int a, string b = "b", long c = 44);
+  void Foo(int a, string b = "b", double c = 3.2);
+  int this[int a, string b = "b"] { get; set; }
 }
 
 // ...
 
+var returnValue = 3;
 var expectations = Rock.Create<IHaveOptionalArguments>();
-expectations.Methods().Target(22, Arg.IsDefault<string>(), Arg.IsDefault<long>()));
+// In this case, we're assuming b will be set to "b",
+// and c will be set to 3.2
+expectations.Methods().Foo(1);
+// With the indexer getter, we assume b will be set to "b"
+expectations.Indexers().Getters().This(2).Returns(returnValue);
+// Read the explanation after this code snippet ;)
+expectations.Indexers().Setters().This(a: 3, value: 52);
 
 var mock = expectations.Instance();
-mock.Target(22);
+mock.Foo(1);
+var value = mock[2];
+mock[3] = 52;
 
 expectations.Verify();
+
+Assert.That(value, Is.EqualTo(returnValue));
 ```
+
+There is a little bit of an oddity if an indexer's setter has optional argument. In this case, the `set_Item()` method that is mapped to the indexer's setter has the `value` parameter **after** the optional parameters. You can't declare this in C# like this:
+
+```csharp
+void set_Item(int a, string b = "b", int value) { /* ... */ }
+```
+
+But, with the use of the `OptionalAttribute` and `DefaultParameterValueAttribute`, this is legal:
+
+```csharp
+void set_Item(int a, [Optional, DefaultParameterValue("b")] string b, int value) { /* ... */ }
+```
+
+Rocks uses this to generate the `This()` expectation override such that the parameter order is the same as what is found in the indexer's setter method. This means that you need to specify the `value` parameter using its' name to clarify which parameter you're setting if you don't set the arguments with default values.
 
 ### Mocking Properties
 

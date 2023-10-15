@@ -15,7 +15,7 @@ public static class IndexerGeneratorTests
 
 			public interface IHaveOptionalArguments
 			{
-				int this[int a, string b = "b"] { get; }
+				int this[int a, string b = "b"] { get; set; }
 			}
 			
 			public static class Test
@@ -45,6 +45,9 @@ public static class IndexerGeneratorTests
 				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveOptionalArguments> Getters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveOptionalArguments> @self) =>
 					new(@self);
 				
+				internal static global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> Setters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveOptionalArguments> @self) =>
+					new(@self);
+				
 				internal static global::IHaveOptionalArguments Instance(this global::Rocks.Expectations.Expectations<global::IHaveOptionalArguments> @self)
 				{
 					if (!@self.WasInstanceInvoked)
@@ -71,6 +74,7 @@ public static class IndexerGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "this[int @a, string @b = \"b\"]")]
+					[global::Rocks.MemberIdentifier(1, "this[int @a, string @b = \"b\"]")]
 					public int this[int @a, string @b = "b"]
 					{
 						get
@@ -95,6 +99,30 @@ public static class IndexerGeneratorTests
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b = \"b\"])");
 						}
+						set
+						{
+							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							{
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[2]).IsValid(@value))
+									{
+										@methodHandler.IncrementCallCount();
+										if (@methodHandler.Method is not null)
+										{
+											((global::System.Action<int, string, int>)@methodHandler.Method)(@a, @b, @value);
+										}
+										return;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a, string @b = \"b\"]");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b = \"b\"])");
+						}
 					}
 				}
 			}
@@ -109,6 +137,18 @@ public static class IndexerGeneratorTests
 				}
 				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Func<int, string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, string @b = "b") =>
 					@self.This(@a, global::Rocks.Arg.Is(@b));
+			}
+			internal static class IndexerSetterExpectationsOfIHaveOptionalArgumentsExtensions
+			{
+				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<int> @value)
+				{
+					global::System.ArgumentNullException.ThrowIfNull(@a);
+					global::System.ArgumentNullException.ThrowIfNull(@b);
+					global::System.ArgumentNullException.ThrowIfNull(@value);
+					return new global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b.Transform("b"), @value }));
+				}
+				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue("b")] string @b, global::Rocks.Argument<int> @value) =>
+					@self.This(@a, global::Rocks.Arg.Is(@b), @value);
 			}
 			
 			""";

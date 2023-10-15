@@ -19,7 +19,7 @@ public class NeedNullableAnnotation
 public interface IHaveOptionalArguments
 {
 	void Foo(int a, string b = "b", double c = 3.2);
-	int this[int a, string b = "b"] { get; }
+	int this[int a, string b = "b"] { get; set; }
 }
 
 public interface IHaveOptionalStructDefaultArgument
@@ -118,11 +118,13 @@ public static class OptionalArgumentsTests
 		var returnValue = 3;
 		var expectations = Rock.Create<IHaveOptionalArguments>();
 		expectations.Methods().Foo(1);
-		expectations.Indexers().Getters().This(1).Returns(returnValue);
+		expectations.Indexers().Getters().This(2).Returns(returnValue);
+		expectations.Indexers().Setters().This(a: 3, value: 52);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
-		var value = mock[1];
+		var value = mock[2];
+		mock[3] = 52;
 
 		expectations.Verify();
 
