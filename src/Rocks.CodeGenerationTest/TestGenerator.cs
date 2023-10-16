@@ -83,7 +83,7 @@ internal static class TestGenerator
 				.Where(_ => _.Severity == DiagnosticSeverity.Error ||
 					_.Severity == DiagnosticSeverity.Warning)
 				.Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
-			//var mockCode = compilation.SyntaxTrees.ToArray()[^1];
+			var mockCode = compilation.SyntaxTrees.ToArray()[^1];
 		}
 		else
 		{
@@ -96,7 +96,7 @@ internal static class TestGenerator
 				.Where(_ => _.Severity == DiagnosticSeverity.Error ||
 					(_.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id)))
 				.Select(_ => new Issue(_.Id, _.Severity, _.ToString(), _.Location)));
-			//var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
+			var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 		}
 
 		return issues.ToImmutableArray();

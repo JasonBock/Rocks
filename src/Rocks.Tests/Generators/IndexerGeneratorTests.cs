@@ -140,15 +140,15 @@ public static class IndexerGeneratorTests
 			}
 			internal static class IndexerSetterExpectationsOfIHaveOptionalArgumentsExtensions
 			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<int> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b.Transform("b"), @value }));
+					return new global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @value, @a, @b.Transform("b") }));
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, [global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue("b")] string @b, global::Rocks.Argument<int> @value) =>
-					@self.This(@a, global::Rocks.Arg.Is(@b), @value);
+				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, string @b = "b") =>
+					@self.This(@value, @a, global::Rocks.Arg.Is(@b));
 			}
 			
 			""";
@@ -377,26 +377,26 @@ public static class IndexerGeneratorTests
 			
 			internal static class IndexerInitializerExpectationsOfIHaveIndexersWithInitExtensions
 			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<uint> @a, global::Rocks.Argument<double> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<double> @value, global::Rocks.Argument<uint> @a)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
+					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @a }));
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<string> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<string> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b, @value }));
+					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @value, @a, @b }));
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c, global::Rocks.Argument<int> @value)
+				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@a);
 					global::System.ArgumentNullException.ThrowIfNull(@b);
 					global::System.ArgumentNullException.ThrowIfNull(@c);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(4) { @a, @b, @c, @value }));
+					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(4) { @value, @a, @b, @c }));
 				}
 			}
 			
@@ -778,11 +778,11 @@ public static class IndexerGeneratorTests
 				}
 				internal static class IndexerInitializerExpectationsOfTargetExtensions
 				{
-					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<int> @value)
+					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
-						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
+						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @a }));
 					}
 				}
 			}

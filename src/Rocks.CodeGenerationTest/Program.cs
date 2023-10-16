@@ -47,7 +47,7 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(SixLabors.ImageSharp.ImageFormatException)
+			typeof(AutoMapper.IMapper)
 		},
 		Array.Empty<Type>(), null));
 

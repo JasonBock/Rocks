@@ -1,6 +1,7 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Linq;
 
 namespace Rocks.Builders.Create;
 
@@ -97,6 +98,9 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			var mockTypeName = property.MockType.FullyQualifiedName;
 			var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
 			var thisParameter = $"this global::Rocks.Expectations.Indexer{accessorName}Expectations<{mockTypeName}> @{namingContext["self"]}";
+			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
+			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
+			var valueParameter = $"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}> @{lastParameter.Name}";
 			var needsGenerationWithDefaults = false;
 
 			var delegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
@@ -107,14 +111,16 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				$"global::Rocks.IndexerAdornments<{mockTypeName}, {delegateTypeName}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
-			var instanceParameters = string.Join(", ", thisParameter,
-				string.Join(", ", propertySetMethod.Parameters.Select(_ =>
+			// We need to put the value parameter immediately after "self"
+			// and then skip the value parameter by taking only the non-value parameters.
+			var instanceParameters = string.Join(", ", thisParameter, valueParameter,
+				string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
 				{
 					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
 					if (isGeneratedWithDefaults && _.HasExplicitDefaultValue)
 					{
-						return $"[global::System.Runtime.InteropServices.Optional, global::System.Runtime.InteropServices.DefaultParameterValue({_.ExplicitDefaultValue})] {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
+						return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
 					}
 
 					if (!isGeneratedWithDefaults)
@@ -128,9 +134,12 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 
 			if (isGeneratedWithDefaults)
 			{
-				var parameterValues = string.Join(", ", propertySetMethod.Parameters.Select(
-					p => p.HasExplicitDefaultValue ? 
-						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+				// We need to put the value parameter first
+				// and then skip the value parameter by taking only the non-value parameters.
+				var parameterValues = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
+					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
+						p => p.HasExplicitDefaultValue ? 
+							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
 				writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine($"@{namingContext["self"]}.This({parameterValues});");
@@ -147,9 +156,12 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 					writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{parameter.Name});");
 				}
 
-				var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
-					_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-						$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
+				// We need to put the value parameter first
+				// and then skip the value parameter by taking only the non-value parameters.
+				var parameters = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
+					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
+						_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+							$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}")));
 				writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 				writer.Indent--;

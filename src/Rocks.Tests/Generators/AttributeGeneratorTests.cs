@@ -526,11 +526,11 @@ public static class AttributeGeneratorTests
 			}
 			internal static class IndexerSetterExpectationsOfNotNullIfNotCasesExtensions
 			{
-				internal static global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::NotNullIfNotCases> @self, global::Rocks.Argument<object?> @node, global::Rocks.Argument<string?> @value)
+				internal static global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::NotNullIfNotCases> @self, global::Rocks.Argument<string?> @value, global::Rocks.Argument<object?> @node)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@node);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>>(self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @node, @value }));
+					return new global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>>(self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @node }));
 				}
 			}
 			
