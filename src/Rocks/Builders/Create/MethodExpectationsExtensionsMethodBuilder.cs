@@ -35,9 +35,18 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 						{
 							var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
-							if (isGeneratedWithDefaults && _.HasExplicitDefaultValue)
+							if (isGeneratedWithDefaults)
 							{
-								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+								if (_.HasExplicitDefaultValue)
+								{
+									return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+								}
+								else
+								{
+									return _.IsParams ?
+										$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
+										$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+								}
 							}
 
 							if (!isGeneratedWithDefaults)
@@ -78,7 +87,7 @@ internal static class MethodExpectationsExtensionsMethodBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(
-					p => p.HasExplicitDefaultValue ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
+					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLine($"internal static {returnValue} {method.Name}({instanceParameters}){extensionConstraints} =>");
 				writer.Indent++;
 				writer.WriteLine($"@{namingContext["self"]}.{method.Name}({parameterValues});");

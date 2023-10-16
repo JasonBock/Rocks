@@ -1,7 +1,6 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Linq;
 
 namespace Rocks.Builders.Create;
 
@@ -33,9 +32,18 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				{
 					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
-					if (isGeneratedWithDefaults && _.HasExplicitDefaultValue)
+					if (isGeneratedWithDefaults)
 					{
-						return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+						if (_.HasExplicitDefaultValue)
+						{
+							return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+						}
+						else
+						{
+							return _.IsParams ?
+								$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
+								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						}
 					}
 
 					if (!isGeneratedWithDefaults)
@@ -50,7 +58,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
-					p => p.HasExplicitDefaultValue ?
+					p => p.HasExplicitDefaultValue || p.IsParams ?
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 				writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 				writer.Indent++;
@@ -118,9 +126,18 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				{
 					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
-					if (isGeneratedWithDefaults && _.HasExplicitDefaultValue)
+					if (isGeneratedWithDefaults)
 					{
-						return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+						if (_.HasExplicitDefaultValue)
+						{
+							return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+						}
+						else
+						{
+							return _.IsParams ?
+								$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
+								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						}
 					}
 
 					if (!isGeneratedWithDefaults)
@@ -138,7 +155,7 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 				// and then skip the value parameter by taking only the non-value parameters.
 				var parameterValues = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
 					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
-						p => p.HasExplicitDefaultValue ? 
+						p => p.HasExplicitDefaultValue || p.IsParams ?
 							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
 				writer.WriteLine($"internal static {returnValue} This({instanceParameters}) =>");
 				writer.Indent++;
@@ -156,12 +173,11 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 					writer.WriteLine($"global::System.ArgumentNullException.ThrowIfNull(@{parameter.Name});");
 				}
 
-				// We need to put the value parameter first
+				// We do NOT need to put the value parameter first
 				// and then skip the value parameter by taking only the non-value parameters.
-				var parameters = string.Join(", ", $"@{propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1].Name}",
-					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
-						_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
-							$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}")));
+				var parameters = string.Join(", ", propertySetMethod.Parameters.Select(
+					_ => _.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
+						$"@{_.Name}.Transform({_.ExplicitDefaultValue})" : $"@{_.Name}"));
 				writer.WriteLine($"return {newAdornments}({namingContext["self"]}.Add({memberIdentifier}, new global::System.Collections.Generic.List<global::Rocks.Argument>({propertySetMethod.Parameters.Length}) {{ {parameters} }}));");
 
 				writer.Indent--;

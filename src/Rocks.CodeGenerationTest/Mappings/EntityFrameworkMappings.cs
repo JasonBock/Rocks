@@ -5,18 +5,14 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
-	internal static class EntityFrameworkMappings
+   internal static class EntityFrameworkMappings
 	{
 		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 			new()
@@ -182,8 +178,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 	}
 
 	namespace EntityFramework
-	{
-		public sealed class MappedLoggerCategory
+   {
+	  public sealed class MappedLoggerCategory
 			: LoggerCategory<MappedLoggerCategory>
 		{ }
 	}

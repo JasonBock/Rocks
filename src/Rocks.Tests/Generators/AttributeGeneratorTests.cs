@@ -530,7 +530,7 @@ public static class AttributeGeneratorTests
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@node);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>>(self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @node }));
+					return new global::Rocks.IndexerAdornments<global::NotNullIfNotCases, global::System.Action<object?, string?>>(self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @node, @value }));
 				}
 			}
 			

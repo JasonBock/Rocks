@@ -39,7 +39,7 @@ public static class AbstractClassIndexerTests
 	{
 		var expectations = Rock.Create<AbstractClassIndexerGetterSetter>();
 		expectations.Indexers().Getters().This(3);
-		expectations.Indexers().Setters().This(3, 4);
+		expectations.Indexers().Setters().This(4, 3);
 
 		var mock = expectations.Instance();
 		var value = mock[3];
@@ -186,7 +186,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetter()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, 4);
+		expectations.Indexers().Setters().This(4, 3);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -206,7 +206,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, 4).RaisesMyEvent(EventArgs.Empty);
+		expectations.Indexers().Setters().This(4, 3).RaisesMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -223,7 +223,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, 4).Callback((a, value) => wasCallbackInvoked = true);
+		expectations.Indexers().Setters().This(4, 3).Callback((a, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -238,7 +238,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, 4).RaisesMyEvent(EventArgs.Empty)
+		expectations.Indexers().Setters().This(4, 3).RaisesMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;
@@ -259,7 +259,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetterMultipleCalls()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, 4).CallCount(2);
+		expectations.Indexers().Setters().This(4, 3).CallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3] = 4;
@@ -273,7 +273,7 @@ public static class AbstractClassIndexerTests
 	{
 		var expectations = Rock.Create<AbstractClassIndexerGetterSetter>();
 		expectations.Indexers().Getters().This(3, "b");
-		expectations.Indexers().Setters().This(3, "b", 4);
+		expectations.Indexers().Setters().This(4, 3, "b");
 
 		var mock = expectations.Instance();
 		var value = mock[3, "b"];
@@ -409,7 +409,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetter()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, "b", 4);
+		expectations.Indexers().Setters().This(4, 3, "b");
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
@@ -429,7 +429,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetterRaiseEvent()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, "b", 4).RaisesMyEvent(EventArgs.Empty);
+		expectations.Indexers().Setters().This(4, 3, "b").RaisesMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -446,7 +446,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, "b", 4).Callback((a, b, value) => wasCallbackInvoked = true);
+		expectations.Indexers().Setters().This(4, 3, "b").Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;
@@ -461,7 +461,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, "b", 4).RaisesMyEvent(EventArgs.Empty)
+		expectations.Indexers().Setters().This(4, 3, "b").RaisesMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;
@@ -482,7 +482,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetterMultipleCalls()
 	{
 		var expectations = Rock.Create<AbstractClassIndexerSetter>();
-		expectations.Indexers().Setters().This(3, "b", 4).CallCount(2);
+		expectations.Indexers().Setters().This(4, 3, "b").CallCount(2);
 
 		var mock = expectations.Instance();
 		mock[3, "b"] = 4;

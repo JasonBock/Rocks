@@ -6,12 +6,11 @@ using MassTransit.Middleware;
 using MassTransit.Observables;
 using MassTransit.Transports;
 using System.Diagnostics.CodeAnalysis;
-using System.Net.Mime;
 
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
-	internal static class MassTransitMappings
+   internal static class MassTransitMappings
 	{
 		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 			new()
@@ -777,8 +776,8 @@ namespace Rocks.CodeGenerationTest.Mappings
 	}
 
 	namespace MassTransit
-	{
-		public sealed class MappedTopologicalSortNodeProperties
+   {
+	  public sealed class MappedTopologicalSortNodeProperties
 			: Node<object>, ITopologicalSortNodeProperties
 		{
 			public MappedTopologicalSortNodeProperties(int index, object value) : base(index, value)

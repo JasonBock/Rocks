@@ -119,7 +119,7 @@ public static class OptionalArgumentsTests
 		var expectations = Rock.Create<IHaveOptionalArguments>();
 		expectations.Methods().Foo(1);
 		expectations.Indexers().Getters().This(2).Returns(returnValue);
-		expectations.Indexers().Setters().This(a: 3, value: 52);
+		expectations.Indexers().Setters().This(52, 3);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);

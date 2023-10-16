@@ -18,8 +18,8 @@ public static class ArgTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(() => expectations.Indexers().Getters().This(null!), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers().Setters().This(null!, "value"), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers().Setters().This(1, null!), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers().Setters().This("value", null!), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers().Setters().This(null!, 1), Throws.TypeOf<ArgumentNullException>());
 		});
 	}
 
