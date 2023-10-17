@@ -11,10 +11,10 @@
     - [Passing Constructor Arguments to a Mock](#passing-constructor-arguments-to-a-mock)
     - [Mocking Generic Methods](#mocking-generic-methods)
     - [Mocking Methods with `ref/out/in` Parameters or `ref readonly` Return Values](#mocking-methods-with-refoutin-parameters-or-ref-readonly-return-values)
-    - [Optional Arguments](#optional-arguments)
     - [Mocking Properties](#mocking-properties)
     - [Mocking Indexers](#mocking-indexers)
     - [Mocking Events](#mocking-events)
+    - [Optional Arguments](#optional-arguments)
     - [Handling Asynchronous Code](#handling-asynchronous-code)
     - [`dynamic` Types](#dynamic-types)
     - ["Special" Types](#special-types)
@@ -284,53 +284,6 @@ Since `Action` and `Func` do not support `ref` and `out`, you have to declare th
 
 `in` parameters do not require any special handling as Rocks doesn't change the value of parameters. `ref readonly` also work in Rocks and require no extra work on your behalf. You can return your own values from methods if you want, and Rocks handles the requirement of having a field available to return by reference.
 
-### Optional Arguments
-
-If your method has optional arguments, you can handle them just like other arguments. You can also use `Arg.IsDefault()` if you want to use the default argument no matter what it is (or if it changes in the future). Here's what that looks like:
-
-```csharp
-public interface IHaveOptionalArguments
-{
-  void Foo(int a, string b = "b", double c = 3.2);
-  int this[int a, string b = "b"] { get; set; }
-}
-
-// ...
-
-var returnValue = 3;
-var expectations = Rock.Create<IHaveOptionalArguments>();
-// In this case, we're assuming b will be set to "b",
-// and c will be set to 3.2
-expectations.Methods().Foo(1);
-// With the indexer getter, we assume b will be set to "b"
-expectations.Indexers().Getters().This(2).Returns(returnValue);
-// Read the explanation after this code snippet ;)
-expectations.Indexers().Setters().This(a: 3, value: 52);
-
-var mock = expectations.Instance();
-mock.Foo(1);
-var value = mock[2];
-mock[3] = 52;
-
-expectations.Verify();
-
-Assert.That(value, Is.EqualTo(returnValue));
-```
-
-There is a little bit of an oddity if an indexer's setter has optional argument. In this case, the `set_Item()` method that is mapped to the indexer's setter has the `value` parameter **after** the optional parameters. You can't declare this in C# like this:
-
-```csharp
-void set_Item(int a, string b = "b", int value) { /* ... */ }
-```
-
-But, with the use of the `OptionalAttribute` and `DefaultParameterValueAttribute`, this is legal:
-
-```csharp
-void set_Item(int a, [Optional, DefaultParameterValue("b")] string b, int value) { /* ... */ }
-```
-
-Rocks uses this to generate the `This()` expectation override such that the parameter order is the same as what is found in the indexer's setter method. This means that you need to specify the `value` parameter using its' name to clarify which parameter you're setting if you don't set the arguments with default values.
-
 ### Mocking Properties
 
 Mocking properties is a breeze in Rocks. `Getters()` and `Setters()` extension methods are generated for you that are available from the `Properties()` extension method:
@@ -395,7 +348,7 @@ public interface IHaveIndexer
 
 var expectations = Rock.Create<IHaveIndexer>();
 expectations.Indexers().Getters().This(3);
-expectations.Indexers().Setters().This(3, 4);
+expectations.Indexers().Setters().This(4, 3);
 
 var mock = expectations.Instance();
 var propertyValue = mock[3];
@@ -404,7 +357,7 @@ mock[3] = 4;
 expectations.Verify();
 ```
 
-Note that the setter looks like it's taking an extra parameter - that's because the value is passed in as the last argument.
+Note that the setter looks like it's taking an extra parameter - that's because the value is passed in as the first argument. If you're wondering why the value is the first argument, read the "Optional Arguments" section for the explanation.
 
 ### Mocking Events
 
@@ -433,6 +386,47 @@ mock.Target(1);
 
 expectations.Verify();
 ```
+
+### Optional Arguments
+
+If your method or indexer has optional arguments, you can handle them just like other arguments. You can also use `Arg.IsDefault()` if you want to use the default argument no matter what it is (or if it changes in the future). Here's what that looks like:
+
+```csharp
+public interface IHaveOptionalArguments
+{
+  void Foo(int a, string b = "b", double c = 3.2);
+  int this[int a, string b = "b"] { get; set; }
+}
+
+// ...
+
+var returnValue = 3;
+var expectations = Rock.Create<IHaveOptionalArguments>();
+// In this case, we're assuming b will be set to "b",
+// and c will be set to 3.2
+expectations.Methods().Foo(1);
+// With the indexer getter, we assume b will be set to "b"
+expectations.Indexers().Getters().This(2).Returns(returnValue);
+// Read the explanation after this code snippet ;)
+expectations.Indexers().Setters().This(value: 52, a: 3);
+
+var mock = expectations.Instance();
+mock.Foo(1);
+var value = mock[2];
+mock[3] = 52;
+
+expectations.Verify();
+
+Assert.That(value, Is.EqualTo(returnValue));
+```
+
+There is a little bit of an oddity if an indexer's setter has optional or `params` arguments. Properties and indexers have methods that are mapped to the `get`, `set`, or `init` accessors. In this case of an indexer's setter, the `set_Item()` mapped method has the `value` parameter **after** the optional parameters. While C#'s compiler makes this happen, you can't declare this in C#:
+
+```csharp
+void set_Item(int a, string b = "b", int value) { /* ... */ }
+```
+
+What Rocks does is generate the `This()` extension method with the `value` as the **first** parameter. That way, any parameters with default values or declared as `params` can show up after `value`.
 
 ### Handling Asynchronous Code
 
