@@ -192,6 +192,13 @@ mock.Target(44);
 expectations.Verify();
 ```
 
+A callback can also be used if the member usage should throw an exception as expected behavior:
+
+```csharp
+expectations.Methods().Target(Arg.Validate<int>(i => i > 10))
+  .Callback(_ => throw new NotSupportedException());
+```
+
 ### Returning Values
 
 If a method returns a value, you can use `Returns()`:
