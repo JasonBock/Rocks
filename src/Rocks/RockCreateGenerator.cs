@@ -48,21 +48,38 @@ internal sealed class RockCreateGenerator
 			return null;
 		}
 
-		var provider = context.SyntaxProvider
+		var compilationOption = context.CompilationProvider.Select((compilation, _) =>
+			compilation.Options.SpecificDiagnosticOptions.TryGetValue("ROCK10", out var rock10Value) ?
+				rock10Value : new ReportDiagnostic?());
+
+		var optionsProvider = context.AnalyzerConfigOptionsProvider.Select((provider, _) =>
+			provider.GlobalOptions.TryGetValue("ROCK10", out var rock10Value) ?
+				Enum.TryParse<DiagnosticSeverity>(rock10Value, out var rock10Severity) ?
+					rock10Severity : new DiagnosticSeverity?() :
+					new DiagnosticSeverity?());
+
+		var coProvider = compilationOption.Combine(optionsProvider);
+
+		var syntaxProvider = context.SyntaxProvider
 			.CreateSyntaxProvider(IsSyntaxTargetForGeneration, TransformTargets)
 			.Where(static _ => _ is not null)
 			.WithTrackingName("RockCreate");
-		context.RegisterSourceOutput(provider.Collect(),
+
+		var combinedProvider = syntaxProvider.Combine(coProvider);
+
+		context.RegisterSourceOutput(combinedProvider.Collect(),
 			(context, source) => CreateOutput(source, context));
 	}
 
-	private static void CreateOutput(ImmutableArray<MockModel?> mocks, SourceProductionContext context)
+	private static void CreateOutput(ImmutableArray<(MockModel? Left, (ReportDiagnostic? Left, DiagnosticSeverity? Right) Right)> outputs, SourceProductionContext context)
 	{
 		var targets = new HashSet<TypeMockModel>();
 
-		foreach (var mock in mocks)
+		foreach (var output in outputs)
 		{
-			foreach (var diagnostic in mock!.Diagnostics)
+			var mock = output.Left!;
+
+			foreach (var diagnostic in mock.Diagnostics)
 			{
 				context.ReportDiagnostic(diagnostic);
 			}

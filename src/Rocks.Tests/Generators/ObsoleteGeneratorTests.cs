@@ -3,6 +3,8 @@ using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Diagnostics;
 
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "ROCK10:Member Is Obsolete", Scope = "module")]
+
 namespace Rocks.Tests.Generators;
 
 public static class ObsoleteGeneratorTests
@@ -157,6 +159,43 @@ public static class ObsoleteGeneratorTests
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
 			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task CreateWhenTargetHasObsoleteMembersAsWarningAndBuildIsErrorAndROCK10IsDisabledAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			#nullable enable
+
+			namespace MockTests
+			{
+				public interface IHaveObsoleteMembers
+				{
+					[Obsolete("This method is not intended to be used directly by user code")]
+					int GetObsoleteValue();
+				}
+
+				public static class Test
+				{
+					public static void Generate()
+					{
+						var rock = Rock.Create<IHaveObsoleteMembers>();
+					}
+				}
+			}
+			""";
+
+		var generatedCode = "this isn't what it should be";
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			new[] { (typeof(RockCreateGenerator), "MockTests.IHaveObsoleteMembers_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>(),
+			generalDiagnosticOption: ReportDiagnostic.Error,
+			disabledDiagnostics: new List<string> { "CS1591", "ROCK10" }).ConfigureAwait(false);
 	}
 
 	[Test]
