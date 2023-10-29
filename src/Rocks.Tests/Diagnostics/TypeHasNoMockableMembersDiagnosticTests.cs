@@ -23,7 +23,9 @@ public static class TypeHasNoMockableMembersDiagnosticTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var descriptor = TypeHasNoMockableMembersDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
+		var descriptor = TypeHasNoMockableMembersDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		Assert.Multiple(() =>
 		{

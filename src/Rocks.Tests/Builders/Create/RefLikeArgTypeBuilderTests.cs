@@ -110,8 +110,9 @@ public static class RefLikeArgTypeBuilderTests
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
 		var name = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!);
+			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!);
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 

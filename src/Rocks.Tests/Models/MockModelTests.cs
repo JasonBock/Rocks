@@ -53,7 +53,7 @@ public static class MockModelTests
 	public static void CreateWhenTargetHasInternalAbstractMembers(string code, int buildType, bool hasDiagnostic, bool isMockNull)
 	{
 		const string targetTypeName = "InternalTargets";
-		var (internalSymbol, internalModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, internalSymbol, internalModel) = MockModelTests.GetType(code, targetTypeName);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(
 			$"public class Target {{ public void Test({targetTypeName} a) {{ }} }}");
@@ -74,7 +74,7 @@ public static class MockModelTests
 		var parameterSymbol = compilationModel.GetDeclaredSymbol(
 			syntaxTree.GetRoot().DescendantNodes(_ => true).OfType<ParameterSyntax>().Single()) as IParameterSymbol;
 
-		var model = MockModel.Create(parameterSymbol!.Type, compilationModel, (BuildType)buildType, true);
+		var model = MockModel.Create(invocation, parameterSymbol!.Type, compilationModel, (BuildType)buildType, true);
 
 		Assert.Multiple(() =>
 		{
@@ -122,8 +122,8 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "EnumType";
 		var code = $"public enum {targetTypeName} {{ }}";
-		var (type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
-		var model = MockModel.Create(type.BaseType!, semanticModel, BuildType.Create, true);
+		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
 
 		Assert.Multiple(() =>
 		{
@@ -137,8 +137,8 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "ValueTypeType";
 		var code = $"public struct {targetTypeName} {{ }}";
-		var (type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
-		var model = MockModel.Create(type.BaseType!, semanticModel, BuildType.Create, true);
+		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
 
 		Assert.Multiple((TestDelegate)(() =>
 		{
@@ -283,14 +283,14 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_MulticastDelegate)
 		{
 			type = type.BaseType;
 		}
 
-		var model = MockModel.Create(type!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
 
 		Assert.Multiple(() =>
 		{
@@ -304,14 +304,14 @@ public static class MockModelTests
 	{
 		const string targetTypeName = "MySpecialMethod";
 		var code = $"public delegate void {targetTypeName}();";
-		var (type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
+		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
 
 		while (type is not null && type.SpecialType != SpecialType.System_Delegate)
 		{
 			type = type.BaseType;
 		}
 
-		var model = MockModel.Create(type!, semanticModel, BuildType.Create, true);
+		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
 
 		Assert.Multiple(() =>
 		{
@@ -673,7 +673,7 @@ public static class MockModelTests
 		});
 	}
 
-	private static (ITypeSymbol, SemanticModel) GetType(string source, string targetTypeName,
+	private static (InvocationExpressionSyntax, ITypeSymbol, SemanticModel) GetType(string source, string targetTypeName,
 		ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -696,13 +696,15 @@ public static class MockModelTests
 		}
 #pragma warning restore CA1851 // Possible multiple enumerations of 'IEnumerable' collection<
 
-		return ((model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
+		return (invocation, (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
 	}
 
 	private static MockModel? GetModel(string source, string targetTypeName,
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
-		var (typeSymbol, model) = MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
-		return MockModel.Create(typeSymbol!, model, buildType, true);
+		var (invocation, typeSymbol, model) = MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);
+		return MockModel.Create(invocation, typeSymbol!, model, buildType, true);
 	}
 }
