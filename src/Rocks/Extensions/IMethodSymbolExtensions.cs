@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Diagnostics;
 using System.Collections.Immutable;
 
@@ -10,7 +11,7 @@ internal static class IMethodSymbolExtensions
 		"global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
 
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IMethodSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
+		this IMethodSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
@@ -18,14 +19,14 @@ internal static class IMethodSymbolExtensions
 			 _ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 				 (_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
 		{
-			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(self));
+			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(invocation, self));
 		}
 		
 		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
 			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
 		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(self));
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
 		}
 
 		return diagnostics.ToImmutable();

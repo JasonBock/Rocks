@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Builders;
 using Rocks.Diagnostics;
 using Rocks.Extensions;
@@ -8,7 +9,8 @@ namespace Rocks.Models;
 
 internal sealed record MockModel
 {
-	internal static MockModel? Create(ITypeSymbol typeToMock, SemanticModel model, BuildType buildType, bool shouldResolveShims)
+	internal static MockModel? Create(InvocationExpressionSyntax invocation, ITypeSymbol typeToMock, 
+		SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
 		if (typeToMock.ContainsDiagnostics())
 		{
@@ -26,18 +28,18 @@ internal sealed record MockModel
 			typeToMock.SpecialType == SpecialType.System_Enum ||
 			typeToMock.SpecialType == SpecialType.System_ValueType)
 		{
-			diagnostics.Add(CannotMockSpecialTypesDiagnostic.Create(typeToMock));
+			diagnostics.Add(CannotMockSpecialTypesDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (typeToMock.IsSealed)
 		{
-			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(typeToMock));
+			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (typeToMock is INamedTypeSymbol namedTypeToMock &&
 			namedTypeToMock.HasOpenGenerics())
 		{
-			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(typeToMock));
+			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(invocation, typeToMock));
 		}
 
 		var attributes = typeToMock.GetAttributes();
@@ -46,7 +48,7 @@ internal sealed record MockModel
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 			(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
 		{
-			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(typeToMock));
+			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(invocation, typeToMock));
 		}
 
 		var memberIdentifier = 0u;
@@ -67,7 +69,7 @@ internal sealed record MockModel
 				if (uniqueConstructors.Any(_ => _.Match(constructor) == MethodMatch.Exact))
 				{
 					// We found a rare case where there are duplicate constructors.
-					diagnostics.Add(DuplicateConstructorsDiagnostic.Create(typeToMock));
+					diagnostics.Add(DuplicateConstructorsDiagnostic.Create(invocation, typeToMock));
 					break;
 				}
 				else
@@ -79,54 +81,54 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var method in methods.Results)
 		{
-			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var property in properties.Results)
 		{
-			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		foreach (var @event in events.Results)
 		{
-			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
 		}
 
 		if (methods.InaccessibleAbstractMembers.Length > 0 || properties.InaccessibleAbstractMembers.Length > 0 ||
 			events.InaccessibleAbstractMembers.Length > 0)
 		{
-			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(typeToMock));
+			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (methods.HasMatchWithNonVirtual)
 		{
-			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(typeToMock));
+			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
 			properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{
-			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(typeToMock));
+			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (buildType == BuildType.Create && methods.Results.Length == 0 && properties.Results.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(typeToMock));
+			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(invocation, typeToMock));
 		}
 
 		if (typeToMock.TypeKind == TypeKind.Class && constructors.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(typeToMock));
+			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(invocation, typeToMock));
 		}
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		return new(!isMockable ? null : new TypeMockModel(typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
+		return new(!isMockable ? null : new TypeMockModel(invocation, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
 			typeToMock.GetFullyQualifiedName(),
 			diagnostics.ToImmutable());
 	}
