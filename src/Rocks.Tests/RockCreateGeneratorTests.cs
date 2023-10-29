@@ -588,7 +588,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasMatchWithNonVirtualDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(14, 23, 14, 36);
+			.WithSpan(32, 14, 32, 52);
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);
@@ -616,7 +616,7 @@ public static class RockCreateGeneratorTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasNoMockableMembersDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(5, 19, 5, 24);
+			.WithSpan(11, 15, 11, 35);
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);

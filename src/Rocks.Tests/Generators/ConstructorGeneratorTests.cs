@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
+using Rocks.Diagnostics;
 
 namespace Rocks.Tests.Generators;
 
@@ -35,7 +36,7 @@ public static class ConstructorGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { DiagnosticResult.CompilerError("ROCK12").WithSpan(5, 14, 5, 19) }).ConfigureAwait(false);
+			new[] { DiagnosticResult.CompilerError(DuplicateConstructorsDiagnostic.Id).WithSpan(18, 14, 18, 50) }).ConfigureAwait(false);
 	}
 
 	[Test]

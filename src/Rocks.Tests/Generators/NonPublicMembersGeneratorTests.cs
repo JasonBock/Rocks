@@ -33,7 +33,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 23, 3, 37);
+			.WithSpan(15, 14, 15, 43);
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);
