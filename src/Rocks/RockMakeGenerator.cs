@@ -40,7 +40,7 @@ internal sealed class RockMakeGenerator
 
 				if (SymbolEqualityComparer.Default.Equals(rockMakeSymbol, invocationSymbol.ConstructedFrom))
 				{
-					return MockModel.Create(invocationSymbol!.TypeArguments[0], model, BuildType.Make, true);
+					return MockModel.Create(node, invocationSymbol!.TypeArguments[0], model, BuildType.Make, true);
 				}
 			}
 

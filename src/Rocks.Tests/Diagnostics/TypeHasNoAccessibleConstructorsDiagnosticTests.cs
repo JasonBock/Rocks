@@ -23,7 +23,9 @@ public static class TypeHasNoAccessibleConstructorsDiagnosticTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var descriptor = TypeHasNoAccessibleConstructorsDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
+		var descriptor = TypeHasNoAccessibleConstructorsDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		Assert.Multiple(() =>
 		{

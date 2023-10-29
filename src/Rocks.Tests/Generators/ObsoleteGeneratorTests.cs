@@ -51,9 +51,9 @@ public static class ObsoleteGeneratorTests
 			new[]
 			{
 				new DiagnosticResult("ROCK10", DiagnosticSeverity.Error)
-					.WithSpan(20, 8, 20, 11),
+					.WithSpan(27, 15, 27, 45),
 				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
-					.WithSpan(20, 8, 20, 11)
+					.WithSpan(27, 15, 27, 45)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
 			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
@@ -101,9 +101,9 @@ public static class ObsoleteGeneratorTests
 			new[]
 			{
 				new DiagnosticResult("ROCK10", DiagnosticSeverity.Error)
-					.WithSpan(20, 15, 20, 18),
+					.WithSpan(27, 15, 27, 45),
 				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
-					.WithSpan(20, 15, 20, 18)
+					.WithSpan(27, 15, 27, 45)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
 			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
@@ -153,7 +153,7 @@ public static class ObsoleteGeneratorTests
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
 					.WithSpan(19, 30, 19, 46).WithArguments("MockTests.IServerComponent", "Do not use this"),
 				new DiagnosticResult(MemberUsesObsoleteTypeDiagnostic.Id, DiagnosticSeverity.Error)
-					.WithSpan(19, 48, 19, 61),
+					.WithSpan(27, 15, 27, 40),
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
 					.WithSpan(20, 21, 20, 37).WithArguments("MockTests.IServerComponent", "Do not use this"),
 			},
@@ -233,11 +233,11 @@ public static class ObsoleteGeneratorTests
 			""";
 
 		var methodDiagnostic = new DiagnosticResult(MemberIsObsoleteDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(11, 8, 11, 23);
+			.WithSpan(24, 15, 24, 42);
 		var propertyDiagnostic = new DiagnosticResult(MemberIsObsoleteDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(14, 8, 14, 14);
+			.WithSpan(24, 15, 24, 42);
 		var eventDiagnostic = new DiagnosticResult(MemberIsObsoleteDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(17, 22, 17, 37);
+			.WithSpan(24, 15, 24, 42);
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { methodDiagnostic, propertyDiagnostic, eventDiagnostic }, 

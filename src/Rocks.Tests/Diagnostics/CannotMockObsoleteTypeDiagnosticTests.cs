@@ -23,7 +23,9 @@ public static class CannotMockObsoleteTypeDiagnosticTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var descriptor = CannotMockObsoleteTypeDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
+		
+		var descriptor = CannotMockObsoleteTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		Assert.Multiple(() =>
 		{

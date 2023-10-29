@@ -23,7 +23,9 @@ public static class CannotSpecifyTypeWithOpenGenericParametersDiagnosticTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var descriptor = CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
+
+		var descriptor = CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		Assert.Multiple(() =>
 		{

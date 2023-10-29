@@ -88,7 +88,8 @@ namespace Rocks.CodeGenerationTest.Extensions
 				var propertySyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 					.OfType<PropertyDeclarationSyntax>().Single();
 				var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
-				var mockModel = MockModel.Create(symbol!, model, BuildType.Create, true);
+				var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
+				var mockModel = MockModel.Create(invocation, symbol!, model, BuildType.Create, true);
 				return mockModel is not null && mockModel.Type is not null;
 			}
 

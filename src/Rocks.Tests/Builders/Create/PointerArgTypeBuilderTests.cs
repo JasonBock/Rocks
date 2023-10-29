@@ -167,8 +167,9 @@ public static class PointerArgTypeBuilderTests
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
 		var name = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(typeToMock, model, BuildType.Create, true)!.Type!);
+			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!);
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 

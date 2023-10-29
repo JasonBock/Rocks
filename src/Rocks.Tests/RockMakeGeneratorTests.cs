@@ -268,7 +268,7 @@ public static class RockMakeGeneratorTests
 			""";
 
 		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(5, 22, 5, 35);
+			.WithSpan(11, 15, 11, 41);
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[] { diagnostic }).ConfigureAwait(false);

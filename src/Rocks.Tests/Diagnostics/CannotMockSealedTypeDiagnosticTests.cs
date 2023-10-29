@@ -23,7 +23,9 @@ public static class CannotMockSealedTypeDiagnosticTests
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<TypeDeclarationSyntax>().Single();
 
-		var descriptor = CannotMockSealedTypeDiagnostic.Create(model.GetDeclaredSymbol(typeSyntax)!);
+		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
+		
+		var descriptor = CannotMockSealedTypeDiagnostic.Create(invocation, model.GetDeclaredSymbol(typeSyntax)!);
 
 		Assert.Multiple(() =>
 		{
