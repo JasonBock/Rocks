@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Rocks.CodeGenerationTest.Extensions;
 using System.CodeDom.Compiler;
 using System.Collections.Concurrent;
-using System.Reflection;
-using System.ComponentModel;
-using Rocks.CodeGenerationTest.Extensions;
 using System.Collections.Immutable;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Rocks.CodeGenerationTest;
 
@@ -13,6 +13,9 @@ internal static class TestGenerator
 {
 	internal static readonly Dictionary<string, ReportDiagnostic> SpecificDiagnostics = new()
 	{
+		{ "CS0612", ReportDiagnostic.Suppress },
+		{ "CS0618", ReportDiagnostic.Suppress },
+		{ "CS0619", ReportDiagnostic.Suppress },
 		{ "CS1701", ReportDiagnostic.Info },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },

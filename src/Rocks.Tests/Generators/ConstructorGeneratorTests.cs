@@ -7,6 +7,70 @@ namespace Rocks.Tests.Generators;
 public static class ConstructorGeneratorTests
 {
 	[Test]
+	public static async Task GenerateWhenNoAccessibleConstructorsExistAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+
+			#nullable enable
+
+			public class Constructable
+			{
+				private Constructable() { }
+
+				public virtual object GetValue() => new();			
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<Constructable>();
+				}
+			}
+			""";
+
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { DiagnosticResult.CompilerError(TypeHasNoAccessibleConstructorsDiagnostic.Id).WithSpan(16, 14, 16, 42) }).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task GenerateWhenOnlyConstructorsIsObsoleteAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			#nullable enable
+
+			public class Constructable
+			{
+				[Obsolete("Old", true)]
+				public Constructable() { }
+
+				public virtual object GetValue() => new();			
+			}
+
+			public static class Test
+			{
+				public static void Generate()
+				{
+					var rock = Rock.Create<Constructable>();
+				}
+			}
+			""";
+
+
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { DiagnosticResult.CompilerError(TypeHasNoAccessibleConstructorsDiagnostic.Id).WithSpan(18, 14, 18, 42) }).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWhenTypeArgumentsCreateDuplicateConstructorsAsync()
 	{
 		var code =

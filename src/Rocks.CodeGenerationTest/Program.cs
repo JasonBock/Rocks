@@ -11,8 +11,8 @@ using System.Reflection;
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
-TestWithTypes();
+TestWithType();
+//TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
@@ -47,7 +47,7 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(AutoMapper.IMapper)
+			typeof(AutoFixture.Kernel.NoSpecimen)
 		},
 		Array.Empty<Type>(), null));
 

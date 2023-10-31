@@ -9,7 +9,7 @@ namespace Rocks.Models;
 
 internal sealed record MockModel
 {
-	internal static MockModel? Create(InvocationExpressionSyntax invocation, ITypeSymbol typeToMock, 
+	internal static MockModel? Create(InvocationExpressionSyntax invocation, ITypeSymbol typeToMock,
 		SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
 		if (typeToMock.ContainsDiagnostics())
@@ -18,7 +18,6 @@ internal sealed record MockModel
 		}
 
 		var compilation = model.Compilation;
-		//var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
 
 		// Do all the work to see if this is a type to mock.
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
@@ -56,7 +55,7 @@ internal sealed record MockModel
 		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 		var containingAssembly = compilation.Assembly;
 
-		var constructors = typeToMock.GetMockableConstructors(containingAssembly);
+		var constructors = typeToMock.GetMockableConstructors(containingAssembly, obsoleteAttribute);
 		var methods = typeToMock.GetMockableMethods(compilation.Assembly, shims, compilation, ref memberIdentifier);
 		var properties = typeToMock.GetMockableProperties(containingAssembly, shims, ref memberIdentifier);
 		var events = typeToMock.GetMockableEvents(containingAssembly);
