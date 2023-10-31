@@ -8,18 +8,17 @@ namespace Rocks.Tests.Extensions;
 
 public static class ITypeSymbolExtensionsIsObsoleteTests
 {
-	[TestCase("public class Target { } public class Usage { public void Foo(Target t) { } }", false, false)]
-	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class Usage { public void Foo(Target t) { } }", false, false)]
-	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class Usage { public void Foo(Target t) { } }", true, true)]
-	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class Usage { public void Foo(Target t) { } }", false, true)]
-	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class Usage { public void Foo(Target t) { } }", true, true)]
-	[TestCase("public class GenericTarget<T> { } public class Usage { public void Foo(GenericTarget<string> t) { } }", true, false)]
-	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", true, true)]
-	public static void IsTypeObsolete(string code, bool treatWarningsAsErrors, bool expectedValue)
+	[TestCase("public class Target { } public class Usage { public void Foo(Target t) { } }", false)]
+	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class Usage { public void Foo(Target t) { } }", false)]
+	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class Usage { public void Foo(Target t) { } }", true)]
+	[TestCase("public class GenericTarget<T> { } public class Usage { public void Foo(GenericTarget<string> t) { } }", false)]
+	[TestCase("[System.Obsolete(\"obsolete\")] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", false)]
+	[TestCase("[System.Obsolete(\"obsolete\", true)] public class Target { } public class SubTarget { } public class GenericTarget<T> where T : Target { } public class Usage { public void Foo(GenericTarget<SubTarget> t) { } }", true)]
+	public static void IsTypeObsolete(string code, bool expectedValue)
 	{
 		(var type, var obsoleteAttribute) = ITypeSymbolExtensionsIsObsoleteTests.GetSymbol(code);
 
-		Assert.That(type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors), Is.EqualTo(expectedValue));
+		Assert.That(type.IsObsolete(obsoleteAttribute), Is.EqualTo(expectedValue));
 	}
 
 	private static (ITypeSymbol type, INamedTypeSymbol obsoleteAttribute) GetSymbol(string source)

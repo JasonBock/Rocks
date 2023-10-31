@@ -5,16 +5,16 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
-	internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors) =>
+	internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute) =>
 		self.GetAttributes().Any(
 			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)) ||
+				(_.ConstructorArguments.Any(_ => _.Value is bool error && error))) ||
 		(self is INamedTypeSymbol namedSelf &&
 			(namedSelf.TypeArguments.Any(
-				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
+				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute)) ||
 			namedSelf.TypeParameters.Any(
 				_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.ConstraintTypes.Any(
-					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)))));
+					_ => !_.Equals(self, SymbolEqualityComparer.Default) && _.IsObsolete(obsoleteAttribute)))));
 
 	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{

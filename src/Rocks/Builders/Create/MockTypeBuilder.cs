@@ -13,6 +13,11 @@ internal static class MockTypeBuilder
 		var kind = type.Type.IsRecord ? "record" : "class";
 		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
+		if(type.Type.AttributesDescription.Length > 0)
+		{
+			writer.WriteLine(type.Type.AttributesDescription);
+		}
+
 		writer.WriteLine($"private sealed {kind} {mockTypeName}");
 		writer.Indent++;
 

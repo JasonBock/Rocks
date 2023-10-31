@@ -8,16 +8,13 @@ namespace Rocks.Extensions;
 internal static class IEventSymbolExtensions
 {
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IEventSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
+		this IEventSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
-		if (self.GetAttributes().Any(
-			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-				(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)) ||
-			self.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
+		if (self.Type.IsObsolete(obsoleteAttribute))
 		{
-			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(invocation, self));
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
 		}
 
 		return diagnostics.ToImmutable();

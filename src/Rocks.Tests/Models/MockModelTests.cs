@@ -212,8 +212,8 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
+			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.False);
+			Assert.That(model.Type, Is.Not.Null);
 		});
 	}
 

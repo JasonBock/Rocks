@@ -58,7 +58,7 @@ public static class TypeReferenceModelTests
 		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
 		var model = new TypeReferenceModel(type, compilation);
 
-		Assert.That(model.AttributesDescription, Is.EqualTo("[return: global::System.SerializableAttribute]"));
+		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.SerializableAttribute]"));
 	}
 
 	[Test]

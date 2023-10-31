@@ -18,7 +18,7 @@ internal sealed record MockModel
 		}
 
 		var compilation = model.Compilation;
-		var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
+		//var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
 
 		// Do all the work to see if this is a type to mock.
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
@@ -43,10 +43,11 @@ internal sealed record MockModel
 		}
 
 		var attributes = typeToMock.GetAttributes();
+
 		var obsoleteAttribute = model.Compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName)!;
 
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-			(_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
+			(_.ConstructorArguments.Any(_ => _.Value is bool error && error))))
 		{
 			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(invocation, typeToMock));
 		}
@@ -81,22 +82,22 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
 		}
 
 		foreach (var method in methods.Results)
 		{
-			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
 		}
 
 		foreach (var property in properties.Results)
 		{
-			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
 		}
 
 		foreach (var @event in events.Results)
 		{
-			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute, treatWarningsAsErrors));
+			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
 		}
 
 		if (methods.InaccessibleAbstractMembers.Length > 0 || properties.InaccessibleAbstractMembers.Length > 0 ||

@@ -8,19 +8,12 @@ namespace Rocks.Extensions;
 internal static class IPropertySymbolExtensions
 {
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IPropertySymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute, bool treatWarningsAsErrors)
+		this IPropertySymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-
-		if (self.GetAttributes().Any(
-			 _ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-				 (_.ConstructorArguments.Any(_ => _.Value is bool error && error) || treatWarningsAsErrors)))
-		{
-			diagnostics.Add(MemberIsObsoleteDiagnostic.Create(invocation, self));
-		}
 		
-		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors)) ||
-			self.Type.IsObsolete(obsoleteAttribute, treatWarningsAsErrors))
+		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
+			self.Type.IsObsolete(obsoleteAttribute))
 		{
 			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
 		}

@@ -83,4 +83,31 @@ public class HaveObsolete
 
 If the member is on an interface, I can still implement it, even with `<AnalysisMode>all</AnalysisMode>` and `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>`. If it's on a class, I can just put that attribute on the overriding member. If that causes a compilation error, someone can add a `[SuppressMessage]` in a GlobalSuppression.cs file, pointing at the member in the generated code. (But what if that doesn't exist?)
 
-I think I'm going to table this for a bit
+I think I'm going to table this for a bit...
+
+Which diagnostics do something with obsolete members?
+
+* `CannotMockObsoleteTypeDiagnostic` - `ROCK2`
+* `MemberIsObsoleteDiagnostic` - `ROCK10`
+* `MemberUsesObsoleteTypeDiagnostic` - `ROCK9`
+
+I should never do this:
+
+```csharp
+var treatWarningsAsErrors = compilation.Options.GeneralDiagnosticOption == ReportDiagnostic.Error;
+```
+
+I don't care. If it can be a warning, the user can do whatever configuration they want to ignore it. If it's an error, then I should report a Rocks diagnostic, even if others will be gen'd by the compiler. Either way, it's wrong.
+
+Conclusions:
+* If I mock a type that has [Obsolete] on it
+    * If `error` is `true`, then create `ROCK2`
+    * Else, it needs to be part of the mock class definition
+* If I mock a member that has [Obsolete] on it, it needs to be part of the member implementation. Doesn't matter if it's an error or warning.
+* If I mock a member that uses an obsolete type.
+    * If `error` is `true`, then create `ROCK9`
+    * Else, it needs to be part of the mock class definition
+* `ROCK10` is no longer created
+
+TODO:
+* Add test for an event using an obsolete type
