@@ -11,8 +11,8 @@ using System.Reflection;
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
-//TestWithTypes();
+//TestWithType();
+TestWithTypes();
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>
@@ -47,7 +47,7 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(AutoFixture.Kernel.NoSpecimen)
+			typeof(System.Collections.ArrayList)
 		},
 		Array.Empty<Type>(), null));
 
@@ -267,5 +267,4 @@ static void PrintIssues(ImmutableArray<Issue> issues)
 		Console.ForegroundColor = currentColor;
 	}
 }
-
 #pragma warning restore CS8321 // Local function is declared but never used

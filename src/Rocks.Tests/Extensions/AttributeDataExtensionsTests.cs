@@ -84,6 +84,34 @@ public interface IA
 		}
 
 		[Test]
+		public static void GetDescriptionWithSpecialCharactersInString()
+		{
+			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
+				"""
+				using Rocks.Tests.Extensions;
+				using System;
+
+				[AttributeUsage(AttributeTargets.Method)]
+				public sealed class MessageAttribute
+					: Attribute
+				{
+					public MessageAttribute(string message) =>
+						this.Message = message;
+
+					public string Message { get; }
+				}
+
+				public interface IA
+				{
+					[Message("a \' a \" a \a a \b a \f a \n a \r a \t a \b")]
+					void Foo();
+				}
+				""");
+
+			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::MessageAttribute("a \' a \" a \a a \b a \f a \n a \r a \t a \b")"""));
+		}
+
+		[Test]
 		public static void GetDescription()
 		{
 			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(

@@ -14,8 +14,7 @@ internal sealed record TypeReferenceModel
 
 		this.NullableAnnotation = type.NullableAnnotation;
 
-		// TODO: Why was this passing in AttributeTargets.ReturnValue?
-		this.AttributesDescription = type.GetAttributes().GetDescription(compilation);
+		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
 		this.Namespace = type.ContainingNamespace is not null ?
 			!type.ContainingNamespace.IsGlobalNamespace ?
 				type.ContainingNamespace.ToDisplayString() :

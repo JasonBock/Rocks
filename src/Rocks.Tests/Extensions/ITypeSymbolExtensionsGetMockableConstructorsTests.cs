@@ -3,8 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Extensions;
-using System;
-using System.Reflection;
 
 namespace Rocks.Tests.Extensions;
 

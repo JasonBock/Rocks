@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Rocks.Extensions;
@@ -58,7 +59,12 @@ internal static class AttributeDataExtensions
 			value switch
 			{
 				TypedConstant tc => GetTypedConstantValue(tc),
-				string s => $"\"{s}\"",
+				string s => 
+					$"""
+					"{s.Replace("\'", "\\\'").Replace("\"", "\\\"").Replace("\a", "\\a")
+						.Replace("\b", "\\b").Replace("\f", "\\f").Replace("\n", "\\n")
+						.Replace("\r", "\\r").Replace("\t", "\\t").Replace("\v", "\\v")}"
+					""",
 				bool b => $"{(b ? "true" : "false")}",
 				_ => value?.ToString() ?? string.Empty
 			};
@@ -80,7 +86,8 @@ internal static class AttributeDataExtensions
 		return $"{name}{arguments}";
 	}
 
-	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, AttributeTargets? target = null)
+	internal static string GetDescription(this ImmutableArray<AttributeData> self, Compilation compilation, 
+		AttributeTargets? target = null)
 	{
 		if (self.Length == 0)
 		{
@@ -95,17 +102,27 @@ internal static class AttributeDataExtensions
 		// * DynamicAttribute (CS1970 - the error is "Do not use 'System.Runtime.CompilerServices.DynamicAttribute'. Use the 'dynamic' keyword instead." - https://sourceroslyn.io/#Microsoft.CodeAnalysis.CSharp/Symbols/Source/SourcePropertySymbolBase.cs,1276)
 		// * EnumeratorCancellationAttribute - I can't reference the type because it's not in .NET Standard 2.0 :(, but I have to filter it out.
 		// * TupleElementNamesAttribute - If a base member has this, it's because the compiler emitted it. Code can't do that - CS8138
+		// * DefaultMemberAttribute - This would only be on a type, but it can't be included if the type has indexers. It's just easier to not include it - CS0646.
+		//
+		// For types (i.e. target.Value.HasFlag(AttributeTargets.Class) == true), we will only "leak"
+		// ObsoleteAttribute.
+
 		var compilerGeneratedAttribute = compilation.GetTypeByMetadataName(typeof(CompilerGeneratedAttribute).FullName);
 		var iteratorStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(IteratorStateMachineAttribute).FullName);
 		var asyncStateMachineAttribute = compilation.GetTypeByMetadataName(typeof(AsyncStateMachineAttribute).FullName);
 		var dynamicAttribute = compilation.GetTypeByMetadataName(typeof(DynamicAttribute).FullName);
 		var tupleElementNamesAttribute = compilation.GetTypeByMetadataName(typeof(TupleElementNamesAttribute).FullName);
 		var conditionalAttribute = compilation.GetTypeByMetadataName(typeof(ConditionalAttribute).FullName);
+		var defaultMemberAttribute = compilation.GetTypeByMetadataName(typeof(DefaultMemberAttribute).FullName);
+		var attributeUsageAttribute = compilation.GetTypeByMetadataName(typeof(AttributeUsageAttribute).FullName);
+		var obsoleteAttribute = compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
 		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
 		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
+				(!target.HasValue || !target.Value.HasFlag(AttributeTargets.Class) ||
+					_.AttributeClass.Equals(obsoleteAttribute, SymbolEqualityComparer.Default)) && 
 				_.AttributeClass.CanBeSeenByContainingAssembly(compilation.Assembly) &&
 				!_.AttributeClass.Equals(compilerGeneratedAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(iteratorStateMachineAttribute, SymbolEqualityComparer.Default) &&
@@ -113,6 +130,7 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(dynamicAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(tupleElementNamesAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(conditionalAttribute, SymbolEqualityComparer.Default) &&
+				!_.AttributeClass.Equals(defaultMemberAttribute, SymbolEqualityComparer.Default) &&
 				_.AttributeClass.GetFullyQualifiedName() != enumeratorCancellationAttribute &&
 				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
 

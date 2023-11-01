@@ -44,7 +44,7 @@ public static class TypeReferenceModelTests
 	}
 
 	[Test]
-	public static void CreateWithAttributes()
+	public static void CreateWithAttributesNotObsolete()
 	{
 		var code =
 			"""
@@ -58,7 +58,25 @@ public static class TypeReferenceModelTests
 		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
 		var model = new TypeReferenceModel(type, compilation);
 
-		Assert.That(model.AttributesDescription, Is.EqualTo("[global::System.SerializableAttribute]"));
+		Assert.That(model.AttributesDescription, Is.Empty);
+	}
+
+	[Test]
+	public static void CreateWithObsoleteAttributes()
+	{
+		var code =
+			"""
+			using System;
+			
+			namespace TargetNamespace; 
+			
+			[Obsolete("old")]
+			public class Target { }
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.AttributesDescription, Is.EqualTo("""[type: global::System.ObsoleteAttribute("old")]"""));
 	}
 
 	[Test]
