@@ -16,6 +16,7 @@ internal static class TestGenerator
 		{ "CS0612", ReportDiagnostic.Suppress },
 		{ "CS0618", ReportDiagnostic.Suppress },
 		{ "CS0619", ReportDiagnostic.Suppress },
+		{ "CS0809", ReportDiagnostic.Suppress },
 		{ "CS1701", ReportDiagnostic.Info },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },
@@ -151,27 +152,6 @@ internal static class TestGenerator
 			})
 			.OrderBy(_ => _.Id).ToArray();
 
-		// TODO: I should see if I can do a compilation with warnings as errors, then I wouldn't even try to compile stuff
-		// that has things like obsolete warnings.
-
-		// CS0612 - "'member' is obsolete"
-		// https://learn.microsoft.com/en-us/dotnet/csharp/misc/cs0612
-
-		// CS0618 - "A class member was marked with the Obsolete attribute, such that a warning will be issued when the class member is referenced."
-		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0618
-
-		// CS1701 - "Assuming assembly reference "Assembly Name #1" matches "Assembly Name #2", you may need to supply runtime policy."
-		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs1701
-
-		// SYSLIB0001 - "The UTF-7 encoding is no longer in wide use among applications, and many specs now forbid its use in interchange."
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0001
-
-		// SYSLIB0003 - "Code access security is not supported"
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0003
-
-		// SYSLIB0017 - "Strong-name signing is not supported and throws PlatformNotSupportedException"
-		// https://learn.microsoft.com/en-us/dotnet/fundamentals/syslib-diagnostics/syslib0017
-		//var ignoredWarnings = new[] { "CS0612", "CS0618", "CS1701", "SYSLIB0001", "SYSLIB0003", "SYSLIB0017" };
 		var ignoredWarnings = Array.Empty<string>();
 		var warnings = result.Diagnostics
 			.Where(_ => _.Severity == DiagnosticSeverity.Warning && !ignoredWarnings.Contains(_.Id))
