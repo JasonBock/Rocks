@@ -5,6 +5,11 @@ namespace Rocks.Tests.Generators;
 
 public static class MethodGeneratorTests
 {
+	// For a method...
+	//   Generate when no parameters exist
+	//   Generate when one parameter exists
+	//   Generate when one generic parameter exists
+
 	[Test]
 	public static async Task GenerateWithOptionalParametersAndParamsAsync()
 	{

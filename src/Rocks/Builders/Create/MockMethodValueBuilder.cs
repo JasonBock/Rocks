@@ -109,7 +109,7 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		if (method.Parameters.Length > 0)
+		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
 				writer, method, method.MockType, namingContext,
