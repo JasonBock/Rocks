@@ -10,11 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Created overloads for member expectation setup when the parameters have optional values (issue [#264](https://github.com/JasonBock/Rocks/issues/264))
-- Changed diagnostics so their location is on the `Rock.Create()` or `Rock.Make()` invocation (issue [#270](https://github.com/JasonBock/Rocks/issues/270))
 
 ### Changed
 
+- Changed diagnostics so their location is on the `Rock.Create()` or `Rock.Make()` invocation (issue [#270](https://github.com/JasonBock/Rocks/issues/270))
 - Altered diagnostic creation for obsolete type usage (issue [#267](https://github.com/JasonBock/Rocks/issues/267))
+
+### Fixed
+
+- Corrected how generic methods are handled in the mock (issue [#269](https://github.com/JasonBock/Rocks/issues/269))
 
 ## [7.1.4] - 2023-10-7
 

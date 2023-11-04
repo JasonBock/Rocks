@@ -168,7 +168,7 @@ public static class ClassGenericMethodTests
 
 		var mock = expectations.Instance();
 
-		Assert.That(mock.BarReturn<string>, Throws.TypeOf<NoReturnValueException>());
+		Assert.That(mock.BarReturn<string>, Throws.TypeOf<ExpectationException>());
 	}
 
 	[Test]
