@@ -144,13 +144,18 @@ public static class GenericsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::ReferencedContainer<T>> @methodReturn ?
-									@methodReturn() :
-									@methodHandler is global::Rocks.HandlerInformation<global::ReferencedContainer<T>> @returnValue ?
-										@returnValue.ReturnValue :
-										throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::ReferencedContainer<T>.");
-								return @result!;
+								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::ReferencedContainer<T>>) || @methodHandler is global::Rocks.HandlerInformation<global::ReferencedContainer<T>>)
+								{
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::ReferencedContainer<T>> @methodReturn ?
+											@methodReturn() :
+											@methodHandler is global::Rocks.HandlerInformation<global::ReferencedContainer<T>> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::ReferencedContainer<T>.");
+										return @result!;
+									}
+								}
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ReferencedContainer<T> SetThings<T>()");
@@ -168,13 +173,18 @@ public static class GenericsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TReturn> @methodReturn ?
-									@methodReturn() :
-									@methodHandler is global::Rocks.HandlerInformation<TReturn> @returnValue ?
-										@returnValue.ReturnValue :
-										throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TReturn.");
-								return @result!;
+								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TReturn>) || @methodHandler is global::Rocks.HandlerInformation<TReturn>)
+								{
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TReturn> @methodReturn ?
+											@methodReturn() :
+											@methodHandler is global::Rocks.HandlerInformation<TReturn> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TReturn.");
+										return @result!;
+									}
+								}
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TReturn Run<TReturn>()");

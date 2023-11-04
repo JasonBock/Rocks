@@ -137,15 +137,18 @@ public static class ConstraintsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object[]>)@methodHandler.Expectations[0]).IsValid(@args))
+								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?>) || @methodHandler is global::Rocks.HandlerInformation<T?>)
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?> @methodReturn ?
-										@methodReturn(@args) :
-										@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
-											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T?.");
-									return @result!;
+									if (((global::Rocks.Argument<object[]>)@methodHandler.Expectations[0]).IsValid(@args))
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?> @methodReturn ?
+											@methodReturn(@args) :
+											@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T?.");
+										return @result!;
+									}
 								}
 							}
 							
@@ -526,15 +529,18 @@ public static class ConstraintsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?>) || @methodHandler is global::Rocks.HandlerInformation<TData?>)
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
-										@methodReturn(@data) :
-										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
-											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
-									return @result!;
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
+											@methodReturn(@data) :
+											@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
+										return @result!;
+									}
 								}
 							}
 							
@@ -943,15 +949,18 @@ public static class ConstraintsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?>) || @methodHandler is global::Rocks.HandlerInformation<TData?>)
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
-										@methodReturn(@data) :
-										@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
-											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
-									return @result!;
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
+											@methodReturn(@data) :
+											@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
+										return @result!;
+									}
 								}
 							}
 							
@@ -1267,7 +1276,7 @@ public static class ConstraintsGeneratorTests
 			using Rocks.Extensions;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
-
+			
 			namespace MockTests
 			{
 				internal static class CreateExpectationsOfThingOfstringExtensions
@@ -1369,13 +1378,18 @@ public static class ConstraintsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::MockTests.Thing<TTarget>> @methodReturn ?
-										@methodReturn() :
-										@methodHandler is global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>> @returnValue ?
-											@returnValue.ReturnValue :
-											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::MockTests.Thing<TTarget>.");
-									return @result!;
+									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::MockTests.Thing<TTarget>>) || @methodHandler is global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>>)
+									{
+										{
+											@methodHandler.IncrementCallCount();
+											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::MockTests.Thing<TTarget>> @methodReturn ?
+												@methodReturn() :
+												@methodHandler is global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>> @returnValue ?
+													@returnValue.ReturnValue :
+													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::MockTests.Thing<TTarget>.");
+											return @result!;
+										}
+									}
 								}
 								
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::MockTests.Thing<TTarget> As<TTarget>()");

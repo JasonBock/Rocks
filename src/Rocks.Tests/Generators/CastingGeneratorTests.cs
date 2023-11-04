@@ -117,17 +117,20 @@ public static class CastingGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value) ?? false) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data) &&
-										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information))
+									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T>) || @methodHandler is global::Rocks.HandlerInformation<T>)
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T> @methodReturn ?
-											@methodReturn(@value, @data, @information) :
-											@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
-												@returnValue.ReturnValue :
-												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T.");
-										return @result!;
+										if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value) ?? false) &&
+											((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data) &&
+											((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information))
+										{
+											@methodHandler.IncrementCallCount();
+											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T> @methodReturn ?
+												@methodReturn(@value, @data, @information) :
+												@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
+													@returnValue.ReturnValue :
+													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T.");
+											return @result!;
+										}
 									}
 								}
 								

@@ -36,9 +36,11 @@ public static class GenericTests
 		expectations.Methods().SetThings<ReferenceTypeTwo>().Returns(referencedContainerTwo);
 
 		var mock = expectations.Instance();
-		Assert.That(mock.SetThings<ReferenceTypeOne>(), Is.SameAs(referencedContainerOne));
-		Assert.That(mock.SetThings<ReferenceTypeTwo>(), Is.EqualTo(referencedContainerTwo));
-
+		Assert.Multiple(() =>
+		{
+			Assert.That(mock.SetThings<ReferenceTypeOne>(), Is.SameAs(referencedContainerOne));
+			Assert.That(mock.SetThings<ReferenceTypeTwo>(), Is.EqualTo(referencedContainerTwo));
+		});
 		expectations.Verify();
 	}
 
@@ -52,9 +54,11 @@ public static class GenericTests
 		expectations.Methods().Run<Guid>().Returns(guidReturn);
 
 		var mock = expectations.Instance();
-		Assert.That(mock.Run<int>(), Is.EqualTo(4));
-		Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
-
+		Assert.Multiple(() =>
+		{
+			Assert.That(mock.Run<int>(), Is.EqualTo(4));
+			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
+		});
 		expectations.Verify();
 	}
 
@@ -85,9 +89,11 @@ public static class GenericTests
 		expectations.Methods().Run<Guid, int>(guidArgument).Returns(5);
 
 		var mock = expectations.Instance();
-		Assert.That(mock.Run<int, Guid>(4), Is.EqualTo(guidReturn));
-		Assert.That(mock.Run<Guid, int>(guidArgument), Is.EqualTo(5));
-
+		Assert.Multiple(() =>
+		{
+			Assert.That(mock.Run<int, Guid>(4), Is.EqualTo(guidReturn));
+			Assert.That(mock.Run<Guid, int>(guidArgument), Is.EqualTo(5));
+		});
 		expectations.Verify();
 	}
 }

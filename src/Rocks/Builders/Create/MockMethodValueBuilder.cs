@@ -3,6 +3,7 @@ using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
+using System.Reflection;
 
 namespace Rocks.Builders.Create;
 
@@ -297,9 +298,20 @@ internal static class MockMethodValueBuilder
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
+		writer.WriteLine("{");
+		writer.Indent++;
 
-		if (method.Parameters.Length > 0)
+		if (method.IsGenericMethod)
 		{
+			var methodCast = method.RequiresProjectedDelegate ?
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
+				DelegateBuilder.Build(method.Parameters, method.ReturnType);
+			var methodReturnType = method.ReturnType.IsRefLikeType ?
+				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, typeToMock) : method.ReturnType.FullyQualifiedName;
+			var handlerName = method.ReturnType.IsPointer ?
+				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(method.ReturnType, typeToMock) :
+				$"global::Rocks.HandlerInformation<{methodReturnType}>";
+			writer.WriteLine($"if ((@{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast}) || @{namingContext["methodHandler"]} is {handlerName})");
 			writer.WriteLine("{");
 			writer.Indent++;
 		}
@@ -348,11 +360,14 @@ internal static class MockMethodValueBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		if (method.Parameters.Length > 0)
+		if (method.IsGenericMethod)
 		{
 			writer.Indent--;
 			writer.WriteLine("}");
 		}
+
+		writer.Indent--;
+		writer.WriteLine("}");
 	}
 
 	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MethodModel method,
