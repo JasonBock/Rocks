@@ -5,7 +5,7 @@ namespace Rocks.Models;
 
 internal sealed record TypeReferenceModel
 {
-	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation, bool isBasedOnTypeParameter = false)
+	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
 	{
 		this.FullyQualifiedName = type.GetFullyQualifiedName();
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
@@ -30,6 +30,13 @@ internal sealed record TypeReferenceModel
 		this.IsEsoteric = type.IsEsoteric();
 		this.IsRefLikeType = type.IsRefLikeType;
 
+		var typeParameterTarget = type.IsPointer() ?
+			type.Kind == SymbolKind.PointerType ?
+				((IPointerTypeSymbol)type).PointedAtType :
+				((IFunctionPointerTypeSymbol)type).BaseType :
+			type;
+		this.IsBasedOnTypeParameter = typeParameterTarget?.IsOpenGeneric() ?? false;
+
 		if (this.IsEsoteric)
 		{
 			this.PointerArgProjectedEvaluationDelegateName =
@@ -37,7 +44,7 @@ internal sealed record TypeReferenceModel
 			this.PointerArgProjectedName =
 				$"ArgumentFor{type.GetName(TypeNameOption.Flatten)}";
 
-			if (isBasedOnTypeParameter && this.IsPointer)
+			if (this.IsBasedOnTypeParameter && this.IsPointer)
 			{
 				this.PointerArgParameterType = ((IPointerTypeSymbol)type).PointedAtType.Name;
 			}
@@ -55,12 +62,13 @@ internal sealed record TypeReferenceModel
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string IncludeGenericsName { get; }
+	internal bool IsBasedOnTypeParameter { get; }
 	internal bool IsEsoteric { get; }
 	internal bool IsPointer { get; }
 	internal bool IsRecord { get; }
 	internal bool IsReferenceType { get; }
 	internal bool IsRefLikeType { get; }
-	internal SymbolKind Kind { get; }
+   internal SymbolKind Kind { get; }
 	internal string Namespace { get; }
 	internal string NoGenericsName { get; }
 	internal NullableAnnotation NullableAnnotation { get; }

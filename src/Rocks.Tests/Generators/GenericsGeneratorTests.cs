@@ -142,12 +142,18 @@ public static class GenericsGeneratorTests
 					{
 						if (this.handlers.TryGetValue(3, out var @methodHandlers))
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::ReferencedContainer<T>>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::ReferencedContainer<T>>)@methodHandler).ReturnValue;
-							return @result!;
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::ReferencedContainer<T>> @methodReturn ?
+									@methodReturn() :
+									@methodHandler is global::Rocks.HandlerInformation<global::ReferencedContainer<T>> @returnValue ?
+										@returnValue.ReturnValue :
+										throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::ReferencedContainer<T>.");
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ReferencedContainer<T> SetThings<T>()");
 						}
 						else
 						{
@@ -160,14 +166,18 @@ public static class GenericsGeneratorTests
 					{
 						if (this.handlers.TryGetValue(4, out var @methodHandlers))
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TReturn> @methodReturn ?
-								@methodReturn() :
-								@methodHandler is global::Rocks.HandlerInformation<TReturn> @returnValue ?
-									@returnValue.ReturnValue :
-									throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TReturn.");
-							return @result!;
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TReturn> @methodReturn ?
+									@methodReturn() :
+									@methodHandler is global::Rocks.HandlerInformation<TReturn> @returnValue ?
+										@returnValue.ReturnValue :
+										throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TReturn.");
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for TReturn Run<TReturn>()");
 						}
 						else
 						{

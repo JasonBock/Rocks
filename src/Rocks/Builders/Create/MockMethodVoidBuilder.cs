@@ -185,8 +185,12 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine($"var @{namingContext["foundMatch"]} = false;");
 		writer.WriteLine();
 		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
-		writer.WriteLine("{");
-		writer.Indent++;
+
+		if (method.Parameters.Length > 0)
+		{
+			writer.WriteLine("{");
+			writer.Indent++;
+		}
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -201,7 +205,7 @@ internal static class MockMethodVoidBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+					!parameter.Type.IsBasedOnTypeParameter ?
 						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
@@ -213,7 +217,7 @@ internal static class MockMethodVoidBuilder
 				}
 
 				writer.WriteLine(
-					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+					!parameter.Type.IsBasedOnTypeParameter ?
 						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
@@ -233,8 +237,11 @@ internal static class MockMethodVoidBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		writer.Indent--;
-		writer.WriteLine("}");
+		if (method.Parameters.Length > 0)
+		{
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
 
 		writer.WriteLine();
 		writer.WriteLine($"if (!@{namingContext["foundMatch"]})");

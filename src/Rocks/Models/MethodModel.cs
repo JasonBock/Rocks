@@ -35,14 +35,7 @@ internal sealed record MethodModel
 
 		this.Parameters = method.Parameters.Select(_ =>
 		{
-			var typeParameterTarget = _.Type.IsPointer() ?
-				_.Type.Kind == SymbolKind.PointerType ?
-					((IPointerTypeSymbol)_.Type).PointedAtType :
-					((IFunctionPointerTypeSymbol)_.Type).BaseType : 
-				_.Type;
-			var isBasedOnTypeParameter = method.TypeParameters.Contains(typeParameterTarget, SymbolEqualityComparer.Default) ||
-				method.ContainingType.TypeParameters.Contains(typeParameterTarget, SymbolEqualityComparer.Default);
-			return new ParameterModel(_, this.MockType, compilation, isBasedOnTypeParameter);
+			return new ParameterModel(_, this.MockType, compilation);
 		}).ToImmutableArray();
 
 		this.ReturnType = new TypeReferenceModel(method.ReturnType, compilation);

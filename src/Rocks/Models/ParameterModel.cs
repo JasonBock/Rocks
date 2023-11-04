@@ -5,8 +5,7 @@ namespace Rocks.Models;
 
 internal sealed record ParameterModel
 {
-	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation, 
-		bool isBasedOnTypeParameter = false)
+	internal ParameterModel(IParameterSymbol parameter, TypeReferenceModel mockType, Compilation compilation)
 	{
 		this.MockType = mockType;
 		this.Name = parameter.Name;
@@ -14,7 +13,7 @@ internal sealed record ParameterModel
 		this.RequiresNullableAnnotation = parameter.RequiresForcedNullableAnnotation();
 		this.IsParams = parameter.IsParams;
 
-		this.Type = new TypeReferenceModel(parameter.Type, compilation, isBasedOnTypeParameter);
+		this.Type = new TypeReferenceModel(parameter.Type, compilation);
 
 		this.HasExplicitDefaultValue = parameter.HasExplicitDefaultValue;
 

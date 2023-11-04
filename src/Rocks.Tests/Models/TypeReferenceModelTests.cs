@@ -26,6 +26,7 @@ public static class TypeReferenceModelTests
 			Assert.That(model.FlattenedName, Is.EqualTo("Target"));
 			Assert.That(model.FullyQualifiedName, Is.EqualTo("global::TargetNamespace.Target"));
 			Assert.That(model.IncludeGenericsName, Is.EqualTo("Target"));
+			Assert.That(model.IsBasedOnTypeParameter, Is.False);
 			Assert.That(model.IsEsoteric, Is.False);
 			Assert.That(model.IsPointer, Is.False);
 			Assert.That(model.IsRecord, Is.False);
@@ -97,6 +98,24 @@ public static class TypeReferenceModelTests
 			Assert.That(model.IncludeGenericsName, Is.EqualTo("Target<T>"));
 			Assert.That(model.NoGenericsName, Is.EqualTo("Target"));
 		});
+	}
+
+	[Test]
+	public static void CreateBasedOnTypeParameter()
+	{
+		var code =
+			"""
+			namespace TargetNamespace; 
+			
+			public class TargetUsage
+			{
+				public void Go<T>(T target) { }
+			}
+			""";
+		(var type, var compilation) = TypeReferenceModelTests.GetSymbolReferenceAndCompilation(code);
+		var model = new TypeReferenceModel(type, compilation);
+
+		Assert.That(model.IsBasedOnTypeParameter, Is.True);
 	}
 
 	[Test]

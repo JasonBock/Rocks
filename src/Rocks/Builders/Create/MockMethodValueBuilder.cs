@@ -33,7 +33,7 @@ internal static class MockMethodValueBuilder
 		var methodParameters = string.Join(", ", method.Parameters.Select(_ =>
 		{
 			var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+			var defaultValue = _.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 				$" = {_.ExplicitDefaultValue}" : string.Empty;
 			var direction = _.RefKind switch
 			{
@@ -122,7 +122,7 @@ internal static class MockMethodValueBuilder
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
 
-		if (method.Parameters.Length > 0)
+		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			writer.WriteLine();
 			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
@@ -159,7 +159,7 @@ internal static class MockMethodValueBuilder
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
 
-			if(shouldThrowDoesNotReturnException)
+			if (shouldThrowDoesNotReturnException)
 			{
 				writer.WriteLine($"_ = {target}.{method.Name}({passedParameter});");
 				writer.WriteLine("throw new global::Rocks.Exceptions.DoesNotReturnException();");
@@ -195,7 +195,7 @@ internal static class MockMethodValueBuilder
 		if (method.ReturnsByRef || method.ReturnsByRefReadOnly)
 		{
 			writer.WriteLine(
-				method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+				!method.ReturnType.IsBasedOnTypeParameter ?
 					$"this.rr{memberIndentifier} = @{namingContext["methodHandler"]}.Method is not null ?" :
 					$"this.rr{memberIndentifier} = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ? ");
 		}
@@ -204,14 +204,14 @@ internal static class MockMethodValueBuilder
 			if (shouldThrowDoesNotReturnException)
 			{
 				writer.WriteLine(
-					method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+					!method.ReturnType.IsBasedOnTypeParameter ?
 						$"_ = @{namingContext["methodHandler"]}.Method is not null ?" :
 						$"_ = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
 			}
 			else
 			{
 				writer.WriteLine(
-					method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+					!method.ReturnType.IsBasedOnTypeParameter ?
 						$"var @{namingContext["result"]} = @{namingContext["methodHandler"]}.Method is not null ?" :
 						$"var @{namingContext["result"]} = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
 			}
@@ -229,13 +229,13 @@ internal static class MockMethodValueBuilder
 			$"global::Rocks.HandlerInformation<{methodReturnType}>";
 
 		writer.WriteLine(
-			method.ReturnType.TypeKind != TypeKind.TypeParameter ?
+			!method.ReturnType.IsBasedOnTypeParameter ?
 				$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments}) :" :
 				$"@{namingContext["methodReturn"]}({methodArguments}) :");
 
 		if (method.ReturnType.IsPointer || !method.ReturnType.IsRefLikeType)
 		{
-			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
+			if (!method.ReturnType.IsBasedOnTypeParameter)
 			{
 				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue;");
 			}
@@ -252,7 +252,7 @@ internal static class MockMethodValueBuilder
 		}
 		else
 		{
-			if (method.ReturnType.TypeKind != TypeKind.TypeParameter)
+			if (!method.ReturnType.IsBasedOnTypeParameter)
 			{
 				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue!.Invoke();");
 			}
@@ -297,8 +297,12 @@ internal static class MockMethodValueBuilder
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
-		writer.WriteLine("{");
-		writer.Indent++;
+
+		if (method.Parameters.Length > 0)
+		{
+			writer.WriteLine("{");
+			writer.Indent++;
+		}
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -313,7 +317,7 @@ internal static class MockMethodValueBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+					!parameter.Type.IsBasedOnTypeParameter ?
 						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
@@ -325,7 +329,7 @@ internal static class MockMethodValueBuilder
 				}
 
 				writer.WriteLine(
-					parameter.Type.TypeKind != TypeKind.TypeParameter ?
+					!parameter.Type.IsBasedOnTypeParameter ?
 						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
 						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
@@ -344,12 +348,15 @@ internal static class MockMethodValueBuilder
 		writer.Indent--;
 		writer.WriteLine("}");
 
-		writer.Indent--;
-		writer.WriteLine("}");
+		if (method.Parameters.Length > 0)
+		{
+			writer.Indent--;
+			writer.WriteLine("}");
+		}
 	}
 
 	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MethodModel method,
-		TypeReferenceModel typeToMock, VariableNamingContext namingContext, 
+		TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
 		writer.WriteLine($"var @{namingContext["methodHandler"]} = @{namingContext["methodHandlers"]}[0];");

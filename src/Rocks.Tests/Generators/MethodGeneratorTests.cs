@@ -95,9 +95,11 @@ public static class MethodGeneratorTests
 										((global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand))
 									{
 										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>)@methodHandler.Method)(@source, @parameters, @membersToExpand) :
-											((global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>>)@methodHandler).ReturnValue;
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>> @methodReturn ?
+											@methodReturn(@source, @parameters, @membersToExpand) :
+											@methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::System.Linq.IQueryable<TDestination>.");
 										return @result!;
 									}
 								}
@@ -120,9 +122,11 @@ public static class MethodGeneratorTests
 										((global::Rocks.Argument<string[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand))
 									{
 										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>>)@methodHandler.Method)(@source, @parameters, @membersToExpand) :
-											((global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>>)@methodHandler).ReturnValue;
+										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>> @methodReturn ?
+											@methodReturn(@source, @parameters, @membersToExpand) :
+											@methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>> @returnValue ?
+												@returnValue.ReturnValue :
+												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::System.Linq.IQueryable<TDestination>.");
 										return @result!;
 									}
 								}

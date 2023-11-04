@@ -117,7 +117,7 @@ public static class ProjectedTypesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::ProjectionsForISurface.ArgumentForTPointer<T>)@methodHandler.Expectations[0]).IsValid(@allocator))
+								if (((@methodHandler.Expectations[0] as global::ProjectionsForISurface.ArgumentForTPointer<T>)?.IsValid(@allocator) ?? false))
 								{
 									@foundMatch = true;
 									
@@ -264,7 +264,7 @@ public static class ProjectedTypesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel>)@methodHandler.Expectations[0]).IsValid(@sourcePixels))
+								if (((@methodHandler.Expectations[0] as global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel>)?.IsValid(@sourcePixels) ?? false))
 								{
 									@foundMatch = true;
 									

@@ -269,7 +269,7 @@ public static class ConstraintsGeneratorTests
 							foreach (var @methodHandler in @methodHandlers)
 							{
 								if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-									((global::Rocks.Argument<global::Frame<T>>)@methodHandler.Expectations[1]).IsValid(@frame))
+									((@methodHandler.Expectations[1] as global::Rocks.Argument<global::Frame<T>>)?.IsValid(@frame) ?? false))
 								{
 									@foundMatch = true;
 									
@@ -1187,7 +1187,7 @@ public static class ConstraintsGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<global::Value<TValue>>)@methodHandler.Expectations[0]).IsValid(@value))
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<global::Value<TValue>>)?.IsValid(@value) ?? false))
 								{
 									@foundMatch = true;
 									
@@ -1367,12 +1367,18 @@ public static class ConstraintsGeneratorTests
 						{
 							if (this.handlers.TryGetValue(3, out var @methodHandlers))
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::MockTests.Thing<TTarget>>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>>)@methodHandler).ReturnValue;
-								return @result!;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									@methodHandler.IncrementCallCount();
+									var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::MockTests.Thing<TTarget>> @methodReturn ?
+										@methodReturn() :
+										@methodHandler is global::Rocks.HandlerInformation<global::MockTests.Thing<TTarget>> @returnValue ?
+											@returnValue.ReturnValue :
+											throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::MockTests.Thing<TTarget>.");
+									return @result!;
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::MockTests.Thing<TTarget> As<TTarget>()");
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::MockTests.Thing<TTarget> As<TTarget>()");
