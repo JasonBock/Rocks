@@ -78,16 +78,77 @@ public int OneParameter(int @a)
 
 The key takeaway here is that, all of the arguments, the callback, and the return value (if the method has a return) is all strongly typed. There are no casts taking place.
 
-For each member, there would be a `List<(...)> validations{n}` field, where `n` is the member identifier. When `Instance()` is called, it would need to pull all those from. This is where it would get tricky. I'd probably need to create something like this:
+For each member, there would be a `List<(...)> validations{n}` field, where `n` is the member identifier. When `Instance()` is called, it would need to pull all those from.
+
+What about the extension methods for the expectations?
+
+```csharp
+internal static MethodAdornments<IInterfaceMethodReturn, Func<int, int>, int> OneParameter(
+    this MethodExpectations<IInterfaceMethodReturn> @self, Argument<int> @a)
+{
+    ArgumentNullException.ThrowIfNull(@a);
+    return new MethodAdornments<IInterfaceMethodReturn, Func<int, int>, int>(
+        @self.Add<int>(1, new List<Argument>(1) { @a }));
+}
+
+```
+
+This is where it would get tricky. I'd probably need to create something like this:
 
 ```csharp
 // Maybe we really strip down Expectations<T> so
 // it only has a Verify() implementation
 
-// Maybe this is a file-scoped type.
-internal sealed class MockExpectations
-    : Expectations<MockType>
+// In Rocks...
+public abstract class Expectations
 {
+	public void Verify()
+	{
+		if(this.WasInstanceInvoked)
+		{
+			var failures = new List<string>();
 
+			foreach (var pair in this.Handlers)
+			{
+				foreach (var handler in pair.Value)
+				{
+					foreach (var failure in handler.Verify())
+					{
+						var member = this.MockType!.GetMemberDescription(pair.Key);
+
+						failures.Add(
+							$"Type: {typeof(T).FullName}, mock type: {this.MockType!.FullName}, member: {member}, message: {failure}");
+					}
+				}
+			}
+
+			if (failures.Count > 0)
+			{
+				throw new VerificationException(failures);
+			}
+		}
+	}
+
+    protected abstract List<string> GetFailures();
+    
+	/// <summary>
+	/// This property is used by Rocks and is not intented to be used by developers.
+	/// </summary>
+	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+	public Type? MockType { get; set; }
+
+	/// <summary>
+	/// This property is used by Rocks and is not intented to be used by developers.
+	/// </summary>
+	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+	public bool WasInstanceInvoked { get; set; }    
+}
+
+// Maybe this is a file-scoped type.
+internal sealed class MockTypeExpectations
+    : IExpectations
+{
+    // May want the capacity at 1, or 2, what's the best guess?
+    internal List<(HandlerInformation handler, Argument<int> a, Func<int, int>? callback, int returnValue)> Handlers1 { get; } = new(1);
 }
 ```
