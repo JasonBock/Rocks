@@ -14,6 +14,66 @@ public static class IMethodSymbolExtensionsMatchTests
 	private const string MethodTwo = nameof(IMethodSymbolExtensionsMatchTests.MethodTwo);
 
 	[Test]
+	public static void MatchWhenMethodsDifferByParameterPointerTypeNullability()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(int* a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.None));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsDifferByParameterArrayTypeNullability()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string[] a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string?[]? a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsDifferByParameterArrayDimensionsNullability()
+	{
+		var code =
+			$$"""
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string[,] a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}(string[] a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.None));
+	}
+
+	[Test]
 	public static void MatchWhenMethodsDifferByParameterTypeNullability()
 	{
 		var code =

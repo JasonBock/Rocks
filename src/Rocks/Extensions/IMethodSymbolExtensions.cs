@@ -14,7 +14,7 @@ internal static class IMethodSymbolExtensions
 		this IMethodSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
-		
+
 		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
 			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute)) ||
 			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute))
@@ -31,11 +31,11 @@ internal static class IMethodSymbolExtensions
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
 			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
 
-   internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self) => 
+	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self) =>
 		self.GetAttributes().Any(
-		   _ => _.AttributeClass?.GetFullyQualifiedName() == IMethodSymbolExtensions.DoesNotReturnAttributeName);
+			_ => _.AttributeClass?.GetFullyQualifiedName() == IMethodSymbolExtensions.DoesNotReturnAttributeName);
 
-   internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
+	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
 		self.Parameters.Length > 16 ||
 		self.Parameters.Any(_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out || _.Type.IsEsoteric()) ||
 			!self.ReturnsVoid && self.ReturnType.IsEsoteric();
@@ -164,7 +164,20 @@ internal static class IMethodSymbolExtensions
 				var selfParameter = selfParameters[i];
 				var otherParameter = otherParameters[i];
 
-				if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
+				if (selfParameter.Type is IArrayTypeSymbol selfArray && otherParameter.Type is IArrayTypeSymbol otherArray)
+				{
+					if (selfArray.Rank != otherArray.Rank ||
+						selfArray.ElementType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
+							otherArray.ElementType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName())
+					{
+						return MethodMatch.None;
+					}
+					else
+					{
+						continue;
+					}
+				}
+				else if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
 					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ||
 					!(selfParameter.RefKind == otherParameter.RefKind ||
 						(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||

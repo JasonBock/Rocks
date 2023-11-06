@@ -17,6 +17,8 @@ internal static class TestGenerator
 		{ "CS0618", ReportDiagnostic.Suppress },
 		{ "CS0619", ReportDiagnostic.Suppress },
 		{ "CS0809", ReportDiagnostic.Suppress },
+		{ "CS8610", ReportDiagnostic.Suppress },
+		{ "CS8765", ReportDiagnostic.Suppress },
 		{ "CS1701", ReportDiagnostic.Info },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },
