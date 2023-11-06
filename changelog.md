@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Corrected how generic methods are handled in the mock (issue [#269](https://github.com/JasonBock/Rocks/issues/269))
+- Fixed how methods are matches with nullability differences in arrays (issue [#271](https://github.com/JasonBock/Rocks/issues/271))
 
 ## [7.1.4] - 2023-10-7
 
