@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Changed diagnostics so their location is on the `Rock.Create()` or `Rock.Make()` invocation (issue [#270](https://github.com/JasonBock/Rocks/issues/270))
 - Altered diagnostic creation for obsolete type usage (issue [#267](https://github.com/JasonBock/Rocks/issues/267))
+- Removed diagnostic docs that were no longer relevant (issue [#272](https://github.com/JasonBock/Rocks/issues/272))
 
 ### Fixed
 
