@@ -4,6 +4,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="BenchmarkDotNet" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp"/>
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks\Rocks.csproj" OutputItemType="Analyzer" />

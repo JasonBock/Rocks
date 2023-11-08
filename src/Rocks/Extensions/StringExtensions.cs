@@ -15,6 +15,6 @@ internal static class StringExtensions
 	// The absolute value of the BigInteger result is returned
 	// because this value will be used as part of a type name,
 	// and "-" isn't allowed in these names.
-	internal static BigInteger GetHash(this string self) => 
+	internal static BigInteger GetHash(this string? self) => 
 		BigInteger.Abs(new(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(self ?? ""))));
 }
