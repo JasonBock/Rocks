@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
 using NuGet.Frameworks;
+using static Microsoft.CodeAnalysis.Testing.ReferenceAssemblies;
 
 namespace Rocks.Tests;
 
@@ -58,7 +59,23 @@ internal static class TestAssistants
 			 "net7.0",
 			 new PackageIdentity(
 				  "Microsoft.NETCore.App.Ref",
-				  "7.0.0-rc.1.22426.10"),
+				  "7.0.13"),
 			 Path.Combine("ref", "net7.0"));
+   }
+
+	private static ReferenceAssemblies GetNet80()
+	{
+		if (!NuGetFramework.Parse("net7.0").IsPackageBased)
+		{
+			// The NuGet version provided at runtime does not recognize the 'net7.0' target framework
+			throw new NotSupportedException("The 'net7.0' target framework is not supported by this version of NuGet.");
+		}
+
+		return new ReferenceAssemblies(
+			 "net8.0",
+			 new PackageIdentity(
+				  "Microsoft.NETCore.App.Ref",
+				  "8.0.0-rc.2.23479.6"),
+			 Path.Combine("ref", "net8.0"));
 	}
 }
