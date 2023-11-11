@@ -47,7 +47,7 @@ static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
 		new[]
 		{
-			typeof(Topshelf.Logging.TopshelfConsoleTraceListener)
+			typeof(FluentValidation.ValidationException)
 		},
 		Array.Empty<Type>(), null));
 

@@ -104,6 +104,14 @@ internal static class AttributeDataExtensions
 		// * TupleElementNamesAttribute - If a base member has this, it's because the compiler emitted it. Code can't do that - CS8138
 		// * DefaultMemberAttribute - This would only be on a type, but it can't be included if the type has indexers. It's just easier to not include it - CS0646.
 		//
+		// There are a handful of attributes we can't "see" when targeting NS 2.0 
+		// that we can't emit. Therefore, we do a string comparison against the FQN
+		// for these attributes:
+		// * EnumeratorCancellationAttribute
+		// * AsyncIteratorStateMachineAttribute
+		// * NullableAttribute
+		// * NullableContextAttribute
+		//
 		// For types (i.e. target.Value.HasFlag(AttributeTargets.Class) == true), we will only "leak"
 		// ObsoleteAttribute.
 
@@ -116,8 +124,11 @@ internal static class AttributeDataExtensions
 		var defaultMemberAttribute = compilation.GetTypeByMetadataName(typeof(DefaultMemberAttribute).FullName);
 		var attributeUsageAttribute = compilation.GetTypeByMetadataName(typeof(AttributeUsageAttribute).FullName);
 		var obsoleteAttribute = compilation.GetTypeByMetadataName(typeof(ObsoleteAttribute).FullName);
+
 		const string enumeratorCancellationAttribute = "global::System.Runtime.CompilerServices.EnumeratorCancellationAttribute";
 		const string asyncIteratorStateMachineAttribute = "global::System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute";
+		const string nullableAttribute = "global::System.Runtime.CompilerServices.NullableAttribute";
+		const string nullableContextAttribute = "global::System.Runtime.CompilerServices.NullableContextAttribute";
 
 		var attributes = self.Where(
 			_ => _.AttributeClass is not null &&
@@ -132,7 +143,9 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(conditionalAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(defaultMemberAttribute, SymbolEqualityComparer.Default) &&
 				_.AttributeClass.GetFullyQualifiedName() != enumeratorCancellationAttribute &&
-				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute).ToImmutableArray();
+				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute &&
+				_.AttributeClass.GetFullyQualifiedName() != nullableAttribute &&
+				_.AttributeClass.GetFullyQualifiedName() != nullableContextAttribute).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{

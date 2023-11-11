@@ -11,18 +11,33 @@ namespace Rocks.CodeGenerationTest;
 
 internal static class TestGenerator
 {
+	/* 
+	These diagnostics relate to:
+	
+	* Obsolete members and types (CS0612, CS0618, CS0619, CS0672, CS0809, SYSLIB0017, SYSLIB0050, SYSLIB0051)
+	* Nullability (CS8610, CS8765)
+	* Runtime policy (CS1701)
+	* UTF7 encoding (SYSLIB0001)
+	* Code access security (SYSLIB0003)
+
+	These are warnings, and they should not cause errors. A user can decide to treat them
+	as errors, but Rocks should still be able to create code that cause these warnings.
+	*/
 	internal static readonly Dictionary<string, ReportDiagnostic> SpecificDiagnostics = new()
 	{
 		{ "CS0612", ReportDiagnostic.Suppress },
 		{ "CS0618", ReportDiagnostic.Suppress },
 		{ "CS0619", ReportDiagnostic.Suppress },
+		{ "CS0672", ReportDiagnostic.Suppress },
 		{ "CS0809", ReportDiagnostic.Suppress },
+		{ "CS1701", ReportDiagnostic.Info },
 		{ "CS8610", ReportDiagnostic.Suppress },
 		{ "CS8765", ReportDiagnostic.Suppress },
-		{ "CS1701", ReportDiagnostic.Info },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },
-		{ "SYSLIB0017", ReportDiagnostic.Info }
+		{ "SYSLIB0017", ReportDiagnostic.Info },
+		{ "SYSLIB0050", ReportDiagnostic.Info },
+		{ "SYSLIB0051", ReportDiagnostic.Info },
 	};
 
 	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies, 

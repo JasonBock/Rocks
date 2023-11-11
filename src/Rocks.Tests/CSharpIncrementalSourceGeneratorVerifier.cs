@@ -21,17 +21,10 @@ namespace Rocks.Tests
 			public Test(ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Default) =>
 				this.SolutionTransforms.Add((solution, projectId) =>
 				{
-					if (solution is null)
-					{
-						throw new ArgumentNullException(nameof(solution));
-					}
+				   ArgumentNullException.ThrowIfNull(solution);
+				   ArgumentNullException.ThrowIfNull(projectId);
 
-					if (projectId is null)
-					{
-						throw new ArgumentNullException(nameof(projectId));
-					}
-
-					var compilationOptions = solution.GetProject(projectId)!.CompilationOptions!;
+				   var compilationOptions = solution.GetProject(projectId)!.CompilationOptions!;
 					compilationOptions = compilationOptions.WithSpecificDiagnosticOptions(
 						compilationOptions.SpecificDiagnosticOptions.SetItems(CSharpVerifierHelper.CompilationOptions))
 						.WithGeneralDiagnosticOption(generalDiagnosticOption);

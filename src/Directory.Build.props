@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>preview</LangVersion>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+		<NoWarn>CA1861</NoWarn>
 		<Nullable>enable</Nullable>
 		<TargetFramework>net8.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>

@@ -52,7 +52,8 @@
     <PackageVersion Include="NServiceBus" Version="8.1.1" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
     <PackageVersion Include="NuGet.Common" Version="6.6.1" />
-    <PackageVersion Include="NUnit" Version="4.0.0-beta.1" />
+    <PackageVersion Include="NuGet.Frameworks" Version="6.7.0" />
+    <PackageVersion Include="NUnit" Version="3.14.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Polly" Version="7.2.4" />
@@ -65,7 +66,7 @@
     <PackageVersion Include="Silk.NET" Version="2.17.1" />
     <PackageVersion Include="SimpleInjector" Version="5.4.1" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.0.1" />
-    <PackageVersion Include="SkiaSharp" Version="2.88.3" />
+    <PackageVersion Include="SkiaSharp" Version="2.88.6" />
     <PackageVersion Include="StackExchange.Redis" Version="2.6.122" />
     <PackageVersion Include="Stripe.net" Version="41.26.0" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
