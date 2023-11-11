@@ -58,7 +58,8 @@ internal sealed class RockCreateBuilder
 			.Replace("global::", string.Empty)
 			.Replace(":", string.Empty)
 			.Replace("<", string.Empty)
-			.Replace(">", string.Empty)}_Rock_Create.g.cs";
+			.Replace(">", string.Empty)
+			.Replace("?", "_null_")}_Rock_Create.g.cs";
 		return (name, text);
 	}
 

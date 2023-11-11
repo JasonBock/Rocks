@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - No longer emitting `[Nullable]` or `[NullableContext]` attributes (issue [#273](https://github.com/JasonBock/Rocks/issues/273))
+- Using a type with nullable types will now create a valid file name (issue [#275](https://github.com/JasonBock/Rocks/issues/275))
 
 ## [7.2.0] - 2023-11-10
 

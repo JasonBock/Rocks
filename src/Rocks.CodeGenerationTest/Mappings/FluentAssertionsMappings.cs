@@ -1,6 +1,5 @@
 ﻿using FluentAssertions.Collections;
 using FluentAssertions.Common;
-using FluentAssertions.Data;
 using FluentAssertions.Equivalency;
 using FluentAssertions.Numeric;
 using FluentAssertions.Primitives;
@@ -49,24 +48,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					{
 						{ "TDelegate", "global::System.Delegate" },
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedDelegateAssertions" },
-					}
-				},
-				{
-					typeof(DataRowAssertions<>), new()
-					{
-						{ "TDataRow", "global::System.Data.DataRow" },
-					}
-				},
-				{
-					typeof(DataSetAssertions<>), new()
-					{
-						{ "TDataSet", "global::System.Data.DataSet" },
-					}
-				},
-				{
-					typeof(DataTableAssertions<>), new()
-					{
-						{ "TDataTable", "global::System.Data.DataTable" },
 					}
 				},
 				{
@@ -160,12 +141,6 @@ namespace Rocks.CodeGenerationTest.Mappings
 					typeof(HttpResponseMessageAssertions<>), new()
 					{
 						{ "TAssertions", "global::Rocks.CodeGenerationTest.Mappings.FluentAssertions.MappedHttpResponseMessageAssertions" },
-					}
-				},
-				{
-					typeof(ICollectionWrapper<>), new()
-					{
-						{ "TCollection", "global::System.Collections.ICollection" },
 					}
 				},
 				{

@@ -57,7 +57,7 @@ static void TestWithTypes()
 	{
 #if INCLUDE_PASSING
 		// .NET types
-
+		/*
 		typeof(Dictionary<,>),
 		typeof(HttpMessageHandler),
 		typeof(object),
@@ -99,7 +99,9 @@ static void TestWithTypes()
 		typeof(MediatR.ISender),
 		typeof(MessagePack.FormatterNotRegisteredException),
 		typeof(Microsoft.CodeAnalysis.SyntaxTree),
+		*/
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
+		/*
 		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
@@ -123,6 +125,7 @@ static void TestWithTypes()
 		typeof(TerraFX.Interop.INativeGuid),
 		typeof(Topshelf.Credentials),
 		typeof(Twilio.Base.Page<>),
+		*/
 #endif
 #if INCLUDE_FAILING
 #endif

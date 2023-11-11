@@ -5,15 +5,23 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Json;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.Reflection;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
-   internal static class EntityFrameworkMappings
+	internal static class EntityFrameworkMappings
 	{
+		//private static readonly JsonNullableStructCollectionReaderWriter<IEnumerable<int?>, object, int> x;
+
 		internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 			new()
 			{
@@ -103,9 +111,16 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
-					typeof(EntityTypeAttributeConventionBase<>), new()
+					typeof(EnumToNumberConverter<,>), new()
 					{
-						{ "TAttribute", "global::System.Attribute" },
+						{ "TEnum", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedEnum" },
+						{ "TNumber", "int" },
+					}
+				},
+				{
+					typeof(IConventionPropertyBaseBuilder<>), new()
+					{
+						{ "TBuilder", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedConventionPropertyBaseBuilder" },
 					}
 				},
 				{
@@ -151,9 +166,26 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
-					typeof(InternalPropertyBaseBuilder<>), new()
+					typeof(InternalPropertyBaseBuilder<,>), new()
 					{
+						{ "TBuilder", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedConventionPropertyBaseBuilder" },
 						{ "TPropertyBase", "global::Microsoft.EntityFrameworkCore.Metadata.Internal.PropertyBase" },
+					}
+				},
+				{
+					typeof(JsonCollectionReaderWriter<,,>), new()
+					{
+						{ "TCollection", "global::System.Collections.Generic.IEnumerable<object>" },
+						{ "TConcreteCollection", "object" },
+						{ "TElement", "object" },
+					}
+				},
+				{
+					typeof(JsonNullableStructCollectionReaderWriter<,,>), new()
+					{
+						{ "TCollection", "global::System.Collections.Generic.IEnumerable<int?>" },
+						{ "TConcreteCollection", "object" },
+						{ "TElement", "int" },
 					}
 				},
 				{
@@ -174,12 +206,59 @@ namespace Rocks.CodeGenerationTest.Mappings
 						{ "TAttribute", "global::System.Attribute" },
 					}
 				},
+				{
+					typeof(StringToEnumConverter<>), new()
+					{
+						{ "TEnum", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedEnum" },
+					}
+				},
+				{
+					typeof(StringEnumConverter<,,>), new()
+					{
+						{ "TModel", "object" },
+						{ "TProvider", "object" },
+						{ "TEnum", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedEnum" },
+					}
+				},
+				{
+					typeof(TypeAttributeConventionBase<>), new()
+					{
+						{ "TAttribute", "global::System.Attribute" },
+					}
+				},
 			};
 	}
 
 	namespace EntityFramework
-   {
-	  public sealed class MappedLoggerCategory
+	{
+		public enum MappedEnum { }
+
+		public sealed class MappedConventionPropertyBaseBuilder
+			: IConventionPropertyBaseBuilder<MappedConventionPropertyBaseBuilder>
+		{
+			public IConventionPropertyBase Metadata => throw new NotImplementedException();
+
+			public IConventionModelBuilder ModelBuilder => throw new NotImplementedException();
+
+			IConventionAnnotatable IConventionAnnotatableBuilder.Metadata => throw new NotImplementedException();
+
+			public bool CanRemoveAnnotation(string name, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public bool CanSetAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public bool CanSetField(string? fieldName, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public bool CanSetField(FieldInfo? fieldInfo, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public bool CanSetPropertyAccessMode(PropertyAccessMode? propertyAccessMode, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? HasAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? HasField(string? fieldName, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? HasField(FieldInfo? fieldInfo, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? HasNoAnnotation(string name, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? HasNonNullAnnotation(string name, object? value, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			public MappedConventionPropertyBaseBuilder? UsePropertyAccessMode(PropertyAccessMode? propertyAccessMode, bool fromDataAnnotation = false) => throw new NotImplementedException();
+			IConventionAnnotatableBuilder? IConventionAnnotatableBuilder.HasAnnotation(string name, object? value, bool fromDataAnnotation) => throw new NotImplementedException();
+			IConventionAnnotatableBuilder? IConventionAnnotatableBuilder.HasNoAnnotation(string name, bool fromDataAnnotation) => throw new NotImplementedException();
+			IConventionAnnotatableBuilder? IConventionAnnotatableBuilder.HasNonNullAnnotation(string name, object? value, bool fromDataAnnotation) => throw new NotImplementedException();
+		}
+
+		public sealed class MappedLoggerCategory
 			: LoggerCategory<MappedLoggerCategory>
 		{ }
 	}

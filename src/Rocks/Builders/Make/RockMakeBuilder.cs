@@ -49,7 +49,8 @@ internal sealed class RockMakeBuilder
 			.Replace("global::", string.Empty)
 			.Replace(":", string.Empty)
 			.Replace("<", string.Empty)
-			.Replace(">", string.Empty)}_Rock_Make.g.cs"; 
+			.Replace(">", string.Empty)
+			.Replace("?", "_null_")}_Rock_Make.g.cs"; 
 		return (name, text);
 	}
 
