@@ -118,6 +118,12 @@ namespace Rocks.CodeGenerationTest.Mappings
 					}
 				},
 				{
+					typeof(EnumToStringConverter<>), new()
+					{
+						{ "TEnum", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedEnum" },
+					}
+				},
+				{
 					typeof(IConventionPropertyBaseBuilder<>), new()
 					{
 						{ "TBuilder", "global::Rocks.CodeGenerationTest.Mappings.EntityFramework.MappedConventionPropertyBaseBuilder" },

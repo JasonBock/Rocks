@@ -4,7 +4,7 @@
 		<Authors>Jason Bock</Authors>
 		<Copyright>Copyright © 2023</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<LangVersion>preview</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 		<NoWarn>CA1861</NoWarn>
 		<Nullable>enable</Nullable>
