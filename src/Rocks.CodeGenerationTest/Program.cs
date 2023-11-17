@@ -1,5 +1,5 @@
 ﻿#define INCLUDE_PASSING
-#define INCLUDE_FAILING
+//#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -36,26 +36,20 @@ static void TestWithCode()
 		    }
 		}
 		""",
-		new[]
-		{
-			typeof(SkiaSharp.SKRegion),
-			typeof(Uri),
-		});
+		[typeof(SkiaSharp.SKRegion), typeof(Uri)]);
 }
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		new[]
-		{
-			typeof(FluentValidation.ValidationException)
-		},
-		Array.Empty<Type>(), null));
+		[typeof(GraphQL.Builders.ConnectionBuilder<>)],
+		[], new() { { typeof(GraphQL.Builders.ConnectionBuilder<>), new() { { "TSourceType", "object" } } } }));
 
 static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
 #if INCLUDE_PASSING
+		/*
 		// .NET types
 		typeof(Dictionary<,>),
 		typeof(HttpMessageHandler),
@@ -67,6 +61,7 @@ static void TestWithTypes()
 		// NuGet references
 
 		typeof(AngleSharp.BrowsingContext),
+		typeof(Ardalis.GuardClauses.Guard),
 		typeof(Autofac.ContainerBuilder),
 		typeof(AutoFixture.AutoPropertiesTarget),
 		typeof(AutoMapper.AutoMapAttribute),
@@ -76,6 +71,9 @@ static void TestWithTypes()
 		typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions),
 		typeof(Azure.Storage.Blobs.BlobClient),
 		typeof(Azure.Storage.Queues.QueueClient),
+		typeof(BenchmarkDotNet.Analysers.AnalyserBase),
+		typeof(Blazored.LocalStorage.ChangedEventArgs),
+		typeof(Blazored.Video.BlazoredVideo),
 		typeof(Bogus.Binder),
 		typeof(Castle.DynamicProxy.ProxyGenerationOptions),
 		typeof(ClangSharp.AbstractConditionalOperator),
@@ -85,6 +83,7 @@ static void TestWithTypes()
 		typeof(Dapper.DbString),
 		typeof(DnsClient.DnsDatagramReader),
 		typeof(Elasticsearch.Net.ApiCallDetails),
+		typeof(EntityFramework.Exceptions.Common.CannotInsertNullException),
 		typeof(FluentAssertions.AggregateExceptionExtractor),
 		typeof(FluentValidation.ApplyConditionTo),
 		typeof(Google.Apis.ETagAction),
@@ -93,6 +92,7 @@ static void TestWithTypes()
 		typeof(Humanizer.ByteSizeExtensions),
 		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 		typeof(IdentityModel.Base64Url),
+		typeof(LLVMSharp.AddrSpaceCastInst),
 		typeof(MassTransit.AbstractUriException),
 		typeof(MathNet.Numerics.AppSwitches),
 		typeof(MediatR.ISender),
@@ -101,13 +101,19 @@ static void TestWithTypes()
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
+		typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle),
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
 		typeof(Ninject.ActivationException),
 		typeof(NodaTime.AmbiguousTimeException),
 		typeof(NuGet.Common.ActivityCorrelationId),
+		typeof(Proto.ActorContextDecorator),
+		typeof(Pulumi.Alias),
 		typeof(RabbitMQ.Client.AmqpTcpEndpoint),
 		typeof(RestSharp.BodyParameter),
 		typeof(Serilog.Core.IDestructuringPolicy),
+		*/
+		typeof(LanguageExt.FuncExtensions),
+		/*
 		typeof(Sigil.CatchBlock),
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 		typeof(SimpleInjector.ActivationException),
@@ -115,6 +121,7 @@ static void TestWithTypes()
 		typeof(SkiaSharp.GRBackend),
 		typeof(StackExchange.Redis.Aggregate),
 		typeof(Stripe.Account),
+		typeof(System.IO.Abstractions.DirectoryAclExtensions),
 		typeof(System.Reactive.ExperimentalAttribute),
 		typeof(System.Reflection.Metadata.ArrayShape),
 		typeof(System.Text.Json.JsonCommentHandling),
@@ -122,8 +129,14 @@ static void TestWithTypes()
 		typeof(TerraFX.Interop.INativeGuid),
 		typeof(Topshelf.Credentials),
 		typeof(Twilio.Base.Page<>),
+		typeof(Wasmtime.ActionResult),
+		*/
 #endif
 #if INCLUDE_FAILING
+		typeof(Aspose.Email.AlternateView),
+		typeof(GraphQL.AllowAnonymousAttribute),
+		typeof(Orleans.Grain),
+		typeof(ServiceStack.ActionExecExtensions),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 

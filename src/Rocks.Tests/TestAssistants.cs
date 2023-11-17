@@ -58,7 +58,7 @@ internal static class TestAssistants
 			 "net7.0",
 			 new PackageIdentity(
 				  "Microsoft.NETCore.App.Ref",
-				  "7.0.13"),
+				  "7.0.14"),
 			 Path.Combine("ref", "net7.0"));
    }
 
@@ -74,7 +74,7 @@ internal static class TestAssistants
 			 "net8.0",
 			 new PackageIdentity(
 				  "Microsoft.NETCore.App.Ref",
-				  "8.0.0-rc.2.23479.6"),
+				  "8.0.0"),
 			 Path.Combine("ref", "net8.0"));
 	}
 }
