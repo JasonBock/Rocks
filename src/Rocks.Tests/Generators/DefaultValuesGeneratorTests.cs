@@ -87,12 +87,12 @@ public static class DefaultValuesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@values) &&
-										((global::Rocks.Argument<global::MockTests.SomeStruct>)@methodHandler.Expectations[1]).IsValid(@someStruct))
+									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@values!) &&
+										((global::Rocks.Argument<global::MockTests.SomeStruct>)@methodHandler.Expectations[1]).IsValid(@someStruct!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>)@methodHandler.Method)(@values, @someStruct) :
+											((global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>)@methodHandler.Method)(@values!, @someStruct!) :
 											((global::Rocks.HandlerInformation<global::System.Threading.Tasks.Task<object>>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -111,12 +111,12 @@ public static class DefaultValuesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@message) &&
-										((global::Rocks.Argument<global::MockTests.SomeStruct>)@methodHandler.Expectations[1]).IsValid(@someStruct))
+									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@message!) &&
+										((global::Rocks.Argument<global::MockTests.SomeStruct>)@methodHandler.Expectations[1]).IsValid(@someStruct!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>)@methodHandler.Method)(@message, @someStruct) :
+											((global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>)@methodHandler.Method)(@message!, @someStruct!) :
 											((global::Rocks.HandlerInformation<global::System.Threading.Tasks.Task>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -233,14 +233,14 @@ public static class DefaultValuesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@initialValue) ?? false))
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@initialValue!) ?? false))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T> @method)
 									{
-										@method(@initialValue);
+										@method(@initialValue!);
 									}
 									break;
 								}
@@ -404,14 +404,14 @@ public static class DefaultValuesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<double>)@methodHandler.Expectations[0]).IsValid(@value))
+								if (((global::Rocks.Argument<double>)@methodHandler.Expectations[0]).IsValid(@value!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<double>)@methodHandler.Method)(@value);
+										((global::System.Action<double>)@methodHandler.Method)(@value!);
 									}
 									break;
 								}

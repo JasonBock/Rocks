@@ -273,11 +273,11 @@ public static class NullabilityGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -287,7 +287,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -336,11 +336,11 @@ public static class NullabilityGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@eventCache) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@source) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@eventType) &&
-									((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@id) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[4]).IsValid(@format) &&
+								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@eventCache!) &&
+									((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@source!) &&
+									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@eventType!) &&
+									((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@id!) &&
+									((global::Rocks.Argument<string>)@methodHandler.Expectations[4]).IsValid(@format!) &&
 									((global::Rocks.Argument<object[]>)@methodHandler.Expectations[5]).IsValid(@args))
 								{
 									@foundMatch = true;
@@ -348,7 +348,7 @@ public static class NullabilityGeneratorTests
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<string, string, string, int, string, object[]>)@methodHandler.Method)(@eventCache, @source, @eventType, @id, @format, @args);
+										((global::System.Action<string, string, string, int, string, object[]>)@methodHandler.Method)(@eventCache!, @source!, @eventType!, @id!, @format!, @args!);
 									}
 									break;
 								}
@@ -361,7 +361,7 @@ public static class NullabilityGeneratorTests
 						}
 						else
 						{
-							base.TraceEvent(@eventCache, @source, @eventType, @id, @format, @args);
+							base.TraceEvent(@eventCache!, @source!, @eventType!, @id!, @format!, @args!);
 						}
 					}
 					

@@ -82,11 +82,11 @@ public static class ClassConstructorCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -96,7 +96,7 @@ public static class ClassConstructorCreateGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						

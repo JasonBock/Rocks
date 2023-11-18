@@ -75,11 +75,11 @@ public static class ConstraintsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -89,7 +89,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -139,11 +139,11 @@ public static class ConstraintsGeneratorTests
 							{
 								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?>) || @methodHandler is global::Rocks.HandlerInformation<T?>)
 								{
-									if (((global::Rocks.Argument<object[]>)@methodHandler.Expectations[0]).IsValid(@args))
+									if (((global::Rocks.Argument<object[]>)@methodHandler.Expectations[0]).IsValid(@args!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<object[], T?> @methodReturn ?
-											@methodReturn(@args) :
+											@methodReturn(@args!) :
 											@methodHandler is global::Rocks.HandlerInformation<T?> @returnValue ?
 												@returnValue.ReturnValue :
 												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T?.");
@@ -156,7 +156,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.GetService<T>(@args);
+							return base.GetService<T>(@args!);
 						}
 					}
 					
@@ -271,15 +271,15 @@ public static class ConstraintsGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-									((@methodHandler.Expectations[1] as global::Rocks.Argument<global::Frame<T>>)?.IsValid(@frame) ?? false))
+								if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+									((@methodHandler.Expectations[1] as global::Rocks.Argument<global::Frame<T>>)?.IsValid(@frame!) ?? false))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T> @method)
 									{
-										@method(ref @a, @frame);
+										@method(ref @a!, @frame!);
 									}
 									break;
 								}
@@ -531,11 +531,11 @@ public static class ConstraintsGeneratorTests
 							{
 								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?>) || @methodHandler is global::Rocks.HandlerInformation<TData?>)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data!) ?? false))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
-											@methodReturn(@data) :
+											@methodReturn(@data!) :
 											@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 												@returnValue.ReturnValue :
 												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
@@ -758,11 +758,11 @@ public static class ConstraintsGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -772,7 +772,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -951,11 +951,11 @@ public static class ConstraintsGeneratorTests
 							{
 								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?>) || @methodHandler is global::Rocks.HandlerInformation<TData?>)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data) ?? false))
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<TData?>)?.IsValid(@data!) ?? false))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<TData?, TData?> @methodReturn ?
-											@methodReturn(@data) :
+											@methodReturn(@data!) :
 											@methodHandler is global::Rocks.HandlerInformation<TData?> @returnValue ?
 												@returnValue.ReturnValue :
 												throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for TData?.");
@@ -968,7 +968,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.HasNullableValue<TData>(@data);
+							return base.HasNullableValue<TData>(@data!);
 						}
 					}
 					
@@ -1196,14 +1196,14 @@ public static class ConstraintsGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<global::Value<TValue>>)?.IsValid(@value) ?? false))
+								if (((@methodHandler.Expectations[0] as global::Rocks.Argument<global::Value<TValue>>)?.IsValid(@value!) ?? false))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<global::Value<TValue>> @method)
 									{
-										@method(@value);
+										@method(@value!);
 									}
 									break;
 								}
@@ -1316,11 +1316,11 @@ public static class ConstraintsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -1330,7 +1330,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						

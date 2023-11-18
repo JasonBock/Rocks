@@ -82,11 +82,11 @@ public static class AsyncIteratorGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -96,7 +96,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -143,11 +143,11 @@ public static class AsyncIteratorGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<global::System.Threading.CancellationToken>)@methodHandler.Expectations[0]).IsValid(@cancellationToken))
+								if (((global::Rocks.Argument<global::System.Threading.CancellationToken>)@methodHandler.Expectations[0]).IsValid(@cancellationToken!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>)@methodHandler.Method)(@cancellationToken) :
+										((global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>)@methodHandler.Method)(@cancellationToken!) :
 										((global::Rocks.HandlerInformation<global::System.Collections.Generic.IAsyncEnumerable<string>>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -157,7 +157,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 						else
 						{
-							return base.GetRecordsAsync(@cancellationToken);
+							return base.GetRecordsAsync(@cancellationToken!);
 						}
 					}
 					

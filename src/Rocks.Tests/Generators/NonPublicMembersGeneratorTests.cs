@@ -117,11 +117,11 @@ public static class NonPublicMembersGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -131,7 +131,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -198,14 +198,14 @@ public static class NonPublicMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<bool>)@methodHandler.Method)(@value);
+											((global::System.Action<bool>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -219,7 +219,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								base.OwnsHandle = @value;
+								base.OwnsHandle = @value!;
 							}
 						}
 					}
@@ -434,11 +434,11 @@ public static class NonPublicMembersGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -448,7 +448,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -497,14 +497,14 @@ public static class NonPublicMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<bool>)@methodHandler.Method)(@value);
+											((global::System.Action<bool>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -518,7 +518,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								base.OwnsHandle = @value;
+								base.OwnsHandle = @value!;
 							}
 						}
 					}
@@ -777,11 +777,11 @@ public static class NonPublicMembersGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									@methodHandler.RaiseEvents(this);
 									return @result!;
@@ -792,7 +792,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -865,11 +865,11 @@ public static class NonPublicMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@key))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@key!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, string>)@methodHandler.Method)(@key) :
+											((global::System.Func<string, string>)@methodHandler.Method)(@key!) :
 											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
 										return @result!;
@@ -880,7 +880,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base[@key];
+								return base[@key!];
 							}
 						}
 					}
@@ -1191,11 +1191,11 @@ public static class NonPublicMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
 										return @result!;
@@ -1206,7 +1206,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -1296,14 +1296,14 @@ public static class NonPublicMembersGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value);
+												((global::System.Action<string>)@methodHandler.Method)(@value!);
 											}
 											
 											if (!@foundMatch)
@@ -1318,7 +1318,7 @@ public static class NonPublicMembersGeneratorTests
 								}
 								else
 								{
-									base.ProtectedProperty = @value;
+									base.ProtectedProperty = @value!;
 								}
 							}
 						}
@@ -1495,11 +1495,11 @@ public static class NonPublicMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										@methodHandler.RaiseEvents(this);
 										return @result!;
@@ -1510,7 +1510,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -1598,14 +1598,14 @@ public static class NonPublicMembersGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value);
+												((global::System.Action<string>)@methodHandler.Method)(@value!);
 											}
 											
 											if (!@foundMatch)

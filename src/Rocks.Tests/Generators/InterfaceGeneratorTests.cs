@@ -79,11 +79,11 @@ public static class InterfaceGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string>)@methodHandler.Method)(@value) :
+											((global::System.Func<int, string>)@methodHandler.Method)(@value!) :
 											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 										return @result!;
 									}

@@ -84,16 +84,16 @@ public static class CastingGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value) ?? false) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data) &&
-										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information))
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!) &&
+										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T, string, global::System.Guid> @method)
 										{
-											@method(@value, @data, @information);
+											@method(@value!, @data!, @information!);
 										}
 										break;
 									}
@@ -119,13 +119,13 @@ public static class CastingGeneratorTests
 								{
 									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T>) || @methodHandler is global::Rocks.HandlerInformation<T>)
 									{
-										if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value) ?? false) &&
-											((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data) &&
-											((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information))
+										if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
+											((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!) &&
+											((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information!))
 										{
 											@methodHandler.IncrementCallCount();
 											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T> @methodReturn ?
-												@methodReturn(@value, @data, @information) :
+												@methodReturn(@value!, @data!, @information!) :
 												@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
 													@returnValue.ReturnValue :
 													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T.");
@@ -149,15 +149,15 @@ public static class CastingGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int, string>)@methodHandler.Method)(@value, @data);
+											((global::System.Action<int, string>)@methodHandler.Method)(@value!, @data!);
 										}
 										break;
 									}
@@ -181,12 +181,12 @@ public static class CastingGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@value, @data) :
+											((global::System.Func<int, string, int>)@methodHandler.Method)(@value!, @data!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}

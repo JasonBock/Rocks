@@ -110,12 +110,12 @@ public static class RockCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string?, string, string?>)@methodHandler.Method)(@a, @b) :
+											((global::System.Func<string?, string, string?>)@methodHandler.Method)(@a!, @b!) :
 											((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 										return @result!;
 									}

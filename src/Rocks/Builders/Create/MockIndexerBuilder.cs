@@ -146,7 +146,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -156,7 +156,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -212,7 +212,7 @@ internal static class MockIndexerBuilder
 			}));
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"{target}[{parameters}] = value;");
+			writer.WriteLine($"{target}[{parameters}] = value!;");
 
 			writer.Indent--;
 			writer.WriteLine("}");

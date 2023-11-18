@@ -79,11 +79,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -93,7 +93,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -142,14 +142,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string[]>)@methodHandler.Expectations[0]).IsValid(@values))
+									if (((global::Rocks.Argument<string[]>)@methodHandler.Expectations[0]).IsValid(@values!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string[]>)@methodHandler.Method)(@values);
+											((global::System.Action<string[]>)@methodHandler.Method)(@values!);
 										}
 										break;
 									}
@@ -162,7 +162,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								base.CallMe(@values);
+								base.CallMe(@values!);
 							}
 						}
 						
@@ -269,11 +269,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -283,7 +283,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -330,11 +330,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string[]>)@methodHandler.Expectations[0]).IsValid(@values))
+									if (((global::Rocks.Argument<string[]>)@methodHandler.Expectations[0]).IsValid(@values!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string[], int>)@methodHandler.Method)(@values) :
+											((global::System.Func<string[], int>)@methodHandler.Method)(@values!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -344,7 +344,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.CallMe(@values);
+								return base.CallMe(@values!);
 							}
 						}
 						
@@ -675,11 +675,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -689,7 +689,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -847,11 +847,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -861,7 +861,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						

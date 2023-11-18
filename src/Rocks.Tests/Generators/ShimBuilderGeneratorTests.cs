@@ -397,12 +397,12 @@ public static class ShimBuilderGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@dimKey) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@dimValue))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@dimKey!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@dimValue!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, int, int>)@methodHandler.Method)(@dimKey, @dimValue) :
+											((global::System.Func<string, int, int>)@methodHandler.Method)(@dimKey!, @dimValue!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -425,11 +425,11 @@ public static class ShimBuilderGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@notDimKey))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@notDimKey!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, int>)@methodHandler.Method)(@notDimKey) :
+											((global::System.Func<string, int>)@methodHandler.Method)(@notDimKey!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}

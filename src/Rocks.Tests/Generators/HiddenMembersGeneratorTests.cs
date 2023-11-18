@@ -90,11 +90,11 @@ public static class HiddenMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -104,7 +104,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -288,11 +288,11 @@ public static class HiddenMembersGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -302,7 +302,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -387,14 +387,14 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int>)@methodHandler.Method)(@value);
+											((global::System.Action<int>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -408,7 +408,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								base.Data = @value;
+								base.Data = @value!;
 							}
 						}
 					}
@@ -421,12 +421,12 @@ public static class HiddenMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@a, @b) :
+											((global::System.Func<int, string, int>)@methodHandler.Method)(@a!, @b!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -436,7 +436,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								return base[@a, @b];
+								return base[@a!, @b!];
 							}
 						}
 					}
@@ -654,14 +654,14 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int>)@methodHandler.Method)(@value);
+											((global::System.Action<int>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -704,14 +704,14 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string>)@methodHandler.Method)(@value);
+											((global::System.Action<string>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -738,12 +738,12 @@ public static class HiddenMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@a, @b) :
+											((global::System.Func<int, string, int>)@methodHandler.Method)(@a!, @b!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -764,12 +764,12 @@ public static class HiddenMembersGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, string>)@methodHandler.Method)(@a, @b) :
+											((global::System.Func<int, string, string>)@methodHandler.Method)(@a!, @b!) :
 											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 										return @result!;
 									}

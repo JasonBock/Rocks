@@ -142,11 +142,11 @@ public static class RecordCreateGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<global::System.Text.StringBuilder>)@methodHandler.Expectations[0]).IsValid(@builder))
+									if (((global::Rocks.Argument<global::System.Text.StringBuilder>)@methodHandler.Expectations[0]).IsValid(@builder!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<global::System.Text.StringBuilder, bool>)@methodHandler.Method)(@builder) :
+											((global::System.Func<global::System.Text.StringBuilder, bool>)@methodHandler.Method)(@builder!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -156,7 +156,7 @@ public static class RecordCreateGeneratorTests
 							}
 							else
 							{
-								return base.PrintMembers(@builder);
+								return base.PrintMembers(@builder!);
 							}
 						}
 						

@@ -78,14 +78,14 @@ public static class NullableAnnotationTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<int?>)@methodHandler.Expectations[0]).IsValid(@value))
+								if (((global::Rocks.Argument<int?>)@methodHandler.Expectations[0]).IsValid(@value!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<int?>)@methodHandler.Method)(@value);
+										((global::System.Action<int?>)@methodHandler.Method)(@value!);
 									}
 									break;
 								}
@@ -190,11 +190,11 @@ public static class NullableAnnotationTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -204,7 +204,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -400,11 +400,11 @@ public static class NullableAnnotationTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -414,7 +414,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -461,11 +461,11 @@ public static class NullableAnnotationTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, int>)@methodHandler.Method)(@initializationData) :
+										((global::System.Func<object?, int>)@methodHandler.Method)(@initializationData!) :
 										((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -488,14 +488,14 @@ public static class NullableAnnotationTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<object?>)@methodHandler.Method)(@initializationData);
+										((global::System.Action<object?>)@methodHandler.Method)(@initializationData!);
 									}
 									break;
 								}

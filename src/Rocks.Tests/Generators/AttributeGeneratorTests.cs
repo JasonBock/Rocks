@@ -184,11 +184,11 @@ public static class AttributeGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -198,7 +198,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -375,11 +375,11 @@ public static class AttributeGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -389,7 +389,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -437,11 +437,11 @@ public static class AttributeGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, object?>)@methodHandler.Method)(@node) :
+										((global::System.Func<object?, object?>)@methodHandler.Method)(@node!) :
 										((global::Rocks.HandlerInformation<object?>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -451,7 +451,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.VisitMethod(@node);
+							return base.VisitMethod(@node!);
 						}
 					}
 					
@@ -462,11 +462,11 @@ public static class AttributeGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, object?>)@methodHandler.Method)(@node) :
+										((global::System.Func<object?, object?>)@methodHandler.Method)(@node!) :
 										((global::Rocks.HandlerInformation<object?>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -476,7 +476,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.VisitParameter(@node);
+							return base.VisitParameter(@node!);
 						}
 					}
 					
@@ -508,14 +508,14 @@ public static class AttributeGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string?>)@methodHandler.Method)(@value);
+											((global::System.Action<string?>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -529,7 +529,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								base.VisitProperty = @value;
+								base.VisitProperty = @value!;
 							}
 						}
 					}
@@ -544,11 +544,11 @@ public static class AttributeGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, string?>)@methodHandler.Method)(@node) :
+											((global::System.Func<object?, string?>)@methodHandler.Method)(@node!) :
 											((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -558,7 +558,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								return base[@node];
+								return base[@node!];
 							}
 						}
 						set
@@ -567,13 +567,13 @@ public static class AttributeGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node) &&
-										((global::Rocks.Argument<string?>)@methodHandler.Expectations[1]).IsValid(@value))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@node!) &&
+										((global::Rocks.Argument<string?>)@methodHandler.Expectations[1]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<object?, string?>)@methodHandler.Method)(@node, @value);
+											((global::System.Action<object?, string?>)@methodHandler.Method)(@node!, @value!);
 										}
 										return;
 									}
@@ -583,7 +583,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								base[@node] = value;
+								base[@node!] = value!;
 							}
 						}
 					}
@@ -833,11 +833,11 @@ public static class AttributeGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -847,7 +847,7 @@ public static class AttributeGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -1127,14 +1127,14 @@ public static class AttributeGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@data))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@data!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string>)@methodHandler.Method)(@data);
+											((global::System.Action<string>)@methodHandler.Method)(@data!);
 										}
 										break;
 									}

@@ -121,7 +121,6 @@ internal static class MockPropertyBuilder
 		var accessor = property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
 
-		var nullableFlag = allowNull ? "!" : string.Empty;
 		writer.WriteLine($"{visibility}{accessor}");
 		writer.WriteLine("{");
 		writer.Indent++;
@@ -141,7 +140,7 @@ internal static class MockPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, property.MockType) :
 					$"global::Rocks.Argument<{property.Type.FullyQualifiedName}>";
 
-		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(@value{nullableFlag}))");
+		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(@value!))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -156,7 +155,7 @@ internal static class MockPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-		writer.WriteLine($"(({methodCast})@methodHandler.Method)(@value{nullableFlag});");
+		writer.WriteLine($"(({methodCast})@methodHandler.Method)(@value!);");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -198,7 +197,7 @@ internal static class MockPropertyBuilder
 			// https://github.com/dotnet/csharplang/issues/2337
 			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{property.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"{target}.{property.Name} = @value;");
+			writer.WriteLine($"{target}.{property.Name} = @value!;");
 		}
 		else
 		{

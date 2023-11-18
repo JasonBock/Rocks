@@ -87,13 +87,13 @@ public static class MethodGeneratorTests
 								{
 									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>) || @methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>>)
 									{
-										if (((global::Rocks.Argument<global::System.Linq.IQueryable>)@methodHandler.Expectations[0]).IsValid(@source) &&
-											((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@parameters) &&
-											((global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand))
+										if (((global::Rocks.Argument<global::System.Linq.IQueryable>)@methodHandler.Expectations[0]).IsValid(@source!) &&
+											((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@parameters!) &&
+											((global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand!))
 										{
 											@methodHandler.IncrementCallCount();
 											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>> @methodReturn ?
-												@methodReturn(@source, @parameters, @membersToExpand) :
+												@methodReturn(@source!, @parameters!, @membersToExpand!) :
 												@methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>> @returnValue ?
 													@returnValue.ReturnValue :
 													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::System.Linq.IQueryable<TDestination>.");
@@ -117,13 +117,13 @@ public static class MethodGeneratorTests
 								{
 									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>>) || @methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>>)
 									{
-										if (((global::Rocks.Argument<global::System.Linq.IQueryable>)@methodHandler.Expectations[0]).IsValid(@source) &&
-											((global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>>)@methodHandler.Expectations[1]).IsValid(@parameters) &&
-											((global::Rocks.Argument<string[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand))
+										if (((global::Rocks.Argument<global::System.Linq.IQueryable>)@methodHandler.Expectations[0]).IsValid(@source!) &&
+											((global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>>)@methodHandler.Expectations[1]).IsValid(@parameters!) &&
+											((global::Rocks.Argument<string[]>)@methodHandler.Expectations[2]).IsValid(@membersToExpand!))
 										{
 											@methodHandler.IncrementCallCount();
 											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>> @methodReturn ?
-												@methodReturn(@source, @parameters, @membersToExpand) :
+												@methodReturn(@source!, @parameters!, @membersToExpand!) :
 												@methodHandler is global::Rocks.HandlerInformation<global::System.Linq.IQueryable<TDestination>> @returnValue ?
 													@returnValue.ReturnValue :
 													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for global::System.Linq.IQueryable<TDestination>.");
@@ -244,16 +244,16 @@ public static class MethodGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b) &&
-										((global::Rocks.Argument<double>)@methodHandler.Expectations[2]).IsValid(@c))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!) &&
+										((global::Rocks.Argument<double>)@methodHandler.Expectations[2]).IsValid(@c!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int, string, double>)@methodHandler.Method)(@a, @b, @c);
+											((global::System.Action<int, string, double>)@methodHandler.Method)(@a!, @b!, @c!);
 										}
 										break;
 									}
@@ -370,16 +370,16 @@ public static class MethodGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@a) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@b) &&
-										((global::Rocks.Argument<global::System.Guid[]>)@methodHandler.Expectations[2]).IsValid(@values))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@a!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@b!) &&
+										((global::Rocks.Argument<global::System.Guid[]>)@methodHandler.Expectations[2]).IsValid(@values!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string, int, global::System.Guid[]>)@methodHandler.Method)(@a, @b, @values);
+											((global::System.Action<string, int, global::System.Guid[]>)@methodHandler.Method)(@a!, @b!, @values!);
 										}
 										break;
 									}
@@ -503,30 +503,30 @@ public static class MethodGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@i0) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@i1) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[2]).IsValid(@i2) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@i3) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[4]).IsValid(@i4) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[5]).IsValid(@i5) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[6]).IsValid(@i6) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[7]).IsValid(@i7) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[8]).IsValid(@i8) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[9]).IsValid(@i9) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[10]).IsValid(@i10) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[11]).IsValid(@i11) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[12]).IsValid(@i12) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[13]).IsValid(@i13) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[14]).IsValid(@i14) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[15]).IsValid(@i15) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[16]).IsValid(@i16) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[17]).IsValid(@i17) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[18]).IsValid(@i18) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[19]).IsValid(@i19))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@i0!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@i1!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[2]).IsValid(@i2!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@i3!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[4]).IsValid(@i4!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[5]).IsValid(@i5!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[6]).IsValid(@i6!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[7]).IsValid(@i7!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[8]).IsValid(@i8!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[9]).IsValid(@i9!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[10]).IsValid(@i10!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[11]).IsValid(@i11!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[12]).IsValid(@i12!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[13]).IsValid(@i13!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[14]).IsValid(@i14!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[15]).IsValid(@i15!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[16]).IsValid(@i16!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[17]).IsValid(@i17!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[18]).IsValid(@i18!) &&
+										((global::Rocks.Argument<int>)@methodHandler.Expectations[19]).IsValid(@i19!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::MockTests.ProjectionsForIHaveTooMuch.AddPropertyCallback_72853676484114143792518254191874903532168788273)@methodHandler.Method)(@i0, @i1, @i2, @i3, @i4, @i5, @i6, @i7, @i8, @i9, @i10, @i11, @i12, @i13, @i14, @i15, @i16, @i17, @i18, @i19) :
+											((global::MockTests.ProjectionsForIHaveTooMuch.AddPropertyCallback_72853676484114143792518254191874903532168788273)@methodHandler.Method)(@i0!, @i1!, @i2!, @i3!, @i4!, @i5!, @i6!, @i7!, @i8!, @i9!, @i10!, @i11!, @i12!, @i13!, @i14!, @i15!, @i16!, @i17!, @i18!, @i19!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}

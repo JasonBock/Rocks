@@ -80,11 +80,11 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -94,7 +94,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj);
+								return base.Equals(@obj!);
 							}
 						}
 						
@@ -282,11 +282,11 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@other))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@other!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@other) :
+											((global::System.Func<object?, bool>)@methodHandler.Method)(@other!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -305,12 +305,12 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@objA) &&
-										((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@objB))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@objA!) &&
+										((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@objB!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, object?, bool>)@methodHandler.Method)(@objA, @objB) :
+											((global::System.Func<object?, object?, bool>)@methodHandler.Method)(@objA!, @objB!) :
 											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -510,17 +510,17 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "string global::MockTests.IMatchObject<object>.Equals(object? @other)")]
-						string global::MockTests.IMatchObject<object>.Equals(object? @other)
+						string global::MockTests.IMatchObject<object>.Equals(object? @other!)
 						{
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@other))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@other!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, string>)@methodHandler.Method)(@other) :
+											((global::System.Func<object?, string>)@methodHandler.Method)(@other!) :
 											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
 										return @result!;
 									}
@@ -539,12 +539,12 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@objA) &&
-										((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@objB))
+									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@objA!) &&
+										((global::Rocks.Argument<object?>)@methodHandler.Expectations[1]).IsValid(@objB!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, object?, int>)@methodHandler.Method)(@objA, @objB) :
+											((global::System.Func<object?, object?, int>)@methodHandler.Method)(@objA!, @objB!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
 										return @result!;
 									}

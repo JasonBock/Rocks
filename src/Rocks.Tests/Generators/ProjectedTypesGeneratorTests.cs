@@ -117,14 +117,14 @@ public static class ProjectedTypesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::ProjectionsForISurface.ArgumentForTPointer<T>)?.IsValid(@allocator) ?? false))
+								if (((@methodHandler.Expectations[0] as global::ProjectionsForISurface.ArgumentForTPointer<T>)?.IsValid(@allocator!) ?? false))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForISurface.CreateCallback_197220541663188455981388668427457375357930643021<T> @method)
 									{
-										@method(@allocator);
+										@method(@allocator!);
 									}
 									break;
 								}
@@ -264,14 +264,14 @@ public static class ProjectedTypesGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((@methodHandler.Expectations[0] as global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel>)?.IsValid(@sourcePixels) ?? false))
+								if (((@methodHandler.Expectations[0] as global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel>)?.IsValid(@sourcePixels!) ?? false))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null && @methodHandler.Method is global::ProjectionsForIUseSpanWithOpenGeneric.FromCallback_92766876440491954433706353246551017062742057391<TSourcePixel> @method)
 									{
-										@method(@sourcePixels);
+										@method(@sourcePixels!);
 									}
 									break;
 								}
@@ -561,14 +561,14 @@ public static class ProjectedTypesGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::MockTests.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154)@methodHandler.Method)(@value);
+											((global::MockTests.ProjectionsForIHavePointers.DelegatePointerParameterCallback_67936425010368164897427961753475545964149702154)@methodHandler.Method)(@value!);
 										}
 										break;
 									}
@@ -610,14 +610,14 @@ public static class ProjectedTypesGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null)
 										{
-											((global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337)@methodHandler.Method)(@value);
+											((global::MockTests.ProjectionsForIHavePointers.PointerParameterCallback_448273544004536059019999557806138154926952273337)@methodHandler.Method)(@value!);
 										}
 										break;
 									}
@@ -822,11 +822,11 @@ public static class ProjectedTypesGeneratorTests
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint)@methodHandler.Expectations[0]).IsValid(@values))
+									if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfint)@methodHandler.Expectations[0]).IsValid(@values!))
 									{
 										@methodHandler.IncrementCallCount();
 										var @result = @methodHandler.Method is not null ?
-											((global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153)@methodHandler.Method)(@values) :
+											((global::MockTests.ProjectionsForIHaveInAndOutSpan.FooCallback_313462758925781114777251005406226933687057720153)@methodHandler.Method)(@values!) :
 											((global::Rocks.HandlerInformation<global::MockTests.ProjectionsForIHaveInAndOutSpan.FooReturnValue_313462758925781114777251005406226933687057720153>)@methodHandler).ReturnValue!.Invoke();
 										return @result!;
 									}
@@ -863,14 +863,14 @@ public static class ProjectedTypesGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte)@methodHandler.Expectations[0]).IsValid(@value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626)@methodHandler.Method)(@value);
+												((global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626)@methodHandler.Method)(@value!);
 											}
 											
 											if (!@foundMatch)

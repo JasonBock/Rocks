@@ -393,14 +393,14 @@ public static class ExplicitImplementationGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value);
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)
@@ -443,14 +443,14 @@ public static class ExplicitImplementationGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value);
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value!);
 										}
 										
 										if (!@foundMatch)

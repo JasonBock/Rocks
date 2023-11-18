@@ -158,11 +158,11 @@ public static class NamingGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -172,7 +172,7 @@ public static class NamingGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -325,16 +325,16 @@ public static class NamingGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@namespace) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@event) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@property))
+								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@namespace!) &&
+									((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@event!) &&
+									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@property!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<string, string, string>)@methodHandler.Method)(@namespace, @event, @property);
+										((global::System.Action<string, string, string>)@methodHandler.Method)(@namespace!, @event!, @property!);
 									}
 									break;
 								}
@@ -442,11 +442,11 @@ public static class NamingGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -456,7 +456,7 @@ public static class NamingGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -612,15 +612,15 @@ public static class NamingGeneratorTests
 							{
 								foreach (var @methodHandler1 in @methodHandlers1)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler1.Expectations[0]).IsValid(@methodHandlers) &&
-										((global::Rocks.Argument<string>)@methodHandler1.Expectations[1]).IsValid(@methodHandler) &&
-										((global::Rocks.Argument<string>)@methodHandler1.Expectations[2]).IsValid(@result) &&
-										((global::Rocks.Argument<string>)@methodHandler1.Expectations[3]).IsValid(@result2) &&
-										((global::Rocks.Argument<string>)@methodHandler1.Expectations[4]).IsValid(@self))
+									if (((global::Rocks.Argument<string>)@methodHandler1.Expectations[0]).IsValid(@methodHandlers!) &&
+										((global::Rocks.Argument<string>)@methodHandler1.Expectations[1]).IsValid(@methodHandler!) &&
+										((global::Rocks.Argument<string>)@methodHandler1.Expectations[2]).IsValid(@result!) &&
+										((global::Rocks.Argument<string>)@methodHandler1.Expectations[3]).IsValid(@result2!) &&
+										((global::Rocks.Argument<string>)@methodHandler1.Expectations[4]).IsValid(@self!))
 									{
 										@methodHandler1.IncrementCallCount();
 										var @result1 = @methodHandler1.Method is not null ?
-											((global::System.Func<string, string, string, string, string, int>)@methodHandler1.Method)(@methodHandlers, @methodHandler, @result, @result2, @self) :
+											((global::System.Func<string, string, string, string, string, int>)@methodHandler1.Method)(@methodHandlers!, @methodHandler!, @result!, @result2!, @self!) :
 											((global::Rocks.HandlerInformation<int>)@methodHandler1).ReturnValue;
 										return @result1!;
 									}
@@ -723,15 +723,15 @@ public static class NamingGeneratorTests
 						{
 							foreach (var @methodHandler1 in @methodHandlers1)
 							{
-								if (((global::Rocks.Argument<string>)@methodHandler1.Expectations[0]).IsValid(@methodHandlers) &&
-									((global::Rocks.Argument<string>)@methodHandler1.Expectations[1]).IsValid(@methodHandler) &&
-									((global::Rocks.Argument<string>)@methodHandler1.Expectations[2]).IsValid(@result) &&
-									((global::Rocks.Argument<string>)@methodHandler1.Expectations[3]).IsValid(@result2) &&
-									((global::Rocks.Argument<string>)@methodHandler1.Expectations[4]).IsValid(@self))
+								if (((global::Rocks.Argument<string>)@methodHandler1.Expectations[0]).IsValid(@methodHandlers!) &&
+									((global::Rocks.Argument<string>)@methodHandler1.Expectations[1]).IsValid(@methodHandler!) &&
+									((global::Rocks.Argument<string>)@methodHandler1.Expectations[2]).IsValid(@result!) &&
+									((global::Rocks.Argument<string>)@methodHandler1.Expectations[3]).IsValid(@result2!) &&
+									((global::Rocks.Argument<string>)@methodHandler1.Expectations[4]).IsValid(@self!))
 								{
 									@methodHandler1.IncrementCallCount();
 									var @result1 = @methodHandler1.Method is not null ?
-										((global::System.Func<string, string, string, string, string, int>)@methodHandler1.Method)(@methodHandlers, @methodHandler, @result, @result2, @self) :
+										((global::System.Func<string, string, string, string, string, int>)@methodHandler1.Method)(@methodHandlers!, @methodHandler!, @result!, @result2!, @self!) :
 										((global::Rocks.HandlerInformation<int>)@methodHandler1).ReturnValue;
 									return @result1!;
 								}
@@ -850,11 +850,11 @@ public static class NamingGeneratorTests
 						{
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj))
+								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
 								{
 									@methodHandler.IncrementCallCount();
 									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj) :
+										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
 										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
 									return @result!;
 								}
@@ -864,7 +864,7 @@ public static class NamingGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj);
+							return base.Equals(@obj!);
 						}
 					}
 					
@@ -1028,15 +1028,15 @@ public static class NamingGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<global::Namespace2.Thing>)@methodHandler.Expectations[0]).IsValid(@thing) &&
-									((global::Rocks.Argument<global::Namespace1.Stuff>)@methodHandler.Expectations[1]).IsValid(@stuff))
+								if (((global::Rocks.Argument<global::Namespace2.Thing>)@methodHandler.Expectations[0]).IsValid(@thing!) &&
+									((global::Rocks.Argument<global::Namespace1.Stuff>)@methodHandler.Expectations[1]).IsValid(@stuff!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<global::Namespace2.Thing, global::Namespace1.Stuff>)@methodHandler.Method)(@thing, @stuff);
+										((global::System.Action<global::Namespace2.Thing, global::Namespace1.Stuff>)@methodHandler.Method)(@thing!, @stuff!);
 									}
 									break;
 								}
@@ -1360,14 +1360,14 @@ public static class NamingGeneratorTests
 								
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value) ?? false))
+									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false))
 									{
 										@foundMatch = true;
 										
 										@methodHandler.IncrementCallCount();
 										if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T> @method)
 										{
-											@method(@value);
+											@method(@value!);
 										}
 										break;
 									}
