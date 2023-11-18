@@ -208,11 +208,11 @@ internal static class MockIndexerBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}!";
 			}));
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"{target}[{parameters}] = value!;");
+			writer.WriteLine($"{target}[{parameters}] = @value!;");
 
 			writer.Indent--;
 			writer.WriteLine("}");

@@ -341,7 +341,7 @@ public static class NullabilityGeneratorTests
 									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@eventType!) &&
 									((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@id!) &&
 									((global::Rocks.Argument<string>)@methodHandler.Expectations[4]).IsValid(@format!) &&
-									((global::Rocks.Argument<object[]>)@methodHandler.Expectations[5]).IsValid(@args))
+									((global::Rocks.Argument<object[]>)@methodHandler.Expectations[5]).IsValid(@args!))
 								{
 									@foundMatch = true;
 									

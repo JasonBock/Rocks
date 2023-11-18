@@ -140,7 +140,7 @@ internal static class MockPropertyBuilder
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, property.MockType) :
 					$"global::Rocks.Argument<{property.Type.FullyQualifiedName}>";
 
-		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(@value!))");
+		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(value!))");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -155,7 +155,7 @@ internal static class MockPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 
-		writer.WriteLine($"(({methodCast})@methodHandler.Method)(@value!);");
+		writer.WriteLine($"(({methodCast})@methodHandler.Method)(value!);");
 
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -164,7 +164,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("if (!@foundMatch)");
 		writer.WriteLine("{");
 		writer.Indent++;
-		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(@value)\");");
+		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -197,11 +197,11 @@ internal static class MockPropertyBuilder
 			// https://github.com/dotnet/csharplang/issues/2337
 			var target = property.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{property.ContainingType.FlattenedName}" : "base";
-			writer.WriteLine($"{target}.{property.Name} = @value!;");
+			writer.WriteLine($"{target}.{property.Name} = value!;");
 		}
 		else
 		{
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(@value)\");");
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers were found for {explicitTypeName}{methodName}(value)\");");
 		}
 
 		writer.Indent--;
@@ -245,7 +245,7 @@ internal static class MockPropertyBuilder
 
 			if (isSetterVisible)
 			{
-				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.SetMethod!.Name}}(@value)")]""");
+				writer.WriteLine($$"""[global::Rocks.MemberIdentifier({{memberIdentifierAttribute}}, "{{explicitTypeName}}{{property.SetMethod!.Name}}(value)")]""");
 			}
 		}
 

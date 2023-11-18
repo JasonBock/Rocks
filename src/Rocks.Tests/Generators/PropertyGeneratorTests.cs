@@ -81,7 +81,7 @@ public static class PropertyGeneratorTests
 						this.handlers = @expectations.Handlers;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "set_Exclude(@value)")]
+					[global::Rocks.MemberIdentifier(0, "set_Exclude(value)")]
 					public bool Exclude
 					{
 						set
@@ -91,19 +91,19 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value))
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<bool>)@methodHandler.Method)(@value);
+											((global::System.Action<bool>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Exclude(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Exclude(value)");
 										}
 										
 										break;
@@ -112,7 +112,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Exclude(@value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Exclude(value)");
 							}
 						}
 					}
@@ -313,7 +313,7 @@ public static class PropertyGeneratorTests
 						}
 					}
 					[global::Rocks.MemberIdentifier(5, "get_PublicGetProtectedSet()")]
-					[global::Rocks.MemberIdentifier(6, "set_PublicGetProtectedSet(@value)")]
+					[global::Rocks.MemberIdentifier(6, "set_PublicGetProtectedSet(value)")]
 					public override string? PublicGetProtectedSet
 					{
 						get
@@ -339,19 +339,19 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string?>)@methodHandler.Method)(@value!);
+											((global::System.Action<string?>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PublicGetProtectedSet(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PublicGetProtectedSet(value)");
 										}
 										
 										break;
@@ -360,11 +360,11 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base.PublicGetProtectedSet = @value;
+								base.PublicGetProtectedSet = value!;
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(7, "set_PrivateGetPublicSet(@value)")]
+					[global::Rocks.MemberIdentifier(7, "set_PrivateGetPublicSet(value)")]
 					public override string? PrivateGetPublicSet
 					{
 						set
@@ -374,19 +374,19 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string?>)@methodHandler.Method)(@value!);
+											((global::System.Action<string?>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet(value)");
 										}
 										
 										break;
@@ -395,12 +395,12 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base.PrivateGetPublicSet = @value;
+								base.PrivateGetPublicSet = value!;
 							}
 						}
 					}
 					[global::Rocks.MemberIdentifier(9, "get_ProtectedGetPublicSet()")]
-					[global::Rocks.MemberIdentifier(10, "set_ProtectedGetPublicSet(@value)")]
+					[global::Rocks.MemberIdentifier(10, "set_ProtectedGetPublicSet(value)")]
 					public override string? ProtectedGetPublicSet
 					{
 						protected get
@@ -426,19 +426,19 @@ public static class PropertyGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string?>)@methodHandler.Method)(@value!);
+											((global::System.Action<string?>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedGetPublicSet(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedGetPublicSet(value)");
 										}
 										
 										break;
@@ -447,7 +447,7 @@ public static class PropertyGeneratorTests
 							}
 							else
 							{
-								base.ProtectedGetPublicSet = @value;
+								base.ProtectedGetPublicSet = value!;
 							}
 						}
 					}

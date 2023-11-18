@@ -482,7 +482,7 @@ public static class AttributeGeneratorTests
 					
 					[global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("value")]
 					[global::Rocks.MemberIdentifier(5, "get_VisitProperty()")]
-					[global::Rocks.MemberIdentifier(6, "set_VisitProperty(@value)")]
+					[global::Rocks.MemberIdentifier(6, "set_VisitProperty(value)")]
 					public override string? VisitProperty
 					{
 						get
@@ -508,19 +508,19 @@ public static class AttributeGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string?>)@methodHandler.Method)(@value!);
+											((global::System.Action<string?>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_VisitProperty(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_VisitProperty(value)");
 										}
 										
 										break;
@@ -529,7 +529,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								base.VisitProperty = @value!;
+								base.VisitProperty = value!;
 							}
 						}
 					}
@@ -583,7 +583,7 @@ public static class AttributeGeneratorTests
 							}
 							else
 							{
-								base[@node!] = value!;
+								base[@node!] = @value!;
 							}
 						}
 					}

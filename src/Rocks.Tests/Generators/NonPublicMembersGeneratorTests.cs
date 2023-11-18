@@ -172,7 +172,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(3, "get_OwnsHandle()")]
-					[global::Rocks.MemberIdentifier(4, "set_OwnsHandle(@value)")]
+					[global::Rocks.MemberIdentifier(4, "set_OwnsHandle(value)")]
 					protected internal override bool OwnsHandle
 					{
 						get
@@ -198,19 +198,19 @@ public static class NonPublicMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<bool>)@methodHandler.Method)(@value!);
+											((global::System.Action<bool>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(value)");
 										}
 										
 										break;
@@ -219,7 +219,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								base.OwnsHandle = @value!;
+								base.OwnsHandle = value!;
 							}
 						}
 					}
@@ -471,7 +471,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(3, "get_OwnsHandle()")]
-					[global::Rocks.MemberIdentifier(4, "set_OwnsHandle(@value)")]
+					[global::Rocks.MemberIdentifier(4, "set_OwnsHandle(value)")]
 					protected override bool OwnsHandle
 					{
 						get
@@ -497,19 +497,19 @@ public static class NonPublicMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<bool>)@methodHandler.Method)(@value!);
+											((global::System.Action<bool>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_OwnsHandle(value)");
 										}
 										
 										break;
@@ -518,7 +518,7 @@ public static class NonPublicMembersGeneratorTests
 							}
 							else
 							{
-								base.OwnsHandle = @value!;
+								base.OwnsHandle = value!;
 							}
 						}
 					}
@@ -1269,7 +1269,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(4, "get_ProtectedProperty()")]
-						[global::Rocks.MemberIdentifier(5, "set_ProtectedProperty(@value)")]
+						[global::Rocks.MemberIdentifier(5, "set_ProtectedProperty(value)")]
 						protected override string ProtectedProperty
 						{
 							get
@@ -1296,19 +1296,19 @@ public static class NonPublicMembersGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value!);
+												((global::System.Action<string>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedProperty(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedProperty(value)");
 											}
 											
 											@methodHandler.RaiseEvents(this);
@@ -1318,7 +1318,7 @@ public static class NonPublicMembersGeneratorTests
 								}
 								else
 								{
-									base.ProtectedProperty = @value!;
+									base.ProtectedProperty = value!;
 								}
 							}
 						}
@@ -1573,7 +1573,7 @@ public static class NonPublicMembersGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(4, "get_ProtectedProperty()")]
-						[global::Rocks.MemberIdentifier(5, "set_ProtectedProperty(@value)")]
+						[global::Rocks.MemberIdentifier(5, "set_ProtectedProperty(value)")]
 						protected override string ProtectedProperty
 						{
 							get
@@ -1598,19 +1598,19 @@ public static class NonPublicMembersGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value!);
+												((global::System.Action<string>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedProperty(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_ProtectedProperty(value)");
 											}
 											
 											@methodHandler.RaiseEvents(this);
@@ -1620,7 +1620,7 @@ public static class NonPublicMembersGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_ProtectedProperty(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_ProtectedProperty(value)");
 								}
 							}
 						}

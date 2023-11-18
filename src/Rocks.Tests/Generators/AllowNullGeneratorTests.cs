@@ -82,7 +82,7 @@ public static class AllowNullGeneratorTests
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						[global::Rocks.MemberIdentifier(0, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(1, "set_NewLine(@value)")]
+						[global::Rocks.MemberIdentifier(1, "set_NewLine(value)")]
 						public string NewLine
 						{
 							get
@@ -106,19 +106,19 @@ public static class AllowNullGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value!);
+												((global::System.Action<string>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
 											}
 											
 											break;
@@ -127,7 +127,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NewLine(value)");
 								}
 							}
 						}
@@ -360,7 +360,7 @@ public static class AllowNullGeneratorTests
 						
 						[global::System.Diagnostics.CodeAnalysis.AllowNullAttribute]
 						[global::Rocks.MemberIdentifier(3, "get_NewLine()")]
-						[global::Rocks.MemberIdentifier(4, "set_NewLine(@value)")]
+						[global::Rocks.MemberIdentifier(4, "set_NewLine(value)")]
 						public override string NewLine
 						{
 							get
@@ -386,19 +386,19 @@ public static class AllowNullGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value!);
+												((global::System.Action<string>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NewLine(value)");
 											}
 											
 											break;
@@ -407,7 +407,7 @@ public static class AllowNullGeneratorTests
 								}
 								else
 								{
-									base.NewLine = @value!;
+									base.NewLine = value!;
 								}
 							}
 						}

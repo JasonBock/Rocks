@@ -510,7 +510,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "string global::MockTests.IMatchObject<object>.Equals(object? @other)")]
-						string global::MockTests.IMatchObject<object>.Equals(object? @other!)
+						string global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
 							if (this.handlers.TryGetValue(0, out var @methodHandlers))
 							{

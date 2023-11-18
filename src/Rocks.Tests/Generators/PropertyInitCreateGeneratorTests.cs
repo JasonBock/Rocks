@@ -98,7 +98,7 @@ public static class PropertyInitCreateGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "get_NonNullableValueType()")]
-						[global::Rocks.MemberIdentifier(1, "set_NonNullableValueType(@value)")]
+						[global::Rocks.MemberIdentifier(1, "set_NonNullableValueType(value)")]
 						public int NonNullableValueType
 						{
 							get
@@ -122,19 +122,19 @@ public static class PropertyInitCreateGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<int>)@methodHandler.Method)(@value);
+												((global::System.Action<int>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableValueType(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableValueType(value)");
 											}
 											
 											break;
@@ -143,12 +143,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableValueType(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableValueType(value)");
 								}
 							}
 						}
 						[global::Rocks.MemberIdentifier(2, "get_NullableValueType()")]
-						[global::Rocks.MemberIdentifier(3, "set_NullableValueType(@value)")]
+						[global::Rocks.MemberIdentifier(3, "set_NullableValueType(value)")]
 						public int? NullableValueType
 						{
 							get
@@ -172,19 +172,19 @@ public static class PropertyInitCreateGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<int?>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<int?>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<int?>)@methodHandler.Method)(@value);
+												((global::System.Action<int?>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableValueType(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableValueType(value)");
 											}
 											
 											break;
@@ -193,12 +193,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableValueType(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableValueType(value)");
 								}
 							}
 						}
 						[global::Rocks.MemberIdentifier(4, "get_NonNullableReferenceType()")]
-						[global::Rocks.MemberIdentifier(5, "set_NonNullableReferenceType(@value)")]
+						[global::Rocks.MemberIdentifier(5, "set_NonNullableReferenceType(value)")]
 						public string NonNullableReferenceType
 						{
 							get
@@ -222,19 +222,19 @@ public static class PropertyInitCreateGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string>)@methodHandler.Method)(@value);
+												((global::System.Action<string>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableReferenceType(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NonNullableReferenceType(value)");
 											}
 											
 											break;
@@ -243,12 +243,12 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableReferenceType(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NonNullableReferenceType(value)");
 								}
 							}
 						}
 						[global::Rocks.MemberIdentifier(6, "get_NullableReferenceType()")]
-						[global::Rocks.MemberIdentifier(7, "set_NullableReferenceType(@value)")]
+						[global::Rocks.MemberIdentifier(7, "set_NullableReferenceType(value)")]
 						public string? NullableReferenceType
 						{
 							get
@@ -272,19 +272,19 @@ public static class PropertyInitCreateGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(@value))
+										if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::System.Action<string?>)@methodHandler.Method)(@value);
+												((global::System.Action<string?>)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableReferenceType(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_NullableReferenceType(value)");
 											}
 											
 											break;
@@ -293,7 +293,7 @@ public static class PropertyInitCreateGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableReferenceType(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_NullableReferenceType(value)");
 								}
 							}
 						}

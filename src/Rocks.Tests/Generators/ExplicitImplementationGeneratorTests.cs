@@ -369,7 +369,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::ILeft.get_Value()")]
-					[global::Rocks.MemberIdentifier(1, "global::ILeft.set_Value(@value)")]
+					[global::Rocks.MemberIdentifier(1, "global::ILeft.set_Value(value)")]
 					global::Values.Information global::ILeft.Value
 					{
 						get
@@ -393,19 +393,19 @@ public static class ExplicitImplementationGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value!);
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ILeft.set_Value(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::ILeft.set_Value(value)");
 										}
 										
 										break;
@@ -414,12 +414,12 @@ public static class ExplicitImplementationGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.set_Value(@value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::ILeft.set_Value(value)");
 							}
 						}
 					}
 					[global::Rocks.MemberIdentifier(2, "global::IRight.get_Value()")]
-					[global::Rocks.MemberIdentifier(3, "global::IRight.set_Value(@value)")]
+					[global::Rocks.MemberIdentifier(3, "global::IRight.set_Value(value)")]
 					global::Values.Information global::IRight.Value
 					{
 						get
@@ -443,19 +443,19 @@ public static class ExplicitImplementationGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(@value!);
+											((global::System.Action<global::Values.Information>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IRight.set_Value(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IRight.set_Value(value)");
 										}
 										
 										break;
@@ -464,7 +464,7 @@ public static class ExplicitImplementationGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.set_Value(@value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IRight.set_Value(value)");
 							}
 						}
 					}

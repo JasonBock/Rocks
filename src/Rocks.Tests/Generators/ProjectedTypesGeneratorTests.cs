@@ -839,7 +839,7 @@ public static class ProjectedTypesGeneratorTests
 						}
 						
 						[global::Rocks.MemberIdentifier(1, "get_Values()")]
-						[global::Rocks.MemberIdentifier(2, "set_Values(@value)")]
+						[global::Rocks.MemberIdentifier(2, "set_Values(value)")]
 						public global::System.Span<byte> Values
 						{
 							get
@@ -863,19 +863,19 @@ public static class ProjectedTypesGeneratorTests
 									var @foundMatch = false;
 									foreach (var @methodHandler in @methodHandlers)
 									{
-										if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte)@methodHandler.Expectations[0]).IsValid(@value!))
+										if (((global::MockTests.ProjectionsForIHaveInAndOutSpan.ArgForSpanOfbyte)@methodHandler.Expectations[0]).IsValid(value!))
 										{
 											@methodHandler.IncrementCallCount();
 											@foundMatch = true;
 											
 											if (@methodHandler.Method is not null)
 											{
-												((global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626)@methodHandler.Method)(@value!);
+												((global::MockTests.ProjectionsForIHaveInAndOutSpan.set_ValuesCallback_273510090488501594048307694596437261624168638626)@methodHandler.Method)(value!);
 											}
 											
 											if (!@foundMatch)
 											{
-												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Values(@value)");
+												throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Values(value)");
 											}
 											
 											break;
@@ -884,7 +884,7 @@ public static class ProjectedTypesGeneratorTests
 								}
 								else
 								{
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Values(@value)");
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Values(value)");
 								}
 							}
 						}

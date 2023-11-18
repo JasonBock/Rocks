@@ -412,7 +412,7 @@ public static class ShimBuilderGeneratorTests
 							}
 							else
 							{
-								return this.shimForIHaveDims[@dimKey, @dimValue];
+								return this.shimForIHaveDims[@dimKey!, @dimValue!];
 							}
 						}
 					}

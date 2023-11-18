@@ -361,7 +361,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(8, "get_Data()")]
-					[global::Rocks.MemberIdentifier(9, "set_Data(@value)")]
+					[global::Rocks.MemberIdentifier(9, "set_Data(value)")]
 					public override int Data
 					{
 						get
@@ -387,19 +387,19 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int>)@methodHandler.Method)(@value!);
+											((global::System.Action<int>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
 										}
 										
 										break;
@@ -408,7 +408,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								base.Data = @value!;
+								base.Data = value!;
 							}
 						}
 					}
@@ -630,7 +630,7 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					[global::Rocks.MemberIdentifier(2, "get_Data()")]
-					[global::Rocks.MemberIdentifier(3, "set_Data(@value)")]
+					[global::Rocks.MemberIdentifier(3, "set_Data(value)")]
 					public int Data
 					{
 						get
@@ -654,19 +654,19 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<int>)@methodHandler.Method)(@value!);
+											((global::System.Action<int>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
 										}
 										
 										break;
@@ -675,12 +675,12 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(@value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
 							}
 						}
 					}
 					[global::Rocks.MemberIdentifier(5, "global::IBase.get_Data()")]
-					[global::Rocks.MemberIdentifier(6, "global::IBase.set_Data(@value)")]
+					[global::Rocks.MemberIdentifier(6, "global::IBase.set_Data(value)")]
 					string global::IBase.Data
 					{
 						get
@@ -704,19 +704,19 @@ public static class HiddenMembersGeneratorTests
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(value!))
 									{
 										@methodHandler.IncrementCallCount();
 										@foundMatch = true;
 										
 										if (@methodHandler.Method is not null)
 										{
-											((global::System.Action<string>)@methodHandler.Method)(@value!);
+											((global::System.Action<string>)@methodHandler.Method)(value!);
 										}
 										
 										if (!@foundMatch)
 										{
-											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IBase.set_Data(@value)");
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::IBase.set_Data(value)");
 										}
 										
 										break;
@@ -725,7 +725,7 @@ public static class HiddenMembersGeneratorTests
 							}
 							else
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.set_Data(@value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IBase.set_Data(value)");
 							}
 						}
 					}
