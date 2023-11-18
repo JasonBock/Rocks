@@ -39,7 +39,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -49,7 +49,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -93,7 +93,7 @@ internal static class MockIndexerBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}";
+				return $"{direction}@{_.Name}!";
 			}));
 			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?

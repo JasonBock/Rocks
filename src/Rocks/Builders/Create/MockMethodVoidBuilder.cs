@@ -129,7 +129,6 @@ internal static class MockMethodVoidBuilder
 			// if the base method didn't throw an exception.
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
-				var requiresNullable = _.RequiresNullableAnnotation ? "!" : string.Empty;
 				var direction = _.RefKind switch
 				{
 					RefKind.Ref => "ref ",
@@ -137,7 +136,7 @@ internal static class MockMethodVoidBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}{requiresNullable}";
+				return $"{direction}@{_.Name}!";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
@@ -206,8 +205,8 @@ internal static class MockMethodVoidBuilder
 			{
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -218,8 +217,8 @@ internal static class MockMethodVoidBuilder
 
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -275,7 +274,7 @@ internal static class MockMethodVoidBuilder
 
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
-				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}" : $"@{_.Name}"));
+				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
 		writer.WriteLine(!method.IsGenericMethod ?
 			$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments});" :
 			$"@{namingContext["method"]}({methodArguments});");
