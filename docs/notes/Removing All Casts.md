@@ -102,53 +102,55 @@ This is where it would get tricky. I'd probably need to create something like th
 // In Rocks...
 public abstract class Expectations
 {
-	public void Verify()
-	{
-		if(this.WasInstanceInvoked)
-		{
-			var failures = new List<string>();
+  public void Verify()
+  {
+    if(this.WasInstanceInvoked)
+    {
+      var failures = new List<string>();
 
-			foreach (var pair in this.Handlers)
-			{
-				foreach (var handler in pair.Value)
-				{
-					foreach (var failure in handler.Verify())
-					{
-						var member = this.MockType!.GetMemberDescription(pair.Key);
+      foreach (var pair in this.Handlers)
+      {
+        foreach (var handler in pair.Value)
+        {
+          foreach (var failure in handler.Verify())
+          {
+            var member = this.MockType!.GetMemberDescription(pair.Key);
 
-						failures.Add(
-							$"Type: {typeof(T).FullName}, mock type: {this.MockType!.FullName}, member: {member}, message: {failure}");
-					}
-				}
-			}
+            failures.Add(
+              $"Type: {typeof(T).FullName}, mock type: {this.MockType!.FullName}, member: {member}, message: {failure}");
+          }
+        }
+      }
+    }
 
-			if (failures.Count > 0)
-			{
-				throw new VerificationException(failures);
-			}
-		}
-	}
-
-    protected abstract List<string> GetFailures();
-    
-	/// <summary>
-	/// This property is used by Rocks and is not intented to be used by developers.
-	/// </summary>
-	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
-	public Type? MockType { get; set; }
-
-	/// <summary>
-	/// This property is used by Rocks and is not intented to be used by developers.
-	/// </summary>
-	[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
-	public bool WasInstanceInvoked { get; set; }    
+    if (failures.Count > 0)
+    {
+      throw new VerificationException(failures);
+    }
+  }
 }
+
+protected abstract List<string> GetFailures();
+    
+/// <summary>
+/// This property is used by Rocks and is not intented to be used by developers.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+public Type? MockType { get; set; }
+
+/// <summary>
+/// This property is used by Rocks and is not intented to be used by developers.
+/// </summary>
+[EditorBrowsable(EditorBrowsableState.Never), Browsable(false)]
+public bool WasInstanceInvoked { get; set; }    
 
 // Maybe this is a file-scoped type.
 internal sealed class MockTypeExpectations
     : IExpectations
 {
-    // May want the capacity at 1, or 2, what's the best guess?
-    internal List<(HandlerInformation handler, Argument<int> a, Func<int, int>? callback, int returnValue)> Handlers1 { get; } = new(1);
+  // May want the capacity at 1, or 2, what's the best guess?
+  internal List<(HandlerInformation handler, Argument<int> a, Func<int, int>? callback, int returnValue)> Handlers1 { get; } = new(1);
 }
 ```
+
+This would take some more code gen work, and I should look at the cost of adding in more code gen, compared to what it saves when a mock is used. But it's also not just about perf cost. This also arguably makes things "correct". Currently, someone could create their own `Expectations<T>` instance that contains a bunch of bad objects that will not cast correctly in the mock when expectations are checked. This approach would remove that because the user couldn't do that anymore. 
