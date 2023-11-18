@@ -26,30 +26,30 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using SkiaSharp;
+		using DnsClient;
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<SKRegion>();
+		        var expectations = Rock.Create<IDnsQuery>();
 		    }
 		}
 		""",
-		[typeof(SkiaSharp.SKRegion), typeof(Uri)]);
+		[typeof(DnsClient.IDnsQuery)]);
 }
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		[typeof(GraphQL.Builders.ConnectionBuilder<>)],
-		[], new() { { typeof(GraphQL.Builders.ConnectionBuilder<>), new() { { "TSourceType", "object" } } } }));
+		[typeof(DnsClient.IDnsQuery)],
+		[typeof(DnsClient.IDnsQuery)], 
+		[]));
 
 static void TestWithTypes()
 {
 	var targetAssemblies = new Type[]
 	{
 #if INCLUDE_PASSING
-		/*
 		// .NET types
 		typeof(Dictionary<,>),
 		typeof(HttpMessageHandler),
@@ -111,9 +111,6 @@ static void TestWithTypes()
 		typeof(RabbitMQ.Client.AmqpTcpEndpoint),
 		typeof(RestSharp.BodyParameter),
 		typeof(Serilog.Core.IDestructuringPolicy),
-		*/
-		typeof(LanguageExt.FuncExtensions),
-		/*
 		typeof(Sigil.CatchBlock),
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 		typeof(SimpleInjector.ActivationException),
@@ -130,11 +127,11 @@ static void TestWithTypes()
 		typeof(Topshelf.Credentials),
 		typeof(Twilio.Base.Page<>),
 		typeof(Wasmtime.ActionResult),
-		*/
 #endif
 #if INCLUDE_FAILING
-		typeof(Aspose.Email.AlternateView),
+		//typeof(Aspose.Email.AlternateView),
 		typeof(GraphQL.AllowAnonymousAttribute),
+		typeof(LanguageExt.FuncExtensions),
 		typeof(Orleans.Grain),
 		typeof(ServiceStack.ActionExecExtensions),
 #endif

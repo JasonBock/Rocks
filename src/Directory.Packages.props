@@ -1,13 +1,13 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AngleSharp" Version="1.0.6" />
+    <PackageVersion Include="AngleSharp" Version="1.0.7" />
     <PackageVersion Include="Ardalis.GuardClauses" Version="4.2.0" />
     <PackageVersion Include="Aspose.Email" Version="23.10.0" />
     <PackageVersion Include="Autofac" Version="7.1.0" />
     <PackageVersion Include="AutoFixture" Version="4.18.0" />
     <PackageVersion Include="AutoMapper" Version="12.0.1" />
     <PackageVersion Include="Avalonia" Version="11.0.5" />
-    <PackageVersion Include="AWSSDK.Core" Version="3.7.300.3" />
+    <PackageVersion Include="AWSSDK.Core" Version="3.7.300.5" />
     <PackageVersion Include="Azure.Core" Version="1.36.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.0" />
     <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.17.0" />
@@ -42,13 +42,13 @@
     <PackageVersion Include="LLVMSharp" Version="16.0.0" />
     <PackageVersion Include="MassTransit" Version="8.1.3-develop.1597" />
     <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageVersion Include="MediatR" Version="12.1.1" />
+    <PackageVersion Include="MediatR" Version="12.2.0" />
     <PackageVersion Include="MessagePack" Version="2.6.100-alpha" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.23525.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Common" Version="4.8.0-3.final" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0-3.final" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit" Version="1.1.1" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0-preview.23525.2" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
@@ -58,13 +58,14 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.9.0-preview-23531-01" />
     <PackageVersion Include="Mono.Cecil" Version="0.11.5" />
     <PackageVersion Include="Moq" Version="4.18.4" />
+    <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageVersion Include="Ninject" Version="4.0.0-beta.1" />
     <PackageVersion Include="NodaTime" Version="3.1.9" />
     <PackageVersion Include="Npgsql" Version="7.0.4" />
     <PackageVersion Include="NServiceBus" Version="8.1.1" />
     <PackageVersion Include="NSubstitute" Version="5.0.0" />
-    <PackageVersion Include="NuGet.Common" Version="6.7.0" />
-    <PackageVersion Include="NuGet.Frameworks" Version="6.7.0" />
+    <PackageVersion Include="NuGet.Common" Version="6.8.0" />
+    <PackageVersion Include="NuGet.Frameworks" Version="6.8.0" />
     <PackageVersion Include="NUnit" Version="3.14.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
@@ -73,7 +74,7 @@
     <PackageVersion Include="Pulumi" Version="3.59.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.0.0-alpha.0" />
     <PackageVersion Include="RestSharp" Version="110.2.1-alpha.0.16" />
-    <PackageVersion Include="Serilog" Version="3.1.1" />
+    <PackageVersion Include="Serilog" Version="3.1.2-dev-02097" />
     <PackageVersion Include="ServiceStack" Version="6.11.0" />
     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
     <PackageVersion Include="Shouldly" Version="4.2.1" />
@@ -83,7 +84,7 @@
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.0.2" />
     <PackageVersion Include="SkiaSharp" Version="2.88.6" />
     <PackageVersion Include="StackExchange.Redis" Version="2.7.4" />
-    <PackageVersion Include="Stripe.net" Version="43.3.0-beta.1" />
+    <PackageVersion Include="Stripe.net" Version="43.4.0-beta.1" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.87" />
     <PackageVersion Include="System.Reactive" Version="6.0.1-preview.1" />
