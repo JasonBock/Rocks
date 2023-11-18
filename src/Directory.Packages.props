@@ -24,11 +24,13 @@
     <PackageVersion Include="Csla" Version="7.0.2" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
     <PackageVersion Include="Dapper" Version="2.1.21" />
+    <PackageVersion Include="DiffEngine" Version="13.0.0" />
     <PackageVersion Include="DnsClient" Version="1.7.0" />
     <PackageVersion Include="Elasticsearch.Net" Version="7.17.5" />
     <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="6.0.3" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0-alpha.3" />
     <PackageVersion Include="FluentValidation" Version="11.8.0" />
+    <PackageVersion Include="Flurl" Version="3.0.7" />
     <PackageVersion Include="Fody" Version="6.8.0" />
     <PackageVersion Include="Google.Apis" Version="1.64.0" />
     <PackageVersion Include="Google.Protobuf" Version="3.23.4" />
@@ -49,9 +51,11 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0-3.final" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit" Version="1.1.1" />
     <PackageVersion Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.2" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.10" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="7.2.3" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
@@ -69,10 +73,12 @@
     <PackageVersion Include="NUnit" Version="3.14.0" />
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageVersion Include="Polly" Version="7.2.4" />
+    <PackageVersion Include="Polly" Version="8.2.0" />
     <PackageVersion Include="Proto.Actor" Version="1.5.1-alpha.0.5" />
     <PackageVersion Include="Pulumi" Version="3.59.0" />
+    <PackageVersion Include="Quartz" Version="3.8.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.0.0-alpha.0" />
+    <PackageVersion Include="Refit" Version="7.0.0" />
     <PackageVersion Include="RestSharp" Version="110.2.1-alpha.0.16" />
     <PackageVersion Include="Serilog" Version="3.1.2-dev-02097" />
     <PackageVersion Include="ServiceStack" Version="6.11.0" />
@@ -87,6 +93,7 @@
     <PackageVersion Include="Stripe.net" Version="43.4.0-beta.1" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
     <PackageVersion Include="System.IO.Abstractions" Version="19.2.87" />
+    <PackageVersion Include="System.Memory.Data" Version="8.0.0" />
     <PackageVersion Include="System.Reactive" Version="6.0.1-preview.1" />
     <PackageVersion Include="System.Reflection.Metadata" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.0" />

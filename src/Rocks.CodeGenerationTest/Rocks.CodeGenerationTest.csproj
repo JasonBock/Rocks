@@ -36,11 +36,13 @@
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
 		<PackageReference Include="Dapper" />
+		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
 		<PackageReference Include="Elasticsearch.Net" />
 		<PackageReference Include="EntityFrameworkCore.Exceptions.Common" />
 		<PackageReference Include="FluentAssertions" />
 		<PackageReference Include="FluentValidation" />
+		<PackageReference Include="Flurl" />
 		<PackageReference Include="Google.Apis" />
 		<PackageReference Include="GraphQL" />
 		<PackageReference Include="Grpc.Core.Api" />
@@ -54,9 +56,16 @@
 		<PackageReference Include="MediatR" />
 		<PackageReference Include="MessagePack" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<!--
+		I can't reference this package due to a TypeLoadException.
+		I reported the issue: 
+		https://github.com/dotnet/SqlClient/issues/2228
+		-->
+		<!--<PackageReference Include="Microsoft.Data.SqlClient" />-->
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Microsoft.OpenApi" />
 		<PackageReference Include="Microsoft.Orleans.Core" />
 		<PackageReference Include="Microsoft.Quantum.Standard" />
 		<PackageReference Include="Mono.Cecil" />
@@ -65,7 +74,9 @@
 		<PackageReference Include="NuGet.Common" />
 		<PackageReference Include="Proto.Actor" />
 		<PackageReference Include="Pulumi" />
+		<PackageReference Include="Quartz" />
 		<PackageReference Include="RabbitMQ.Client" />
+		<PackageReference Include="Refit" />
 		<PackageReference Include="RestSharp" />
 		<PackageReference Include="Serilog" />
 		<PackageReference Include="ServiceStack" />
