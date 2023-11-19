@@ -140,6 +140,53 @@ internal static class IMethodSymbolExtensions
 
 	internal static MethodMatch Match(this IMethodSymbol self, IMethodSymbol other)
 	{
+		static bool DoTypesMatch(ITypeSymbol left, ITypeSymbol right)
+		{
+			var leftType = left.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+			var rightType = right.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+
+			var symbolFormatterNoGenerics = SymbolDisplayFormat.FullyQualifiedFormat
+				.WithGenericsOptions(SymbolDisplayGenericsOptions.None)
+				.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+			if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
+				rightType.ToDisplayString(symbolFormatterNoGenerics))
+			{
+				return false;
+			}
+			else
+			{
+				// Now we know the type name sans generics are the same. Now we check each type parameter
+				// if the type is generic. And we need to be recursive about it.
+				if (left is INamedTypeSymbol namedLeft && right is INamedTypeSymbol namedRight)
+				{
+					if (namedLeft.TypeParameters.Length != namedRight.TypeParameters.Length)
+					{
+						return false;
+					}
+					else
+					{
+						for (var i = 0; i < namedLeft.TypeParameters.Length; i++)
+						{
+							if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
+								namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter))
+							{
+								// At this point, we know that the type arguments have not been provided with types
+								// i.e. they're "open". Therefore, we can continue, because comparing names like
+								// "T" and "U" is meaningless.
+								if (!SymbolEqualityComparer.Default.Equals(namedLeft.TypeArguments[i], namedRight.TypeArguments[i]))
+								{
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			return true;
+		}
+
 		if (self.Name != other.Name)
 		{
 			return MethodMatch.None;
@@ -167,8 +214,7 @@ internal static class IMethodSymbolExtensions
 				if (selfParameter.Type is IArrayTypeSymbol selfArray && otherParameter.Type is IArrayTypeSymbol otherArray)
 				{
 					if (selfArray.Rank != otherArray.Rank ||
-						selfArray.ElementType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
-							otherArray.ElementType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName())
+						!DoTypesMatch(selfArray.ElementType, otherArray.ElementType))
 					{
 						return MethodMatch.None;
 					}
@@ -177,19 +223,32 @@ internal static class IMethodSymbolExtensions
 						continue;
 					}
 				}
-				else if (selfParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() !=
-					otherParameter.Type.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ||
-					!(selfParameter.RefKind == otherParameter.RefKind ||
-						(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
-						(selfParameter.RefKind == RefKind.Out && otherParameter.RefKind == RefKind.Ref)) ||
+				else if (!(selfParameter.RefKind == otherParameter.RefKind ||
+					(selfParameter.RefKind == RefKind.Ref && otherParameter.RefKind == RefKind.Out) ||
+					(selfParameter.RefKind == RefKind.Out && otherParameter.RefKind == RefKind.Ref)) ||
 					selfParameter.IsParams != otherParameter.IsParams)
 				{
 					return MethodMatch.None;
 				}
+				else
+				{
+					var selfParameterType = selfParameter.Type;
+					var otherParameterType = otherParameter.Type;
+
+					if ((selfParameterType.TypeKind == TypeKind.TypeParameter && otherParameterType.TypeKind == TypeKind.TypeParameter) ||
+						DoTypesMatch(selfParameterType, otherParameterType))
+					{
+						// These are type parameters so we don't need to compare them, or the types match, move on.
+						continue;
+					}
+					else
+					{
+						return MethodMatch.None;
+					}
+				}
 			}
 
-			return self.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ==
-				other.ReturnType.WithNullableAnnotation(NullableAnnotation.NotAnnotated).GetFullyQualifiedName() ?
+			return DoTypesMatch(self.ReturnType, other.ReturnType) ?
 				MethodMatch.Exact : MethodMatch.DifferByReturnTypeOnly;
 		}
 	}
