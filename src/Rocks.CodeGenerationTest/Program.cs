@@ -26,22 +26,44 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using DnsClient;
+		using System.Threading;
+		using System.Threading.Tasks;
+		
+		#nullable enable
+
+		public class ConnectionAndTransactionHolder { }
+
+		public abstract class BaseClass
+		{
+			protected abstract Task<T> ExecuteInLock<T>(
+				string? lockName,
+				Func<ConnectionAndTransactionHolder, Task<T>> txCallback,
+				CancellationToken cancellationToken = default);
+		}
+
+		public class SubClass
+			: BaseClass
+		{
+			protected override Task<T> ExecuteInLock<T>(
+				string? lockName,
+				Func<ConnectionAndTransactionHolder, Task<T>> txCallback,
+				CancellationToken cancellationToken = default) => null!;
+		}
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<IDnsQuery>();
+		        var expectations = Rock.Create<SubClass>();
 		    }
 		}
 		""",
-		[typeof(DnsClient.IDnsQuery)]);
+		[]);
 }
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		[typeof(GraphQL.Builders.ConnectionBuilder<>)],
+		[typeof(Quartz.Impl.AdoJobStore.JobStoreCMT)],
 		[typeof(GraphQL.Builders.ConnectionBuilder<>)], 
 		new()
 		{
@@ -103,6 +125,7 @@ static void TestWithTypes()
 		typeof(Humanizer.ByteSizeExtensions),
 		typeof(ICSharpCode.SharpZipLib.SharpZipBaseException),
 		typeof(IdentityModel.Base64Url),
+		typeof(LanguageExt.FuncExtensions),
 		typeof(LLVMSharp.AddrSpaceCastInst),
 		typeof(MassTransit.AbstractUriException),
 		typeof(MathNet.Numerics.AppSwitches),
@@ -144,9 +167,8 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		//typeof(Aspose.Email.AlternateView),
-		typeof(LanguageExt.FuncExtensions),
-		typeof(Orleans.Grain),
-		typeof(ServiceStack.ActionExecExtensions),
+		//typeof(Orleans.Grain),
+		//typeof(ServiceStack.ActionExecExtensions),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 

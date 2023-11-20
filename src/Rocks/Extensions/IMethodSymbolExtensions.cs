@@ -142,24 +142,24 @@ internal static class IMethodSymbolExtensions
 	{
 		static bool DoTypesMatch(ITypeSymbol left, ITypeSymbol right)
 		{
-			var leftType = left.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
-			var rightType = right.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
-
-			var symbolFormatterNoGenerics = SymbolDisplayFormat.FullyQualifiedFormat
-				.WithGenericsOptions(SymbolDisplayGenericsOptions.None)
-				.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-
-			if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
-				rightType.ToDisplayString(symbolFormatterNoGenerics))
+			if (left is INamedTypeSymbol namedLeft && right is INamedTypeSymbol namedRight)
 			{
-				return false;
-			}
-			else
-			{
-				// Now we know the type name sans generics are the same. Now we check each type parameter
-				// if the type is generic. And we need to be recursive about it.
-				if (left is INamedTypeSymbol namedLeft && right is INamedTypeSymbol namedRight)
+				var leftType = namedLeft.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+				var rightType = namedRight.WithNullableAnnotation(NullableAnnotation.NotAnnotated);
+
+				var symbolFormatterNoGenerics = SymbolDisplayFormat.FullyQualifiedFormat
+					.WithGenericsOptions(SymbolDisplayGenericsOptions.None)
+					.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
+
+				if (leftType.ToDisplayString(symbolFormatterNoGenerics) !=
+					rightType.ToDisplayString(symbolFormatterNoGenerics))
 				{
+					return false;
+				}
+				else
+				{
+					// Now we know the type name sans generics are the same. Now we check each type parameter
+					// if the type is generic. And we need to be recursive about it.
 					if (namedLeft.TypeParameters.Length != namedRight.TypeParameters.Length)
 					{
 						return false;
@@ -171,20 +171,24 @@ internal static class IMethodSymbolExtensions
 							if (!(namedLeft.TypeArguments[i].TypeKind == TypeKind.TypeParameter &&
 								namedRight.TypeArguments[i].TypeKind == TypeKind.TypeParameter))
 							{
-								// At this point, we know that the type arguments have not been provided with types
-								// i.e. they're "open". Therefore, we can continue, because comparing names like
+								// At this point, we know that the type arguments have been provided with types
+								// i.e. they're "closed". Therefore, we can continue, because comparing names like
 								// "T" and "U" is meaningless.
-								if (!SymbolEqualityComparer.Default.Equals(namedLeft.TypeArguments[i], namedRight.TypeArguments[i]))
+								if (!DoTypesMatch(namedLeft.TypeArguments[i], namedRight.TypeArguments[i]))
 								{
 									return false;
 								}
 							}
 						}
 					}
+
+					return true;
 				}
 			}
-
-			return true;
+			else
+			{
+				return SymbolEqualityComparer.Default.Equals(left, right);
+			}
 		}
 
 		if (self.Name != other.Name)
