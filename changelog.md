@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - No longer emitting `[Nullable]` or `[NullableContext]` attributes (issue [#273](https://github.com/JasonBock/Rocks/issues/273))
 - Using a type with nullable types will now create a valid file name (issue [#275](https://github.com/JasonBock/Rocks/issues/275))
 - Fixed an issue with parameters marked with `[AllowNull]` and had `default` as the default value (issue [#279](https://github.com/JasonBock/Rocks/issues/279))
+- Overriding methods that change the name of generic parameters are now handled correctly (issue [#280](https://github.com/JasonBock/Rocks/issues/280))
 
 ## [7.2.0] - 2023-11-10
 

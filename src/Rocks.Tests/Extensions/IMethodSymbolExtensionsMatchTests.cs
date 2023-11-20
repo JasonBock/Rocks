@@ -14,6 +14,50 @@ public static class IMethodSymbolExtensionsMatchTests
 	private const string MethodTwo = nameof(IMethodSymbolExtensionsMatchTests.MethodTwo);
 
 	[Test]
+	public static void MatchWhenMethodsDifferByGenericParameterName()
+	{
+		var code =
+			$$"""
+			public class Generic<T> { }
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}<B>(Generic<B> a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}<S>(Generic<S> a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
+	public static void MatchWhenMethodsDifferByGenericParameterNameRecursive()
+	{
+		var code =
+			$$"""
+			public class KeyValue<K, P> { }
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassOne}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}<B, S>(KeyValue<B, KeyValue<B, S>> a) { }
+			}
+
+			public class {{IMethodSymbolExtensionsMatchTests.ClassTwo}}
+			{
+				public void {{IMethodSymbolExtensionsMatchTests.MethodOne}}<B, Q>(KeyValue<B, KeyValue<B, Q>> a) { }
+			}
+			""";
+
+		Assert.That(IMethodSymbolExtensionsMatchTests.MatchMethods(code, IMethodSymbolExtensionsMatchTests.MethodOne, IMethodSymbolExtensionsMatchTests.MethodOne),
+			Is.EqualTo(MethodMatch.Exact));
+	}
+
+	[Test]
 	public static void MatchWhenMethodsDifferByParameterPointerTypeNullability()
 	{
 		var code =
