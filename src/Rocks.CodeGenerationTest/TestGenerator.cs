@@ -15,7 +15,7 @@ internal static class TestGenerator
 	These diagnostics relate to:
 	
 	* Obsolete members and types (CS0612, CS0618, CS0619, CS0672, CS0809, SYSLIB0017, SYSLIB0050, SYSLIB0051)
-	* Nullability (CS8610, CS8765)
+	* Nullability (CS8610, CS8765, CS8613)
 	* Runtime policy (CS1701)
 	* UTF7 encoding (SYSLIB0001)
 	* Code access security (SYSLIB0003)
@@ -32,6 +32,7 @@ internal static class TestGenerator
 		{ "CS0809", ReportDiagnostic.Suppress },
 		{ "CS1701", ReportDiagnostic.Info },
 		{ "CS8610", ReportDiagnostic.Suppress },
+		{ "CS8613", ReportDiagnostic.Suppress },
 		{ "CS8765", ReportDiagnostic.Suppress },
 		{ "SYSLIB0001", ReportDiagnostic.Info },
 		{ "SYSLIB0003", ReportDiagnostic.Info },

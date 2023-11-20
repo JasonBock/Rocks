@@ -63,7 +63,7 @@ static void TestWithCode()
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		[typeof(Quartz.Impl.AdoJobStore.JobStoreCMT)],
+		[typeof(GraphQL.DataLoader.IDataLoaderResult<>)],
 		[typeof(GraphQL.Builders.ConnectionBuilder<>)], 
 		new()
 		{
