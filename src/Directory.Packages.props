@@ -55,6 +55,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.0-preview.1.23557.2" />
     <PackageVersion Include="Microsoft.OpenApi" Version="1.6.10" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="7.2.3" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />

@@ -65,6 +65,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.Logging" />
+		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
 		<PackageReference Include="Microsoft.OpenApi" />
 		<PackageReference Include="Microsoft.Orleans.Core" />
 		<PackageReference Include="Microsoft.Quantum.Standard" />

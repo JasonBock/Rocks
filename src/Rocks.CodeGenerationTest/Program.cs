@@ -135,6 +135,7 @@ static void TestWithTypes()
 		typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource),
 		typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope),
 		typeof(Microsoft.Extensions.Logging.LogDefineOptions),
+		typeof(Microsoft.Extensions.ServiceDiscovery.ServiceEndPointResolver),
 		typeof(Microsoft.OpenApi.Any.AnyType),
 		typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle),
 		typeof(Mono.Cecil.FixedSysStringMarshalInfo),
