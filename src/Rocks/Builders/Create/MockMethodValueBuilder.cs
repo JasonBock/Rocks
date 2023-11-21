@@ -144,6 +144,7 @@ internal static class MockMethodValueBuilder
 			// Note that if the method has [DoesNotReturn], we'll disregard
 			// the return value and throw DoesNotReturnException
 			// if the base method didn't throw an exception.
+			var index = -1;
 			var passedParameter = string.Join(", ", method.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
@@ -153,7 +154,10 @@ internal static class MockMethodValueBuilder
 					RefKind.In => "in ",
 					_ => string.Empty
 				};
-				return $"{direction}@{_.Name}!";
+
+				index++;
+
+				return $"{(method.OverriddenMethod is not null ? method.OverriddenMethod.Parameters[index].Name : _.Name)}: {direction}@{_.Name}!";
 			}));
 			var target = method.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{method.ContainingType.FlattenedName}" : "base";
