@@ -13,6 +13,7 @@ internal static class MappedTypes
 	internal static Dictionary<Type, Dictionary<string, string>> GetMappedTypes() =>
 		new Dictionary<Type, Dictionary<string, string>>()
 			.AddItems(AngleSharpMappings.GetMappedTypes())
+			.AddItems(AspireMappings.GetMappedTypes())
 			//.AddItems(AsposeMappings.GetMappedTypes())
 			.AddItems(AutoMapperMappings.GetMappedTypes())
 			.AddItems(AvaloniaMappings.GetMappedTypes())

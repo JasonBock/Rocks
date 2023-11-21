@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" />
 		<PackageReference Include="Ardalis.GuardClauses" />
+		<PackageReference Include="Aspire.Hosting" />
 		<!--
 		I'm not referencing Aspose.Email right now because of this:
 		https://github.com/JasonBock/Rocks/issues/281

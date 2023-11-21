@@ -92,6 +92,7 @@ static void TestWithTypes()
 		// NuGet references
 		typeof(AngleSharp.BrowsingContext),
 		typeof(Ardalis.GuardClauses.Guard),
+		typeof(Aspire.Hosting.ContainerResourceBuilderExtensions),
 		typeof(Autofac.ContainerBuilder),
 		typeof(AutoFixture.AutoPropertiesTarget),
 		typeof(AutoMapper.AutoMapAttribute),

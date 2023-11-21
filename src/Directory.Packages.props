@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageVersion Include="AngleSharp" Version="1.0.7" />
     <PackageVersion Include="Ardalis.GuardClauses" Version="4.2.0" />
+    <PackageVersion Include="Aspire.Hosting" Version="8.0.0-preview.1.23557.2" />
     <PackageVersion Include="Aspose.Email" Version="23.10.0" />
     <PackageVersion Include="Autofac" Version="7.1.0" />
     <PackageVersion Include="AutoFixture" Version="4.18.0" />
