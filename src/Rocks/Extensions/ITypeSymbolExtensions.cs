@@ -327,8 +327,10 @@ internal static class ITypeSymbolExtensions
 				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
 					_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
+			// We don't want to include non-virtual static methods.
+			// Later on in MockModel I make a check for static abstract methods.
 			foreach (var selfMethod in self.GetMembers().OfType<IMethodSymbol>()
-				.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
+				.Where(_ => !(_.IsStatic && !_.IsAbstract && !_.IsVirtual) && _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 			{
 				if (!selfMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
 					selfMethod.IsAbstract)
@@ -370,7 +372,7 @@ internal static class ITypeSymbolExtensions
 			foreach (var selfBaseInterface in self.AllInterfaces)
 			{
 				foreach (var selfBaseMethod in selfBaseInterface.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
+					.Where(_ => !(_.IsStatic && !_.IsAbstract && !_.IsVirtual) && _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName))
 				{
 					if (!selfBaseMethod.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{
@@ -581,7 +583,7 @@ internal static class ITypeSymbolExtensions
 		if (self.TypeKind == TypeKind.Interface)
 		{
 			foreach (var selfProperty in self.GetMembers().OfType<IPropertySymbol>()
-				.Where(_ => (_.IsIndexer || _.CanBeReferencedByName)))
+				.Where(_ => !(_.IsStatic && !_.IsAbstract && !_.IsVirtual) && (_.IsIndexer || _.CanBeReferencedByName)))
 			{
 				if (!selfProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 				{
@@ -612,7 +614,7 @@ internal static class ITypeSymbolExtensions
 			foreach (var selfBaseInterface in self.AllInterfaces)
 			{
 				foreach (var selfBaseProperty in selfBaseInterface.GetMembers().OfType<IPropertySymbol>()
-					.Where(_ => (_.IsIndexer || _.CanBeReferencedByName)))
+					.Where(_ => !(_.IsStatic && !_.IsAbstract && !_.IsVirtual) && (_.IsIndexer || _.CanBeReferencedByName)))
 				{
 					if (!selfBaseProperty.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol))
 					{

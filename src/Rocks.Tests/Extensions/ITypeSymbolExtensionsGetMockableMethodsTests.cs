@@ -134,6 +134,37 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 	}
 
 	[Test]
+	public static void GetMockableMethodsWithStaticNonVirtualMethodsOnInterface()
+	{
+		const string targetMethodName = "Foo";
+		const string targetTypeName = "ITest";
+
+		var code =
+			$$"""
+			public interface {{targetTypeName}}
+			{
+				public static string ToString(IRequest request) => "";
+				public static string ToMethodCallString(IRequest request) => "";
+				void {{targetMethodName}}();
+			}
+			""";
+
+		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var memberIdentifier = 0u;
+		var shims = new HashSet<ITypeSymbol>();
+		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
+			var methods = result.Results;
+			Assert.That(methods, Has.Length.EqualTo(1));
+			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
+			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.No));
+		});
+	}
+
+	[Test]
 	public static void GetMockableMethodsWhenInterfaceHasBaseInterface()
 	{
 		const string baseMethodName = "Foo";

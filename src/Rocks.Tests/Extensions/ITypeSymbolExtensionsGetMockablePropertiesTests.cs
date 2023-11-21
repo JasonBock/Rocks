@@ -9,6 +9,36 @@ namespace Rocks.Tests.Extensions;
 public static class ITypeSymbolExtensionsGetMockablePropertiesTests
 {
 	[Test]
+	public static void GetMockablePropertiesFromInterfaceWithStaticNonVirtualProperties()
+	{
+		const string targetTypeName = "ITest";
+
+		var code =
+			$$"""
+			public interface {{targetTypeName}}
+			{
+				static int StaticData { get; init; }
+				int Data { get; init; }
+			}
+			""";
+
+		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockablePropertiesTests.GetTypeSymbol(code, targetTypeName);
+		var memberIdentifier = 0u;
+		var shims = new HashSet<ITypeSymbol>();
+		var result = typeSymbol.GetMockableProperties(typeSymbol.ContainingAssembly, shims, ref memberIdentifier);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(result.InaccessibleAbstractMembers, Is.Empty);
+			var properties = result.Results;
+			Assert.That(properties, Has.Length.EqualTo(1));
+
+			var dataProperty = properties.Single(_ => _.Value.Name == "Data");
+			Assert.That(dataProperty.Accessors, Is.EqualTo(PropertyAccessor.GetAndInit));
+		});
+	}
+
+	[Test]
 	public static void GetMockablePropertiesWithInit()
 	{
 		const string targetTypeName = "Test";

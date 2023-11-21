@@ -65,60 +65,10 @@ public static class InterfaceGeneratorTests
 						this.handlers = @expectations.Handlers;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "string ToString(global::IRequest @request)")]
-					public string ToString(global::IRequest @request)
-					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
-						{
-							foreach (var @methodHandler in @methodHandlers)
-							{
-								if (((global::Rocks.Argument<global::IRequest>)@methodHandler.Expectations[0]).IsValid(@request!))
-								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<global::IRequest, string>)@methodHandler.Method)(@request!) :
-										((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
-									return @result!;
-								}
-							}
-							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string ToString(global::IRequest @request)");
-						}
-						else
-						{
-							return this.shimForIRequest.ToString(@request!);
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(1, "string ToMethodCallString(global::IRequest @request)")]
-					public string ToMethodCallString(global::IRequest @request)
-					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
-						{
-							foreach (var @methodHandler in @methodHandlers)
-							{
-								if (((global::Rocks.Argument<global::IRequest>)@methodHandler.Expectations[0]).IsValid(@request!))
-								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<global::IRequest, string>)@methodHandler.Method)(@request!) :
-										((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
-									return @result!;
-								}
-							}
-							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string ToMethodCallString(global::IRequest @request)");
-						}
-						else
-						{
-							return this.shimForIRequest.ToMethodCallString(@request!);
-						}
-					}
-					
-					[global::Rocks.MemberIdentifier(2, "void AddInvokeMethodOptions(int @options)")]
+					[global::Rocks.MemberIdentifier(0, "void AddInvokeMethodOptions(int @options)")]
 					public void AddInvokeMethodOptions(int @options)
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
 							var @foundMatch = false;
 							
@@ -153,20 +103,10 @@ public static class InterfaceGeneratorTests
 			
 			internal static class MethodExpectationsOfIRequestExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::IRequest, global::System.Func<global::IRequest, string>, string> ToString(this global::Rocks.Expectations.MethodExpectations<global::IRequest> @self, global::Rocks.Argument<global::IRequest> @request)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@request);
-					return new global::Rocks.MethodAdornments<global::IRequest, global::System.Func<global::IRequest, string>, string>(@self.Add<string>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @request }));
-				}
-				internal static global::Rocks.MethodAdornments<global::IRequest, global::System.Func<global::IRequest, string>, string> ToMethodCallString(this global::Rocks.Expectations.MethodExpectations<global::IRequest> @self, global::Rocks.Argument<global::IRequest> @request)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@request);
-					return new global::Rocks.MethodAdornments<global::IRequest, global::System.Func<global::IRequest, string>, string>(@self.Add<string>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @request }));
-				}
 				internal static global::Rocks.MethodAdornments<global::IRequest, global::System.Action<int>> AddInvokeMethodOptions(this global::Rocks.Expectations.MethodExpectations<global::IRequest> @self, global::Rocks.Argument<int> @options)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@options);
-					return new global::Rocks.MethodAdornments<global::IRequest, global::System.Action<int>>(@self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @options }));
+					return new global::Rocks.MethodAdornments<global::IRequest, global::System.Action<int>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @options }));
 				}
 			}
 			

@@ -141,6 +141,7 @@ static void TestWithTypes()
 		typeof(Ninject.ActivationException),
 		typeof(NodaTime.AmbiguousTimeException),
 		typeof(NuGet.Common.ActivityCorrelationId),
+		typeof(Orleans.Grain),
 		typeof(Proto.ActorContextDecorator),
 		typeof(Pulumi.Alias),
 		typeof(Quartz.AdoProviderExtensions),
@@ -167,7 +168,6 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		//typeof(Aspose.Email.AlternateView),
-		//typeof(Orleans.Grain),
 		//typeof(ServiceStack.ActionExecExtensions),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
