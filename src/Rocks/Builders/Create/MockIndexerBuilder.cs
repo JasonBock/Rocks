@@ -86,7 +86,6 @@ internal static class MockIndexerBuilder
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
-			var index = -1;
 			var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
@@ -95,8 +94,7 @@ internal static class MockIndexerBuilder
 					_ => string.Empty
 				};
 
-				index++;
-				return $"{(indexer.OverriddenProperty is not null ? indexer.OverriddenProperty.Parameters[index].Name : _.Name)}: {direction}@{_.Name}!";
+				return $"{_.Name}: {direction}@{_.Name}!";
 			}));
 			var refReturn = indexer.ReturnsByRef || indexer.ReturnsByRefReadOnly ? "ref " : string.Empty;
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
@@ -204,7 +202,6 @@ internal static class MockIndexerBuilder
 			// We'll do this as well for interfaces with a DIM through a shim.
 			// If something like this is added in the future, then I'll revisit this:
 			// https://github.com/dotnet/csharplang/issues/2337
-			var index = -1;
 			var parameters = string.Join(", ", indexer.Parameters.Select(_ =>
 			{
 				var direction = _.RefKind switch
@@ -213,8 +210,7 @@ internal static class MockIndexerBuilder
 					_ => string.Empty
 				};
 
-				index++;
-				return $"{(indexer.OverriddenProperty is not null ? indexer.OverriddenProperty.Parameters[index].Name : _.Name)}: {direction}@{_.Name}!";
+				return $"{_.Name}: {direction}@{_.Name}!";
 			}));
 			var target = indexer.ContainingType.TypeKind == TypeKind.Interface ?
 				$"this.shimFor{indexer.ContainingType.FlattenedName}" : "base";

@@ -10,11 +10,8 @@ internal sealed record MethodModel
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 		RequiresOverride requiresOverride, uint memberIdentifier)
 	{
-		(this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier, this.OverriddenMethod) =
-			(mockType, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier,
-				method.OverriddenMethod is not null ?
-					new MethodModel(method.OverriddenMethod, mockType, compilation, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier) :
-					null);
+		(this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =
+			(mockType, requiresExplicitInterfaceImplementation, requiresOverride, memberIdentifier);
 
 		this.ContainingType = new TypeReferenceModel(method.ContainingType, compilation);
 
@@ -112,7 +109,6 @@ internal sealed record MethodModel
 	internal MethodKind MethodKind { get; }
 	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
-	internal MethodModel? OverriddenMethod { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
 	internal string? ProjectedCallbackDelegateName { get; }

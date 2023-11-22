@@ -26,35 +26,25 @@ static void TestWithCode()
 		"""
 		using Rocks;
 		using System;
-		using System.Threading;
-		using System.Threading.Tasks;
 		
 		#nullable enable
 
-		public class ConnectionAndTransactionHolder { }
-
-		public abstract class BaseClass
+		public abstract class GeneratorBase
 		{
-			protected abstract Task<T> ExecuteInLock<T>(
-				string? lockName,
-				Func<ConnectionAndTransactionHolder, Task<T>> txCallback,
-				CancellationToken cancellationToken = default);
+			protected abstract string GetBuildArtifactsDirectoryPath(string assemblyLocation, string programName);
 		}
 
-		public class SubClass
-			: BaseClass
+		public class Generator
+			: GeneratorBase
 		{
-			protected override Task<T> ExecuteInLock<T>(
-				string? lockName,
-				Func<ConnectionAndTransactionHolder, Task<T>> txCallback,
-				CancellationToken cancellationToken = default) => null!;
+			protected override string GetBuildArtifactsDirectoryPath(string buildPartition, string programName) => "";
 		}
 
 		public static class Test
 		{
 		    public static void Go()
 		    {
-		        var expectations = Rock.Create<SubClass>();
+		        var expectations = Rock.Create<Generator>();
 		    }
 		}
 		""",
@@ -63,18 +53,9 @@ static void TestWithCode()
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		[typeof(GraphQL.DataLoader.IDataLoaderResult<>)],
-		[typeof(GraphQL.Builders.ConnectionBuilder<>)], 
-		new()
-		{
-			{
-				typeof(GraphQL.Builders.ConnectionBuilder<>),
-				new()
-				{
-					{ "TSourceType", "object" }
-				}
-			}
-		}));
+		[typeof(BenchmarkDotNet.Toolchains.Roslyn.Generator)],
+		[],
+		[]));
 
 static void TestWithTypes()
 {
@@ -151,6 +132,7 @@ static void TestWithTypes()
 		typeof(Refit.AliasAsAttribute),
 		typeof(RestSharp.BodyParameter),
 		typeof(Serilog.Core.IDestructuringPolicy),
+		typeof(ServiceStack.ActionExecExtensions),
 		typeof(Sigil.CatchBlock),
 		typeof(Silk.NET.Core.Attributes.CountAttribute),
 		typeof(SimpleInjector.ActivationException),
@@ -170,7 +152,6 @@ static void TestWithTypes()
 #endif
 #if INCLUDE_FAILING
 		//typeof(Aspose.Email.AlternateView),
-		//typeof(ServiceStack.ActionExecExtensions),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 

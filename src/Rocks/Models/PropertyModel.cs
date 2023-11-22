@@ -10,11 +10,8 @@ internal sealed record PropertyModel
 		RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 		PropertyAccessor accessors, uint memberIdentifier)
 	{
-		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier, this.OverriddenProperty) =
-			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier,
-				property.OverriddenProperty is not null ?
-					new PropertyModel(property.OverriddenProperty, mockType, compilation, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier) :
-					null);
+		(this.Type, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =
+			(new TypeReferenceModel(property.Type, compilation), mockType, requiresExplicitInterfaceImplementation, requiresOverride, accessors, memberIdentifier);
 
 		this.ContainingType = new TypeReferenceModel(property.ContainingType, compilation);
 		this.Name = property.Name;
@@ -82,7 +79,6 @@ internal sealed record PropertyModel
 	internal uint MemberIdentifier { get; }
 	internal TypeReferenceModel MockType { get; }
 	internal string Name { get; }
-	internal PropertyModel? OverriddenProperty { get; }
 	internal string? OverridingCodeValue { get; }
 	internal EquatableArray<ParameterModel> Parameters { get; }
 	internal RequiresExplicitInterfaceImplementation RequiresExplicitInterfaceImplementation { get; }

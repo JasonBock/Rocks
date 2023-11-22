@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an issue with parameters marked with `[AllowNull]` and had `default` as the default value (issue [#279](https://github.com/JasonBock/Rocks/issues/279))
 - Overriding methods that change the name of generic parameters are now handled correctly (issue [#280](https://github.com/JasonBock/Rocks/issues/280))
 - Non-virtual static members in interfaces are no longer included in the mock (issue [#276](https://github.com/JasonBock/Rocks/issues/276))
+- Calling base members in the mock will use the parameter name to ensure the correct base member is invoked (issue [#278](https://github.com/JasonBock/Rocks/issues/278))
 
 ## [7.2.0] - 2023-11-10
 
