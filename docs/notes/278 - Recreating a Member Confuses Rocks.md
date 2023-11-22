@@ -51,7 +51,5 @@ I think I overthought it by looking at the Overridden. If it's abstract, that is
 
 Tests
 * DONE - Run code gen tests
-* Run integration tests
-* Add one where the override changes the parameter name, it should still work and use the overriding method parameter name
-* Add for MethodModel and PropertyModel
-* Fix unit tests (lots of param name additions will cause diff errors)
+* DONE - Run integration tests
+* DONE - Fix unit tests (lots of param name additions will cause diff errors)
