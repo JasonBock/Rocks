@@ -98,7 +98,7 @@ public static class IndexerGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -950,7 +950,7 @@ public static class IndexerGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						

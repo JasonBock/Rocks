@@ -96,7 +96,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -162,7 +162,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Bind<S>(@f!);
+							return base.Bind<S>(f: @f!);
 						}
 					}
 					
@@ -285,7 +285,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -625,7 +625,7 @@ public static class GenericsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					

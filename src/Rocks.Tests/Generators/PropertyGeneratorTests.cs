@@ -252,7 +252,7 @@ public static class PropertyGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					

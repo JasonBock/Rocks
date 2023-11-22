@@ -93,7 +93,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						
@@ -162,7 +162,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								base.CallMe(@values!);
+								base.CallMe(values: @values!);
 							}
 						}
 						
@@ -283,7 +283,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						
@@ -344,7 +344,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.CallMe(@values!);
+								return base.CallMe(values: @values!);
 							}
 						}
 						
@@ -689,7 +689,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						
@@ -861,7 +861,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						

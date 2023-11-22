@@ -89,7 +89,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -156,7 +156,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.GetService<T>(@args!);
+							return base.GetService<T>(args: @args!);
 						}
 					}
 					
@@ -772,7 +772,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -968,7 +968,7 @@ public static class ConstraintsGeneratorTests
 						}
 						else
 						{
-							return base.HasNullableValue<TData>(@data!);
+							return base.HasNullableValue<TData>(data: @data!);
 						}
 					}
 					
@@ -1330,7 +1330,7 @@ public static class ConstraintsGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						

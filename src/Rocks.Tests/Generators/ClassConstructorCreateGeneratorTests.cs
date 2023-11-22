@@ -96,7 +96,7 @@ public static class ClassConstructorCreateGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						

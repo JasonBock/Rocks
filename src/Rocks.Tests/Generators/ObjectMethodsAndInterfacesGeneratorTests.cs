@@ -94,7 +94,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							}
 							else
 							{
-								return base.Equals(@obj!);
+								return base.Equals(obj: @obj!);
 							}
 						}
 						

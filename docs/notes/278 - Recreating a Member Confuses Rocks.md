@@ -47,8 +47,10 @@ So, maybe the thing to fix this is that when I call a base method. But, I need t
 
 What about indexers? And shims?
 
+I think I overthought it by looking at the Overridden. If it's abstract, that isn't the target we want. We literally want to target the method we're given, because it's not abstract.
+
 Tests
-* Run code gen tests
+* DONE - Run code gen tests
 * Run integration tests
 * Add one where the override changes the parameter name, it should still work and use the overriding method parameter name
 * Add for MethodModel and PropertyModel

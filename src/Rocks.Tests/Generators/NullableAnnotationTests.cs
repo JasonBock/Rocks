@@ -204,7 +204,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -414,7 +414,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -475,7 +475,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							return base.IntReturn(@initializationData!);
+							return base.IntReturn(initializationData: @initializationData!);
 						}
 					}
 					
@@ -508,7 +508,7 @@ public static class NullableAnnotationTests
 						}
 						else
 						{
-							base.VoidReturn(@initializationData!);
+							base.VoidReturn(initializationData: @initializationData!);
 						}
 					}
 					

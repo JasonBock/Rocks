@@ -96,7 +96,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 						else
 						{
-							return base.Equals(@obj!);
+							return base.Equals(obj: @obj!);
 						}
 					}
 					
@@ -157,7 +157,7 @@ public static class AsyncIteratorGeneratorTests
 						}
 						else
 						{
-							return base.GetRecordsAsync(@cancellationToken!);
+							return base.GetRecordsAsync(cancellationToken: @cancellationToken!);
 						}
 					}
 					
