@@ -1,5 +1,5 @@
-﻿//#define INCLUDE_PASSING
-#define INCLUDE_FAILING
+﻿#define INCLUDE_PASSING
+//#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -74,6 +74,7 @@ static void TestWithTypes()
 		typeof(AngleSharp.BrowsingContext),
 		typeof(Ardalis.GuardClauses.Guard),
 		typeof(Aspire.Hosting.ContainerResourceBuilderExtensions),
+		typeof(Aspose.Email.AlternateView),
 		typeof(Autofac.ContainerBuilder),
 		typeof(AutoFixture.AutoPropertiesTarget),
 		typeof(AutoMapper.AutoMapAttribute),
@@ -94,7 +95,9 @@ static void TestWithTypes()
 		typeof(CsvHelper.ArrayHelper),
 		typeof(Dapper.DbString),
 		typeof(DiffEngine.BuildServerDetector),
-		typeof(DnsClient.DnsDatagramReader),
+		// Commenting this out until this is addressed:
+		// https://github.com/JasonBock/Rocks/issues/281
+		//typeof(DnsClient.DnsDatagramReader),
 		typeof(Elasticsearch.Net.ApiCallDetails),
 		typeof(EntityFramework.Exceptions.Common.CannotInsertNullException),
 		typeof(FluentAssertions.AggregateExceptionExtractor),
@@ -151,7 +154,6 @@ static void TestWithTypes()
 		typeof(Wasmtime.ActionResult),
 #endif
 #if INCLUDE_FAILING
-		typeof(Aspose.Email.AlternateView),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 

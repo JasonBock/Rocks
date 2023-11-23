@@ -11,11 +11,6 @@
 		<PackageReference Include="AngleSharp" />
 		<PackageReference Include="Ardalis.GuardClauses" />
 		<PackageReference Include="Aspire.Hosting" />
-		<!--
-		I'm not referencing Aspose.Email right now because of this:
-		https://github.com/JasonBock/Rocks/issues/281
-		I think I can eventually address this, but until then, I can't include it.
-		-->
 		<PackageReference Include="Aspose.Email" />
 		<PackageReference Include="Autofac" />
 		<PackageReference Include="AutoFixture" />

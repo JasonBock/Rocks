@@ -1,7 +1,10 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Testing;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Rocks.Diagnostics;
 
 namespace Rocks.Tests.Generators;
@@ -327,6 +330,73 @@ public static class NonPublicMembersGeneratorTests
 	}
 
 	[Test]
+	public static async Task CreateWithInternalAbstractMemberInDifferentAssemblyWithUnreferenceableNameAsync()
+	{
+		/*
+		public abstract class InternalAbstractInvalidMember
+		{
+			public abstract void Valid();
+			internal abstract void 4gbnwbnbspeclmzqvzf8egt7ef2ytrtdMCa();
+		}
+		*/
+
+		using var assembly = AssemblyDefinition.CreateAssembly(
+			new AssemblyNameDefinition("Invalid", Version.Parse("1.0.0.0")),
+			"Invalid", ModuleKind.Dll);
+
+		var type = new TypeDefinition("", "InternalAbstractInvalidMember",
+			TypeAttributes.AnsiClass | TypeAttributes.BeforeFieldInit | TypeAttributes.Public | TypeAttributes.Abstract,
+			assembly.MainModule.TypeSystem.Object);
+		assembly.MainModule.Types.Add(type);
+
+		var constructor = new MethodDefinition(".ctor",
+			MethodAttributes.Family | MethodAttributes.HideBySig | MethodAttributes.RTSpecialName | MethodAttributes.SpecialName,
+			assembly.MainModule.TypeSystem.Void);
+		type.Methods.Add(constructor);
+		var constructorILProcessor = constructor.Body.GetILProcessor();
+		constructorILProcessor.Emit(OpCodes.Ldarg_0);
+		constructorILProcessor.Emit(OpCodes.Call,
+			assembly.MainModule.ImportReference(new MethodReference(".ctor", type.Module.TypeSystem.Void, type) { HasThis = true }));
+		constructorILProcessor.Emit(OpCodes.Ret);
+
+		var validMethod = new MethodDefinition("Valid",
+			MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Abstract | MethodAttributes.NewSlot,
+			assembly.MainModule.TypeSystem.Void);
+		type.Methods.Add(validMethod);
+
+		var invalidMethod = new MethodDefinition("4gbnwbnbspeclmzqvzf8egt7ef2ytrtdMCa",
+			MethodAttributes.Assembly | MethodAttributes.HideBySig | MethodAttributes.Virtual | MethodAttributes.Abstract | MethodAttributes.NewSlot,
+			assembly.MainModule.TypeSystem.Void);
+		type.Methods.Add(invalidMethod);
+
+		using var stream = new MemoryStream();
+		assembly.Write(stream);
+		stream.Position = 0;
+
+		var reference = MetadataReference.CreateFromStream(stream);
+
+		var code =
+			"""
+			using Rocks;
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Create<InternalAbstractInvalidMember>();
+				}
+			}
+			""";
+
+		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
+			.WithSpan(7, 14, 7, 58);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic },
+			additionalReferences: [reference]).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithInternalAbstractMemberInDifferentAssemblyAsync()
 	{
 		var source =
@@ -383,7 +453,7 @@ public static class NonPublicMembersGeneratorTests
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Cast<MetadataReference>()
-			.ToList(); 
+			.ToList();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { sourceSyntaxTree },
 			sourceReferences,
@@ -1030,7 +1100,7 @@ public static class NonPublicMembersGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>(), 
+			Enumerable.Empty<DiagnosticResult>(),
 			additionalReferences: sourceReferences).ConfigureAwait(false);
 	}
 

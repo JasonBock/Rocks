@@ -1,5 +1,4 @@
 ﻿using Aspose.Email.Clients.Imap.Models;
-using Aspose.Email.Mapi;
 
 namespace Rocks.CodeGenerationTest.Mappings
 {
