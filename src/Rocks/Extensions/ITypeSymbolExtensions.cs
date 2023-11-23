@@ -5,6 +5,27 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	/*
+	Does the given type has at leat one member that:
+	* Is a method or property (but not an indexer)
+	* Is not static
+	* Is abstract
+	* Cannot be referenced by name
+	* Cannot be seen by containing assembly of mock invocation
+	*/
+	internal static bool HasInaccessibleAstractMembersWithInvalidIdentifiers(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
+	{
+		static bool HasInaccessibleMembers(ITypeSymbol type, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
+			type.GetMembers().Any(_ => (_.Kind == SymbolKind.Method || (_.Kind == SymbolKind.Property && !(_ as IPropertySymbol)!.IsIndexer)) &&
+				!_.IsStatic && _.IsAbstract && !_.CanBeReferencedByName &&
+				!_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
+
+		return self.TypeKind == TypeKind.Interface ?
+			HasInaccessibleMembers(self, containingAssemblyOfInvocationSymbol) ||
+				self.AllInterfaces.Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol)) :
+			self.GetInheritanceHierarchy().Any(_ => HasInaccessibleMembers(_, containingAssemblyOfInvocationSymbol));
+	}
+
 	internal static bool IsObsolete(this ITypeSymbol self, INamedTypeSymbol obsoleteAttribute) =>
 		self.GetAttributes().Any(
 			_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&

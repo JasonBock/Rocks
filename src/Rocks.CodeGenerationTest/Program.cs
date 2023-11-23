@@ -1,5 +1,5 @@
-﻿#define INCLUDE_PASSING
-//#define INCLUDE_FAILING
+﻿//#define INCLUDE_PASSING
+#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
 using Rocks;
@@ -151,7 +151,7 @@ static void TestWithTypes()
 		typeof(Wasmtime.ActionResult),
 #endif
 #if INCLUDE_FAILING
-		//typeof(Aspose.Email.AlternateView),
+		typeof(Aspose.Email.AlternateView),
 #endif
    }.Select(_ => _.Assembly).ToHashSet();
 
