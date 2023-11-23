@@ -99,8 +99,8 @@ internal sealed record MockModel
 			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
 		}
 
-		if (methods.InaccessibleAbstractMembers.Length > 0 || properties.InaccessibleAbstractMembers.Length > 0 ||
-			events.InaccessibleAbstractMembers.Length > 0)
+		if (methods.HasInaccessibleAbstractMembers || properties.HasInaccessibleAbstractMembers ||
+			events.HasInaccessibleAbstractMembers)
 		{
 			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(invocation, typeToMock));
 		}

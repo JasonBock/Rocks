@@ -1,13 +1,12 @@
-﻿using Microsoft.CodeAnalysis;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 
 namespace Rocks.Extensions;
 
 internal sealed class MockableProperties
 {
-	internal MockableProperties(ImmutableArray<PropertyMockableResult> results, ImmutableArray<IPropertySymbol> inaccessibleAbstractMembers) =>
-		(this.Results, this.InaccessibleAbstractMembers) = (results, inaccessibleAbstractMembers);
+	internal MockableProperties(ImmutableArray<PropertyMockableResult> results, bool hasInaccessibleAbstractMembers) =>
+		(this.Results, this.HasInaccessibleAbstractMembers) = (results, hasInaccessibleAbstractMembers);
 
-	internal ImmutableArray<IPropertySymbol> InaccessibleAbstractMembers { get; }
+	internal bool HasInaccessibleAbstractMembers { get; }
 	internal ImmutableArray<PropertyMockableResult> Results { get; }
 }

@@ -327,6 +327,49 @@ public static class NonPublicMembersGeneratorTests
 	}
 
 	[Test]
+	public static async Task CreateWithInternalAbstractMemberInDifferentAssemblyAsync()
+	{
+		var source =
+			"""
+			public abstract class InternalAbstractMember
+			{
+				internal abstract void CannotSee(string a);
+			}
+			""";
+		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Cast<MetadataReference>()
+			.ToList();
+		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
+		var sourceCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { sourceSyntaxTree },
+			sourceReferences,
+			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+		var sourceReference = sourceCompilation.ToMetadataReference()!;
+		sourceReferences.Add(sourceReference);
+
+		var code =
+			"""
+			using Rocks;
+
+			public static class Test
+			{
+				public static void Go()
+				{
+					var rock = Rock.Create<InternalAbstractMember>();
+				}
+			}
+			""";
+
+		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
+			.WithSpan(7, 14, 7, 51);
+		await TestAssistants.RunAsync<RockCreateGenerator>(code,
+			Enumerable.Empty<(Type, string, string)>(),
+			new[] { diagnostic },
+			additionalReferences: sourceReferences).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task CreateWithProtectedInternalPropertyAndMixedVisibilityInDifferentAssemblyAsync()
 	{
 		var source =
