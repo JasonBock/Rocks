@@ -64,9 +64,9 @@ static void TestWithTypes()
 	{
 #if INCLUDE_PASSING
 		// .NET types
-		new (typeof(Dictionary<,>), []),
-		new (typeof(HttpMessageHandler), []),
 		new (typeof(object), []),
+		new (typeof(System.Collections.Generic.Dictionary<,>), []),
+		new (typeof(System.Net.Http.HttpMessageHandler), []),
 		new (typeof(System.Collections.Immutable.ImmutableArray), []),
 		new (typeof(System.Text.Json.JsonDocument), []),
 		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
@@ -175,27 +175,32 @@ static void TestWithTypes()
 	var totalDiscoveredTypeCount = 0;
 	var issues = new List<Issue>();
 
+	var visitedAssemblies = new HashSet<Assembly>();
+
 	foreach (var targetMapping in targetMappings)
 	{
-		Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
-		var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
-		var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, [], targetMapping.aliases);
-		totalDiscoveredTypeCount += discoveredTypes.Length;
-		Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypes.Length}");
+		if (visitedAssemblies.Add(targetMapping.type.Assembly))
+		{
+			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
+			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
+			var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, [], targetMapping.aliases);
+			totalDiscoveredTypeCount += discoveredTypes.Length;
+			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypes.Length}");
 
-		Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockCreateGenerator)}");
-		issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
+			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockCreateGenerator)}");
+			issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
 
-		Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockMakeGenerator)}");
-		issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
+			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockMakeGenerator)}");
+			issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
 
-		Console.WriteLine();
+			Console.WriteLine();
+		}
 	}
 
 	Console.WriteLine(
 		$$"""
 		Generator testing complete.
-			Total assembly count is {{targetMappings.Length}}
+			Total assembly count is {{visitedAssemblies.Count}}
 			Total discovered type count is {{totalDiscoveredTypeCount}}
 		""");
 

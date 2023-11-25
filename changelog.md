@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Non-virtual static members in interfaces are no longer included in the mock (issue [#276](https://github.com/JasonBock/Rocks/issues/276))
 - Calling base members in the mock will use the parameter name to ensure the correct base member is invoked (issue [#278](https://github.com/JasonBock/Rocks/issues/278))
 - Internal abstract members with unreferenceable names are now handled correctly (issue [#277](https://github.com/JasonBock/Rocks/issues/277))
+- References that have aliases will now be used in Rocks during mock generation (issue [#281](https://github.com/JasonBock/Rocks/issues/281))
 
 ## [7.2.0] - 2023-11-10
 
