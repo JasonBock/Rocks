@@ -11,7 +11,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 	internal static class TypeExtensions
 	{
 		internal static string GetTypeDefinition(this Type self,
-			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
+			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 		{
 			if (self.IsGenericTypeDefinition)
 			{
@@ -26,7 +26,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 						genericArguments[i] = genericTypeMappings[self][argument.Name];
 					}
 
-					return $"{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
+					return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
 				}
 				else
 				{
@@ -52,7 +52,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 						}
 					}
 
-					return $"{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
+					return $"{(aliases.Length > 0 ? $"{aliases[0]}::" : string.Empty)}{self.FullName!.Split("`")[0]}<{string.Join(", ", genericArguments)}>";
 				}
 			}
 			else
@@ -62,22 +62,24 @@ namespace Rocks.CodeGenerationTest.Extensions
 		}
 
 		internal static bool IsValidTarget(this Type self,
+			string[] aliases,
 			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings = null)
 		{
 			if (self.GetCustomAttribute<RequiresPreviewFeaturesAttribute>() is null)
 			{
 				var code = 
 					$$"""
+					{{(aliases.Length > 0 ? $"extern alias {aliases[0]}" : string.Empty)}}
 					public class Foo 
 					{ 
-						public {{self.GetTypeDefinition(genericTypeMappings)}} Data { get; } 
+						public {{self.GetTypeDefinition(genericTypeMappings, aliases)}} Data { get; } 
 					}
 					""";
 				var syntaxTree = CSharpSyntaxTree.ParseText(code);
 				var references = AppDomain.CurrentDomain.GetAssemblies()
 					.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 					.Select(_ => MetadataReference.CreateFromFile(_.Location))
-					.Concat(new[] { MetadataReference.CreateFromFile(self.Assembly.Location) });
+					.Concat(new[] { MetadataReference.CreateFromFile(self.Assembly.Location).WithAliases(aliases) });
 				var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
 					references, new(OutputKind.DynamicallyLinkedLibrary,
 						allowUnsafe: true,

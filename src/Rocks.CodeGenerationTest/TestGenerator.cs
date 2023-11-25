@@ -41,8 +41,8 @@ internal static class TestGenerator
 		{ "SYSLIB0051", ReportDiagnostic.Info },
 	};
 
-	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies, 
-		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, Type[] typesToIgnore)
+	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies,
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, Type[] typesToIgnore, string[] aliases)
 	{
 		var discoveredTypes = new ConcurrentDictionary<Type, byte>();
 
@@ -51,7 +51,7 @@ internal static class TestGenerator
 			Parallel.ForEach(assembly.GetTypes()
 				.Where(_ => _.IsPublic && !_.IsSealed && !typesToIgnore.Contains(_)), _ =>
 				{
-					if (_.IsValidTarget(genericTypeMappings))
+					if (_.IsValidTarget(aliases, genericTypeMappings))
 					{
 						discoveredTypes.AddOrUpdate(_, 0, (_, _) => 0);
 					}
@@ -62,18 +62,18 @@ internal static class TestGenerator
 	}
 
 	internal static ImmutableArray<Issue> Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
-		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
 		var isCreate = generator is RockCreateGenerator;
-		var code = GetCode(targetTypes, isCreate, genericTypeMappings);
+		var code = GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location)))
+			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
 			.Concat(new[]
 			{
 				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
@@ -198,10 +198,21 @@ internal static class TestGenerator
 		}
 	}
 
-	static string GetCode(Type[] types, bool isCreate, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings)
+	static string GetCode(Type[] types, bool isCreate, Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
 	{
 		using var writer = new StringWriter();
 		using var indentWriter = new IndentedTextWriter(writer, "\t");
+
+		if (aliases.Length > 0)
+		{
+			foreach(var alias in aliases)
+			{
+				indentWriter.WriteLine($"extern alias {alias};");
+			}
+
+			indentWriter.WriteLine();
+		}
+
 		indentWriter.WriteLine("using Rocks;");
 		indentWriter.WriteLine("using System;");
 		indentWriter.WriteLine();
@@ -217,7 +228,7 @@ internal static class TestGenerator
 
 		for (var i = 0; i < types.Length; i++)
 		{
-			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings)}>();");
+			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings, aliases)}>();");
 		}
 
 		indentWriter.Indent--;
