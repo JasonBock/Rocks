@@ -27,6 +27,18 @@ internal sealed class RockMakeBuilder
 
 			""");
 
+		if (this.MockType.Aliases.Length > 0)
+		{
+			var requiredAliases = this.MockType.Aliases
+				.Select(_ => $"extern alias {_};").ToArray();
+			foreach ( var requiredAlias in requiredAliases) 
+			{
+				indentWriter.WriteLine(requiredAlias);
+			}
+
+			indentWriter.WriteLine();
+		}
+
 		var mockNamespace = this.MockType.Type.Namespace;
 
 		if (mockNamespace.Length > 0)
