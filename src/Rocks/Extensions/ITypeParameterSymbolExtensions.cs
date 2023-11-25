@@ -10,7 +10,7 @@ internal static class ITypeParameterSymbolExtensions
 				.Where(_ => _.TypeKind == TypeKind.Class || _.TypeKind == TypeKind.Interface)
 				.All(_ => _.CanBeSeenByContainingAssembly(assembly));
 
-	internal static string GetConstraints(this ITypeParameterSymbol self)
+	internal static string GetConstraints(this ITypeParameterSymbol self, Compilation compilation)
 	{
 		var constraints = new List<string>();
 
@@ -44,9 +44,9 @@ internal static class ITypeParameterSymbolExtensions
 		}
 
 		// Then type constraints (classes first, then interfaces, then other generic type parameters)
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class).Select(_ => _.GetFullyQualifiedName()));
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Interface).Select(_ => _.GetFullyQualifiedName()));
-		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter).Select(_ => _.GetFullyQualifiedName()));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Class).Select(_ => _.GetFullyQualifiedName(compilation)));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.Interface).Select(_ => _.GetFullyQualifiedName(compilation)));
+		constraints.AddRange(self.ConstraintTypes.Where(_ => _.TypeKind == TypeKind.TypeParameter).Select(_ => _.GetFullyQualifiedName(compilation)));
 
 		// Then constructor constraint
 		if (self.HasConstructorConstraint)

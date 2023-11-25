@@ -8,11 +8,11 @@ internal static class ObjectExtensions
 	/// This should only be used to get a stringified version of a default value
 	/// that will be put into the call site of an emitted method.
 	/// </summary>
-	internal static string GetDefaultValue(this object? self, ITypeSymbol selfType)
+	internal static string GetDefaultValue(this object? self, ITypeSymbol selfType, Compilation compilation)
 	{
 		if (selfType.TypeKind == TypeKind.Enum)
 		{
-			return $"({selfType.GetFullyQualifiedName()})({self})";
+			return $"({selfType.GetFullyQualifiedName(compilation)})({self})";
 		}
 		else
 		{

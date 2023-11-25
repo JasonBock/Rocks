@@ -129,7 +129,7 @@ internal sealed record MockModel
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
 		return new(!isMockable ? null : new TypeMockModel(invocation, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
-			typeToMock.GetFullyQualifiedName(),
+			typeToMock.GetFullyQualifiedName(compilation),
 			diagnostics.ToImmutable());
 	}
 

@@ -28,7 +28,7 @@ internal sealed record EventModel
 			eventNamedType.DelegateInvokeMethod is not null &&
 			eventNamedType.DelegateInvokeMethod.Parameters is { Length: 2 })
 		{
-			argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName();
+			argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName(compilation);
 		}
 
 		this.ArgsType = argsType;

@@ -12,13 +12,13 @@ internal static class IMethodSymbolExtensionsGetNameTests
 	[TestCase("public class Target { public void Foo<T>() { } }", MethodNameOption.IncludeGenerics, "Foo<T>")]
 	public static void GetName(string code, MethodNameOption option, string expectedName)
 	{
-		var methodSymbol = IMethodSymbolExtensionsGetNameTests.GetMethodSymbol(code);
-		var name = methodSymbol.GetName(option);
+		var (methodSymbol, compilation) = IMethodSymbolExtensionsGetNameTests.GetMethodSymbol(code);
+		var name = methodSymbol.GetName(compilation, option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
 	}
 
-	private static IMethodSymbol GetMethodSymbol(string source)
+	private static (IMethodSymbol, Compilation) GetMethodSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -30,6 +30,6 @@ internal static class IMethodSymbolExtensionsGetNameTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Where(_ => _.Identifier.Text == "Foo").Single();
-		return model.GetDeclaredSymbol(methodSyntax)!;
+		return (model.GetDeclaredSymbol(methodSyntax)!, compilation);
 	}
 }

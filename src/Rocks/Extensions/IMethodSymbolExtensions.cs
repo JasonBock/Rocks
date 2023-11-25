@@ -8,7 +8,7 @@ namespace Rocks.Extensions;
 internal static class IMethodSymbolExtensions
 {
 	private const string DoesNotReturnAttributeName =
-		"global::System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
+		"System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
 
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
 		this IMethodSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
@@ -31,9 +31,9 @@ internal static class IMethodSymbolExtensions
 			self.TypeParameters.All(_ => _.CanBeSeenByContainingAssembly(assembly)) &&
 			(self.ReturnsVoid || self.ReturnType.CanBeSeenByContainingAssembly(assembly));
 
-	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self) =>
+	internal static bool IsMarkedWithDoesNotReturn(this IMethodSymbol self, Compilation compilation) =>
 		self.GetAttributes().Any(
-			_ => _.AttributeClass?.GetFullyQualifiedName() == IMethodSymbolExtensions.DoesNotReturnAttributeName);
+			_ => _.AttributeClass?.GetFullyQualifiedName(compilation).EndsWith(IMethodSymbolExtensions.DoesNotReturnAttributeName) ?? false);
 
 	internal static bool RequiresProjectedDelegate(this IMethodSymbol self) =>
 		self.Parameters.Length > 16 ||
@@ -82,14 +82,14 @@ internal static class IMethodSymbolExtensions
 	internal static bool IsUnsafe(this IMethodSymbol self) =>
 		self.Parameters.Any(_ => _.Type.IsPointer()) || (!self.ReturnsVoid && self.ReturnType.IsPointer());
 
-	internal static string GetName(this IMethodSymbol self, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
+	internal static string GetName(this IMethodSymbol self, Compilation compilation, MethodNameOption option = MethodNameOption.IncludeGenerics, string extendedName = "")
 	{
 		var generics = option == MethodNameOption.IncludeGenerics && self.TypeArguments.Length > 0 ?
-			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetFullyQualifiedName()))}>" : string.Empty;
+			$"<{string.Join(", ", self.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)))}>" : string.Empty;
 		return $"{self.Name}{extendedName}{generics}";
 	}
 
-	internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self)
+	internal static ImmutableArray<string> GetConstraints(this IMethodSymbol self, Compilation compilation)
 	{
 		var constraints = new List<string>();
 
@@ -101,7 +101,7 @@ internal static class IMethodSymbolExtensions
 
 				if (typeParameter.Equals(self.TypeArguments[i]))
 				{
-					constraints.Add(typeParameter.GetConstraints());
+					constraints.Add(typeParameter.GetConstraints(compilation));
 				}
 			}
 		}

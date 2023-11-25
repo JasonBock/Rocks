@@ -43,22 +43,22 @@ internal static class AttributeDataExtensions
 		return namespaces.ToImmutable();
 	}
 
-	internal static string GetDescription(this AttributeData self)
+	internal static string GetDescription(this AttributeData self, Compilation compilation)
 	{
-		static string GetTypedConstantValue(TypedConstant value) =>
+		static string GetTypedConstantValue(TypedConstant value, Compilation compilation) =>
 			value.Kind switch
 			{
-				TypedConstantKind.Primitive => GetValue(value.Value),
-				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName()})",
-				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v)))} }}",
-				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName()})({value.Value})",
+				TypedConstantKind.Primitive => GetValue(value.Value, compilation),
+				TypedConstantKind.Type => $"typeof({((INamedTypeSymbol)value.Value!).GetFullyQualifiedName(compilation)})",
+				TypedConstantKind.Array => $"new[] {{ {string.Join(", ", value.Values.Select(v => GetValue(v, compilation)))} }}",
+				TypedConstantKind.Enum => $"({value.Type!.GetFullyQualifiedName(compilation)})({value.Value})",
 				_ => value.Value?.ToString() ?? string.Empty
 			};
 
-		static string GetValue(object? value) =>
+		static string GetValue(object? value, Compilation compilation) =>
 			value switch
 			{
-				TypedConstant tc => GetTypedConstantValue(tc),
+				TypedConstant tc => GetTypedConstantValue(tc, compilation),
 				string s => 
 					$"""
 					"{s.Replace("\'", "\\\'").Replace("\"", "\\\"").Replace("\a", "\\a")
@@ -69,17 +69,17 @@ internal static class AttributeDataExtensions
 				_ => value?.ToString() ?? string.Empty
 			};
 
-		var name = self.AttributeClass!.GetFullyQualifiedName();
+		var name = self.AttributeClass!.GetFullyQualifiedName(compilation);
 		var argumentParts = new List<string>();
 
 		if (self.ConstructorArguments.Length > 0)
 		{
-			argumentParts.AddRange(self.ConstructorArguments.Select(_ => GetTypedConstantValue(_)));
+			argumentParts.AddRange(self.ConstructorArguments.Select(_ => GetTypedConstantValue(_, compilation)));
 		}
 
 		if (self.NamedArguments.Length > 0)
 		{
-			argumentParts.AddRange(self.NamedArguments.Select(_ => $"{_.Key} = {GetTypedConstantValue(_.Value)}"));
+			argumentParts.AddRange(self.NamedArguments.Select(_ => $"{_.Key} = {GetTypedConstantValue(_.Value, compilation)}"));
 		}
 
 		var arguments = argumentParts.Count > 0 ? $"({string.Join(", ", argumentParts)})" : string.Empty;
@@ -142,10 +142,10 @@ internal static class AttributeDataExtensions
 				!_.AttributeClass.Equals(tupleElementNamesAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(conditionalAttribute, SymbolEqualityComparer.Default) &&
 				!_.AttributeClass.Equals(defaultMemberAttribute, SymbolEqualityComparer.Default) &&
-				_.AttributeClass.GetFullyQualifiedName() != enumeratorCancellationAttribute &&
-				_.AttributeClass.GetFullyQualifiedName() != asyncIteratorStateMachineAttribute &&
-				_.AttributeClass.GetFullyQualifiedName() != nullableAttribute &&
-				_.AttributeClass.GetFullyQualifiedName() != nullableContextAttribute).ToImmutableArray();
+				_.AttributeClass.GetFullyQualifiedName(compilation) != enumeratorCancellationAttribute &&
+				_.AttributeClass.GetFullyQualifiedName(compilation) != asyncIteratorStateMachineAttribute &&
+				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableAttribute &&
+				_.AttributeClass.GetFullyQualifiedName(compilation) != nullableContextAttribute).ToImmutableArray();
 
 		if (attributes.Length == 0)
 		{
@@ -153,7 +153,7 @@ internal static class AttributeDataExtensions
 		}
 		else
 		{
-			return $"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target.GetTarget()}: " : string.Empty)}{string.Join(", ", attributes.Select(_ => _.GetDescription()))}]";
+			return $"[{(!string.IsNullOrWhiteSpace(target.GetTarget()) ? $"{target.GetTarget()}: " : string.Empty)}{string.Join(", ", attributes.Select(_ => _.GetDescription(compilation)))}]";
 		}
 	}
 

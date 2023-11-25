@@ -25,8 +25,8 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("using System.Collections.Generic; using Stuff; namespace Stuff { public class Thing { } } public static class Target { public static void Foo(List<Thing?> a) { } }", "global::System.Collections.Generic.List<global::Stuff.Thing?>")]
 	public static void GetReferenceableName(string code, string expectedName)
 	{
-		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
-		var name = typeSymbol.GetFullyQualifiedName();
+		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var name = typeSymbol.GetFullyQualifiedName(compilation);
 
 		Assert.That(name, Is.EqualTo(expectedName));
 	}
@@ -42,7 +42,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 	[TestCase("public class Target { public unsafe void Foo(delegate* unmanaged[Stdcall, SuppressGCTransition]<int, int> a) { } }", TypeNameOption.Flatten, "delegatePointer_unmanaged_Stdcall__SuppressGCTransition_Ofint__int")]
 	public static void GetNameForEsotericType(string code, TypeNameOption option, string expectedName)
 	{
-		var typeSymbol = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
+		var (typeSymbol, _) = ITypeSymbolExtensionsGetNameTests.GetTypeSymbolFromParameter(code);
 		var name = typeSymbol.GetName(option);
 
 		Assert.That(name, Is.EqualTo(expectedName));
@@ -118,7 +118,7 @@ internal static class ITypeSymbolExtensionsGetNameTests
 		return model.GetDeclaredSymbol(typeSyntax)!;
 	}
 
-	private static ITypeSymbol GetTypeSymbolFromParameter(string source)
+	private static (ITypeSymbol, Compilation) GetTypeSymbolFromParameter(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -130,6 +130,6 @@ internal static class ITypeSymbolExtensionsGetNameTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type;
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0].Type, compilation);
 	}
 }

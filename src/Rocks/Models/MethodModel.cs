@@ -20,7 +20,7 @@ internal sealed record MethodModel
 			this.OverridingCodeValue = method.GetOverridingCodeValue(compilation.Assembly);
 		}
 
-		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn();
+		this.IsMarkedWithDoesNotReturn = method.IsMarkedWithDoesNotReturn(compilation);
 		this.ShouldThrowDoesNotReturnException = this.IsMarkedWithDoesNotReturn;
 
 		this.IsAbstract = method.IsAbstract;
@@ -29,9 +29,9 @@ internal sealed record MethodModel
 		this.IsUnsafe = method.IsUnsafe();
 
 		this.MethodKind = method.MethodKind;
-		this.Constraints = method.GetConstraints();
+		this.Constraints = method.GetConstraints(compilation);
 		this.DefaultConstraints = method.GetDefaultConstraints();
-		this.Name = method.GetName();
+		this.Name = method.GetName(compilation);
 
 		this.Parameters = method.Parameters.Select(_ =>
 		{
@@ -49,12 +49,12 @@ internal sealed record MethodModel
 
 		if (this.RequiresProjectedDelegate)
 		{
-			this.ProjectedCallbackDelegateName = method.GetName(extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+			this.ProjectedCallbackDelegateName = method.GetName(compilation, extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
 		if (this.ReturnType.IsRefLikeType)
 		{
-			this.ProjectedReturnValueDelegateName = method.GetName(extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+			this.ProjectedReturnValueDelegateName = method.GetName(compilation, extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
 		if (!this.ReturnsVoid)

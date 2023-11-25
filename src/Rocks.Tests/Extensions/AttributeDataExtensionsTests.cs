@@ -86,7 +86,7 @@ public interface IA
 		[Test]
 		public static void GetDescriptionWithSpecialCharactersInString()
 		{
-			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 				"""
 				using Rocks.Tests.Extensions;
 				using System;
@@ -108,13 +108,14 @@ public interface IA
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::MessageAttribute("a \' a \" a \a a \b a \f a \n a \r a \t a \b")"""));
+			Assert.That(attributes[0].GetDescription(compilation), 
+				Is.EqualTo("""global::MessageAttribute("a \' a \" a \a a \b a \f a \n a \r a \t a \b")"""));
 		}
 
 		[Test]
 		public static void GetDescription()
 		{
-			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 				"""
 				using Rocks.Tests.Extensions;
 				using System;
@@ -126,13 +127,14 @@ public interface IA
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
+			Assert.That(attributes[0].GetDescription(compilation), 
+				Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]
 		public static void GetDescriptionWithNegativeEnumValue()
 		{
-			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 				"""
 				using Rocks.Tests.Extensions;
 				using System;
@@ -144,13 +146,14 @@ public interface IA
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(-1), NamedA = 44)"""));
+			Assert.That(attributes[0].GetDescription(compilation),
+				Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::System.Guid), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(-1), NamedA = 44)"""));
 		}
 
 		[Test]
 		public static void GetDescriptionWithOpenGeneric()
 		{
-			var (attributes, _) = AttributeDataExtensionsTests.GetAttributes(
+			var (attributes, compilation) = AttributeDataExtensionsTests.GetAttributes(
 				"""
 				using ADETTypes;
 				using Rocks.Tests.Extensions;
@@ -163,7 +166,8 @@ public interface IA
 				}
 				""");
 
-			Assert.That(attributes[0].GetDescription(), Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::ADETTypes.OpenGeneric<,>), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
+			Assert.That(attributes[0].GetDescription(compilation), 
+				Is.EqualTo("""global::Rocks.Tests.Extensions.MyTestAttribute("a value", 12.34, 22, 44, typeof(global::ADETTypes.OpenGeneric<,>), new[] { 6, 7 }, (global::Rocks.Tests.Extensions.MyValue)(0), NamedA = 44)"""));
 		}
 
 		[Test]

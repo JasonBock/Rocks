@@ -115,11 +115,29 @@ internal static class ITypeSymbolExtensions
 		return false;
 	}
 
-	internal static string GetFullyQualifiedName(this ITypeSymbol self)
+	internal static string GetFullyQualifiedName(this ITypeSymbol self, Compilation compilation)
 	{
+		const string GlobalPrefix = "global::";
+
 		var symbolFormatter = SymbolDisplayFormat.FullyQualifiedFormat
 			.AddMiscellaneousOptions(SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
-		return self.ToDisplayString(symbolFormatter);
+		var symbolName = self.ToDisplayString(symbolFormatter);
+
+		// If the symbol name has "global::" at the start,
+		// then see if the type's assembly has at least one alias.
+		// If there is one, then replace "global::" with "{alias}::"
+
+		if (symbolName.StartsWith(GlobalPrefix))
+		{
+			var aliases = compilation.GetMetadataReference(self.ContainingAssembly)?.Properties.Aliases ?? ImmutableArray<string>.Empty;
+
+			if (aliases.Length > 0)
+			{
+				symbolName = symbolName.Replace(GlobalPrefix, $"{aliases[0]}::");
+			}
+		}
+
+		return symbolName;
 	}
 
 	// TODO: This method really needs to change.

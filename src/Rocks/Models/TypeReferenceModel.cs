@@ -7,7 +7,7 @@ internal sealed record TypeReferenceModel
 {
 	internal TypeReferenceModel(ITypeSymbol type, Compilation compilation)
 	{
-		this.FullyQualifiedName = type.GetFullyQualifiedName();
+		this.FullyQualifiedName = type.GetFullyQualifiedName(compilation);
 		this.FlattenedName = type.GetName(TypeNameOption.Flatten);
 		this.NoGenericsName = type.GetName(TypeNameOption.NoGenerics);
 		this.IncludeGenericsName = type.GetName(TypeNameOption.IncludeGenerics);

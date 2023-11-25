@@ -19,7 +19,7 @@ internal sealed record ParameterModel
 
 		if (this.HasExplicitDefaultValue)
 		{
-			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type);
+			this.ExplicitDefaultValue = parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation);
 		}
 
 		this.AttributesDescription = parameter.GetAttributes().GetDescription(compilation);

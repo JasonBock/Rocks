@@ -65,11 +65,11 @@ public static class ObjectExtensionsTests
 	[TestCase("public class Test { public void Foo(decimal value = 22) { } }", "22")]
 	public static void GetDefaultValue(string code, string expectedResult)
 	{
-		var parameter = ObjectExtensionsTests.GetParameterSymbol(code);
-		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type), Is.EqualTo(expectedResult));
+		var (parameter, compilation) = ObjectExtensionsTests.GetParameterSymbol(code);
+		Assert.That(parameter.ExplicitDefaultValue.GetDefaultValue(parameter.Type, compilation), Is.EqualTo(expectedResult));
 	}
 
-	private static IParameterSymbol GetParameterSymbol(string source)
+	private static (IParameterSymbol, Compilation) GetParameterSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -81,6 +81,6 @@ public static class ObjectExtensionsTests
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
 			.OfType<MethodDeclarationSyntax>().Single();
-		return model.GetDeclaredSymbol(methodSyntax)!.Parameters[0];
+		return (model.GetDeclaredSymbol(methodSyntax)!.Parameters[0], compilation);
 	}
 }
