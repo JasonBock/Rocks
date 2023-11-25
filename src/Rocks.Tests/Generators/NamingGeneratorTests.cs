@@ -10,7 +10,12 @@ public static class NamingGeneratorTests
 	[Test]
 	public static async Task CreateWithDuplicateTypeNamesAsync()
 	{
-		// TODO: Can do .WithAliases() on a MetadataReference.
+		var references = AppDomain.CurrentDomain.GetAssemblies()
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Cast<MetadataReference>()
+			.ToList();
+
 		var firstSource =
 			"""
 			namespace SameNamespace
@@ -23,17 +28,12 @@ public static class NamingGeneratorTests
 				void Use(SameNamespace.SameType value);
 			}			
 			""";
-		var firstSourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Cast<MetadataReference>()
-			.ToList();
 		var firstSourceSyntaxTree = CSharpSyntaxTree.ParseText(firstSource);
 		var firstSourceCompilation = CSharpCompilation.Create("first", new SyntaxTree[] { firstSourceSyntaxTree },
-			firstSourceReferences,
+			references,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var firstSourceReference = firstSourceCompilation.ToMetadataReference()!;
-		firstSourceReferences.Add(firstSourceReference);
+		firstSourceReference = firstSourceReference.WithAliases(["First"]);
 
 		var secondSource =
 			"""
@@ -42,27 +42,23 @@ public static class NamingGeneratorTests
 				public class SameType { }
 			}
 			""";
-		var secondSourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
-			.Cast<MetadataReference>()
-			.ToList();
 		var secondSourceSyntaxTree = CSharpSyntaxTree.ParseText(secondSource);
 		var secondSourceCompilation = CSharpCompilation.Create("second", new SyntaxTree[] { secondSourceSyntaxTree },
-			secondSourceReferences,
+			references,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var secondSourceReference = secondSourceCompilation.ToMetadataReference()!;
-		secondSourceReferences.Add(secondSourceReference);
 
 		var code =
 			"""
+			extern alias First;
+
 			using Rocks;
 
 			public static class Test
 			{
 				public static void Go()
 				{
-					var rock = Rock.Create<IUseSameNames>();
+					var rock = Rock.Create<First.IUseSameNames>();
 				}
 			}
 			""";
@@ -73,16 +69,18 @@ public static class NamingGeneratorTests
 			
 			#nullable enable
 			
+			extern alias First;
+			
 			using Rocks.Extensions;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
 			internal static class CreateExpectationsOfIUseSameNamesExtensions
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IUseSameNames> Methods(this global::Rocks.Expectations.Expectations<global::IUseSameNames> @self) =>
+				internal static global::Rocks.Expectations.MethodExpectations<First::IUseSameNames> Methods(this global::Rocks.Expectations.Expectations<First::IUseSameNames> @self) =>
 					new(@self);
 				
-				internal static global::IUseSameNames Instance(this global::Rocks.Expectations.Expectations<global::IUseSameNames> @self)
+				internal static First::IUseSameNames Instance(this global::Rocks.Expectations.Expectations<First::IUseSameNames> @self)
 				{
 					if (!@self.WasInstanceInvoked)
 					{
@@ -98,17 +96,17 @@ public static class NamingGeneratorTests
 				}
 				
 				private sealed class RockIUseSameNames
-					: global::IUseSameNames
+					: First::IUseSameNames
 				{
 					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
 					
-					public RockIUseSameNames(global::Rocks.Expectations.Expectations<global::IUseSameNames> @expectations)
+					public RockIUseSameNames(global::Rocks.Expectations.Expectations<First::IUseSameNames> @expectations)
 					{
 						this.handlers = @expectations.Handlers;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Use(global::SameNamespace.SameType @value)")]
-					public void Use(global::SameNamespace.SameType @value)
+					[global::Rocks.MemberIdentifier(0, "void Use(First::SameNamespace.SameType @value)")]
+					public void Use(First::SameNamespace.SameType @value)
 					{
 						if (this.handlers.TryGetValue(0, out var @methodHandlers))
 						{
@@ -116,14 +114,14 @@ public static class NamingGeneratorTests
 							
 							foreach (var @methodHandler in @methodHandlers)
 							{
-								if (((global::Rocks.Argument<global::SameNamespace.SameType>)@methodHandler.Expectations[0]).IsValid(@value!))
+								if (((global::Rocks.Argument<First::SameNamespace.SameType>)@methodHandler.Expectations[0]).IsValid(@value!))
 								{
 									@foundMatch = true;
 									
 									@methodHandler.IncrementCallCount();
 									if (@methodHandler.Method is not null)
 									{
-										((global::System.Action<global::SameNamespace.SameType>)@methodHandler.Method)(@value!);
+										((global::System.Action<First::SameNamespace.SameType>)@methodHandler.Method)(@value!);
 									}
 									break;
 								}
@@ -131,12 +129,12 @@ public static class NamingGeneratorTests
 							
 							if (!@foundMatch)
 							{
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Use(global::SameNamespace.SameType @value)");
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void Use(First::SameNamespace.SameType @value)");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Use(global::SameNamespace.SameType @value)");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Use(First::SameNamespace.SameType @value)");
 						}
 					}
 					
@@ -145,21 +143,21 @@ public static class NamingGeneratorTests
 			
 			internal static class MethodExpectationsOfIUseSameNamesExtensions
 			{
-				internal static global::Rocks.MethodAdornments<global::IUseSameNames, global::System.Action<global::SameNamespace.SameType>> Use(this global::Rocks.Expectations.MethodExpectations<global::IUseSameNames> @self, global::Rocks.Argument<global::SameNamespace.SameType> @value)
+				internal static global::Rocks.MethodAdornments<First::IUseSameNames, global::System.Action<First::SameNamespace.SameType>> Use(this global::Rocks.Expectations.MethodExpectations<First::IUseSameNames> @self, global::Rocks.Argument<First::SameNamespace.SameType> @value)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.MethodAdornments<global::IUseSameNames, global::System.Action<global::SameNamespace.SameType>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+					return new global::Rocks.MethodAdornments<First::IUseSameNames, global::System.Action<First::SameNamespace.SameType>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
 				}
 			}
 			
 			""";
 
-		firstSourceReferences.AddRange(secondSourceReferences);
+		references.AddRange([firstSourceReference, secondSourceReference]);
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IUseSameNames_Rock_Create.g.cs", generatedCode) },
+			new[] { (typeof(RockCreateGenerator), "FirstIUseSameNames_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>(),
-			additionalReferences: firstSourceReferences).ConfigureAwait(false);
+			additionalReferences: references).ConfigureAwait(false);
 	}
 
 	[Test]

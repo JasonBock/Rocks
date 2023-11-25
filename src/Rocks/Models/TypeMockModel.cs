@@ -19,19 +19,20 @@ internal sealed record TypeMockModel
 		// TODO: Remember to sort all array so "equatable" will work,
 		// EXCEPT FOR parameter order (including generic parameters).
 		// Those have to stay in the order they exist in the definition.
-		this.Constructors = constructors.Select(_ => 
+		this.Aliases = compilation.GetAliases();
+		this.Constructors = constructors.Select(_ =>
 			new ConstructorModel(_, this.Type, compilation)).ToImmutableArray();
 		this.Methods = methods.Results.Select(_ =>
 			new MethodModel(_.Value, this.Type, compilation, _.RequiresExplicitInterfaceImplementation,
 				_.RequiresOverride, _.MemberIdentifier)).ToImmutableArray();
 		this.Properties = properties.Results.Select(_ =>
 			new PropertyModel(_.Value, this.Type, compilation,
-				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride, 
+				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride,
 				_.Accessors, _.MemberIdentifier)).ToImmutableArray();
 		this.Events = events.Results.Select(_ =>
 			new EventModel(_.Value, this.Type, compilation,
 				_.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
-		this.Shims = shouldResolveShims ? 
+		this.Shims = shouldResolveShims ?
 			shims.Select(_ =>
 				MockModel.Create(invocation, _, model, BuildType.Create, false)!.Type!).ToImmutableArray() :
 			ImmutableArray<TypeMockModel>.Empty;
@@ -43,6 +44,7 @@ internal sealed record TypeMockModel
 			.ToImmutableArray();
 	}
 
+	internal EquatableArray<string> Aliases { get; }
 	internal TypeReferenceModel Type { get; }
 	internal EquatableArray<ConstructorModel> Constructors { get; }
 	internal EquatableArray<EventModel> Events { get; }

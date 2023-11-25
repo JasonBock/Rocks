@@ -40,3 +40,5 @@ https://learn.microsoft.com/en-us/nuget/consume-packages/package-references-in-p
 https://learn.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.projectreference.aliases?view=roslyn-dotnet-4.7.0
 
 `ITypeSymbolExtensions.GetFullyQualifiedName()` looks like the logical place to do this, but it requires a `Compilation` object. When I set this with `TypeReferenceModel`, it's stored in a property, but that method is called in multiple places. I'll have to see just how pervasive this would be...
+
+OK, in the code gen test app, I'll need to find which assemblies have an alias, add that to the top of the file that does code gen, **and** add that to any type I'm passing to `Rock.Create()` and `Rock.Make()`.
