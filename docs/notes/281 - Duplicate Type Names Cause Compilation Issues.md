@@ -42,3 +42,8 @@ https://learn.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.projectrefer
 `ITypeSymbolExtensions.GetFullyQualifiedName()` looks like the logical place to do this, but it requires a `Compilation` object. When I set this with `TypeReferenceModel`, it's stored in a property, but that method is called in multiple places. I'll have to see just how pervasive this would be...
 
 OK, in the code gen test app, I'll need to find which assemblies have an alias, add that to the top of the file that does code gen, **and** add that to any type I'm passing to `Rock.Create()` and `Rock.Make()`.
+
+* Create a record: `public sealed record TypeAliases(Type type, string[] aliases);` - this can be used in a couple of places
+* `TestGenerator.Generate()`, change the parameter to be a `TypeAliases[] typesToLoadAssembliesFrom`. Then, when these references are added, just pass in `alias` to `WithAliases`
+* `TestGenerator.GetCode()` will change to use `TypeAliases`, it will need to add any aliases with `extern alias {alias};` and add the alias in the `Rock` call.
+* Mapping code must be changed manually to use the aliases.
