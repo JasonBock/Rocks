@@ -42,6 +42,7 @@
     <PackageVersion Include="IdentityModel" Version="6.2.0" />
     <PackageVersion Include="ILGPU" Version="1.4.0" />
     <PackageVersion Include="LanguageExt.Core" Version="4.4.7" />
+    <PackageVersion Include="Lib.Harmony" Version="2.2.2" />
     <PackageVersion Include="LLVMSharp" Version="16.0.0" />
     <PackageVersion Include="MassTransit" Version="8.1.3-develop.1613" />
     <PackageVersion Include="MathNet.Numerics" Version="5.0.0" />

@@ -106,6 +106,7 @@ static void TestWithTypes()
 		new (typeof(GraphQL.AllowAnonymousAttribute), []),
 		new (typeof(Grpc.Core.AuthContext), []),
 		new (typeof(HandlebarsDotNet.Arguments), []),
+		new (typeof(HarmonyLib.AccessTools), []),
 		new (typeof(Humanizer.ByteSizeExtensions), []),
 		new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
 		new (typeof(IdentityModel.Base64Url), []),
