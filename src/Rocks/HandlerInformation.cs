@@ -15,7 +15,7 @@ public class HandlerInformation
 	private int callCount;
 
 	[NonSerialized]
-	private readonly List<RaiseEventInformation> raiseEvents = new();
+	private readonly List<RaiseEventInformation> raiseEvents = [];
 
 	/// <summary>
 	/// Creates a new <see cref="HandlerInformation"/> instance.

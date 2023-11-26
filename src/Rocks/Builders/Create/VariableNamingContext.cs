@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 internal sealed class VariableNamingContext
 {
 	private readonly ImmutableArray<ParameterModel> parameters;
-	private readonly Dictionary<string, string> variables = new();
+	private readonly Dictionary<string, string> variables = [];
 
 	internal VariableNamingContext(MethodModel method) =>
 		this.parameters = method.Parameters;

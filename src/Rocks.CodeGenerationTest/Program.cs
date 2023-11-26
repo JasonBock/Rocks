@@ -204,7 +204,7 @@ static void TestWithTypes()
 			Total discovered type count is {{totalDiscoveredTypeCount}}
 		""");
 
-	PrintIssues(issues.ToImmutableArray());
+	PrintIssues([.. issues]);
 }
 
 static void PrintIssues(ImmutableArray<Issue> issues)

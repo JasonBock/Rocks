@@ -58,7 +58,7 @@ internal static class TestGenerator
 				});
 		}
 
-		return discoveredTypes.Keys.ToArray();
+		return [.. discoveredTypes.Keys];
 	}
 
 	internal static ImmutableArray<Issue> Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
@@ -121,7 +121,7 @@ internal static class TestGenerator
 			var mockCode = outputCompilation.SyntaxTrees.ToArray()[^1];
 		}
 
-		return issues.ToImmutableArray();
+		return [.. issues];
 	}
 
 	internal static void Generate(IIncrementalGenerator generator, string code, Type[] typesToLoadAssembliesFrom)
@@ -205,7 +205,7 @@ internal static class TestGenerator
 
 		if (aliases.Length > 0)
 		{
-			foreach(var alias in aliases)
+			foreach (var alias in aliases)
 			{
 				indentWriter.WriteLine($"extern alias {alias};");
 			}

@@ -23,7 +23,7 @@ public static class ClassGenericMethodTests
 		expectations.Methods().Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
-		mock.Foo(new List<string>());
+		mock.Foo([]);
 
 		expectations.Verify();
 	}
@@ -33,7 +33,7 @@ public static class ClassGenericMethodTests
 	{
 		var mock = Rock.Make<ClassGenericMethod<int>>().Instance();
 
-		Assert.That(() => mock.Foo(new List<string>()), Throws.Nothing);
+		Assert.That(() => mock.Foo([]), Throws.Nothing);
 	}
 
 	[Test]

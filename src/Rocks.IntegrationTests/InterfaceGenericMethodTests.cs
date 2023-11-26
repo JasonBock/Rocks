@@ -51,7 +51,7 @@ public static class InterfaceGenericMethodTests
 		expectations.Methods().Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
-		mock.Foo(new List<string>());
+		mock.Foo([]);
 
 		expectations.Verify();
 	}
@@ -61,7 +61,7 @@ public static class InterfaceGenericMethodTests
 	{
 		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
 
-		Assert.That(() => mock.Foo(new List<string>()), Throws.Nothing);
+		Assert.That(() => mock.Foo([]), Throws.Nothing);
 	}
 
 	[Test]

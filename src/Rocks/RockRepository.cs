@@ -12,7 +12,7 @@ public sealed class RockRepository
 	: IDisposable
 {
 	private bool isDisposed = false;
-	private readonly List<IExpectations> rocks = new();
+	private readonly List<IExpectations> rocks = [];
 
 	/// <summary>
 	/// Creates a new <see cref="Expectations{T}"/> instance,

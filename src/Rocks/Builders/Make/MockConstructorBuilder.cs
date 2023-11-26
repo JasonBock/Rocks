@@ -18,7 +18,7 @@ internal static class MockConstructorBuilder
 
 		var contextParameters = requiredInitPropertiesAndIndexers.Length == 0 ?
 			Array.Empty<string>() :
-			new [] { $"ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" };
+			[$"ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"];
 		var instanceParameters = 
 			string.Join(", ", contextParameters.Concat(parameters.Select(_ =>
 				{

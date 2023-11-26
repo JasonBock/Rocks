@@ -148,7 +148,7 @@ internal static class MockConstructorExtensionsBuilder
 				})));
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
-			new[] { $"@{namingContext["constructorProperties"]}" } :
+			[$"@{namingContext["constructorProperties"]}"] :
 			Array.Empty<string>();
 		var rockInstanceParameters = string.Join(", ",
 			contextParameters.Concat(parameters.Select(_ =>

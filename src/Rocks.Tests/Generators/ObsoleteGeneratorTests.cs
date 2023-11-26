@@ -331,7 +331,7 @@ public static class ObsoleteGeneratorTests
 					.WithSpan(18, 27, 18, 38)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -379,7 +379,7 @@ public static class ObsoleteGeneratorTests
 					.WithSpan(27, 15, 27, 45)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -427,7 +427,7 @@ public static class ObsoleteGeneratorTests
 					.WithSpan(27, 15, 27, 45)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -479,7 +479,7 @@ public static class ObsoleteGeneratorTests
 					.WithSpan(20, 21, 20, 37).WithArguments("MockTests.IServerComponent", "Do not use this"),
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: new List<string> { "CS1591" }).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
 	}
 
 	[Test]

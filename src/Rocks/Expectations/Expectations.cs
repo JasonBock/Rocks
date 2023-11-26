@@ -16,7 +16,7 @@ public class Expectations<T>
 #pragma warning restore CA1724
 {
 	internal Expectations() =>
-		this.Handlers = new();
+		this.Handlers = [];
 
 	internal Expectations(Expectations<T> expectations) =>
 		this.Handlers = expectations.Handlers;

@@ -111,7 +111,7 @@ internal static class MockPropertyBuilder
 
 	private static void BuildSetter(IndentedTextWriter writer,
 		PropertyModel property, string propertyVisibility,
-		uint memberIdentifier, bool raiseEvents, string explicitTypeName, bool allowNull)
+		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var methodName = property.SetMethod!.Name;
 		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
@@ -269,7 +269,7 @@ internal static class MockPropertyBuilder
 
 		if (isSetterVisible)
 		{
-			MockPropertyBuilder.BuildSetter(writer, property, visibility, memberIdentifier, raiseEvents, explicitTypeName, property.AllowNull);
+			MockPropertyBuilder.BuildSetter(writer, property, visibility, memberIdentifier, raiseEvents, explicitTypeName);
 		}
 
 		writer.Indent--;
