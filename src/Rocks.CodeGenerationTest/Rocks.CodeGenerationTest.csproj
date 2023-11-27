@@ -31,6 +31,7 @@
 		<PackageReference Include="Confluent.Kafka" />
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
+		<PackageReference Include="Cursively" />
 		<PackageReference Include="Dapper" />
 		<PackageReference Include="DiffEngine" />
 		<PackageReference Include="DnsClient" />
@@ -74,8 +75,10 @@
 		<PackageReference Include="Pulumi" />
 		<PackageReference Include="Quartz" />
 		<PackageReference Include="RabbitMQ.Client" />
+		<PackageReference Include="RecordParser" />
 		<PackageReference Include="Refit" />
 		<PackageReference Include="RestSharp" />
+		<PackageReference Include="Sep" />
 		<PackageReference Include="Serilog" />
 		<PackageReference Include="ServiceStack" />
 		<PackageReference Include="SharpZipLib" />
@@ -86,6 +89,7 @@
 		<PackageReference Include="SkiaSharp" />
 		<PackageReference Include="StackExchange.Redis" />
 		<PackageReference Include="Stripe.net" />
+		<PackageReference Include="Sylvan.Data.Csv" />
 		<PackageReference Include="System.IO.Abstractions" />
 		<PackageReference Include="System.Reactive" />
 		<PackageReference Include="System.Reflection.Metadata" />
