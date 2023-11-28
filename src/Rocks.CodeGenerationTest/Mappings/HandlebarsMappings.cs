@@ -3,7 +3,6 @@ using HandlebarsDotNet.Collections;
 using HandlebarsDotNet.Decorators;
 using HandlebarsDotNet.Helpers;
 using HandlebarsDotNet.Iterators;
-using HandlebarsDotNet.PathStructure;
 using HandlebarsDotNet.ValueProviders;
 
 namespace Rocks.CodeGenerationTest.Mappings
@@ -72,17 +71,23 @@ namespace Rocks.CodeGenerationTest.Mappings
 			};
 	}
 
-	namespace HandlebarsDotNet
+   public class X : VerifyTests.WriteOnlyJsonConverter<string>
+   {
+	  public override void Write(VerifyJsonWriter writer, string value) => throw new NotImplementedException();
+   }
+
+   namespace HandlebarsDotNet
 	{
 		public struct MappedDecoratorOptions : IDecoratorOptions
 		{
 			public DataValues Data => throw new NotImplementedException();
 
-			public PathInfo Name => throw new NotImplementedException();
-
 			public BindingContext Frame => throw new NotImplementedException();
 
+			global::HandlebarsDotNet.PathStructure.PathInfo IDecoratorOptions.Name => throw new NotImplementedException();
+
 			public IIndexed<string, IHelperDescriptor<BlockHelperOptions>> GetBlockHelpers() => throw new NotImplementedException();
+
 			public IIndexed<string, IHelperDescriptor<HelperOptions>> GetHelpers() => throw new NotImplementedException();
 		}
 
@@ -90,7 +95,7 @@ namespace Rocks.CodeGenerationTest.Mappings
 		{
 			public DataValues Data => throw new NotImplementedException();
 
-			public PathInfo Name => throw new NotImplementedException();
+			public global::HandlebarsDotNet.PathStructure.PathInfo Name => throw new NotImplementedException();
 
 			public BindingContext Frame => throw new NotImplementedException();
 		}

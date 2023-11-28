@@ -110,6 +110,7 @@
     <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.22621.2" />
     <PackageVersion Include="Topshelf" Version="4.3.1-develop.253" />
     <PackageVersion Include="Twilio" Version="7.0.0-rc.1" />
+    <PackageVersion Include="Verify" Version="22.6.0" />
     <PackageVersion Include="Wasmtime" Version="15.0.0" />
   </ItemGroup>
 </Project>

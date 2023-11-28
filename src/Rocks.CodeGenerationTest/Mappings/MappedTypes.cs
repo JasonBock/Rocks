@@ -42,5 +42,6 @@ internal static class MappedTypes
 			.AddItems(SilkMappings.GetMappedTypes())
 			.AddItems(StripeMappings.GetMappedTypes())
 			.AddItems(TopshelfMappings.GetMappedTypes())
-			.AddItems(TwilioMappings.GetMappedTypes());
+			.AddItems(TwilioMappings.GetMappedTypes())
+			.AddItems(VerifyMappings.GetMappedTypes());
 }

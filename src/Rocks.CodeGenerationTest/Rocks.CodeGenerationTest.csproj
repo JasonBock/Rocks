@@ -99,6 +99,7 @@
 		<PackageReference Include="TerraFX.Interop.Windows" />
 		<PackageReference Include="Topshelf" />
 		<PackageReference Include="Twilio" />
+		<PackageReference Include="Verify" />
 		<PackageReference Include="Wasmtime" />
 	</ItemGroup>
 </Project>
