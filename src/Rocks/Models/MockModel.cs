@@ -55,8 +55,8 @@ internal sealed record MockModel
 		var shims = new HashSet<ITypeSymbol>(SymbolEqualityComparer.Default);
 		var containingAssembly = compilation.Assembly;
 
-		var constructors = new MockableConstructors(typeToMock, containingAssembly, obsoleteAttribute).Constructors;
-		var methods = typeToMock.GetMockableMethods(compilation.Assembly, shims, compilation, ref memberIdentifier);
+		var constructors = new MockableConstructorDiscovery(typeToMock, containingAssembly, obsoleteAttribute).Constructors;
+		var methods = new MockableMethodDiscovery(typeToMock, compilation.Assembly, shims, compilation, ref memberIdentifier).Methods;
 		var properties = typeToMock.GetMockableProperties(containingAssembly, shims, ref memberIdentifier);
 		var events = typeToMock.GetMockableEvents(containingAssembly);
 

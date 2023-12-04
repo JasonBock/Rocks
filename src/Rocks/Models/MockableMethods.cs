@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace Rocks.Extensions;
+namespace Rocks.Models;
 
 internal sealed class MockableMethods
 {

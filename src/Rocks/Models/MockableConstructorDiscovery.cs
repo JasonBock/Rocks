@@ -4,9 +4,9 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-internal sealed class MockableConstructors
+internal sealed class MockableConstructorDiscovery
 {
-   internal MockableConstructors(ITypeSymbol mockType,
+   internal MockableConstructorDiscovery(ITypeSymbol mockType,
 	   IAssemblySymbol containingAssemblyOfInvocationSymbol, INamedTypeSymbol obsoleteAttribute) =>
 			// We can't use constructors that are obsolete in error.
 			this.Constructors = mockType.TypeKind == TypeKind.Class ?

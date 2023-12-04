@@ -3,10 +3,11 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using Rocks.Extensions;
+using Rocks.Models;
 
-namespace Rocks.Tests.Extensions;
+namespace Rocks.Tests.Models;
 
-public static class ITypeSymbolExtensionsGetMockableMethodsTests
+public static class MockableMethodDiscoveryTests
 {
 	[Test]
 	public static void GetMockableMethodsWithNewAbstractMethodWithOverride()
@@ -34,10 +35,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -82,10 +83,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -118,10 +119,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result= typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -149,10 +150,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -184,10 +185,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -221,10 +222,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -264,10 +265,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -311,10 +312,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			{ }
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -344,10 +345,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
@@ -372,10 +373,10 @@ public static class ITypeSymbolExtensionsGetMockableMethodsTests
 
 		var code = $"public class {targetTypeName} {{ }}";
 
-		var (typeSymbol, compilation) = ITypeSymbolExtensionsGetMockableMethodsTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
-		var result = typeSymbol.GetMockableMethods(typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier);
+		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
 
 		Assert.Multiple(() =>
 		{
