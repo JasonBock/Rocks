@@ -91,3 +91,5 @@ public class X : StaticToString
 This is incorrect. The `ToString()` method cannot be an override. Removing it makes compilation errors go away (side note: I should create a bug for that). If I can figure out how to reuse this functionality, it **has** to be rock-solid. Taking a dependency on that is risky in that if it doesn't work correctly, I have little to no control when the issues would get fixed, if ever.
 
 Also...where is this code? I don't think it's in VS proper, as SharpLab seems to use the same functionality (though I don't think it's exactly the same). I found [`AbstractChangeImplementationCodeRefactoringProvider`](https://github.com/dotnet/roslyn/blob/d11caad0ab35ec679716353eead320f92d05e753/src/Features/CSharp/Portable/ImplementInterface/AbstractChangeImplementationCodeRefactoringProvider.cs). Unfortunately, it's `internal`, but maybe I can copy/pasta what I need, or there's another way to get this mapping for classes and interfaces.
+
+ANYWAY...let's try just creating `Mockable...` classes and start the refactoring.
