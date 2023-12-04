@@ -157,40 +157,6 @@ internal sealed class ISimpleCreateExpectations
 
 			return new GeneratedMethodAdornments<Handler0, global::System.Func<int, global::System.Guid, string>, string>(handler);
 		}
-
-		// I may not need all the Adornments types anymore,
-		// as they'll all get code-gen'd. Or I might.
-		// I could make a `handler` class that has 
-		// TCallback or TCallback and TResult, and all the `handler0`, etc.
-		// types would derive from that. Then I can pass in a subtype
-		// to this
-		internal sealed class ISimpleMethodAdornments
-		{
-			private Handler0 handler;
-
-			internal ISimpleMethodAdornments(Handler0 handler) =>
-				this.handler = handler;
-
-			public ISimpleMethodAdornments CallCount(uint expectedCallCount)
-			{
-				this.handler.ExpectedCallCount = expectedCallCount;
-				return this;
-			}
-
-			public ISimpleMethodAdornments Callback(global::System.Func<int, global::System.Guid, string> callback)
-			{
-				this.handler.Callback = callback;
-				return this;
-			}
-
-			// If the member didn't return anything
-			// Returns() wouldn't be created.
-			public ISimpleMethodAdornments Returns(string returnValue)
-			{
-				this.handler.ReturnValue = returnValue;
-				return this;
-			}
-		}
 	}
 }
 
