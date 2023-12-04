@@ -2,11 +2,11 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Extensions;
+using Rocks.Models;
 
-namespace Rocks.Tests.Extensions;
+namespace Rocks.Tests.Models;
 
-public static class ITypeSymbolExtensionsGetMockableConstructorsTests
+public static class MockableConstructorsTests
 {
 	[Test]
 	public static void GetMockableConstructorsForClass()
@@ -18,8 +18,8 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 				public Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute) = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
-		var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly, obsoleteAttribute);
+		var (typeSymbol, obsoleteAttribute) = MockableConstructorsTests.GetTypeSymbol(code);
+		var constructors = new MockableConstructors(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(1));
 	}
@@ -34,7 +34,7 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 				internal Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute) = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute) = MockableConstructorsTests.GetTypeSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
@@ -47,7 +47,7 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 		var containingCompilation = CSharpCompilation.Create("InvocationAssembly", new SyntaxTree[] { containingSyntaxTree },
 			containingReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
-		var constructors = typeSymbol.GetMockableConstructors(containingCompilation.Assembly, obsoleteAttribute);
+		var constructors = new MockableConstructors(typeSymbol, containingCompilation.Assembly, obsoleteAttribute).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(0));
 	}
@@ -56,8 +56,8 @@ public static class ITypeSymbolExtensionsGetMockableConstructorsTests
 	public static void GetMockableConstructorsForInterface()
 	{
 		var code = "public interface Target { }";
-		var (typeSymbol, obsoleteAttribute) = ITypeSymbolExtensionsGetMockableConstructorsTests.GetTypeSymbol(code);
-		var constructors = typeSymbol.GetMockableConstructors(typeSymbol.ContainingAssembly, obsoleteAttribute);
+		var (typeSymbol, obsoleteAttribute) = MockableConstructorsTests.GetTypeSymbol(code);
+		var constructors = new MockableConstructors(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(0));
 	}

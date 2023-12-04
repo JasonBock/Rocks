@@ -237,18 +237,6 @@ internal static class ITypeSymbolExtensions
 		return namespaces.ToImmutable();
 	}
 
-	// We can't use constructors that are obsolete in error.
-	internal static ImmutableArray<IMethodSymbol> GetMockableConstructors(
-		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol, INamedTypeSymbol obsoleteAttribute) =>
-			self.TypeKind == TypeKind.Class ?
-				self.GetMembers().OfType<IMethodSymbol>()
-					.Where(_ => _.MethodKind == MethodKind.Constructor &&
-						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
-						!_.GetAttributes().Any(
-							a => a.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-								(a.ConstructorArguments.Any(_ => _.Value is bool error && error)))).ToImmutableArray() :
-				Array.Empty<IMethodSymbol>().ToImmutableArray();
-
 	internal static MockableEvents GetMockableEvents(
 		this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
