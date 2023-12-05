@@ -57,8 +57,8 @@ internal sealed record MockModel
 
 		var constructors = new MockableConstructorDiscovery(typeToMock, containingAssembly, obsoleteAttribute).Constructors;
 		var methods = new MockableMethodDiscovery(typeToMock, compilation.Assembly, shims, compilation, ref memberIdentifier).Methods;
-		var properties = typeToMock.GetMockableProperties(containingAssembly, shims, ref memberIdentifier);
-		var events = typeToMock.GetMockableEvents(containingAssembly);
+		var properties = new MockablePropertyDiscovery(typeToMock, containingAssembly, shims, ref memberIdentifier).Properties;
+		var events = new MockableEventDiscovery(typeToMock, containingAssembly).Events;
 
 		if (constructors.Length > 1)
 		{

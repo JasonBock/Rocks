@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Rocks.Extensions;
 using Rocks.Models;
 
-namespace Rocks.Tests.Extensions;
+namespace Rocks.Tests.Models;
 
 public static class MethodMockableResultTests
 {
