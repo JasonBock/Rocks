@@ -1,13 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
 using System.Diagnostics;
 
-namespace Rocks.Models;
+namespace Rocks.Discovery;
 
 [DebuggerDisplay("Value = {Value}")]
-internal sealed class EventMockableResult
+internal sealed class MockableEventResult
 {
-   internal EventMockableResult(IEventSymbol value,
+   internal MockableEventResult(IEventSymbol value,
 	   RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride) =>
 	   (this.Value, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride) =
 		   (value, requiresExplicitInterfaceImplementation, requiresOverride);

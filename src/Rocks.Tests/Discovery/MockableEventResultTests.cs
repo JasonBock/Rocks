@@ -2,17 +2,16 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Extensions;
-using Rocks.Models;
+using Rocks.Discovery;
 
-namespace Rocks.Tests.Models;
+namespace Rocks.Tests.Discovery;
 
-public static class MethodMockableResultTests
+public static class MockableEventResultTests
 {
 	[Test]
-	public static void GetResult()
+	public static void GetResults()
 	{
-		var code = "public class Target { public void Foo() { } }";
+		var code = "public class Target { public event EventHandler MyEvent; }";
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
 			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
@@ -21,20 +20,17 @@ public static class MethodMockableResultTests
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
-		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
-			.OfType<MethodDeclarationSyntax>().Single();
-		var methodSymbol = model.GetDeclaredSymbol(methodSyntax)!;
+		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
+			.OfType<TypeDeclarationSyntax>().Single();
+		var eventSymbol = (IEventSymbol)model.GetDeclaredSymbol(typeSyntax)!.GetMembers().Single(_ => _ is IEventSymbol);
 
-		var result = new MethodMockableResult(methodSymbol, methodSymbol.ContainingType,
-			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
+		var result = new MockableEventResult(eventSymbol, RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(result.Value, Is.SameAs(methodSymbol));
-			Assert.That(result.MockType, Is.SameAs(methodSymbol.ContainingType));
+			Assert.That(result.Value, Is.SameAs(eventSymbol));
 			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
 			Assert.That(result.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			Assert.That(result.MemberIdentifier, Is.EqualTo(3));
 		});
 	}
 }

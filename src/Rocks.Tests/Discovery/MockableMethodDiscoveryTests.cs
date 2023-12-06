@@ -2,10 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Extensions;
-using Rocks.Models;
+using Rocks.Discovery;
 
-namespace Rocks.Tests.Models;
+namespace Rocks.Tests.Discovery;
 
 public static class MockableMethodDiscoveryTests
 {
@@ -35,7 +34,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -45,11 +44,11 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
-			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
@@ -83,7 +82,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -93,11 +92,11 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
-			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var dataMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(dataMethod.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
@@ -119,7 +118,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -150,7 +149,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -185,7 +184,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -222,7 +221,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -265,7 +264,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -312,7 +311,7 @@ public static class MockableMethodDiscoveryTests
 			{ }
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -345,7 +344,7 @@ public static class MockableMethodDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -355,11 +354,11 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(4));
-			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			var fooMethod = methods.Single(_ => _.Value.Name == targetMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
@@ -373,7 +372,7 @@ public static class MockableMethodDiscoveryTests
 
 		var code = $"public class {targetTypeName} {{ }}";
 
-		var (typeSymbol, compilation) = MockableMethodDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockableMethodDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, compilation, ref memberIdentifier).Methods;
@@ -383,11 +382,11 @@ public static class MockableMethodDiscoveryTests
 			Assert.That(result.HasInaccessibleAbstractMembers, Is.False);
 			var methods = result.Results;
 			Assert.That(methods, Has.Length.EqualTo(3));
-			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = methods.Single(_ => _.Value.Name == nameof(GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(object.Equals));
+			var equalsMethod = methods.Single(_ => _.Value.Name == nameof(Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
-			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(object.ToString));
+			var toStringMethod = methods.Single(_ => _.Value.Name == nameof(ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 		});
 	}

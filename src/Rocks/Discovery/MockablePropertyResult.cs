@@ -2,12 +2,12 @@
 using Rocks.Extensions;
 using System.Diagnostics;
 
-namespace Rocks.Models;
+namespace Rocks.Discovery;
 
 [DebuggerDisplay("Value = {Value}")]
-internal sealed class PropertyMockableResult
+internal sealed class MockablePropertyResult
 {
-   internal PropertyMockableResult(IPropertySymbol value, ITypeSymbol mockType,
+   internal MockablePropertyResult(IPropertySymbol value, ITypeSymbol mockType,
 	   RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation, RequiresOverride requiresOverride,
 	   uint memberIdentifier) =>
 	   (this.Value, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.Accessors, this.MemberIdentifier) =

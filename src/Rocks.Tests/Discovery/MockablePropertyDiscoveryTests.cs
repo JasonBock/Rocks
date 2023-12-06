@@ -2,10 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
-using Rocks.Models;
-using Rocks.Extensions;
+using Rocks.Discovery;
 
-namespace Rocks.Tests.Models;
+namespace Rocks.Tests.Discovery;
 
 public static class MockablePropertyDiscoveryTests
 {
@@ -23,7 +22,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockablePropertyDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
@@ -53,7 +52,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockablePropertyDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
@@ -87,7 +86,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockablePropertyDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
@@ -99,12 +98,12 @@ public static class MockablePropertyDiscoveryTests
 			Assert.That(properties, Has.Length.EqualTo(3));
 
 			var thisIntProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
-				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
+				 _.Value.Parameters[0].Type.SpecialType == SpecialType.System_Int32);
 			Assert.That(thisIntProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(thisIntProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
 			var thisStringProperty = properties.Single(_ => _.Value.Parameters.Length == 1 &&
-				_.Value.Parameters[0].Type.SpecialType == SpecialType.System_String);
+				 _.Value.Parameters[0].Type.SpecialType == SpecialType.System_String);
 			Assert.That(thisStringProperty.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.No));
 			Assert.That(thisStringProperty.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
@@ -140,7 +139,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockablePropertyDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;
@@ -183,7 +182,7 @@ public static class MockablePropertyDiscoveryTests
 			}
 			""";
 
-		var (typeSymbol, compilation) = MockablePropertyDiscoveryTests.GetTypeSymbol(code, targetTypeName);
+		var (typeSymbol, compilation) = GetTypeSymbol(code, targetTypeName);
 		var memberIdentifier = 0u;
 		var shims = new HashSet<ITypeSymbol>();
 		var result = new MockablePropertyDiscovery(typeSymbol, typeSymbol.ContainingAssembly, shims, ref memberIdentifier).Properties;

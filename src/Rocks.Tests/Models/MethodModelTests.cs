@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Models;
-using Rocks.Extensions;
 
 namespace Rocks.Tests.Models;
 

@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Builders.Create;
 using Rocks.Models;
-using Rocks.Extensions;
 
 namespace Rocks.Tests.Builders.Create;
 

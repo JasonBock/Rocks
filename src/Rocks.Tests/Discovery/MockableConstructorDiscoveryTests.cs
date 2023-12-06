@@ -2,9 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Models;
+using Rocks.Discovery;
 
-namespace Rocks.Tests.Models;
+namespace Rocks.Tests.Discovery;
 
 public static class MockableConstructorDiscoveryTests
 {
@@ -18,7 +18,7 @@ public static class MockableConstructorDiscoveryTests
 				public Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute) = MockableConstructorDiscoveryTests.GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute) = GetTypeSymbol(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(1));
@@ -34,7 +34,7 @@ public static class MockableConstructorDiscoveryTests
 				internal Target() { }
 			}
 			""";
-		var (typeSymbol, obsoleteAttribute) = MockableConstructorDiscoveryTests.GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute) = GetTypeSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
 		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
@@ -56,7 +56,7 @@ public static class MockableConstructorDiscoveryTests
 	public static void GetMockableConstructorsForInterface()
 	{
 		var code = "public interface Target { }";
-		var (typeSymbol, obsoleteAttribute) = MockableConstructorDiscoveryTests.GetTypeSymbol(code);
+		var (typeSymbol, obsoleteAttribute) = GetTypeSymbol(code);
 		var constructors = new MockableConstructorDiscovery(typeSymbol, typeSymbol.ContainingAssembly, obsoleteAttribute).Constructors;
 
 		Assert.That(constructors, Has.Length.EqualTo(0));

@@ -1,5 +1,4 @@
-﻿using Rocks.Extensions;
-using Rocks.Models;
+﻿using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
@@ -97,9 +96,9 @@ internal static class IndexerExpectationsExtensionsIndexerBuilder
 		BuildGetterImplementation(writer, property, memberIdentifier, false);
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, PropertyAccessor accessor)
 	{
-		static void BuildSetterImplementation(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, PropertyAccessor accessor, bool isGeneratedWithDefaults)
+		static void BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, PropertyAccessor accessor, bool isGeneratedWithDefaults)
 		{
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariableNamingContext(propertySetMethod);

@@ -93,3 +93,13 @@ This is incorrect. The `ToString()` method cannot be an override. Removing it ma
 Also...where is this code? I don't think it's in VS proper, as SharpLab seems to use the same functionality (though I don't think it's exactly the same). I found [`AbstractChangeImplementationCodeRefactoringProvider`](https://github.com/dotnet/roslyn/blob/d11caad0ab35ec679716353eead320f92d05e753/src/Features/CSharp/Portable/ImplementInterface/AbstractChangeImplementationCodeRefactoringProvider.cs). Unfortunately, it's `internal`, but maybe I can copy/pasta what I need, or there's another way to get this mapping for classes and interfaces.
 
 ANYWAY...let's try just creating `Mockable...` classes and start the refactoring.
+
+Move the discovery types into `Rocks.Discovery`
+
+Change all these names:
+EventMockableResult => MockableEventResult
+EventMockableResultTests => MockableEventResultTests
+MethodMockableResult => MockableMethodResult
+MethodMockableResultTests => MockableMethodResultTests
+PropertyMockableResult => MockablePropertyResult
+PropertyMockableResultTests => MockablePropertyResultTests

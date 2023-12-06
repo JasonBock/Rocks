@@ -1,12 +1,12 @@
 ﻿using System.Collections.Immutable;
 
-namespace Rocks.Models;
+namespace Rocks.Discovery;
 
 internal sealed class MockableEvents
 {
-   internal MockableEvents(ImmutableArray<EventMockableResult> results, bool hasInaccessibleAbstractMembers) =>
+   internal MockableEvents(ImmutableArray<MockableEventResult> results, bool hasInaccessibleAbstractMembers) =>
 	   (this.Results, this.HasInaccessibleAbstractMembers) = (results, hasInaccessibleAbstractMembers);
 
    internal bool HasInaccessibleAbstractMembers { get; }
-   internal ImmutableArray<EventMockableResult> Results { get; }
+   internal ImmutableArray<MockableEventResult> Results { get; }
 }

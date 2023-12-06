@@ -1,12 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
 internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName)
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var namingContext = new VariableNamingContext(propertyGetMethod);
@@ -52,7 +52,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, Models.PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
 	{
 		var propertySetMethod = property.SetMethod!;
 		var namingContext = new VariableNamingContext(propertySetMethod);
@@ -92,7 +92,7 @@ internal static class ExplicitIndexerExpectationsExtensionsIndexerBuilder
 		writer.WriteLine("}");
 	}
 
-	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property,  
+	internal static void Build(IndentedTextWriter writer, PropertyModel property,  
 		PropertyAccessor accessor, string containingTypeName)
 	{
 		var memberIdentifier = property.MemberIdentifier;

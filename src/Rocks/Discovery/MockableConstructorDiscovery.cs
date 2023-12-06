@@ -2,7 +2,7 @@
 using Rocks.Extensions;
 using System.Collections.Immutable;
 
-namespace Rocks.Models;
+namespace Rocks.Discovery;
 
 internal sealed class MockableConstructorDiscovery
 {
@@ -15,8 +15,8 @@ internal sealed class MockableConstructorDiscovery
 						_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol) &&
 						!_.GetAttributes().Any(
 							a => a.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
-								(a.ConstructorArguments.Any(_ => _.Value is bool error && error)))).ToImmutableArray() :
-				Array.Empty<IMethodSymbol>().ToImmutableArray();
+								a.ConstructorArguments.Any(_ => _.Value is bool error && error))).ToImmutableArray() :
+				ImmutableArray<IMethodSymbol>.Empty;
 
    internal ImmutableArray<IMethodSymbol> Constructors { get; }
 }

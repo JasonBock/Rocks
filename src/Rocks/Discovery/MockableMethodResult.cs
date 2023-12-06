@@ -1,13 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
 using System.Diagnostics;
 
-namespace Rocks.Models;
+namespace Rocks.Discovery;
 
 [DebuggerDisplay("Value = {Value}")]
-internal sealed class MethodMockableResult
+internal sealed class MockableMethodResult
 {
-   internal MethodMockableResult(IMethodSymbol value, ITypeSymbol mockType,
+   internal MockableMethodResult(IMethodSymbol value, ITypeSymbol mockType,
 	   RequiresExplicitInterfaceImplementation requiresExplicitInterfaceImplementation,
 	   RequiresOverride requiresOverride, uint memberIdentifier) =>
 	   (this.Value, this.MockType, this.RequiresExplicitInterfaceImplementation, this.RequiresOverride, this.MemberIdentifier) =

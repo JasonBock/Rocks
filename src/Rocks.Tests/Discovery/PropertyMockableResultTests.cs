@@ -2,10 +2,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Extensions;
-using Rocks.Models;
+using Rocks.Discovery;
 
-namespace Rocks.Tests.Models;
+namespace Rocks.Tests.Discovery;
 
 public static class PropertyMockableResultTests
 {
@@ -25,7 +24,7 @@ public static class PropertyMockableResultTests
 			.OfType<PropertyDeclarationSyntax>().Single();
 		var propertySymbol = model.GetDeclaredSymbol(propertySyntax)!;
 
-		var result = new PropertyMockableResult(propertySymbol, propertySymbol.ContainingType,
+		var result = new MockablePropertyResult(propertySymbol, propertySymbol.ContainingType,
 			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
 
 		Assert.Multiple(() =>

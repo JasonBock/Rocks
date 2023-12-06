@@ -8,7 +8,7 @@ using System.Runtime.Versioning;
 
 namespace Rocks.CodeGenerationTest.Extensions
 {
-	internal static class TypeExtensions
+   internal static class TypeExtensions
 	{
 		internal static string GetTypeDefinition(this Type self,
 			Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)

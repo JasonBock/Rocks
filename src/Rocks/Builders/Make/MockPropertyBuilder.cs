@@ -1,11 +1,11 @@
-﻿using Rocks.Extensions;
+﻿using Rocks.Models;
 using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Make;
 
 internal static class MockPropertyBuilder
 {
-	internal static void Build(IndentedTextWriter writer, Models.PropertyModel property)
+	internal static void Build(IndentedTextWriter writer, PropertyModel property)
 	{
 		if (property.AttributesDescription.Length > 0)
 		{
