@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Builders;
 using Rocks.Diagnostics;
+using Rocks.Discovery;
 using Rocks.Extensions;
 using System.Collections.Immutable;
 

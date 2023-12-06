@@ -83,37 +83,22 @@ internal static class ITypeSymbolExtensions
 		}
 	}
 
-	internal static bool IsOpenGeneric(this ITypeSymbol self)
-	{
-		if (self.TypeKind == TypeKind.TypeParameter)
+   internal static bool IsOpenGeneric(this ITypeSymbol self) => 
+		self switch
 		{
-			return true;
-		}
-		else if (self is INamedTypeSymbol namedType)
-		{
-			return namedType.HasOpenGenerics();
-		}
+			{ TypeKind: TypeKind.TypeParameter } => true,
+			INamedTypeSymbol namedType => namedType.HasOpenGenerics(),
+			_ => false
+		};
 
-		return false;
-	}
-
-	internal static bool IsPointer(this ITypeSymbol self) =>
+   internal static bool IsPointer(this ITypeSymbol self) =>
 		self.Kind == SymbolKind.PointerType || self.Kind == SymbolKind.FunctionPointerType;
 
 	internal static bool IsEsoteric(this ITypeSymbol self) => self.IsPointer() || self.IsRefLikeType;
 
-	internal static bool ContainsDiagnostics(this ITypeSymbol self)
-	{
-		foreach (var declaringTypeToMockSyntax in self.DeclaringSyntaxReferences)
-		{
-			if (declaringTypeToMockSyntax.GetSyntax().GetDiagnostics().Any(_ => _.Severity == DiagnosticSeverity.Error))
-			{
-				return true;
-			}
-		}
-
-		return false;
-	}
+	internal static bool ContainsDiagnostics(this ITypeSymbol self) =>
+		self.DeclaringSyntaxReferences.Any(syntax =>
+			syntax.GetSyntax().GetDiagnostics().Any(_ => _.Severity == DiagnosticSeverity.Error));
 
 	internal static string GetFullyQualifiedName(this ITypeSymbol self, Compilation compilation)
 	{
