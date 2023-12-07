@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Made internal refactors for member discovery (issue [#235](https://github.com/JasonBock/Rocks/issues/235))
 
+### Fixed
+
+- `sealed` members on interfaces are no longer included in the mock type (issue [#284](https://github.com/JasonBock/Rocks/issues/284))
+
 ## [7.3.0] - 2023-11-25
 
 ### Changed
