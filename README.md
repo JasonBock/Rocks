@@ -37,7 +37,7 @@ More details can be found on the [Overview page](https://github.com/JasonBock/Ro
 
 ## Additional Documentation
 
-* [Discord Server](https://discord.com/channels/1035376645864955974/1035376646326321194)
+* [Discord Server](https://discord.gg/ZXMhkKsMRb)
 * [Changelog](https://github.com/JasonBock/Rocks/blob/main/changelog.md)
 * [Unit testing best practices with .NET Core and .NET Standard](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-best-practices)
 * [BenchmarkMockNet](https://github.com/ecoAPM/BenchmarkMockNet)
