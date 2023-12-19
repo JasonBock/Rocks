@@ -41,7 +41,12 @@ internal static class TestGenerator
 		{ "SYSLIB0051", ReportDiagnostic.Info },
 	};
 
-	internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies,
+   internal static Type[] GetTargets(HashSet<Assembly> targetAssemblies, Type[] typesToIgnore) => 
+		targetAssemblies.SelectMany(
+			_ => _.GetTypes().Where(
+				_ => _.IsPublic && !_.IsValueType && !_.IsSealed && !typesToIgnore.Contains(_))).ToArray();
+
+   internal static Type[] GetDiscoveredTypes(HashSet<Assembly> targetAssemblies,
 		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, Type[] typesToIgnore, string[] aliases)
 	{
 		var discoveredTypes = new ConcurrentDictionary<Type, byte>();

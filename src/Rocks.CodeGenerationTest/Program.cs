@@ -189,16 +189,31 @@ static void TestWithTypes()
 		{
 			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
-			var discoveredTypes = TestGenerator.GetDiscoveredTypes(targetAssemblySet, genericTypeMappings, [], targetMapping.aliases);
-			totalDiscoveredTypeCount += discoveredTypes.Length;
-			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypes.Length}");
+			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, []);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockCreateGenerator)}");
-			issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
+			var createIssues = TestGenerator.Generate(
+				new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases);
+			issues.AddRange(createIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockMakeGenerator)}");
-			issues.AddRange(TestGenerator.Generate(new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases));
+			var makeIssues = TestGenerator.Generate(
+				new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases);
+			issues.AddRange(makeIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
+			// We want to get a unique set of issues that occur when we generate mocks.
+			// I only get the unique create errors (which **should** be the same
+			// as the make issue count) - looks something like this:
+			//
+			// "Rock.Create<AngleSharp.Io.VirtualResponse>()"
+			//
+			// We subtract that count value from the discovered type count.
+			var typeIssues = new HashSet<string>(
+				createIssues.Select(_ => _.Location.SourceTree!.GetText().GetSubText(_.Location.SourceSpan).ToString()));
+
+			var discoveredTypeCount = discoveredTypes.Length - typeIssues.Count;
+			totalDiscoveredTypeCount += discoveredTypeCount;
+			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypeCount}");
 			Console.WriteLine();
 		}
 	}
