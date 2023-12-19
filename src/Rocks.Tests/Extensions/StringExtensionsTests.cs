@@ -13,4 +13,9 @@ public static class StringExtensionsTests
 	[TestCase(null, "51555898148515146965744933031213250625354807770")]
 	public static void CreateHash(string? input, string expectedData) => 
 		Assert.That(input.GetHash(), Is.EqualTo(BigInteger.Parse(expectedData, CultureInfo.InvariantCulture)));
+
+	[TestCase("global::this<that>:?", "thisthat_null_")]
+	[TestCase("thisthat", "thisthat")]
+	public static void GenerateFileName(string input, string expectedFileName) =>
+		Assert.That(input.GenerateFileName(), Is.EqualTo(expectedFileName));
 }

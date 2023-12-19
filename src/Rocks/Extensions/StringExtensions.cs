@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Rocks.Builders;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -17,4 +18,11 @@ internal static class StringExtensions
 	// and "-" isn't allowed in these names.
 	internal static BigInteger GetHash(this string? self) => 
 		BigInteger.Abs(new(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(self ?? ""))));
+
+	internal static string GenerateFileName(this string self) =>
+		self.Replace("global::", string.Empty)
+			.Replace(":", string.Empty)
+			.Replace("<", string.Empty)
+			.Replace(">", string.Empty)
+			.Replace("?", "_null_");
 }

@@ -57,12 +57,7 @@ internal sealed class RockMakeBuilder
 		}
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
-		var name = $"{this.MockType.Type.FullyQualifiedName
-			.Replace("global::", string.Empty)
-			.Replace(":", string.Empty)
-			.Replace("<", string.Empty)
-			.Replace(">", string.Empty)
-			.Replace("?", "_null_")}_Rock_Make.g.cs"; 
+		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Make.g.cs"; 
 		return (name, text);
 	}
 

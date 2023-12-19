@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis.Text;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Text;
@@ -65,12 +66,7 @@ internal sealed class RockCreateBuilder
 		var text = SourceText.From(
 			string.Join(Environment.NewLine, content),
 			Encoding.UTF8);
-		var name = $"{this.MockType.Type.FullyQualifiedName
-			.Replace("global::", string.Empty)
-			.Replace(":", string.Empty)
-			.Replace("<", string.Empty)
-			.Replace(">", string.Empty)
-			.Replace("?", "_null_")}_Rock_Create.g.cs";
+		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Create.g.cs";
 		return (name, text);
 	}
 
