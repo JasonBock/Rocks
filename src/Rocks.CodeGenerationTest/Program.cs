@@ -7,12 +7,19 @@ using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
 using Rocks.CodeGenerationTest.Mappings;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Reflection;
+
+var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
 //TestWithType();
 TestWithTypes();
+
+stopwatch.Stop();
+
+Console.WriteLine($"Total time: {stopwatch.Elapsed}");
 
 #pragma warning disable CS8321 // Local function is declared but never used
 static void TestTypeValidity() =>

@@ -92,4 +92,6 @@ Testing Ardalis.GuardClauses - RockMakeGenerator
 
 And it is **much** faster. Let's see if I can get the counts right - let's just do AngleSharp.
 
-OK, I think I got it filtering correctly.
+OK, I think I got it filtering correctly. Highest I saw memory consumption was 7 GB. If I'm really concerned, I can partition the discovered types into groups of 200. BTW I also noticed that assemblies that have a lot of types (like Stripe and Twilio) actually go really fast. I'm guessing that the number of members on those types is really small.
+
+I tried to get a `Stopwatch`-based number for the "old" way, and I can't even get it to run anymore on my machine. It crashes, locks up the machine, etc. Now, it's just under 2 minutes.
