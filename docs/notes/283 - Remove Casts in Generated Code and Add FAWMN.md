@@ -1,0 +1,59 @@
+OK, this will be a LOT of work. What needs to be done?
+
+# Ref Struct Work
+
+Basically [this](https://github.com/JasonBock/Rocks/issues/170). I may be able to create custom types for `Span<>` and related `Span` types. As I mentioned in the issue, there may be support for all `ref struct` types in generics in the future, so this can be generalized, but `Span<>` is pervasive enough that making supporting types for it I think will be beneficial.
+
+OK, I did some work and updated the issue. I can create a handful of types that can be used for `Span<>` and `ReadOnlySpan<>`. Other `ref struct` types will have to still have all of that gen'd until C# will support `ref struct`s in generics. I should probably also consider having distinct properties for `TypeReferenceModel`. I have `IsEsoteric`, `IsPointer`, and `IsRefLikeType`. Maybe what's better is `IsPointer`, `IsFunctionPointer`, and `IsRefLikeType`
+
+# Attributes
+
+Create two attributes, `RockCreateAttribute` and `RockMakeAttribute`, that take a generic parameter, can only exist at assembly level, and multiple can exist.
+
+# Create New Supporting Types
+
+While I already have some of these types, they'll need to change. Look at the work in `GeneratedBaseMocking`.
+
+* `Expectations`
+* `Handler<TCallback>`
+* `Handler<TCallback, TReturnValue>`
+
+I'm not sure these needs to change, basically all the adornment classes.
+* `MethodAdornments<TCallback>`
+* `MethodAdornments<TCallback, TReturnValue>`
+
+# Alter Generated Code
+
+A lot of work happens here. Again, look at `GeneratedBaseMocking`.
+
+## Create `Handler{n}` Classes
+
+These need to be created for each member with an identifier.
+
+## Create Handler Lists
+
+These need to be created for each member with an identifier.
+
+## Create Expectations Properties
+
+These used to be extension methods; now, they'll live on the expectations type. Methods, properties, indexers, along with the explicit member implementations.
+
+## Implement `Verify()`
+
+Basically just need to do `.AddRange()` for each handler list.
+
+## Update Member Handling
+
+We no longer need casts. Just need to modify which list the member iterates.
+
+## Create Custom Expectations Classes
+
+These will be nested within the expectations class. The extension methods I made now go here.
+
+## Create `Pointer...<>` Types
+
+This is basically [this](https://github.com/JasonBock/Rocks/issues/244) for the 3rd time.
+
+## Create `Span...<>` and `ReadOnlySpan<>...` Types
+
+Do what I talked about above.
