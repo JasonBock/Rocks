@@ -46,14 +46,14 @@ internal sealed class ISimpleCreateExpectations
 	// * call count
 	// * expected call count
 	// * return value (if not void)
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	internal sealed class Handler0
 		: GeneratedHandler<global::System.Func<int, global::System.Guid, string>, string>
 	{
-		public global::Rocks.Argument<int> @options;
-		public global::Rocks.Argument<global::System.Guid> @id;
-	}
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+		public global::Rocks.Argument<int> Options { get; set; }
+		public global::Rocks.Argument<global::System.Guid> Id { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	}
 
 	// Create as many handler lists for all the handler types.
 	private readonly List<Handler0> @handlers0 = new();
@@ -63,7 +63,7 @@ internal sealed class ISimpleCreateExpectations
 	internal ISimpleMethodExpectations Methods { get; }
 
 	internal ISimpleCreateExpectations() =>
-		this.Methods = new ISimpleMethodExpectations(this);
+		this.Methods = new(this);
 
 	internal global::ISimple Instance()
 	{
@@ -112,8 +112,8 @@ internal sealed class ISimpleCreateExpectations
 			{
 				var @handler = @handlers0[i];
 
-				if (@handler.@options.IsValid(@options!) &&
-					@handler.@id.IsValid(@id!))
+				if (@handler.Options.IsValid(@options!) &&
+					@handler.Id.IsValid(@id!))
 				{
 					@handler.CallCount++;
 					var @result = @handler.Callback is not null ?
@@ -145,8 +145,8 @@ internal sealed class ISimpleCreateExpectations
 
 			var handler = new Handler0
 			{
-				options = @options,
-				id = @id,
+				Options = @options,
+				Id = @id,
 				Callback = null,
 				CallCount = 0,
 				ExpectedCallCount = 1,

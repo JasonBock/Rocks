@@ -91,7 +91,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 				var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
 				var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
 				var mockModel = MockModel.Create(invocation, symbol!, model, BuildType.Create, true);
-				return mockModel is not null && mockModel.Type is not null;
+				return mockModel.Type is not null;
 			}
 
 			return false;

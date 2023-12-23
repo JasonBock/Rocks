@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Diagnostics;
 using System.Collections.Immutable;
 
@@ -8,13 +7,13 @@ namespace Rocks.Extensions;
 internal static class IEventSymbolExtensions
 {
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IEventSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
+		this IEventSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
 		if (self.Type.IsObsolete(obsoleteAttribute))
 		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
 		}
 
 		return diagnostics.ToImmutable();

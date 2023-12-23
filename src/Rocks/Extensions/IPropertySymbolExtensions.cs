@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Diagnostics;
 using System.Collections.Immutable;
 
@@ -8,14 +7,14 @@ namespace Rocks.Extensions;
 internal static class IPropertySymbolExtensions
 {
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IPropertySymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
+		this IPropertySymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 		
 		if (self.Parameters.Any(_ => _.Type.IsObsolete(obsoleteAttribute)) ||
 			self.Type.IsObsolete(obsoleteAttribute))
 		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
 		}
 
 		return diagnostics.ToImmutable();

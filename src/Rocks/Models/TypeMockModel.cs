@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Discovery;
 using Rocks.Extensions;
 using System.Collections.Immutable;
@@ -9,7 +8,7 @@ namespace Rocks.Models;
 internal sealed record TypeMockModel
 {
    internal TypeMockModel(
-	   InvocationExpressionSyntax invocation, ITypeSymbol type, Compilation compilation, SemanticModel model,
+		SyntaxNode node, ITypeSymbol type, Compilation compilation, SemanticModel model,
 	   ImmutableArray<IMethodSymbol> constructors, MockableMethods methods,
 	   MockableProperties properties, MockableEvents events,
 	   HashSet<ITypeSymbol> shims, bool shouldResolveShims)
@@ -34,7 +33,7 @@ internal sealed record TypeMockModel
 			  _.RequiresExplicitInterfaceImplementation, _.RequiresOverride)).ToImmutableArray();
 	  this.Shims = shouldResolveShims ?
 		  shims.Select(_ =>
-			  MockModel.Create(invocation, _, model, BuildType.Create, false)!.Type!).ToImmutableArray() :
+			  MockModel.Create(node, _, model, BuildType.Create, false)!.Type!).ToImmutableArray() :
 		  ImmutableArray<TypeMockModel>.Empty;
 
 	  this.ConstructorProperties = type.GetMembers().OfType<IPropertySymbol>()

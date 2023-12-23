@@ -3,7 +3,6 @@
 /// <summary>
 /// Specifies the type of mock to make.
 /// </summary>
-[Flags]
 public enum BuildType
 {
 	/// <summary>

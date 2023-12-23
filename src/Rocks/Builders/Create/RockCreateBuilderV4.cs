@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Rocks.Builders.Create;
 
-internal sealed class RockCreateBuilder
+internal sealed class RockCreateBuilderV4
 {
-	internal RockCreateBuilder(TypeMockModel mockType)
+	internal RockCreateBuilderV4(TypeMockModel mockType)
 	{
 		this.MockType = mockType;
 		(this.Name, this.Text) = this.Build();
@@ -37,7 +37,7 @@ internal sealed class RockCreateBuilder
 			"using System.Collections.Immutable;",
 		};
 
-		var wereTypesProjected = MockBuilder.Build(indentWriter, this.MockType);
+		var wereTypesProjected = MockBuilderV4.Build(indentWriter, this.MockType);
 
 		if (wereTypesProjected)
 		{

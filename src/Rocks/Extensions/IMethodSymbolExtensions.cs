@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Diagnostics;
 using System.Collections.Immutable;
 
@@ -11,7 +10,7 @@ internal static class IMethodSymbolExtensions
 		"System.Diagnostics.CodeAnalysis.DoesNotReturnAttribute";
 
 	internal static ImmutableArray<Diagnostic> GetObsoleteDiagnostics(
-		this IMethodSymbol self, InvocationExpressionSyntax invocation, INamedTypeSymbol obsoleteAttribute)
+		this IMethodSymbol self, SyntaxNode node, INamedTypeSymbol obsoleteAttribute)
 	{
 		var diagnostics = ImmutableArray.CreateBuilder<Diagnostic>();
 
@@ -19,7 +18,7 @@ internal static class IMethodSymbolExtensions
 			self.TypeParameters.Any(_ => _.IsObsolete(obsoleteAttribute)) ||
 			!self.ReturnsVoid && self.ReturnType.IsObsolete(obsoleteAttribute))
 		{
-			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(invocation, self));
+			diagnostics.Add(MemberUsesObsoleteTypeDiagnostic.Create(node, self));
 		}
 
 		return diagnostics.ToImmutable();

@@ -1,12 +1,11 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Globalization;
 
 namespace Rocks.Diagnostics;
 
 internal static class MemberUsesObsoleteTypeDiagnostic
 {
-	internal static Diagnostic Create(InvocationExpressionSyntax invocation, ISymbol symbol) =>
+	internal static Diagnostic Create(SyntaxNode invocation, ISymbol symbol) =>
 		Diagnostic.Create(new(MemberUsesObsoleteTypeDiagnostic.Id, MemberUsesObsoleteTypeDiagnostic.Title,
 			string.Format(CultureInfo.CurrentCulture, MemberUsesObsoleteTypeDiagnostic.Message,
 				symbol.Name),
