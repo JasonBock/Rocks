@@ -12,18 +12,24 @@ internal static class MockBuilderV4
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations");
-				: Expectations
+			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations
+				: global::Rocks.Expectations
 			{
 			""");
 		writer.Indent++;
 
-		MockHandlerListBuilderV4.Build(writer, mockType);
+		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
+			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
+			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
+
+		MockHandlerListBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 
 		var expectationPropertyNames = new List<string>();
+		expectationPropertyNames.AddRange(MockMethodExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
+		expectationPropertyNames.AddRange(MockPropertyExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
 
-		expectationPropertyNames.AddRange(MockMethodExtensionsBuilderV4.Build(writer, mockType));
-		MockPropertyExtensionsBuilder.Build(writer, mockType);
+		// TODO: Add in as new V4s are created
+		/*
 		MockConstructorExtensionsBuilder.Build(writer, mockType);
 
 		writer.WriteLine();
@@ -32,14 +38,17 @@ internal static class MockBuilderV4
 		// that initializes all the member expectation properties with "new(this)".
 
 		MockTypeBuilder.Build(writer, mockType);
+		*/
 
 		writer.Indent--;
 		writer.WriteLine("}");
 
+		// TODO: Add in as new V4s are created
+		/*
 		MethodExpectationsExtensionsBuilder.Build(writer, mockType);
 		PropertyExpectationsExtensionsBuilder.Build(writer, mockType);
 		EventExpectationsExtensionsBuilder.Build(writer, mockType);
-
+		*/
 		return wereTypesProjected;
 	}
 }

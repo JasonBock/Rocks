@@ -6,7 +6,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MockMethodExtensionsBuilderV4
 {
-	internal static IEnumerable<string> Build(IndentedTextWriter writer, TypeMockModel type)
+	internal static IEnumerable<string> Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
 	{
 		if (type.Methods.Length > 0)
 		{
@@ -14,7 +14,7 @@ internal static class MockMethodExtensionsBuilderV4
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
-				writer.WriteLine($"internal {type.Type.FlattenedName}MethodExpectations Methods {{ get; }}");
+				writer.WriteLine($"internal {expectationsFullyQualifiedName}.{type.Type.FlattenedName}MethodExpectations Methods {{ get; }}");
 				yield return "Methods";
 			}
 
@@ -26,7 +26,7 @@ internal static class MockMethodExtensionsBuilderV4
 				{
 					var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
 
-					writer.WriteLine($"internal Explicit{flattenedContainingTypeName}MethodExpectations ExplicitMethodsFor{flattenedContainingTypeName} {{ get; }}");
+					writer.WriteLine($"internal {expectationsFullyQualifiedName}.Explicit{flattenedContainingTypeName}MethodExpectations ExplicitMethodsFor{flattenedContainingTypeName} {{ get; }}");
 					yield return $"ExplicitMethodsFor{flattenedContainingTypeName}";
 				}
 			}

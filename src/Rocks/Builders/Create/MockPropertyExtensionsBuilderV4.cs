@@ -6,29 +6,27 @@ namespace Rocks.Builders.Create;
 
 internal static class MockPropertyExtensionsBuilderV4
 {
-	internal static IEnumerable<string> Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static IEnumerable<string> Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		if (mockType.Properties.Length > 0)
 		{
-			var typeToMockName = mockType.Type.FullyQualifiedName;
-
-			foreach (var property in MockPropertyExtensionsBuilderV4.BuildProperties(writer, mockType, typeToMockName))
+			foreach (var property in MockPropertyExtensionsBuilderV4.BuildProperties(writer, mockType, expectationsFullyQualifiedName))
 			{
 				yield return property;
 			}
 
-			foreach (var indexer in MockPropertyExtensionsBuilderV4.BuildIndexers(writer, mockType, typeToMockName))
+			foreach (var indexer in MockPropertyExtensionsBuilderV4.BuildIndexers(writer, mockType, expectationsFullyQualifiedName))
 			{
 				yield return indexer;
 			}
 		}
 	}
 
-	private static IEnumerable<string> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string typeToMockName)
+	private static IEnumerable<string> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
-			writer.WriteLine($"internal {mockType.Type.FlattenedName}IndexerExpectations Indexers {{ get; }}");
+			writer.WriteLine($"internal {expectationsFullyQualifiedName}.{mockType.Type.FlattenedName}IndexerExpectations Indexers {{ get; }}");
 			yield return "Indexers";
 		}
 
@@ -39,16 +37,16 @@ internal static class MockPropertyExtensionsBuilderV4
 		{
 			var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
 
-			writer.WriteLine($"internal Explicit{flattenedContainingTypeName}IndexerExpectations ExplicitIndexersFor{flattenedContainingTypeName} {{ get; }}");
+			writer.WriteLine($"internal {expectationsFullyQualifiedName}.Explicit{flattenedContainingTypeName}IndexerExpectations ExplicitIndexersFor{flattenedContainingTypeName} {{ get; }}");
 			yield return $"ExplicitIndexersFor{flattenedContainingTypeName}";
 		}
 	}
 
-	private static IEnumerable<string> BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string typeToMockName)
+	private static IEnumerable<string> BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
-			writer.WriteLine($"internal {mockType.Type.FlattenedName}PropertyExpectations Properties {{ get; }}");
+			writer.WriteLine($"internal {expectationsFullyQualifiedName}.{mockType.Type.FlattenedName}PropertyExpectations Properties {{ get; }}");
 			yield return "Properties";
 		}
 
@@ -59,7 +57,7 @@ internal static class MockPropertyExtensionsBuilderV4
 		{
 			var flattenedContainingTypeName = typeGroup.Key.FlattenedName;
 
-			writer.WriteLine($"internal Explicit{flattenedContainingTypeName}PropertyExpectations ExplicitPropertiesFor{flattenedContainingTypeName} {{ get; }}");
+			writer.WriteLine($"internal {expectationsFullyQualifiedName}.Explicit{flattenedContainingTypeName}PropertyExpectations ExplicitPropertiesFor{flattenedContainingTypeName} {{ get; }}");
 			yield return $"ExplicitPropertiesFor{flattenedContainingTypeName}";
 		}
 	}
