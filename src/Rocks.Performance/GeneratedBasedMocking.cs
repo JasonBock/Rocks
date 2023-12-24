@@ -63,7 +63,7 @@ internal sealed class ISimpleCreateExpectations
 	internal ISimpleMethodExpectations Methods { get; }
 
 	internal ISimpleCreateExpectations() =>
-		this.Methods = new(this);
+		(this.Methods) = (new(this));
 
 	internal global::ISimple Instance()
 	{

@@ -76,11 +76,158 @@ public static class V4GeneratorTests
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler0> @handlers0 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler1> @handlers1 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler3> @handlers3 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler4> @handlers4 = new();
 				
 				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
 				internal global::ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
 				internal global::ITestCreateExpectations.ITestIndexerExpectations Indexers { get; }
+				
+				internal ITestCreateExpectations() =>
+					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
+				
+				internal static global::ITest Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockITest(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+				
+				private sealed class RockITest
+					: global::ITest
+				{
+					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					
+					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> @expectations)
+					{
+						this.handlers = @expectations.Handlers;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "void Work()")]
+					public void Work()
+					{
+						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						{
+							var @methodHandler = @methodHandlers[0];
+							@methodHandler.IncrementCallCount();
+							if (@methodHandler.Method is not null)
+							{
+								((global::System.Action)@methodHandler.Method)();
+							}
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Work()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int Process(string @value)")]
+					public int Process(string @value)
+					{
+						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						{
+							foreach (var @methodHandler in @methodHandlers)
+							{
+								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+								{
+									@methodHandler.IncrementCallCount();
+									var @result = @methodHandler.Method is not null ?
+										((global::System.Func<string, int>)@methodHandler.Method)(@value!) :
+										((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int Process(string @value)");
+						}
+						
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int Process(string @value)");
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "get_Data()")]
+					[global::Rocks.MemberIdentifier(3, "set_Data(value)")]
+					public global::System.Guid Data
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							{
+								var @methodHandler = @methodHandlers[0];
+								@methodHandler.IncrementCallCount();
+								var @result = @methodHandler.Method is not null ?
+									((global::System.Func<global::System.Guid>)@methodHandler.Method)() :
+									((global::Rocks.HandlerInformation<global::System.Guid>)@methodHandler).ReturnValue;
+								return @result!;
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_Data())");
+						}
+						set
+						{
+							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							{
+								var @foundMatch = false;
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[0]).IsValid(value!))
+									{
+										@methodHandler.IncrementCallCount();
+										@foundMatch = true;
+										
+										if (@methodHandler.Method is not null)
+										{
+											((global::System.Action<global::System.Guid>)@methodHandler.Method)(value!);
+										}
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for set_Data(value)");
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(4, "this[long @index]")]
+					public global::Holder this[long @index]
+					{
+						get
+						{
+							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							{
+								foreach (var @methodHandler in @methodHandlers)
+								{
+									if (((global::Rocks.Argument<long>)@methodHandler.Expectations[0]).IsValid(@index!))
+									{
+										@methodHandler.IncrementCallCount();
+										var @result = @methodHandler.Method is not null ?
+											((global::System.Func<long, global::Holder>)@methodHandler.Method)(@index!) :
+											((global::Rocks.HandlerInformation<global::Holder>)@methodHandler).ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[long @index])");
+						}
+					}
+				}
 			}
 			
 			""";

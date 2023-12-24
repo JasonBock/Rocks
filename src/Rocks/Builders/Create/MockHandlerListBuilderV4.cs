@@ -24,6 +24,11 @@ internal static class MockHandlerListBuilderV4
 		foreach (var property in mockType.Properties)
 		{
 			writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}> @handlers{property.MemberIdentifier} = new();");
+
+			if (property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit)
+			{
+				writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier + 1}> @handlers{property.MemberIdentifier + 1} = new();");
+			}
 		}
 
 		writer.WriteLine();
@@ -101,46 +106,6 @@ internal static class MockHandlerListBuilderV4
 				MockHandlerListBuilderV4.BuildHandler(writer, property.GetMethod!);
 				MockHandlerListBuilderV4.BuildHandler(writer, property.SetMethod!);
 			}
-			//// I need to potentially do this twice, if it is a "GetAndSet" for example.
-
-			//var parameters = property.GetMethod is not null ?
-			//	property.GetMethod.Parameters :
-			//	property.SetMethod!.Parameters;
-			//var callbackDelegateTypeName = DelegateBuilder.Build(parameters);
-			//var returnTypeName = property.GetMethod is null ? string.Empty :
-			//	property.GetMethod.ReturnType.IsRefLikeType ?
-			//		MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(property.GetMethod, property.MockType) :
-			//		property.GetMethod.ReturnType.FullyQualifiedName;
-			//returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
-
-			//writer.WriteLines(
-			//	$$"""
-			//	internal sealed class Handler{{property.MemberIdentifier}}
-			//		: HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
-			//	{
-			//	""");
-
-			//writer.Indent++;
-
-			//// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-			//// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
-			//writer.WriteLine("#pragma warning disable CS8618");
-
-			//// TODO: I should consider putting this in MethodModel as well as properties.
-			//var names = new VariableNamingContextV4(new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableArray());
-
-			//foreach (var parameter in parameters)
-			//{
-			//	var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
-			//	var name = names[parameter.Name];
-			//	writer.WriteLine($"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}> {name} {{ get; set; }}");
-			//}
-
-			//writer.WriteLine("#pragma warning restore CS8618");
-
-			//writer.Indent--;
-			//writer.WriteLine("}");
-			//writer.WriteLine();
 		}
 	}
 }

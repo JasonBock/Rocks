@@ -8,7 +8,7 @@ internal static class MockBuilderV4
 {
 	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
+		var wereTypesProjected = MockProjectedTypesBuilderV4.Build(writer, mockType);
 
 		writer.WriteLines(
 			$$"""
@@ -27,18 +27,14 @@ internal static class MockBuilderV4
 		var expectationPropertyNames = new List<string>();
 		expectationPropertyNames.AddRange(MockMethodExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
 		expectationPropertyNames.AddRange(MockPropertyExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
-
-		// TODO: Add in as new V4s are created
-		/*
-		MockConstructorExtensionsBuilder.Build(writer, mockType);
-
 		writer.WriteLine();
 
-		// TODO: I'll need to create a constructor for the expectations type
-		// that initializes all the member expectation properties with "new(this)".
+		MockConstructorExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName, expectationPropertyNames);
+		writer.WriteLine();
 
-		MockTypeBuilder.Build(writer, mockType);
-		*/
+		// TODO: Need to generate Verify();
+
+		MockTypeBuilderV4.Build(writer, mockType);
 
 		writer.Indent--;
 		writer.WriteLine("}");
