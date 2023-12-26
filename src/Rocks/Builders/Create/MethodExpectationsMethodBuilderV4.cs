@@ -68,10 +68,10 @@ internal static class MethodExpectationsMethodBuilderV4
 					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
 					method.ReturnType.FullyQualifiedName;
 			var adornmentsType = method.ReturnsVoid ?
-				$"global::Rocks.MethodAdornmentsV4<{mockTypeName}, {callbackDelegateTypeName}>" :
+				$"global::Rocks.MethodAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}>" :
 				method.ReturnType.IsPointer ?
 					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.MethodAdornmentsV4<{mockTypeName}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.MethodAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var addMethod = method.ReturnsVoid ? "Add" :

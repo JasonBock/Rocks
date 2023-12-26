@@ -1,7 +1,6 @@
 ﻿using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -9,8 +8,28 @@ internal static class MockHandlerListBuilderV4
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
+		var hasParameters = mockType.Methods.Any(_ => _.Parameters.Length > 0) ||
+			mockType.Properties.Any(_ => (_.GetMethod is not null && _.GetMethod.Parameters.Length > 0) || (_.SetMethod!.Parameters.Length > 0));
+
+		if (hasParameters)
+		{
+			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
+			writer.WriteLine("#pragma warning disable CS8618");
+			writer.WriteLine();
+		}
+
 		BuildMethodHandlerTypes(writer, mockType);
 		BuildPropertyHandlerTypes(writer, mockType);
+
+		if (hasParameters)
+		{
+			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
+			writer.WriteLine("#pragma warning restore CS8618");
+			writer.WriteLine();
+		}
+
 		BuildHandlerListFields(writer, mockType, expectationsFullyQualifiedName);
 	}
 
@@ -58,10 +77,6 @@ internal static class MockHandlerListBuilderV4
 			writer.WriteLine("{");
 			writer.Indent++;
 
-			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
-			writer.WriteLine("#pragma warning disable CS8618");
-
 			var names = HandlerVariableNamingContextV4.Create();
 
 			foreach (var parameter in method.Parameters)
@@ -71,7 +86,6 @@ internal static class MockHandlerListBuilderV4
 				writer.WriteLine($"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}> {name} {{ get; set; }}");
 			}
 
-			writer.WriteLine("#pragma warning restore CS8618");
 			writer.Indent--;
 			writer.WriteLine("}");
 		}

@@ -46,6 +46,8 @@ public static class V4GeneratorTests
 			internal sealed class ITestCreateExpectations
 				: global::Rocks.Expectations
 			{
+				#pragma warning disable CS8618
+				
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Action>
 				{ }
@@ -53,10 +55,8 @@ public static class V4GeneratorTests
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::System.Action<global::Holder, string>>
 				{
-					#pragma warning disable CS8618
 					public global::Rocks.Argument<global::Holder> holder { get; set; }
 					public global::Rocks.Argument<string> value { get; set; }
-					#pragma warning restore CS8618
 				}
 				
 				internal sealed class Handler2
@@ -66,10 +66,8 @@ public static class V4GeneratorTests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Func<global::Holder, string, int>, int>
 				{
-					#pragma warning disable CS8618
 					public global::Rocks.Argument<global::Holder> holder { get; set; }
 					public global::Rocks.Argument<string> value { get; set; }
-					#pragma warning restore CS8618
 				}
 				
 				internal sealed class Handler4
@@ -79,27 +77,23 @@ public static class V4GeneratorTests
 				internal sealed class Handler5
 					: global::Rocks.HandlerV4<global::System.Action<global::System.Guid>>
 				{
-					#pragma warning disable CS8618
 					public global::Rocks.Argument<global::System.Guid> value { get; set; }
-					#pragma warning restore CS8618
 				}
 				
 				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Func<long, global::Holder>, global::Holder>
 				{
-					#pragma warning disable CS8618
 					public global::Rocks.Argument<long> index { get; set; }
-					#pragma warning restore CS8618
 				}
 				
 				internal sealed class Handler7
 					: global::Rocks.HandlerV4<global::System.Action<long, global::Holder>>
 				{
-					#pragma warning disable CS8618
 					public global::Rocks.Argument<long> index { get; set; }
 					public global::Rocks.Argument<global::Holder> value { get; set; }
-					#pragma warning restore CS8618
 				}
+				
+				#pragma warning restore CS8618
 				
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler0> @handlers0 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler1> @handlers1 = new();
@@ -395,7 +389,7 @@ public static class V4GeneratorTests
 					internal ITestMethodExpectations(global::ITestCreateExpectations expectations) =>
 						this.expectations = expectations;
 					
-					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Action> NoArgumentsNoReturn()
+					internal global::Rocks.MethodAdornmentsV4<global::ITestCreateExpectations.Handler0, global::System.Action> NoArgumentsNoReturn()
 					{
 						var handler = new global::ITestCreateExpectations.Handler0
 						{
@@ -408,7 +402,7 @@ public static class V4GeneratorTests
 						this.expectations.handlers0.Add(handler);
 						return new(handler);
 					}
-					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Action<global::Holder, string>> ArgumentsNoReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
+					internal global::Rocks.MethodAdornmentsV4<global::ITestCreateExpectations.Handler1, global::System.Action<global::Holder, string>> ArgumentsNoReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@holder);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -426,7 +420,7 @@ public static class V4GeneratorTests
 						this.expectations.handlers1.Add(handler);
 						return new(handler);
 					}
-					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Func<int>, int> NoArgumentsReturn()
+					internal global::Rocks.MethodAdornmentsV4<global::ITestCreateExpectations.Handler2, global::System.Func<int>, int> NoArgumentsReturn()
 					{
 						var handler = new global::ITestCreateExpectations.Handler2
 						{
@@ -439,7 +433,7 @@ public static class V4GeneratorTests
 						this.expectations.handlers2.Add(handler);
 						return new(handler);
 					}
-					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Func<global::Holder, string, int>, int> ArgumentsReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
+					internal global::Rocks.MethodAdornmentsV4<global::ITestCreateExpectations.Handler3, global::System.Func<global::Holder, string, int>, int> ArgumentsReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@holder);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
