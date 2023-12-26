@@ -37,15 +37,16 @@ internal static class MockBuilderV4
 
 		MockTypeBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 
-		writer.Indent--;
-		writer.Write("}");
-
+		MethodExpectationsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 		// TODO: Add in as new V4s are created
 		/*
-		MethodExpectationsExtensionsBuilder.Build(writer, mockType);
 		PropertyExpectationsExtensionsBuilder.Build(writer, mockType);
 		EventExpectationsExtensionsBuilder.Build(writer, mockType);
 		*/
+
+		writer.Indent--;
+		writer.Write("}");
+
 		return wereTypesProjected;
 	}
 }

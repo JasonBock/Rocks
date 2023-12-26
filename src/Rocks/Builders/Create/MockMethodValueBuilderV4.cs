@@ -105,7 +105,7 @@ internal static class MockMethodValueBuilderV4
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.expectations.handler{method.MemberIdentifier}.Count > 0)");
+		writer.WriteLine($"if (this.expectations.handlers{method.MemberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -290,7 +290,7 @@ internal static class MockMethodValueBuilderV4
 		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
-		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handler{method.MemberIdentifier})");
+		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handlers{method.MemberIdentifier})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -369,7 +369,7 @@ internal static class MockMethodValueBuilderV4
 		TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
-		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handler{method.MemberIdentifier}[0];");
+		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handlers{method.MemberIdentifier}[0];");
 		MockMethodValueBuilderV4.BuildMethodHandler(
 			writer, method, typeToMock, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 	}

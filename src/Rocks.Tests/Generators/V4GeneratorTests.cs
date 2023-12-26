@@ -28,6 +28,8 @@ public static class V4GeneratorTests
 				Guid Data { get; set; }
 
 				Holder this[long index] { get; set; }
+
+				event EventHandler Test;
 			}
 			""";
 
@@ -153,7 +155,7 @@ public static class V4GeneratorTests
 				}
 				
 				private sealed class RockITest
-					: global::ITest
+					: global::ITest, global::Rocks.IRaiseEvents
 				{
 					private readonly global::ITestCreateExpectations expectations;
 					
@@ -165,9 +167,9 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void NoArgumentsNoReturn()")]
 					public void NoArgumentsNoReturn()
 					{
-						if (this.expectations.handler0.Count > 0)
+						if (this.expectations.handlers0.Count > 0)
 						{
-							var @handler = this.expectations.handler0[0];
+							var @handler = this.expectations.handlers0[0];
 							@handler.CallCount++;
 							
 							if (@handler.Callback is not null)
@@ -175,6 +177,7 @@ public static class V4GeneratorTests
 								@handler.Callback();
 							}
 							
+							@handler.RaiseEvents(this);
 						}
 						else
 						{
@@ -185,11 +188,11 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(1, "void ArgumentsNoReturn(global::Holder @holder, string @value)")]
 					public void ArgumentsNoReturn(global::Holder @holder, string @value)
 					{
-						if (this.expectations.handler1.Count > 0)
+						if (this.expectations.handlers1.Count > 0)
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.expectations.handler1)
+							foreach (var @handler in this.expectations.handlers1)
 							{
 								if (@handler.holder.IsValid(@holder!) &&
 									@handler.value.IsValid(@value!))
@@ -203,6 +206,7 @@ public static class V4GeneratorTests
 										@handler.Callback(@holder!, @value!);
 									}
 									
+									@handler.RaiseEvents(this);
 									break;
 								}
 							}
@@ -221,13 +225,14 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(2, "int NoArgumentsReturn()")]
 					public int NoArgumentsReturn()
 					{
-						if (this.expectations.handler2.Count > 0)
+						if (this.expectations.handlers2.Count > 0)
 						{
-							var @handler = this.expectations.handler2[0];
+							var @handler = this.expectations.handlers2[0];
 							@handler.CallCount++;
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() :
 								@handler.ReturnValue;
+							@handler.RaiseEvents(this);
 							return @result!;
 						}
 						
@@ -237,9 +242,9 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(3, "int ArgumentsReturn(global::Holder @holder, string @value)")]
 					public int ArgumentsReturn(global::Holder @holder, string @value)
 					{
-						if (this.expectations.handler3.Count > 0)
+						if (this.expectations.handlers3.Count > 0)
 						{
-							foreach (var @handler in this.expectations.handler3)
+							foreach (var @handler in this.expectations.handlers3)
 							{
 								if ((@handler.holder.IsValid(@holder!) &&
 									@handler.value.IsValid(@value!))
@@ -248,6 +253,7 @@ public static class V4GeneratorTests
 									var @result = @handler.Callback is not null ?
 										@handler.Callback(@holder!, @value!) :
 										@handler.ReturnValue;
+									@handler.RaiseEvents(this);
 									return @result!;
 								}
 							}
@@ -262,13 +268,14 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handler4.Count > 0)
+							if (this.expectations.handlers4.Count > 0)
 							{
 								var @handler = this.expectations.handler4[0];
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() :
 									@handler.ReturnValue;
+								@handler.RaiseEvents(this);
 								return @result!;
 							}
 							
@@ -279,7 +286,7 @@ public static class V4GeneratorTests
 							if (this.expectations.handler5)
 							{
 								var @foundMatch = false;
-								foreach (var @handler in this.expectations.handler5)
+								foreach (var @handler in this.expectations.handlers5)
 								{
 									if (@handler.value.IsValid(value!))
 									{
@@ -296,6 +303,7 @@ public static class V4GeneratorTests
 											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_Data(value)");
 										}
 										
+										@handler.RaiseEvents(this);
 										break;
 									}
 								}
@@ -312,9 +320,9 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handler6.Count > 0)
+							if (this.expectations.handlers6.Count > 0)
 							{
-								foreach (var @handler in this.expectations.handler6)
+								foreach (var @handler in this.expectations.handlers6)
 								{
 									if (@handler.index.IsValid(@index!))
 									{
@@ -322,6 +330,7 @@ public static class V4GeneratorTests
 										var @result = @handler.Callback is not null ?
 											@handler.Callback(@index!) :
 											@handler.ReturnValue;
+										@handler.RaiseEvents(this);
 										return @result!;
 									}
 								}
@@ -333,9 +342,9 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.expectations.handler7.Count > 0)
+							if (this.expectations.handlers7.Count > 0)
 							{
-								foreach (var @handler in this.expectations.handler7)
+								foreach (var @handler in this.expectations.handlers7)
 								{
 									if (@handler.index.IsValid(@index!) &&
 										@handler.value.IsValid(@value!))
@@ -347,6 +356,7 @@ public static class V4GeneratorTests
 											@handler.Callback(@index!, @value!);
 										}
 										
+										@handler.RaiseEvents(this);
 										return;
 									}
 								}
@@ -356,6 +366,96 @@ public static class V4GeneratorTests
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[long @index])");
 						}
+					}
+					
+					#pragma warning disable CS0067
+					public event global::System.EventHandler? Test;
+					#pragma warning restore CS0067
+					
+					void global::Rocks.IRaiseEvents.Raise(string @fieldName, object @args)
+					{
+						var @thisType = this.GetType();
+						var @eventDelegate = (global::System.MulticastDelegate)thisType.GetField(@fieldName, 
+							global::System.Reflection.BindingFlags.Instance | global::System.Reflection.BindingFlags.NonPublic)!.GetValue(this)!;
+						
+						if (@eventDelegate is not null)
+						{
+							foreach (var @handler in @eventDelegate.GetInvocationList())
+							{
+								@handler.Method.Invoke(@handler.Target, new object[]{this, @args});
+							}
+						}
+					}
+				}
+				
+				internal sealed class ITestMethodExpectations
+				{
+					private readonly global::ITestCreateExpectations expectations;
+				
+					internal ITestMethodExpectations(global::ITestCreateExpectations expectations) =>
+						this.expectations = expectations;
+					
+					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Action> NoArgumentsNoReturn()
+					{
+						var handler = new global::ITestCreateExpectations.Handler0
+						{
+							Callback = null,
+							CallCount = 0,
+							ExpectedCallCount = 1,
+							ReturnValue = null
+						};
+						
+						this.expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Action<global::Holder, string>> ArgumentsNoReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@holder);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var handler = new global::ITestCreateExpectations.Handler1
+						{
+							holder = @holder,
+							value = @value,
+							Callback = null,
+							CallCount = 0,
+							ExpectedCallCount = 1,
+							ReturnValue = null
+						};
+						
+						this.expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Func<int>, int> NoArgumentsReturn()
+					{
+						var handler = new global::ITestCreateExpectations.Handler2
+						{
+							Callback = null,
+							CallCount = 0,
+							ExpectedCallCount = 1,
+							ReturnValue = null
+						};
+						
+						this.expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.MethodAdornmentsV4<global::ITest, global::System.Func<global::Holder, string, int>, int> ArgumentsReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@holder);
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var handler = new global::ITestCreateExpectations.Handler3
+						{
+							holder = @holder,
+							value = @value,
+							Callback = null,
+							CallCount = 0,
+							ExpectedCallCount = 1,
+							ReturnValue = null
+						};
+						
+						this.expectations.handlers3.Add(handler);
+						return new(handler);
 					}
 				}
 			}

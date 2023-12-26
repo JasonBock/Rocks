@@ -32,19 +32,19 @@ This looks for `RockAttribute`. However...`MockModel` uses `InvocationExpression
 
 A lot of work happens here. Again, look at `GeneratedBaseMocking`.
 
-# Create `Handler{n}` Classes
+# DONE - Create `Handler{n}` Classes
 
 These need to be created for each member with an identifier.
 
-# Create Handler Lists
+# DONE - Create Handler Lists
 
 These need to be created for each member with an identifier.
 
-# Create Expectations Properties
+# DONE - Create Expectations Properties
 
 These used to be extension methods; now, they'll live on the expectations type. Methods, properties, indexers, along with the explicit member implementations.
 
-# Implement `Verify()`
+# DONE - Implement `Verify()`
 
 Basically just need to do `.AddRange()` for each handler list.
 
@@ -59,6 +59,10 @@ These will be nested within the expectations class. The extension methods I made
 # Casts for Type Parameter Handlers
 
 Oops. I forgot there are cases where the handlers need to be open generics, because the method could have open generics (properties/indexers don't matter). I'll need to generate those type parameters on the custom handler I make, and then still do a cast on the parameter if it's based on a type parameter.
+
+# Remove ALL Casts
+
+I think the way this is set up, I can truly remove all casts from all member implementations (save for the type parameter case mentioned in the previous section).
 
 # Create `Pointer...<>` Types
 

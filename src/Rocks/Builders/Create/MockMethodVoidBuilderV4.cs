@@ -94,7 +94,7 @@ internal static class MockMethodVoidBuilderV4
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.expectations.handler{method.MemberIdentifier}.Count > 0)");
+		writer.WriteLine($"if (this.expectations.handlers{method.MemberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -168,7 +168,7 @@ internal static class MockMethodVoidBuilderV4
 		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
-		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handler{method.MemberIdentifier}[0];");
+		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handlers{method.MemberIdentifier}[0];");
 		MockMethodVoidBuilderV4.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)
@@ -183,7 +183,7 @@ internal static class MockMethodVoidBuilderV4
 	{
 		writer.WriteLine($"var @{namingContext["foundMatch"]} = false;");
 		writer.WriteLine();
-		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handler{method.MemberIdentifier})");
+		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handlers{method.MemberIdentifier})");
 
 		if (method.Parameters.Length > 0)
 		{
@@ -288,7 +288,6 @@ internal static class MockMethodVoidBuilderV4
 
 		if (raiseEvents)
 		{
-			writer.WriteLine();
 			writer.WriteLine($"@{namingContext["handler"]}.RaiseEvents(this);");
 		}
 	}

@@ -24,7 +24,7 @@ internal static class MockPropertyBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.expectations.handler{memberIdentifier}.Count > 0)");
+		writer.WriteLine($"if (this.expectations.handlers{memberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -134,7 +134,7 @@ internal static class MockPropertyBuilderV4
 				if (this.expectations.handler{{memberIdentifier}})
 				{
 					var @foundMatch = false;
-					foreach (var @handler in this.expectations.handler{{memberIdentifier}})
+					foreach (var @handler in this.expectations.handlers{{memberIdentifier}})
 					{
 						if (@handler.value.IsValid(value!))
 						{
@@ -157,7 +157,7 @@ internal static class MockPropertyBuilderV4
 		
 		if (raiseEvents)
 		{
-			writer.WriteLine("@methodHandler.RaiseEvents(this);");
+			writer.WriteLine("@handler.RaiseEvents(this);");
 		}
 
 		writer.Indent -= 4;
