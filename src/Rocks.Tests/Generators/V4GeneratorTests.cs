@@ -27,7 +27,7 @@ public static class V4GeneratorTests
 			
 				Guid Data { get; set; }
 
-				Holder this[long index] { get; }
+				Holder this[long index] { get; set; }
 			}
 			""";
 
@@ -90,6 +90,15 @@ public static class V4GeneratorTests
 					#pragma warning restore CS8618
 				}
 				
+				internal sealed class Handler7
+					: global::Rocks.HandlerV4<global::System.Action<long, global::Holder>>
+				{
+					#pragma warning disable CS8618
+					public global::Rocks.Argument<long> index { get; set; }
+					public global::Rocks.Argument<global::Holder> value { get; set; }
+					#pragma warning restore CS8618
+				}
+				
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler0> @handlers0 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler1> @handlers1 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler2> @handlers2 = new();
@@ -97,6 +106,7 @@ public static class V4GeneratorTests
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler4> @handlers4 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler5> @handlers5 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler6> @handlers6 = new();
+				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler7> @handlers7 = new();
 				
 				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
 				internal global::ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
@@ -133,6 +143,7 @@ public static class V4GeneratorTests
 						failures.AddRange(this.Verify(handlers4));
 						failures.AddRange(this.Verify(handlers5));
 						failures.AddRange(this.Verify(handlers6));
+						failures.AddRange(this.Verify(handlers7));
 				
 						if (failures.Count > 0)
 						{
@@ -296,21 +307,47 @@ public static class V4GeneratorTests
 						}
 					}
 					[global::Rocks.MemberIdentifier(6, "this[long @index]")]
+					[global::Rocks.MemberIdentifier(7, "this[long @index]")]
 					public global::Holder this[long @index]
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(6, out var @methodHandlers))
+							if (this.expectations.handler6.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.expectations.handler6)
 								{
-									if (((global::Rocks.Argument<long>)@methodHandler.Expectations[0]).IsValid(@index!))
+									if (@handler.index.IsValid(@index!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<long, global::Holder>)@methodHandler.Method)(@index!) :
-											((global::Rocks.HandlerInformation<global::Holder>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@index!) :
+											@handler.ReturnValue;
 										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[long @index])");
+						}
+						set
+						{
+							if (this.expectations.handler7.Count > 0)
+							{
+								foreach (var @handler in this.expectations.handler7)
+								{
+									if (@handler.index.IsValid(@index!) &&
+										@handler.value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										
+										if (@handler.Callback is not null)
+										{
+											@handler.Callback(@index!, @value!);
+										}
+										
+										return;
 									}
 								}
 								
