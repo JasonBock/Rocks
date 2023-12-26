@@ -17,7 +17,7 @@ internal sealed class RockGenerator
 			.ForAttributeWithMetadataName("Rocks.RockAttribute`1", (_, _) => true,
 				(context, token) =>
 				{
-					var models = new List<MockModel>(context.Attributes.Length);
+					var models = new List<MockModelV4>(context.Attributes.Length);
 
 					for (var i = 0; i < context.Attributes.Length; i++)
 					{
@@ -33,7 +33,7 @@ internal sealed class RockGenerator
 
 						if (!typeToMock.ContainsDiagnostics())
 						{
-							models.Add(MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(),
+							models.Add(MockModelV4.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
 								typeToMock, context.SemanticModel, buildType, true));
 						}
 					}
@@ -46,7 +46,7 @@ internal sealed class RockGenerator
 			(context, source) => RockGenerator.CreateOutput(source, context));
 	}
 
-	private static void CreateOutput(ImmutableArray<MockModel> mocks, SourceProductionContext context)
+	private static void CreateOutput(ImmutableArray<MockModelV4> mocks, SourceProductionContext context)
 	{
 		foreach (var mock in mocks.Distinct())
 		{

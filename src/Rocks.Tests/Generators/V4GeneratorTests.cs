@@ -19,9 +19,12 @@ public static class V4GeneratorTests
 
 			public interface ITest
 			{
-				void Work();
-				int Process(string value);
+				void NoArgumentsNoReturn();
+				void ArgumentsNoReturn(Holder holder, string value);
 
+				int NoArgumentsReturn();
+				int ArgumentsReturn(Holder holder, string value);
+			
 				Guid Data { get; set; }
 
 				Holder this[long index] { get; }
@@ -46,18 +49,32 @@ public static class V4GeneratorTests
 				{ }
 				
 				internal sealed class Handler1
-					: global::Rocks.HandlerV4<global::System.Func<string, int>, int>
+					: global::Rocks.HandlerV4<global::System.Action<global::Holder, string>>
 				{
 					#pragma warning disable CS8618
+					public global::Rocks.Argument<global::Holder> holder { get; set; }
 					public global::Rocks.Argument<string> value { get; set; }
 					#pragma warning restore CS8618
 				}
 				
 				internal sealed class Handler2
-					: global::Rocks.HandlerV4<global::System.Func<global::System.Guid>, global::System.Guid>
+					: global::Rocks.HandlerV4<global::System.Func<int>, int>
 				{ }
 				
 				internal sealed class Handler3
+					: global::Rocks.HandlerV4<global::System.Func<global::Holder, string, int>, int>
+				{
+					#pragma warning disable CS8618
+					public global::Rocks.Argument<global::Holder> holder { get; set; }
+					public global::Rocks.Argument<string> value { get; set; }
+					#pragma warning restore CS8618
+				}
+				
+				internal sealed class Handler4
+					: global::Rocks.HandlerV4<global::System.Func<global::System.Guid>, global::System.Guid>
+				{ }
+				
+				internal sealed class Handler5
 					: global::Rocks.HandlerV4<global::System.Action<global::System.Guid>>
 				{
 					#pragma warning disable CS8618
@@ -65,7 +82,7 @@ public static class V4GeneratorTests
 					#pragma warning restore CS8618
 				}
 				
-				internal sealed class Handler4
+				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Func<long, global::Holder>, global::Holder>
 				{
 					#pragma warning disable CS8618
@@ -78,6 +95,8 @@ public static class V4GeneratorTests
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler2> @handlers2 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler3> @handlers3 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler4> @handlers4 = new();
+				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler5> @handlers5 = new();
+				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler6> @handlers6 = new();
 				
 				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
 				internal global::ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
@@ -101,64 +120,138 @@ public static class V4GeneratorTests
 					}
 				}
 				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers4));
+						failures.AddRange(this.Verify(handlers5));
+						failures.AddRange(this.Verify(handlers6));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
 				private sealed class RockITest
 					: global::ITest
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
+					private readonly global::ITestCreateExpectations expectations;
 					
-					public RockITest(global::Rocks.Expectations.Expectations<global::ITest> @expectations)
+					public RockITest(global::ITestCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.expectations = @expectations;
 					}
 					
-					[global::Rocks.MemberIdentifier(0, "void Work()")]
-					public void Work()
+					[global::Rocks.MemberIdentifier(0, "void NoArgumentsNoReturn()")]
+					public void NoArgumentsNoReturn()
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.expectations.handler0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							if (@methodHandler.Method is not null)
+							var @handler = this.expectations.handler0[0];
+							@handler.CallCount++;
+							
+							if (@handler.Callback is not null)
 							{
-								((global::System.Action)@methodHandler.Method)();
+								@handler.Callback();
+							}
+							
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void NoArgumentsNoReturn()");
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "void ArgumentsNoReturn(global::Holder @holder, string @value)")]
+					public void ArgumentsNoReturn(global::Holder @holder, string @value)
+					{
+						if (this.expectations.handler1.Count > 0)
+						{
+							var @foundMatch = false;
+							
+							foreach (var @handler in this.expectations.handler1)
+							{
+								if (@handler.holder.IsValid(@holder!) &&
+									@handler.value.IsValid(@value!))
+								{
+									@foundMatch = true;
+									
+									@handler.CallCount++;
+									
+									if (@handler.Callback is not null)
+									{
+										@handler.Callback(@holder!, @value!);
+									}
+									
+									break;
+								}
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void ArgumentsNoReturn(global::Holder @holder, string @value)");
 							}
 						}
 						else
 						{
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Work()");
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void ArgumentsNoReturn(global::Holder @holder, string @value)");
 						}
 					}
 					
-					[global::Rocks.MemberIdentifier(1, "int Process(string @value)")]
-					public int Process(string @value)
+					[global::Rocks.MemberIdentifier(2, "int NoArgumentsReturn()")]
+					public int NoArgumentsReturn()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.expectations.handler2.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							var @handler = this.expectations.handler2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() :
+								@handler.ReturnValue;
+							return @result!;
+						}
+						
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int NoArgumentsReturn()");
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "int ArgumentsReturn(global::Holder @holder, string @value)")]
+					public int ArgumentsReturn(global::Holder @holder, string @value)
+					{
+						if (this.expectations.handler3.Count > 0)
+						{
+							foreach (var @handler in this.expectations.handler3)
 							{
-								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@value!))
+								if ((@handler.@holder.IsValid(@holder!) &&
+									@handler.@value.IsValid(@value!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<string, int>)@methodHandler.Method)(@value!) :
-										((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@holder!, @value!) :
+										@handler.ReturnValue;
 									return @result!;
 								}
 							}
-							
-							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for int Process(string @value)");
 						}
 						
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int Process(string @value)");
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int ArgumentsReturn(global::Holder @holder, string @value)");
 					}
 					
-					[global::Rocks.MemberIdentifier(2, "get_Data()")]
-					[global::Rocks.MemberIdentifier(3, "set_Data(value)")]
+					[global::Rocks.MemberIdentifier(4, "get_Data()")]
+					[global::Rocks.MemberIdentifier(5, "set_Data(value)")]
 					public global::System.Guid Data
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.handlers.TryGetValue(4, out var @methodHandlers))
 							{
 								var @methodHandler = @methodHandlers[0];
 								@methodHandler.IncrementCallCount();
@@ -172,7 +265,7 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.handlers.TryGetValue(5, out var @methodHandlers))
 							{
 								var @foundMatch = false;
 								foreach (var @methodHandler in @methodHandlers)
@@ -202,12 +295,12 @@ public static class V4GeneratorTests
 							}
 						}
 					}
-					[global::Rocks.MemberIdentifier(4, "this[long @index]")]
+					[global::Rocks.MemberIdentifier(6, "this[long @index]")]
 					public global::Holder this[long @index]
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							if (this.handlers.TryGetValue(6, out var @methodHandlers))
 							{
 								foreach (var @methodHandler in @methodHandlers)
 								{
@@ -229,7 +322,6 @@ public static class V4GeneratorTests
 					}
 				}
 			}
-			
 			""";
 
 		await TestAssistants.RunAsync<RockGenerator>(code,

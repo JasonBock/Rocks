@@ -1,4 +1,7 @@
-﻿namespace Rocks;
+﻿using Rocks.Builders.Create;
+using System.Collections.Immutable;
+
+namespace Rocks;
 
 /// <summary>
 /// Specifies expectations on a member.
@@ -41,4 +44,12 @@ public abstract class HandlerV4<TCallback, TReturnValue>
 	/// Gets or sets the return value.
 	/// </summary>
 	public TReturnValue? ReturnValue { get; set; }
+}
+
+// We need a VNC for Handler-based usage,
+// so the factory method produces one for everyone.
+internal static class HandlerVariableNamingContextV4
+{
+	internal static VariableNamingContextV4 Create() =>
+		new (new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableArray());
 }

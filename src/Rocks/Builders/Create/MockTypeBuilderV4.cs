@@ -8,12 +8,12 @@ namespace Rocks.Builders.Create;
 
 internal static class MockTypeBuilderV4
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
 	{
 		var kind = type.Type.IsRecord ? "record" : "class";
 		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
-		if(type.Type.AttributesDescription.Length > 0)
+		if (type.Type.AttributesDescription.Length > 0)
 		{
 			writer.WriteLine(type.Type.AttributesDescription);
 		}
@@ -32,19 +32,19 @@ internal static class MockTypeBuilderV4
 		MockTypeBuilderV4.BuildShimFields(writer, type);
 		MockTypeBuilderV4.BuildRefReturnFields(writer, type);
 
-		writer.WriteLine($"private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;");
+		writer.WriteLine($"private readonly {expectationsFullyQualifiedName} expectations;");
 		writer.WriteLine();
 
 		if (type.Constructors.Length > 0)
 		{
 			foreach (var constructor in type.Constructors)
 			{
-				MockConstructorBuilderV4.Build(writer, type, constructor.Parameters, type.Shims);
+				MockConstructorBuilderV4.Build(writer, type, constructor.Parameters, type.Shims, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			MockConstructorBuilderV4.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims);
+			MockConstructorBuilderV4.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims, expectationsFullyQualifiedName);
 		}
 
 		writer.WriteLine();

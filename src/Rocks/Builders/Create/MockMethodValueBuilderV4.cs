@@ -105,7 +105,7 @@ internal static class MockMethodValueBuilderV4
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({method.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
+		writer.WriteLine($"if (this.expectations.handler{method.MemberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -120,12 +120,6 @@ internal static class MockMethodValueBuilderV4
 			MockMethodValueBuilderV4.BuildMethodValidationHandlerNoParameters(
 				writer, method, method.MockType, namingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
-		}
-
-		if (method.Parameters.Length > 0 || method.IsGenericMethod)
-		{
-			writer.WriteLine();
-			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
 		}
 
 		writer.Indent--;
@@ -186,7 +180,7 @@ internal static class MockMethodValueBuilderV4
 	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method, TypeReferenceModel typeToMock,
 		VariableNamingContext namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
-		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
+		writer.WriteLine($"@{namingContext["handler"]}.CallCount++;");
 
 		var methodCast = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
@@ -196,8 +190,8 @@ internal static class MockMethodValueBuilderV4
 		{
 			writer.WriteLine(
 				!method.ReturnType.IsBasedOnTypeParameter ?
-					$"this.rr{memberIndentifier} = @{namingContext["methodHandler"]}.Method is not null ?" :
-					$"this.rr{memberIndentifier} = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ? ");
+					$"this.rr{memberIndentifier} = @{namingContext["handler"]}.Callback is not null ?" :
+					$"this.rr{memberIndentifier} = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ? ");
 		}
 		else
 		{
@@ -205,15 +199,15 @@ internal static class MockMethodValueBuilderV4
 			{
 				writer.WriteLine(
 					!method.ReturnType.IsBasedOnTypeParameter ?
-						$"_ = @{namingContext["methodHandler"]}.Method is not null ?" :
-						$"_ = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
+						$"_ = @{namingContext["handler"]}.Callback is not null ?" :
+						$"_ = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
 			}
 			else
 			{
 				writer.WriteLine(
 					!method.ReturnType.IsBasedOnTypeParameter ?
-						$"var @{namingContext["result"]} = @{namingContext["methodHandler"]}.Method is not null ?" :
-						$"var @{namingContext["result"]} = @{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
+						$"var @{namingContext["result"]} = @{namingContext["handler"]}.Callback is not null ?" :
+						$"var @{namingContext["result"]} = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
 			}
 		}
 
@@ -230,20 +224,20 @@ internal static class MockMethodValueBuilderV4
 
 		writer.WriteLine(
 			!method.ReturnType.IsBasedOnTypeParameter ?
-				$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments}) :" :
+				$"@{namingContext["handler"]}.Callback({methodArguments}) :" :
 				$"@{namingContext["methodReturn"]}({methodArguments}) :");
 
 		if (method.ReturnType.IsPointer || !method.ReturnType.IsRefLikeType)
 		{
 			if (!method.ReturnType.IsBasedOnTypeParameter)
 			{
-				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue;");
+				writer.WriteLine($"@{namingContext["handler"]}.ReturnValue;");
 			}
 			else
 			{
 				writer.WriteLines(
 					$$"""
-					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
+					@{{namingContext["handler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue :
 						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
 					"""
@@ -254,13 +248,13 @@ internal static class MockMethodValueBuilderV4
 		{
 			if (!method.ReturnType.IsBasedOnTypeParameter)
 			{
-				writer.WriteLine($"(({handlerName})@{namingContext["methodHandler"]}).ReturnValue!.Invoke();");
+				writer.WriteLine($"@{namingContext["handler"]}.ReturnValue!.Invoke();");
 			}
 			else
 			{
 				writer.WriteLines(
 					$$"""
-					@{{namingContext["methodHandler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
+					@{{namingContext["handler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
 						@{{namingContext["returnValue"]}}.ReturnValue!.Invoke() :
 						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
 					"""
@@ -272,7 +266,7 @@ internal static class MockMethodValueBuilderV4
 
 		if (raiseEvents)
 		{
-			writer.WriteLine($"@{namingContext["methodHandler"]}.RaiseEvents(this);");
+			writer.WriteLine($"@{namingContext["handler"]}.RaiseEvents(this);");
 		}
 
 		if (shouldThrowDoesNotReturnException)
@@ -296,7 +290,7 @@ internal static class MockMethodValueBuilderV4
 		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
-		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
+		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handler{method.MemberIdentifier})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -310,10 +304,12 @@ internal static class MockMethodValueBuilderV4
 			var handlerName = method.ReturnType.IsPointer ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(method.ReturnType, typeToMock) :
 				$"global::Rocks.HandlerInformation<{methodReturnType}>";
-			writer.WriteLine($"if ((@{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast}) || @{namingContext["methodHandler"]} is {handlerName})");
+			writer.WriteLine($"if ((@{namingContext["handler"]}.Method is not null && @{namingContext["handler"]}.Callback is {methodCast}) || @{namingContext["handler"]} is {handlerName})");
 			writer.WriteLine("{");
 			writer.Indent++;
 		}
+
+		var handlerNamingContext = HandlerVariableNamingContextV4.Create();
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -329,8 +325,8 @@ internal static class MockMethodValueBuilderV4
 			{
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if ((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -341,8 +337,8 @@ internal static class MockMethodValueBuilderV4
 
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -354,7 +350,7 @@ internal static class MockMethodValueBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockMethodValueBuilder.BuildMethodHandler(
+		MockMethodValueBuilderV4.BuildMethodHandler(
 			writer, method, typeToMock, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -373,8 +369,8 @@ internal static class MockMethodValueBuilderV4
 		TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier)
 	{
-		writer.WriteLine($"var @{namingContext["methodHandler"]} = @{namingContext["methodHandlers"]}[0];");
-		MockMethodValueBuilder.BuildMethodHandler(
+		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handler{method.MemberIdentifier}[0];");
+		MockMethodValueBuilderV4.BuildMethodHandler(
 			writer, method, typeToMock, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 	}
 }

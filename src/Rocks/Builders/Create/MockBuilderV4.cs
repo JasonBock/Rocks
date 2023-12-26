@@ -32,12 +32,13 @@ internal static class MockBuilderV4
 		MockConstructorExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName, expectationPropertyNames);
 		writer.WriteLine();
 
-		// TODO: Need to generate Verify();
+		MockExpectationsVerifyBuilderV4.Build(writer, mockType);
+		writer.WriteLine();
 
-		MockTypeBuilderV4.Build(writer, mockType);
+		MockTypeBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 
 		writer.Indent--;
-		writer.WriteLine("}");
+		writer.Write("}");
 
 		// TODO: Add in as new V4s are created
 		/*

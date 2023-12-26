@@ -62,8 +62,7 @@ internal static class MockHandlerListBuilderV4
 			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
 			writer.WriteLine("#pragma warning disable CS8618");
 
-			// TODO: I should consider putting this in MethodModel as well as properties.
-			var names = new VariableNamingContextV4(new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableArray());
+			var names = HandlerVariableNamingContextV4.Create();
 
 			foreach (var parameter in method.Parameters)
 			{

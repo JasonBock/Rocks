@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.Diagnostics;
 using Rocks.Discovery;
 using Rocks.Extensions;
@@ -7,16 +6,11 @@ using System.Collections.Immutable;
 
 namespace Rocks.Models;
 
-internal sealed record MockModel
+internal sealed record MockModelV4
 {
-	internal static MockModel? Create(SyntaxNode invocation, ITypeSymbol typeToMock,
+	internal static MockModelV4 Create(SyntaxNode node, ITypeSymbol typeToMock,
 		SemanticModel model, BuildType buildType, bool shouldResolveShims)
 	{
-		if (typeToMock.ContainsDiagnostics())
-		{
-			return null;
-		}
-
 		var compilation = model.Compilation;
 
 		// Do all the work to see if this is a type to mock.
@@ -27,18 +21,18 @@ internal sealed record MockModel
 			typeToMock.SpecialType == SpecialType.System_Enum ||
 			typeToMock.SpecialType == SpecialType.System_ValueType)
 		{
-			diagnostics.Add(CannotMockSpecialTypesDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(CannotMockSpecialTypesDiagnostic.Create(node, typeToMock));
 		}
 
 		if (typeToMock.IsSealed)
 		{
-			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(CannotMockSealedTypeDiagnostic.Create(node, typeToMock));
 		}
 
 		if (typeToMock is INamedTypeSymbol namedTypeToMock &&
 			namedTypeToMock.HasOpenGenerics())
 		{
-			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Create(node, typeToMock));
 		}
 
 		var attributes = typeToMock.GetAttributes();
@@ -48,7 +42,7 @@ internal sealed record MockModel
 		if (attributes.Any(_ => _.AttributeClass!.Equals(obsoleteAttribute, SymbolEqualityComparer.Default) &&
 			_.ConstructorArguments.Any(_ => _.Value is bool error && error)))
 		{
-			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(CannotMockObsoleteTypeDiagnostic.Create(node, typeToMock));
 		}
 
 		var memberIdentifier = 0u;
@@ -69,7 +63,7 @@ internal sealed record MockModel
 				if (uniqueConstructors.Any(_ => _.Match(constructor) == MethodMatch.Exact))
 				{
 					// We found a rare case where there are duplicate constructors.
-					diagnostics.Add(DuplicateConstructorsDiagnostic.Create(invocation, typeToMock));
+					diagnostics.Add(DuplicateConstructorsDiagnostic.Create(node, typeToMock));
 					break;
 				}
 				else
@@ -81,63 +75,64 @@ internal sealed record MockModel
 
 		foreach (var constructor in constructors)
 		{
-			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
+			diagnostics.AddRange(constructor.GetObsoleteDiagnostics(node, obsoleteAttribute));
 		}
 
 		foreach (var method in methods.Results)
 		{
-			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
+			diagnostics.AddRange(method.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
 		}
 
 		foreach (var property in properties.Results)
 		{
-			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
+			diagnostics.AddRange(property.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
 		}
 
 		foreach (var @event in events.Results)
 		{
-			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(invocation, obsoleteAttribute));
+			diagnostics.AddRange(@event.Value.GetObsoleteDiagnostics(node, obsoleteAttribute));
 		}
 
 		if (methods.HasInaccessibleAbstractMembers || properties.HasInaccessibleAbstractMembers ||
 			events.HasInaccessibleAbstractMembers || typeToMock.HasInaccessibleAstractMembersWithInvalidIdentifiers(containingAssembly))
 		{
-			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(TypeHasInaccessibleAbstractMembersDiagnostic.Create(node, typeToMock));
 		}
 
 		if (methods.HasMatchWithNonVirtual)
 		{
-			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(TypeHasMatchWithNonVirtualDiagnostic.Create(node, typeToMock));
 		}
 
 		if (methods.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic) ||
 			properties.Results.Any(_ => _.Value.IsAbstract && _.Value.IsStatic))
 		{
-			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(InterfaceHasStaticAbstractMembersDiagnostic.Create(node, typeToMock));
 		}
 
 		if (buildType == BuildType.Create && methods.Results.Length == 0 && properties.Results.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(TypeHasNoMockableMembersDiagnostic.Create(node, typeToMock));
 		}
 
 		if (typeToMock.TypeKind == TypeKind.Class && constructors.Length == 0)
 		{
-			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(invocation, typeToMock));
+			diagnostics.Add(TypeHasNoAccessibleConstructorsDiagnostic.Create(node, typeToMock));
 		}
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		return new(!isMockable ? null : new TypeMockModel(invocation, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
+		return new(!isMockable ? null : new TypeMockModel(node, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
 			typeToMock.GetFullyQualifiedName(compilation),
-			diagnostics.ToImmutable());
+			diagnostics.ToImmutable(), buildType);
 	}
 
-	private MockModel(TypeMockModel? type, string typeFullyQualifiedName,
-		EquatableArray<Diagnostic> diagnostics) =>
-		(this.Type, this.FullyQualifiedName, this.Diagnostics) =
-			(type, typeFullyQualifiedName, diagnostics);
+	private MockModelV4(TypeMockModel? type, string typeFullyQualifiedName,
+		EquatableArray<Diagnostic> diagnostics, BuildType buildType) =>
+		(this.Type, this.FullyQualifiedName, this.Diagnostics, this.BuildType) =
+			(type, typeFullyQualifiedName, diagnostics, buildType);
 
+	internal BuildType BuildType { get; }
 	internal EquatableArray<Diagnostic> Diagnostics { get; }
 	internal string FullyQualifiedName { get; }
 	internal TypeMockModel? Type { get; }

@@ -24,6 +24,10 @@ Create two attributes, `RockCreateAttribute` and `RockMakeAttribute`, that take 
 
 Actually, I just made one attribute, and moved `BuildType`, which I use so there's just one. This may also help if I add "other" ways to create mocks.
 
+# DONE - Create `RockGenerator`
+
+This looks for `RockAttribute`. However...`MockModel` uses `InvocationExpressionSyntax` node, but that's only used for diagnostic reporting. So, I'll turn that into a `SyntaxNode`, and then I can pass in the node for the attribute declaration.
+
 # Alter Generated Code
 
 A lot of work happens here. Again, look at `GeneratedBaseMocking`.
@@ -51,6 +55,10 @@ We no longer need casts. Just need to modify which list the member iterates.
 # Create Custom Expectations Classes
 
 These will be nested within the expectations class. The extension methods I made now go here.
+
+# Casts for Type Parameter Handlers
+
+Oops. I forgot there are cases where the handlers need to be open generics, because the method could have open generics (properties/indexers don't matter). I'll need to generate those type parameters on the custom handler I make, and then still do a cast on the parameter if it's based on a type parameter.
 
 # Create `Pointer...<>` Types
 

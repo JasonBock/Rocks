@@ -50,8 +50,8 @@ internal sealed class ISimpleCreateExpectations
 		: GeneratedHandler<global::System.Func<int, global::System.Guid, string>, string>
 	{
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-		public global::Rocks.Argument<int> Options { get; set; }
-		public global::Rocks.Argument<global::System.Guid> Id { get; set; }
+		public global::Rocks.Argument<int> options { get; set; }
+		public global::Rocks.Argument<global::System.Guid> id { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	}
 
@@ -98,22 +98,22 @@ internal sealed class ISimpleCreateExpectations
 	private sealed class RockISimple
 		 : global::ISimple
 	{
-		private readonly global::System.Collections.Generic.List<Handler0> handlers0;
+		private readonly global::ISimpleCreateExpectations expectations;
 
 		public RockISimple(global::ISimpleCreateExpectations @expectations)
 		{
-			this.handlers0 = @expectations.@handlers0;
+			this.expectations = @expectations;
 		}
 
 		[global::Rocks.MemberIdentifier(0, "string DoStuff(int @options, global::System.Guid @id)")]
 		public string DoStuff(int @options, global::System.Guid @id)
 		{
-			for (var i = 0; i < @handlers0.Count; i++)
+			for (var i = 0; i < this.expectations.@handlers0.Count; i++)
 			{
-				var @handler = @handlers0[i];
+				var @handler = this.expectations.@handlers0[i];
 
-				if (@handler.Options.IsValid(@options!) &&
-					@handler.Id.IsValid(@id!))
+				if (@handler.options.IsValid(@options!) &&
+					@handler.id.IsValid(@id!))
 				{
 					@handler.CallCount++;
 					var @result = @handler.Callback is not null ?
@@ -145,8 +145,8 @@ internal sealed class ISimpleCreateExpectations
 
 			var handler = new Handler0
 			{
-				Options = @options,
-				Id = @id,
+				options = @options,
+				id = @id,
 				Callback = null,
 				CallCount = 0,
 				ExpectedCallCount = 1,
@@ -191,7 +191,7 @@ namespace Rocks
 		public GeneratedMethodAdornments(THandler handler) =>
 			this.handler = handler;
 
-		public GeneratedMethodAdornments<THandler, TCallback, TReturn> CallCount(uint expectedCallCount)
+		public GeneratedMethodAdornments<THandler, TCallback, TReturn> ExpectedCallCount(uint expectedCallCount)
 		{
 			this.handler.ExpectedCallCount = expectedCallCount;
 			return this;

@@ -94,7 +94,7 @@ internal static class MockMethodVoidBuilderV4
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({method.MemberIdentifier}, out var @{namingContext["methodHandlers"]}))");
+		writer.WriteLine($"if (this.expectations.handler{method.MemberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -168,8 +168,8 @@ internal static class MockMethodVoidBuilderV4
 		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException)
 	{
-		writer.WriteLine($"var @{namingContext["methodHandler"]} = @{namingContext["methodHandlers"]}[0];");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
+		writer.WriteLine($"var @{namingContext["handler"]} = this.expectations.handler{method.MemberIdentifier}[0];");
+		MockMethodVoidBuilderV4.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)
 		{
@@ -183,13 +183,15 @@ internal static class MockMethodVoidBuilderV4
 	{
 		writer.WriteLine($"var @{namingContext["foundMatch"]} = false;");
 		writer.WriteLine();
-		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
+		writer.WriteLine($"foreach (var @{namingContext["handler"]} in this.expectations.handler{method.MemberIdentifier})");
 
 		if (method.Parameters.Length > 0)
 		{
 			writer.WriteLine("{");
 			writer.Indent++;
 		}
+
+		var handlerNamingContext = HandlerVariableNamingContextV4.Create();
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -205,8 +207,8 @@ internal static class MockMethodVoidBuilderV4
 			{
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"if ((({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if (@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -217,8 +219,8 @@ internal static class MockMethodVoidBuilderV4
 
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"(({argType})@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((@{namingContext["methodHandler"]}.Expectations[{i}] as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"(@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -231,7 +233,7 @@ internal static class MockMethodVoidBuilderV4
 		writer.Indent++;
 		writer.WriteLine($"@{namingContext["foundMatch"]} = true;");
 		writer.WriteLine();
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
+		MockMethodVoidBuilderV4.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -260,15 +262,16 @@ internal static class MockMethodVoidBuilderV4
 	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method, TypeReferenceModel typeToMock,
 		VariableNamingContext namingContext, bool raiseEvents)
 	{
-		writer.WriteLine($"@{namingContext["methodHandler"]}.IncrementCallCount();");
+		writer.WriteLine($"@{namingContext["handler"]}.CallCount++;");
 
 		var methodCast = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters);
 
+		writer.WriteLine();
 		writer.WriteLine(!method.IsGenericMethod ?
-			$"if (@{namingContext["methodHandler"]}.Method is not null)" :
-			$"if (@{namingContext["methodHandler"]}.Method is not null && @{namingContext["methodHandler"]}.Method is {methodCast} @{namingContext["method"]})");
+			$"if (@{namingContext["handler"]}.Callback is not null)" :
+			$"if (@{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Callback is {methodCast} @{namingContext["method"]})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -276,16 +279,17 @@ internal static class MockMethodVoidBuilderV4
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
 		writer.WriteLine(!method.IsGenericMethod ?
-			$"(({methodCast})@{namingContext["methodHandler"]}.Method)({methodArguments});" :
+			$"@{namingContext["handler"]}.Callback({methodArguments});" :
 			$"@{namingContext["method"]}({methodArguments});");
 
 		writer.Indent--;
 		writer.WriteLine("}");
+		writer.WriteLine();
 
 		if (raiseEvents)
 		{
 			writer.WriteLine();
-			writer.WriteLine($"@{namingContext["methodHandler"]}.RaiseEvents(this);");
+			writer.WriteLine($"@{namingContext["handler"]}.RaiseEvents(this);");
 		}
 	}
 }
