@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Immutable;
 
 namespace Rocks.Builders.Create;
 
@@ -15,7 +15,7 @@ internal static class MockPropertyBuilderV4
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var methodName = propertyGetMethod.Name;
-		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{propertyGetMethod.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
@@ -24,48 +24,55 @@ internal static class MockPropertyBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
+		writer.WriteLine($"if (this.expectations.handler{memberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine("var @methodHandler = @methodHandlers[0];");
-		writer.WriteLine("@methodHandler.IncrementCallCount();");
+		writer.WriteLine($"var @handler = this.expectations.handler{memberIdentifier}[0];");
+		writer.WriteLine("@handler.CallCount++;");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
 		{
-			writer.WriteLine($"this.rr{property.MemberIdentifier} = @methodHandler.Method is not null ?");
+			writer.WriteLine($"this.rr{property.MemberIdentifier} = @handler.Callback is not null ?");
 		}
 		else
 		{
-			writer.WriteLine("var @result = @methodHandler.Method is not null ?");
+			writer.WriteLine("var @result = @handler.Callback is not null ?");
 		}
 
 		writer.Indent++;
 
-		var methodCast = propertyGetMethod.RequiresProjectedDelegate ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
-		var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-			propertyGetMethod.ReturnType.FullyQualifiedName;
-		var handlerName = property.Type.IsPointer ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, property.MockType) :
-			$"global::Rocks.HandlerInformation<{propertyReturnType}>";
-
-		writer.WriteLine($"(({methodCast})@methodHandler.Method)() :");
-		if (propertyGetMethod.ReturnType.IsPointer || !propertyGetMethod.ReturnType.IsRefLikeType)
+		if (!propertyGetMethod.RequiresProjectedDelegate)
 		{
-			writer.WriteLine($"(({handlerName})@methodHandler).ReturnValue;");
+			writer.WriteLine($"@handler.Callback() :");
 		}
 		else
 		{
-			writer.WriteLine($"(({handlerName})@methodHandler).ReturnValue!.Invoke();");
+			var methodCast = MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType);
+			writer.WriteLine($"(({methodCast})@handler.Callback)() :");
 		}
+
+		if (propertyGetMethod.ReturnType.IsPointer || !propertyGetMethod.ReturnType.IsRefLikeType)
+		{
+			writer.WriteLine($"@handler.ReturnValue;");
+		}
+		else
+		{
+			// TODO: I might be able to remove these casts as well.
+			var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
+				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+				propertyGetMethod.ReturnType.FullyQualifiedName;
+			var handlerName = property.Type.IsPointer ?
+				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, property.MockType) :
+				$"global::Rocks.Handler<{propertyReturnType}>";
+			writer.WriteLine($"(({handlerName})@handler).ReturnValue!.Invoke();");
+		}
+
 		writer.Indent--;
 
 		if (raiseEvents)
 		{
-			writer.WriteLine("@methodHandler.RaiseEvents(this);");
+			writer.WriteLine("@handler.RaiseEvents(this);");
 		}
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
@@ -113,80 +120,59 @@ internal static class MockPropertyBuilderV4
 		uint memberIdentifier, bool raiseEvents, string explicitTypeName)
 	{
 		var methodName = property.SetMethod!.Name;
-		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ? 
+		var methodVisibility = property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No ?
 			$"{property.SetMethod!.OverridingCodeValue} " : string.Empty;
 		var visibility = methodVisibility != propertyVisibility ?
 			methodVisibility : string.Empty;
 		var accessor = property.Accessors == PropertyAccessor.Init || property.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
 
-		writer.WriteLine($"{visibility}{accessor}");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.WriteLines(
+			$$"""
+			{{visibility}}{{accessor}}
+			{
+				if (this.expectations.handler{{memberIdentifier}})
+				{
+					var @foundMatch = false;
+					foreach (var @handler in this.expectations.handler{{memberIdentifier}})
+					{
+						if (@handler.value.IsValid(value!))
+						{
+							@handler.CallCount++;
+							@foundMatch = true;
+							
+							if (@handler.Method is not null)
+							{
+								@methodHandler.Method(value!);
+							}
+							
+							if (!@foundMatch)
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for {{explicitTypeName}}{{methodName}}(value)");
+							}
+							
+			""");
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @methodHandlers))");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("var @foundMatch = false;");
-		writer.WriteLine("foreach (var @methodHandler in @methodHandlers)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		var argType = property.Type.IsPointer ?
-			PointerArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, property.MockType) :
-				property.Type.IsRefLikeType ?
-					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(property.Type, property.MockType) :
-					$"global::Rocks.Argument<{property.Type.FullyQualifiedName}>";
-
-		writer.WriteLine($"if ((({argType})@methodHandler.Expectations[0]).IsValid(value!))");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		writer.WriteLine("@methodHandler.IncrementCallCount();");
-		writer.WriteLine("@foundMatch = true;");
-		writer.WriteLine();
-		writer.WriteLine("if (@methodHandler.Method is not null)");
-		writer.WriteLine("{");
-		writer.Indent++;
-
-		var methodCast = property.SetMethod!.RequiresProjectedDelegate ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
-			DelegateBuilder.Build(property.SetMethod!.Parameters);
-
-		writer.WriteLine($"(({methodCast})@methodHandler.Method)(value!);");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
-		writer.WriteLine("if (!@foundMatch)");
-		writer.WriteLine("{");
-		writer.Indent++;
-		writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {explicitTypeName}{methodName}(value)\");");
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine();
+		writer.Indent += 4;
+		
 		if (raiseEvents)
 		{
 			writer.WriteLine("@methodHandler.RaiseEvents(this);");
 		}
 
-		writer.WriteLine("break;");
+		writer.Indent -= 4;
 
-		writer.Indent--;
-		writer.WriteLine("}");
+		writer.WriteLines(
+			"""
+							break;
+						}
+					}
+				}
+				else
+				{
+			""");
 
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-
-		writer.WriteLine("else");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.Indent += 2;
 
 		if (!property.IsAbstract)
 		{

@@ -325,8 +325,8 @@ internal static class MockMethodValueBuilderV4
 			{
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"if ((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"if (((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"if ((@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"if (((@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -337,8 +337,8 @@ internal static class MockMethodValueBuilderV4
 
 				writer.WriteLine(
 					!parameter.Type.IsBasedOnTypeParameter ?
-						$"@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
-						$"((@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+						$"@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}" :
+						$"((@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]} as {argType})?.IsValid(@{parameter.Name}!) ?? false){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{

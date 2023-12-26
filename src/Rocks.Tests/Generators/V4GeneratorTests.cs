@@ -230,8 +230,8 @@ public static class V4GeneratorTests
 						{
 							foreach (var @handler in this.expectations.handler3)
 							{
-								if ((@handler.@holder.IsValid(@holder!) &&
-									@handler.@value.IsValid(@value!))
+								if ((@handler.holder.IsValid(@holder!) &&
+									@handler.value.IsValid(@value!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -251,13 +251,13 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							if (this.expectations.handler4.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::System.Guid>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::System.Guid>)@methodHandler).ReturnValue;
+								var @handler = this.expectations.handler4[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() :
+									@handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -265,19 +265,19 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							if (this.expectations.handler5)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.expectations.handler5)
 								{
-									if (((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
 										
-										if (@methodHandler.Method is not null)
+										if (@handler.Method is not null)
 										{
-											((global::System.Action<global::System.Guid>)@methodHandler.Method)(value!);
+											@methodHandler.Method(value!);
 										}
 										
 										if (!@foundMatch)
