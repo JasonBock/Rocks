@@ -48,11 +48,11 @@ These used to be extension methods; now, they'll live on the expectations type. 
 
 Basically just need to do `.AddRange()` for each handler list.
 
-# Update Member Handling
+# DONE - Update Member Handling
 
 We no longer need casts. Just need to modify which list the member iterates.
 
-# Create Custom Expectations Classes
+# DONE - Create Custom Expectations Classes
 
 These will be nested within the expectations class. The extension methods I made now go here.
 
@@ -75,3 +75,27 @@ Do what I talked about above.
 # Create `InvalidRockAttributeDiagnostic`
 
 I assume that I'll always find a `RockAttribute` with a generic parameter and a `BuildType` constructor argument. Someone *could* create an attribute to mess with this. So, I'll add some checks that if I find `RockAttribute` that really isn't mine, I'll create a diagnostic.
+
+
+What can I clean up with the gen'd code?
+
+* There's a blank line after the list handlers are new'd up. Remove it.
+* It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide.
+* I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
+* If `Callback` isn't null, do a one liner like this: `@handler.Callback?.Invoke();`. If there's a return value, I think I can do this: `@handler.Callback?.Invoke() ?? @handler.ReturnValue`
+* Need to create a blank line between property and/or indexer implementations.
+* Add a blank line after any member implementations in the expectations classes.
+* When I create a handler:
+    * Do not need to set `Callback` or `CallCount`
+    * Update the base `HandlerV4<>` class to set `ExpectedCallCount` to `1`.
+    * If the member has no parameters, just do `();` after the `new...()` constructor call.
+* After gen'ing a member expectation class (even the internal property/indexer ones), add a blank line.
+* After gen'ing the member expectation classes, add a blank line.
+* After gen'ing the member expectation properties, add a blank line.
+* There's a space between `internal` and the target type for `Instance()`, remove it.
+* There's a blank line after generating `Instance()`, remove it.
+
+What can I clean up with what I've done so far?
+
+* There should be **no** casts done in the mock, or the expectations, unless the method has open generics.
+* Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
