@@ -7,7 +7,7 @@ namespace Rocks.Builders.Create;
 
 internal static class MethodExpectationsBuilderV4
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
+	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
 	{
 		if (type.Methods.Length > 0)
 		{
@@ -20,10 +20,8 @@ internal static class MethodExpectationsBuilderV4
 					$$"""
 					internal sealed class {{typeToMock}}MethodExpectations
 					{
-						private readonly {{expectationsFullyQualifiedName}} expectations;
-
 						internal {{typeToMock}}MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
-							this.expectations = expectations;
+							this.Expectations = expectations;
 						
 					""");
 
@@ -35,8 +33,11 @@ internal static class MethodExpectationsBuilderV4
 					MethodExpectationsMethodBuilderV4.Build(writer, method, expectationsFullyQualifiedName);
 				}
 
+				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
 				writer.Indent--;
 				writer.WriteLine("}");
+
+				yield return new($"{expectationsFullyQualifiedName}.{typeToMock}MethodExpectations", "Methods");
 			}
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
@@ -46,8 +47,18 @@ internal static class MethodExpectationsBuilderV4
 					.GroupBy(_ => _.ContainingType.FlattenedName))
 				{
 					var containingTypeName = typeGroup.Key;
-					writer.WriteLine($"internal sealed class {typeToMock}ExplicitMethodExpectationsFor{containingTypeName}");
-					writer.WriteLine("{");
+
+					writer.WriteLines(
+						$$"""
+						internal sealed class {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}
+						{
+							private readonly {{expectationsFullyQualifiedName}} expectations;
+
+							internal {{typeToMock}}MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
+								this.expectations = expectations;
+						
+						""");
+
 					writer.Indent++;
 
 					foreach (var method in typeGroup)
@@ -57,6 +68,8 @@ internal static class MethodExpectationsBuilderV4
 
 					writer.Indent--;
 					writer.WriteLine("}");
+
+					yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitMethodExpectationsFor{containingTypeName}", $"ExplicitMethodsFor{containingTypeName}");
 				}
 			}
 		}

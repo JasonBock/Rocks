@@ -17,9 +17,6 @@ internal static class MethodExpectationsMethodBuilderV4
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
 
-			//var thisParameter = isExplicitImplementation ?
-			//	$"this global::Rocks.Expectations.ExplicitMethodExpectations<{mockTypeName}, {containingTypeName}> @{namingContext["self"]}" :
-			//	$"this global::Rocks.Expectations.MethodExpectations<{mockTypeName}> @{namingContext["self"]}";
 			var instanceParameters = method.Parameters.Length == 0 ? string.Empty :
 				string.Join(", ", method.Parameters.Select(_ =>
 				{
@@ -68,10 +65,10 @@ internal static class MethodExpectationsMethodBuilderV4
 					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
 					method.ReturnType.FullyQualifiedName;
 			var adornmentsType = method.ReturnsVoid ?
-				$"global::Rocks.MethodAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}>" :
+				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}>" :
 				method.ReturnType.IsPointer ?
 					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.MethodAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var addMethod = method.ReturnsVoid ? "Add" :
@@ -107,7 +104,7 @@ internal static class MethodExpectationsMethodBuilderV4
 						ReturnValue = null
 					};
 
-					this.expectations.handlers{{method.MemberIdentifier}}.Add(handler);
+					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
 				writer.Indent--;
@@ -159,7 +156,7 @@ internal static class MethodExpectationsMethodBuilderV4
 						ReturnValue = null
 					};
 
-					this.expectations.handlers{{method.MemberIdentifier}}.Add(handler);
+					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
 

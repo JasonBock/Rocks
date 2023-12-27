@@ -23,13 +23,6 @@ internal static class MockBuilderV4
 			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
 
 		MockHandlerListBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
-
-		var expectationPropertyNames = new List<string>();
-		expectationPropertyNames.AddRange(MockMethodExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
-		expectationPropertyNames.AddRange(MockPropertyExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
-		writer.WriteLine();
-
-		MockConstructorExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName, expectationPropertyNames);
 		writer.WriteLine();
 
 		MockExpectationsVerifyBuilderV4.Build(writer, mockType);
@@ -37,12 +30,23 @@ internal static class MockBuilderV4
 
 		MockTypeBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 
-		MethodExpectationsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
+		var expectationMappings = new List<ExpectationMapping>();
+
+		expectationMappings.AddRange(MethodExpectationsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
+		expectationMappings.AddRange(PropertyExpectationsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName));
+
 		// TODO: Add in as new V4s are created
 		/*
-		PropertyExpectationsExtensionsBuilder.Build(writer, mockType);
 		EventExpectationsExtensionsBuilder.Build(writer, mockType);
 		*/
+
+		foreach(var expectationMapping in expectationMappings) 
+		{
+			writer.WriteLine($"internal {expectationMapping.PropertyExpectationTypeName} {expectationMapping.PropertyName} {{ get; }}");
+		}
+
+		MockConstructorExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName, expectationMappings);
+		writer.WriteLine();
 
 		writer.Indent--;
 		writer.Write("}");

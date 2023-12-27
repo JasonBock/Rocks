@@ -9,12 +9,12 @@ namespace Rocks.Builders.Create;
 internal static class MockConstructorExtensionsBuilderV4
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
-		string expectationsFullyQualifiedName, List<string> expectationPropertyNames)
+		string expectationsFullyQualifiedName, List<ExpectationMapping> expectationMappings)
 	{
 		writer.WriteLine($"internal {mockType.Type.FlattenedName}CreateExpectations() =>");
 		writer.Indent++;
-		var thisExpectations = $"({string.Join(", ", expectationPropertyNames.Select(_ => $"this.{_}"))})";
-		var newExpectations = $"({string.Join(", ", expectationPropertyNames.Select(_ => "new(this)"))})";
+		var thisExpectations = $"({string.Join(", ", expectationMappings.Select(_ => $"this.{_.PropertyName}"))})";
+		var newExpectations = $"({string.Join(", ", expectationMappings.Select(_ => "new(this)"))})";
 		writer.WriteLine($"{thisExpectations} = {newExpectations};");
 		writer.Indent--;
 		writer.WriteLine();
@@ -173,7 +173,7 @@ internal static class MockConstructorExtensionsBuilderV4
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)} {mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
