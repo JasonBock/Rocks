@@ -44,7 +44,7 @@ public static class V4GeneratorTests
 			using System.Collections.Immutable;
 			
 			internal sealed class ITestCreateExpectations
-				: global::Rocks.Expectations
+				: global::Rocks.Expectations.ExpectationsV4
 			{
 				#pragma warning disable CS8618
 				
@@ -219,7 +219,7 @@ public static class V4GeneratorTests
 						{
 							foreach (var @handler in this.expectations.handlers3)
 							{
-								if ((@handler.holder.IsValid(@holder!) &&
+								if (@handler.holder.IsValid(@holder!) &&
 									@handler.value.IsValid(@value!))
 								{
 									@handler.CallCount++;
@@ -243,7 +243,7 @@ public static class V4GeneratorTests
 						{
 							if (this.expectations.handlers4.Count > 0)
 							{
-								var @handler = this.expectations.handler4[0];
+								var @handler = this.expectations.handlers4[0];
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() :
@@ -256,7 +256,7 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.expectations.handler5)
+							if (this.expectations.handlers5.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.expectations.handlers5)
@@ -266,9 +266,9 @@ public static class V4GeneratorTests
 										@handler.CallCount++;
 										@foundMatch = true;
 										
-										if (@handler.Method is not null)
+										if (@handler.Callback is not null)
 										{
-											@methodHandler.Method(value!);
+											@handler.Callback(value!);
 										}
 										
 										if (!@foundMatch)
@@ -373,7 +373,6 @@ public static class V4GeneratorTests
 							Callback = null,
 							CallCount = 0,
 							ExpectedCallCount = 1,
-							ReturnValue = null
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -391,7 +390,6 @@ public static class V4GeneratorTests
 							Callback = null,
 							CallCount = 0,
 							ExpectedCallCount = 1,
-							ReturnValue = null
 						};
 						
 						this.Expectations.handlers1.Add(handler);
@@ -404,7 +402,6 @@ public static class V4GeneratorTests
 							Callback = null,
 							CallCount = 0,
 							ExpectedCallCount = 1,
-							ReturnValue = null
 						};
 						
 						this.Expectations.handlers2.Add(handler);
@@ -422,7 +419,6 @@ public static class V4GeneratorTests
 							Callback = null,
 							CallCount = 0,
 							ExpectedCallCount = 1,
-							ReturnValue = null
 						};
 						
 						this.Expectations.handlers3.Add(handler);
@@ -430,81 +426,114 @@ public static class V4GeneratorTests
 					}
 					private global::ITestCreateExpectations Expectations { get; }
 				}
-				internal sealed class ITestPropertiesExpectations
+				internal sealed class ITestPropertyExpectations
 				{
-					
-					internal sealed class ITestPropertyExpectations
+					internal sealed class ITestPropertyGetterExpectations
 					{
-						internal sealed class ITestPropertyGetterExpectations
-						{
-							internal ITestPropertyGetterExpectations(global::ITestCreateExpectations expectations) =>
-								this.Expectations = expectations;
-							
-							internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler4, global::System.Func<global::System.Guid>, global::System.Guid> Data()
-							{
-								var handler = new global::ITestCreateExpectations.Handler4
-								{
-									Callback = null,
-									CallCount = 0,
-									ExpectedCallCount = 1,
-									ReturnValue = null
-								};
-								
-								this.Expectations.handlers4.Add(handler);
-								return new(handler);
-							}
-							private global::ITestCreateExpectations Expectations { get; }
-						}
-						internal sealed class ITestPropertySetterExpectations
-						{
-							internal ITestPropertyGetterExpectations(global::ITestCreateExpectations expectations) =>
-								this.Expectations = expectations;
-							
-							internal global::Rocks.AdornmentsV4<global::ITest, global::System.Action<global::System.Guid>> Data(global::Rocks.Argument<global::System.Guid> @value)
-							{
-								var handler = new global::ITestCreateExpectations.Handler5
-								{
-									value = @value,
-									Callback = null,
-									CallCount = 0,
-									ExpectedCallCount = 1,
-									ReturnValue = null
-								};
-								
-								this.Expectations.handlers5.Add(handler);
-								return new(handler);
-							}
-							private global::ITestCreateExpectations Expectations { get; }
-						}
+						internal ITestPropertyGetterExpectations(global::ITestCreateExpectations expectations) =>
+							this.Expectations = expectations;
 						
-						internal ITestPropertyExpectations(global::ITestCreateExpectations expectations) =>
-							(this.Getters, this.Setters) = (new(expectations), new(expectations));
+						internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler4, global::System.Func<global::System.Guid>, global::System.Guid> Data()
+						{
+							var handler = new global::ITestCreateExpectations.Handler4
+							{
+								Callback = null,
+								CallCount = 0,
+								ExpectedCallCount = 1,
+							};
 						
-						internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyGetterExpectations Getters { get; }
-						internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertySetterExpectations Setters { get; }
+							this.Expectations.handlers4.Add(handler);
+							return new(handler);
+						}
+						private global::ITestCreateExpectations Expectations { get; }
 					}
-					internal static class IndexerGetterExpectationsOfITestExtensions
+					internal sealed class ITestPropertySetterExpectations
 					{
-						internal static global::Rocks.IndexerAdornments<global::ITest, global::System.Func<long, global::Holder>, global::Holder> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::ITest> @self, global::Rocks.Argument<long> @index)
+						internal ITestPropertySetterExpectations(global::ITestCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler5, global::System.Action<global::System.Guid>> Data(global::Rocks.Argument<global::System.Guid> @value)
+						{
+							var handler = new global::ITestCreateExpectations.Handler5
+							{
+								value = @value,
+								Callback = null,
+								CallCount = 0,
+								ExpectedCallCount = 1,
+							};
+						
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						private global::ITestCreateExpectations Expectations { get; }
+					}
+					
+					internal ITestPropertyExpectations(global::ITestCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyGetterExpectations Getters { get; }
+					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertySetterExpectations Setters { get; }
+				}
+				internal sealed class ITestIndexerExpectations
+				{
+					internal sealed class ITestIndexerGetterExpectations
+					{
+						internal ITestIndexerGetterExpectations(global::ITestCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler6, global::System.Func<long, global::Holder>, global::Holder> This(global::Rocks.Argument<long> @index)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@index);
-							return new global::Rocks.IndexerAdornments<global::ITest, global::System.Func<long, global::Holder>, global::Holder>(@self.Add<global::Holder>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @index }));
+							
+							var handler = new global::ITestCreateExpectations.Handler6
+							{
+								index = @index,
+								Callback = null,
+								CallCount = 0,
+								ExpectedCallCount = 1,
+							};
+							
+							this.Expectations.handlers6.Add(handler);
+							return new(handler);
 						}
+						private global::ITestCreateExpectations Expectations { get; }
 					}
-					internal static class IndexerSetterExpectationsOfITestExtensions
+					internal sealed class ITestIndexerSetterExpectations
 					{
-						internal static global::Rocks.IndexerAdornments<global::ITest, global::System.Action<long, global::Holder>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::ITest> @self, global::Rocks.Argument<global::Holder> @value, global::Rocks.Argument<long> @index)
+						internal ITestIndexerSetterExpectations(global::ITestCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler7, global::System.Action<long, global::Holder>> This(global::Rocks.Argument<global::Holder> @value, global::Rocks.Argument<long> @index)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
-							return new global::Rocks.IndexerAdornments<global::ITest, global::System.Action<long, global::Holder>>(self.Add(7, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @index, @value }));
+							
+							var handler = new global::ITestCreateExpectations.Handler7
+							{
+								index = @index,
+								value = @value,
+								Callback = null,
+								CallCount = 0,
+								ExpectedCallCount = 1,
+							};
+							
+							this.Expectations.handlers7.Add(handler);
+							return new(handler);
 						}
+						private global::ITestCreateExpectations Expectations { get; }
 					}
+					
+					internal ITestIndexerExpectations(global::ITestCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::ITestCreateExpectations.ITestIndexerExpectations.ITestIndexerGetterExpectations Getters { get; }
+					internal global::ITestCreateExpectations.ITestIndexerExpectations.ITestIndexerSetterExpectations Setters { get; }
 				}
 				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
 				internal global::ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
+				internal global::ITestCreateExpectations.ITestIndexerExpectations Indexers { get; }
 				internal ITestCreateExpectations() =>
-					(this.Methods, this.Properties) = (new(this), new(this));
+					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
 				internal  global::ITest Instance()
 				{

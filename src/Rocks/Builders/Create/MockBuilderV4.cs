@@ -13,7 +13,7 @@ internal static class MockBuilderV4
 		writer.WriteLines(
 			$$"""
 			internal sealed class {{mockType.Type.FlattenedName}}CreateExpectations
-				: global::Rocks.Expectations
+				: global::Rocks.Expectations.ExpectationsV4
 			{
 			""");
 		writer.Indent++;

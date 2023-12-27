@@ -28,7 +28,7 @@ internal static class MockPropertyBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"var @handler = this.expectations.handler{memberIdentifier}[0];");
+		writer.WriteLine($"var @handler = this.expectations.handlers{memberIdentifier}[0];");
 		writer.WriteLine("@handler.CallCount++;");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
@@ -131,7 +131,7 @@ internal static class MockPropertyBuilderV4
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.expectations.handler{{memberIdentifier}})
+				if (this.expectations.handlers{{memberIdentifier}}.Count > 0)
 				{
 					var @foundMatch = false;
 					foreach (var @handler in this.expectations.handlers{{memberIdentifier}})
@@ -141,9 +141,9 @@ internal static class MockPropertyBuilderV4
 							@handler.CallCount++;
 							@foundMatch = true;
 							
-							if (@handler.Method is not null)
+							if (@handler.Callback is not null)
 							{
-								@methodHandler.Method(value!);
+								@handler.Callback(value!);
 							}
 							
 							if (!@foundMatch)

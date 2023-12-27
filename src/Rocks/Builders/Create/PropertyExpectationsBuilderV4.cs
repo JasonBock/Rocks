@@ -13,19 +13,10 @@ internal static class PropertyExpectationsBuilderV4
 
 		if (mockType.Properties.Length > 0)
 		{
-			writer.WriteLines(
-				$$"""
-				internal sealed class {{mockType.Type.FlattenedName}}PropertiesExpectations
-				{
-				""");
-
-			writer.Indent++;
-			writer.WriteLine();
-
 			if (mockType.Properties.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
 				propertyMappings.AddRange(PropertyExpectationsBuilderV4.BuildProperties(writer, mockType, expectationsFullyQualifiedName));
-				PropertyExpectationsBuilderV4.BuildIndexers(writer, mockType, expectationsFullyQualifiedName);
+				propertyMappings.AddRange(PropertyExpectationsBuilderV4.BuildIndexers(writer, mockType, expectationsFullyQualifiedName));
 			}
 
 			if (mockType.Properties.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
@@ -33,9 +24,6 @@ internal static class PropertyExpectationsBuilderV4
 				PropertyExpectationsBuilderV4.BuildExplicitProperties(writer, mockType, expectationsFullyQualifiedName);
 				PropertyExpectationsBuilderV4.BuildExplicitIndexers(writer, mockType, expectationsFullyQualifiedName);
 			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
 		}
 
 		return propertyMappings;
@@ -105,62 +93,124 @@ internal static class PropertyExpectationsBuilderV4
 		}
 	}
 
-	private static void BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
+	private static IEnumerable<ExpectationMapping> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+		var typeToMock = mockType.Type.FlattenedName;
+
+		if (mockType.Properties.Any(_ => _.IsIndexer))
+		{
+			writer.WriteLine($"internal sealed class {typeToMock}IndexerExpectations");
+			writer.WriteLine("{");
+			writer.Indent++;
+
+			var propertyProperties = new List<ExpectationMapping>();
+
+			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
 			 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
 				_.Accessors == PropertyAccessor.GetAndInit)))
-		{
-			writer.WriteLine($"internal static class IndexerGetterExpectationsOf{mockType.Type.FlattenedName}Extensions");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			foreach (var result in mockType.Properties
-				.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
-					_.Accessors == PropertyAccessor.GetAndInit)))
 			{
-				IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Get);
+				writer.WriteLines(
+					$$"""
+					internal sealed class {{typeToMock}}IndexerGetterExpectations
+					{
+						internal {{typeToMock}}IndexerGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+							this.Expectations = expectations;
+						
+					""");
+				writer.Indent++;
+
+				foreach (var result in mockType.Properties
+					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+						(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
+						_.Accessors == PropertyAccessor.GetAndInit)))
+				{
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Get, expectationsFullyQualifiedName);
+				}
+
+				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.Indent--;
+				writer.WriteLine("}");
+
+				propertyProperties.Add(new(
+					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerGetterExpectations", "Getters"));
+			}
+
+			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal sealed class {{typeToMock}}IndexerSetterExpectations
+					{
+						internal {{typeToMock}}IndexerSetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+							this.Expectations = expectations;
+						
+					""");
+				writer.Indent++;
+
+				foreach (var result in mockType.Properties
+					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+						(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				{
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Set, expectationsFullyQualifiedName);
+				}
+
+				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.Indent--;
+				writer.WriteLine("}");
+
+				propertyProperties.Add(new(
+					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerSetterExpectations", "Setters"));
+			}
+
+			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+				 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+			{
+				writer.WriteLines(
+					$$"""
+					internal sealed class {{typeToMock}}IndexerInitializerExpectations
+					{
+						internal {{typeToMock}}IndexerInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
+							this.Expectations = expectations;
+						
+					""");
+				writer.Indent++;
+
+				foreach (var result in mockType.Properties
+					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
+						(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+				{
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Init, expectationsFullyQualifiedName);
+				}
+
+				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
+				writer.Indent--;
+				writer.WriteLine("}");
+
+				propertyProperties.Add(new(
+					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerInitializerExpectations", "Initializers"));
+			}
+
+			writer.WriteLine();
+
+			// Generate the constructor and properties.
+			writer.WriteLine($"internal {typeToMock}IndexerExpectations({expectationsFullyQualifiedName} expectations) =>");
+			writer.Indent++;
+			var thisExpectations = $"({string.Join(", ", propertyProperties.Select(_ => $"this.{_.PropertyName}"))})";
+			var newExpectations = $"({string.Join(", ", propertyProperties.Select(_ => "new(expectations)"))})";
+			writer.WriteLine($"{thisExpectations} = {newExpectations};");
+			writer.Indent--;
+			writer.WriteLine();
+
+			foreach (var propertyProperty in propertyProperties)
+			{
+				writer.WriteLine($"internal {propertyProperty.PropertyExpectationTypeName} {propertyProperty.PropertyName} {{ get; }}");
 			}
 
 			writer.Indent--;
 			writer.WriteLine("}");
-		}
 
-		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
-		{
-			writer.WriteLine($"internal static class IndexerSetterExpectationsOf{mockType.Type.FlattenedName}Extensions");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			foreach (var result in mockType.Properties
-				.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
-			{
-				IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Set);
-			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
-		}
-
-		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
-		{
-			writer.WriteLine($"internal static class IndexerInitializerExpectationsOf{mockType.Type.FlattenedName}Extensions");
-			writer.WriteLine("{");
-			writer.Indent++;
-
-			foreach (var result in mockType.Properties
-				.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-					(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
-			{
-				IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Init);
-			}
-
-			writer.Indent--;
-			writer.WriteLine("}");
+			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations", "Indexers");
 		}
 	}
 
@@ -276,7 +326,7 @@ internal static class PropertyExpectationsBuilderV4
 					$$"""
 					internal sealed class {{typeToMock}}PropertySetterExpectations
 					{
-						internal {{typeToMock}}PropertyGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal {{typeToMock}}PropertySetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");

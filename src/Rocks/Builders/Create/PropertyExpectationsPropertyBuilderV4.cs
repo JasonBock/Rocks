@@ -22,24 +22,21 @@ internal static class PropertyExpectationsPropertyBuilderV4
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
 			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {propertyReturnValue}>";
 
-		writer.WriteLine($"internal {returnValue} {property.Name}()");
-		writer.WriteLine("{");
-		writer.Indent++;
 		writer.WriteLines(
 			$$"""
-			var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+			internal {{returnValue}} {{property.Name}}()
 			{
-				Callback = null,
-				CallCount = 0,
-				ExpectedCallCount = 1,
-				ReturnValue = null
-			};
+				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+				{
+					Callback = null,
+					CallCount = 0,
+					ExpectedCallCount = 1,
+				};
 
-			this.Expectations.handlers{{memberIdentifier}}.Add(handler);
-			return new(handler);
+				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler);
+			}
 			""");
-		writer.Indent--;
-		writer.WriteLine("}");
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
@@ -57,27 +54,24 @@ internal static class PropertyExpectationsPropertyBuilderV4
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var returnValue = propertyParameterType.IsPointer ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
-			$"global::Rocks.AdornmentsV4<{mockTypeName}, {delegateTypeName}>";
+			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {delegateTypeName}>";
 
-		writer.WriteLine($"internal {returnValue} {property.Name}(global::Rocks.Argument<{propertyParameterValue}> @value)");
-		writer.WriteLine("{");
-		writer.Indent++;
 		writer.WriteLines(
 			$$"""
-			var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+			internal {{returnValue}} {{property.Name}}(global::Rocks.Argument<{{propertyParameterValue}}> @value)
 			{
-				value = @value,
-				Callback = null,
-				CallCount = 0,
-				ExpectedCallCount = 1,
-				ReturnValue = null
-			};
+				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+				{
+					value = @value,
+					Callback = null,
+					CallCount = 0,
+					ExpectedCallCount = 1,
+				};
 
-			this.Expectations.handlers{{memberIdentifier}}.Add(handler);
-			return new(handler);
+				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler);
+			}
 			""");
-		writer.Indent--;
-		writer.WriteLine("}");
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel result, PropertyAccessor accessor, string expectationsFullyQualifiedName)

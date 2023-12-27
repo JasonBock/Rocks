@@ -101,12 +101,12 @@ internal static class MethodExpectationsMethodBuilderV4
 						Callback = null,
 						CallCount = 0,
 						ExpectedCallCount = 1,
-						ReturnValue = null
 					};
 
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
+
 				writer.Indent--;
 				writer.WriteLine("}");
 			}
@@ -153,7 +153,6 @@ internal static class MethodExpectationsMethodBuilderV4
 						Callback = null,
 						CallCount = 0,
 						ExpectedCallCount = 1,
-						ReturnValue = null
 					};
 
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
