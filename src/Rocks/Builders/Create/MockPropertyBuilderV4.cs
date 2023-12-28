@@ -33,42 +33,16 @@ internal static class MockPropertyBuilderV4
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
 		{
-			writer.WriteLine($"this.rr{property.MemberIdentifier} = @handler.Callback is not null ?");
+			writer.WriteLine($"this.rr{property.MemberIdentifier} = @handler.Callback?.Invoke() ?? @handler.ReturnValue;");
 		}
 		else
 		{
-			writer.WriteLine("var @result = @handler.Callback is not null ?");
+			writer.WriteLine("var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;");
 		}
 
-		writer.Indent++;
-
-		if (!propertyGetMethod.RequiresProjectedDelegate)
-		{
-			writer.WriteLine($"@handler.Callback() :");
-		}
-		else
-		{
-			var methodCast = MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType);
-			writer.WriteLine($"(({methodCast})@handler.Callback)() :");
-		}
-
-		if (propertyGetMethod.ReturnType.IsPointer || !propertyGetMethod.ReturnType.IsRefLikeType)
-		{
-			writer.WriteLine($"@handler.ReturnValue;");
-		}
-		else
-		{
-			// TODO: I might be able to remove these casts as well.
-			var propertyReturnType = propertyGetMethod.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				propertyGetMethod.ReturnType.FullyQualifiedName;
-			var handlerName = property.Type.IsPointer ?
-				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(property.Type, property.MockType) :
-				$"global::Rocks.Handler<{propertyReturnType}>";
-			writer.WriteLine($"(({handlerName})@handler).ReturnValue!.Invoke();");
-		}
-
-		writer.Indent--;
+		// TODO: I took a lot out here because sometimes I apparently pass in 
+		// a delegate for the return value for certain return types. But...
+		// I'm thinking I don't need to do that anymore? We'll see.
 
 		if (raiseEvents)
 		{
@@ -140,11 +114,7 @@ internal static class MockPropertyBuilderV4
 						{
 							@handler.CallCount++;
 							@foundMatch = true;
-							
-							if (@handler.Callback is not null)
-							{
-								@handler.Callback(value!);
-							}
+							@handler.Callback?.Invoke(value!);
 							
 							if (!@foundMatch)
 							{

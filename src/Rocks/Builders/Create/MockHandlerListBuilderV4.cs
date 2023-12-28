@@ -49,8 +49,6 @@ internal static class MockHandlerListBuilderV4
 				writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier + 1}> @handlers{property.MemberIdentifier + 1} = new();");
 			}
 		}
-
-		writer.WriteLine();
 	}
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method)

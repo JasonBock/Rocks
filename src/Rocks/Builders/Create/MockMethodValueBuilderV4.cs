@@ -1,5 +1,4 @@
 ﻿using Microsoft.CodeAnalysis;
-using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -185,13 +184,19 @@ internal static class MockMethodValueBuilderV4
 		var methodCast = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters, method.ReturnType);
+		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
+			string.Join(", ", method.Parameters.Select(
+				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
 
+		// TODO: I took a lot out here because sometimes I apparently pass in 
+		// a delegate for the return value for certain return types. But...
+		// I'm thinking I don't need to do that anymore? We'll see.
 		if (method.ReturnsByRef || method.ReturnsByRefReadOnly)
 		{
 			writer.WriteLine(
 				!method.ReturnType.IsBasedOnTypeParameter ?
-					$"this.rr{memberIndentifier} = @{namingContext["handler"]}.Callback is not null ?" :
-					$"this.rr{memberIndentifier} = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ? ");
+					$"this.rr{memberIndentifier} = @{namingContext["handler"]}.Callback?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;" :
+					$"this.rr{memberIndentifier} = (@{namingContext["handler"]}.Callback as {methodCast})?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;");
 		}
 		else
 		{
@@ -199,70 +204,17 @@ internal static class MockMethodValueBuilderV4
 			{
 				writer.WriteLine(
 					!method.ReturnType.IsBasedOnTypeParameter ?
-						$"_ = @{namingContext["handler"]}.Callback is not null ?" :
-						$"_ = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
+						$"_ = @{namingContext["handler"]}.Callback?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;" :
+						$"_ = (@{namingContext["handler"]}.Callback as {methodCast})?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;");
 			}
 			else
 			{
 				writer.WriteLine(
 					!method.ReturnType.IsBasedOnTypeParameter ?
-						$"var @{namingContext["result"]} = @{namingContext["handler"]}.Callback is not null ?" :
-						$"var @{namingContext["result"]} = @{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Method is {methodCast} @{namingContext["methodReturn"]} ?");
+						$"var @{namingContext["result"]} = @{namingContext["handler"]}.Callback?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;" :
+						$"var @{namingContext["result"]} = (@{namingContext["handler"]}.Callback as {methodCast})?.Invoke({methodArguments}) ?? @{namingContext["handler"]}.ReturnValue;");
 			}
 		}
-
-		writer.Indent++;
-
-		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
-			string.Join(", ", method.Parameters.Select(
-				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
-		var methodReturnType = method.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, typeToMock) : method.ReturnType.FullyQualifiedName;
-		var handlerName = method.ReturnType.IsPointer ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(method.ReturnType, typeToMock) :
-			$"global::Rocks.HandlerInformation<{methodReturnType}>";
-
-		writer.WriteLine(
-			!method.ReturnType.IsBasedOnTypeParameter ?
-				$"@{namingContext["handler"]}.Callback({methodArguments}) :" :
-				$"@{namingContext["methodReturn"]}({methodArguments}) :");
-
-		if (method.ReturnType.IsPointer || !method.ReturnType.IsRefLikeType)
-		{
-			if (!method.ReturnType.IsBasedOnTypeParameter)
-			{
-				writer.WriteLine($"@{namingContext["handler"]}.ReturnValue;");
-			}
-			else
-			{
-				writer.WriteLines(
-					$$"""
-					@{{namingContext["handler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
-						@{{namingContext["returnValue"]}}.ReturnValue :
-						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
-					"""
-				);
-			}
-		}
-		else
-		{
-			if (!method.ReturnType.IsBasedOnTypeParameter)
-			{
-				writer.WriteLine($"@{namingContext["handler"]}.ReturnValue!.Invoke();");
-			}
-			else
-			{
-				writer.WriteLines(
-					$$"""
-					@{{namingContext["handler"]}} is {{handlerName}} @{{namingContext["returnValue"]}} ?
-						@{{namingContext["returnValue"]}}.ReturnValue!.Invoke() :
-						throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for {{method.ReturnType.FullyQualifiedName}}.");
-					"""
-				);
-			}
-		}
-
-		writer.Indent--;
 
 		if (raiseEvents)
 		{

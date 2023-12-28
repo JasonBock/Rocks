@@ -104,7 +104,6 @@ public static class V4GeneratorTests
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler6> @handlers6 = new();
 				private readonly global::System.Collections.Generic.List<global::ITestCreateExpectations.Handler7> @handlers7 = new();
 				
-				
 				public override void Verify()
 				{
 					if (this.WasInstanceInvoked)
@@ -144,12 +143,7 @@ public static class V4GeneratorTests
 						{
 							var @handler = this.expectations.handlers0[0];
 							@handler.CallCount++;
-							
-							if (@handler.Callback is not null)
-							{
-								@handler.Callback();
-							}
-							
+							@handler.Callback?.Invoke();
 							@handler.RaiseEvents(this);
 						}
 						else
@@ -173,12 +167,7 @@ public static class V4GeneratorTests
 									@foundMatch = true;
 									
 									@handler.CallCount++;
-									
-									if (@handler.Callback is not null)
-									{
-										@handler.Callback(@holder!, @value!);
-									}
-									
+									@handler.Callback?.Invoke(@holder!, @value!);
 									@handler.RaiseEvents(this);
 									break;
 								}
@@ -202,9 +191,7 @@ public static class V4GeneratorTests
 						{
 							var @handler = this.expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback is not null ?
-								@handler.Callback() :
-								@handler.ReturnValue;
+							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 							@handler.RaiseEvents(this);
 							return @result!;
 						}
@@ -223,9 +210,7 @@ public static class V4GeneratorTests
 									@handler.value.IsValid(@value!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback is not null ?
-										@handler.Callback(@holder!, @value!) :
-										@handler.ReturnValue;
+									var @result = @handler.Callback?.Invoke(@holder!, @value!) ?? @handler.ReturnValue;
 									@handler.RaiseEvents(this);
 									return @result!;
 								}
@@ -245,9 +230,7 @@ public static class V4GeneratorTests
 							{
 								var @handler = this.expectations.handlers4[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback is not null ?
-									@handler.Callback() :
-									@handler.ReturnValue;
+								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 								@handler.RaiseEvents(this);
 								return @result!;
 							}
@@ -265,11 +248,7 @@ public static class V4GeneratorTests
 									{
 										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@handler.Callback is not null)
-										{
-											@handler.Callback(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -300,9 +279,7 @@ public static class V4GeneratorTests
 									if (@handler.index.IsValid(@index!))
 									{
 										@handler.CallCount++;
-										var @result = @handler.Callback is not null ?
-											@handler.Callback(@index!) :
-											@handler.ReturnValue;
+										var @result = @handler.Callback?.Invoke(@index!) ?? @handler.ReturnValue;
 										@handler.RaiseEvents(this);
 										return @result!;
 									}
@@ -323,12 +300,7 @@ public static class V4GeneratorTests
 										@handler.value.IsValid(@value!))
 									{
 										@handler.CallCount++;
-										
-										if (@handler.Callback is not null)
-										{
-											@handler.Callback(@index!, @value!);
-										}
-										
+										@handler.Callback?.Invoke(@index!, @value!);
 										@handler.RaiseEvents(this);
 										return;
 									}

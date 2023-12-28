@@ -79,10 +79,8 @@ I assume that I'll always find a `RockAttribute` with a generic parameter and a 
 
 What can I clean up with the gen'd code?
 
-* There's a blank line after the list handlers are new'd up. Remove it.
-* It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide.
-* I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
-* If `Callback` isn't null, do a one liner like this: `@handler.Callback?.Invoke();`. If there's a return value, I think I can do this: `@handler.Callback?.Invoke() ?? @handler.ReturnValue`
+* DONE - There's a blank line after the list handlers are new'd up. Remove it.
+* DONE - If `Callback` isn't null, do a one liner like this: `@handler.Callback?.Invoke();`. If there's a return value, I think I can do this: `@handler.Callback?.Invoke() ?? @handler.ReturnValue`
 * Need to create a blank line between property and/or indexer implementations.
 * Add a blank line after any member implementations in the expectations classes.
 * When I create a handler:
@@ -94,6 +92,8 @@ What can I clean up with the gen'd code?
 * After gen'ing the member expectation properties, add a blank line.
 * There's a space between `internal` and the target type for `Instance()`, remove it.
 * There's a blank line after generating `Instance()`, remove it.
+* It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide, but that's a lot of work for very little gain.
+* I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
 
 What can I clean up with what I've done so far?
 

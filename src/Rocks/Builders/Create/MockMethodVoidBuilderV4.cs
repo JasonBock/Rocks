@@ -267,24 +267,12 @@ internal static class MockMethodVoidBuilderV4
 		var methodCast = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, typeToMock) :
 			DelegateBuilder.Build(method.Parameters);
-
-		writer.WriteLine();
-		writer.WriteLine(!method.IsGenericMethod ?
-			$"if (@{namingContext["handler"]}.Callback is not null)" :
-			$"if (@{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Callback is {methodCast} @{namingContext["method"]})");
-		writer.WriteLine("{");
-		writer.Indent++;
-
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
 		writer.WriteLine(!method.IsGenericMethod ?
-			$"@{namingContext["handler"]}.Callback({methodArguments});" :
-			$"@{namingContext["method"]}({methodArguments});");
-
-		writer.Indent--;
-		writer.WriteLine("}");
-		writer.WriteLine();
+			$"@{namingContext["handler"]}.Callback?.Invoke({methodArguments});" :
+			$"(@{namingContext["handler"]}.Callback as {methodCast})?.Invoke({methodArguments});");
 
 		if (raiseEvents)
 		{
