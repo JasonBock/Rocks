@@ -16,6 +16,12 @@ internal static class PropertyExpectationsBuilderV4
 			if (mockType.Properties.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
 				propertyMappings.AddRange(PropertyExpectationsBuilderV4.BuildProperties(writer, mockType, expectationsFullyQualifiedName));
+
+				if (propertyMappings.Count > 0)
+				{
+					writer.WriteLine();
+				}
+
 				propertyMappings.AddRange(PropertyExpectationsBuilderV4.BuildIndexers(writer, mockType, expectationsFullyQualifiedName));
 			}
 
@@ -133,6 +139,11 @@ internal static class PropertyExpectationsBuilderV4
 
 				propertyProperties.Add(new(
 					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerGetterExpectations", "Getters"));
+			}
+
+			if (propertyProperties.Count > 0)
+			{
+				writer.WriteLine();
 			}
 
 			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
@@ -317,6 +328,11 @@ internal static class PropertyExpectationsBuilderV4
 
 				propertyProperties.Add(new(
 					$"{expectationsFullyQualifiedName}.{typeToMock}PropertyExpectations.{typeToMock}PropertyGetterExpectations", "Getters"));
+			}
+
+			if (propertyProperties.Count > 0)
+			{
+				writer.WriteLine();
 			}
 
 			if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&

@@ -96,13 +96,7 @@ internal static class MethodExpectationsMethodBuilderV4
 				writer.Indent++;
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}
-					{
-						Callback = null,
-						CallCount = 0,
-						ExpectedCallCount = 1,
-					};
-
+					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}();
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
@@ -150,9 +144,6 @@ internal static class MethodExpectationsMethodBuilderV4
 				writer.Indent--;
 				writer.WriteLines(
 					$$"""
-						Callback = null,
-						CallCount = 0,
-						ExpectedCallCount = 1,
 					};
 
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);

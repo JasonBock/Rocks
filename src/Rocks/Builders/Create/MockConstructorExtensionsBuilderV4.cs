@@ -173,7 +173,7 @@ internal static class MockConstructorExtensionsBuilderV4
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)} {mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}{mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 

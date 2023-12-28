@@ -26,13 +26,7 @@ internal static class PropertyExpectationsPropertyBuilderV4
 			$$"""
 			internal {{returnValue}} {{property.Name}}()
 			{
-				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
-				{
-					Callback = null,
-					CallCount = 0,
-					ExpectedCallCount = 1,
-				};
-
+				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
 				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
 				return new(handler);
 			}
@@ -63,9 +57,6 @@ internal static class PropertyExpectationsPropertyBuilderV4
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 				{
 					value = @value,
-					Callback = null,
-					CallCount = 0,
-					ExpectedCallCount = 1,
 				};
 
 				this.Expectations.handlers{{memberIdentifier}}.Add(handler);

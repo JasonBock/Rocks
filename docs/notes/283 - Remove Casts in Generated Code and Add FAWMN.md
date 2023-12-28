@@ -81,8 +81,8 @@ What can I clean up with the gen'd code?
 
 * DONE - There's a blank line after the list handlers are new'd up. Remove it.
 * DONE - If `Callback` isn't null, do a one liner like this: `@handler.Callback?.Invoke();`. If there's a return value, I think I can do this: `@handler.Callback?.Invoke() ?? @handler.ReturnValue`
-* Need to create a blank line between property and/or indexer implementations.
-* Add a blank line after any member implementations in the expectations classes.
+* DONE - Need to create a blank line between property and/or indexer implementations.
+* DONE - Add a blank line after any member implementations in the expectations classes.
 * When I create a handler:
     * Do not need to set `Callback` or `CallCount`
     * Update the base `HandlerV4<>` class to set `ExpectedCallCount` to `1`.

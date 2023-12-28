@@ -13,6 +13,11 @@ public abstract class HandlerV4
 	private readonly List<RaiseEventInformation> raiseEvents = [];
 
 	/// <summary>
+	/// Creates a new <see cref="HandlerV4"/> instance.
+	/// </summary>
+	public HandlerV4() => this.ExpectedCallCount = 1;
+
+	/// <summary>
 	/// Adds an expectation to raise an event.
 	/// </summary>
 	/// <param name="raiseEvent">The event to raise.</param>

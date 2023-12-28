@@ -31,6 +31,7 @@ internal static class MethodExpectationsBuilderV4
 					_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
 					MethodExpectationsMethodBuilderV4.Build(writer, method, expectationsFullyQualifiedName);
+					writer.WriteLine();
 				}
 
 				writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
@@ -52,10 +53,8 @@ internal static class MethodExpectationsBuilderV4
 						$$"""
 						internal sealed class {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}
 						{
-							private readonly {{expectationsFullyQualifiedName}} expectations;
-
 							internal {{typeToMock}}MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
-								this.expectations = expectations;
+								this.Expectations = expectations;
 						
 						""");
 
@@ -64,8 +63,10 @@ internal static class MethodExpectationsBuilderV4
 					foreach (var method in typeGroup)
 					{
 						MethodExpectationsMethodBuilderV4.Build(writer, method, expectationsFullyQualifiedName);
+						writer.WriteLine();
 					}
 
+					writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
 					writer.Indent--;
 					writer.WriteLine("}");
 

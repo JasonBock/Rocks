@@ -266,6 +266,7 @@ public static class V4GeneratorTests
 							}
 						}
 					}
+					
 					[global::Rocks.MemberIdentifier(6, "this[long @index]")]
 					[global::Rocks.MemberIdentifier(7, "this[long @index]")]
 					public global::Holder this[long @index]
@@ -340,16 +341,11 @@ public static class V4GeneratorTests
 					
 					internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler0, global::System.Action> NoArgumentsNoReturn()
 					{
-						var handler = new global::ITestCreateExpectations.Handler0
-						{
-							Callback = null,
-							CallCount = 0,
-							ExpectedCallCount = 1,
-						};
-						
+						var handler = new global::ITestCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
+					
 					internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler1, global::System.Action<global::Holder, string>> ArgumentsNoReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@holder);
@@ -359,26 +355,19 @@ public static class V4GeneratorTests
 						{
 							holder = @holder,
 							value = @value,
-							Callback = null,
-							CallCount = 0,
-							ExpectedCallCount = 1,
 						};
 						
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
+					
 					internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler2, global::System.Func<int>, int> NoArgumentsReturn()
 					{
-						var handler = new global::ITestCreateExpectations.Handler2
-						{
-							Callback = null,
-							CallCount = 0,
-							ExpectedCallCount = 1,
-						};
-						
+						var handler = new global::ITestCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
 					}
+					
 					internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler3, global::System.Func<global::Holder, string, int>, int> ArgumentsReturn(global::Rocks.Argument<global::Holder> @holder, global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@holder);
@@ -388,16 +377,15 @@ public static class V4GeneratorTests
 						{
 							holder = @holder,
 							value = @value,
-							Callback = null,
-							CallCount = 0,
-							ExpectedCallCount = 1,
 						};
 						
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}
+					
 					private global::ITestCreateExpectations Expectations { get; }
 				}
+				
 				internal sealed class ITestPropertyExpectations
 				{
 					internal sealed class ITestPropertyGetterExpectations
@@ -407,18 +395,13 @@ public static class V4GeneratorTests
 						
 						internal global::Rocks.AdornmentsV4<global::ITestCreateExpectations.Handler4, global::System.Func<global::System.Guid>, global::System.Guid> Data()
 						{
-							var handler = new global::ITestCreateExpectations.Handler4
-							{
-								Callback = null,
-								CallCount = 0,
-								ExpectedCallCount = 1,
-							};
-						
+							var handler = new global::ITestCreateExpectations.Handler4();
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
 						}
 						private global::ITestCreateExpectations Expectations { get; }
 					}
+					
 					internal sealed class ITestPropertySetterExpectations
 					{
 						internal ITestPropertySetterExpectations(global::ITestCreateExpectations expectations) =>
@@ -429,9 +412,6 @@ public static class V4GeneratorTests
 							var handler = new global::ITestCreateExpectations.Handler5
 							{
 								value = @value,
-								Callback = null,
-								CallCount = 0,
-								ExpectedCallCount = 1,
 							};
 						
 							this.Expectations.handlers5.Add(handler);
@@ -446,6 +426,7 @@ public static class V4GeneratorTests
 					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyGetterExpectations Getters { get; }
 					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertySetterExpectations Setters { get; }
 				}
+				
 				internal sealed class ITestIndexerExpectations
 				{
 					internal sealed class ITestIndexerGetterExpectations
@@ -460,9 +441,6 @@ public static class V4GeneratorTests
 							var handler = new global::ITestCreateExpectations.Handler6
 							{
 								index = @index,
-								Callback = null,
-								CallCount = 0,
-								ExpectedCallCount = 1,
 							};
 							
 							this.Expectations.handlers6.Add(handler);
@@ -470,6 +448,7 @@ public static class V4GeneratorTests
 						}
 						private global::ITestCreateExpectations Expectations { get; }
 					}
+					
 					internal sealed class ITestIndexerSetterExpectations
 					{
 						internal ITestIndexerSetterExpectations(global::ITestCreateExpectations expectations) =>
@@ -484,9 +463,6 @@ public static class V4GeneratorTests
 							{
 								index = @index,
 								value = @value,
-								Callback = null,
-								CallCount = 0,
-								ExpectedCallCount = 1,
 							};
 							
 							this.Expectations.handlers7.Add(handler);
@@ -501,13 +477,15 @@ public static class V4GeneratorTests
 					internal global::ITestCreateExpectations.ITestIndexerExpectations.ITestIndexerGetterExpectations Getters { get; }
 					internal global::ITestCreateExpectations.ITestIndexerExpectations.ITestIndexerSetterExpectations Setters { get; }
 				}
+				
 				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
 				internal global::ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
 				internal global::ITestCreateExpectations.ITestIndexerExpectations Indexers { get; }
+				
 				internal ITestCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
 				
-				internal  global::ITest Instance()
+				internal global::ITest Instance()
 				{
 					if (!this.WasInstanceInvoked)
 					{
@@ -521,7 +499,6 @@ public static class V4GeneratorTests
 						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 					}
 				}
-				
 			}
 			""";
 

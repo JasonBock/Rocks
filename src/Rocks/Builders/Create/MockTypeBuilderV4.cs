@@ -61,19 +61,34 @@ internal static class MockTypeBuilderV4
 			}
 		}
 
+		var hasProperties = false;
+
 		foreach (var property in type.Properties.Where(_ => !_.IsIndexer))
 		{
+			hasProperties = true;
 			MockPropertyBuilderV4.Build(writer, property, canRaiseEvents);
 		}
 
+		if (hasProperties)
+		{
+			writer.WriteLine();
+		}
+
+		var hasIndexers = false;
+
 		foreach (var indexer in type.Properties.Where(_ => _.IsIndexer))
 		{
+			hasIndexers = true;
 			MockIndexerBuilderV4.Build(writer, indexer, canRaiseEvents);
+		}
+
+		if (hasIndexers)
+		{
+			writer.WriteLine();
 		}
 
 		if (canRaiseEvents)
 		{
-			writer.WriteLine();
 			MockEventsBuilderV4.Build(writer, type.Events);
 		}
 

@@ -99,9 +99,6 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				writer.Indent--;
 				writer.WriteLines(
 					$$"""
-						Callback = null,
-						CallCount = 0,
-						ExpectedCallCount = 1,
 					};
 
 					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
@@ -220,9 +217,6 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				writer.Indent--;
 				writer.WriteLines(
 					$$"""
-						Callback = null,
-						CallCount = 0,
-						ExpectedCallCount = 1,
 					};
 
 					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
