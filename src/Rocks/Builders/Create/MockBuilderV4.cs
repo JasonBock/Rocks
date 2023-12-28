@@ -48,11 +48,6 @@ internal static class MockBuilderV4
 			writer.WriteLine();
 		}
 
-		// TODO: Add in as new V4s are created
-		/*
-		EventExpectationsExtensionsBuilder.Build(writer, mockType);
-		*/
-
 		foreach (var expectationMapping in expectationMappings) 
 		{
 			writer.WriteLine($"internal {expectationMapping.PropertyExpectationTypeName} {expectationMapping.PropertyName} {{ get; }}");

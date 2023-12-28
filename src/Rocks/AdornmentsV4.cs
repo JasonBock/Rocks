@@ -19,6 +19,16 @@ public sealed class AdornmentsV4<THandler, TCallback>
 		this.handler = handler;
 
 	/// <summary>
+	/// Adds an expectation to raise an event.
+	/// </summary>
+	/// <param name="raiseEvent">The event to raise.</param>
+	public AdornmentsV4<THandler, TCallback> AddRaiseEvent(RaiseEventInformation raiseEvent)
+	{
+		this.handler.AddRaiseEvent(raiseEvent);
+		return this;
+	}
+
+	/// <summary>
 	/// Sets the handler with the expected call count and returns itself.
 	/// </summary>
 	/// <param name="expectedCallCount">The expected call count.</param>
@@ -57,6 +67,16 @@ public sealed class AdornmentsV4<THandler, TCallback, TReturnValue>
 	/// <param name="handler">The handler instance.</param>
 	public AdornmentsV4(THandler handler) =>
 		this.handler = handler;
+
+	/// <summary>
+	/// Adds an expectation to raise an event.
+	/// </summary>
+	/// <param name="raiseEvent">The event to raise.</param>
+	public AdornmentsV4<THandler, TCallback, TReturnValue> AddRaiseEvent(RaiseEventInformation raiseEvent)
+	{
+		this.handler.AddRaiseEvent(raiseEvent);
+		return this;
+	}
 
 	/// <summary>
 	/// Sets the handler with the expected call count and returns itself.
