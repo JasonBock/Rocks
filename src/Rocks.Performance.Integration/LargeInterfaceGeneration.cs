@@ -27,19 +27,19 @@ proposed code change to make Moq faster.
 [MemoryDiagnoser]
 public class LargeInterfaceGeneration
 {
-	private readonly Expectations<IHaveLotsOfMembers> expectations;
-	private readonly IHaveLotsOfMembers mock;
+	//private readonly Expectations<IHaveLotsOfMembers> expectations = null!;
+	private readonly IHaveLotsOfMembers mock = null!;
 	public const int CallCount = 30_000;
 
 	public LargeInterfaceGeneration()
 	{
-		this.expectations = Rock.Create<IHaveLotsOfMembers>();
-		this.expectations.Properties().Getters()
-			.SomeProp().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
-		this.expectations.Methods()
-			.SomeMethod().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
+		//this.expectations = Rock.Create<IHaveLotsOfMembers>();
+		//this.expectations.Properties().Getters()
+		//	.SomeProp().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
+		//this.expectations.Methods()
+		//	.SomeMethod().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
 
-		this.mock = this.expectations.Instance();
+		//this.mock = this.expectations.Instance();
 	}
 
 	[Benchmark]

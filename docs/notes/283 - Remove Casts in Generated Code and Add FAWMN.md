@@ -83,19 +83,30 @@ What can I clean up with the gen'd code?
 * DONE - If `Callback` isn't null, do a one liner like this: `@handler.Callback?.Invoke();`. If there's a return value, I think I can do this: `@handler.Callback?.Invoke() ?? @handler.ReturnValue`
 * DONE - Need to create a blank line between property and/or indexer implementations.
 * DONE - Add a blank line after any member implementations in the expectations classes.
-* When I create a handler:
+* DONE - When I create a handler:
     * Do not need to set `Callback` or `CallCount`
     * Update the base `HandlerV4<>` class to set `ExpectedCallCount` to `1`.
     * If the member has no parameters, just do `();` after the `new...()` constructor call.
-* After gen'ing a member expectation class (even the internal property/indexer ones), add a blank line.
-* After gen'ing the member expectation classes, add a blank line.
-* After gen'ing the member expectation properties, add a blank line.
-* There's a space between `internal` and the target type for `Instance()`, remove it.
-* There's a blank line after generating `Instance()`, remove it.
-* It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide, but that's a lot of work for very little gain.
+* DONE - After gen'ing a member expectation class (even the internal property/indexer ones), add a blank line.
+* DONE - After gen'ing the member expectation classes, add a blank line.
+* DONE - After gen'ing the member expectation properties, add a blank line.
+* DONE - There's a space between `internal` and the target type for `Instance()`, remove it.
+* DONE - There's a blank line after generating `Instance()`, remove it.
 * I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
+
+* It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide, but that's a lot of work for very little gain.
 
 What can I clean up with what I've done so far?
 
 * There should be **no** casts done in the mock, or the expectations, unless the method has open generics.
 * Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
+
+More areas to test:
+
+* `IHaveLotsOfMembers` is causing an issue/error. Need to investigate.
+* This may be complicated, and not sure if this is worth it, but...it may be possible that a mock type has duplicated handler types. It may be worth trying to reduce the number of handler types made, though I'm not sure of this.
+* Properties that are `requires` and/or `init`, as `ConstructorProperties` are generated
+* Explicit interface implementation, that generates other things
+* Open generics on a method
+* `ret return` types
+* Makes, gotta change that.

@@ -9,7 +9,7 @@ internal static class MockHandlerListBuilderV4
 	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		var hasParameters = mockType.Methods.Any(_ => _.Parameters.Length > 0) ||
-			mockType.Properties.Any(_ => (_.GetMethod is not null && _.GetMethod.Parameters.Length > 0) || (_.SetMethod!.Parameters.Length > 0));
+			mockType.Properties.Any(_ => (_.GetMethod?.Parameters.Length > 0) || (_.SetMethod?.Parameters.Length > 0));
 
 		if (hasParameters)
 		{
