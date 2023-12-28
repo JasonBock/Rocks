@@ -32,9 +32,6 @@ internal static class MockTypeBuilderV4
 		MockTypeBuilderV4.BuildShimFields(writer, type);
 		MockTypeBuilderV4.BuildRefReturnFields(writer, type);
 
-		writer.WriteLine($"private readonly {expectationsFullyQualifiedName} expectations;");
-		writer.WriteLine();
-
 		if (type.Constructors.Length > 0)
 		{
 			foreach (var constructor in type.Constructors)
@@ -90,9 +87,12 @@ internal static class MockTypeBuilderV4
 		if (canRaiseEvents)
 		{
 			MockEventsBuilderV4.Build(writer, type.Events);
+			writer.WriteLine();
 		}
 
 		MockTypeBuilderV4.BuildShimTypes(writer, type, mockTypeName);
+
+		writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
 
 		writer.Indent--;
 		writer.WriteLine("}");

@@ -12,7 +12,7 @@ public static class V4GeneratorTests
 			"""
 			using Rocks;
 
-			[assembly: Rock<IHaveLotsOfMembers>(BuildType.Create)]
+			[assembly: RockCreate<IHaveLotsOfMembers>]
 
 			public interface IHaveLotsOfMembers
 			{
@@ -71,19 +71,17 @@ public static class V4GeneratorTests
 				private sealed class RockIHaveLotsOfMembers
 					: global::IHaveLotsOfMembers
 				{
-					private readonly global::IHaveLotsOfMembersCreateExpectations expectations;
-					
 					public RockIHaveLotsOfMembers(global::IHaveLotsOfMembersCreateExpectations @expectations)
 					{
-						this.expectations = @expectations;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "int SomeMethod()")]
 					public int SomeMethod()
 					{
-						if (this.expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @handler = this.expectations.handlers0[0];
+							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
 							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 							return @result!;
@@ -97,9 +95,9 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								var @handler = this.expectations.handlers1[0];
+								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
 								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 								return @result!;
@@ -113,9 +111,9 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @handler = this.expectations.handlers2[0];
+								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
 								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 								return @result!;
@@ -125,6 +123,7 @@ public static class V4GeneratorTests
 						}
 					}
 					
+					private global::IHaveLotsOfMembersCreateExpectations Expectations { get; }
 				}
 				
 				internal sealed class IHaveLotsOfMembersMethodExpectations
@@ -195,8 +194,8 @@ public static class V4GeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockGenerator>(code,
-			new[] { (typeof(RockGenerator), "IHaveLotsOfMembers_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IHaveLotsOfMembers_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 
@@ -624,7 +623,7 @@ public static class V4GeneratorTests
 			using Rocks;
 			using System;
 
-			[assembly: Rock<ITest>(BuildType.Create)]
+			[assembly: RockCreate<ITest>()]
 
 			public sealed class Holder { }
 
@@ -740,19 +739,17 @@ public static class V4GeneratorTests
 				private sealed class RockITest
 					: global::ITest, global::Rocks.IRaiseEvents
 				{
-					private readonly global::ITestCreateExpectations expectations;
-					
 					public RockITest(global::ITestCreateExpectations @expectations)
 					{
-						this.expectations = @expectations;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "void NoArgumentsNoReturn()")]
 					public void NoArgumentsNoReturn()
 					{
-						if (this.expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @handler = this.expectations.handlers0[0];
+							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
 							@handler.Callback?.Invoke();
 							@handler.RaiseEvents(this);
@@ -766,11 +763,11 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(1, "void ArgumentsNoReturn(global::Holder @holder, string @value)")]
 					public void ArgumentsNoReturn(global::Holder @holder, string @value)
 					{
-						if (this.expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1.Count > 0)
 						{
 							var @foundMatch = false;
 							
-							foreach (var @handler in this.expectations.handlers1)
+							foreach (var @handler in this.Expectations.handlers1)
 							{
 								if (@handler.holder.IsValid(@holder!) &&
 									@handler.value.IsValid(@value!))
@@ -798,9 +795,9 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(2, "int NoArgumentsReturn()")]
 					public int NoArgumentsReturn()
 					{
-						if (this.expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @handler = this.expectations.handlers2[0];
+							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
 							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 							@handler.RaiseEvents(this);
@@ -813,9 +810,9 @@ public static class V4GeneratorTests
 					[global::Rocks.MemberIdentifier(3, "int ArgumentsReturn(global::Holder @holder, string @value)")]
 					public int ArgumentsReturn(global::Holder @holder, string @value)
 					{
-						if (this.expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3.Count > 0)
 						{
-							foreach (var @handler in this.expectations.handlers3)
+							foreach (var @handler in this.Expectations.handlers3)
 							{
 								if (@handler.holder.IsValid(@holder!) &&
 									@handler.value.IsValid(@value!))
@@ -837,9 +834,9 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4.Count > 0)
 							{
-								var @handler = this.expectations.handlers4[0];
+								var @handler = this.Expectations.handlers4[0];
 								@handler.CallCount++;
 								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 								@handler.RaiseEvents(this);
@@ -850,10 +847,10 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @handler in this.expectations.handlers5)
+								foreach (var @handler in this.Expectations.handlers5)
 								{
 									if (@handler.value.IsValid(value!))
 									{
@@ -884,9 +881,9 @@ public static class V4GeneratorTests
 					{
 						get
 						{
-							if (this.expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6.Count > 0)
 							{
-								foreach (var @handler in this.expectations.handlers6)
+								foreach (var @handler in this.Expectations.handlers6)
 								{
 									if (@handler.index.IsValid(@index!))
 									{
@@ -904,9 +901,9 @@ public static class V4GeneratorTests
 						}
 						set
 						{
-							if (this.expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7.Count > 0)
 							{
-								foreach (var @handler in this.expectations.handlers7)
+								foreach (var @handler in this.Expectations.handlers7)
 								{
 									if (@handler.index.IsValid(@index!) &&
 										@handler.value.IsValid(@value!))
@@ -943,6 +940,8 @@ public static class V4GeneratorTests
 							}
 						}
 					}
+					
+					private global::ITestCreateExpectations Expectations { get; }
 				}
 				
 				internal sealed class ITestMethodExpectations
@@ -1113,8 +1112,8 @@ public static class V4GeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockGenerator>(code,
-			new[] { (typeof(RockGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

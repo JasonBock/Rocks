@@ -2,7 +2,7 @@
 using Rocks;
 using Rocks.Performance.Integration;
 
-[assembly: Rock<IHaveLotsOfMembers>(BuildType.Create)]
+[assembly: RockCreate<IHaveLotsOfMembers>]
 
 namespace Rocks.Performance.Integration;
 
@@ -37,15 +37,15 @@ public class LargeInterfaceGenerationV4
 	{
 		var expectations = Rock.Create<IHaveLotsOfMembers>();
 		expectations.Properties().Getters()
-			.SomeProp().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
+			.SomeProp().Callback(() => 1).CallCount(LargeInterfaceGeneration.CallCount);
 		expectations.Methods()
-			.SomeMethod().Returns(1).CallCount(LargeInterfaceGeneration.CallCount);
+			.SomeMethod().Callback(() => 1).CallCount(LargeInterfaceGeneration.CallCount);
 
 		this.mock = expectations.Instance();
 
 		var expectationsV4 = new IHaveLotsOfMembersCreateExpectations();
-		expectationsV4.Properties.Getters.SomeProp().ReturnValue(1).ExpectedCallCount(LargeInterfaceGeneration.CallCount);
-		expectationsV4.Methods.SomeMethod().ReturnValue(1).ExpectedCallCount(LargeInterfaceGeneration.CallCount);
+		expectationsV4.Properties.Getters.SomeProp().Callback(() => 1).ExpectedCallCount(LargeInterfaceGeneration.CallCount);
+		expectationsV4.Methods.SomeMethod().Callback(() => 1).ExpectedCallCount(LargeInterfaceGeneration.CallCount);
 
 		this.mockV4 = expectationsV4.Instance();
 	}

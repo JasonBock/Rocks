@@ -24,11 +24,11 @@ internal static class MockPropertyBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.expectations.handlers{memberIdentifier}.Count > 0)");
+		writer.WriteLine($"if (this.Expectations.handlers{memberIdentifier}.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"var @handler = this.expectations.handlers{memberIdentifier}[0];");
+		writer.WriteLine($"var @handler = this.Expectations.handlers{memberIdentifier}[0];");
 		writer.WriteLine("@handler.CallCount++;");
 
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
@@ -105,10 +105,10 @@ internal static class MockPropertyBuilderV4
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.expectations.handlers{{memberIdentifier}}.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
 				{
 					var @foundMatch = false;
-					foreach (var @handler in this.expectations.handlers{{memberIdentifier}})
+					foreach (var @handler in this.Expectations.handlers{{memberIdentifier}})
 					{
 						if (@handler.value.IsValid(value!))
 						{

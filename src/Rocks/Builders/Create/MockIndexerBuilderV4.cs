@@ -24,9 +24,9 @@ internal static class MockIndexerBuilderV4
 			$$"""
 			{{visibility}}get
 			{
-				if (this.expectations.handlers{{memberIdentifier}}.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
 				{
-					foreach (var @{{namingContext["handler"]}} in this.expectations.handlers{{memberIdentifier}})
+					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
 					{
 			""");
 
@@ -133,9 +133,9 @@ internal static class MockIndexerBuilderV4
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.expectations.handlers{{memberIdentifier}}.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
 				{
-					foreach (var @{{namingContext["handler"]}} in this.expectations.handlers{{memberIdentifier}})
+					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
 					{
 			""");
 

@@ -86,13 +86,13 @@ internal static class MockConstructorBuilderV4
 	{
 		if (shims.Length == 0)
 		{
-			writer.WriteLine($"this.expectations = @{namingContext["expectations"]};");
+			writer.WriteLine($"this.Expectations = @{namingContext["expectations"]};");
 		}
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.Type.FlattenedName}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_.Type)}(this)"));
-			writer.WriteLine($"(this.expectations, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
+			writer.WriteLine($"(this.Expectations, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
 		}
 
 		if (constructorProperties.Length > 0)
