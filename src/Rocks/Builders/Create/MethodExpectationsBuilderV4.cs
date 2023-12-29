@@ -53,7 +53,7 @@ internal static class MethodExpectationsBuilderV4
 						$$"""
 						internal sealed class {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}
 						{
-							internal {{typeToMock}}MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
+							internal {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 								this.Expectations = expectations;
 						
 						""");
