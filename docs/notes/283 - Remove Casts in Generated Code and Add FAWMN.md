@@ -109,6 +109,12 @@ var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
 return @result!;
 
 * The projected types, I'm thinking they should just go under the nested expectation type.
+* For `DoesNotReturn`, I'm thinking this can be simplified:
+
+_ = @handler.Callback is not null ?
+    @handler.Callback() : @handler.ReturnValue;
+
+Just call the callback if it's not null. Something to consider.
 
 More areas to test:
 
