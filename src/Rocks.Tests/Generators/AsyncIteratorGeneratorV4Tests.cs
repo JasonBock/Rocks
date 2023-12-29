@@ -266,21 +266,15 @@ public static class AsyncIteratorGeneratorV4Tests
 			using System.Threading;
 			using System.Threading.Tasks;
 			
+			[assembly: RockMake<AsyncEnumeration>]
+
 			public class AsyncEnumeration
 			{
 				public virtual async IAsyncEnumerable<string> GetRecordsAsync(
-			        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+					[EnumeratorCancellation] CancellationToken cancellationToken = default)
 				{
 					await Task.CompletedTask;
 					yield return "y";
-				}
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<AsyncEnumeration>();
 				}
 			}
 			""";
@@ -291,9 +285,9 @@ public static class AsyncIteratorGeneratorV4Tests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfAsyncEnumerationExtensions
+			internal sealed class AsyncEnumerationMakeExpectations
 			{
-				internal static global::AsyncEnumeration Instance(this global::Rocks.MakeGeneration<global::AsyncEnumeration> @self)
+				internal global::AsyncEnumeration Instance()
 				{
 					return new RockAsyncEnumeration();
 				}
@@ -323,11 +317,10 @@ public static class AsyncIteratorGeneratorV4Tests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }
