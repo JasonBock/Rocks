@@ -47,7 +47,7 @@ internal sealed class RockCreateBuilderV4
 		if (mockNamespace.Length > 0)
 		{
 			indentWriter.Indent--;
-			indentWriter.WriteLine("}");
+			indentWriter.Write("}");
 		}
 
 		var content = new List<string>

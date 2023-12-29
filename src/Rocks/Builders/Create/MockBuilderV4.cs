@@ -48,7 +48,7 @@ internal static class MockBuilderV4
 			writer.WriteLine();
 		}
 
-		foreach (var expectationMapping in expectationMappings) 
+		foreach (var expectationMapping in expectationMappings)
 		{
 			writer.WriteLine($"internal {expectationMapping.PropertyExpectationTypeName} {expectationMapping.PropertyName} {{ get; }}");
 		}
@@ -58,7 +58,15 @@ internal static class MockBuilderV4
 		MockConstructorExtensionsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName, expectationMappings);
 
 		writer.Indent--;
-		writer.Write("}");
+
+		if (mockType.Type.Namespace.Length > 0)
+		{
+			writer.WriteLine("}");
+		}
+		else
+		{
+			writer.Write("}");
+		}
 
 		return wereTypesProjected;
 	}

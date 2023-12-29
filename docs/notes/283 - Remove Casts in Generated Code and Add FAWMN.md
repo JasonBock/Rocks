@@ -92,20 +92,20 @@ What can I clean up with the gen'd code?
 * DONE - After gen'ing the member expectation properties, add a blank line.
 * DONE - There's a space between `internal` and the target type for `Instance()`, remove it.
 * DONE - There's a blank line after generating `Instance()`, remove it.
-* I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
+* DONE - I should consider making the `expectations` field a property named `Expectations`. This is consistent with the approach uses in the expectation classes.
 
 * It's possible that the `expectations` field **could** collide with any implemented members, or any members on the mock type for that matter. Highly unlikely, but it's possible. Note that this was the same case with the current approach as that uses a `handlers` field. So...I could get a list of all the member names on the mock type (mocked or not), and ensure the field name doesn't collide, but that's a lot of work for very little gain.
 
 What can I clean up with what I've done so far?
 
 * There should be **no** casts done in the mock, or the expectations, unless the method has open generics.
-* Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
+* DONE - Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
+* I think I can reduce the number of handler classes made. For example, two methods that take no arguments and return void have exactly the same handler. If I can map arguments+return types to a handler number + the member identifier, I could make that reduction.
 
 More areas to test:
 
-* `IHaveLotsOfMembers` is causing an issue/error. Need to investigate.
-* This may be complicated, and not sure if this is worth it, but...it may be possible that a mock type has duplicated handler types. It may be worth trying to reduce the number of handler types made, though I'm not sure of this.
-* Properties that are `requires` and/or `init`, as `ConstructorProperties` are generated
+* DONE - `IHaveLotsOfMembers` is causing an issue/error. Need to investigate.
+* Properties that are `required` and/or `init`, as `ConstructorProperties` are generated
 * Explicit interface implementation, that generates other things
 * Open generics on a method
 * `ret return` types
