@@ -121,6 +121,12 @@ internal static class MockMethodValueBuilderV4
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier);
 		}
 
+		if (method.Parameters.Length > 0 || method.IsGenericMethod)
+		{
+			writer.WriteLine();
+			writer.WriteLine($"throw new global::Rocks.Exceptions.ExpectationException(\"No handlers match for {methodSignature.Replace("\"", "\\\"")}\");");
+		}
+
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -256,7 +262,7 @@ internal static class MockMethodValueBuilderV4
 			var handlerName = method.ReturnType.IsPointer ?
 				MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(method.ReturnType, typeToMock) :
 				$"global::Rocks.HandlerInformation<{methodReturnType}>";
-			writer.WriteLine($"if ((@{namingContext["handler"]}.Method is not null && @{namingContext["handler"]}.Callback is {methodCast}) || @{namingContext["handler"]} is {handlerName})");
+			writer.WriteLine($"if ((@{namingContext["handler"]}.Callback is not null && @{namingContext["handler"]}.Callback is {methodCast}) || @{namingContext["handler"]} is {handlerName})");
 			writer.WriteLine("{");
 			writer.Indent++;
 		}
