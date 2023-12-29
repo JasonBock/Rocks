@@ -343,7 +343,7 @@ internal static class MockMethodValueBuilderV4
 				}
 				else
 				{
-					throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for {{methodSignature.Replace("\"", "\\\"")}}");"
+					throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for {{methodSignature.Replace("\"", "\\\"")}}");
 				}
 				""");
 		}

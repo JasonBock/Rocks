@@ -77,6 +77,13 @@ internal static class MockHandlerListBuilderV4
 				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
 			""");
 
+		if(method.Constraints.Length > 0) 
+		{
+			writer.Indent++;
+			writer.WriteLine(string.Join(" ", method.Constraints));
+			writer.Indent--;
+		}
+		
 		if (method.Parameters.Length > 0)
 		{
 			writer.WriteLine("{");

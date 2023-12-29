@@ -495,20 +495,14 @@ public static class AllowNullGeneratorV4Tests
 			using System;
 			using System.Diagnostics.CodeAnalysis;
 
+			[assembly: RockMake<MockTests.Allow>]
+
 			namespace MockTests
 			{
 				public class Allow
 				{
 					 [AllowNull]
 					 public virtual string NewLine { get; set; }
-				}
-	
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<Allow>();
-					}
 				}
 			}
 			""";
@@ -521,9 +515,9 @@ public static class AllowNullGeneratorV4Tests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfAllowExtensions
+				internal sealed class AllowMakeExpectations
 				{
-					internal static global::MockTests.Allow Instance(this global::Rocks.MakeGeneration<global::MockTests.Allow> @self)
+					internal global::MockTests.Allow Instance()
 					{
 						return new RockAllow();
 					}
@@ -556,11 +550,10 @@ public static class AllowNullGeneratorV4Tests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.Allow_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.Allow_Rock_Make.g.cs", generatedCode) },
 			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
 	}
 }

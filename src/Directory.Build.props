@@ -10,6 +10,6 @@
 		<Nullable>enable</Nullable>
 		<TargetFramework>net8.0</TargetFramework>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<Version>7.3.0</Version>
+		<Version>8.0.0-alpha.1</Version>
 	</PropertyGroup>
 </Project>

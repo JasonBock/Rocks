@@ -101,12 +101,21 @@ What can I clean up with what I've done so far?
 * There should be **no** casts done in the mock, or the expectations, unless the method has open generics.
 * DONE - Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
 * I think I can reduce the number of handler classes made. For example, two methods that take no arguments and return void have exactly the same handler. If I can map arguments+return types to a handler number + the member identifier, I could make that reduction.
+* When I generate the handler, what's the "proper" order?
+
+var @handler = this.Expectations.handlers0[0];
+@handler.CallCount++;
+var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+return @result!;
+
+* The projected types, I'm thinking they should just go under the nested expectation type.
 
 More areas to test:
 
 * DONE - `IHaveLotsOfMembers` is causing an issue/error. Need to investigate.
+* DONE - Makes, gotta change that.
+* DONE - Open generics on a method
 * Properties that are `required` and/or `init`, as `ConstructorProperties` are generated
 * Explicit interface implementation, that generates other things
-* Open generics on a method
 * `ret return` types
-* Makes, gotta change that.
+* Remove FileName.cs from test project.
