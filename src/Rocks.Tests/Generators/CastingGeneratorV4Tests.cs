@@ -44,7 +44,7 @@ public static class CastingGeneratorV4Tests
 				{
 					#pragma warning disable CS8618
 					
-					internal sealed class Handler0
+					internal sealed class Handler0<T>
 						: global::Rocks.HandlerV4<global::System.Action<T, string, global::System.Guid>>
 					{
 						public global::Rocks.Argument<T> value { get; set; }
@@ -52,7 +52,7 @@ public static class CastingGeneratorV4Tests
 						public global::Rocks.Argument<global::System.Guid> information { get; set; }
 					}
 					
-					internal sealed class Handler1
+					internal sealed class Handler1<T>
 						: global::Rocks.HandlerV4<global::System.Func<T, string, global::System.Guid, T>, T>
 					{
 						public global::Rocks.Argument<T> value { get; set; }
@@ -76,8 +76,8 @@ public static class CastingGeneratorV4Tests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1> @handlers1 = new();
+					private readonly global::System.Collections.Generic.List<global::Rocks.HandlerV4> @handlers0 = new();
+					private readonly global::System.Collections.Generic.List<global::Rocks.HandlerV4> @handlers1 = new();
 					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2> @handlers2 = new();
 					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3> @handlers3 = new();
 					
@@ -114,17 +114,19 @@ public static class CastingGeneratorV4Tests
 							{
 								var @foundMatch = false;
 								
-								foreach (var @handler in this.Expectations.handlers0)
+								foreach (var @genericHandler in this.Expectations.handlers0)
 								{
-									if ((@handler.value as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
-										@handler.data.IsValid(@data!) &&
-										@handler.information.IsValid(@information!))
+									if (@genericHandler is global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T> @handler)
 									{
-										@foundMatch = true;
-										
-										@handler.CallCount++;
-										(@handler.Callback as global::System.Action<T, string, global::System.Guid>)?.Invoke(@value!, @data!, @information!);
-										break;
+										if (@handler.value.IsValid(@value!) &&
+											@handler.data.IsValid(@data!) &&
+											@handler.information.IsValid(@information!))
+										{
+											@foundMatch = true;
+											@handler.CallCount++;
+											@handler.Callback?.Invoke(@value!, @data!, @information!);
+											break;
+										}
 									}
 								}
 								
@@ -144,16 +146,17 @@ public static class CastingGeneratorV4Tests
 						{
 							if (this.Expectations.handlers1.Count > 0)
 							{
-								foreach (var @handler in this.Expectations.handlers1)
+								foreach (var @genericHandler in this.Expectations.handlers1)
 								{
-									if ((@handler.Callback is not null && @handler.Callback is global::System.Func<T, string, global::System.Guid, T>) || @handler is global::Rocks.HandlerInformation<T>)
+									if (@genericHandler is global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T> @handler)
 									{
-										if ((@handler.value as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
+										if (@handler.value.IsValid(@value!) &&
 											@handler.data.IsValid(@data!) &&
 											@handler.information.IsValid(@information!))
 										{
 											@handler.CallCount++;
-											var @result = (@handler.Callback as global::System.Func<T, string, global::System.Guid, T>)?.Invoke(@value!, @data!, @information!) ?? @handler.ReturnValue;
+											var @result = @handler.Callback is not null ?
+												@handler.Callback(@value!, @data!, @information!) : @handler.ReturnValue;
 											return @result!;
 										}
 									}
@@ -178,7 +181,6 @@ public static class CastingGeneratorV4Tests
 										@handler.data.IsValid(@data!))
 									{
 										@foundMatch = true;
-										
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@value!, @data!);
 										break;
@@ -207,7 +209,8 @@ public static class CastingGeneratorV4Tests
 										@handler.data.IsValid(@data!))
 									{
 										@handler.CallCount++;
-										var @result = @handler.Callback?.Invoke(@value!, @data!) ?? @handler.ReturnValue;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@value!, @data!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -226,13 +229,13 @@ public static class CastingGeneratorV4Tests
 						internal IHaveOpenGenericsOfGuidMethodExpectations(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>
 							{
 								value = @value,
 								data = @data,
@@ -243,13 +246,13 @@ public static class CastingGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>
 							{
 								value = @value,
 								data = @data,

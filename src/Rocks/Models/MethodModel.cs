@@ -31,6 +31,10 @@ internal sealed record MethodModel
 	  this.MethodKind = method.MethodKind;
 	  this.Constraints = method.GetConstraints(compilation);
 	  this.DefaultConstraints = method.GetDefaultConstraints();
+	  this.TypeArguments = method.TypeArguments.Length > 0 ?
+			method.TypeArguments.Select(_ => _.GetFullyQualifiedName(compilation)).ToImmutableArray() :
+			ImmutableArray<string>.Empty;
+
 	  this.Name = method.GetName(compilation);
 
 	  this.Parameters = method.Parameters.Select(_ =>
@@ -109,7 +113,7 @@ internal sealed record MethodModel
    internal MethodKind MethodKind { get; }
    internal TypeReferenceModel MockType { get; }
    internal string Name { get; }
-   internal string? OverridingCodeValue { get; }
+	internal string? OverridingCodeValue { get; }
    internal EquatableArray<ParameterModel> Parameters { get; }
    internal string? ProjectedCallbackDelegateName { get; }
    internal string? ProjectedReturnValueDelegateName { get; }
@@ -129,4 +133,5 @@ internal sealed record MethodModel
    internal bool ReturnsByRef { get; }
    internal bool ReturnsByRefReadOnly { get; }
    internal bool ShouldThrowDoesNotReturnException { get; }
+	internal EquatableArray<string> TypeArguments { get; }
 }

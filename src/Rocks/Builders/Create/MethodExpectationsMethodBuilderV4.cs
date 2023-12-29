@@ -64,11 +64,13 @@ internal static class MethodExpectationsMethodBuilderV4
 				method.ReturnType.IsRefLikeType ?
 					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
 					method.ReturnType.FullyQualifiedName;
+			var typeArguments = method.IsGenericMethod ?
+				$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 			var adornmentsType = method.ReturnsVoid ?
-				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}>" :
+				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>" :
 				method.ReturnType.IsPointer ?
 					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>";
 			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
 
 			var addMethod = method.ReturnsVoid ? "Add" :
@@ -96,7 +98,7 @@ internal static class MethodExpectationsMethodBuilderV4
 				writer.Indent++;
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}();
+					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
@@ -118,7 +120,7 @@ internal static class MethodExpectationsMethodBuilderV4
 				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}
+					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}
 					{
 					""");
 				writer.Indent++;

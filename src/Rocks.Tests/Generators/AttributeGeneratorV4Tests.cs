@@ -236,7 +236,8 @@ public static class AttributeGeneratorV4Tests
 								if (@handler.obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@obj!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -256,7 +257,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -272,7 +274,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -512,7 +515,8 @@ public static class AttributeGeneratorV4Tests
 								if (@handler.obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@obj!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -532,7 +536,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -548,7 +553,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -568,7 +574,8 @@ public static class AttributeGeneratorV4Tests
 								if (@handler.node.IsValid(@node!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@node!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@node!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -591,7 +598,8 @@ public static class AttributeGeneratorV4Tests
 								if (@handler.node.IsValid(@node!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@node!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@node!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -666,7 +674,8 @@ public static class AttributeGeneratorV4Tests
 									if (@handler.node.IsValid(@node!))
 									{
 										@handler.CallCount++;
-										var @result = @handler.Callback?.Invoke(@node!) ?? @handler.ReturnValue;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@node!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -1124,7 +1133,8 @@ public static class AttributeGeneratorV4Tests
 								if (@handler.obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@obj!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -1144,7 +1154,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -1160,7 +1171,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -1176,7 +1188,8 @@ public static class AttributeGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -1481,7 +1494,6 @@ public static class AttributeGeneratorV4Tests
 									if (@handler.data.IsValid(@data!))
 									{
 										@foundMatch = true;
-										
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@data!);
 										break;

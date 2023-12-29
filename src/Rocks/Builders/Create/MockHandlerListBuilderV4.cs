@@ -37,7 +37,12 @@ internal static class MockHandlerListBuilderV4
 	{
 		foreach (var method in mockType.Methods)
 		{
-			writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}> @handlers{method.MemberIdentifier} = new();");
+			// If the method has open generics, we have to use the base Handler type -
+			// we'll cast it later within the method implementation.
+			var handlers = method.TypeArguments.Length == 0 ?
+				$"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}> @handlers{method.MemberIdentifier} = new();" :
+				$"private readonly global::System.Collections.Generic.List<global::Rocks.HandlerV4> @handlers{method.MemberIdentifier} = new();";
+			writer.WriteLine(handlers);
 		}
 
 		foreach (var property in mockType.Properties)
@@ -63,10 +68,12 @@ internal static class MockHandlerListBuilderV4
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
 				method.ReturnType.FullyQualifiedName;
 		returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
+		var typeArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class Handler{{method.MemberIdentifier}}
+			internal sealed class Handler{{method.MemberIdentifier}}{{typeArguments}}
 				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
 			""");
 

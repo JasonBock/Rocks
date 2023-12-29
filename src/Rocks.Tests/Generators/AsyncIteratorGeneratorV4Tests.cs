@@ -107,7 +107,8 @@ public static class AsyncIteratorGeneratorV4Tests
 								if (@handler.obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@obj!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -127,7 +128,8 @@ public static class AsyncIteratorGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -143,7 +145,8 @@ public static class AsyncIteratorGeneratorV4Tests
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -162,7 +165,8 @@ public static class AsyncIteratorGeneratorV4Tests
 								if (@handler.cancellationToken.IsValid(@cancellationToken!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@cancellationToken!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@cancellationToken!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}

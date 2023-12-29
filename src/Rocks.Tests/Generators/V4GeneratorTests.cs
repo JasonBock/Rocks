@@ -163,7 +163,6 @@ public static class V4GeneratorTests
 									@handler.value.IsValid(@value!))
 								{
 									@foundMatch = true;
-									
 									@handler.CallCount++;
 									@handler.Callback?.Invoke(@holder!, @value!);
 									@handler.RaiseEvents(this);
@@ -189,7 +188,8 @@ public static class V4GeneratorTests
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
-							var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							@handler.RaiseEvents(this);
 							return @result!;
 						}
@@ -208,7 +208,8 @@ public static class V4GeneratorTests
 									@handler.value.IsValid(@value!))
 								{
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke(@holder!, @value!) ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@holder!, @value!) : @handler.ReturnValue;
 									@handler.RaiseEvents(this);
 									return @result!;
 								}
@@ -280,7 +281,8 @@ public static class V4GeneratorTests
 									if (@handler.index.IsValid(@index!))
 									{
 										@handler.CallCount++;
-										var @result = @handler.Callback?.Invoke(@index!) ?? @handler.ReturnValue;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@index!) : @handler.ReturnValue;
 										@handler.RaiseEvents(this);
 										return @result!;
 									}
