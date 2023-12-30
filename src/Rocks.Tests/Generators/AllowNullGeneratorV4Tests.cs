@@ -171,7 +171,6 @@ public static class AllowNullGeneratorV4Tests
 						internal global::MockTests.IAllowCreateExpectations.IAllowPropertyExpectations.IAllowPropertySetterExpectations Setters { get; }
 					}
 					
-					
 					internal global::MockTests.IAllowCreateExpectations.IAllowPropertyExpectations Properties { get; }
 					
 					internal IAllowCreateExpectations() =>

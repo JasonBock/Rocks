@@ -115,7 +115,6 @@ public static class AttributeGeneratorV4Tests
 					internal global::IItemsCreateExpectations.IItemsPropertyExpectations.IItemsPropertyGetterExpectations Getters { get; }
 				}
 				
-				
 				internal global::IItemsCreateExpectations.IItemsPropertyExpectations Properties { get; }
 				
 				internal IItemsCreateExpectations() =>
@@ -815,7 +814,6 @@ public static class AttributeGeneratorV4Tests
 					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesPropertyExpectations.NotNullIfNotCasesPropertyGetterExpectations Getters { get; }
 					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesPropertyExpectations.NotNullIfNotCasesPropertySetterExpectations Setters { get; }
 				}
-				
 				internal sealed class NotNullIfNotCasesIndexerExpectations
 				{
 					internal sealed class NotNullIfNotCasesIndexerGetterExpectations
@@ -1009,7 +1007,6 @@ public static class AttributeGeneratorV4Tests
 					
 					internal global::IUseTuplesCreateExpectations.IUseTuplesPropertyExpectations.IUseTuplesPropertyGetterExpectations Getters { get; }
 				}
-				
 				
 				internal global::IUseTuplesCreateExpectations.IUseTuplesPropertyExpectations Properties { get; }
 				

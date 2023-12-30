@@ -430,7 +430,6 @@ public static class V4GeneratorTests
 					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyGetterExpectations Getters { get; }
 					internal global::ITestCreateExpectations.ITestPropertyExpectations.ITestPropertySetterExpectations Setters { get; }
 				}
-				
 				internal sealed class ITestIndexerExpectations
 				{
 					internal sealed class ITestIndexerGetterExpectations

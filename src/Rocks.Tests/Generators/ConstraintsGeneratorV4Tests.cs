@@ -53,6 +53,7 @@ public static class ConstraintsGeneratorV4Tests
 				
 				internal sealed class Handler3<T>
 					: global::Rocks.HandlerV4<global::System.Func<object[], T?>, T?>
+					where T : class
 				{
 					public global::Rocks.Argument<object[]> args { get; set; }
 				}
