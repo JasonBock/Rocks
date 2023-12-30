@@ -7,66 +7,69 @@ namespace Rocks.Builders.Create;
 
 internal static class ExplicitPropertyExpectationsPropertyBuilderV4
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var propertyGetMethod = property.GetMethod!;
 
 		var mockTypeName = property.MockType.FullyQualifiedName;
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<{mockTypeName}, {containingTypeName}> @self";
-
-		var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
+		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 			propertyGetMethod.ReturnType.IsRefLikeType ?
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-			delegateTypeName : propertyGetMethod.ReturnType.FullyQualifiedName;
-		var adornmentsType = property.Type.IsEsoteric ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
-			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}, {propertyReturnValue}>";
-		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
-
-		var addMethod = property.Type.IsPointer ?
-			MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(property.Type, property.MockType) : 
-			$"Add<{propertyReturnValue}>";
+			callbackDelegateTypeName : propertyGetMethod.ReturnType.FullyQualifiedName;
+		var returnValue = propertyGetMethod.ReturnType.IsPointer ?
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
+			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {propertyReturnValue}>";
 
 		writer.WriteLines(
 			$$"""
-			internal static {{returnValue}} {{property.Name}}({{thisParameter}}) =>
-				{{newAdornments}}(@self.{{addMethod}}({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+			internal {{returnValue}} {{property.Name}}()
+			{
+				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
+				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler);
+			}
 			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string containingTypeName, PropertyAccessor accessor)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
-		var propertyParameterValue = property.SetMethod!.Parameters[0].Type.FullyQualifiedName;
-		var accessorName = accessor == PropertyAccessor.Set ? "Setter" : "Initializer";
+		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
+		var propertyParameterValue = propertyParameterType.FullyQualifiedName;
 		var mockTypeName = property.MockType.FullyQualifiedName;
-		var thisParameter = $"this global::Rocks.Expectations.ExplicitProperty{accessorName}Expectations<{mockTypeName}, {containingTypeName}> @self";
 
-		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
+		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
-		var adornmentsType = property.SetMethod!.RequiresProjectedDelegate ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, true)}<{mockTypeName}, {delegateTypeName}>" :
-			$"global::Rocks.PropertyAdornments<{mockTypeName}, {delegateTypeName}>";
-		var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
+		var returnValue = propertyParameterType.IsPointer ?
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
+			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 
 		writer.WriteLines(
 			$$"""
-			internal static {{returnValue}} {{property.Name}}({{thisParameter}}, global::Rocks.Argument<{{propertyParameterValue}}> value) =>
-				{{newAdornments}}(@self.Add({{memberIdentifier}}, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
+			internal {{returnValue}} {{property.Name}}(global::Rocks.Argument<{{propertyParameterValue}}> @value)
+			{
+				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+				{
+					value = @value,
+				};
+
+				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				return new(handler);
+			}
 			""");
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel property,
-		PropertyAccessor accessor, string containingTypeName)
+		PropertyAccessor accessor, string expectationsFullyQualifiedName)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
 		{
-			ExplicitPropertyExpectationsPropertyBuilderV4.BuildGetter(writer, property, memberIdentifier, containingTypeName);
+			ExplicitPropertyExpectationsPropertyBuilderV4.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
 		}
 		else if(accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init)
 		{
@@ -76,7 +79,7 @@ internal static class ExplicitPropertyExpectationsPropertyBuilderV4
 				memberIdentifier++;
 			}
 
-			ExplicitPropertyExpectationsPropertyBuilderV4.BuildSetter(writer, property, memberIdentifier, containingTypeName, accessor);
+			ExplicitPropertyExpectationsPropertyBuilderV4.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
 		}
 	}
 }

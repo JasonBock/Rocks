@@ -43,12 +43,12 @@ internal static class PropertyExpectationsPropertyBuilderV4
 					RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
 			propertyParameterType.FullyQualifiedName;
 		var mockTypeName = property.MockType.FullyQualifiedName;
-		var delegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
+		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var returnValue = propertyParameterType.IsPointer ?
-			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {delegateTypeName}>" :
-			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {delegateTypeName}>";
+			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
+			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 
 		writer.WriteLines(
 			$$"""
