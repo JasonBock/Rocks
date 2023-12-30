@@ -17,7 +17,7 @@ internal static class ExplicitIndexerExpectationsIndexerBuilderV4
 			propertyGetMethod.ReturnType.IsRefLikeType ?
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
+			DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
 			callbackDelegateTypeName : propertyGetMethod.ReturnType.FullyQualifiedName;
 		var returnValue = propertyGetMethod.ReturnType.IsPointer ?
@@ -30,7 +30,7 @@ internal static class ExplicitIndexerExpectationsIndexerBuilderV4
 
 		writer.WriteLines(
 			$$"""
-			internal {{returnValue}} {{property.Name}}({{instanceParameters}})
+			internal {{returnValue}} This({{instanceParameters}})
 			{
 			""");
 		writer.Indent++;
@@ -77,25 +77,25 @@ internal static class ExplicitIndexerExpectationsIndexerBuilderV4
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
-		var propertyGetMethod = property.GetMethod!;
+		var propertySetMethod = property.SetMethod!;
 
 		var mockTypeName = property.MockType.FullyQualifiedName;
-		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-			propertyGetMethod.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
-		var returnValue = propertyGetMethod.ReturnType.IsPointer ?
+		var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
+			propertySetMethod.ReturnType.IsRefLikeType ?
+				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+			DelegateBuilder.Build(propertySetMethod.Parameters, property.Type);
+		var returnValue = propertySetMethod.ReturnType.IsPointer ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
 			$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-		var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
+		var instanceParameters = string.Join(", ", propertySetMethod.Parameters.Select(_ =>
 		{
 			return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}> @{_.Name}";
 		}));
 
 		writer.WriteLines(
 			$$"""
-			internal {{returnValue}} {{property.Name}}({{instanceParameters}})
+			internal {{returnValue}} This({{instanceParameters}})
 			{
 			""");
 		writer.Indent++;

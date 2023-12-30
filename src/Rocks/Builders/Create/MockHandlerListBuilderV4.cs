@@ -56,7 +56,7 @@ internal static class MockHandlerListBuilderV4
 		}
 	}
 
-	private static void BuildHandler(IndentedTextWriter writer, MethodModel method)
+	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier)
 	{
 		var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
@@ -73,7 +73,7 @@ internal static class MockHandlerListBuilderV4
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class Handler{{method.MemberIdentifier}}{{typeArguments}}
+			internal sealed class Handler{{memberIdentifier}}{{typeArguments}}
 				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
 			""");
 
@@ -113,7 +113,7 @@ internal static class MockHandlerListBuilderV4
 	{
 		foreach (var method in mockType.Methods)
 		{
-			MockHandlerListBuilderV4.BuildHandler(writer, method);
+			MockHandlerListBuilderV4.BuildHandler(writer, method, method.MemberIdentifier);
 		}
 	}
 
@@ -124,12 +124,12 @@ internal static class MockHandlerListBuilderV4
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
 				var method = property.Accessors == PropertyAccessor.Get ? property.GetMethod! : property.SetMethod!;
-				MockHandlerListBuilderV4.BuildHandler(writer, method);
+				MockHandlerListBuilderV4.BuildHandler(writer, method, property.MemberIdentifier);
 			}
 			else
 			{
-				MockHandlerListBuilderV4.BuildHandler(writer, property.GetMethod!);
-				MockHandlerListBuilderV4.BuildHandler(writer, property.SetMethod!);
+				MockHandlerListBuilderV4.BuildHandler(writer, property.GetMethod!, property.MemberIdentifier);
+				MockHandlerListBuilderV4.BuildHandler(writer, property.SetMethod!, property.MemberIdentifier + 1);
 			}
 		}
 	}

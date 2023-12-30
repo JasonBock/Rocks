@@ -152,7 +152,7 @@ internal static class PropertyExpectationsBuilderV4
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitIndexerExpectationsFor{containingTypeName}", $"ExplicitPropertiesFor{containingTypeName}");
+			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitIndexerExpectationsFor{containingTypeName}", $"ExplicitIndexersFor{containingTypeName}");
 		}
 	}
 

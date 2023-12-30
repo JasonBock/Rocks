@@ -9,7 +9,8 @@ namespace Rocks.Builders.Make;
 
 internal static class MockConstructorExpectationsBuilderV4
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
+		string expectationsFullyQualifiedName)
 	{
 		var constructorProperties = mockType.ConstructorProperties;
 		var enumerableTypes = constructorProperties.Select(_ =>
@@ -112,26 +113,28 @@ internal static class MockConstructorExpectationsBuilderV4
 			foreach (var constructor in mockType.Constructors)
 			{
 				MockConstructorExpectationsBuilderV4.Build(writer, mockType.Type,
-					constructor.Parameters, constructorProperties.Length > 0, hasRequiredProperties);
+					constructor.Parameters, constructorProperties.Length > 0, 
+					hasRequiredProperties, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
 			MockConstructorExpectationsBuilderV4.Build(writer, mockType.Type,
-				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties);
+				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, 
+				hasRequiredProperties, expectationsFullyQualifiedName);
 		}
 	}
 
 	private static void Build(IndentedTextWriter writer, TypeReferenceModel type, ImmutableArray<ParameterModel> parameters,
-		bool requiredInitObjectInitialization, bool hasRequiredProperties)
+		bool requiredInitObjectInitialization, bool hasRequiredProperties, string expectationsFullyQualifiedName)
 	{
 		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitialization ?
-				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" :
-				string.Empty;
-		var instanceParameters = parameters.Length == 0 ? string.Empty :
-			string.Join(", ", parameters.Select(_ =>
+				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
+				Array.Empty<string>();
+		var instanceParameters = 
+			$"{string.Join(", ", parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 				var direction = _.RefKind switch
@@ -142,7 +145,7 @@ internal static class MockConstructorExpectationsBuilderV4
 					_ => string.Empty
 				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-			}));
+			}).Concat(constructorPropertiesParameter))}";
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
 			[$"@{namingContext["constructorProperties"]}"] :

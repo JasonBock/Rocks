@@ -11,7 +11,11 @@ internal static class MockExpectationBuilderV4
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		MockConstructorExpectationsBuilderV4.Build(writer, mockType);
+		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
+			$"global::{mockType.Type.FlattenedName}MakeExpectations" :
+			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}MakeExpectations";
+
+		MockConstructorExpectationsBuilderV4.Build(writer, mockType, expectationsFullyQualifiedName);
 		writer.WriteLine();
 		MockMakeBuilderV4.Build(writer, mockType);
 

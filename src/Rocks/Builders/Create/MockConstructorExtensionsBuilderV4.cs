@@ -139,10 +139,10 @@ internal static class MockConstructorExtensionsBuilderV4
 		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitialization ?
-				$", {expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" :
-				string.Empty;
-		var instanceParameters = parameters.Length == 0 ? string.Empty :
-			string.Join(", ", parameters.Select(_ =>
+				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
+				Array.Empty<string>();
+		var instanceParameters = 
+			$"{string.Join(", ", parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 				var direction = _.RefKind switch
@@ -153,7 +153,7 @@ internal static class MockConstructorExtensionsBuilderV4
 					_ => string.Empty
 				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-			}));
+			}).Concat(constructorPropertiesParameter))}";
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
 			$"this, @{namingContext["constructorProperties"]}" :
