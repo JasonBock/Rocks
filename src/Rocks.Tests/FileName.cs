@@ -1,18 +1,4 @@
-﻿
-//public interface IBase
+﻿//public interface IUseKeyword
 //{
-//	void Foo();
-
-//	string Data { get; set; }
-
-//	string this[int a, string b] { get; }
-//}
-
-//public interface ISub : IBase
-//{
-//	new int Foo();
-
-//	new int Data { get; set; }
-
-//	new int this[int a, string b] { get; }
+//	void Foo(string @namespace, string @event, string @property);
 //}

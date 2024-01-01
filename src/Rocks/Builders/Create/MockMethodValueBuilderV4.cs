@@ -278,7 +278,7 @@ internal static class MockMethodValueBuilderV4
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -288,7 +288,7 @@ internal static class MockMethodValueBuilderV4
 				}
 
 				writer.WriteLine(
-					$"@{namingContext["handler"]}.{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{

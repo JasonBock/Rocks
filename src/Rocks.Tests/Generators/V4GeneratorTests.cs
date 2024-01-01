@@ -55,8 +55,8 @@ public static class V4GeneratorTests
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::System.Action<global::Holder, string>>
 				{
-					public global::Rocks.Argument<global::Holder> holder { get; set; }
-					public global::Rocks.Argument<string> value { get; set; }
+					public global::Rocks.Argument<global::Holder> @holder { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
 				internal sealed class Handler2
@@ -66,8 +66,8 @@ public static class V4GeneratorTests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Func<global::Holder, string, int>, int>
 				{
-					public global::Rocks.Argument<global::Holder> holder { get; set; }
-					public global::Rocks.Argument<string> value { get; set; }
+					public global::Rocks.Argument<global::Holder> @holder { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
 				internal sealed class Handler4
@@ -77,20 +77,20 @@ public static class V4GeneratorTests
 				internal sealed class Handler5
 					: global::Rocks.HandlerV4<global::System.Action<global::System.Guid>>
 				{
-					public global::Rocks.Argument<global::System.Guid> value { get; set; }
+					public global::Rocks.Argument<global::System.Guid> @value { get; set; }
 				}
 				
 				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Func<long, global::Holder>, global::Holder>
 				{
-					public global::Rocks.Argument<long> index { get; set; }
+					public global::Rocks.Argument<long> @index { get; set; }
 				}
 				
 				internal sealed class Handler7
 					: global::Rocks.HandlerV4<global::System.Action<long, global::Holder>>
 				{
-					public global::Rocks.Argument<long> index { get; set; }
-					public global::Rocks.Argument<global::Holder> value { get; set; }
+					public global::Rocks.Argument<long> @index { get; set; }
+					public global::Rocks.Argument<global::Holder> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -159,8 +159,8 @@ public static class V4GeneratorTests
 							
 							foreach (var @handler in this.Expectations.handlers1)
 							{
-								if (@handler.holder.IsValid(@holder!) &&
-									@handler.value.IsValid(@value!))
+								if (@handler.@holder.IsValid(@holder!) &&
+									@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
@@ -204,8 +204,8 @@ public static class V4GeneratorTests
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
-								if (@handler.holder.IsValid(@holder!) &&
-									@handler.value.IsValid(@value!))
+								if (@handler.@holder.IsValid(@holder!) &&
+									@handler.@value.IsValid(@value!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -278,7 +278,7 @@ public static class V4GeneratorTests
 							{
 								foreach (var @handler in this.Expectations.handlers6)
 								{
-									if (@handler.index.IsValid(@index!))
+									if (@handler.@index.IsValid(@index!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -299,8 +299,8 @@ public static class V4GeneratorTests
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
-									if (@handler.index.IsValid(@index!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@index.IsValid(@index!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@index!, @value!);
@@ -357,8 +357,8 @@ public static class V4GeneratorTests
 						
 						var handler = new global::ITestCreateExpectations.Handler1
 						{
-							holder = @holder,
-							value = @value,
+							@holder = @holder,
+							@value = @value,
 						};
 						
 						this.Expectations.handlers1.Add(handler);
@@ -379,8 +379,8 @@ public static class V4GeneratorTests
 						
 						var handler = new global::ITestCreateExpectations.Handler3
 						{
-							holder = @holder,
-							value = @value,
+							@holder = @holder,
+							@value = @value,
 						};
 						
 						this.Expectations.handlers3.Add(handler);
@@ -443,7 +443,7 @@ public static class V4GeneratorTests
 							
 							var handler = new global::ITestCreateExpectations.Handler6
 							{
-								index = @index,
+								@index = @index,
 							};
 							
 							this.Expectations.handlers6.Add(handler);
@@ -464,8 +464,8 @@ public static class V4GeneratorTests
 							
 							var handler = new global::ITestCreateExpectations.Handler7
 							{
-								index = @index,
-								value = @value,
+								@index = @index,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers7.Add(handler);

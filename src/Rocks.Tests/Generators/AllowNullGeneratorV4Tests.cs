@@ -50,7 +50,7 @@ public static class AllowNullGeneratorV4Tests
 					internal sealed class Handler1
 						: global::Rocks.HandlerV4<global::System.Action<string>>
 					{
-						public global::Rocks.Argument<string> value { get; set; }
+						public global::Rocks.Argument<string> @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618

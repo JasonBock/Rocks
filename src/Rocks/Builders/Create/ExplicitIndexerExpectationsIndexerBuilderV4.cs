@@ -54,11 +54,11 @@ internal static class ExplicitIndexerExpectationsIndexerBuilderV4
 		{
 			if (parameter.HasExplicitDefaultValue)
 			{
-				writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
 			}
 			else
 			{
-				writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
 			}
 		}
 
@@ -119,11 +119,11 @@ internal static class ExplicitIndexerExpectationsIndexerBuilderV4
 		{
 			if (parameter.HasExplicitDefaultValue)
 			{
-				writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
 			}
 			else
 			{
-				writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+				writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
 			}
 		}
 

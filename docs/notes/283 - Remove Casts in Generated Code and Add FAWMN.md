@@ -125,3 +125,4 @@ More areas to test:
 * Explicit interface implementation, that generates other things
 * `ret return` types
 * Remove FileName.cs from test project.
+* Naming conflicts with property names on Handler

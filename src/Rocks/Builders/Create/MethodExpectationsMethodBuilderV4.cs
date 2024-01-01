@@ -131,15 +131,15 @@ internal static class MethodExpectationsMethodBuilderV4
 				{
 					if (parameter.HasExplicitDefaultValue && method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
 					}
 					else if (parameter.RefKind == RefKind.Out)
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.FullyQualifiedName}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = global::Rocks.Arg.Any<{parameter.Type.FullyQualifiedName}{(parameter.RequiresNullableAnnotation ? "?" : string.Empty)}>(),");
 					}
 					else
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
 					}
 				}
 

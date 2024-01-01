@@ -47,7 +47,7 @@ public static class AsyncIteratorGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -61,7 +61,7 @@ public static class AsyncIteratorGeneratorV4Tests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>
 				{
-					public global::Rocks.Argument<global::System.Threading.CancellationToken> cancellationToken { get; set; }
+					public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -104,7 +104,7 @@ public static class AsyncIteratorGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -162,7 +162,7 @@ public static class AsyncIteratorGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
-								if (@handler.cancellationToken.IsValid(@cancellationToken!))
+								if (@handler.@cancellationToken.IsValid(@cancellationToken!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -193,7 +193,7 @@ public static class AsyncIteratorGeneratorV4Tests
 						
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -220,7 +220,7 @@ public static class AsyncIteratorGeneratorV4Tests
 						
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler3
 						{
-							cancellationToken = @cancellationToken.Transform(default),
+							@cancellationToken = @cancellationToken.Transform(default),
 						};
 						
 						this.Expectations.handlers3.Add(handler);

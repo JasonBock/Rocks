@@ -88,11 +88,11 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				{
 					if (parameter.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
 					}
 					else
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
 					}
 				}
 
@@ -206,11 +206,11 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				{
 					if (parameter.HasExplicitDefaultValue && property.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name}.Transform({parameter.ExplicitDefaultValue}),");
 					}
 					else
 					{
-						writer.WriteLine($"{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
+						writer.WriteLine($"@{handlerNamingContext[parameter.Name]} = @{parameter.Name},");
 					}
 				}
 

@@ -95,7 +95,7 @@ internal static class MockHandlerListBuilderV4
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
-				writer.WriteLine($"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}> {name} {{ get; set; }}");
+				writer.WriteLine($"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}> @{name} {{ get; set; }}");
 			}
 
 			writer.Indent--;
