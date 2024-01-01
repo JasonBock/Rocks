@@ -73,7 +73,7 @@ internal static class MockHandlerListBuilderV4
 
 		writer.WriteLines(
 			$$"""
-			internal sealed class Handler{{memberIdentifier}}{{typeArguments}}
+			internal{{(method.IsUnsafe ? " unsafe" : string.Empty)}} sealed class Handler{{memberIdentifier}}{{typeArguments}}
 				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
 			""");
 
@@ -95,7 +95,10 @@ internal static class MockHandlerListBuilderV4
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
-				writer.WriteLine($"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}> @{name} {{ get; set; }}");
+				var argumentTypeName = parameter.Type.PointerType is null ?
+					$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>" :
+					$"public global::Rocks.PointerArgument<{parameter.Type.PointerType.FullyQualifiedName}>";
+				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
 			}
 
 			writer.Indent--;

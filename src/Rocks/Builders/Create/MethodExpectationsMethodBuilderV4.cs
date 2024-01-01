@@ -22,8 +22,8 @@ internal static class MethodExpectationsMethodBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName = _.Type.IsPointer ?
-							PointerArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType) :
+						var argName = _.Type.TypeKind == TypeKind.Pointer ?
+							$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
 							RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
 						return $"{argName} @{_.Name}";
 					}

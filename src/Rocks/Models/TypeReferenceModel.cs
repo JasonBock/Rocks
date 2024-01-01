@@ -56,6 +56,14 @@ internal sealed record TypeReferenceModel
 			this.RefLikeArgConstructorProjectedName =
 				$"ArgFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}";
 		}
+
+		this.PointerType =
+			 this.IsPointer ?
+				  type.Kind == SymbolKind.PointerType ?
+						new TypeReferenceModel(((IPointerTypeSymbol)type).PointedAtType, compilation) :
+						((IFunctionPointerTypeSymbol)type).BaseType is not null ?
+							 new TypeReferenceModel(((IFunctionPointerTypeSymbol)type).BaseType!, compilation) : null :
+				  null;
 	}
 
 	internal string AttributesDescription { get; }
@@ -76,6 +84,7 @@ internal sealed record TypeReferenceModel
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }
+	internal TypeReferenceModel? PointerType { get; }
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
 	internal string? RefLikeArgProjectedName { get; }
 	internal string? RefLikeArgConstructorProjectedName { get; }
