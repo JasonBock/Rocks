@@ -55,7 +55,7 @@ public static class HiddenMembersGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 					{
-						public global::Rocks.Argument<object?> obj { get; set; }
+						public global::Rocks.Argument<object?> @obj { get; set; }
 					}
 					
 					internal sealed class Handler1
@@ -110,7 +110,7 @@ public static class HiddenMembersGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.obj.IsValid(@obj!))
+									if (@handler.@obj.IsValid(@obj!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -190,7 +190,7 @@ public static class HiddenMembersGeneratorV4Tests
 							
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler0
 							{
-								obj = @obj,
+								@obj = @obj,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -299,7 +299,7 @@ public static class HiddenMembersGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -321,14 +321,14 @@ public static class HiddenMembersGeneratorV4Tests
 				internal sealed class Handler9
 					: global::Rocks.HandlerV4<global::System.Action<int>>
 				{
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				internal sealed class Handler10
 					: global::Rocks.HandlerV4<global::System.Func<int, string, int>, int>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -377,7 +377,7 @@ public static class HiddenMembersGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -501,8 +501,8 @@ public static class HiddenMembersGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers10)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -534,7 +534,7 @@ public static class HiddenMembersGeneratorV4Tests
 						
 						var handler = new global::SubClassCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -619,8 +619,8 @@ public static class HiddenMembersGeneratorV4Tests
 							
 							var handler = new global::SubClassCreateExpectations.Handler10
 							{
-								a = @a,
-								b = @b,
+								@a = @a,
+								@b = @b,
 							};
 							
 							this.Expectations.handlers10.Add(handler);
@@ -726,14 +726,14 @@ public static class HiddenMembersGeneratorV4Tests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Action<int>>
 				{
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				internal sealed class Handler4
 					: global::Rocks.HandlerV4<global::System.Func<int, string, int>, int>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
 				}
 				
 				internal sealed class Handler5
@@ -743,14 +743,14 @@ public static class HiddenMembersGeneratorV4Tests
 				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Action<string>>
 				{
-					public global::Rocks.Argument<string> value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
 				internal sealed class Handler7
 					: global::Rocks.HandlerV4<global::System.Func<int, string, string>, string>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -922,8 +922,8 @@ public static class HiddenMembersGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -947,8 +947,8 @@ public static class HiddenMembersGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1050,8 +1050,8 @@ public static class HiddenMembersGeneratorV4Tests
 							
 							var handler = new global::ISubCreateExpectations.Handler4
 							{
-								a = @a,
-								b = @b,
+								@a = @a,
+								@b = @b,
 							};
 							
 							this.Expectations.handlers4.Add(handler);
@@ -1119,8 +1119,8 @@ public static class HiddenMembersGeneratorV4Tests
 							
 							var handler = new global::ISubCreateExpectations.Handler7
 							{
-								a = @a,
-								b = @b,
+								@a = @a,
+								@b = @b,
 							};
 							
 							this.Expectations.handlers7.Add(handler);

@@ -57,7 +57,7 @@ public static class InheritanceGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 					{
-						public global::Rocks.Argument<object?> obj { get; set; }
+						public global::Rocks.Argument<object?> @obj { get; set; }
 					}
 					
 					internal sealed class Handler1
@@ -71,13 +71,13 @@ public static class InheritanceGeneratorV4Tests
 					internal sealed class Handler4
 						: global::Rocks.HandlerV4<global::System.Func<global::MockTests.ScriptScopeContext, object>, object>
 					{
-						public global::Rocks.Argument<global::MockTests.ScriptScopeContext> scope { get; set; }
+						public global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope { get; set; }
 					}
 					
 					internal sealed class Handler5
 						: global::Rocks.HandlerV4<global::System.Func<object, object>, object>
 					{
-						public global::Rocks.Argument<object> target { get; set; }
+						public global::Rocks.Argument<object> @target { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -122,7 +122,7 @@ public static class InheritanceGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.obj.IsValid(@obj!))
+									if (@handler.@obj.IsValid(@obj!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -180,7 +180,7 @@ public static class InheritanceGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
-									if (@handler.scope.IsValid(@scope!))
+									if (@handler.@scope.IsValid(@scope!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -204,7 +204,7 @@ public static class InheritanceGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
-									if (@handler.target.IsValid(@target!))
+									if (@handler.@target.IsValid(@target!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -233,7 +233,7 @@ public static class InheritanceGeneratorV4Tests
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler0
 							{
-								obj = @obj,
+								@obj = @obj,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -260,7 +260,7 @@ public static class InheritanceGeneratorV4Tests
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler4
 							{
-								scope = @scope,
+								@scope = @scope,
 							};
 							
 							this.Expectations.handlers4.Add(handler);
@@ -273,7 +273,7 @@ public static class InheritanceGeneratorV4Tests
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler5
 							{
-								target = @target,
+								@target = @target,
 							};
 							
 							this.Expectations.handlers5.Add(handler);

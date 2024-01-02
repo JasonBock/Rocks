@@ -47,11 +47,24 @@ internal static class MockHandlerListBuilderV4
 
 		foreach (var property in mockType.Properties)
 		{
-			writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}> @handlers{property.MemberIdentifier} = new();");
-
-			if (property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit)
+			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
-				writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier + 1}> @handlers{property.MemberIdentifier + 1} = new();");
+				writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}> @handlers{property.MemberIdentifier} = new();");
+			}
+			else
+			{
+				var memberIdentifier = property.MemberIdentifier;
+
+				if (property.GetCanBeSeenByContainingAssembly)
+				{
+					writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}> @handlers{memberIdentifier} = new();");
+					memberIdentifier++;
+				}
+
+				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
+				{
+					writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}> @handlers{memberIdentifier} = new();");
+				}
 			}
 		}
 	}
@@ -77,13 +90,13 @@ internal static class MockHandlerListBuilderV4
 				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
 			""");
 
-		if(method.Constraints.Length > 0) 
+		if (method.Constraints.Length > 0)
 		{
 			writer.Indent++;
 			writer.WriteLine(string.Join(" ", method.Constraints));
 			writer.Indent--;
 		}
-		
+
 		if (method.Parameters.Length > 0)
 		{
 			writer.WriteLine("{");
@@ -131,8 +144,18 @@ internal static class MockHandlerListBuilderV4
 			}
 			else
 			{
-				MockHandlerListBuilderV4.BuildHandler(writer, property.GetMethod!, property.MemberIdentifier);
-				MockHandlerListBuilderV4.BuildHandler(writer, property.SetMethod!, property.MemberIdentifier + 1);
+				var memberIdentifier = property.MemberIdentifier;
+
+				if (property.GetCanBeSeenByContainingAssembly)
+				{
+					MockHandlerListBuilderV4.BuildHandler(writer, property.GetMethod!, memberIdentifier);
+					memberIdentifier++;
+				}
+
+				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
+				{
+					MockHandlerListBuilderV4.BuildHandler(writer, property.SetMethod!, memberIdentifier);
+				}
 			}
 		}
 	}

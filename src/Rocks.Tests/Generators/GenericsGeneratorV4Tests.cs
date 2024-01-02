@@ -47,7 +47,7 @@ public static class GenericsGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -61,7 +61,7 @@ public static class GenericsGeneratorV4Tests
 				internal sealed class Handler4<S>
 					: global::Rocks.HandlerV4<global::System.Func<global::System.Func<S>, global::Proxy<S>>, global::Proxy<S>>
 				{
-					public global::Rocks.Argument<global::System.Func<S>> f { get; set; }
+					public global::Rocks.Argument<global::System.Func<S>> @f { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -104,7 +104,7 @@ public static class GenericsGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -164,7 +164,7 @@ public static class GenericsGeneratorV4Tests
 							{
 								if (@genericHandler is global::MOfobjectCreateExpectations.Handler4<S> @handler)
 								{
-									if (@handler.f.IsValid(@f!))
+									if (@handler.@f.IsValid(@f!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -196,7 +196,7 @@ public static class GenericsGeneratorV4Tests
 						
 						var handler = new global::MOfobjectCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -223,7 +223,7 @@ public static class GenericsGeneratorV4Tests
 						
 						var handler = new global::MOfobjectCreateExpectations.Handler4<S>
 						{
-							f = @f,
+							@f = @f,
 						};
 						
 						this.Expectations.handlers4.Add(handler);
@@ -302,7 +302,7 @@ public static class GenericsGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -365,7 +365,7 @@ public static class GenericsGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -483,7 +483,7 @@ public static class GenericsGeneratorV4Tests
 						
 						var handler = new global::GenericContainerCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -748,7 +748,7 @@ public static class GenericsGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -797,7 +797,7 @@ public static class GenericsGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -862,7 +862,7 @@ public static class GenericsGeneratorV4Tests
 						
 						var handler = new global::GeometryValueComparerOfobjectCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -959,7 +959,7 @@ public static class GenericsGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object, global::MockTests.RequestHandle<object>>, global::MockTests.RequestHandle<object>>
 					{
-						public global::Rocks.Argument<object> message { get; set; }
+						public global::Rocks.Argument<object> @message { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -996,7 +996,7 @@ public static class GenericsGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.message.IsValid(@message!))
+									if (@handler.@message.IsValid(@message!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1025,7 +1025,7 @@ public static class GenericsGeneratorV4Tests
 							
 							var handler = new global::MockTests.IRequestClientOfobjectCreateExpectations.Handler0
 							{
-								message = @message,
+								@message = @message,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -1105,15 +1105,15 @@ public static class GenericsGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<global::System.Guid, object, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>>
 					{
-						public global::Rocks.Argument<global::System.Guid> requestId { get; set; }
-						public global::Rocks.Argument<object> values { get; set; }
+						public global::Rocks.Argument<global::System.Guid> @requestId { get; set; }
+						public global::Rocks.Argument<object> @values { get; set; }
 					}
 					
 					internal sealed class Handler1
 						: global::Rocks.HandlerV4<global::System.Func<global::System.Guid, object, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>
 					{
-						public global::Rocks.Argument<global::System.Guid> requestId { get; set; }
-						public global::Rocks.Argument<object> message { get; set; }
+						public global::Rocks.Argument<global::System.Guid> @requestId { get; set; }
+						public global::Rocks.Argument<object> @message { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1152,8 +1152,8 @@ public static class GenericsGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.requestId.IsValid(@requestId!) &&
-										@handler.values.IsValid(@values!))
+									if (@handler.@requestId.IsValid(@requestId!) &&
+										@handler.@values.IsValid(@values!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1175,8 +1175,8 @@ public static class GenericsGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (@handler.requestId.IsValid(@requestId!) &&
-										@handler.message.IsValid(@message!))
+									if (@handler.@requestId.IsValid(@requestId!) &&
+										@handler.@message.IsValid(@message!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1206,8 +1206,8 @@ public static class GenericsGeneratorV4Tests
 							
 							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler0
 							{
-								requestId = @requestId,
-								values = @values,
+								@requestId = @requestId,
+								@values = @values,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -1228,8 +1228,8 @@ public static class GenericsGeneratorV4Tests
 							
 							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler1
 							{
-								requestId = @requestId,
-								message = @message,
+								@requestId = @requestId,
+								@message = @message,
 							};
 							
 							this.Expectations.handlers1.Add(handler);

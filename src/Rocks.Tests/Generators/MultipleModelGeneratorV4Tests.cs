@@ -45,7 +45,7 @@ public static class MultipleModelGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<int, string>, string>
 					{
-						public global::Rocks.Argument<int> value { get; set; }
+						public global::Rocks.Argument<int> @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -82,7 +82,7 @@ public static class MultipleModelGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.value.IsValid(@value!))
+									if (@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -111,7 +111,7 @@ public static class MultipleModelGeneratorV4Tests
 							
 							var handler = new global::MockTests.ITargetCreateExpectations.Handler0
 							{
-								value = @value,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers0.Add(handler);

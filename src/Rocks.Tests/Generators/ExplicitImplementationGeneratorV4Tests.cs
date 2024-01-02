@@ -327,7 +327,7 @@ public static class ExplicitImplementationGeneratorV4Tests
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::System.Action<global::Values.Information>>
 				{
-					public global::Rocks.Argument<global::Values.Information> value { get; set; }
+					public global::Rocks.Argument<global::Values.Information> @value { get; set; }
 				}
 				
 				internal sealed class Handler2
@@ -337,7 +337,7 @@ public static class ExplicitImplementationGeneratorV4Tests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Action<global::Values.Information>>
 				{
-					public global::Rocks.Argument<global::Values.Information> value { get; set; }
+					public global::Rocks.Argument<global::Values.Information> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618

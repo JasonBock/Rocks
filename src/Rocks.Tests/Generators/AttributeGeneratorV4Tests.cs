@@ -177,7 +177,7 @@ public static class AttributeGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -232,7 +232,7 @@ public static class AttributeGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -312,7 +312,7 @@ public static class AttributeGeneratorV4Tests
 						
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -415,7 +415,7 @@ public static class AttributeGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -429,13 +429,13 @@ public static class AttributeGeneratorV4Tests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Func<object?, object?>, object?>
 				{
-					public global::Rocks.Argument<object?> node { get; set; }
+					public global::Rocks.Argument<object?> @node { get; set; }
 				}
 				
 				internal sealed class Handler4
 					: global::Rocks.HandlerV4<global::System.Func<object?, object?>, object?>
 				{
-					public global::Rocks.Argument<object?> node { get; set; }
+					public global::Rocks.Argument<object?> @node { get; set; }
 				}
 				
 				internal sealed class Handler5
@@ -445,20 +445,20 @@ public static class AttributeGeneratorV4Tests
 				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Action<string?>>
 				{
-					public global::Rocks.Argument<string?> value { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
 				}
 				
 				internal sealed class Handler7
 					: global::Rocks.HandlerV4<global::System.Func<object?, string?>, string?>
 				{
-					public global::Rocks.Argument<object?> node { get; set; }
+					public global::Rocks.Argument<object?> @node { get; set; }
 				}
 				
 				internal sealed class Handler8
 					: global::Rocks.HandlerV4<global::System.Action<object?, string?>>
 				{
-					public global::Rocks.Argument<object?> node { get; set; }
-					public global::Rocks.Argument<string?> value { get; set; }
+					public global::Rocks.Argument<object?> @node { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -511,7 +511,7 @@ public static class AttributeGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -570,7 +570,7 @@ public static class AttributeGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
-								if (@handler.node.IsValid(@node!))
+								if (@handler.@node.IsValid(@node!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -594,7 +594,7 @@ public static class AttributeGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers4)
 							{
-								if (@handler.node.IsValid(@node!))
+								if (@handler.@node.IsValid(@node!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -670,7 +670,7 @@ public static class AttributeGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
-									if (@handler.node.IsValid(@node!))
+									if (@handler.@node.IsValid(@node!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -692,8 +692,8 @@ public static class AttributeGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers8)
 								{
-									if (@handler.node.IsValid(@node!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@node.IsValid(@node!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@node!, @value!);
@@ -724,7 +724,7 @@ public static class AttributeGeneratorV4Tests
 						
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -751,7 +751,7 @@ public static class AttributeGeneratorV4Tests
 						
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler3
 						{
-							node = @node,
+							@node = @node,
 						};
 						
 						this.Expectations.handlers3.Add(handler);
@@ -764,7 +764,7 @@ public static class AttributeGeneratorV4Tests
 						
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler4
 						{
-							node = @node,
+							@node = @node,
 						};
 						
 						this.Expectations.handlers4.Add(handler);
@@ -827,7 +827,7 @@ public static class AttributeGeneratorV4Tests
 							
 							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler7
 							{
-								node = @node,
+								@node = @node,
 							};
 							
 							this.Expectations.handlers7.Add(handler);
@@ -848,8 +848,8 @@ public static class AttributeGeneratorV4Tests
 							
 							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler8
 							{
-								node = @node,
-								value = @value,
+								@node = @node,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers8.Add(handler);
@@ -1072,7 +1072,7 @@ public static class AttributeGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -1127,7 +1127,7 @@ public static class AttributeGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -1209,7 +1209,7 @@ public static class AttributeGeneratorV4Tests
 						
 						var handler = new global::HaveDynamicCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -1449,7 +1449,7 @@ public static class AttributeGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Action<string>>
 					{
-						public global::Rocks.Argument<string> data { get; set; }
+						public global::Rocks.Argument<string> @data { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1488,7 +1488,7 @@ public static class AttributeGeneratorV4Tests
 								
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.data.IsValid(@data!))
+									if (@handler.@data.IsValid(@data!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -1522,7 +1522,7 @@ public static class AttributeGeneratorV4Tests
 							
 							var handler = new global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0
 							{
-								data = @data,
+								@data = @data,
 							};
 							
 							this.Expectations.handlers0.Add(handler);

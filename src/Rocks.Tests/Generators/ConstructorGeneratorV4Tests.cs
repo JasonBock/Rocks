@@ -121,7 +121,7 @@ public static class ConstructorGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -182,7 +182,7 @@ public static class ConstructorGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -264,7 +264,7 @@ public static class ConstructorGeneratorV4Tests
 						
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);

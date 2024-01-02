@@ -49,15 +49,15 @@ public static class DefaultValuesGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>>
 					{
-						public global::Rocks.Argument<object> values { get; set; }
-						public global::Rocks.Argument<global::MockTests.SomeStruct> someStruct { get; set; }
+						public global::Rocks.Argument<object> @values { get; set; }
+						public global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct { get; set; }
 					}
 					
 					internal sealed class Handler1
 						: global::Rocks.HandlerV4<global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task>
 					{
-						public global::Rocks.Argument<object> message { get; set; }
-						public global::Rocks.Argument<global::MockTests.SomeStruct> someStruct { get; set; }
+						public global::Rocks.Argument<object> @message { get; set; }
+						public global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -96,8 +96,8 @@ public static class DefaultValuesGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.values.IsValid(@values!) &&
-										@handler.someStruct.IsValid(@someStruct!))
+									if (@handler.@values.IsValid(@values!) &&
+										@handler.@someStruct.IsValid(@someStruct!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -119,8 +119,8 @@ public static class DefaultValuesGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (@handler.message.IsValid(@message!) &&
-										@handler.someStruct.IsValid(@someStruct!))
+									if (@handler.@message.IsValid(@message!) &&
+										@handler.@someStruct.IsValid(@someStruct!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -150,8 +150,8 @@ public static class DefaultValuesGeneratorV4Tests
 							
 							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler0
 							{
-								values = @values,
-								someStruct = @someStruct.Transform(default),
+								@values = @values,
+								@someStruct = @someStruct.Transform(default),
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -174,8 +174,8 @@ public static class DefaultValuesGeneratorV4Tests
 							
 							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler1
 							{
-								message = @message,
-								someStruct = @someStruct,
+								@message = @message,
+								@someStruct = @someStruct,
 							};
 							
 							this.Expectations.handlers1.Add(handler);
@@ -250,7 +250,7 @@ public static class DefaultValuesGeneratorV4Tests
 				internal sealed class Handler0<T>
 					: global::Rocks.HandlerV4<global::System.Action<T>>
 				{
-					public global::Rocks.Argument<T> initialValue { get; set; }
+					public global::Rocks.Argument<T> @initialValue { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -291,7 +291,7 @@ public static class DefaultValuesGeneratorV4Tests
 							{
 								if (@genericHandler is global::IGenericDefaultCreateExpectations.Handler0<T> @handler)
 								{
-									if (@handler.initialValue.IsValid(@initialValue!))
+									if (@handler.@initialValue.IsValid(@initialValue!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -326,7 +326,7 @@ public static class DefaultValuesGeneratorV4Tests
 						
 						var handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
 						{
-							initialValue = @initialValue.Transform(default!),
+							@initialValue = @initialValue.Transform(default!),
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -447,7 +447,7 @@ public static class DefaultValuesGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Action<double>>
 				{
-					public global::Rocks.Argument<double> value { get; set; }
+					public global::Rocks.Argument<double> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -486,7 +486,7 @@ public static class DefaultValuesGeneratorV4Tests
 							
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.value.IsValid(@value!))
+								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
@@ -520,7 +520,7 @@ public static class DefaultValuesGeneratorV4Tests
 						
 						var handler = new global::IUseInfinityCreateExpectations.Handler0
 						{
-							value = @value.Transform(double.PositiveInfinity),
+							@value = @value.Transform(double.PositiveInfinity),
 						};
 						
 						this.Expectations.handlers0.Add(handler);

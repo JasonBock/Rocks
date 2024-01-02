@@ -73,11 +73,11 @@ internal static class PropertyExpectationsPropertyBuilderV4
 		{
 			PropertyExpectationsPropertyBuilderV4.BuildGetter(writer, result, memberIdentifier, expectationsFullyQualifiedName);
 		}
-		else if((accessor == PropertyAccessor.Set || accessor == PropertyAccessor.Init) &&
-			(result.SetCanBeSeenByContainingAssembly || result.InitCanBeSeenByContainingAssembly))
+		else if((accessor == PropertyAccessor.Set && result.SetCanBeSeenByContainingAssembly) || 
+			(accessor == PropertyAccessor.Init && result.InitCanBeSeenByContainingAssembly))
 		{
-			if (result.Accessors == PropertyAccessor.GetAndSet ||
-				result.Accessors == PropertyAccessor.GetAndInit)
+			if ((result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
+				result.GetCanBeSeenByContainingAssembly)
 			{
 				memberIdentifier++;
 			}

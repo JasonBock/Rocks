@@ -27,11 +27,24 @@ internal static class MockExpectationsVerifyBuilderV4
 
 		foreach (var property in mockType.Properties)
 		{
-			writer.WriteLine($"failures.AddRange(this.Verify(handlers{property.MemberIdentifier}));");
-
-			if (property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit)
+			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
-				writer.WriteLine($"failures.AddRange(this.Verify(handlers{property.MemberIdentifier + 1}));");
+				writer.WriteLine($"failures.AddRange(this.Verify(handlers{property.MemberIdentifier}));");
+			}
+			else
+			{
+				var memberIdentifier = property.MemberIdentifier;
+
+				if (property.GetCanBeSeenByContainingAssembly)
+				{
+					writer.WriteLine($"failures.AddRange(this.Verify(handlers{memberIdentifier}));");
+					memberIdentifier++;
+				}
+
+				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
+				{
+					writer.WriteLine($"failures.AddRange(this.Verify(handlers{memberIdentifier}));");
+				}
 			}
 		}
 

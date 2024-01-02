@@ -50,17 +50,17 @@ public static class MethodGeneratorV4Tests
 					internal sealed class Handler0<TDestination>
 						: global::Rocks.HandlerV4<global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>
 					{
-						public global::Rocks.Argument<global::System.Linq.IQueryable> source { get; set; }
-						public global::Rocks.Argument<object?> parameters { get; set; }
-						public global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]> membersToExpand { get; set; }
+						public global::Rocks.Argument<global::System.Linq.IQueryable> @source { get; set; }
+						public global::Rocks.Argument<object?> @parameters { get; set; }
+						public global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]> @membersToExpand { get; set; }
 					}
 					
 					internal sealed class Handler1<TDestination>
 						: global::Rocks.HandlerV4<global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>
 					{
-						public global::Rocks.Argument<global::System.Linq.IQueryable> source { get; set; }
-						public global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> parameters { get; set; }
-						public global::Rocks.Argument<string[]> membersToExpand { get; set; }
+						public global::Rocks.Argument<global::System.Linq.IQueryable> @source { get; set; }
+						public global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> @parameters { get; set; }
+						public global::Rocks.Argument<string[]> @membersToExpand { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -101,9 +101,9 @@ public static class MethodGeneratorV4Tests
 								{
 									if (@genericHandler is global::MockTests.IMapperCreateExpectations.Handler0<TDestination> @handler)
 									{
-										if (@handler.source.IsValid(@source!) &&
-											@handler.parameters.IsValid(@parameters!) &&
-											@handler.membersToExpand.IsValid(@membersToExpand!))
+										if (@handler.@source.IsValid(@source!) &&
+											@handler.@parameters.IsValid(@parameters!) &&
+											@handler.@membersToExpand.IsValid(@membersToExpand!))
 										{
 											@handler.CallCount++;
 											var @result = @handler.Callback is not null ?
@@ -128,9 +128,9 @@ public static class MethodGeneratorV4Tests
 								{
 									if (@genericHandler is global::MockTests.IMapperCreateExpectations.Handler1<TDestination> @handler)
 									{
-										if (@handler.source.IsValid(@source!) &&
-											@handler.parameters.IsValid(@parameters!) &&
-											@handler.membersToExpand.IsValid(@membersToExpand!))
+										if (@handler.@source.IsValid(@source!) &&
+											@handler.@parameters.IsValid(@parameters!) &&
+											@handler.@membersToExpand.IsValid(@membersToExpand!))
 										{
 											@handler.CallCount++;
 											var @result = @handler.Callback is not null ?
@@ -162,9 +162,9 @@ public static class MethodGeneratorV4Tests
 							
 							var handler = new global::MockTests.IMapperCreateExpectations.Handler0<TDestination>
 							{
-								source = @source,
-								parameters = @parameters.Transform(null),
-								membersToExpand = @membersToExpand,
+								@source = @source,
+								@parameters = @parameters.Transform(null),
+								@membersToExpand = @membersToExpand,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -181,9 +181,9 @@ public static class MethodGeneratorV4Tests
 							
 							var handler = new global::MockTests.IMapperCreateExpectations.Handler1<TDestination>
 							{
-								source = @source,
-								parameters = @parameters,
-								membersToExpand = @membersToExpand,
+								@source = @source,
+								@parameters = @parameters,
+								@membersToExpand = @membersToExpand,
 							};
 							
 							this.Expectations.handlers1.Add(handler);
@@ -259,9 +259,9 @@ public static class MethodGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Action<int, string, double>>
 					{
-						public global::Rocks.Argument<int> a { get; set; }
-						public global::Rocks.Argument<string> b { get; set; }
-						public global::Rocks.Argument<double> c { get; set; }
+						public global::Rocks.Argument<int> @a { get; set; }
+						public global::Rocks.Argument<string> @b { get; set; }
+						public global::Rocks.Argument<double> @c { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -300,9 +300,9 @@ public static class MethodGeneratorV4Tests
 								
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.c.IsValid(@c!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@c.IsValid(@c!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -338,9 +338,9 @@ public static class MethodGeneratorV4Tests
 							
 							var handler = new global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0
 							{
-								a = @a,
-								b = @b.Transform("b"),
-								c = @c.Transform(3.2),
+								@a = @a,
+								@b = @b.Transform("b"),
+								@c = @c.Transform(3.2),
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -419,9 +419,9 @@ public static class MethodGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Action<string, int, global::System.Guid[]>>
 					{
-						public global::Rocks.Argument<string> a { get; set; }
-						public global::Rocks.Argument<int> b { get; set; }
-						public global::Rocks.Argument<global::System.Guid[]> values { get; set; }
+						public global::Rocks.Argument<string> @a { get; set; }
+						public global::Rocks.Argument<int> @b { get; set; }
+						public global::Rocks.Argument<global::System.Guid[]> @values { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -460,9 +460,9 @@ public static class MethodGeneratorV4Tests
 								
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.values.IsValid(@values!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@values.IsValid(@values!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -498,9 +498,9 @@ public static class MethodGeneratorV4Tests
 							
 							var handler = new global::MockTests.IProjectionCreateExpectations.Handler0
 							{
-								a = @a,
-								b = @b.Transform(22),
-								values = @values,
+								@a = @a,
+								@b = @b.Transform(22),
+								@values = @values,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -588,26 +588,26 @@ public static class MethodGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHaveTooMuch.AddPropertyCallback_72853676484114143792518254191874903532168788273, int>
 					{
-						public global::Rocks.Argument<int> i0 { get; set; }
-						public global::Rocks.Argument<int> i1 { get; set; }
-						public global::Rocks.Argument<int> i2 { get; set; }
-						public global::Rocks.Argument<int> i3 { get; set; }
-						public global::Rocks.Argument<int> i4 { get; set; }
-						public global::Rocks.Argument<int> i5 { get; set; }
-						public global::Rocks.Argument<int> i6 { get; set; }
-						public global::Rocks.Argument<int> i7 { get; set; }
-						public global::Rocks.Argument<int> i8 { get; set; }
-						public global::Rocks.Argument<int> i9 { get; set; }
-						public global::Rocks.Argument<int> i10 { get; set; }
-						public global::Rocks.Argument<int> i11 { get; set; }
-						public global::Rocks.Argument<int> i12 { get; set; }
-						public global::Rocks.Argument<int> i13 { get; set; }
-						public global::Rocks.Argument<int> i14 { get; set; }
-						public global::Rocks.Argument<int> i15 { get; set; }
-						public global::Rocks.Argument<int> i16 { get; set; }
-						public global::Rocks.Argument<int> i17 { get; set; }
-						public global::Rocks.Argument<int> i18 { get; set; }
-						public global::Rocks.Argument<int> i19 { get; set; }
+						public global::Rocks.Argument<int> @i0 { get; set; }
+						public global::Rocks.Argument<int> @i1 { get; set; }
+						public global::Rocks.Argument<int> @i2 { get; set; }
+						public global::Rocks.Argument<int> @i3 { get; set; }
+						public global::Rocks.Argument<int> @i4 { get; set; }
+						public global::Rocks.Argument<int> @i5 { get; set; }
+						public global::Rocks.Argument<int> @i6 { get; set; }
+						public global::Rocks.Argument<int> @i7 { get; set; }
+						public global::Rocks.Argument<int> @i8 { get; set; }
+						public global::Rocks.Argument<int> @i9 { get; set; }
+						public global::Rocks.Argument<int> @i10 { get; set; }
+						public global::Rocks.Argument<int> @i11 { get; set; }
+						public global::Rocks.Argument<int> @i12 { get; set; }
+						public global::Rocks.Argument<int> @i13 { get; set; }
+						public global::Rocks.Argument<int> @i14 { get; set; }
+						public global::Rocks.Argument<int> @i15 { get; set; }
+						public global::Rocks.Argument<int> @i16 { get; set; }
+						public global::Rocks.Argument<int> @i17 { get; set; }
+						public global::Rocks.Argument<int> @i18 { get; set; }
+						public global::Rocks.Argument<int> @i19 { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -644,26 +644,26 @@ public static class MethodGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.i0.IsValid(@i0!) &&
-										@handler.i1.IsValid(@i1!) &&
-										@handler.i2.IsValid(@i2!) &&
-										@handler.i3.IsValid(@i3!) &&
-										@handler.i4.IsValid(@i4!) &&
-										@handler.i5.IsValid(@i5!) &&
-										@handler.i6.IsValid(@i6!) &&
-										@handler.i7.IsValid(@i7!) &&
-										@handler.i8.IsValid(@i8!) &&
-										@handler.i9.IsValid(@i9!) &&
-										@handler.i10.IsValid(@i10!) &&
-										@handler.i11.IsValid(@i11!) &&
-										@handler.i12.IsValid(@i12!) &&
-										@handler.i13.IsValid(@i13!) &&
-										@handler.i14.IsValid(@i14!) &&
-										@handler.i15.IsValid(@i15!) &&
-										@handler.i16.IsValid(@i16!) &&
-										@handler.i17.IsValid(@i17!) &&
-										@handler.i18.IsValid(@i18!) &&
-										@handler.i19.IsValid(@i19!))
+									if (@handler.@i0.IsValid(@i0!) &&
+										@handler.@i1.IsValid(@i1!) &&
+										@handler.@i2.IsValid(@i2!) &&
+										@handler.@i3.IsValid(@i3!) &&
+										@handler.@i4.IsValid(@i4!) &&
+										@handler.@i5.IsValid(@i5!) &&
+										@handler.@i6.IsValid(@i6!) &&
+										@handler.@i7.IsValid(@i7!) &&
+										@handler.@i8.IsValid(@i8!) &&
+										@handler.@i9.IsValid(@i9!) &&
+										@handler.@i10.IsValid(@i10!) &&
+										@handler.@i11.IsValid(@i11!) &&
+										@handler.@i12.IsValid(@i12!) &&
+										@handler.@i13.IsValid(@i13!) &&
+										@handler.@i14.IsValid(@i14!) &&
+										@handler.@i15.IsValid(@i15!) &&
+										@handler.@i16.IsValid(@i16!) &&
+										@handler.@i17.IsValid(@i17!) &&
+										@handler.@i18.IsValid(@i18!) &&
+										@handler.@i19.IsValid(@i19!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -711,26 +711,26 @@ public static class MethodGeneratorV4Tests
 							
 							var handler = new global::MockTests.IHaveTooMuchCreateExpectations.Handler0
 							{
-								i0 = @i0,
-								i1 = @i1,
-								i2 = @i2,
-								i3 = @i3,
-								i4 = @i4,
-								i5 = @i5,
-								i6 = @i6,
-								i7 = @i7,
-								i8 = @i8,
-								i9 = @i9,
-								i10 = @i10,
-								i11 = @i11,
-								i12 = @i12,
-								i13 = @i13,
-								i14 = @i14,
-								i15 = @i15,
-								i16 = @i16,
-								i17 = @i17,
-								i18 = @i18,
-								i19 = @i19,
+								@i0 = @i0,
+								@i1 = @i1,
+								@i2 = @i2,
+								@i3 = @i3,
+								@i4 = @i4,
+								@i5 = @i5,
+								@i6 = @i6,
+								@i7 = @i7,
+								@i8 = @i8,
+								@i9 = @i9,
+								@i10 = @i10,
+								@i11 = @i11,
+								@i12 = @i12,
+								@i13 = @i13,
+								@i14 = @i14,
+								@i15 = @i15,
+								@i16 = @i16,
+								@i17 = @i17,
+								@i18 = @i18,
+								@i19 = @i19,
 							};
 							
 							this.Expectations.handlers0.Add(handler);

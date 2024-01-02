@@ -54,7 +54,7 @@ public static class InterfaceGeneratorV4Tests
 				internal sealed class Handler2
 					: global::Rocks.HandlerV4<global::System.Action<string>>
 				{
-					public global::Rocks.Argument<string> value { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -292,7 +292,7 @@ public static class InterfaceGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Action<int>>
 				{
-					public global::Rocks.Argument<int> options { get; set; }
+					public global::Rocks.Argument<int> @options { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -331,7 +331,7 @@ public static class InterfaceGeneratorV4Tests
 							
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.options.IsValid(@options!))
+								if (@handler.@options.IsValid(@options!))
 								{
 									@foundMatch = true;
 									@handler.CallCount++;
@@ -365,7 +365,7 @@ public static class InterfaceGeneratorV4Tests
 						
 						var handler = new global::IRequestCreateExpectations.Handler0
 						{
-							options = @options,
+							@options = @options,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -441,7 +441,7 @@ public static class InterfaceGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<int, string>, string>
 					{
-						public global::Rocks.Argument<int> value { get; set; }
+						public global::Rocks.Argument<int> @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -478,7 +478,7 @@ public static class InterfaceGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.value.IsValid(@value!))
+									if (@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -507,7 +507,7 @@ public static class InterfaceGeneratorV4Tests
 							
 							var handler = new global::MockTests.ITargetCreateExpectations.Handler0
 							{
-								value = @value,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers0.Add(handler);

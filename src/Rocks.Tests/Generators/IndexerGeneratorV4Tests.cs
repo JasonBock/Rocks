@@ -40,7 +40,7 @@ public static class IndexerGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -54,29 +54,29 @@ public static class IndexerGeneratorV4Tests
 				internal sealed class Handler3
 					: global::Rocks.HandlerV4<global::System.Func<int, int>, int>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
 				}
 				
 				internal sealed class Handler4
 					: global::Rocks.HandlerV4<global::System.Action<int, int>>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				internal sealed class Handler5
 					: global::Rocks.HandlerV4<global::System.Func<int, string, int>, int>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
 				}
 				
 				internal sealed class Handler6
 					: global::Rocks.HandlerV4<global::System.Action<int, string, int>>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -125,7 +125,7 @@ public static class IndexerGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -186,7 +186,7 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers3)
 								{
-									if (@handler.a.IsValid(@a!))
+									if (@handler.@a.IsValid(@a!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -206,8 +206,8 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @value!);
@@ -231,8 +231,8 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -252,9 +252,9 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers6)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @b!, @value!);
@@ -283,7 +283,7 @@ public static class IndexerGeneratorV4Tests
 						
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -320,7 +320,7 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3
 							{
-								a = @a,
+								@a = @a,
 							};
 							
 							this.Expectations.handlers3.Add(handler);
@@ -333,8 +333,8 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5
 							{
-								a = @a,
-								b = @b,
+								@a = @a,
+								@b = @b,
 							};
 							
 							this.Expectations.handlers5.Add(handler);
@@ -355,8 +355,8 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4
 							{
-								a = @a,
-								value = @value,
+								@a = @a,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers4.Add(handler);
@@ -370,9 +370,9 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6
 							{
-								a = @a,
-								b = @b,
-								value = @value,
+								@a = @a,
+								@b = @b,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers6.Add(handler);
@@ -450,16 +450,16 @@ public static class IndexerGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<int, string, int>, int>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
 				}
 				
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::System.Action<int, string, int>>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -501,8 +501,8 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -522,9 +522,9 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @b!, @value!);
@@ -555,8 +555,8 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
 							{
-								a = @a,
-								b = @b.Transform("b"),
+								@a = @a,
+								@b = @b.Transform("b"),
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -580,9 +580,9 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
 							{
-								a = @a,
-								b = @b.Transform("b"),
-								value = @value,
+								@a = @a,
+								@b = @b.Transform("b"),
+								@value = @value,
 							};
 							
 							this.Expectations.handlers1.Add(handler);
@@ -663,25 +663,25 @@ public static class IndexerGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Action<uint, double>>
 				{
-					public global::Rocks.Argument<uint> a { get; set; }
-					public global::Rocks.Argument<double> value { get; set; }
+					public global::Rocks.Argument<uint> @a { get; set; }
+					public global::Rocks.Argument<double> @value { get; set; }
 				}
 				
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::System.Action<int, string, string>>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<string> b { get; set; }
-					public global::Rocks.Argument<string> value { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
 				internal sealed class Handler2
 					: global::Rocks.HandlerV4<global::System.Action<string, int, global::System.Guid, int>>
 				{
-					public global::Rocks.Argument<string> a { get; set; }
-					public global::Rocks.Argument<int> b { get; set; }
-					public global::Rocks.Argument<global::System.Guid> c { get; set; }
-					public global::Rocks.Argument<int> value { get; set; }
+					public global::Rocks.Argument<string> @a { get; set; }
+					public global::Rocks.Argument<int> @b { get; set; }
+					public global::Rocks.Argument<global::System.Guid> @c { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -739,8 +739,8 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @value!);
@@ -763,9 +763,9 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @b!, @value!);
@@ -788,10 +788,10 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers2)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.b.IsValid(@b!) &&
-										@handler.c.IsValid(@c!) &&
-										@handler.value.IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@c.IsValid(@c!) &&
+										@handler.@value.IsValid(@value!))
 									{
 										@handler.CallCount++;
 										@handler.Callback?.Invoke(@a!, @b!, @c!, @value!);
@@ -822,8 +822,8 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler0
 							{
-								a = @a,
-								value = @value,
+								@a = @a,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -837,9 +837,9 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler1
 							{
-								a = @a,
-								b = @b,
-								value = @value,
+								@a = @a,
+								@b = @b,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers1.Add(handler);
@@ -854,10 +854,10 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler2
 							{
-								a = @a,
-								b = @b,
-								c = @c,
-								value = @value,
+								@a = @a,
+								@b = @b,
+								@c = @c,
+								@value = @value,
 							};
 							
 							this.Expectations.handlers2.Add(handler);
@@ -1109,7 +1109,7 @@ public static class IndexerGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 					{
-						public global::Rocks.Argument<object?> obj { get; set; }
+						public global::Rocks.Argument<object?> @obj { get; set; }
 					}
 					
 					internal sealed class Handler1
@@ -1123,14 +1123,14 @@ public static class IndexerGeneratorV4Tests
 					internal sealed class Handler3
 						: global::Rocks.HandlerV4<global::System.Func<int, int>, int>
 					{
-						public global::Rocks.Argument<int> a { get; set; }
+						public global::Rocks.Argument<int> @a { get; set; }
 					}
 					
 					internal sealed class Handler4
 						: global::Rocks.HandlerV4<global::System.Action<int, int>>
 					{
-						public global::Rocks.Argument<int> a { get; set; }
-						public global::Rocks.Argument<int> value { get; set; }
+						public global::Rocks.Argument<int> @a { get; set; }
+						public global::Rocks.Argument<int> @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1182,7 +1182,7 @@ public static class IndexerGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.obj.IsValid(@obj!))
+									if (@handler.@obj.IsValid(@obj!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1243,7 +1243,7 @@ public static class IndexerGeneratorV4Tests
 								{
 									foreach (var @handler in this.Expectations.handlers3)
 									{
-										if (@handler.a.IsValid(@a!))
+										if (@handler.@a.IsValid(@a!))
 										{
 											@handler.CallCount++;
 											var @result = @handler.Callback is not null ?
@@ -1263,8 +1263,8 @@ public static class IndexerGeneratorV4Tests
 								{
 									foreach (var @handler in this.Expectations.handlers4)
 									{
-										if (@handler.a.IsValid(@a!) &&
-											@handler.value.IsValid(@value!))
+										if (@handler.@a.IsValid(@a!) &&
+											@handler.@value.IsValid(@value!))
 										{
 											@handler.CallCount++;
 											@handler.Callback?.Invoke(@a!, @value!);
@@ -1293,7 +1293,7 @@ public static class IndexerGeneratorV4Tests
 							
 							var handler = new global::MockTests.TargetCreateExpectations.Handler0
 							{
-								obj = @obj,
+								@obj = @obj,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
@@ -1330,7 +1330,7 @@ public static class IndexerGeneratorV4Tests
 								
 								var handler = new global::MockTests.TargetCreateExpectations.Handler3
 								{
-									a = @a,
+									@a = @a,
 								};
 								
 								this.Expectations.handlers3.Add(handler);
@@ -1351,8 +1351,8 @@ public static class IndexerGeneratorV4Tests
 								
 								var handler = new global::MockTests.TargetCreateExpectations.Handler4
 								{
-									a = @a,
-									value = @value,
+									@a = @a,
+									@value = @value,
 								};
 								
 								this.Expectations.handlers4.Add(handler);

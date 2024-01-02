@@ -40,7 +40,7 @@ public static class ConstraintsGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -55,7 +55,7 @@ public static class ConstraintsGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::System.Func<object[], T?>, T?>
 					where T : class
 				{
-					public global::Rocks.Argument<object[]> args { get; set; }
+					public global::Rocks.Argument<object[]> @args { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -98,7 +98,7 @@ public static class ConstraintsGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -159,7 +159,7 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								if (@genericHandler is global::BaseStuffCreateExpectations.Handler3<T> @handler)
 								{
-									if (@handler.args.IsValid(@args!))
+									if (@handler.@args.IsValid(@args!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -191,7 +191,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::BaseStuffCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -218,7 +218,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::BaseStuffCreateExpectations.Handler3<T>
 						{
-							args = @args,
+							@args = @args,
 						};
 						
 						this.Expectations.handlers3.Add(handler);
@@ -301,8 +301,8 @@ public static class ConstraintsGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T>>
 					where T : unmanaged, global::IDot<T>
 				{
-					public global::Rocks.Argument<int> a { get; set; }
-					public global::Rocks.Argument<global::Frame<T>> frame { get; set; }
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<global::Frame<T>> @frame { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -344,8 +344,8 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								if (@genericHandler is global::INeedDelegateCreateExpectations.Handler0<T> @handler)
 								{
-									if (@handler.a.IsValid(@a!) &&
-										@handler.frame.IsValid(@frame!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@frame.IsValid(@frame!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -381,8 +381,8 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::INeedDelegateCreateExpectations.Handler0<T>
 						{
-							a = @a,
-							frame = @frame,
+							@a = @a,
+							@frame = @frame,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -499,7 +499,7 @@ public static class ConstraintsGeneratorV4Tests
 				internal sealed class Handler7<TData>
 					: global::Rocks.HandlerV4<global::System.Func<TData?, TData?>, TData?>
 				{
-					public global::Rocks.Argument<TData?> data { get; set; }
+					public global::Rocks.Argument<TData?> @data { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -713,7 +713,7 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								if (@genericHandler is global::ITypeConstraintsCreateExpectations.Handler7<TData> @handler)
 								{
-									if (@handler.data.IsValid(@data!))
+									if (@handler.@data.IsValid(@data!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -792,7 +792,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler7<TData>
 						{
-							data = @data,
+							@data = @data,
 						};
 						
 						this.Expectations.handlers7.Add(handler);
@@ -962,7 +962,7 @@ public static class ConstraintsGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 				{
-					public global::Rocks.Argument<object?> obj { get; set; }
+					public global::Rocks.Argument<object?> @obj { get; set; }
 				}
 				
 				internal sealed class Handler1
@@ -1011,7 +1011,7 @@ public static class ConstraintsGeneratorV4Tests
 				internal sealed class Handler10<TData>
 					: global::Rocks.HandlerV4<global::System.Func<TData?, TData?>, TData?>
 				{
-					public global::Rocks.Argument<TData?> data { get; set; }
+					public global::Rocks.Argument<TData?> @data { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -1068,7 +1068,7 @@ public static class ConstraintsGeneratorV4Tests
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (@handler.obj.IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
@@ -1286,7 +1286,7 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								if (@genericHandler is global::TypeConstraintsCreateExpectations.Handler10<TData> @handler)
 								{
-									if (@handler.data.IsValid(@data!))
+									if (@handler.@data.IsValid(@data!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1318,7 +1318,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::TypeConstraintsCreateExpectations.Handler0
 						{
-							obj = @obj,
+							@obj = @obj,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -1394,7 +1394,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::TypeConstraintsCreateExpectations.Handler10<TData>
 						{
-							data = @data,
+							@data = @data,
 						};
 						
 						this.Expectations.handlers10.Add(handler);
@@ -1569,7 +1569,7 @@ public static class ConstraintsGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::System.Action<global::Value<TValue>>>
 					where TValue : unmanaged, global::IValue<TValue>
 				{
-					public global::Rocks.Argument<global::Value<TValue>> value { get; set; }
+					public global::Rocks.Argument<global::Value<TValue>> @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -1611,7 +1611,7 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								if (@genericHandler is global::IUnmanagedValueCreateExpectations.Handler0<TValue> @handler)
 								{
-									if (@handler.value.IsValid(@value!))
+									if (@handler.@value.IsValid(@value!))
 									{
 										@foundMatch = true;
 										@handler.CallCount++;
@@ -1646,7 +1646,7 @@ public static class ConstraintsGeneratorV4Tests
 						
 						var handler = new global::IUnmanagedValueCreateExpectations.Handler0<TValue>
 						{
-							value = @value,
+							@value = @value,
 						};
 						
 						this.Expectations.handlers0.Add(handler);
@@ -1725,7 +1725,7 @@ public static class ConstraintsGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 					{
-						public global::Rocks.Argument<object?> obj { get; set; }
+						public global::Rocks.Argument<object?> @obj { get; set; }
 					}
 					
 					internal sealed class Handler1
@@ -1781,7 +1781,7 @@ public static class ConstraintsGeneratorV4Tests
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (@handler.obj.IsValid(@obj!))
+									if (@handler.@obj.IsValid(@obj!))
 									{
 										@handler.CallCount++;
 										var @result = @handler.Callback is not null ?
@@ -1871,7 +1871,7 @@ public static class ConstraintsGeneratorV4Tests
 							
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler0
 							{
-								obj = @obj,
+								@obj = @obj,
 							};
 							
 							this.Expectations.handlers0.Add(handler);
