@@ -48,8 +48,9 @@ internal static class PropertyExpectationsBuilderV4
 
 			var propertyProperties = new List<ExpectationMapping>();
 
-			var typeGroupGetters = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.GetAndInit).ToArray();
+			var typeGroupGetters = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.GetCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupGetters.Length > 0)
 			{
@@ -77,7 +78,9 @@ internal static class PropertyExpectationsBuilderV4
 					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitIndexerGetterExpectationsFor{containingTypeName}", $"Getters"));
 			}
 
-			var typeGroupSetters = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet).ToArray();
+			var typeGroupSetters = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.SetCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupSetters.Length > 0)
 			{
@@ -105,7 +108,9 @@ internal static class PropertyExpectationsBuilderV4
 					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitIndexerSetterExpectationsFor{containingTypeName}", $"Setters"));
 			}
 
-			var typeGroupInitializers = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit).ToArray();
+			var typeGroupInitializers = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.InitCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupInitializers.Length > 0)
 			{
@@ -158,10 +163,10 @@ internal static class PropertyExpectationsBuilderV4
 
 	private static IEnumerable<ExpectationMapping> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
-		var typeToMock = mockType.Type.FlattenedName;
-
 		if (mockType.Properties.Any(_ => _.IsIndexer))
 		{
+			var typeToMock = mockType.Type.FlattenedName;
+
 			writer.WriteLine($"internal sealed class {typeToMock}IndexerExpectations");
 			writer.WriteLine("{");
 			writer.Indent++;
@@ -169,8 +174,8 @@ internal static class PropertyExpectationsBuilderV4
 			var propertyProperties = new List<ExpectationMapping>();
 
 			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-			 (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.GetAndInit)))
+				(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.GetCanBeSeenByContainingAssembly))
 			{
 				writer.WriteLines(
 					$$"""
@@ -184,8 +189,8 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in mockType.Properties
 					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-						(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
-						_.Accessors == PropertyAccessor.GetAndInit)))
+						(_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+						_.GetCanBeSeenByContainingAssembly))
 				{
 					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Get, expectationsFullyQualifiedName);
 				}
@@ -204,7 +209,8 @@ internal static class PropertyExpectationsBuilderV4
 			}
 
 			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+				 (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				 _.SetCanBeSeenByContainingAssembly))
 			{
 				writer.WriteLines(
 					$$"""
@@ -218,7 +224,8 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in mockType.Properties
 					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-						(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet)))
+						(_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+						_.SetCanBeSeenByContainingAssembly))
 				{
 					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Set, expectationsFullyQualifiedName);
 				}
@@ -232,7 +239,8 @@ internal static class PropertyExpectationsBuilderV4
 			}
 
 			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-				 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+				 (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				 _.InitCanBeSeenByContainingAssembly))
 			{
 				writer.WriteLines(
 					$$"""
@@ -246,7 +254,8 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in mockType.Properties
 					.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
-						(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit)))
+						(_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+						_.InitCanBeSeenByContainingAssembly))
 				{
 					IndexerExpectationsIndexerBuilderV4.Build(writer, result, PropertyAccessor.Init, expectationsFullyQualifiedName);
 				}
@@ -301,8 +310,9 @@ internal static class PropertyExpectationsBuilderV4
 
 			var propertyProperties = new List<ExpectationMapping>();
 
-			var typeGroupGetters = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet ||
-				_.Accessors == PropertyAccessor.GetAndInit).ToArray();
+			var typeGroupGetters = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Get || _.Accessors == PropertyAccessor.GetAndSet || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.GetCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupGetters.Length > 0)
 			{
@@ -330,7 +340,9 @@ internal static class PropertyExpectationsBuilderV4
 					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitPropertyGetterExpectationsFor{containingTypeName}", $"Getters"));
 			}
 
-			var typeGroupSetters = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet).ToArray();
+			var typeGroupSetters = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Set || _.Accessors == PropertyAccessor.GetAndSet) &&
+				_.SetCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupSetters.Length > 0)
 			{
@@ -358,7 +370,9 @@ internal static class PropertyExpectationsBuilderV4
 					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitPropertySetterExpectationsFor{containingTypeName}", $"Setters"));
 			}
 
-			var typeGroupInitializers = typeGroup.Where(_ => _.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit).ToArray();
+			var typeGroupInitializers = typeGroup.Where(
+				_ => (_.Accessors == PropertyAccessor.Init || _.Accessors == PropertyAccessor.GetAndInit) &&
+				_.InitCanBeSeenByContainingAssembly).ToArray();
 
 			if (typeGroupInitializers.Length > 0)
 			{

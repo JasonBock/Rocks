@@ -25,13 +25,14 @@ public static class MockableMethodResultTests
 		var methodSymbol = model.GetDeclaredSymbol(methodSyntax)!;
 
 		var result = new MockableMethodResult(methodSymbol, methodSymbol.ContainingType,
-			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, 3);
+			RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.Yes, RequiresHiding.Yes, 3);
 
 		Assert.Multiple(() =>
 		{
 			Assert.That(result.Value, Is.SameAs(methodSymbol));
 			Assert.That(result.MockType, Is.SameAs(methodSymbol.ContainingType));
 			Assert.That(result.RequiresExplicitInterfaceImplementation, Is.EqualTo(RequiresExplicitInterfaceImplementation.Yes));
+			Assert.That(result.RequiresHiding, Is.EqualTo(RequiresHiding.Yes));
 			Assert.That(result.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 			Assert.That(result.MemberIdentifier, Is.EqualTo(3));
 		});

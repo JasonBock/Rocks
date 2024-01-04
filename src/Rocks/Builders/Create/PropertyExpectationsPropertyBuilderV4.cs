@@ -16,7 +16,7 @@ internal static class PropertyExpectationsPropertyBuilderV4
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
 		var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) : 
+			MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 			propertyGetMethod.ReturnType.FullyQualifiedName;
 		var returnValue = propertyGetMethod.ReturnType.IsPointer ?
 			$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Property, false)}<{mockTypeName}, {callbackDelegateTypeName}>" :
@@ -36,7 +36,7 @@ internal static class PropertyExpectationsPropertyBuilderV4
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
-		var propertyParameterValue = 
+		var propertyParameterValue =
 			propertyParameterType.IsEsoteric ?
 				propertyParameterType.IsPointer ?
 					PointerArgTypeBuilder.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
@@ -65,24 +65,24 @@ internal static class PropertyExpectationsPropertyBuilderV4
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel result, PropertyAccessor accessor, string expectationsFullyQualifiedName)
+	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName)
 	{
-		var memberIdentifier = result.MemberIdentifier;
+		var memberIdentifier = property.MemberIdentifier;
 
-		if (accessor == PropertyAccessor.Get && result.GetCanBeSeenByContainingAssembly)
+		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
 		{
-			PropertyExpectationsPropertyBuilderV4.BuildGetter(writer, result, memberIdentifier, expectationsFullyQualifiedName);
+			PropertyExpectationsPropertyBuilderV4.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
 		}
-		else if((accessor == PropertyAccessor.Set && result.SetCanBeSeenByContainingAssembly) || 
-			(accessor == PropertyAccessor.Init && result.InitCanBeSeenByContainingAssembly))
+		else if ((accessor == PropertyAccessor.Set && property.SetCanBeSeenByContainingAssembly) ||
+			(accessor == PropertyAccessor.Init && property.InitCanBeSeenByContainingAssembly))
 		{
-			if ((result.Accessors == PropertyAccessor.GetAndSet || result.Accessors == PropertyAccessor.GetAndInit) &&
-				result.GetCanBeSeenByContainingAssembly)
+			if ((property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
+				property.GetCanBeSeenByContainingAssembly)
 			{
 				memberIdentifier++;
 			}
 
-			PropertyExpectationsPropertyBuilderV4.BuildSetter(writer, result, memberIdentifier, expectationsFullyQualifiedName);
+			PropertyExpectationsPropertyBuilderV4.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
 		}
 	}
 }

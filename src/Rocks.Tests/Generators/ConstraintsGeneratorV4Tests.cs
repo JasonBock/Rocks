@@ -198,14 +198,14 @@ public static class ConstraintsGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::BaseStuffCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::BaseStuffCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::BaseStuffCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::BaseStuffCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::BaseStuffCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::BaseStuffCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1325,14 +1325,14 @@ public static class ConstraintsGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::TypeConstraintsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::TypeConstraintsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::TypeConstraintsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::TypeConstraintsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::TypeConstraintsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::TypeConstraintsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1878,14 +1878,14 @@ public static class ConstraintsGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.ThingOfstringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.ThingOfstringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.ThingOfstringCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.ThingOfstringCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);

@@ -14,7 +14,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo() { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["b"];
@@ -26,7 +26,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["b"];
@@ -38,7 +38,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["a"];
@@ -50,7 +50,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a) { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		_ = namingContext["b"];
@@ -63,7 +63,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		var variable = namingContext["a"];
@@ -75,7 +75,7 @@ public static class VariableNamingContextTests
 	{
 		(var method, var compilation) = VariableNamingContextTests.GetMethod("public class Method { public void Foo(int a, int a1) { } }");
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 
 		var namingContext = new VariableNamingContext(model);
 		_ = namingContext["a2"];

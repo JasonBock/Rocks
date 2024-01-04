@@ -525,14 +525,14 @@ public static class NamingGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::IHaveDelegateCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::IHaveDelegateCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::IHaveDelegateCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::IHaveDelegateCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::IHaveDelegateCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::IHaveDelegateCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -909,14 +909,14 @@ public static class NamingGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HaveNamingConflictsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::HaveNamingConflictsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HaveNamingConflictsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::HaveNamingConflictsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1456,14 +1456,14 @@ public static class NamingGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HasRequiredPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::HasRequiredPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HasRequiredPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::HasRequiredPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);

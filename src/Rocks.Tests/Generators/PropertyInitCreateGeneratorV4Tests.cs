@@ -624,14 +624,14 @@ public static class PropertyInitCreateGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);

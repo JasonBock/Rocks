@@ -212,7 +212,7 @@ public static class RecordCreateGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.RecordTestCreateExpectations.Handler3, global::System.Func<string>, string> ToString()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.RecordTestCreateExpectations.Handler3, global::System.Func<string>, string> ToString()
 						{
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
@@ -232,7 +232,7 @@ public static class RecordCreateGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);

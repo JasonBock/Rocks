@@ -143,7 +143,7 @@ public static class ObjectMethodsAndInterfacesGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.StaticToStringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.StaticToStringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.StaticToStringCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -424,7 +424,7 @@ public static class ObjectMethodsAndInterfacesGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<object>, object> MemberwiseClone()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<object>, object> MemberwiseClone()
 						{
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -711,7 +711,7 @@ public static class ObjectMethodsAndInterfacesGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<bool>, bool> MemberwiseClone()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<bool>, bool> MemberwiseClone()
 						{
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);

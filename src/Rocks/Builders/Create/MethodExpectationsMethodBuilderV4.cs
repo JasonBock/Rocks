@@ -81,19 +81,21 @@ internal static class MethodExpectationsMethodBuilderV4
 			var constraints = method.Constraints;
 			var extensionConstraints = constraints.Length > 0 ?
 				$" {string.Join(" ", constraints)}" : "";
+			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
 
 			if (isGeneratedWithDefaults)
 			{
 				var parameterValues = string.Join(", ", method.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
-				writer.WriteLine($"internal {returnValue} {method.Name}({instanceParameters}){extensionConstraints} =>");
+
+				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints} =>");
 				writer.Indent++;
 				writer.WriteLine($"this.{method.Name}({parameterValues});");
 				writer.Indent--;
 			}
 			else if (method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"internal {returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
+				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLines(
@@ -108,7 +110,7 @@ internal static class MethodExpectationsMethodBuilderV4
 			}
 			else
 			{
-				writer.WriteLine($"internal {returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
+				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 

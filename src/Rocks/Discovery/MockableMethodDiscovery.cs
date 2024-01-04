@@ -7,14 +7,31 @@ namespace Rocks.Discovery;
 internal sealed class MockableMethodDiscovery
 {
 	internal MockableMethodDiscovery(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier) =>
-			this.Methods =
-				mockType.TypeKind == TypeKind.Interface ?
-					GetMethodsForInterface(mockType, containingAssemblyOfInvocationSymbol, shims, compilation, ref memberIdentifier) :
-					GetMethodsForClass(mockType, containingAssemblyOfInvocationSymbol, shims, compilation, ref memberIdentifier);
+		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
+	{
+		// We need to get the set of methods from object (static, instance, virtual, non-virtual, doesn't matter)
+		// because the mock object will derive from object,
+		// and interfaces like IEquatable<T> have a method (Equals(T? other))
+		// that have the possibility of colliding with methods from interfaces.
+		// We don't want to include them, we just need to consider them to see
+		// if a method requires explicit implementation.
+		// We also need to flag methods (especially if the mock type is a class)
+		// that are discovered like GetHashCode(), because the generated method expectation class
+		// will generate a "GetHashCode()" method for users to set an expectation,
+		// and that expectation method needs to hide the base class method (e.g. mark it as "new")
+		var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
+		var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
+			.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
+				_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)).ToImmutableArray();
+
+		this.Methods =
+			mockType.TypeKind == TypeKind.Interface ?
+				GetMethodsForInterface(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier) :
+				GetMethodsForClass(mockType, containingAssemblyOfInvocationSymbol, shims, objectMethods, ref memberIdentifier);
+	}
 
 	private static MockableMethods GetMethodsForClass(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier)
 	{
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
@@ -81,7 +98,9 @@ internal sealed class MockableMethodDiscovery
 								else if ((methodToRemove is null || !methodToRemove.Value.ContainingType.Equals(hierarchyMethod.ContainingType)) &&
 									!hierarchyMethod.IsSealed)
 								{
-									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, memberIdentifier));
+									methods.Add(new(hierarchyMethod, mockType, RequiresExplicitInterfaceImplementation.No, RequiresOverride.Yes, 
+										objectMethods.Any(_ => hierarchyMethod.Name == _.Name && hierarchyMethod.Parameters.Length == 0) ?
+											RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
 
 									if (hierarchyMethod.ContainingType.TypeKind == TypeKind.Interface && hierarchyMethod.IsVirtual)
 									{
@@ -118,29 +137,18 @@ internal sealed class MockableMethodDiscovery
 	}
 
 	private static MockableMethods GetMethodsForInterface(ITypeSymbol mockType, IAssemblySymbol containingAssemblyOfInvocationSymbol,
-		HashSet<ITypeSymbol> shims, Compilation compilation, ref uint memberIdentifier)
+		HashSet<ITypeSymbol> shims, ImmutableArray<IMethodSymbol> objectMethods, ref uint memberIdentifier)
 	{
 		// We don't want to include non-virtual static methods.
 		// Later on in MockModel I make a check for static abstract methods.
 		static bool IsMethodToExamine(IMethodSymbol method) =>
-			!(method.IsStatic && !method.IsAbstract && !method.IsVirtual) && 
+			!(method.IsStatic && !method.IsAbstract && !method.IsVirtual) &&
 			(method.IsAbstract || method.IsVirtual) &&
 			method.MethodKind == MethodKind.Ordinary && method.CanBeReferencedByName;
 
 		var methods = ImmutableArray.CreateBuilder<MockableMethodResult>();
 		var inaccessibleAbstractMembers = false;
 		var hasMatchWithNonVirtual = false;
-
-		// We need to get the set of methods from object (static, instance, virtual, non-virtual, doesn't matter)
-		// because the mock object will derive from object,
-		// and interfaces like IEquatable<T> have a method (Equals(T? other))
-		// that have the possibility of colliding with methods from interfaces.
-		// We don't want to include them, we just need to consider them to see
-		// if a method requires explicit implementation
-		var objectSymbol = compilation.GetTypeByMetadataName(typeof(object).FullName)!;
-		var objectMethods = objectSymbol.GetMembers().OfType<IMethodSymbol>()
-			.Where(_ => _.MethodKind == MethodKind.Ordinary && _.CanBeReferencedByName &&
-				_.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
 		foreach (var selfMethod in mockType.GetMembers().OfType<IMethodSymbol>()
 			.Where(IsMethodToExamine))
@@ -168,7 +176,9 @@ internal sealed class MockableMethodDiscovery
 							MethodMatch.DifferByReturnTypeOnly => true,
 							_ => false
 						}) ? RequiresExplicitInterfaceImplementation.Yes : RequiresExplicitInterfaceImplementation.No;
-					methods.Add(new(selfMethod, mockType, selfMethodRequiresExplicit, RequiresOverride.No, memberIdentifier));
+					methods.Add(new(selfMethod, mockType, selfMethodRequiresExplicit, RequiresOverride.No,
+						objectMethods.Any(_ => selfMethod.Name == _.Name && selfMethod.Parameters.Length == 0) ?
+							RequiresHiding.Yes : RequiresHiding.No, memberIdentifier));
 
 					if (selfMethod.IsVirtual)
 					{
@@ -238,7 +248,10 @@ internal sealed class MockableMethodDiscovery
 						RequiresExplicitInterfaceImplementation.No;
 
 					methods.Add(new(baseInterfaceMethodGroup[0], mockType,
-						requiresExplicitImplementation, RequiresOverride.No, memberIdentifier));
+						requiresExplicitImplementation, RequiresOverride.No,
+						objectMethods.Any(_ => baseInterfaceMethodGroup[0].Name == _.Name && baseInterfaceMethodGroup[0].Parameters.Length == 0) ?
+							RequiresHiding.Yes : RequiresHiding.No,
+						memberIdentifier));
 
 					if (baseInterfaceMethodGroup[0].IsVirtual)
 					{
@@ -252,7 +265,10 @@ internal sealed class MockableMethodDiscovery
 					foreach (var baseInterfaceMethod in baseInterfaceMethodGroup)
 					{
 						methods.Add(new(baseInterfaceMethod, mockType,
-							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, memberIdentifier));
+							RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No,
+							objectMethods.Any(_ => baseInterfaceMethod.Name == _.Name && baseInterfaceMethod.Parameters.Length == 0) ?
+								RequiresHiding.Yes : RequiresHiding.No,
+							memberIdentifier));
 
 						if (baseInterfaceMethod.IsVirtual)
 						{

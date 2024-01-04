@@ -76,7 +76,6 @@ Do what I talked about above.
 
 I assume that I'll always find a `RockAttribute` with a generic parameter and a `BuildType` constructor argument. Someone *could* create an attribute to mess with this. So, I'll add some checks that if I find `RockAttribute` that really isn't mine, I'll create a diagnostic.
 
-
 What can I clean up with the gen'd code?
 
 * DONE - There's a blank line after the list handlers are new'd up. Remove it.
@@ -98,6 +97,8 @@ What can I clean up with the gen'd code?
 
 What can I clean up with what I've done so far?
 
+* Finish up fixes in `PropertyExpectationsBuilderV4`. Already done in `BuildProperties()`, need to do the other three.
+* Oops, I forgot that putting methods in the member expectations classes like `GetHashCode()` can cause an issue. If I `new` them, I can hide the base class implementation, which...should be OK?
 * There should be **no** casts done in the mock, or the expectations, unless the method has open generics.
 * DONE - Create `[RockCreate<>]` and `[RockMake<>]`. That should be a bit more concise than passing in `BuildType`. I can still use one `RockGenerator` class, and look at the name of the type to determine which one to build. Maybe rename `RockGenerator` to `RockAttributeGenerator`.
 * I think I can reduce the number of handler classes made. For example, two methods that take no arguments and return void have exactly the same handler. If I can map arguments+return types to a handler number + the member identifier, I could make that reduction.
@@ -124,5 +125,6 @@ More areas to test:
 * Properties that are `required` and/or `init`, as `ConstructorProperties` are generated
 * Explicit interface implementation, that generates other things
 * `ret return` types
+* No longer need to project types for pointers.
 * Remove FileName.cs from test project.
 * Naming conflicts with property names on Handler

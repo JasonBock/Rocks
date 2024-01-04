@@ -252,14 +252,14 @@ public static class NonPublicMembersGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::VisibilityIssuesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::VisibilityIssuesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -714,7 +714,7 @@ public static class NonPublicMembersGeneratorV4Tests
 					internal VisibilityIssuesMethodExpectations(global::VisibilityIssuesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler0, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler0, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::VisibilityIssuesCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -734,7 +734,7 @@ public static class NonPublicMembersGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::VisibilityIssuesCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::VisibilityIssuesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1176,7 +1176,7 @@ public static class NonPublicMembersGeneratorV4Tests
 					internal HasInternalVirtualMethodExpectations(global::HasInternalVirtualCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::HasInternalVirtualCreateExpectations.Handler0, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::HasInternalVirtualCreateExpectations.Handler0, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::HasInternalVirtualCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -1196,7 +1196,7 @@ public static class NonPublicMembersGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::HasInternalVirtualCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1671,14 +1671,14 @@ public static class NonPublicMembersGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -2032,14 +2032,14 @@ public static class NonPublicMembersGeneratorV4Tests
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						internal new global::Rocks.AdornmentsV4<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
 							var handler = new global::MockTests.TestCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);

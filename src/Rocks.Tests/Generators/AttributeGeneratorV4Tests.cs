@@ -319,14 +319,14 @@ public static class AttributeGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::ConventionDispatcherCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::ConventionDispatcherCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -731,14 +731,14 @@ public static class AttributeGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::NotNullIfNotCasesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::NotNullIfNotCasesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1216,14 +1216,14 @@ public static class AttributeGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::HaveDynamicCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::HaveDynamicCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::HaveDynamicCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::HaveDynamicCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);

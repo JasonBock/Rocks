@@ -45,7 +45,7 @@ public static class MockProjectedDelegateBuilderTests
 	{
 		(var symbol, var compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
 		var method = new MethodModel(symbol, new TypeReferenceModel(symbol.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 		Assert.That(method.ProjectedCallbackDelegateName, Is.EqualTo(expectedValue));
 	}
 
@@ -96,7 +96,7 @@ public static class MockProjectedDelegateBuilderTests
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
 		var name = MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
-				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1),
+				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
@@ -137,7 +137,7 @@ public static class MockProjectedDelegateBuilderTests
 	{
 		var (method, compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
-			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1);
+			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
 		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo(expectedValue));
 	}
 
@@ -188,7 +188,7 @@ public static class MockProjectedDelegateBuilderTests
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
 		var name = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
-				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, 1),
+				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}

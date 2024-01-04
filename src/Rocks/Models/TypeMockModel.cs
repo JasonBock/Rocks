@@ -23,7 +23,7 @@ internal sealed record TypeMockModel
 		  new ConstructorModel(_, this.Type, compilation)).ToImmutableArray();
 	  this.Methods = methods.Results.Select(_ =>
 		  new MethodModel(_.Value, this.Type, compilation, _.RequiresExplicitInterfaceImplementation,
-			  _.RequiresOverride, _.MemberIdentifier)).ToImmutableArray();
+			  _.RequiresOverride, _.RequiresHiding, _.MemberIdentifier)).ToImmutableArray();
 	  this.Properties = properties.Results.Select(_ =>
 		  new PropertyModel(_.Value, this.Type, compilation,
 			  _.RequiresExplicitInterfaceImplementation, _.RequiresOverride,

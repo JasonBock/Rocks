@@ -203,14 +203,14 @@ public static class GenericsGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::MOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::MOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::MOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::MOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::MOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::MOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -490,14 +490,14 @@ public static class GenericsGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::GenericContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::GenericContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::GenericContainerCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::GenericContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::GenericContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::GenericContainerCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -658,14 +658,14 @@ public static class GenericsGeneratorV4Tests
 					internal CriterionOfobjectMethodExpectations(global::CriterionOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::CriterionOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::CriterionOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::CriterionOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::CriterionOfobjectCreateExpectations.Handler3, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::CriterionOfobjectCreateExpectations.Handler3, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::CriterionOfobjectCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
@@ -869,14 +869,14 @@ public static class GenericsGeneratorV4Tests
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::GeometryValueComparerOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					internal new global::Rocks.AdornmentsV4<global::GeometryValueComparerOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
 						var handler = new global::GeometryValueComparerOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
 					
-					internal global::Rocks.AdornmentsV4<global::GeometryValueComparerOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					internal new global::Rocks.AdornmentsV4<global::GeometryValueComparerOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
 						var handler = new global::GeometryValueComparerOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
