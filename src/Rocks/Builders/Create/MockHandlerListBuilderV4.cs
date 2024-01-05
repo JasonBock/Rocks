@@ -1,4 +1,5 @@
-﻿using Rocks.Extensions;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 
@@ -71,23 +72,41 @@ internal static class MockHandlerListBuilderV4
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier)
 	{
-		var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
-			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-			method.ReturnsVoid ?
-				DelegateBuilder.Build(method.Parameters) :
-				DelegateBuilder.Build(method.Parameters, method.ReturnType);
-		var returnTypeName = method.ReturnsVoid ? string.Empty :
-			method.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-				method.ReturnType.FullyQualifiedName;
-		returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
+		string handlerBaseType;
+
+		if (method.ReturnType.IsRefLikeType || method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+		{
+			handlerBaseType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedHandlerFullyQualifiedNameName(method.ReturnType, method.MockType);
+		}
+		else
+		{
+			var callbackDelegateTypeName =
+				method.RequiresProjectedDelegate ?
+					MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
+					method.ReturnsVoid ?
+						DelegateBuilder.Build(method.Parameters) :
+						DelegateBuilder.Build(method.Parameters, method.ReturnType);
+			var returnTypeName =
+				method.ReturnsVoid ?
+					string.Empty :
+					method.ReturnType.TypeKind == TypeKind.Pointer ?
+						method.ReturnType.PointerType!.FullyQualifiedName :
+						method.ReturnType.FullyQualifiedName;
+			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
+			var handlerType =
+				method.ReturnType.TypeKind == TypeKind.Pointer ?
+					"PointerHandlerV4" :
+					"HandlerV4";
+			handlerBaseType = $"global::Rocks.{handlerType}<{callbackDelegateTypeName}{returnTypeName}>";
+		}
+
 		var typeArguments = method.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
 		writer.WriteLines(
 			$$"""
-			internal{{(method.IsUnsafe ? " unsafe" : string.Empty)}} sealed class Handler{{memberIdentifier}}{{typeArguments}}
-				: global::Rocks.HandlerV4<{{callbackDelegateTypeName}}{{returnTypeName}}>
+			internal sealed class Handler{{memberIdentifier}}{{typeArguments}}
+				: {{handlerBaseType}}
 			""");
 
 		if (method.Constraints.Length > 0)
@@ -108,9 +127,15 @@ internal static class MockHandlerListBuilderV4
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
-				var argumentTypeName = parameter.Type.PointerType is null ?
-					$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>" :
-					$"public global::Rocks.PointerArgument<{parameter.Type.PointerType.FullyQualifiedName}>";
+				var argumentTypeName =
+					parameter.Type.IsEsoteric ?
+						parameter.Type.IsRefLikeType ?
+							$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
+							parameter.Type.TypeKind == TypeKind.Pointer ?
+								$"public global::Rocks.PointerArgument<{parameter.Type.PointerType!.FullyQualifiedName}>" :
+								$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
+						$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>";
+
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");
 			}
 

@@ -22,9 +22,10 @@ internal static class MethodExpectationsMethodBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName = _.Type.TypeKind == TypeKind.Pointer ?
-							$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
-							RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(_.Type, method.MockType);
+						var argName =
+							_.Type.TypeKind == TypeKind.Pointer ?
+								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
+								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -55,28 +56,32 @@ internal static class MethodExpectationsMethodBuilderV4
 					}
 				}));
 
-			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-				method.ReturnsVoid ?
-					DelegateBuilder.Build(method.Parameters) :
-					DelegateBuilder.Build(method.Parameters, method.ReturnType);
-			var returnType = method.ReturnsVoid ? string.Empty :
-				method.ReturnType.IsRefLikeType ?
-					MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-					method.ReturnType.FullyQualifiedName;
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
-			var adornmentsType = method.ReturnsVoid ?
-				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>" :
-				method.ReturnType.IsPointer ?
-					$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(method.ReturnType, method.MockType, AdornmentType.Method, method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)}<{mockTypeName}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>";
-			var (returnValue, newAdornments) = (adornmentsType, $"new {adornmentsType}");
+			string adornmentsType;
 
-			var addMethod = method.ReturnsVoid ? "Add" :
-				method.ReturnType.IsPointer ?
-					MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(method.ReturnType) :
-					$"Add<{returnType}>";
+			if (method.ReturnType.IsRefLikeType || method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+			{
+				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
+			}
+			else
+			{
+				var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
+					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
+					method.ReturnsVoid ?
+						DelegateBuilder.Build(method.Parameters) :
+						DelegateBuilder.Build(method.Parameters, method.ReturnType);
+				var returnType = method.ReturnsVoid ? string.Empty :
+					method.ReturnType.TypeKind == TypeKind.Pointer ?
+						method.ReturnType.PointerType!.FullyQualifiedName :
+						method.ReturnType.FullyQualifiedName;
+
+				adornmentsType = method.ReturnsVoid ?
+					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>" :
+					method.ReturnType.IsPointer ?
+						$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>" :
+						$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>";
+			}
 
 			var constraints = method.Constraints;
 			var extensionConstraints = constraints.Length > 0 ?
@@ -88,14 +93,14 @@ internal static class MethodExpectationsMethodBuilderV4
 				var parameterValues = string.Join(", ", method.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 
-				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints} =>");
+				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints} =>");
 				writer.Indent++;
 				writer.WriteLine($"this.{method.Name}({parameterValues});");
 				writer.Indent--;
 			}
 			else if (method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
+				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 				writer.WriteLines(
@@ -110,7 +115,7 @@ internal static class MethodExpectationsMethodBuilderV4
 			}
 			else
 			{
-				writer.WriteLine($"internal {hiding}{returnValue} {method.Name}({instanceParameters}){extensionConstraints}");
+				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
 

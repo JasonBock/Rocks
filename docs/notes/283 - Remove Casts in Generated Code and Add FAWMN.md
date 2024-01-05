@@ -128,3 +128,25 @@ More areas to test:
 * No longer need to project types for pointers.
 * Remove FileName.cs from test project.
 * Naming conflicts with property names on Handler
+
+Projected Type Generation
+
+OK, things have changed/simplified somewhat. Here are the steps:
+
+* DONE - Callbacks
+    * DONE - If a member has an esoteric type (pointer, function pointer, `ref struct``), either as a parameter or a return value, it needs a callback generated
+* DONE - Arguments
+    * DONE - If an argument is a function pointer or ref struct, it needs a custom `Argument` type generated (note that pointers can use `PointerArgument<>`)
+* DONE - Types: There are two types that need to be made together whenever a return type that is a function pointer or a `ref struct` is encountered for each unique type:
+    * DONE - Handler: Generate a `unsafe abstract class` that derives from `HandlerV4<TCallback>`, passing in the gen'd callback. It creates the `ReturnValue` property with the type name. Use `FunctionPointerHandlerTypeBuilderV4`, rename as `ProjectedHandlerTypeBuilderV4`
+    * DONE - Adornments: Generate a `unsafe sealed class`, `AdornmentsFor...<THandler>` where `THandler` is constrained to the gen'd handler type, with a constructor taking the handler and a `ReturnValue()` method that takes the `ref struct` or function pointer type.
+
+During mock code generation:
+
+* DONE - Handlers
+    * DONE - If the parameter type is a pointer, `PointerArgument<>` is used; otherwise, we use the gen'd argument type name. 
+    * DONE - If the return type is a pointer, `PointerHandlerV4<>` is the base type to use for the handler. If the return type is a `ref struct` or a function pointer, we use the gen'd handler type as the base type.
+* DONE - Member Implementation
+    * DONE - Nothing should change. With all the code gen done before, everything is standardized.
+* DONE - Expectations
+    * DONE - If the return type is a pointer, return `PointerAdornmentsV4<>`. If it's a `ref struct` or a function pointer, use the `AdornmentsFor...<>` gen'd type. Either way, the implementation should be standard for everything.

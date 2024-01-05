@@ -57,7 +57,7 @@ internal sealed record MethodModel
 			this.ProjectedCallbackDelegateName = method.GetName(compilation, extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}
 
-		if (this.ReturnType.IsRefLikeType)
+		if (this.ReturnType.IsRefLikeType || this.ReturnType.TypeKind == TypeKind.FunctionPointer)
 		{
 			this.ProjectedReturnValueDelegateName = method.GetName(compilation, extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
 		}

@@ -6,6 +6,31 @@ namespace Rocks.Tests.Generators;
 public static class RefStructGeneratorV4Tests
 {
 	[Test]
+	public static async Task CreateWithRefLikeTypeWithOpenGenericsAsync()
+	{
+		var code =
+			"""
+			using Rocks;
+			using System;
+
+			[assembly: RockCreate<IUseSpanWithOpenGeneric>]
+
+			public interface IUseSpanWithOpenGeneric
+			{
+				 void From<TSourcePixel>(
+					  ReadOnlySpan<TSourcePixel> sourcePixels)
+					  where TSourcePixel : unmanaged;
+			}
+			""";
+
+		var generatedCode = "";
+
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IUseSpanWithOpenGeneric_Rock_Create.g.cs", generatedCode) },
+			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+	}
+
+	[Test]
 	public static async Task GenerateWithSpanOfTAsync()
 	{
 		var code =

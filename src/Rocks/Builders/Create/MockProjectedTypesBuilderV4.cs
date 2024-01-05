@@ -15,9 +15,9 @@ internal static class MockProjectedTypesBuilderV4
 		using var projectedWriter = new StringWriter();
 		using var projectedIndentWriter = new IndentedTextWriter(projectedWriter, "\t");
 
-		MockProjectedDelegateBuilder.Build(projectedIndentWriter, type);
-		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, type);
-		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, type);
+		MockProjectedDelegateBuilderV4.Build(projectedIndentWriter, type);
+		MockProjectedArgTypeBuilderV4.Build(projectedIndentWriter, type);
+		MockProjectedHandlerAdornmentsTypesBuilderV4.Build(projectedIndentWriter, type);
 
 		var projectedCode = projectedWriter.ToString();
 

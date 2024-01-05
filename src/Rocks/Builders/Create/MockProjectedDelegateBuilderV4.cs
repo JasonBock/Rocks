@@ -4,7 +4,7 @@ using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
-internal static class MockProjectedDelegateBuilder
+internal static class MockProjectedDelegateBuilderV4
 {
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
@@ -40,17 +40,17 @@ internal static class MockProjectedDelegateBuilder
 
 	// TODO: this could go on the MethodModel itself.
 	internal static string GetProjectedReturnValueDelegate(MethodModel method) =>
-		$"internal delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
+		$"internal {(method.IsUnsafe ? "unsafe " : string.Empty)}delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
 		static void BuildDelegate(IndentedTextWriter writer, MethodModel method)
 		{
-			writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+			writer.WriteLine(MockProjectedDelegateBuilderV4.GetProjectedDelegate(method));
 
 			if (method.ReturnType.IsRefLikeType)
 			{
-				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedReturnValueDelegate(method));
+				writer.WriteLine(MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegate(method));
 			}
 		}
 
