@@ -165,9 +165,20 @@ Now I remember why `ref struct` returns are done through a delegate. I am gen'in
 * DONE - To be consistent, just do this: `@handler.Callback is not null ? @handler.Callback() : @handler.ReturnValue;` when I return a value - basically don't do the `Callback?.Invoke` thing, it runs into too many corner cases. The other approach will always work (though this is OK for property setters)
 * DONE - Property adornments need to be updated to return the right type for esoteric types.
 
-* I don't think I need to have "explicit" expectation builders for properties and indexers. All they're doing is gen'ing the getters and setters and they don't need to know the type they're implementing.
+* DONE - I don't think I need to have "explicit" expectation builders for properties and indexers. All they're doing is gen'ing the getters and setters and they don't need to know the type they're implementing.
 
 
-* For indexers (getters and setters as well as explicit)
-    * Parameter types needs to be updated to `PointerArgument` or the gen'd type
-    * The returned adornment type needs to be updated
+* DONE - For indexers (getters and setters as well as explicit)
+    * DONE - Parameter types needs to be updated to `PointerArgument` or the gen'd type
+    * DONE - The returned adornment type needs to be updated
+
+And now...all the tests in Rocks.Tests pass!
+
+What's left?
+
+* Update Rocks.CodeGenerationTest to use new approach. Only include a couple of assemblies to start to ensure it's working, then do all.
+* Add perf tests to see how generators compare as well as mocking perf
+* Update Rocks.IntegrationTests to use new approach
+* Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
+* Update documentation
+* Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?

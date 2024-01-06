@@ -14,8 +14,8 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
-TestWithTypes();
+TestWithType();
+//TestWithTypes();
 
 stopwatch.Stop();
 
@@ -59,11 +59,11 @@ static void TestWithCode()
 }
 
 static void TestWithType() =>
-	PrintIssues(TestGenerator.Generate(new RockCreateGenerator(),
-		[typeof(BenchmarkDotNet.Toolchains.Roslyn.Generator)],
+	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
+		[typeof(System.IO.Abstractions.PathBase)],
 		[],
 		[],
-		[]));
+		[], BuildType.Create));
 
 static void TestWithTypes()
 {
@@ -78,7 +78,7 @@ static void TestWithTypes()
 		new (typeof(System.Text.Json.JsonDocument), []),
 		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
 
-		// NuGet references
+		//// NuGet references
 		new (typeof(AngleSharp.BrowsingContext), []),
 		new (typeof(Ardalis.GuardClauses.Guard), []),
 		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
@@ -200,12 +200,12 @@ static void TestWithTypes()
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockCreateGenerator)}");
 			var createIssues = TestGenerator.Generate(
-				new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases);
+				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockMakeGenerator)}");
 			var makeIssues = TestGenerator.Generate(
-				new RockCreateGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases);
+				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
 			// We want to get a unique set of issues that occur when we generate mocks.

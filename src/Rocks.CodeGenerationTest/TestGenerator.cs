@@ -67,11 +67,11 @@ internal static class TestGenerator
 	}
 
 	internal static ImmutableArray<Issue> Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
-		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases)
+		Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
 	{
 		var issues = new List<Issue>();
 		var assemblies = targetTypes.Select(_ => _.Assembly).ToHashSet();
-		var isCreate = generator is RockCreateGenerator;
+		var isCreate = buildType == BuildType.Create;
 		var code = GetCode(targetTypes, isCreate, genericTypeMappings, aliases);
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
@@ -218,30 +218,46 @@ internal static class TestGenerator
 			indentWriter.WriteLine();
 		}
 
-		indentWriter.WriteLine("using Rocks;");
-		indentWriter.WriteLine("using System;");
-		indentWriter.WriteLine();
-		indentWriter.WriteLine("[assembly: CLSCompliant(false)]");
-		indentWriter.WriteLine();
-		indentWriter.WriteLine("public static class GenerateCode");
-		indentWriter.WriteLine("{");
-		indentWriter.Indent++;
+		indentWriter.Write(
+			"""
+			using Rocks;
+			using System;
 
-		indentWriter.WriteLine("public static void Go()");
-		indentWriter.WriteLine("{");
-		indentWriter.Indent++;
+			[assembly: CLSCompliant(false)]
+			""");
+		indentWriter.WriteLine();
 
 		for (var i = 0; i < types.Length; i++)
 		{
-			indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings, aliases)}>();");
+			indentWriter.WriteLine($"[assembly: Rock{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings, aliases)}>]");
 		}
 
-		indentWriter.Indent--;
-		indentWriter.WriteLine("}");
-
-		indentWriter.Indent--;
-		indentWriter.WriteLine("}");
-
 		return writer.ToString();
+
+		//indentWriter.WriteLine("using Rocks;");
+		//indentWriter.WriteLine("using System;");
+		//indentWriter.WriteLine();
+		//indentWriter.WriteLine("[assembly: CLSCompliant(false)]");
+		//indentWriter.WriteLine();
+		//indentWriter.WriteLine("public static class GenerateCode");
+		//indentWriter.WriteLine("{");
+		//indentWriter.Indent++;
+
+		//indentWriter.WriteLine("public static void Go()");
+		//indentWriter.WriteLine("{");
+		//indentWriter.Indent++;
+
+		//for (var i = 0; i < types.Length; i++)
+		//{
+		//	indentWriter.WriteLine($"var r{i} = Rock.{(isCreate ? "Create" : "Make")}<{types[i].GetTypeDefinition(genericTypeMappings, aliases)}>();");
+		//}
+
+		//indentWriter.Indent--;
+		//indentWriter.WriteLine("}");
+
+		//indentWriter.Indent--;
+		//indentWriter.WriteLine("}");
+
+		//return writer.ToString();
 	}
 }

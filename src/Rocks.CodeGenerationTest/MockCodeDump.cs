@@ -5,49 +5,667 @@
 //using Rocks.Extensions;
 //using System.Collections.Generic;
 //using System.Collections.Immutable;
+//using System.IO.Abstractions.ProjectionsForPathBase;
 
-//namespace BenchmarkDotNet.Toolchains.Roslyn
+//namespace System.IO.Abstractions
 //{
-//	internal static class CreateExpectationsOfGeneratorExtensions
+//	namespace ProjectionsForPathBase
 //	{
-//		internal static global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> Methods(this global::Rocks.Expectations.Expectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self) =>
-//			new(@self);
-
-//		internal static global::BenchmarkDotNet.Toolchains.Roslyn.Generator Instance(this global::Rocks.Expectations.Expectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self)
+//		internal delegate string JoinCallback_15556403834946920933416596556976369267494708373(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2);
+//		internal delegate string JoinCallback_47060620879035878699782186451828362770092212527(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3);
+//		internal delegate bool TryJoinCallback_530140047793570782880049560089743718439848364003(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.Span<char> @destination, out int @charsWritten);
+//		internal delegate bool TryJoinCallback_686134325988342444604560700806513718030405432440(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.Span<char> @destination, out int @charsWritten);
+//		internal delegate bool HasExtensionCallback_643134210436936966016132222010794379435569854999(global::System.ReadOnlySpan<char> @path);
+//		internal delegate bool IsPathFullyQualifiedCallback_48860660829234213696024453385885003561356428400(global::System.ReadOnlySpan<char> @path);
+//		internal delegate bool IsPathRootedCallback_729439918569605109118174273133108433967231871994(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetDirectoryNameCallback_249611762019998098327945742990468137594474489358(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetDirectoryNameReturnValue_249611762019998098327945742990468137594474489358();
+//		internal delegate global::System.ReadOnlySpan<char> GetExtensionCallback_707518076985268236537423133826940883142831014121(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetExtensionReturnValue_707518076985268236537423133826940883142831014121();
+//		internal delegate global::System.ReadOnlySpan<char> GetFileNameCallback_65944073508202954788775943960116411795258357393(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetFileNameReturnValue_65944073508202954788775943960116411795258357393();
+//		internal delegate global::System.ReadOnlySpan<char> GetFileNameWithoutExtensionCallback_686421730155307683540933933703815093026136031367(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetFileNameWithoutExtensionReturnValue_686421730155307683540933933703815093026136031367();
+//		internal delegate global::System.ReadOnlySpan<char> GetPathRootCallback_9785249839797812988262284012566633727649249238(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> GetPathRootReturnValue_9785249839797812988262284012566633727649249238();
+//		internal delegate bool EndsInDirectorySeparatorCallback_185491315368662040883448594571290759052245679050(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> TrimEndingDirectorySeparatorCallback_535707280762856697740384172552375380316373874005(global::System.ReadOnlySpan<char> @path);
+//		internal delegate global::System.ReadOnlySpan<char> TrimEndingDirectorySeparatorReturnValue_535707280762856697740384172552375380316373874005();
+//		internal delegate string JoinCallback_522933266278897969183002454503729499517508500910(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.ReadOnlySpan<char> @path4);
+//		internal delegate bool ArgEvaluationForReadOnlySpanOfchar(global::System.ReadOnlySpan<char> @value);
+		
+//		internal sealed class ArgForReadOnlySpanOfchar
+//			: global::Rocks.Argument
 //		{
-//			if (!@self.WasInstanceInvoked)
+//			private readonly global::System.IO.Abstractions.ProjectionsForPathBase.ArgEvaluationForReadOnlySpanOfchar? evaluation;
+//			private readonly global::Rocks.ValidationState validation;
+			
+//			internal ArgForReadOnlySpanOfchar() => this.validation = global::Rocks.ValidationState.None;
+			
+//			internal ArgForReadOnlySpanOfchar(global::System.IO.Abstractions.ProjectionsForPathBase.ArgEvaluationForReadOnlySpanOfchar @evaluation)
 //			{
-//				@self.WasInstanceInvoked = true;
-//				var @mock = new RockGenerator(@self);
-//				@self.MockType = @mock.GetType();
-//				return @mock;
+//				this.evaluation = @evaluation;
+//				this.validation = global::Rocks.ValidationState.Evaluation;
 //			}
-//			else
+			
+//			public bool IsValid(global::System.ReadOnlySpan<char> @value) =>
+//				this.validation switch
+//				{
+//					global::Rocks.ValidationState.None => true,
+//					global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
+//					_ => throw new global::System.NotSupportedException("Invalid validation state."),
+//				};
+//		}
+//		internal delegate bool ArgEvaluationForSpanOfchar(global::System.Span<char> @value);
+		
+//		internal sealed class ArgForSpanOfchar
+//			: global::Rocks.Argument
+//		{
+//			private readonly global::System.IO.Abstractions.ProjectionsForPathBase.ArgEvaluationForSpanOfchar? evaluation;
+//			private readonly global::Rocks.ValidationState validation;
+			
+//			internal ArgForSpanOfchar() => this.validation = global::Rocks.ValidationState.None;
+			
+//			internal ArgForSpanOfchar(global::System.IO.Abstractions.ProjectionsForPathBase.ArgEvaluationForSpanOfchar @evaluation)
 //			{
-//				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+//				this.evaluation = @evaluation;
+//				this.validation = global::Rocks.ValidationState.Evaluation;
+//			}
+			
+//			public bool IsValid(global::System.Span<char> @value) =>
+//				this.validation switch
+//				{
+//					global::Rocks.ValidationState.None => true,
+//					global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
+//					_ => throw new global::System.NotSupportedException("Invalid validation state."),
+//				};
+//		}
+//		internal class HandlerForReadOnlySpanOfchar<TCallback, TReturnValue>
+//			: global::Rocks.HandlerV4<TCallback>
+//			where TCallback : Delegate
+//		{
+//			internal TReturnValue? ReturnValue { get; set; }
+//		}
+
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameCallback_249611762019998098327945742990468137594474489358>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameReturnValue_249611762019998098327945742990468137594474489358? ReturnValue { get; set; }
+//		//}
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.GetExtensionCallback_707518076985268236537423133826940883142831014121>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.GetExtensionReturnValue_707518076985268236537423133826940883142831014121? ReturnValue { get; set; }
+//		//}
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameCallback_65944073508202954788775943960116411795258357393>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameReturnValue_65944073508202954788775943960116411795258357393? ReturnValue { get; set; }
+//		//}
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameWithoutExtensionCallback_686421730155307683540933933703815093026136031367>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameWithoutExtensionReturnValue_686421730155307683540933933703815093026136031367? ReturnValue { get; set; }
+//		//}
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.GetPathRootCallback_9785249839797812988262284012566633727649249238>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.GetPathRootReturnValue_9785249839797812988262284012566633727649249238? ReturnValue { get; set; }
+//		//}
+//		//internal class HandlerForReadOnlySpanOfchar
+//		//	: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.TrimEndingDirectorySeparatorCallback_535707280762856697740384172552375380316373874005>
+//		//{
+//		//	internal global::System.IO.Abstractions.ProjectionsForPathBase.TrimEndingDirectorySeparatorReturnValue_535707280762856697740384172552375380316373874005? ReturnValue { get; set; }
+//		//}
+//		internal sealed class AdornmentsForReadOnlySpanOfchar<THandler, TCallback, TReturnValue>
+//			: global::Rocks.AdornmentsV4<THandler, TCallback>
+//			where THandler : HandlerForReadOnlySpanOfchar<TCallback, TReturnValue>
+//			where TCallback : Delegate
+//			where TReturnValue : Delegate
+//		{
+//			internal AdornmentsForReadOnlySpanOfchar(THandler handler)
+//				: base(handler)
+//			{ }
+
+//			internal AdornmentsForReadOnlySpanOfchar<THandler, TCallback, TReturnValue> ReturnValue(TReturnValue returnValue)
+//			{
+//				this.handler.ReturnValue = returnValue;
+//				return this;
 //			}
 //		}
 
-//		private sealed class RockGenerator
-//			: global::BenchmarkDotNet.Toolchains.Roslyn.Generator
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameCallback_249611762019998098327945742990468137594474489358>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameReturnValue_249611762019998098327945742990468137594474489358 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.GetExtensionCallback_707518076985268236537423133826940883142831014121>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.GetExtensionReturnValue_707518076985268236537423133826940883142831014121 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameCallback_65944073508202954788775943960116411795258357393>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameReturnValue_65944073508202954788775943960116411795258357393 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameWithoutExtensionCallback_686421730155307683540933933703815093026136031367>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.GetFileNameWithoutExtensionReturnValue_686421730155307683540933933703815093026136031367 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.GetPathRootCallback_9785249839797812988262284012566633727649249238>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.GetPathRootReturnValue_9785249839797812988262284012566633727649249238 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//	internal sealed class AdornmentsForReadOnlySpanOfchar
+//	//		: global::Rocks.AdornmentsV4<HandlerForReadOnlySpanOfchar, global::System.IO.Abstractions.ProjectionsForPathBase.TrimEndingDirectorySeparatorCallback_535707280762856697740384172552375380316373874005>
+//	//	{
+//	//		internal AdornmentsForReadOnlySpanOfchar(HandlerForReadOnlySpanOfchar handler) 
+//	//			: base(handler) 
+//	//		{ }
+		
+//	//		internal AdornmentsForReadOnlySpanOfchar ReturnValue(global::System.IO.Abstractions.ProjectionsForPathBase.TrimEndingDirectorySeparatorReturnValue_535707280762856697740384172552375380316373874005 returnValue)
+//	//		{
+//	//			this.handler.ReturnValue = returnValue;
+//	//			return this;
+//	//		}
+//	//	}
+//	//}
+	
+//	internal sealed class PathBaseCreateExpectations
+//		: global::Rocks.Expectations.ExpectationsV4
+//	{
+//		#pragma warning disable CS8618
+		
+//		internal sealed class Handler0
+//			: global::Rocks.HandlerV4<global::System.Func<string?>, string?>
+//		{ }
+		
+//		internal sealed class Handler1
+//			: global::Rocks.HandlerV4<global::System.Func<object?, bool>, bool>
 //		{
-//			private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-
-//			public RockGenerator(global::Rocks.Expectations.Expectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @expectations)
+//			public global::Rocks.Argument<object?> @obj { get; set; }
+//		}
+		
+//		internal sealed class Handler2
+//			: global::Rocks.HandlerV4<global::System.Func<int>, int>
+//		{ }
+		
+//		internal sealed class Handler3
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//			public global::Rocks.Argument<string> @extension { get; set; }
+//		}
+		
+//		internal sealed class Handler4
+//			: global::Rocks.HandlerV4<global::System.Func<string[], string>, string>
+//		{
+//			public global::Rocks.Argument<string[]> @paths { get; set; }
+//		}
+		
+//		internal sealed class Handler5
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//		}
+		
+//		internal sealed class Handler6
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//			public global::Rocks.Argument<string> @path3 { get; set; }
+//		}
+		
+//		internal sealed class Handler7
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//			public global::Rocks.Argument<string> @path3 { get; set; }
+//			public global::Rocks.Argument<string> @path4 { get; set; }
+//		}
+		
+//		internal sealed class Handler8
+//			: global::Rocks.HandlerV4<global::System.Func<string, bool>, bool>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler9
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler10
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler11
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler12
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler13
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler14
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//			public global::Rocks.Argument<string> @basePath { get; set; }
+//		}
+		
+//		internal sealed class Handler15
+//			: global::Rocks.HandlerV4<global::System.Func<char[]>, char[]>
+//		{ }
+		
+//		internal sealed class Handler16
+//			: global::Rocks.HandlerV4<global::System.Func<char[]>, char[]>
+//		{ }
+		
+//		internal sealed class Handler17
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler18
+//			: global::Rocks.HandlerV4<global::System.Func<string>, string>
+//		{ }
+		
+//		internal sealed class Handler19
+//			: global::Rocks.HandlerV4<global::System.Func<string>, string>
+//		{ }
+		
+//		internal sealed class Handler20
+//			: global::Rocks.HandlerV4<global::System.Func<string>, string>
+//		{ }
+		
+//		internal sealed class Handler21
+//			: global::Rocks.HandlerV4<global::System.Func<string, bool>, bool>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler22
+//			: global::Rocks.HandlerV4<global::System.Func<string, bool>, bool>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler23
+//			: global::Rocks.HandlerV4<global::System.Func<string, bool>, bool>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler24
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @relativeTo { get; set; }
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler25
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_15556403834946920933416596556976369267494708373, string>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2 { get; set; }
+//		}
+		
+//		internal sealed class Handler26
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_47060620879035878699782186451828362770092212527, string>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3 { get; set; }
+//		}
+		
+//		internal sealed class Handler27
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.TryJoinCallback_530140047793570782880049560089743718439848364003, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForSpanOfchar @destination { get; set; }
+//			public global::Rocks.Argument<int> @charsWritten { get; set; }
+//		}
+		
+//		internal sealed class Handler28
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.TryJoinCallback_686134325988342444604560700806513718030405432440, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForSpanOfchar @destination { get; set; }
+//			public global::Rocks.Argument<int> @charsWritten { get; set; }
+//		}
+		
+//		internal sealed class Handler29
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.HasExtensionCallback_643134210436936966016132222010794379435569854999, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler30
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.IsPathFullyQualifiedCallback_48860660829234213696024453385885003561356428400, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler31
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.IsPathRootedCallback_729439918569605109118174273133108433967231871994, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler32
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar<global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameCallback_249611762019998098327945742990468137594474489358, global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameReturnValue_249611762019998098327945742990468137594474489358>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler33
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar<global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameCallback_249611762019998098327945742990468137594474489358, global::System.IO.Abstractions.ProjectionsForPathBase.GetDirectoryNameReturnValue_249611762019998098327945742990468137594474489358>
 //			{
-//				this.handlers = @expectations.Handlers;
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler34
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler35
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler36
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler37
+//			: global::Rocks.HandlerV4<global::System.Func<string[], string>, string>
+//		{
+//			public global::Rocks.Argument<string[]> @paths { get; set; }
+//		}
+		
+//		internal sealed class Handler38
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//		}
+		
+//		internal sealed class Handler39
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//			public global::Rocks.Argument<string> @path3 { get; set; }
+//		}
+		
+//		internal sealed class Handler40
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.EndsInDirectorySeparatorCallback_185491315368662040883448594571290759052245679050, bool>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler41
+//			: global::Rocks.HandlerV4<global::System.Func<string, bool>, bool>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler42
+//			: global::System.IO.Abstractions.ProjectionsForPathBase.HandlerForReadOnlySpanOfchar
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path { get; set; }
+//		}
+		
+//		internal sealed class Handler43
+//			: global::Rocks.HandlerV4<global::System.Func<string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path { get; set; }
+//		}
+		
+//		internal sealed class Handler44
+//			: global::Rocks.HandlerV4<global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_522933266278897969183002454503729499517508500910, string>
+//		{
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3 { get; set; }
+//			public global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path4 { get; set; }
+//		}
+		
+//		internal sealed class Handler45
+//			: global::Rocks.HandlerV4<global::System.Func<string, string, string, string, string>, string>
+//		{
+//			public global::Rocks.Argument<string> @path1 { get; set; }
+//			public global::Rocks.Argument<string> @path2 { get; set; }
+//			public global::Rocks.Argument<string> @path3 { get; set; }
+//			public global::Rocks.Argument<string> @path4 { get; set; }
+//		}
+		
+//		internal sealed class Handler46
+//			: global::Rocks.HandlerV4<global::System.Func<char>, char>
+//		{ }
+		
+//		internal sealed class Handler47
+//			: global::Rocks.HandlerV4<global::System.Func<char>, char>
+//		{ }
+		
+//		internal sealed class Handler48
+//			: global::Rocks.HandlerV4<global::System.Func<char[]>, char[]>
+//		{ }
+		
+//		internal sealed class Handler49
+//			: global::Rocks.HandlerV4<global::System.Func<char>, char>
+//		{ }
+		
+//		internal sealed class Handler50
+//			: global::Rocks.HandlerV4<global::System.Func<char>, char>
+//		{ }
+		
+//		#pragma warning restore CS8618
+		
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler0> @handlers0 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler1> @handlers1 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler2> @handlers2 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler3> @handlers3 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler4> @handlers4 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler5> @handlers5 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler6> @handlers6 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler7> @handlers7 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler8> @handlers8 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler9> @handlers9 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler10> @handlers10 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler11> @handlers11 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler12> @handlers12 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler13> @handlers13 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler14> @handlers14 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler15> @handlers15 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler16> @handlers16 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler17> @handlers17 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler18> @handlers18 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler19> @handlers19 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler20> @handlers20 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler21> @handlers21 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler22> @handlers22 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler23> @handlers23 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler24> @handlers24 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler25> @handlers25 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler26> @handlers26 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler27> @handlers27 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler28> @handlers28 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler29> @handlers29 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler30> @handlers30 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler31> @handlers31 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler32> @handlers32 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler33> @handlers33 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler34> @handlers34 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler35> @handlers35 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler36> @handlers36 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler37> @handlers37 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler38> @handlers38 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler39> @handlers39 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler40> @handlers40 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler41> @handlers41 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler42> @handlers42 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler43> @handlers43 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler44> @handlers44 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler45> @handlers45 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler46> @handlers46 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler47> @handlers47 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler48> @handlers48 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler49> @handlers49 = new();
+//		private readonly global::System.Collections.Generic.List<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler50> @handlers50 = new();
+		
+//		public override void Verify()
+//		{
+//			if (this.WasInstanceInvoked)
+//			{
+//				var failures = new global::System.Collections.Generic.List<string>();
+		
+//				failures.AddRange(this.Verify(handlers0));
+//				failures.AddRange(this.Verify(handlers1));
+//				failures.AddRange(this.Verify(handlers2));
+//				failures.AddRange(this.Verify(handlers3));
+//				failures.AddRange(this.Verify(handlers4));
+//				failures.AddRange(this.Verify(handlers5));
+//				failures.AddRange(this.Verify(handlers6));
+//				failures.AddRange(this.Verify(handlers7));
+//				failures.AddRange(this.Verify(handlers8));
+//				failures.AddRange(this.Verify(handlers9));
+//				failures.AddRange(this.Verify(handlers10));
+//				failures.AddRange(this.Verify(handlers11));
+//				failures.AddRange(this.Verify(handlers12));
+//				failures.AddRange(this.Verify(handlers13));
+//				failures.AddRange(this.Verify(handlers14));
+//				failures.AddRange(this.Verify(handlers15));
+//				failures.AddRange(this.Verify(handlers16));
+//				failures.AddRange(this.Verify(handlers17));
+//				failures.AddRange(this.Verify(handlers18));
+//				failures.AddRange(this.Verify(handlers19));
+//				failures.AddRange(this.Verify(handlers20));
+//				failures.AddRange(this.Verify(handlers21));
+//				failures.AddRange(this.Verify(handlers22));
+//				failures.AddRange(this.Verify(handlers23));
+//				failures.AddRange(this.Verify(handlers24));
+//				failures.AddRange(this.Verify(handlers25));
+//				failures.AddRange(this.Verify(handlers26));
+//				failures.AddRange(this.Verify(handlers27));
+//				failures.AddRange(this.Verify(handlers28));
+//				failures.AddRange(this.Verify(handlers29));
+//				failures.AddRange(this.Verify(handlers30));
+//				failures.AddRange(this.Verify(handlers31));
+//				failures.AddRange(this.Verify(handlers32));
+//				failures.AddRange(this.Verify(handlers33));
+//				failures.AddRange(this.Verify(handlers34));
+//				failures.AddRange(this.Verify(handlers35));
+//				failures.AddRange(this.Verify(handlers36));
+//				failures.AddRange(this.Verify(handlers37));
+//				failures.AddRange(this.Verify(handlers38));
+//				failures.AddRange(this.Verify(handlers39));
+//				failures.AddRange(this.Verify(handlers40));
+//				failures.AddRange(this.Verify(handlers41));
+//				failures.AddRange(this.Verify(handlers42));
+//				failures.AddRange(this.Verify(handlers43));
+//				failures.AddRange(this.Verify(handlers44));
+//				failures.AddRange(this.Verify(handlers45));
+//				failures.AddRange(this.Verify(handlers46));
+//				failures.AddRange(this.Verify(handlers47));
+//				failures.AddRange(this.Verify(handlers48));
+//				failures.AddRange(this.Verify(handlers49));
+//				failures.AddRange(this.Verify(handlers50));
+		
+//				if (failures.Count > 0)
+//				{
+//					throw new global::Rocks.Exceptions.VerificationException(failures);
+//				}
 //			}
-
+//		}
+		
+//		private sealed class RockPathBase
+//			: global::System.IO.Abstractions.PathBase
+//		{
+//			public RockPathBase(global::System.IO.Abstractions.PathBaseCreateExpectations @expectations, global::System.IO.Abstractions.IFileSystem @fileSystem)
+//				: base(@fileSystem)
+//			{
+//				this.Expectations = @expectations;
+//			}
+			
 //			[global::Rocks.MemberIdentifier(0, "string? ToString()")]
 //			public override string? ToString()
 //			{
-//				if (this.handlers.TryGetValue(0, out var @methodHandlers))
+//				if (this.Expectations.handlers0.Count > 0)
 //				{
-//					var @methodHandler = @methodHandlers[0];
-//					@methodHandler.IncrementCallCount();
-//					var @result = @methodHandler.Method is not null ?
-//						((global::System.Func<string?>)@methodHandler.Method)() :
-//						((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+//					var @handler = this.Expectations.handlers0[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
 //					return @result!;
 //				}
 //				else
@@ -55,24 +673,23 @@
 //					return base.ToString();
 //				}
 //			}
-
+			
 //			[global::Rocks.MemberIdentifier(1, "bool Equals(object? @obj)")]
 //			public override bool Equals(object? @obj)
 //			{
-//				if (this.handlers.TryGetValue(1, out var @methodHandlers))
+//				if (this.Expectations.handlers1.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers1)
 //					{
-//						if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+//						if (@handler.@obj.IsValid(@obj!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-//								((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@obj!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
+					
 //					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
 //				}
 //				else
@@ -80,17 +697,16 @@
 //					return base.Equals(obj: @obj!);
 //				}
 //			}
-
+			
 //			[global::Rocks.MemberIdentifier(2, "int GetHashCode()")]
 //			public override int GetHashCode()
 //			{
-//				if (this.handlers.TryGetValue(2, out var @methodHandlers))
+//				if (this.Expectations.handlers2.Count > 0)
 //				{
-//					var @methodHandler = @methodHandlers[0];
-//					@methodHandler.IncrementCallCount();
-//					var @result = @methodHandler.Method is not null ?
-//						((global::System.Func<int>)@methodHandler.Method)() :
-//						((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+//					var @handler = this.Expectations.handlers2[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
 //					return @result!;
 //				}
 //				else
@@ -98,464 +714,1724 @@
 //					return base.GetHashCode();
 //				}
 //			}
-
-//			[global::Rocks.MemberIdentifier(4, "string GetBinariesDirectoryPath(string @buildArtifactsDirectoryPath, string @configuration)")]
-//			protected override string GetBinariesDirectoryPath(string @buildArtifactsDirectoryPath, string @configuration)
+			
+//			[global::Rocks.MemberIdentifier(3, "string ChangeExtension(string @path, string @extension)")]
+//			public override string ChangeExtension(string @path, string @extension)
 //			{
-//				if (this.handlers.TryGetValue(4, out var @methodHandlers))
+//				if (this.Expectations.handlers3.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers3)
 //					{
-//						if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@buildArtifactsDirectoryPath!) &&
-//							((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@configuration!))
+//						if (@handler.@path.IsValid(@path!) &&
+//							@handler.@extension.IsValid(@extension!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<string, string, string>)@methodHandler.Method)(@buildArtifactsDirectoryPath!, @configuration!) :
-//								((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!, @extension!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetBinariesDirectoryPath(string @buildArtifactsDirectoryPath, string @configuration)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string ChangeExtension(string @path, string @extension)");
 //				}
-//				else
-//				{
-//					return base.GetBinariesDirectoryPath(buildArtifactsDirectoryPath: @buildArtifactsDirectoryPath!, configuration: @configuration!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string ChangeExtension(string @path, string @extension)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(5, "string GetExecutableExtension()")]
-//			protected override string GetExecutableExtension()
+			
+//			[global::Rocks.MemberIdentifier(4, "string Combine(params string[] @paths)")]
+//			public override string Combine(params string[] @paths)
 //			{
-//				if (this.handlers.TryGetValue(5, out var @methodHandlers))
+//				if (this.Expectations.handlers4.Count > 0)
 //				{
-//					var @methodHandler = @methodHandlers[0];
-//					@methodHandler.IncrementCallCount();
-//					var @result = @methodHandler.Method is not null ?
-//						((global::System.Func<string>)@methodHandler.Method)() :
-//						((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//					foreach (var @handler in this.Expectations.handlers4)
+//					{
+//						if (@handler.@paths.IsValid(@paths!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@paths!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Combine(params string[] @paths)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Combine(params string[] @paths)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(5, "string Combine(string @path1, string @path2)")]
+//			public override string Combine(string @path1, string @path2)
+//			{
+//				if (this.Expectations.handlers5.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers5)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Combine(string @path1, string @path2)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Combine(string @path1, string @path2)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(6, "string Combine(string @path1, string @path2, string @path3)")]
+//			public override string Combine(string @path1, string @path2, string @path3)
+//			{
+//				if (this.Expectations.handlers6.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers6)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Combine(string @path1, string @path2, string @path3)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Combine(string @path1, string @path2, string @path3)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(7, "string Combine(string @path1, string @path2, string @path3, string @path4)")]
+//			public override string Combine(string @path1, string @path2, string @path3, string @path4)
+//			{
+//				if (this.Expectations.handlers7.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers7)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!) &&
+//							@handler.@path4.IsValid(@path4!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!, @path4!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Combine(string @path1, string @path2, string @path3, string @path4)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Combine(string @path1, string @path2, string @path3, string @path4)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(8, "bool Exists(string @path)")]
+//			public override bool Exists(string @path)
+//			{
+//				if (this.Expectations.handlers8.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers8)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Exists(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool Exists(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(9, "string GetDirectoryName(string @path)")]
+//			public override string GetDirectoryName(string @path)
+//			{
+//				if (this.Expectations.handlers9.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers9)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetDirectoryName(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetDirectoryName(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(10, "string GetExtension(string @path)")]
+//			public override string GetExtension(string @path)
+//			{
+//				if (this.Expectations.handlers10.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers10)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetExtension(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetExtension(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(11, "string GetFileName(string @path)")]
+//			public override string GetFileName(string @path)
+//			{
+//				if (this.Expectations.handlers11.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers11)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetFileName(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetFileName(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(12, "string GetFileNameWithoutExtension(string @path)")]
+//			public override string GetFileNameWithoutExtension(string @path)
+//			{
+//				if (this.Expectations.handlers12.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers12)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetFileNameWithoutExtension(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetFileNameWithoutExtension(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(13, "string GetFullPath(string @path)")]
+//			public override string GetFullPath(string @path)
+//			{
+//				if (this.Expectations.handlers13.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers13)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetFullPath(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetFullPath(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(14, "string GetFullPath(string @path, string @basePath)")]
+//			public override string GetFullPath(string @path, string @basePath)
+//			{
+//				if (this.Expectations.handlers14.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers14)
+//					{
+//						if (@handler.@path.IsValid(@path!) &&
+//							@handler.@basePath.IsValid(@basePath!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!, @basePath!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetFullPath(string @path, string @basePath)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetFullPath(string @path, string @basePath)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(15, "char[] GetInvalidFileNameChars()")]
+//			public override char[] GetInvalidFileNameChars()
+//			{
+//				if (this.Expectations.handlers15.Count > 0)
+//				{
+//					var @handler = this.Expectations.handlers15[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
 //					return @result!;
 //				}
-//				else
-//				{
-//					return base.GetExecutableExtension();
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for char[] GetInvalidFileNameChars()");
 //			}
-
-//			[global::Rocks.MemberIdentifier(6, "string GetProjectFilePath(string @buildArtifactsDirectoryPath)")]
-//			protected override string GetProjectFilePath(string @buildArtifactsDirectoryPath)
+			
+//			[global::Rocks.MemberIdentifier(16, "char[] GetInvalidPathChars()")]
+//			public override char[] GetInvalidPathChars()
 //			{
-//				if (this.handlers.TryGetValue(6, out var @methodHandlers))
+//				if (this.Expectations.handlers16.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					var @handler = this.Expectations.handlers16[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
+//					return @result!;
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for char[] GetInvalidPathChars()");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(17, "string GetPathRoot(string @path)")]
+//			public override string GetPathRoot(string @path)
+//			{
+//				if (this.Expectations.handlers17.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers17)
 //					{
-//						if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@buildArtifactsDirectoryPath!))
+//						if (@handler.@path.IsValid(@path!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<string, string>)@methodHandler.Method)(@buildArtifactsDirectoryPath!) :
-//								((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetProjectFilePath(string @buildArtifactsDirectoryPath)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetPathRoot(string @path)");
 //				}
-//				else
-//				{
-//					return base.GetProjectFilePath(buildArtifactsDirectoryPath: @buildArtifactsDirectoryPath!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetPathRoot(string @path)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(8, "void CopyAllRequiredFiles(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override void CopyAllRequiredFiles(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
+			
+//			[global::Rocks.MemberIdentifier(18, "string GetRandomFileName()")]
+//			public override string GetRandomFileName()
 //			{
-//				if (this.handlers.TryGetValue(8, out var @methodHandlers))
+//				if (this.Expectations.handlers18.Count > 0)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
-//					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[0]).IsValid(@artifactsPaths!))
-//						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Method)(@artifactsPaths!);
-//							}
-//							break;
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void CopyAllRequiredFiles(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
-//					}
+//					var @handler = this.Expectations.handlers18[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
+//					return @result!;
 //				}
-//				else
-//				{
-//					base.CopyAllRequiredFiles(artifactsPaths: @artifactsPaths!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetRandomFileName()");
 //			}
-
-//			[global::Rocks.MemberIdentifier(9, "void GenerateNuGetConfig(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override void GenerateNuGetConfig(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
+			
+//			[global::Rocks.MemberIdentifier(19, "string GetTempFileName()")]
+//			public override string GetTempFileName()
 //			{
-//				if (this.handlers.TryGetValue(9, out var @methodHandlers))
+//				if (this.Expectations.handlers19.Count > 0)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
-//					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[0]).IsValid(@artifactsPaths!))
-//						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Method)(@artifactsPaths!);
-//							}
-//							break;
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void GenerateNuGetConfig(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
-//					}
+//					var @handler = this.Expectations.handlers19[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
+//					return @result!;
 //				}
-//				else
-//				{
-//					base.GenerateNuGetConfig(artifactsPaths: @artifactsPaths!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetTempFileName()");
 //			}
-
-//			[global::Rocks.MemberIdentifier(10, "void GenerateProject(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths, global::BenchmarkDotNet.Loggers.ILogger @logger)")]
-//			protected override void GenerateProject(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths, global::BenchmarkDotNet.Loggers.ILogger @logger)
+			
+//			[global::Rocks.MemberIdentifier(20, "string GetTempPath()")]
+//			public override string GetTempPath()
 //			{
-//				if (this.handlers.TryGetValue(10, out var @methodHandlers))
+//				if (this.Expectations.handlers20.Count > 0)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
-//					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition>)@methodHandler.Expectations[0]).IsValid(@buildPartition!) &&
-//							((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[1]).IsValid(@artifactsPaths!) &&
-//							((global::Rocks.Argument<global::BenchmarkDotNet.Loggers.ILogger>)@methodHandler.Expectations[2]).IsValid(@logger!))
-//						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths, global::BenchmarkDotNet.Loggers.ILogger>)@methodHandler.Method)(@buildPartition!, @artifactsPaths!, @logger!);
-//							}
-//							break;
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void GenerateProject(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths, global::BenchmarkDotNet.Loggers.ILogger @logger)");
-//					}
+//					var @handler = this.Expectations.handlers20[0];
+//					@handler.CallCount++;
+//					var @result = @handler.Callback is not null ?
+//						@handler.Callback() : @handler.ReturnValue;
+//					return @result!;
 //				}
-//				else
-//				{
-//					base.GenerateProject(buildPartition: @buildPartition!, artifactsPaths: @artifactsPaths!, logger: @logger!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetTempPath()");
 //			}
-
-//			[global::Rocks.MemberIdentifier(12, "string GetPackagesDirectoryPath(string @buildArtifactsDirectoryPath)")]
-//			protected override string GetPackagesDirectoryPath(string @buildArtifactsDirectoryPath)
+			
+//			[global::Rocks.MemberIdentifier(21, "bool HasExtension(string @path)")]
+//			public override bool HasExtension(string @path)
 //			{
-//				if (this.handlers.TryGetValue(12, out var @methodHandlers))
+//				if (this.Expectations.handlers21.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers21)
 //					{
-//						if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@buildArtifactsDirectoryPath!))
+//						if (@handler.@path.IsValid(@path!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<string, string>)@methodHandler.Method)(@buildArtifactsDirectoryPath!) :
-//								((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetPackagesDirectoryPath(string @buildArtifactsDirectoryPath)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool HasExtension(string @path)");
 //				}
-//				else
-//				{
-//					return base.GetPackagesDirectoryPath(buildArtifactsDirectoryPath: @buildArtifactsDirectoryPath!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool HasExtension(string @path)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(13, "void GenerateAppConfig(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override void GenerateAppConfig(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
+			
+//			[global::Rocks.MemberIdentifier(22, "bool IsPathRooted(string @path)")]
+//			public override bool IsPathRooted(string @path)
 //			{
-//				if (this.handlers.TryGetValue(13, out var @methodHandlers))
+//				if (this.Expectations.handlers22.Count > 0)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers22)
 //					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition>)@methodHandler.Expectations[0]).IsValid(@buildPartition!) &&
-//							((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[1]).IsValid(@artifactsPaths!))
+//						if (@handler.@path.IsValid(@path!))
 //						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Method)(@buildPartition!, @artifactsPaths!);
-//							}
-//							break;
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void GenerateAppConfig(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
-//					}
-//				}
-//				else
-//				{
-//					base.GenerateAppConfig(buildPartition: @buildPartition!, artifactsPaths: @artifactsPaths!);
-//				}
-//			}
-
-//			[global::Rocks.MemberIdentifier(14, "void GenerateCode(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override void GenerateCode(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
-//			{
-//				if (this.handlers.TryGetValue(14, out var @methodHandlers))
-//				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
-//					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition>)@methodHandler.Expectations[0]).IsValid(@buildPartition!) &&
-//							((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[1]).IsValid(@artifactsPaths!))
-//						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Method)(@buildPartition!, @artifactsPaths!);
-//							}
-//							break;
-//						}
-//					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void GenerateCode(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
-//					}
-//				}
-//				else
-//				{
-//					base.GenerateCode(buildPartition: @buildPartition!, artifactsPaths: @artifactsPaths!);
-//				}
-//			}
-
-//			[global::Rocks.MemberIdentifier(15, "string GetExecutablePath(string @binariesDirectoryPath, string @programName)")]
-//			protected override string GetExecutablePath(string @binariesDirectoryPath, string @programName)
-//			{
-//				if (this.handlers.TryGetValue(15, out var @methodHandlers))
-//				{
-//					foreach (var @methodHandler in @methodHandlers)
-//					{
-//						if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@binariesDirectoryPath!) &&
-//							((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@programName!))
-//						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<string, string, string>)@methodHandler.Method)(@binariesDirectoryPath!, @programName!) :
-//								((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetExecutablePath(string @binariesDirectoryPath, string @programName)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool IsPathRooted(string @path)");
 //				}
-//				else
-//				{
-//					return base.GetExecutablePath(binariesDirectoryPath: @binariesDirectoryPath!, programName: @programName!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool IsPathRooted(string @path)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(16, "string GetBuildArtifactsDirectoryPath(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, string @programName)")]
-//			protected override string GetBuildArtifactsDirectoryPath(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, string @programName)
+			
+//			[global::Rocks.MemberIdentifier(23, "bool IsPathFullyQualified(string @path)")]
+//			public override bool IsPathFullyQualified(string @path)
 //			{
-//				if (this.handlers.TryGetValue(16, out var @methodHandlers))
+//				if (this.Expectations.handlers23.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers23)
 //					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition>)@methodHandler.Expectations[0]).IsValid(@buildPartition!) &&
-//							((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@programName!))
+//						if (@handler.@path.IsValid(@path!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<global::BenchmarkDotNet.Running.BuildPartition, string, string>)@methodHandler.Method)(@buildPartition!, @programName!) :
-//								((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetBuildArtifactsDirectoryPath(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, string @programName)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool IsPathFullyQualified(string @path)");
 //				}
-//				else
-//				{
-//					return base.GetBuildArtifactsDirectoryPath(assemblyLocation: @buildPartition!, programName: @programName!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool IsPathFullyQualified(string @path)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(17, "string[] GetArtifactsToCleanup(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override string[] GetArtifactsToCleanup(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
+			
+//			[global::Rocks.MemberIdentifier(24, "string GetRelativePath(string @relativeTo, string @path)")]
+//			public override string GetRelativePath(string @relativeTo, string @path)
 //			{
-//				if (this.handlers.TryGetValue(17, out var @methodHandlers))
+//				if (this.Expectations.handlers24.Count > 0)
 //				{
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers24)
 //					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[0]).IsValid(@artifactsPaths!))
+//						if (@handler.@relativeTo.IsValid(@relativeTo!) &&
+//							@handler.@path.IsValid(@path!))
 //						{
-//							@methodHandler.IncrementCallCount();
-//							var @result = @methodHandler.Method is not null ?
-//								((global::System.Func<global::BenchmarkDotNet.Toolchains.ArtifactsPaths, string[]>)@methodHandler.Method)(@artifactsPaths!) :
-//								((global::Rocks.HandlerInformation<string[]>)@methodHandler).ReturnValue;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@relativeTo!, @path!) : @handler.ReturnValue;
 //							return @result!;
 //						}
 //					}
-
-//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string[] GetArtifactsToCleanup(global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string GetRelativePath(string @relativeTo, string @path)");
 //				}
-//				else
-//				{
-//					return base.GetArtifactsToCleanup(artifactsPaths: @artifactsPaths!);
-//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string GetRelativePath(string @relativeTo, string @path)");
 //			}
-
-//			[global::Rocks.MemberIdentifier(18, "void GenerateBuildScript(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)")]
-//			protected override void GenerateBuildScript(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)
+			
+//			[global::Rocks.MemberIdentifier(25, "string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2)")]
+//			public override string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2)
 //			{
-//				if (this.handlers.TryGetValue(18, out var @methodHandlers))
+//				if (this.Expectations.handlers25.Count > 0)
 //				{
-//					var @foundMatch = false;
-
-//					foreach (var @methodHandler in @methodHandlers)
+//					foreach (var @handler in this.Expectations.handlers25)
 //					{
-//						if (((global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition>)@methodHandler.Expectations[0]).IsValid(@buildPartition!) &&
-//							((global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Expectations[1]).IsValid(@artifactsPaths!))
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!))
 //						{
-//							@foundMatch = true;
-
-//							@methodHandler.IncrementCallCount();
-//							if (@methodHandler.Method is not null)
-//							{
-//								((global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>)@methodHandler.Method)(@buildPartition!, @artifactsPaths!);
-//							}
-//							break;
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!) : @handler.ReturnValue;
+//							return @result!;
 //						}
 //					}
-
-//					if (!@foundMatch)
-//					{
-//						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for void GenerateBuildScript(global::BenchmarkDotNet.Running.BuildPartition @buildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths @artifactsPaths)");
-//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2)");
 //				}
-//				else
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(26, "string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3)")]
+//			public override string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3)
+//			{
+//				if (this.Expectations.handlers26.Count > 0)
 //				{
-//					base.GenerateBuildScript(buildPartition: @buildPartition!, artifactsPaths: @artifactsPaths!);
+//					foreach (var @handler in this.Expectations.handlers26)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(27, "bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.Span<char> @destination, out int @charsWritten)")]
+//			public override bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.Span<char> @destination, out int @charsWritten)
+//			{
+//				@charsWritten = default!;
+//				if (this.Expectations.handlers27.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers27)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!) &&
+//							@handler.@destination.IsValid(@destination!) &&
+//							@handler.@charsWritten.IsValid(@charsWritten!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!, @destination!, out @charsWritten!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.Span<char> @destination, out int @charsWritten)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.Span<char> @destination, out int @charsWritten)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(28, "bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.Span<char> @destination, out int @charsWritten)")]
+//			public override bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.Span<char> @destination, out int @charsWritten)
+//			{
+//				@charsWritten = default!;
+//				if (this.Expectations.handlers28.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers28)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@destination.IsValid(@destination!) &&
+//							@handler.@charsWritten.IsValid(@charsWritten!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @destination!, out @charsWritten!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.Span<char> @destination, out int @charsWritten)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool TryJoin(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.Span<char> @destination, out int @charsWritten)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(29, "bool HasExtension(global::System.ReadOnlySpan<char> @path)")]
+//			public override bool HasExtension(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers29.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers29)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool HasExtension(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool HasExtension(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(30, "bool IsPathFullyQualified(global::System.ReadOnlySpan<char> @path)")]
+//			public override bool IsPathFullyQualified(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers30.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers30)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool IsPathFullyQualified(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool IsPathFullyQualified(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(31, "bool IsPathRooted(global::System.ReadOnlySpan<char> @path)")]
+//			public override bool IsPathRooted(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers31.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers31)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool IsPathRooted(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool IsPathRooted(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(32, "global::System.ReadOnlySpan<char> GetDirectoryName(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> GetDirectoryName(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers32.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers32)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> GetDirectoryName(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> GetDirectoryName(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(33, "global::System.ReadOnlySpan<char> GetExtension(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> GetExtension(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers33.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers33)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> GetExtension(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> GetExtension(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(34, "global::System.ReadOnlySpan<char> GetFileName(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> GetFileName(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers34.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers34)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> GetFileName(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> GetFileName(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(35, "global::System.ReadOnlySpan<char> GetFileNameWithoutExtension(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> GetFileNameWithoutExtension(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers35.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers35)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> GetFileNameWithoutExtension(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> GetFileNameWithoutExtension(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(36, "global::System.ReadOnlySpan<char> GetPathRoot(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> GetPathRoot(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers36.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers36)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> GetPathRoot(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> GetPathRoot(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(37, "string Join(params string[] @paths)")]
+//			public override string Join(params string[] @paths)
+//			{
+//				if (this.Expectations.handlers37.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers37)
+//					{
+//						if (@handler.@paths.IsValid(@paths!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@paths!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(params string[] @paths)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(params string[] @paths)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(38, "string Join(string @path1, string @path2)")]
+//			public override string Join(string @path1, string @path2)
+//			{
+//				if (this.Expectations.handlers38.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers38)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(string @path1, string @path2)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(string @path1, string @path2)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(39, "string Join(string @path1, string @path2, string @path3)")]
+//			public override string Join(string @path1, string @path2, string @path3)
+//			{
+//				if (this.Expectations.handlers39.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers39)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(string @path1, string @path2, string @path3)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(string @path1, string @path2, string @path3)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(40, "bool EndsInDirectorySeparator(global::System.ReadOnlySpan<char> @path)")]
+//			public override bool EndsInDirectorySeparator(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers40.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers40)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool EndsInDirectorySeparator(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool EndsInDirectorySeparator(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(41, "bool EndsInDirectorySeparator(string @path)")]
+//			public override bool EndsInDirectorySeparator(string @path)
+//			{
+//				if (this.Expectations.handlers41.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers41)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool EndsInDirectorySeparator(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for bool EndsInDirectorySeparator(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(42, "global::System.ReadOnlySpan<char> TrimEndingDirectorySeparator(global::System.ReadOnlySpan<char> @path)")]
+//			public override global::System.ReadOnlySpan<char> TrimEndingDirectorySeparator(global::System.ReadOnlySpan<char> @path)
+//			{
+//				if (this.Expectations.handlers42.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers42)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue!();
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for global::System.ReadOnlySpan<char> TrimEndingDirectorySeparator(global::System.ReadOnlySpan<char> @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.ReadOnlySpan<char> TrimEndingDirectorySeparator(global::System.ReadOnlySpan<char> @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(43, "string TrimEndingDirectorySeparator(string @path)")]
+//			public override string TrimEndingDirectorySeparator(string @path)
+//			{
+//				if (this.Expectations.handlers43.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers43)
+//					{
+//						if (@handler.@path.IsValid(@path!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string TrimEndingDirectorySeparator(string @path)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string TrimEndingDirectorySeparator(string @path)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(44, "string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.ReadOnlySpan<char> @path4)")]
+//			public override string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.ReadOnlySpan<char> @path4)
+//			{
+//				if (this.Expectations.handlers44.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers44)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!) &&
+//							@handler.@path4.IsValid(@path4!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!, @path4!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.ReadOnlySpan<char> @path4)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(global::System.ReadOnlySpan<char> @path1, global::System.ReadOnlySpan<char> @path2, global::System.ReadOnlySpan<char> @path3, global::System.ReadOnlySpan<char> @path4)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(45, "string Join(string @path1, string @path2, string @path3, string @path4)")]
+//			public override string Join(string @path1, string @path2, string @path3, string @path4)
+//			{
+//				if (this.Expectations.handlers45.Count > 0)
+//				{
+//					foreach (var @handler in this.Expectations.handlers45)
+//					{
+//						if (@handler.@path1.IsValid(@path1!) &&
+//							@handler.@path2.IsValid(@path2!) &&
+//							@handler.@path3.IsValid(@path3!) &&
+//							@handler.@path4.IsValid(@path4!))
+//						{
+//							@handler.CallCount++;
+//							var @result = @handler.Callback is not null ?
+//								@handler.Callback(@path1!, @path2!, @path3!, @path4!) : @handler.ReturnValue;
+//							return @result!;
+//						}
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers match for string Join(string @path1, string @path2, string @path3, string @path4)");
+//				}
+				
+//				throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Join(string @path1, string @path2, string @path3, string @path4)");
+//			}
+			
+//			[global::Rocks.MemberIdentifier(46, "get_AltDirectorySeparatorChar()")]
+//			public override char AltDirectorySeparatorChar
+//			{
+//				get
+//				{
+//					if (this.Expectations.handlers46.Count > 0)
+//					{
+//						var @handler = this.Expectations.handlers46[0];
+//						@handler.CallCount++;
+//						var @result = @handler.Callback is not null ?
+//							@handler.Callback() : @handler.ReturnValue;
+//						return @result!;
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_AltDirectorySeparatorChar())");
 //				}
 //			}
-
+//			[global::Rocks.MemberIdentifier(47, "get_DirectorySeparatorChar()")]
+//			public override char DirectorySeparatorChar
+//			{
+//				get
+//				{
+//					if (this.Expectations.handlers47.Count > 0)
+//					{
+//						var @handler = this.Expectations.handlers47[0];
+//						@handler.CallCount++;
+//						var @result = @handler.Callback is not null ?
+//							@handler.Callback() : @handler.ReturnValue;
+//						return @result!;
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_DirectorySeparatorChar())");
+//				}
+//			}
+//			[global::System.ObsoleteAttribute("Please use GetInvalidPathChars or GetInvalidFileNameChars instead.")]
+//			[global::Rocks.MemberIdentifier(48, "get_InvalidPathChars()")]
+//			public override char[] InvalidPathChars
+//			{
+//				get
+//				{
+//					if (this.Expectations.handlers48.Count > 0)
+//					{
+//						var @handler = this.Expectations.handlers48[0];
+//						@handler.CallCount++;
+//						var @result = @handler.Callback is not null ?
+//							@handler.Callback() : @handler.ReturnValue;
+//						return @result!;
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_InvalidPathChars())");
+//				}
+//			}
+//			[global::Rocks.MemberIdentifier(49, "get_PathSeparator()")]
+//			public override char PathSeparator
+//			{
+//				get
+//				{
+//					if (this.Expectations.handlers49.Count > 0)
+//					{
+//						var @handler = this.Expectations.handlers49[0];
+//						@handler.CallCount++;
+//						var @result = @handler.Callback is not null ?
+//							@handler.Callback() : @handler.ReturnValue;
+//						return @result!;
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_PathSeparator())");
+//				}
+//			}
+//			[global::Rocks.MemberIdentifier(50, "get_VolumeSeparatorChar()")]
+//			public override char VolumeSeparatorChar
+//			{
+//				get
+//				{
+//					if (this.Expectations.handlers50.Count > 0)
+//					{
+//						var @handler = this.Expectations.handlers50[0];
+//						@handler.CallCount++;
+//						var @result = @handler.Callback is not null ?
+//							@handler.Callback() : @handler.ReturnValue;
+//						return @result!;
+//					}
+					
+//					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_VolumeSeparatorChar())");
+//				}
+//			}
+			
+//			private global::System.IO.Abstractions.PathBaseCreateExpectations Expectations { get; }
 //		}
-//	}
-
-//	internal static class MethodExpectationsOfGeneratorExtensions
-//	{
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self) =>
-//			new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string?>, string?>(@self.Add<string?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<object?> @obj)
+		
+//		internal sealed class PathBaseMethodExpectations
 //		{
-//			global::System.ArgumentNullException.ThrowIfNull(@obj);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<object?, bool>, bool>(@self.Add<bool>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+//			internal PathBaseMethodExpectations(global::System.IO.Abstractions.PathBaseCreateExpectations expectations) =>
+//				this.Expectations = expectations;
+			
+//			internal new global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler0, global::System.Func<string?>, string?> ToString()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler0();
+//				this.Expectations.handlers0.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler1, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@obj);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler1
+//				{
+//					@obj = @obj,
+//				};
+				
+//				this.Expectations.handlers1.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal new global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler2();
+//				this.Expectations.handlers2.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler3, global::System.Func<string, string, string>, string> ChangeExtension(global::Rocks.Argument<string> @path, global::Rocks.Argument<string> @extension)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+//				global::System.ArgumentNullException.ThrowIfNull(@extension);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler3
+//				{
+//					@path = @path,
+//					@extension = @extension,
+//				};
+				
+//				this.Expectations.handlers3.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler4, global::System.Func<string[], string>, string> Combine(global::Rocks.Argument<string[]> @paths)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@paths);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler4
+//				{
+//					@paths = @paths,
+//				};
+				
+//				this.Expectations.handlers4.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler5, global::System.Func<string, string, string>, string> Combine(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler5
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//				};
+				
+//				this.Expectations.handlers5.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler6, global::System.Func<string, string, string, string>, string> Combine(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2, global::Rocks.Argument<string> @path3)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler6
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//				};
+				
+//				this.Expectations.handlers6.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler7, global::System.Func<string, string, string, string, string>, string> Combine(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2, global::Rocks.Argument<string> @path3, global::Rocks.Argument<string> @path4)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+//				global::System.ArgumentNullException.ThrowIfNull(@path4);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler7
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//					@path4 = @path4,
+//				};
+				
+//				this.Expectations.handlers7.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler8, global::System.Func<string, bool>, bool> Exists(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler8
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers8.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler9, global::System.Func<string, string>, string> GetDirectoryName(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler9
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers9.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler10, global::System.Func<string, string>, string> GetExtension(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler10
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers10.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler11, global::System.Func<string, string>, string> GetFileName(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler11
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers11.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler12, global::System.Func<string, string>, string> GetFileNameWithoutExtension(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler12
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers12.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler13, global::System.Func<string, string>, string> GetFullPath(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler13
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers13.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler14, global::System.Func<string, string, string>, string> GetFullPath(global::Rocks.Argument<string> @path, global::Rocks.Argument<string> @basePath)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+//				global::System.ArgumentNullException.ThrowIfNull(@basePath);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler14
+//				{
+//					@path = @path,
+//					@basePath = @basePath,
+//				};
+				
+//				this.Expectations.handlers14.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler15, global::System.Func<char[]>, char[]> GetInvalidFileNameChars()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler15();
+//				this.Expectations.handlers15.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler16, global::System.Func<char[]>, char[]> GetInvalidPathChars()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler16();
+//				this.Expectations.handlers16.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler17, global::System.Func<string, string>, string> GetPathRoot(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler17
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers17.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler18, global::System.Func<string>, string> GetRandomFileName()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler18();
+//				this.Expectations.handlers18.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler19, global::System.Func<string>, string> GetTempFileName()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler19();
+//				this.Expectations.handlers19.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler20, global::System.Func<string>, string> GetTempPath()
+//			{
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler20();
+//				this.Expectations.handlers20.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler21, global::System.Func<string, bool>, bool> HasExtension(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler21
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers21.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler22, global::System.Func<string, bool>, bool> IsPathRooted(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler22
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers22.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler23, global::System.Func<string, bool>, bool> IsPathFullyQualified(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler23
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers23.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler24, global::System.Func<string, string, string>, string> GetRelativePath(global::Rocks.Argument<string> @relativeTo, global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@relativeTo);
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler24
+//				{
+//					@relativeTo = @relativeTo,
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers24.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler25, global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_15556403834946920933416596556976369267494708373, string> Join(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler25
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//				};
+				
+//				this.Expectations.handlers25.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler26, global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_47060620879035878699782186451828362770092212527, string> Join(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler26
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//				};
+				
+//				this.Expectations.handlers26.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler27, global::System.IO.Abstractions.ProjectionsForPathBase.TryJoinCallback_530140047793570782880049560089743718439848364003, bool> TryJoin(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForSpanOfchar @destination, global::Rocks.Argument<int> @charsWritten)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+//				global::System.ArgumentNullException.ThrowIfNull(@destination);
+//				global::System.ArgumentNullException.ThrowIfNull(@charsWritten);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler27
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//					@destination = @destination,
+//					@charsWritten = global::Rocks.Arg.Any<int>(),
+//				};
+				
+//				this.Expectations.handlers27.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler28, global::System.IO.Abstractions.ProjectionsForPathBase.TryJoinCallback_686134325988342444604560700806513718030405432440, bool> TryJoin(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForSpanOfchar @destination, global::Rocks.Argument<int> @charsWritten)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@destination);
+//				global::System.ArgumentNullException.ThrowIfNull(@charsWritten);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler28
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@destination = @destination,
+//					@charsWritten = global::Rocks.Arg.Any<int>(),
+//				};
+				
+//				this.Expectations.handlers28.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler29, global::System.IO.Abstractions.ProjectionsForPathBase.HasExtensionCallback_643134210436936966016132222010794379435569854999, bool> HasExtension(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler29
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers29.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler30, global::System.IO.Abstractions.ProjectionsForPathBase.IsPathFullyQualifiedCallback_48860660829234213696024453385885003561356428400, bool> IsPathFullyQualified(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler30
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers30.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler31, global::System.IO.Abstractions.ProjectionsForPathBase.IsPathRootedCallback_729439918569605109118174273133108433967231871994, bool> IsPathRooted(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler31
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers31.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar GetDirectoryName(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler32
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers32.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar GetExtension(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler33
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers33.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar GetFileName(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler34
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers34.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar GetFileNameWithoutExtension(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler35
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers35.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar GetPathRoot(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler36
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers36.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler37, global::System.Func<string[], string>, string> Join(global::Rocks.Argument<string[]> @paths)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@paths);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler37
+//				{
+//					@paths = @paths,
+//				};
+				
+//				this.Expectations.handlers37.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler38, global::System.Func<string, string, string>, string> Join(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler38
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//				};
+				
+//				this.Expectations.handlers38.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler39, global::System.Func<string, string, string, string>, string> Join(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2, global::Rocks.Argument<string> @path3)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler39
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//				};
+				
+//				this.Expectations.handlers39.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler40, global::System.IO.Abstractions.ProjectionsForPathBase.EndsInDirectorySeparatorCallback_185491315368662040883448594571290759052245679050, bool> EndsInDirectorySeparator(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler40
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers40.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler41, global::System.Func<string, bool>, bool> EndsInDirectorySeparator(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler41
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers41.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::System.IO.Abstractions.ProjectionsForPathBase.AdornmentsForReadOnlySpanOfchar TrimEndingDirectorySeparator(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler42
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers42.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler43, global::System.Func<string, string>, string> TrimEndingDirectorySeparator(global::Rocks.Argument<string> @path)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler43
+//				{
+//					@path = @path,
+//				};
+				
+//				this.Expectations.handlers43.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler44, global::System.IO.Abstractions.ProjectionsForPathBase.JoinCallback_522933266278897969183002454503729499517508500910, string> Join(global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path1, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path2, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path3, global::System.IO.Abstractions.ProjectionsForPathBase.ArgForReadOnlySpanOfchar @path4)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+//				global::System.ArgumentNullException.ThrowIfNull(@path4);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler44
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//					@path4 = @path4,
+//				};
+				
+//				this.Expectations.handlers44.Add(handler);
+//				return new(handler);
+//			}
+			
+//			internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler45, global::System.Func<string, string, string, string, string>, string> Join(global::Rocks.Argument<string> @path1, global::Rocks.Argument<string> @path2, global::Rocks.Argument<string> @path3, global::Rocks.Argument<string> @path4)
+//			{
+//				global::System.ArgumentNullException.ThrowIfNull(@path1);
+//				global::System.ArgumentNullException.ThrowIfNull(@path2);
+//				global::System.ArgumentNullException.ThrowIfNull(@path3);
+//				global::System.ArgumentNullException.ThrowIfNull(@path4);
+				
+//				var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler45
+//				{
+//					@path1 = @path1,
+//					@path2 = @path2,
+//					@path3 = @path3,
+//					@path4 = @path4,
+//				};
+				
+//				this.Expectations.handlers45.Add(handler);
+//				return new(handler);
+//			}
+			
+//			private global::System.IO.Abstractions.PathBaseCreateExpectations Expectations { get; }
 //		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self) =>
-//			new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<int>, int>(@self.Add<int>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string, string>, string> GetBinariesDirectoryPath(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<string> @buildArtifactsDirectoryPath, global::Rocks.Argument<string> @configuration)
+		
+//		internal sealed class PathBasePropertyExpectations
 //		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildArtifactsDirectoryPath);
-//			global::System.ArgumentNullException.ThrowIfNull(@configuration);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string, string>, string>(@self.Add<string>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @buildArtifactsDirectoryPath, @configuration }));
+//			internal sealed class PathBasePropertyGetterExpectations
+//			{
+//				internal PathBasePropertyGetterExpectations(global::System.IO.Abstractions.PathBaseCreateExpectations expectations) =>
+//					this.Expectations = expectations;
+				
+//				internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler46, global::System.Func<char>, char> AltDirectorySeparatorChar()
+//				{
+//					var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler46();
+//					this.Expectations.handlers46.Add(handler);
+//					return new(handler);
+//				}
+//				internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler47, global::System.Func<char>, char> DirectorySeparatorChar()
+//				{
+//					var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler47();
+//					this.Expectations.handlers47.Add(handler);
+//					return new(handler);
+//				}
+//				internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler48, global::System.Func<char[]>, char[]> InvalidPathChars()
+//				{
+//					var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler48();
+//					this.Expectations.handlers48.Add(handler);
+//					return new(handler);
+//				}
+//				internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler49, global::System.Func<char>, char> PathSeparator()
+//				{
+//					var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler49();
+//					this.Expectations.handlers49.Add(handler);
+//					return new(handler);
+//				}
+//				internal global::Rocks.AdornmentsV4<global::System.IO.Abstractions.PathBaseCreateExpectations.Handler50, global::System.Func<char>, char> VolumeSeparatorChar()
+//				{
+//					var handler = new global::System.IO.Abstractions.PathBaseCreateExpectations.Handler50();
+//					this.Expectations.handlers50.Add(handler);
+//					return new(handler);
+//				}
+//				private global::System.IO.Abstractions.PathBaseCreateExpectations Expectations { get; }
+//			}
+			
+			
+//			internal PathBasePropertyExpectations(global::System.IO.Abstractions.PathBaseCreateExpectations expectations) =>
+//				(this.Getters) = (new(expectations));
+			
+//			internal global::System.IO.Abstractions.PathBaseCreateExpectations.PathBasePropertyExpectations.PathBasePropertyGetterExpectations Getters { get; }
 //		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string>, string> GetExecutableExtension(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self) =>
-//			new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string>, string>(@self.Add<string>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string>, string> GetProjectFilePath(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<string> @buildArtifactsDirectoryPath)
+		
+//		internal global::System.IO.Abstractions.PathBaseCreateExpectations.PathBaseMethodExpectations Methods { get; }
+//		internal global::System.IO.Abstractions.PathBaseCreateExpectations.PathBasePropertyExpectations Properties { get; }
+		
+//		internal PathBaseCreateExpectations() =>
+//			(this.Methods, this.Properties) = (new(this), new(this));
+		
+//		internal global::System.IO.Abstractions.PathBase Instance(global::System.IO.Abstractions.IFileSystem @fileSystem)
 //		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildArtifactsDirectoryPath);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string>, string>(@self.Add<string>(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @buildArtifactsDirectoryPath }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>> CopyAllRequiredFiles(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>>(@self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @artifactsPaths }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>> GenerateNuGetConfig(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Toolchains.ArtifactsPaths>>(@self.Add(9, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @artifactsPaths }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths, global::BenchmarkDotNet.Loggers.ILogger>> GenerateProject(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition> @buildPartition, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths, global::Rocks.Argument<global::BenchmarkDotNet.Loggers.ILogger> @logger)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildPartition);
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			global::System.ArgumentNullException.ThrowIfNull(@logger);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths, global::BenchmarkDotNet.Loggers.ILogger>>(@self.Add(10, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @buildPartition, @artifactsPaths, @logger }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string>, string> GetPackagesDirectoryPath(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<string> @buildArtifactsDirectoryPath)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildArtifactsDirectoryPath);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string>, string>(@self.Add<string>(12, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @buildArtifactsDirectoryPath }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>> GenerateAppConfig(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition> @buildPartition, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildPartition);
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>>(@self.Add(13, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @buildPartition, @artifactsPaths }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>> GenerateCode(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition> @buildPartition, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildPartition);
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>>(@self.Add(14, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @buildPartition, @artifactsPaths }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string, string>, string> GetExecutablePath(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<string> @binariesDirectoryPath, global::Rocks.Argument<string> @programName)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@binariesDirectoryPath);
-//			global::System.ArgumentNullException.ThrowIfNull(@programName);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<string, string, string>, string>(@self.Add<string>(15, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @binariesDirectoryPath, @programName }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<global::BenchmarkDotNet.Running.BuildPartition, string, string>, string> GetBuildArtifactsDirectoryPath(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition> @buildPartition, global::Rocks.Argument<string> @programName)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildPartition);
-//			global::System.ArgumentNullException.ThrowIfNull(@programName);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<global::BenchmarkDotNet.Running.BuildPartition, string, string>, string>(@self.Add<string>(16, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @buildPartition, @programName }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<global::BenchmarkDotNet.Toolchains.ArtifactsPaths, string[]>, string[]> GetArtifactsToCleanup(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Func<global::BenchmarkDotNet.Toolchains.ArtifactsPaths, string[]>, string[]>(@self.Add<string[]>(17, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @artifactsPaths }));
-//		}
-//		internal static global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>> GenerateBuildScript(this global::Rocks.Expectations.MethodExpectations<global::BenchmarkDotNet.Toolchains.Roslyn.Generator> @self, global::Rocks.Argument<global::BenchmarkDotNet.Running.BuildPartition> @buildPartition, global::Rocks.Argument<global::BenchmarkDotNet.Toolchains.ArtifactsPaths> @artifactsPaths)
-//		{
-//			global::System.ArgumentNullException.ThrowIfNull(@buildPartition);
-//			global::System.ArgumentNullException.ThrowIfNull(@artifactsPaths);
-//			return new global::Rocks.MethodAdornments<global::BenchmarkDotNet.Toolchains.Roslyn.Generator, global::System.Action<global::BenchmarkDotNet.Running.BuildPartition, global::BenchmarkDotNet.Toolchains.ArtifactsPaths>>(@self.Add(18, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @buildPartition, @artifactsPaths }));
+//			if (!this.WasInstanceInvoked)
+//			{
+//				this.WasInstanceInvoked = true;
+//				var @mock = new RockPathBase(this, @fileSystem);
+//				this.MockType = @mock.GetType();
+//				return @mock;
+//			}
+//			else
+//			{
+//				throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+//			}
 //		}
 //	}
 //}
