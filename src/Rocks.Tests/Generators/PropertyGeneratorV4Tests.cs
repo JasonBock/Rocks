@@ -120,7 +120,8 @@ public static class PropertyGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -1541,7 +1542,8 @@ public static class PropertyGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -1560,7 +1562,8 @@ public static class PropertyGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers5[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -1637,7 +1640,8 @@ public static class PropertyGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers9[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else

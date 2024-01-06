@@ -149,7 +149,8 @@ public static class ShimBuilderGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -165,7 +166,8 @@ public static class ShimBuilderGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -452,7 +454,8 @@ public static class ShimBuilderGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -470,7 +473,8 @@ public static class ShimBuilderGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers4[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							

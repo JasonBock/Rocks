@@ -193,6 +193,8 @@ internal static class MockMethodValueBuilderV4
 		var methodArguments = method.Parameters.Length == 0 ? string.Empty :
 			string.Join(", ", method.Parameters.Select(
 				_ => _.RefKind == RefKind.Ref || _.RefKind == RefKind.Out ? $"{(_.RefKind == RefKind.Ref ? "ref" : "out")} @{_.Name}!" : $"@{_.Name}!"));
+		var returnValueCall = method.ReturnType.IsRefLikeType ?
+			".ReturnValue!()" : ".ReturnValue";
 
 		// TODO: I took a lot out here because sometimes I apparently pass in 
 		// a delegate for the return value for certain return types. But...
@@ -202,7 +204,7 @@ internal static class MockMethodValueBuilderV4
 			writer.WriteLines(
 				$$"""
 				this.rr{{memberIndentifier}} = @{{namingContext["handler"]}}.Callback is not null ?
-					@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}.ReturnValue;
+					@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
 				""");
 		}
 		else
@@ -212,7 +214,7 @@ internal static class MockMethodValueBuilderV4
 				writer.WriteLines(
 					$$"""
 					_ = @{{namingContext["handler"]}}.Callback is not null ?
-						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}.ReturnValue;
+						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
 					""");
 			}
 			else
@@ -220,7 +222,7 @@ internal static class MockMethodValueBuilderV4
 				writer.WriteLines(
 					$$"""
 					var @{{namingContext["result"]}} = @{{namingContext["handler"]}}.Callback is not null ?
-						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}.ReturnValue;
+						@{{namingContext["handler"]}}.Callback({{methodArguments}}) : @{{namingContext["handler"]}}{{returnValueCall}};
 					""");
 			}
 		}

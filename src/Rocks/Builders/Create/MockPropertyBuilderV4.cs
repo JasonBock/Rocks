@@ -31,18 +31,25 @@ internal static class MockPropertyBuilderV4
 		writer.WriteLine($"var @handler = this.Expectations.handlers{memberIdentifier}[0];");
 		writer.WriteLine("@handler.CallCount++;");
 
+		var returnValueCall = property.Type.IsRefLikeType ?
+			".ReturnValue!()" : ".ReturnValue";
+
 		if (property.ReturnsByRef || property.ReturnsByRefReadOnly)
 		{
-			writer.WriteLine($"this.rr{property.MemberIdentifier} = @handler.Callback?.Invoke() ?? @handler.ReturnValue;");
+			writer.WriteLines(
+				$$"""
+				this.rr{{property.MemberIdentifier}} = @handler.Callback is not null ?
+					@handler.Callback() : @handler{{returnValueCall}};
+				""");
 		}
 		else
 		{
-			writer.WriteLine("var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;");
+			writer.WriteLines(
+				$$"""
+				var @result = @handler.Callback is not null ?
+					@handler.Callback() : @handler{{returnValueCall}};
+				""");
 		}
-
-		// TODO: I took a lot out here because sometimes I apparently pass in 
-		// a delegate for the return value for certain return types. But...
-		// I'm thinking I don't need to do that anymore? We'll see.
 
 		if (raiseEvents)
 		{

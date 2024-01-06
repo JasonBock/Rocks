@@ -29,15 +29,14 @@ internal static partial class MockProjectedHandlerAdornmentsTypesBuilderV4
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
-		var adornmentTypes = new HashSet<(TypeReferenceModel type, string projectedCallbackName)>();
+		var adornmentTypes = new HashSet<(TypeReferenceModel type, MethodModel method)>();
 
 		foreach (var method in type.Methods)
 		{
 			if (!method.ReturnsVoid &&
 				(method.ReturnType.TypeKind == TypeKind.FunctionPointer || method.ReturnType.IsRefLikeType))
 			{
-				adornmentTypes.Add((method.ReturnType,
-					MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType)));
+				adornmentTypes.Add((method.ReturnType, method));
 			}
 		}
 
@@ -46,58 +45,67 @@ internal static partial class MockProjectedHandlerAdornmentsTypesBuilderV4
 			if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
 				(property.Type.TypeKind == TypeKind.FunctionPointer || property.Type.IsRefLikeType))
 			{
-				adornmentTypes.Add((property.Type,
-					MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(property.GetMethod!, property.MockType)));
+				adornmentTypes.Add((property.Type, property.GetMethod!));
 			}
 		}
 
-		var types = adornmentTypes.ToList();
-
-		if (types.Count > 0)
+		if (adornmentTypes.Count > 0)
 		{
-			foreach (var handlerType in types.Distinct())
+			foreach (var handlerType in adornmentTypes)
 			{
-				MockProjectedHandlerAdornmentsTypesBuilderV4.BuildHandlerType(writer, handlerType.type, handlerType.projectedCallbackName);
+				MockProjectedHandlerAdornmentsTypesBuilderV4.BuildHandlerType(writer, handlerType.type, handlerType.method);
 			}
 
 			foreach (var adornmentType in adornmentTypes)
 			{
-				MockProjectedHandlerAdornmentsTypesBuilderV4.BuildAdornmentsType(writer, adornmentType.type, adornmentType.projectedCallbackName);
+				MockProjectedHandlerAdornmentsTypesBuilderV4.BuildAdornmentsType(writer, adornmentType.type, adornmentType.method);
 			}
 		}
 	}
 
-	private static void BuildHandlerType(IndentedTextWriter writer, TypeReferenceModel type, string projectedCallbackName)
+	private static void BuildHandlerType(IndentedTextWriter writer, TypeReferenceModel type, MethodModel method)
 	{
 		var handlerName = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedHandlerName(type);
 		var isUnsafe = type.IsPointer ? " unsafe" : string.Empty;
+		var projectedCallbackDelegateName = MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(
+			method, method.MockType);
+		var returnType = 
+			type.IsRefLikeType ? 
+				$"{MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType)}?" : 
+				type.FullyQualifiedName;
 
 		writer.WriteLines(
 			$$"""
 			internal{{isUnsafe}} class {{handlerName}}
-				: global::Rocks.HandlerV4<{{projectedCallbackName}}>
+				: global::Rocks.HandlerV4<{{projectedCallbackDelegateName}}>
 			{
-				internal {{type.FullyQualifiedName}} ReturnValue { get; set; }
+				internal {{returnType}} ReturnValue { get; set; }
 			}
 			""");
 	}
 
-	private static void BuildAdornmentsType(IndentedTextWriter writer, TypeReferenceModel type, string projectedCallbackName)
+	private static void BuildAdornmentsType(IndentedTextWriter writer, TypeReferenceModel type, MethodModel method)
 	{
 		var adornmentName = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsName(type);
 		var handlerName = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedHandlerName(type);
+		var projectedCallbackDelegateName = MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(
+			method, method.MockType);
+		var returnType =
+			type.IsRefLikeType ?
+				MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+				type.FullyQualifiedName;
 		var isUnsafe = type.IsPointer ? " unsafe" : string.Empty;
 
 		writer.WriteLines(
 			$$"""
 			internal{{isUnsafe}} sealed class {{adornmentName}}
-				: global::Rocks.AdornmentsV4<{{handlerName}}, {{projectedCallbackName}}>
+				: global::Rocks.AdornmentsV4<{{handlerName}}, {{projectedCallbackDelegateName}}>
 			{
 				internal {{adornmentName}}({{handlerName}} handler) 
 					: base(handler) 
 				{ }
 
-				internal {{adornmentName}} ReturnValue({{type.FullyQualifiedName}} returnValue)
+				internal {{adornmentName}} ReturnValue({{returnType}} returnValue)
 				{
 					this.handler.ReturnValue = returnValue;
 					return this;

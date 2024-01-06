@@ -114,7 +114,8 @@ public static class InterfaceGeneratorV4Tests
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
-								var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								@handler.RaiseEvents(this);
 								return @result!;
 							}

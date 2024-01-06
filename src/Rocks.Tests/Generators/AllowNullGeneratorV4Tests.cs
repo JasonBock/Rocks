@@ -93,7 +93,8 @@ public static class AllowNullGeneratorV4Tests
 								{
 									var @handler = this.Expectations.handlers0[0];
 									@handler.CallCount++;
-									var @result = @handler.Callback?.Invoke() ?? @handler.ReturnValue;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback() : @handler.ReturnValue;
 									return @result!;
 								}
 								

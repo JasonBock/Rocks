@@ -150,3 +150,17 @@ During mock code generation:
     * DONE - Nothing should change. With all the code gen done before, everything is standardized.
 * DONE - Expectations
     * DONE - If the return type is a pointer, return `PointerAdornmentsV4<>`. If it's a `ref struct` or a function pointer, use the `AdornmentsFor...<>` gen'd type. Either way, the implementation should be standard for everything.
+
+* DONE - For `ref struct` and function pointers
+    * DONE - The gen'd `HandlerFor...` type needs to not be sealed
+    * DONE - he gen'd `AdornmentsFor...` type should not be generic (with no constraint either), and pass in the `HandlerFor...` type to the `THandler` parameter. Change the ctor parameter type as well.
+
+Now I remember why `ref struct` returns are done through a delegate. I am gen'ing the return value delegate, but what I need to do is:
+
+* DONE - For the `ReturnValue` property on the custom handler, it needs to be of this return value delegate
+* DONE - Any time I gen a `ReturnValue` property, make the type nullable (arguments should always be set, but the return value may not)
+* DONE - Adornment needs to get the right return value type if it's a `ref struct`
+* DONE - For any mock member implementation that returns a value, if the return type is a `ref struct`, then do `.ReturnValue!()`
+
+* DONE - To be consistent, just do this: `@handler.Callback is not null ? @handler.Callback() : @handler.ReturnValue;` when I return a value - basically don't do the `Callback?.Invoke` thing, it runs into too many corner cases. The other approach will always work (though this is OK for property setters)
+* Property and indexer adornments need to be updated to return the right type for esoteric types.
