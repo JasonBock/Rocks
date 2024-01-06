@@ -13,7 +13,6 @@ internal static class IndexerExpectationsIndexerBuilderV4
 		{
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariableNamingContext(propertyGetMethod);
-			var mockTypeName = property.MockType.FullyQualifiedName;
 			var needsGenerationWithDefaults = false;
 
 			var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
@@ -22,35 +21,63 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
 				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 				propertyGetMethod.ReturnType.FullyQualifiedName;
-			var returnValue = propertyGetMethod.ReturnType.IsPointer ?
-				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
-				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {delegateTypeName}, {propertyReturnValue}>";
+			string adornmentsType;
+
+			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
+			{
+				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+			}
+			else
+			{
+				var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
+					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+					DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
+				var returnType = 
+					property.Type.TypeKind == TypeKind.Pointer ?
+						property.Type.PointerType!.FullyQualifiedName :
+						property.Type.FullyQualifiedName;
+
+				adornmentsType = property.Type.IsPointer ?
+					$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>" :
+					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
+			}
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
-					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-
-					if (isGeneratedWithDefaults)
+					if (_.Type.IsEsoteric)
 					{
-						if (_.HasExplicitDefaultValue)
-						{
-							return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
-						}
-						else
-						{
-							return _.IsParams ?
-								$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
-						}
+						var argName =
+							_.Type.TypeKind == TypeKind.Pointer ?
+								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
+								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						return $"{argName} @{_.Name}";
 					}
-
-					if (!isGeneratedWithDefaults)
+					else
 					{
-						// Only set this flag if we're currently not generating with defaults.
-						needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
-					}
+						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
-					return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						if (isGeneratedWithDefaults)
+						{
+							if (_.HasExplicitDefaultValue)
+							{
+								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+							}
+							else
+							{
+								return _.IsParams ?
+									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
+									$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+							}
+						}
+
+						if (!isGeneratedWithDefaults)
+						{
+							// Only set this flag if we're currently not generating with defaults.
+							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
+						}
+
+						return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+					}
 				}));
 
 			if (isGeneratedWithDefaults)
@@ -58,14 +85,14 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ?
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
-				writer.WriteLine($"internal {returnValue} This({instanceParameters}) =>");
+				writer.WriteLine($"internal {adornmentsType} This({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine($"this.This({parameterValues});");
 				writer.Indent--;
 			}
 			else
 			{
-				writer.WriteLine($"internal {returnValue} This({instanceParameters})");
+				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
 
@@ -124,19 +151,37 @@ internal static class IndexerExpectationsIndexerBuilderV4
 		{
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariableNamingContext(propertySetMethod);
-			var mockTypeName = property.MockType.FullyQualifiedName;
 
 			var lastParameter = propertySetMethod.Parameters[propertySetMethod.Parameters.Length - 1];
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
-			var valueParameter = $"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}> @{lastParameter.Name}";
+			var valueParameterArgument =
+				lastParameter.Type.IsEsoteric ?
+					lastParameter.Type.TypeKind == TypeKind.Pointer ?
+						$"global::Rocks.PointerArgument<{lastParameter.Type.PointerType!.FullyQualifiedName}>" :
+						ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
+				$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
+			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
+
 			var needsGenerationWithDefaults = false;
 
 			var delegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
 				DelegateBuilder.Build(propertySetMethod.Parameters);
-			var returnValue = propertySetMethod.RequiresProjectedDelegate ?
-				$"{MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(property.Type, property.MockType, AdornmentType.Indexer, false)}<{mockTypeName}, {delegateTypeName}>" :
-				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {delegateTypeName}>";
+			string adornmentsType;
+
+			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
+			{
+				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+			}
+			else
+			{
+				var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
+					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+					DelegateBuilder.Build(propertySetMethod.Parameters);
+				adornmentsType = property.Type.IsPointer ?
+					$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>" :
+					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+			}
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
@@ -176,14 +221,14 @@ internal static class IndexerExpectationsIndexerBuilderV4
 					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
 						p => p.HasExplicitDefaultValue || p.IsParams ?
 							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
-				writer.WriteLine($"internal {returnValue} This({instanceParameters}) =>");
+				writer.WriteLine($"internal {adornmentsType} This({instanceParameters}) =>");
 				writer.Indent++;
 				writer.WriteLine($"this.This({parameterValues});");
 				writer.Indent--;
 			}
 			else
 			{
-				writer.WriteLine($"internal {returnValue} This({instanceParameters})");
+				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
 

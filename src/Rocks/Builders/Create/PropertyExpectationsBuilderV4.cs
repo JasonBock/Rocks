@@ -66,7 +66,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupGetters)
 				{
-					ExplicitIndexerExpectationsIndexerBuilderV4.Build(writer, result,
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result,
 						PropertyAccessor.Get, expectationsFullyQualifiedName);
 				}
 
@@ -96,7 +96,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupSetters)
 				{
-					ExplicitIndexerExpectationsIndexerBuilderV4.Build(writer, result,
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result,
 						PropertyAccessor.Set, expectationsFullyQualifiedName);
 				}
 
@@ -126,7 +126,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupInitializers)
 				{
-					ExplicitIndexerExpectationsIndexerBuilderV4.Build(writer, result,
+					IndexerExpectationsIndexerBuilderV4.Build(writer, result,
 						PropertyAccessor.Init, expectationsFullyQualifiedName);
 				}
 
@@ -328,7 +328,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupGetters)
 				{
-					ExplicitPropertyExpectationsPropertyBuilderV4.Build(writer, result,
+					PropertyExpectationsPropertyBuilderV4.Build(writer, result,
 						PropertyAccessor.Get, expectationsFullyQualifiedName);
 				}
 
@@ -358,7 +358,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupSetters)
 				{
-					ExplicitPropertyExpectationsPropertyBuilderV4.Build(writer, result,
+					PropertyExpectationsPropertyBuilderV4.Build(writer, result,
 						PropertyAccessor.Set, expectationsFullyQualifiedName);
 				}
 
@@ -388,7 +388,7 @@ internal static class PropertyExpectationsBuilderV4
 
 				foreach (var result in typeGroupInitializers)
 				{
-					ExplicitPropertyExpectationsPropertyBuilderV4.Build(writer, result,
+					PropertyExpectationsPropertyBuilderV4.Build(writer, result,
 						PropertyAccessor.Init, expectationsFullyQualifiedName);
 				}
 

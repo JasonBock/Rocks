@@ -11,9 +11,6 @@ internal static class MethodExpectationsMethodBuilderV4
 	{
 		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults, string expectationsFullyQualifiedName)
 		{
-			var isExplicitImplementation = method.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes;
-			var mockTypeName = method.MockType.FullyQualifiedName;
-			var containingTypeName = method.ContainingType.FullyQualifiedName;
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
 

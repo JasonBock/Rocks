@@ -163,4 +163,11 @@ Now I remember why `ref struct` returns are done through a delegate. I am gen'in
 * DONE - For any mock member implementation that returns a value, if the return type is a `ref struct`, then do `.ReturnValue!()`
 
 * DONE - To be consistent, just do this: `@handler.Callback is not null ? @handler.Callback() : @handler.ReturnValue;` when I return a value - basically don't do the `Callback?.Invoke` thing, it runs into too many corner cases. The other approach will always work (though this is OK for property setters)
-* Property and indexer adornments need to be updated to return the right type for esoteric types.
+* DONE - Property adornments need to be updated to return the right type for esoteric types.
+
+* I don't think I need to have "explicit" expectation builders for properties and indexers. All they're doing is gen'ing the getters and setters and they don't need to know the type they're implementing.
+
+
+* For indexers (getters and setters as well as explicit)
+    * Parameter types needs to be updated to `PointerArgument` or the gen'd type
+    * The returned adornment type needs to be updated
