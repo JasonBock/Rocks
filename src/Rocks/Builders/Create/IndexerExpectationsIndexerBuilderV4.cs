@@ -32,7 +32,7 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
 					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
 					DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
-				var returnType = 
+				var returnType =
 					property.Type.TypeKind == TypeKind.Pointer ?
 						property.Type.PointerType!.FullyQualifiedName :
 						property.Type.FullyQualifiedName;
@@ -167,50 +167,50 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			var delegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
 				DelegateBuilder.Build(propertySetMethod.Parameters);
-			string adornmentsType;
-
-			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
-			{
-				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
-			}
-			else
-			{
-				var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
-					DelegateBuilder.Build(propertySetMethod.Parameters);
-				adornmentsType = property.Type.IsPointer ?
-					$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>" :
-					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-			}
+			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
+				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+				DelegateBuilder.Build(propertySetMethod.Parameters);
+			var adornmentsType = $"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
 			var instanceParameters = string.Join(", ", valueParameter,
 				string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(_ =>
 				{
-					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-
-					if (isGeneratedWithDefaults)
+					if (_.Type.IsEsoteric)
 					{
-						if (_.HasExplicitDefaultValue)
-						{
-							return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
-						}
-						else
-						{
-							return _.IsParams ?
-								$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
-								$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
-						}
+						var argName =
+							_.Type.TypeKind == TypeKind.Pointer ?
+								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
+								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						return $"{argName} @{_.Name}";
 					}
-
-					if (!isGeneratedWithDefaults)
+					else
 					{
-						// Only set this flag if we're currently not generating with defaults.
-						needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
-					}
+						var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 
-					return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+						if (isGeneratedWithDefaults)
+						{
+							if (_.HasExplicitDefaultValue)
+							{
+								return $"{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name} = {_.ExplicitDefaultValue}";
+							}
+							else
+							{
+								return _.IsParams ?
+									$"params {_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}" :
+									$"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+							}
+						}
+
+						if (!isGeneratedWithDefaults)
+						{
+							// Only set this flag if we're currently not generating with defaults.
+							needsGenerationWithDefaults |= _.HasExplicitDefaultValue;
+						}
+
+						return $"global::Rocks.Argument<{_.Type.FullyQualifiedName}{requiresNullable}> @{_.Name}";
+					}
 				})));
 
 			if (isGeneratedWithDefaults)

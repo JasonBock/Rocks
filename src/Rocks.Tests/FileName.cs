@@ -11,8 +11,50 @@ namespace MockTests
 {
 	namespace ProjectionsForIHavePointers
 	{
-		internal unsafe delegate string get_ItemCallback_358841955163324583119694615602880815135165759209(int* @index);
-		internal unsafe delegate void set_ItemCallback_670704542699972028623331848601141915565982287732(int* @index, string @value);
+		internal unsafe delegate delegate*<int, void> get_ItemCallback_544565603059154913763960422018104775893635174208(string @index);
+		internal unsafe delegate void set_ItemCallback_639797374395471112019498606510044262758696353188(string @index, delegate*<int, void> @value);
+		internal unsafe delegate bool ArgEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
+
+		internal unsafe sealed class ArgFordelegatePointerOfint__void
+			: global::Rocks.Argument
+		{
+			private readonly global::MockTests.ProjectionsForIHavePointers.ArgEvaluationFordelegatePointerOfint__void? evaluation;
+			private readonly global::Rocks.ValidationState validation;
+
+			internal ArgFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
+
+			internal ArgFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgEvaluationFordelegatePointerOfint__void @evaluation)
+			{
+				this.evaluation = @evaluation;
+				this.validation = global::Rocks.ValidationState.Evaluation;
+			}
+
+			public bool IsValid(delegate*<int, void> @value) =>
+				this.validation switch
+				{
+					global::Rocks.ValidationState.None => true,
+					global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
+					_ => throw new global::System.NotSupportedException("Invalid validation state."),
+				};
+		}
+		internal unsafe class HandlerFordelegatePointerOfint__void
+			: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.get_ItemCallback_544565603059154913763960422018104775893635174208>
+		{
+			internal delegate*<int, void> ReturnValue { get; set; }
+		}
+		internal unsafe sealed class AdornmentsFordelegatePointerOfint__void
+			: global::Rocks.AdornmentsV4<HandlerFordelegatePointerOfint__void, global::MockTests.ProjectionsForIHavePointers.get_ItemCallback_544565603059154913763960422018104775893635174208>
+		{
+			internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void handler)
+				: base(handler)
+			{ }
+
+			internal AdornmentsFordelegatePointerOfint__void ReturnValue(delegate*<int, void> returnValue)
+			{
+				this.handler.ReturnValue = returnValue;
+				return this;
+			}
+		}
 	}
 
 	internal sealed class IHavePointersCreateExpectations
@@ -21,16 +63,16 @@ namespace MockTests
 #pragma warning disable CS8618
 
 		internal sealed class Handler0
-			: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.get_ItemCallback_358841955163324583119694615602880815135165759209, string>
+			: global::MockTests.ProjectionsForIHavePointers.HandlerFordelegatePointerOfint__void
 		{
-			public global::Rocks.PointerArgument<int> @index { get; set; }
+			public global::Rocks.Argument<string> @index { get; set; }
 		}
 
 		internal sealed class Handler1
-			: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.set_ItemCallback_670704542699972028623331848601141915565982287732>
+			: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.set_ItemCallback_639797374395471112019498606510044262758696353188>
 		{
-			public global::Rocks.PointerArgument<int> @index { get; set; }
-			public global::Rocks.Argument<string> @value { get; set; }
+			public global::Rocks.Argument<string> @index { get; set; }
+			public global::MockTests.ProjectionsForIHavePointers.ArgFordelegatePointerOfint__void @value { get; set; }
 		}
 
 #pragma warning restore CS8618
@@ -62,9 +104,9 @@ namespace MockTests
 				this.Expectations = @expectations;
 			}
 
-			[global::Rocks.MemberIdentifier(0, "this[int* @index]")]
-			[global::Rocks.MemberIdentifier(1, "this[int* @index]")]
-			public unsafe string this[int* @index]
+			[global::Rocks.MemberIdentifier(0, "this[string @index]")]
+			[global::Rocks.MemberIdentifier(1, "this[string @index]")]
+			public unsafe delegate*<int, void> this[string @index]
 			{
 				get
 				{
@@ -81,10 +123,10 @@ namespace MockTests
 							}
 						}
 
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int* @index]");
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
 					}
 
-					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int* @index])");
+					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
 				}
 				set
 				{
@@ -101,10 +143,10 @@ namespace MockTests
 							}
 						}
 
-						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int* @index]");
+						throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
 					}
 
-					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int* @index])");
+					throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @index])");
 				}
 			}
 
@@ -117,7 +159,7 @@ namespace MockTests
 				internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 					this.Expectations = expectations;
 
-				internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.ProjectionsForIHavePointers.get_ItemCallback_358841955163324583119694615602880815135165759209, string> This(global::Rocks.PointerArgument<int> @index)
+				internal global::MockTests.ProjectionsForIHavePointers.AdornmentsFordelegatePointerOfint__void This(global::Rocks.Argument<string> @index)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@index);
 
@@ -137,7 +179,7 @@ namespace MockTests
 				internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 					this.Expectations = expectations;
 
-				internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.set_ItemCallback_670704542699972028623331848601141915565982287732> This(global::Rocks.Argument<string> @value, global::Rocks.PointerArgument<int> @index)
+				internal global::Rocks.AdornmentsV4<Handler1, set_ItemCallback_639797374395471112019498606510044262758696353188> This(global::MockTests.ProjectionsForIHavePointers.ArgFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
 				{
 					global::System.ArgumentNullException.ThrowIfNull(@index);
 					global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -188,8 +230,6 @@ namespace MockTests
 {
 	public unsafe interface IHavePointers
 	{
-#pragma warning disable CA1043 // Use Integral Or String Argument For Indexers
-	  string this[int* index] { get; set; }
-#pragma warning restore CA1043 // Use Integral Or String Argument For Indexers
-   }
+		delegate*<int, void> this[string index] { get; set; }
+	}
 }

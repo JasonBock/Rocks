@@ -41,12 +41,10 @@ internal static class MockProjectedArgTypeBuilderV4
 			{
 				GetEsotericTypes(property.Parameters, types);
 			}
-			else
+
+			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
 			{
-				if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
-				{
-					types.Add(property.Type);
-				}
+				types.Add(property.Type);
 			}
 		}
 
