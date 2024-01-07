@@ -177,8 +177,23 @@ And now...all the tests in Rocks.Tests pass!
 What's left?
 
 * Update Rocks.CodeGenerationTest to use new approach. Only include a couple of assemblies to start to ensure it's working, then do all.
+
+Wait. I think I just realized I don't need to gen Handler and Adornment classes for ref structs. I can just use the generic ones. I can probably gen a generic type for function pointers as well, would need the function pointer type baked in for `ReturnValue`, but the callback can be generic(I may already be doing this)
+
+* DONE - Delegates - this is needed for all esoterics. I can be cleaner by creating a name sans the method name, and get the hash of that. This can be used as a key to ensure only unique delegates are created.
+* DONE - Arg
+    * Pointers - no need, can use `PointerArgument<>`
+    * Function pointers and `ref struct` - create the delegate callback and custom argument type (just like what I'm doing)
+* DONE - Handler and adornments - Comment out the code that calls `BuildHandlers()` for this, as I think no work needs to be done here.
+    * Pointers - no need, handler can use `PointerArgument<>`, adorments, can return `PointerAdornment` when a return as pointer is needed
+    * `ref struct` - no need, just use the generic `Handler` and `Adornment` types (note that in this case, the `ReturnValue` is a delegate, because we need a `ref struct` within a `ref struct` to store state, and that's currently not doable with the current design.)
+    * Function pointers - if a return is a function pointer, juse use the `Handler` with no return, and bake in the return value (which I think I'm already doing), so I still need to gen the adornment.
+
+* Tests to add:
+    * Multiple `ref structs`, pointers, and function pointers
 * Add perf tests to see how generators compare as well as mocking perf
 * Update Rocks.IntegrationTests to use new approach
 * Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
+* Can WriteLines() be updated with a Write() + WriteLine()?
 * Update documentation
 * Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?

@@ -11,24 +11,30 @@ internal static class PropertyExpectationsPropertyBuilderV4
 	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var propertyGetMethod = property.GetMethod!;
+		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
+			MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+			DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
 
 		string adornmentsType;
 
-		if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
+		if (property.Type.TypeKind == TypeKind.FunctionPointer)
 		{
-			adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+			var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+			adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
 		}
 		else
 		{
-			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				DelegateBuilder.Build(ImmutableArray<ParameterModel>.Empty, property.Type);
-			var returnType = property.Type.TypeKind == TypeKind.Pointer ?
-				property.Type.PointerType!.FullyQualifiedName :
-				property.Type.FullyQualifiedName;
+			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
+			var returnType =
+				property.Type.TypeKind == TypeKind.Pointer ?
+					property.Type.PointerType!.FullyQualifiedName :
+					property.Type.IsRefLikeType ?
+						MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+						property.Type.FullyQualifiedName;
+
 			adornmentsType = property.Type.IsPointer ?
-				$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>" :
-				$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
+				$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
+				$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		}
 
 		writer.WriteLines(

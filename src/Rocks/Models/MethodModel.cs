@@ -54,12 +54,16 @@ internal sealed record MethodModel
 
 		if (this.RequiresProjectedDelegate)
 		{
-			this.ProjectedCallbackDelegateName = method.GetName(compilation, extendedName: $"Callback_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+			var signature = new List<string>([this.ReturnType.FullyQualifiedName]);
+			signature.AddRange(this.TypeArguments);
+			signature.AddRange(this.Parameters.Select(_ => _.Type.FullyQualifiedName));
+			var signatureHash = string.Join(", ", signature).GetHash();
+			this.ProjectedCallbackDelegateName = $"Callback_{signatureHash}";
 		}
 
 		if (this.ReturnType.IsRefLikeType || this.ReturnType.TypeKind == TypeKind.FunctionPointer)
 		{
-			this.ProjectedReturnValueDelegateName = method.GetName(compilation, extendedName: $"ReturnValue_{method.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat).GetHash()}");
+			this.ProjectedReturnValueDelegateName = $"ReturnValue_{this.ReturnType.FullyQualifiedName.GetHash()}";
 		}
 
 		if (!this.ReturnsVoid)

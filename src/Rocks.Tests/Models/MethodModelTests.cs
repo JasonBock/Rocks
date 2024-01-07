@@ -133,7 +133,7 @@ public static class MethodModelTests
 		var model = new MethodModel(method, mockType, compilation,
 			 RequiresExplicitInterfaceImplementation.Yes, RequiresOverride.No, RequiresHiding.No, memberIdentifier);
 
-		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("GoReturnValue_621102180885560748718300056435181775887076786345"));
+		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("ReturnValue_305616756374865012389506681414051734154688895315"));
 	}
 
 	[Test]

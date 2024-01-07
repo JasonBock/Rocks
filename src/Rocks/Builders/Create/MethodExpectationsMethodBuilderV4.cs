@@ -55,29 +55,36 @@ internal static class MethodExpectationsMethodBuilderV4
 
 			var typeArguments = method.IsGenericMethod ?
 				$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
+			var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
+				MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
+				method.ReturnsVoid ?
+					DelegateBuilder.Build(method.Parameters) :
+					DelegateBuilder.Build(method.Parameters, method.ReturnType);
+
 			string adornmentsType;
 
-			if (method.ReturnType.IsRefLikeType || method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+			if (method.ReturnType.TypeKind == TypeKind.FunctionPointer)
 			{
-				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
+				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
+				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
 			}
 			else
 			{
-				var callbackDelegateTypeName = method.RequiresProjectedDelegate ?
-					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-					method.ReturnsVoid ?
-						DelegateBuilder.Build(method.Parameters) :
-						DelegateBuilder.Build(method.Parameters, method.ReturnType);
-				var returnType = method.ReturnsVoid ? string.Empty :
-					method.ReturnType.TypeKind == TypeKind.Pointer ?
-						method.ReturnType.PointerType!.FullyQualifiedName :
-						method.ReturnType.FullyQualifiedName;
+				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}";
+				var returnType = 
+					method.ReturnsVoid ? 
+						string.Empty :
+						method.ReturnType.TypeKind == TypeKind.Pointer ?
+							method.ReturnType.PointerType!.FullyQualifiedName :
+							method.ReturnType.IsRefLikeType ?
+								MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+								method.ReturnType.FullyQualifiedName;
 
 				adornmentsType = method.ReturnsVoid ?
-					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}>" :
+					$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}>" :
 					method.ReturnType.IsPointer ?
-						$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>" :
-						$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}{typeArguments}, {callbackDelegateTypeName}, {returnType}>";
+						$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
+						$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var constraints = method.Constraints;

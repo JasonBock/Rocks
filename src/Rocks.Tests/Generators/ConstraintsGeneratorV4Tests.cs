@@ -289,7 +289,7 @@ public static class ConstraintsGeneratorV4Tests
 			
 			namespace ProjectionsForINeedDelegate
 			{
-				internal delegate void FooCallback_191327403400827159052686230025463041183626019740<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
+				internal delegate void Callback_62226393729299369697944853027816998264665736292<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
 			}
 			
 			internal sealed class INeedDelegateCreateExpectations
@@ -298,7 +298,7 @@ public static class ConstraintsGeneratorV4Tests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0<T>
-					: global::Rocks.HandlerV4<global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T>>
+					: global::Rocks.HandlerV4<global::ProjectionsForINeedDelegate.Callback_62226393729299369697944853027816998264665736292<T>>
 					where T : unmanaged, global::IDot<T>
 				{
 					public global::Rocks.Argument<int> @a { get; set; }
@@ -374,7 +374,7 @@ public static class ConstraintsGeneratorV4Tests
 					internal INeedDelegateMethodExpectations(global::INeedDelegateCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::INeedDelegateCreateExpectations.Handler0<T>, global::ProjectionsForINeedDelegate.FooCallback_191327403400827159052686230025463041183626019740<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
+					internal global::Rocks.AdornmentsV4<global::INeedDelegateCreateExpectations.Handler0<T>, global::ProjectionsForINeedDelegate.Callback_62226393729299369697944853027816998264665736292<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@frame);

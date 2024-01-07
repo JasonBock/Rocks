@@ -15,31 +15,30 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			var namingContext = new VariableNamingContext(propertyGetMethod);
 			var needsGenerationWithDefaults = false;
 
-			var delegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				DelegateBuilder.Build(property.Parameters, property.Type);
-			var propertyReturnValue = propertyGetMethod.ReturnType.IsRefLikeType ?
-				MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-				propertyGetMethod.ReturnType.FullyQualifiedName;
+			var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
+				MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+				DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
+
 			string adornmentsType;
 
-			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
+			if (property.Type.TypeKind == TypeKind.FunctionPointer)
 			{
-				adornmentsType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
+				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
 			}
 			else
 			{
-				var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
-					MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-					DelegateBuilder.Build(propertyGetMethod.Parameters, property.Type);
+				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 				var returnType =
 					property.Type.TypeKind == TypeKind.Pointer ?
 						property.Type.PointerType!.FullyQualifiedName :
-						property.Type.FullyQualifiedName;
+						property.Type.IsRefLikeType ?
+							MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+							property.Type.FullyQualifiedName;
 
 				adornmentsType = property.Type.IsPointer ?
-					$"global::Rocks.PointerAdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>" :
-					$"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
+					$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
@@ -164,11 +163,8 @@ internal static class IndexerExpectationsIndexerBuilderV4
 
 			var needsGenerationWithDefaults = false;
 
-			var delegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
-				DelegateBuilder.Build(propertySetMethod.Parameters);
 			var callbackDelegateTypeName = propertySetMethod.RequiresProjectedDelegate ?
-				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
+				MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
 				DelegateBuilder.Build(propertySetMethod.Parameters);
 			var adornmentsType = $"global::Rocks.AdornmentsV4<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
 

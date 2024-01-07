@@ -2,6 +2,7 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
+using System.Reflection.Metadata;
 
 namespace Rocks.Builders.Create;
 
@@ -72,26 +73,29 @@ internal static class MockHandlerListBuilderV4
 
 	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier)
 	{
+		var callbackDelegateTypeName =
+			method.RequiresProjectedDelegate ?
+				MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
+				method.ReturnsVoid ?
+					DelegateBuilder.Build(method.Parameters) :
+					DelegateBuilder.Build(method.Parameters, method.ReturnType);
+
 		string handlerBaseType;
 
-		if (method.ReturnType.IsRefLikeType || method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+		if (method.ReturnType.TypeKind == TypeKind.FunctionPointer)
 		{
-			handlerBaseType = MockProjectedHandlerAdornmentsTypesBuilderV4.GetProjectedHandlerFullyQualifiedNameName(method.ReturnType, method.MockType);
+			handlerBaseType = $"{MockProjectedAdornmentsTypesBuilderV4.GetProjectedHandlerFullyQualifiedNameName(method.ReturnType, method.MockType)}<{callbackDelegateTypeName}>";
 		}
 		else
 		{
-			var callbackDelegateTypeName =
-				method.RequiresProjectedDelegate ?
-					MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(method, method.MockType) :
-					method.ReturnsVoid ?
-						DelegateBuilder.Build(method.Parameters) :
-						DelegateBuilder.Build(method.Parameters, method.ReturnType);
 			var returnTypeName =
 				method.ReturnsVoid ?
 					string.Empty :
 					method.ReturnType.TypeKind == TypeKind.Pointer ?
 						method.ReturnType.PointerType!.FullyQualifiedName :
-						method.ReturnType.FullyQualifiedName;
+						method.ReturnType.IsRefLikeType ?
+							MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+							method.ReturnType.FullyQualifiedName;
 			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
 			var handlerType =
 				method.ReturnType.TypeKind == TypeKind.Pointer ?

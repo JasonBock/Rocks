@@ -14,8 +14,8 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-TestWithType();
-//TestWithTypes();
+//TestWithType();
+TestWithTypes();
 
 stopwatch.Stop();
 

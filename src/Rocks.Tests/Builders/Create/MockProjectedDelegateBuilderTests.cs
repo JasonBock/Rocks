@@ -24,7 +24,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"FooCallback_497363238751704866053452189283926723308443685748")]
+		"Callback_622207356388706191349839859274279130635882420392")]
 	[TestCase(
 		"""
 		namespace Outer 
@@ -40,7 +40,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"FooCallback_509704329523946660150386999463474580341671541387")]
+		"Callback_536123349113394606002674821465700528085876440800")]
 	public static void GetProjectedCallbackDelegateName(string code, string expectedValue)
 	{
 		(var symbol, var compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
@@ -69,7 +69,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.FooCallback_497363238751704866053452189283926723308443685748")]
+		"global::Mock.ProjectionsForIMock.Callback_622207356388706191349839859274279130635882420392")]
 	[TestCase(
 		"""
 		namespace Mock 
@@ -90,7 +90,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.FooCallback_509704329523946660150386999463474580341671541387")]
+		"global::Mock.ProjectionsForIMock.Callback_536123349113394606002674821465700528085876440800")]
 	public static void GetProjectedCallbackDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
@@ -101,96 +101,57 @@ public static class MockProjectedDelegateBuilderTests
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
-	[TestCase(
-		"""
-		namespace Outer 
-		{ 
-			namespace Inner 
-			{ 
-				public class Target { } 
-				
-				public static class Test 
-				{ 
-					public static System.Span<int> Foo(Target t) => default; 
-				} 
-			} 
-		}
-		""",
-		"FooReturnValue_150544254424482794293143350194542396194679863893")]
-	[TestCase(
-		"""
-		namespace Outer 
-		{ 
-			namespace Inner 
-			{ 
-				public class Target<T> { } 
-				
-				public static class Test 
-				{ 
-					public static System.Span<int> Foo(Target<string> t) => default; 
-				} 
-			} 
-		}
-		""",
-		"FooReturnValue_597877384104637463797567380593086296660561401666")]
-	public static void GetProjectedReturnValueDelegateName(string code, string expectedValue)
+	public static void GetProjectedReturnValueDelegateName()
 	{
+		var code =
+			"""
+			namespace Outer 
+			{ 
+				namespace Inner 
+				{ 
+					public class Target<T> { } 
+				
+					public static class Test 
+					{ 
+						public static System.Span<int> Foo(Target<string> t) => default; 
+					} 
+				} 
+			}
+			""";
 		var (method, compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
-		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo(expectedValue));
+		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("ReturnValue_597877384104637463797567380593086296660561401666"));
 	}
 
-	[TestCase(
-		"""
-		namespace Mock 
-		{ 
-			public interface IMock { } 
-		} 
-		
-		namespace Outer 
-		{ 
-			namespace Inner 
-			{ 
-				public class Target { } 
-
-				public static class Test 
-				{ 
-					public static System.Span<int> Foo(Target t) => default; 
-				} 
-			} 
-		}
-		""",
-		"global::Mock.ProjectionsForIMock.FooReturnValue_150544254424482794293143350194542396194679863893")]
-	[TestCase(
-		"""
-		namespace Mock 
-		{ 
-			public interface IMock { } 
-		} 
-		
-		namespace Outer 
-		{ 
-			namespace Inner 
-			{ 
-				public class Target<T> { } 
-
-				public static class Test 
-				{ 
-					public static System.Span<int> Foo(Target<string> t) => default; 
-				} 
-			} 
-		}
-		""",
-		"global::Mock.ProjectionsForIMock.FooReturnValue_597877384104637463797567380593086296660561401666")]
-	public static void GetProjectedReturnValueDelegateFullyQualifiedName(string code, string expectedValue)
+	public static void GetProjectedReturnValueDelegateFullyQualifiedName()
 	{
+		var code =
+			"""
+			namespace Mock 
+			{ 
+				public interface IMock { } 
+			} 
+		
+			namespace Outer 
+			{ 
+				namespace Inner 
+				{ 
+					public class Target { } 
+
+					public static class Test 
+					{ 
+						public static System.Span<int> Foo(Target t) => default; 
+					} 
+				} 
+			}
+			""";
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
 		var name = MockProjectedDelegateBuilder.GetProjectedReturnValueDelegateFullyQualifiedName(
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
 				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo(expectedValue));
+		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ReturnValue_3056167563748650"));
 	}
 
 	private static (ITypeSymbol typeToMock, IMethodSymbol method, Compilation compilation) GetSymbols(string source)
