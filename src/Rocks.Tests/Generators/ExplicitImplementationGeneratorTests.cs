@@ -176,7 +176,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -276,7 +276,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -496,7 +496,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -630,7 +630,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -749,7 +749,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "ISetupList_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -810,7 +810,7 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -886,6 +886,6 @@ public static class ExplicitImplementationGeneratorTests
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "IIterablestring_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 }

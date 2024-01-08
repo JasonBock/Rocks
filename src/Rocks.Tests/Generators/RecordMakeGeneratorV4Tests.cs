@@ -82,6 +82,6 @@ public static class RecordMakeGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 }

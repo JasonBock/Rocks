@@ -204,7 +204,7 @@ public static class DoesNotReturnGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -289,7 +289,7 @@ public static class DoesNotReturnGeneratorTests
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -417,7 +417,7 @@ public static class DoesNotReturnGeneratorTests
 
 		await TestAssistants.RunAsync<RockCreateGenerator>(code,
 			new[] { (typeof(RockCreateGenerator), "MockTests.IInterfaceTest_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -490,6 +490,6 @@ public static class DoesNotReturnGeneratorTests
 
 		await TestAssistants.RunAsync<RockMakeGenerator>(code,
 			new[] { (typeof(RockMakeGenerator), "MockTests.IInterfaceTest_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 }

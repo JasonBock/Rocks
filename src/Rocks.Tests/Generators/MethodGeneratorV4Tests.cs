@@ -218,7 +218,7 @@ public static class MethodGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IMapper_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -377,7 +377,7 @@ public static class MethodGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveOptionalArguments_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -537,7 +537,7 @@ public static class MethodGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IProjection_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -577,7 +577,7 @@ public static class MethodGeneratorV4Tests
 			{
 				namespace ProjectionsForIHaveTooMuch
 				{
-					internal delegate int Callback_689992383706361060850206812768549482280497785059(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19);
+					internal delegate int Callback_383140697323744298072430331353344056628280456971(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19);
 				}
 				
 				internal sealed class IHaveTooMuchCreateExpectations
@@ -586,7 +586,7 @@ public static class MethodGeneratorV4Tests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHaveTooMuch.Callback_689992383706361060850206812768549482280497785059, int>
+						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHaveTooMuch.Callback_383140697323744298072430331353344056628280456971, int>
 					{
 						public global::Rocks.Argument<int> @i0 { get; set; }
 						public global::Rocks.Argument<int> @i1 { get; set; }
@@ -686,7 +686,7 @@ public static class MethodGeneratorV4Tests
 						internal IHaveTooMuchMethodExpectations(global::MockTests.IHaveTooMuchCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.ProjectionsForIHaveTooMuch.Callback_689992383706361060850206812768549482280497785059, int> AddProperty(global::Rocks.Argument<int> @i0, global::Rocks.Argument<int> @i1, global::Rocks.Argument<int> @i2, global::Rocks.Argument<int> @i3, global::Rocks.Argument<int> @i4, global::Rocks.Argument<int> @i5, global::Rocks.Argument<int> @i6, global::Rocks.Argument<int> @i7, global::Rocks.Argument<int> @i8, global::Rocks.Argument<int> @i9, global::Rocks.Argument<int> @i10, global::Rocks.Argument<int> @i11, global::Rocks.Argument<int> @i12, global::Rocks.Argument<int> @i13, global::Rocks.Argument<int> @i14, global::Rocks.Argument<int> @i15, global::Rocks.Argument<int> @i16, global::Rocks.Argument<int> @i17, global::Rocks.Argument<int> @i18, global::Rocks.Argument<int> @i19)
+						internal global::Rocks.AdornmentsV4<global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.ProjectionsForIHaveTooMuch.Callback_383140697323744298072430331353344056628280456971, int> AddProperty(global::Rocks.Argument<int> @i0, global::Rocks.Argument<int> @i1, global::Rocks.Argument<int> @i2, global::Rocks.Argument<int> @i3, global::Rocks.Argument<int> @i4, global::Rocks.Argument<int> @i5, global::Rocks.Argument<int> @i6, global::Rocks.Argument<int> @i7, global::Rocks.Argument<int> @i8, global::Rocks.Argument<int> @i9, global::Rocks.Argument<int> @i10, global::Rocks.Argument<int> @i11, global::Rocks.Argument<int> @i12, global::Rocks.Argument<int> @i13, global::Rocks.Argument<int> @i14, global::Rocks.Argument<int> @i15, global::Rocks.Argument<int> @i16, global::Rocks.Argument<int> @i17, global::Rocks.Argument<int> @i18, global::Rocks.Argument<int> @i19)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@i0);
 							global::System.ArgumentNullException.ThrowIfNull(@i1);
@@ -765,6 +765,6 @@ public static class MethodGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveTooMuch_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 }

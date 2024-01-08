@@ -56,7 +56,19 @@ internal sealed record MethodModel
 		{
 			var signature = new List<string>([this.ReturnType.FullyQualifiedName]);
 			signature.AddRange(this.TypeArguments);
-			signature.AddRange(this.Parameters.Select(_ => _.Type.FullyQualifiedName));
+			signature.AddRange(this.Parameters.Select(_ =>
+				{
+					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+					var direction = _.RefKind switch
+					{
+						RefKind.Ref => "ref ",
+						RefKind.Out => "out ",
+						RefKind.In => "in ",
+						RefKind.RefReadOnlyParameter => "ref readonly ",
+						_ => string.Empty
+					};
+					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
+				}));
 			var signatureHash = string.Join(", ", signature).GetHash();
 			this.ProjectedCallbackDelegateName = $"Callback_{signatureHash}";
 		}

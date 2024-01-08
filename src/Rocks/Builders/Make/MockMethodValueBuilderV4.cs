@@ -25,6 +25,7 @@ internal static class MockMethodValueBuilderV4
 				RefKind.Ref => "ref ",
 				RefKind.Out => "out ",
 				RefKind.In => "in ",
+				RefKind.RefReadOnlyParameter => "ref readonly ",
 				_ => string.Empty
 			};
 			var parameter = $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}{defaultValue}";

@@ -24,7 +24,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"Callback_622207356388706191349839859274279130635882420392")]
+		"Callback_647318856387459030730720199270116526843799107753")]
 	[TestCase(
 		"""
 		namespace Outer 
@@ -40,7 +40,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"Callback_536123349113394606002674821465700528085876440800")]
+		"Callback_204004461298901558364159322673297972159356701735")]
 	public static void GetProjectedCallbackDelegateName(string code, string expectedValue)
 	{
 		(var symbol, var compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
@@ -69,7 +69,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.Callback_622207356388706191349839859274279130635882420392")]
+		"global::Mock.ProjectionsForIMock.Callback_647318856387459030730720199270116526843799107753")]
 	[TestCase(
 		"""
 		namespace Mock 
@@ -90,7 +90,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.Callback_536123349113394606002674821465700528085876440800")]
+		"global::Mock.ProjectionsForIMock.Callback_204004461298901558364159322673297972159356701735")]
 	public static void GetProjectedCallbackDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);

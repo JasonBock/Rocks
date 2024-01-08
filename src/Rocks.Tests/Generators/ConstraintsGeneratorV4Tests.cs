@@ -252,7 +252,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "BaseStuff_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -289,7 +289,7 @@ public static class ConstraintsGeneratorV4Tests
 			
 			namespace ProjectionsForINeedDelegate
 			{
-				internal delegate void Callback_62226393729299369697944853027816998264665736292<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
+				internal delegate void Callback_592396125302095547400633258221535774913220381582<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
 			}
 			
 			internal sealed class INeedDelegateCreateExpectations
@@ -298,7 +298,7 @@ public static class ConstraintsGeneratorV4Tests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0<T>
-					: global::Rocks.HandlerV4<global::ProjectionsForINeedDelegate.Callback_62226393729299369697944853027816998264665736292<T>>
+					: global::Rocks.HandlerV4<global::ProjectionsForINeedDelegate.Callback_592396125302095547400633258221535774913220381582<T>>
 					where T : unmanaged, global::IDot<T>
 				{
 					public global::Rocks.Argument<int> @a { get; set; }
@@ -374,7 +374,7 @@ public static class ConstraintsGeneratorV4Tests
 					internal INeedDelegateMethodExpectations(global::INeedDelegateCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::INeedDelegateCreateExpectations.Handler0<T>, global::ProjectionsForINeedDelegate.Callback_62226393729299369697944853027816998264665736292<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
+					internal global::Rocks.AdornmentsV4<global::INeedDelegateCreateExpectations.Handler0<T>, global::ProjectionsForINeedDelegate.Callback_592396125302095547400633258221535774913220381582<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@frame);
@@ -416,7 +416,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "INeedDelegate_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -826,7 +826,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -914,7 +914,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -1428,7 +1428,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "TypeConstraints_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -1525,7 +1525,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "TypeConstraints_Rock_Make.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -1680,7 +1680,7 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IUnmanagedValue_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 
 	[Test]
@@ -1927,6 +1927,6 @@ public static class ConstraintsGeneratorV4Tests
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Thingstring_Rock_Create.g.cs", generatedCode) },
-			Enumerable.Empty<DiagnosticResult>()).ConfigureAwait(false);
+			[]).ConfigureAwait(false);
 	}
 }
