@@ -10,45 +10,47 @@ internal static class ProjectedArgTypeBuilderV4
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
-		var argForType = type.RefLikeArgProjectedName;
+		var argForType = type.EsotericArgumentProjectedName;
 		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
-		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
+		var argForType = type.EsotericArgumentProjectedEvaluationDelegateName;
 		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
-		var validationDelegateName = type.RefLikeArgProjectedEvaluationDelegateName;
+		var validationDelegateName = type.EsotericArgumentProjectedEvaluationDelegateName;
 		var validationDelegateFullyQualifiedName = ProjectedArgTypeBuilderV4.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel);
-		var argName = type.RefLikeArgProjectedName;
-		var argConstructorName = type.RefLikeArgConstructorProjectedName;
-		var typeName = type.FullyQualifiedName;
+		var argName = type.EsotericArgumentProjectedName;
+		var argConstructorName = type.EsotericArgumentConstructorProjectedName;
+		var typeName = type.PointerArgParameterType;
 		var isUnsafe = type.IsPointer ? " unsafe" : string.Empty;
+		var typeArgument = type.IsPointer && type.IsBasedOnTypeParameter ? $"<{typeName}>" : string.Empty;
+		var constraint = type.IsPointer && type.IsBasedOnTypeParameter ? $" where {typeName} : unmanaged" : string.Empty;
 
 		writer.WriteLines(
 			$$"""
-			internal{{isUnsafe}} delegate bool {{validationDelegateName}}({{typeName}} @value);
+			internal{{isUnsafe}} delegate bool {{validationDelegateName}}{{typeArgument}}({{type.FullyQualifiedName}} @value){{constraint}};
 			
-			internal{{isUnsafe}} sealed class {{argName}}
-				: global::Rocks.Argument
+			internal{{isUnsafe}} sealed class {{argName}}{{typeArgument}}
+				: global::Rocks.Argument{{constraint}}
 			{
-				private readonly {{validationDelegateFullyQualifiedName}}? evaluation;
+				private readonly {{validationDelegateFullyQualifiedName}}{{typeArgument}}? evaluation;
 				private readonly global::Rocks.ValidationState validation;
 				
 				internal {{argConstructorName}}() => this.validation = global::Rocks.ValidationState.None;
 				
-				internal {{argConstructorName}}({{validationDelegateFullyQualifiedName}} @evaluation)
+				internal {{argConstructorName}}({{validationDelegateFullyQualifiedName}}{{typeArgument}} @evaluation)
 				{
 					this.evaluation = @evaluation;
 					this.validation = global::Rocks.ValidationState.Evaluation;
 				}
 				
-				public bool IsValid({{typeName}} @value) =>
+				public bool IsValid({{type.FullyQualifiedName}} @value) =>
 					this.validation switch
 					{
 						global::Rocks.ValidationState.None => true,

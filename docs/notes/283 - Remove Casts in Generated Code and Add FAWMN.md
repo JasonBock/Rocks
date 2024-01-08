@@ -189,6 +189,23 @@ Wait. I think I just realized I don't need to gen Handler and Adornment classes 
     * `ref struct` - no need, just use the generic `Handler` and `Adornment` types (note that in this case, the `ReturnValue` is a delegate, because we need a `ref struct` within a `ref struct` to store state, and that's currently not doable with the current design.)
     * Function pointers - if a return is a function pointer, juse use the `Handler` with no return, and bake in the return value (which I think I'm already doing), so I still need to gen the adornment.
 
+So, this is a fun one `unsafe void*** AsVtblPtr();`. I can create custom delegates and stuff
+
+PointerHandler
+PointerArgument
+PointerAdornments
+
+I think the great pointer experiment is toast. If I have a `void***`, even if I know the count of pointers, I can't pass `void` to a generic. So I **have** to generate the pointer types, whether they're for arguments or return values.
+
+* Argument - only for argument types that are pointers.
+* Handler and Adornments - only for return types that are pointers (note that it does not matter if it's `void` or not).
+
+* The type argument is only made when it's a pointer.
+* The constraint is only made when it's a pointer.
+
+OK, down to 7 errors in code gen.
+
+
 * Tests to add:
     * Multiple `ref structs`, pointers, and function pointers
 * Add perf tests to see how generators compare as well as mocking perf
@@ -196,4 +213,5 @@ Wait. I think I just realized I don't need to gen Handler and Adornment classes 
 * Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
 * Can WriteLines() be updated with a Write() + WriteLine()?
 * Update documentation
+* Check all TODOs
 * Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?

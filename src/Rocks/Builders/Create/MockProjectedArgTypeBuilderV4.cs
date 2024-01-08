@@ -21,7 +21,8 @@ internal static class MockProjectedArgTypeBuilderV4
 		{
 			foreach (var parameter in parameters)
 			{
-				if (parameter.Type.IsRefLikeType || parameter.Type.TypeKind == TypeKind.FunctionPointer)
+				if (parameter.Type.IsRefLikeType || parameter.Type.TypeKind == TypeKind.FunctionPointer ||
+					parameter.Type.TypeKind == TypeKind.Pointer)
 				{
 					types.Add(parameter.Type);
 				}
@@ -42,7 +43,8 @@ internal static class MockProjectedArgTypeBuilderV4
 				GetEsotericTypes(property.Parameters, types);
 			}
 
-			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer)
+			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer ||
+				property.Type.TypeKind == TypeKind.Pointer)
 			{
 				types.Add(property.Type);
 			}

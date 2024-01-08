@@ -17,7 +17,8 @@ internal static class PropertyExpectationsPropertyBuilderV4
 
 		string adornmentsType;
 
-		if (property.Type.TypeKind == TypeKind.FunctionPointer)
+		if (property.Type.TypeKind == TypeKind.FunctionPointer ||
+			property.Type.TypeKind == TypeKind.Pointer)
 		{
 			var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
 			adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
@@ -26,15 +27,11 @@ internal static class PropertyExpectationsPropertyBuilderV4
 		{
 			var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 			var returnType =
-				property.Type.TypeKind == TypeKind.Pointer ?
-					property.Type.PointerType!.FullyQualifiedName :
-					property.Type.IsRefLikeType ?
-						MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-						property.Type.FullyQualifiedName;
+				property.Type.IsRefLikeType ?
+					MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+					property.Type.FullyQualifiedName;
 
-			adornmentsType = property.Type.IsPointer ?
-				$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
-				$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+			adornmentsType = $"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		}
 
 		writer.WriteLines(
@@ -53,10 +50,8 @@ internal static class PropertyExpectationsPropertyBuilderV4
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
 			propertyParameterType.IsEsoteric ?
-				propertyParameterType.TypeKind == TypeKind.Pointer ?
-					$"global::Rocks.PointerArgument<{propertyParameterType.PointerType!.FullyQualifiedName}>" :
-					ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType):
-			$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
+				ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
+				$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);

@@ -39,6 +39,28 @@ internal sealed record TypeReferenceModel
 
 		if (this.IsEsoteric)
 		{
+			if (type.Kind == SymbolKind.PointerType)
+			{
+				(var count, var pointerType) = type.GetPointerInformation();
+				this.PointerCount = count;
+				this.PointerType = new TypeReferenceModel(pointerType, compilation);
+			}
+			else if (type is IFunctionPointerTypeSymbol functionPointerType &&
+				functionPointerType.BaseType is not null)
+			{
+				this.PointerCount = 1;
+				this.PointerType = new TypeReferenceModel(((IFunctionPointerTypeSymbol)type).BaseType!, compilation);
+			}
+
+			this.EsotericArgumentProjectedEvaluationDelegateName =
+				$"ArgumentEvaluationFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}{(this.PointerCount > 0 ? this.PointerCount : string.Empty)}";
+			this.EsotericArgumentProjectedName =
+				$"ArgumentFor{(type.IsOpenGeneric() ? type.GetName() : type.GetName(TypeNameOption.Flatten))}{(this.PointerCount > 0 ? this.PointerCount : string.Empty)}";
+			this.EsotericArgumentConstructorProjectedName =
+				$"ArgumentFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}{(this.PointerCount > 0 ? this.PointerCount : string.Empty)}";
+
+			// TODO: Need to remove properties here that I really don't need/use
+
 			this.PointerArgProjectedEvaluationDelegateName =
 				$"ArgumentEvaluationFor{type.GetName(TypeNameOption.Flatten)}";
 			this.PointerArgProjectedName =
@@ -56,17 +78,12 @@ internal sealed record TypeReferenceModel
 			this.RefLikeArgConstructorProjectedName =
 				$"ArgFor{(type.IsOpenGeneric() ? type.GetName(TypeNameOption.NoGenerics) : type.GetName(TypeNameOption.Flatten))}";
 		}
-
-		this.PointerType =
-			 this.IsPointer ?
-				  type.Kind == SymbolKind.PointerType ?
-						new TypeReferenceModel(((IPointerTypeSymbol)type).PointedAtType, compilation) :
-						((IFunctionPointerTypeSymbol)type).BaseType is not null ?
-							 new TypeReferenceModel(((IFunctionPointerTypeSymbol)type).BaseType!, compilation) : null :
-				  null;
 	}
 
 	internal string AttributesDescription { get; }
+	internal string? EsotericArgumentConstructorProjectedName { get; }
+	internal string? EsotericArgumentProjectedEvaluationDelegateName { get; }
+	internal string? EsotericArgumentProjectedName { get; }
 	internal string FlattenedName { get; }
 	internal string FullyQualifiedName { get; }
 	internal string IncludeGenericsName { get; }
@@ -84,6 +101,7 @@ internal sealed record TypeReferenceModel
 	internal string? PointerArgParameterType { get; }
 	internal string? PointerArgProjectedEvaluationDelegateName { get; }
 	internal string? PointerArgProjectedName { get; }
+	internal int PointerCount { get; }
 	internal TypeReferenceModel? PointerType { get; }
 	internal string? RefLikeArgProjectedEvaluationDelegateName { get; }
 	internal string? RefLikeArgProjectedName { get; }

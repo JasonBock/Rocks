@@ -37,17 +37,17 @@ public static class RefStructGeneratorV4Tests
 			namespace ProjectionsForIUseSpanWithOpenGeneric
 			{
 				internal delegate void Callback_2922353516573848633448014417918862835800990378<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged;
-				internal delegate bool ArgEvaluationForReadOnlySpan<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @value);
+				internal delegate bool ArgumentEvaluationForReadOnlySpan<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @value);
 				
-				internal sealed class ArgForReadOnlySpan<TSourcePixel>
+				internal sealed class ArgumentForReadOnlySpan<TSourcePixel>
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpan<TSourcePixel>? evaluation;
+					private readonly global::ProjectionsForIUseSpanWithOpenGeneric.ArgumentEvaluationForReadOnlySpan<TSourcePixel>? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForReadOnlySpan() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForReadOnlySpan() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForReadOnlySpan(global::ProjectionsForIUseSpanWithOpenGeneric.ArgEvaluationForReadOnlySpan<TSourcePixel> @evaluation)
+					internal ArgumentForReadOnlySpan(global::ProjectionsForIUseSpanWithOpenGeneric.ArgumentEvaluationForReadOnlySpan<TSourcePixel> @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -72,7 +72,7 @@ public static class RefStructGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::ProjectionsForIUseSpanWithOpenGeneric.Callback_2922353516573848633448014417918862835800990378<TSourcePixel>>
 					where TSourcePixel : unmanaged
 				{
-					public global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel> @sourcePixels { get; set; }
+					public global::ProjectionsForIUseSpanWithOpenGeneric.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -143,7 +143,7 @@ public static class RefStructGeneratorV4Tests
 					internal IUseSpanWithOpenGenericMethodExpectations(global::IUseSpanWithOpenGenericCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::ProjectionsForIUseSpanWithOpenGeneric.Callback_2922353516573848633448014417918862835800990378<TSourcePixel>> From<TSourcePixel>(global::ProjectionsForIUseSpanWithOpenGeneric.ArgForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
+					internal global::Rocks.AdornmentsV4<global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::ProjectionsForIUseSpanWithOpenGeneric.Callback_2922353516573848633448014417918862835800990378<TSourcePixel>> From<TSourcePixel>(global::ProjectionsForIUseSpanWithOpenGeneric.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
 						
@@ -216,17 +216,17 @@ public static class RefStructGeneratorV4Tests
 			namespace ProjectionsForIHaveRefStruct
 			{
 				internal delegate void Callback_676553247640170094513687038998386166176284646117(global::System.Span<int> @values);
-				internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> @value);
+				internal delegate bool ArgumentEvaluationForSpanOfint(global::System.Span<int> @value);
 				
-				internal sealed class ArgForSpanOfint
+				internal sealed class ArgumentForSpanOfint
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint? evaluation;
+					private readonly global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint @evaluation)
+					internal ArgumentForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -250,7 +250,7 @@ public static class RefStructGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117>
 				{
-					public global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @values { get; set; }
+					public global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @values { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -317,7 +317,7 @@ public static class RefStructGeneratorV4Tests
 					internal IHaveRefStructMethodExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler0, global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117> RefStructParameter(global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @values)
+					internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler0, global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117> RefStructParameter(global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @values)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@values);
 						
@@ -517,17 +517,17 @@ public static class RefStructGeneratorV4Tests
 				internal delegate global::System.Span<int> Callback_305616756374865012389506681414051734154688895315();
 				internal delegate global::System.Span<int> ReturnValue_305616756374865012389506681414051734154688895315();
 				internal delegate void Callback_676553247640170094513687038998386166176284646117(global::System.Span<int> @value);
-				internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> @value);
+				internal delegate bool ArgumentEvaluationForSpanOfint(global::System.Span<int> @value);
 				
-				internal sealed class ArgForSpanOfint
+				internal sealed class ArgumentForSpanOfint
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint? evaluation;
+					private readonly global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint @evaluation)
+					internal ArgumentForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -555,7 +555,7 @@ public static class RefStructGeneratorV4Tests
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117>
 				{
-					public global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @value { get; set; }
+					public global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -656,7 +656,7 @@ public static class RefStructGeneratorV4Tests
 						internal IHaveRefStructPropertySetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117> Data(global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @value)
+						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_676553247640170094513687038998386166176284646117> Data(global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @value)
 						{
 							var handler = new global::IHaveRefStructCreateExpectations.Handler1
 							{
@@ -734,17 +734,17 @@ public static class RefStructGeneratorV4Tests
 			{
 				internal delegate string Callback_487247892812412250284155408385360355044577700267(global::System.Span<int> @index);
 				internal delegate void Callback_689731592130834677919818887360693555462542605352(global::System.Span<int> @index, string @value);
-				internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> @value);
+				internal delegate bool ArgumentEvaluationForSpanOfint(global::System.Span<int> @value);
 				
-				internal sealed class ArgForSpanOfint
+				internal sealed class ArgumentForSpanOfint
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint? evaluation;
+					private readonly global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint @evaluation)
+					internal ArgumentForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -768,13 +768,13 @@ public static class RefStructGeneratorV4Tests
 				internal sealed class Handler0
 					: global::Rocks.HandlerV4<global::ProjectionsForIHaveRefStruct.Callback_487247892812412250284155408385360355044577700267, string>
 				{
-					public global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @index { get; set; }
+					public global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @index { get; set; }
 				}
 				
 				internal sealed class Handler1
 					: global::Rocks.HandlerV4<global::ProjectionsForIHaveRefStruct.Callback_689731592130834677919818887360693555462542605352>
 				{
-					public global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @index { get; set; }
+					public global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @index { get; set; }
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
 				
@@ -862,7 +862,7 @@ public static class RefStructGeneratorV4Tests
 						internal IHaveRefStructIndexerGetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler0, global::ProjectionsForIHaveRefStruct.Callback_487247892812412250284155408385360355044577700267, string> This(global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @index)
+						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler0, global::ProjectionsForIHaveRefStruct.Callback_487247892812412250284155408385360355044577700267, string> This(global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @index)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
@@ -882,7 +882,7 @@ public static class RefStructGeneratorV4Tests
 						internal IHaveRefStructIndexerSetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_689731592130834677919818887360693555462542605352> This(global::Rocks.Argument<string> @value, global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @index)
+						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_689731592130834677919818887360693555462542605352> This(global::Rocks.Argument<string> @value, global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @index)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -965,17 +965,17 @@ public static class RefStructGeneratorV4Tests
 				internal delegate global::System.Span<int> Callback_82622901419900028928279950794957851302506027935(string @index);
 				internal delegate global::System.Span<int> ReturnValue_305616756374865012389506681414051734154688895315();
 				internal delegate void Callback_23785253474456163915852151378274352521926083328(string @index, global::System.Span<int> @value);
-				internal delegate bool ArgEvaluationForSpanOfint(global::System.Span<int> @value);
+				internal delegate bool ArgumentEvaluationForSpanOfint(global::System.Span<int> @value);
 				
-				internal sealed class ArgForSpanOfint
+				internal sealed class ArgumentForSpanOfint
 					: global::Rocks.Argument
 				{
-					private readonly global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint? evaluation;
+					private readonly global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint? evaluation;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForSpanOfint() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgEvaluationForSpanOfint @evaluation)
+					internal ArgumentForSpanOfint(global::ProjectionsForIHaveRefStruct.ArgumentEvaluationForSpanOfint @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
@@ -1006,7 +1006,7 @@ public static class RefStructGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::ProjectionsForIHaveRefStruct.Callback_23785253474456163915852151378274352521926083328>
 				{
 					public global::Rocks.Argument<string> @index { get; set; }
-					public global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @value { get; set; }
+					public global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @value { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -1113,7 +1113,7 @@ public static class RefStructGeneratorV4Tests
 						internal IHaveRefStructIndexerSetterExpectations(global::IHaveRefStructCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_23785253474456163915852151378274352521926083328> This(global::ProjectionsForIHaveRefStruct.ArgForSpanOfint @value, global::Rocks.Argument<string> @index)
+						internal global::Rocks.AdornmentsV4<global::IHaveRefStructCreateExpectations.Handler1, global::ProjectionsForIHaveRefStruct.Callback_23785253474456163915852151378274352521926083328> This(global::ProjectionsForIHaveRefStruct.ArgumentForSpanOfint @value, global::Rocks.Argument<string> @index)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);

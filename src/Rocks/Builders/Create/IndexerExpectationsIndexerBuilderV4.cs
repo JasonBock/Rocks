@@ -21,7 +21,8 @@ internal static class IndexerExpectationsIndexerBuilderV4
 
 			string adornmentsType;
 
-			if (property.Type.TypeKind == TypeKind.FunctionPointer)
+			if (property.Type.TypeKind == TypeKind.FunctionPointer ||
+				property.Type.TypeKind == TypeKind.Pointer)
 			{
 				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(property.Type, property.MockType);
 				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
@@ -30,25 +31,18 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			{
 				var handlerTypeName = $"{expectationsFullyQualifiedName}.Handler{memberIdentifier}";
 				var returnType =
-					property.Type.TypeKind == TypeKind.Pointer ?
-						property.Type.PointerType!.FullyQualifiedName :
-						property.Type.IsRefLikeType ?
-							MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
-							property.Type.FullyQualifiedName;
+					property.Type.IsRefLikeType ?
+						MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(propertyGetMethod, property.MockType) :
+						property.Type.FullyQualifiedName;
 
-				adornmentsType = property.Type.IsPointer ?
-					$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
-					$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+				adornmentsType = $"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName =
-							_.Type.TypeKind == TypeKind.Pointer ?
-								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
-								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName = ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -155,10 +149,8 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
 			var valueParameterArgument =
 				lastParameter.Type.IsEsoteric ?
-					lastParameter.Type.TypeKind == TypeKind.Pointer ?
-						$"global::Rocks.PointerArgument<{lastParameter.Type.PointerType!.FullyQualifiedName}>" :
-						ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
-				$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
+					ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
+					$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
 
 			var needsGenerationWithDefaults = false;
@@ -175,10 +167,7 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName =
-							_.Type.TypeKind == TypeKind.Pointer ?
-								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
-								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName = ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else

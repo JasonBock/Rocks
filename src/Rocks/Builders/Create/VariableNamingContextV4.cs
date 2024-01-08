@@ -47,3 +47,11 @@ internal sealed class VariableNamingContextV4
 		}
 	}
 }
+
+// We need a VNC for Handler-based usage,
+// so the factory method produces one for everyone.
+internal static class HandlerVariableNamingContextV4
+{
+	internal static VariableNamingContextV4 Create() =>
+		new(new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableArray());
+}

@@ -82,7 +82,8 @@ internal static class MockHandlerListBuilderV4
 
 		string handlerBaseType;
 
-		if (method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+		if (method.ReturnType.TypeKind == TypeKind.FunctionPointer ||
+			method.ReturnType.TypeKind == TypeKind.Pointer)
 		{
 			handlerBaseType = $"{MockProjectedAdornmentsTypesBuilderV4.GetProjectedHandlerFullyQualifiedNameName(method.ReturnType, method.MockType)}<{callbackDelegateTypeName}>";
 		}
@@ -91,17 +92,11 @@ internal static class MockHandlerListBuilderV4
 			var returnTypeName =
 				method.ReturnsVoid ?
 					string.Empty :
-					method.ReturnType.TypeKind == TypeKind.Pointer ?
-						method.ReturnType.PointerType!.FullyQualifiedName :
-						method.ReturnType.IsRefLikeType ?
-							MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-							method.ReturnType.FullyQualifiedName;
+					method.ReturnType.IsRefLikeType ?
+						MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+						method.ReturnType.FullyQualifiedName;
 			returnTypeName = returnTypeName == string.Empty ? string.Empty : $", {returnTypeName}";
-			var handlerType =
-				method.ReturnType.TypeKind == TypeKind.Pointer ?
-					"PointerHandlerV4" :
-					"HandlerV4";
-			handlerBaseType = $"global::Rocks.{handlerType}<{callbackDelegateTypeName}{returnTypeName}>";
+			handlerBaseType = $"global::Rocks.HandlerV4<{callbackDelegateTypeName}{returnTypeName}>";
 		}
 
 		var typeArguments = method.TypeArguments.Length > 0 ?
@@ -131,13 +126,10 @@ internal static class MockHandlerListBuilderV4
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
+				var typeArgument = parameter.Type.IsPointer && parameter.Type.IsBasedOnTypeParameter ? $"<{parameter.Type.PointerArgParameterType}>" : string.Empty;
 				var argumentTypeName =
 					parameter.Type.IsEsoteric ?
-						parameter.Type.IsRefLikeType ?
-							$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
-							parameter.Type.TypeKind == TypeKind.Pointer ?
-								$"public global::Rocks.PointerArgument<{parameter.Type.PointerType!.FullyQualifiedName}>" :
-								$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
+						$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}{typeArgument}" :
 						$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>";
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");

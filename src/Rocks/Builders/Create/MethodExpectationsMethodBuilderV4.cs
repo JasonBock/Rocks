@@ -19,10 +19,8 @@ internal static class MethodExpectationsMethodBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName =
-							_.Type.TypeKind == TypeKind.Pointer ?
-								$"global::Rocks.PointerArgument<{_.Type.PointerType!.FullyQualifiedName}>" :
-								ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var typeArgument = _.Type.IsPointer && _.Type.IsBasedOnTypeParameter ? $"<{_.Type.PointerArgParameterType}>" : string.Empty;
+						var argName = $"{ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType)}{typeArgument}";
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -63,7 +61,8 @@ internal static class MethodExpectationsMethodBuilderV4
 
 			string adornmentsType;
 
-			if (method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+			if (method.ReturnType.TypeKind == TypeKind.FunctionPointer ||
+				method.ReturnType.TypeKind == TypeKind.Pointer)
 			{
 				var projectedAdornmentTypeName = MockProjectedAdornmentsTypesBuilderV4.GetProjectedAdornmentsFullyQualifiedNameName(method.ReturnType, method.MockType);
 				adornmentsType = $"{projectedAdornmentTypeName}<{callbackDelegateTypeName}>";
@@ -74,17 +73,13 @@ internal static class MethodExpectationsMethodBuilderV4
 				var returnType = 
 					method.ReturnsVoid ? 
 						string.Empty :
-						method.ReturnType.TypeKind == TypeKind.Pointer ?
-							method.ReturnType.PointerType!.FullyQualifiedName :
-							method.ReturnType.IsRefLikeType ?
-								MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
-								method.ReturnType.FullyQualifiedName;
+						method.ReturnType.IsRefLikeType ?
+							MockProjectedDelegateBuilderV4.GetProjectedReturnValueDelegateFullyQualifiedName(method, method.MockType) :
+							method.ReturnType.FullyQualifiedName;
 
 				adornmentsType = method.ReturnsVoid ?
 					$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}>" :
-					method.ReturnType.IsPointer ?
-						$"global::Rocks.PointerAdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>" :
-						$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
+					$"global::Rocks.AdornmentsV4<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
 			var constraints = method.Constraints;

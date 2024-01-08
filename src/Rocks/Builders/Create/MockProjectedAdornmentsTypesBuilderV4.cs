@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 internal static partial class MockProjectedAdornmentsTypesBuilderV4
 {
 	internal static string GetProjectedAdornmentsName(TypeReferenceModel type) =>
-		$"AdornmentsFor{type.FlattenedName}";
+		$"AdornmentsFor{type.FlattenedName}{(type.PointerCount > 0 ? type.PointerCount : string.Empty)}";
 
 	internal static string GetProjectedAdornmentsFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
@@ -18,7 +18,7 @@ internal static partial class MockProjectedAdornmentsTypesBuilderV4
 	}
 
 	internal static string GetProjectedHandlerName(TypeReferenceModel type) =>
-		$"HandlerFor{type.FlattenedName}";
+		$"HandlerFor{type.FlattenedName}{(type.PointerCount > 0 ? type.PointerCount : string.Empty)}";
 
 	internal static string GetProjectedHandlerFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
@@ -33,7 +33,8 @@ internal static partial class MockProjectedAdornmentsTypesBuilderV4
 
 		foreach (var method in type.Methods)
 		{
-			if (!method.ReturnsVoid && method.ReturnType.TypeKind == TypeKind.FunctionPointer)
+			if (!method.ReturnsVoid && (method.ReturnType.TypeKind == TypeKind.FunctionPointer ||
+				method.ReturnType.TypeKind == TypeKind.Pointer))
 			{
 				adornmentTypes.Add(method.ReturnType);
 			}
@@ -42,7 +43,7 @@ internal static partial class MockProjectedAdornmentsTypesBuilderV4
 		foreach (var property in type.Properties)
 		{
 			if ((property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.GetAndSet || property.Accessors == PropertyAccessor.GetAndInit) &&
-				property.Type.TypeKind == TypeKind.FunctionPointer)
+				(property.Type.TypeKind == TypeKind.FunctionPointer || property.Type.TypeKind == TypeKind.Pointer))
 			{
 				adornmentTypes.Add(property.Type);
 			}

@@ -76,26 +76,3 @@ public abstract class HandlerV4<TCallback, TReturnValue>
 	/// </summary>
 	public TReturnValue? ReturnValue { get; set; }
 }
-
-/// <summary>
-/// Specifies expectations on a member
-/// with a callback and a pointer-based return value.
-/// </summary>
-public unsafe abstract class PointerHandlerV4<TCallback, TReturnValue>
-	: HandlerV4<TCallback>
-	where TCallback : Delegate
-	where TReturnValue : unmanaged
-{
-	/// <summary>
-	/// Gets or sets the return value.
-	/// </summary>
-	public TReturnValue* ReturnValue { get; set; }
-}
-
-// We need a VNC for Handler-based usage,
-// so the factory method produces one for everyone.
-internal static class HandlerVariableNamingContextV4
-{
-	internal static VariableNamingContextV4 Create() =>
-		new (new[] { "CallCount", "ExpectedCallCount", "Callback", "ReturnValue" }.ToImmutableArray());
-}

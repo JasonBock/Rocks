@@ -60,7 +60,7 @@ static void TestWithCode()
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(System.IO.Abstractions.PathBase)],
+		[typeof(Silk.NET.Core.Native.IComVtbl)],
 		[],
 		[],
 		[], BuildType.Create));

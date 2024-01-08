@@ -5,6 +5,20 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	internal static (int count, ITypeSymbol pointerType) GetPointerInformation(this ITypeSymbol self)
+	{
+		var count = 0;
+		var pointedAt = self;
+
+		while (pointedAt.TypeKind == TypeKind.Pointer)
+		{
+			pointedAt = ((IPointerTypeSymbol)pointedAt).PointedAtType;
+			count++;
+		}
+
+		return (count, pointedAt);
+	}
+
 	/*
 	Does the given type has at leat one member that:
 	* Is a method or property (but not an indexer)
