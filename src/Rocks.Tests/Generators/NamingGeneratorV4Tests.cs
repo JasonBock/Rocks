@@ -1490,7 +1490,7 @@ public static class NamingGeneratorV4Tests
 					internal required string? Data { get; init; }
 				}
 				
-				internal global::HasRequiredProperty Instance(string @constructorProperties, global::HasRequiredPropertyCreateExpectations.ConstructorProperties @constructorProperties1)
+				internal global::HasRequiredProperty Instance(global::HasRequiredPropertyCreateExpectations.ConstructorProperties @constructorProperties1, string @constructorProperties)
 				{
 					if (@constructorProperties1 is null)
 					{

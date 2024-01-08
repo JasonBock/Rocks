@@ -134,7 +134,7 @@ internal static class MockConstructorExpectationsBuilderV4
 				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
 				Array.Empty<string>();
 		var instanceParameters = 
-			$"{string.Join(", ", parameters.Select(_ =>
+			$"{string.Join(", ", constructorPropertiesParameter.Concat(parameters.Select(_ =>
 			{
 				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
 				var direction = _.RefKind switch
@@ -145,7 +145,7 @@ internal static class MockConstructorExpectationsBuilderV4
 					_ => string.Empty
 				};
 				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-			}).Concat(constructorPropertiesParameter))}";
+			})))}";
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
 			[$"@{namingContext["constructorProperties"]}"] :
