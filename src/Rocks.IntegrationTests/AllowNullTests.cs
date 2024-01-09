@@ -18,10 +18,11 @@ public class Allow
 public static class AllowNullTests
 {
 	[Test]
+	[RockCreate<IAllow>]
 	public static void CreateWithAbstract()
 	{
-		var expectations = Rock.Create<IAllow>();
-		expectations.Properties().Setters().NewLine(Arg.Is<string>(null!));
+		var expectations = new IAllowCreateExpectations();
+		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
 
 		var mock = expectations.Instance();
 		mock.NewLine = null;
@@ -30,17 +31,19 @@ public static class AllowNullTests
 	}
 
 	[Test]
+	[RockMake<IAllow>]
 	public static void MakeWithAbstract()
 	{
-		var mock = Rock.Make<IAllow>().Instance();
+		var mock = new IAllowMakeExpectations().Instance();
 		mock.NewLine = null;
 	}
 
 	[Test]
+	[RockCreate<Allow>]
 	public static void CreateWithNonAbstract()
 	{
-		var expectations = Rock.Create<Allow>();
-		expectations.Properties().Setters().NewLine(Arg.Is<string>(null!));
+		var expectations = new AllowCreateExpectations();
+		expectations.Properties.Setters.NewLine(Arg.Is<string>(null!));
 
 		var chunk = expectations.Instance();
 		chunk.NewLine = null;
@@ -49,9 +52,10 @@ public static class AllowNullTests
 	}
 
 	[Test]
+	[RockMake<Allow>]
 	public static void MakeWithNonAbstract()
 	{
-		var mock = Rock.Make<Allow>().Instance();
+		var mock = new AllowMakeExpectations().Instance();
 		mock.NewLine = null;
 	}
 }

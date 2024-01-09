@@ -205,21 +205,45 @@ I think the great pointer experiment is toast. If I have a `void***`, even if I 
 
 OK, down to 7 errors in code gen.
 
-* On `Instance()` methods, `ConstructorParameter` arguments go first, not last.
+* DONE - On `Instance()` methods, `ConstructorParameter` arguments go first, not last.
 
 YAY! No more test or code gen test errors!
 
-* Issue with `IHaveRefAndOutV4`, specifically with `ref` parameters, not passed in with `ref`. Actually, it's this one: `public void OutArgument(out int @a)`, the gen'd callback has it as a `ref` and it should be `out`
+* DONE - Issue with `IHaveRefAndOutV4`, specifically with `ref` parameters, not passed in with `ref`. Actually, it's this one: `public void OutArgument(out int @a)`, the gen'd callback has it as a `ref` and it should be `out`
 
 Man, I just keep going back with esoteric types :(. I don't need the pointer number, but `void****` isn't being recognized as a pointer now. What.
 
+OK, things are working again, integration tests that have been converted are compiling and passing successfully. Success!
 
-* Tests to add:
-    * Multiple `ref structs`, pointers, and function pointers
+Considering a big breaking change. Right now I require generic types to be "closed" when they are given to Rocks. This leads to expectation class names that are...kind of ugly. Furthermore, I have to generate mock infrastructure for each closed type. Even though I've tried to support open generics for a while, I think it's time to consider reversing the rule. That is, instead of the user doing this:
+
+```
+[RockCreate<IService<int, string>>]
+```
+
+I do this:
+
+```
+[RockCreate(typeof(IService<,>))]
+```
+
+Note that I can't do this, as it leads to a `CS7003` error:
+
+```
+[RockCreate<IService<,>>]
+```
+
+So, I create a version of the attribute that isn't generic, and takes one parameter, a `Type`. This is the type that we target. If it's open, we then generate the mock infrastructure with everything open (a preliminary test seems that this is doable).
+
+But, for alpha.1, I think I'll leave it as-is, get everything working (which should be the case as everything was closed generic types before) and deal with the ugly names for now. Then I can look at adding support for open generic types (once and for all, hopefully it's not a bust again like it was with pointers).
+
+* DONE - Tests to add:
+    * DONE - Multiple `ref structs`, pointers, and function pointers
 * DONE - Add perf tests to see how generators compare as well as mocking perf
-* Consider letting `RockAttributeGenerator` target types and methods, may make things more convenient.
+* DONE - Consider letting `RockAttributeGenerator` target types and methods, may make things more convenient.
 * Update Rocks.IntegrationTests to use new approach
     * Comment out
+* I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 * Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
 * Can WriteLines() be updated with a Write() + WriteLine()?
 * Update documentation

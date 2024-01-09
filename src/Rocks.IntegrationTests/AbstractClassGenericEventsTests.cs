@@ -14,14 +14,16 @@ public abstract class AbstractClassGenericEvents<T>
    public abstract event EventHandler<T> MyEvent;
 }
 
+[RockCreate<AbstractClassGenericEvents<AbstractClassEventArgs>>]
+[RockMake<AbstractClassGenericEvents<AbstractClassEventArgs>>]
 public static class AbstractClassGenericEventsTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<AbstractClassGenericEvents<AbstractClassEventArgs>>();
-		expectations.Methods().Foo().RaisesMyEvent(new AbstractClassEventArgs());
+		var expectations = new AbstractClassGenericEventsOfAbstractClassEventArgsCreateExpectations();
+		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new AbstractClassEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -36,7 +38,7 @@ public static class AbstractClassGenericEventsTests
 	[Test]
 	public static void MakeUsingGenericType()
 	{
-		var mock = Rock.Make<AbstractClassGenericEvents<AbstractClassEventArgs>>().Instance();
+		var mock = new AbstractClassGenericEventsOfAbstractClassEventArgsMakeExpectations().Instance();
 		mock.Foo();
 	}
 }

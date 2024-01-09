@@ -13,10 +13,11 @@ public abstract class AbstractClassMethodReturn
 public static class AbstractClassMethodReturnTests
 {
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParameters()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters();
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
@@ -27,19 +28,21 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockMake<AbstractClassMethodReturn>]
 	public static void MakeWithNoParameters()
 	{
-		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var mock = new AbstractClassMethodReturnMakeExpectations().Instance();
 		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersWithReturn()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters().Returns(3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
@@ -50,10 +53,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters().CallCount(2);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -63,10 +67,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters().CallCount(2);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -75,10 +80,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersAndCallback()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters().Callback(() => 3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters().Callback(() => 3);
 
 		var mock = expectations.Instance();
 		var value = mock.NoParameters();
@@ -89,9 +95,10 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
 
 		var chunk = expectations.Instance();
 
@@ -99,10 +106,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().NoParameters();
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		_ = expectations.Instance();
 
@@ -110,10 +118,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithOneParameter()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().OneParameter(3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.OneParameter(3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
@@ -124,19 +133,21 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockMake<AbstractClassMethodReturn>]
 	public static void MakeWithOneParameter()
 	{
-		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var mock = new AbstractClassMethodReturnMakeExpectations().Instance();
 		var value = mock.OneParameter(3);
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithOneParameterWithReturn()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().OneParameter(3).Returns(3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.OneParameter(3).ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
@@ -147,10 +158,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithOneParameterWithCallback()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().OneParameter(3).Callback(_ => 3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.OneParameter(3).Callback(_ => 3);
 
 		var mock = expectations.Instance();
 		var value = mock.OneParameter(3);
@@ -161,10 +173,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().OneParameter(3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.OneParameter(3);
 
 		var mock = expectations.Instance();
 
@@ -172,10 +185,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithMultipleParameters()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().MultipleParameters(3, "b");
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 		var value = mock.MultipleParameters(3, "b");
@@ -186,19 +200,21 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockMake<AbstractClassMethodReturn>]
 	public static void MakeWithMultipleParameters()
 	{
-		var mock = Rock.Make<AbstractClassMethodReturn>().Instance();
+		var mock = new AbstractClassMethodReturnMakeExpectations().Instance();
 		var value = mock.MultipleParameters(3, "b");
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithMultipleParametersWithReturn()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().MultipleParameters(3, "b").Returns(3);
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b").ReturnValue(3);
 
 		var mock = expectations.Instance();
 		var value = mock.MultipleParameters(3, "b");
@@ -209,12 +225,13 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithMultipleParametersWithCallback()
 	{
 		var aValue = 0;
 		var bValue = string.Empty;
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().MultipleParameters(3, "b").Callback((a, b) =>
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b").Callback((a, b) =>
 		{
 			(aValue, bValue) = (a, b);
 			return 3;
@@ -234,10 +251,11 @@ public static class AbstractClassMethodReturnTests
 	}
 
 	[Test]
+	[RockCreate<AbstractClassMethodReturn>]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
-		var expectations = Rock.Create<AbstractClassMethodReturn>();
-		expectations.Methods().MultipleParameters(3, "b");
+		var expectations = new AbstractClassMethodReturnCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 

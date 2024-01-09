@@ -9,9 +9,9 @@ public class AsyncEnumeration
 		[EnumeratorCancellation] CancellationToken cancellationToken = default)
 	{
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-	  await Task.CompletedTask;
+		await Task.CompletedTask;
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-	  yield return "y";
+		yield return "y";
 	}
 }
 
@@ -26,23 +26,24 @@ public interface IAmAsynchronous
 public static class AsynchronousTests
 {
 	[Test]
+	[RockCreate<AsyncEnumeration>]
 	public static async Task CreateAsyncInteratorAsync()
 	{
 		static async IAsyncEnumerable<string> ReturnsAsyncIterator()
 		{
 #pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
-		 await Task.CompletedTask;
+			await Task.CompletedTask;
 #pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
-		 yield return "x";
+			yield return "x";
 		}
 
-		var expectations = Rock.Create<AsyncEnumeration>();
-		expectations.Methods().GetRecordsAsync(Arg.IsDefault<CancellationToken>()).Returns(ReturnsAsyncIterator());
+		var expectations = new AsyncEnumerationCreateExpectations();
+		expectations.Methods.GetRecordsAsync(Arg.IsDefault<CancellationToken>()).ReturnValue(ReturnsAsyncIterator());
 		var mock = expectations.Instance();
 
 		var values = new List<string>();
 
-		await foreach(var value in mock.GetRecordsAsync())
+		await foreach (var value in mock.GetRecordsAsync())
 		{
 			values.Add(value);
 		}
@@ -57,14 +58,15 @@ public static class AsynchronousTests
 	}
 
 	[Test]
+	[RockCreate<IAmAsynchronous>]
 	public static async Task CreateAsynchronousMethodsAsync()
 	{
 		const int returnValue = 3;
-		var expectations = Rock.Create<IAmAsynchronous>();
-		expectations.Methods().FooAsync().Returns(Task.CompletedTask);
-		expectations.Methods().FooReturnAsync().Returns(Task.FromResult(returnValue));
-		expectations.Methods().ValueFooAsync().Returns(new ValueTask());
-		expectations.Methods().ValueFooReturnAsync().Returns(new ValueTask<int>(returnValue));
+		var expectations = new IAmAsynchronousCreateExpectations();
+		expectations.Methods.FooAsync().ReturnValue(Task.CompletedTask);
+		expectations.Methods.FooReturnAsync().ReturnValue(Task.FromResult(returnValue));
+		expectations.Methods.ValueFooAsync().ReturnValue(new ValueTask());
+		expectations.Methods.ValueFooReturnAsync().ReturnValue(new ValueTask<int>(returnValue));
 
 		var mock = expectations.Instance();
 		await mock.FooAsync().ConfigureAwait(false);
@@ -82,11 +84,12 @@ public static class AsynchronousTests
 	}
 
 	[Test]
+	[RockCreate<IAmAsynchronous>]
 	public static async Task CreateAsynchronousMethodsWithAsyncCallbackAsync()
 	{
-		var expectations = Rock.Create<IAmAsynchronous>();
-		expectations.Methods().FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
-		expectations.Methods().FooReturnAsync().Callback(async () =>
+		var expectations = new IAmAsynchronousCreateExpectations();
+		expectations.Methods.FooAsync().Callback(async () => await Task.Delay(10).ConfigureAwait(false));
+		expectations.Methods.FooReturnAsync().Callback(async () =>
 		{
 			await Task.Delay(10).ConfigureAwait(false);
 			return 3;
@@ -102,9 +105,10 @@ public static class AsynchronousTests
 	}
 
 	[Test]
+	[RockMake<IAmAsynchronous>]
 	public static async Task MakeAsynchronousMethodsAsync()
 	{
-		var mock = Rock.Make<IAmAsynchronous>().Instance();
+		var mock = new IAmAsynchronousMakeExpectations().Instance();
 		await mock.FooAsync().ConfigureAwait(false);
 		var value = await mock.FooReturnAsync().ConfigureAwait(false);
 		await mock.ValueFooAsync().ConfigureAwait(false);

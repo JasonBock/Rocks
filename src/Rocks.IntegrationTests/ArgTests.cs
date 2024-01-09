@@ -12,29 +12,32 @@ public interface IHaveArgument
 public static class ArgTests
 {
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentFromIndexerWithNull()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
+		var expectations = new IHaveArgumentCreateExpectations();
 		Assert.Multiple(() =>
 		{
-			Assert.That(() => expectations.Indexers().Getters().This(null!), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers().Setters().This("value", null!), Throws.TypeOf<ArgumentNullException>());
-			Assert.That(() => expectations.Indexers().Setters().This(null!, 1), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers.Getters.This(null!), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers.Setters.This("value", null!), Throws.TypeOf<ArgumentNullException>());
+			Assert.That(() => expectations.Indexers.Setters.This(null!, 1), Throws.TypeOf<ArgumentNullException>());
 		});
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentFromMethodWithNull()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		Assert.That(() => expectations.Methods().Foo(null!), Throws.TypeOf<ArgumentNullException>());
+		var expectations = new IHaveArgumentCreateExpectations();
+		Assert.That(() => expectations.Methods.Foo(null!), Throws.TypeOf<ArgumentNullException>());
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithValue()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		expectations.Methods().Foo(3);
+		var expectations = new IHaveArgumentCreateExpectations();
+		expectations.Methods.Foo(3);
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -43,10 +46,11 @@ public static class ArgTests
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithIs()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		expectations.Methods().Foo(Arg.Is(3));
+		var expectations = new IHaveArgumentCreateExpectations();
+		expectations.Methods.Foo(Arg.Is(3));
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -55,10 +59,11 @@ public static class ArgTests
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithAny()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		expectations.Methods().Foo(Arg.Any<int>());
+		var expectations = new IHaveArgumentCreateExpectations();
+		expectations.Methods.Foo(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Foo(3);
@@ -67,10 +72,11 @@ public static class ArgTests
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithValidate()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		expectations.Methods().Foo(Arg.Validate<int>(_ => _ > 20 && _ < 30));
+		var expectations = new IHaveArgumentCreateExpectations();
+		expectations.Methods.Foo(Arg.Validate<int>(_ => _ > 20 && _ < 30));
 
 		var mock = expectations.Instance();
 		mock.Foo(25);
@@ -79,10 +85,11 @@ public static class ArgTests
 	}
 
 	[Test]
+	[RockCreate<IHaveArgument>]
 	public static void DeclareArgumentWithDefault()
 	{
-		var expectations = Rock.Create<IHaveArgument>();
-		expectations.Methods().Bar(Arg.IsDefault<int>());
+		var expectations = new IHaveArgumentCreateExpectations();
+		expectations.Methods.Bar(Arg.IsDefault<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);

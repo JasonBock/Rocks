@@ -17,13 +17,15 @@ public abstract class AbstractClassConstructor
 	public string? StringData { get; }
 }
 
+[RockCreate<AbstractClassConstructor>]
+[RockMake<AbstractClassConstructor>]
 public static class AbstractClassConstructorTests
 {
 	[Test]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var expectations = Rock.Create<AbstractClassConstructor>();
-		expectations.Methods().NoParameters();
+		var expectations = new AbstractClassConstructorCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
@@ -40,7 +42,7 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void MakeWithNoParametersAndPublicConstructor()
 	{
-		var mock = Rock.Make<AbstractClassConstructor>().Instance(3);
+		var mock = new AbstractClassConstructorMakeExpectations().Instance(3);
 		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -49,8 +51,8 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var expectations = Rock.Create<AbstractClassConstructor>();
-		expectations.Methods().NoParameters();
+		var expectations = new AbstractClassConstructorCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
@@ -67,7 +69,7 @@ public static class AbstractClassConstructorTests
 	[Test]
 	public static void MakeWithNoParametersAndProtectedConstructor()
 	{
-		var mock = Rock.Make<AbstractClassConstructor>().Instance("b");
+		var mock = new AbstractClassConstructorMakeExpectations().Instance("b");
 		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));

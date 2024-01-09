@@ -14,13 +14,15 @@ public abstract class AbstractClassGenericMethod<T>
 	public abstract TData? NullableValues<TData>(TData? data);
 }
 
+[RockCreate<AbstractClassGenericMethod<int>>]
+[RockMake<AbstractClassGenericMethod<int>>]
 public static class AbstractClassGenericMethodTests
 {
 	[Test]
 	public static void CreateUsingGenericType()
 	{
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().Foo(Arg.Any<List<string>>());
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
 		mock.Foo([]);
@@ -31,15 +33,15 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeUsingGenericType()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		mock.Foo([]);
 	}
 
 	[Test]
 	public static void CreateWithGenericTypeParameter()
 	{
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().Quux(Arg.Any<int>());
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.Quux(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Quux(3);
@@ -50,15 +52,15 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeWithGenericTypeParameter()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		mock.Quux(3);
 	}
 
 	[Test]
 	public static void CreateWithGenericParameterType()
 	{
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().Bar(Arg.Any<int>());
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);
@@ -69,15 +71,15 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeWithGenericParameterType()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		mock.Bar(3);
 	}
 
 	[Test]
 	public static void CreateWithGenericParameterTypeThatDoesNotMatch()
 	{
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().Bar(Arg.Any<int>());
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 
@@ -88,8 +90,8 @@ public static class AbstractClassGenericMethodTests
 	public static void CreateUsingGenericTypeAsReturn()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().FooReturn().Returns(returnValue);
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.FooReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.FooReturn();
@@ -102,7 +104,7 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeUsingGenericTypeAsReturn()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.FooReturn();
 
 		Assert.That(value, Is.EqualTo(default(List<string>)));
@@ -112,8 +114,8 @@ public static class AbstractClassGenericMethodTests
 	public static void CreateWithGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().QuuxReturn().Returns(returnValue);
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.QuuxReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.QuuxReturn();
@@ -126,7 +128,7 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeWithGenericTypeParameterAsReturn()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.QuuxReturn();
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -136,8 +138,8 @@ public static class AbstractClassGenericMethodTests
 	public static void CreateWithGenericParameterTypeAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().BarReturn<int>().Returns(returnValue);
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.BarReturn<int>();
@@ -150,7 +152,7 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeWithGenericParameterTypeAsReturn()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.BarReturn<int>();
 
 		Assert.That(value, Is.EqualTo(default(int)));
@@ -160,8 +162,8 @@ public static class AbstractClassGenericMethodTests
 	public static void CreateWithGenericParameterTypeAsReturnThatDoesNotMatch()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().BarReturn<int>().Returns(returnValue);
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 
@@ -172,8 +174,8 @@ public static class AbstractClassGenericMethodTests
 	public static void CreateWithNullableGenericParameterTypes()
 	{
 		var returnValue = "c";
-		var expectations = Rock.Create<AbstractClassGenericMethod<int>>();
-		expectations.Methods().NullableValues<string>("b").Returns(returnValue);
+		var expectations = new AbstractClassGenericMethodOfintCreateExpectations();
+		expectations.Methods.NullableValues<string>("b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.NullableValues("b");
@@ -186,7 +188,7 @@ public static class AbstractClassGenericMethodTests
 	[Test]
 	public static void MakeWithNullableGenericParameterTypes()
 	{
-		var mock = Rock.Make<AbstractClassGenericMethod<int>>().Instance();
+		var mock = new AbstractClassGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.NullableValues("b");
 
 		Assert.That(value, Is.EqualTo(default(string?)));
