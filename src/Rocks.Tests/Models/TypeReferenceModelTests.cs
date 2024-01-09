@@ -159,9 +159,9 @@ public static class TypeReferenceModelTests
 			Assert.That(model.IsPointer, Is.True);
 			Assert.That(model.PointerArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
 			Assert.That(model.PointerArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
-			Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgEvaluationForintPointer"));
-			Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgForintPointer"));
-			Assert.That(model.RefLikeArgConstructorProjectedName, Is.EqualTo("ArgForintPointer"));
+			Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForintPointer"));
+			Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgumentForintPointer"));
+			Assert.That(model.RefLikeArgConstructorProjectedName, Is.EqualTo("ArgumentForintPointer"));
 		});
 	}
 

@@ -262,7 +262,7 @@ public unsafe static class PointerTestsV4
 		static void DelegatePointerParameterDelegate(int a) { }
 
 		var expectations = new IHavePointersV4CreateExpectations();
-		expectations.Methods.DelegatePointerReturn().Returns(&DelegatePointerParameterDelegate);
+		expectations.Methods.DelegatePointerReturn().ReturnValue(&DelegatePointerParameterDelegate);
 
 		var mock = expectations.Instance();
 		mock.DelegatePointerReturn();

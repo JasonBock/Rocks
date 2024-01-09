@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.Testing;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace Rocks.Tests.Generators;
 
@@ -34,22 +33,22 @@ public static class PointerGeneratorV4Tests
 			namespace ProjectionsForIPointerUsage
 			{
 				internal unsafe delegate void** Callback_311684193689074896480440330448335592561750954598();
-				internal unsafe class HandlerForvoidPointerPointer2<TCallback>
+				internal unsafe class HandlerForvoidPointerPointer<TCallback>
 					: global::Rocks.HandlerV4<TCallback>
 					where TCallback : global::System.Delegate
 				{
 					public void** ReturnValue { get; set; }
 				}
 				
-				internal unsafe sealed class AdornmentsForvoidPointerPointer2<TCallback>
-					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointer2<TCallback>, TCallback>
+				internal unsafe sealed class AdornmentsForvoidPointerPointer<TCallback>
+					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointer<TCallback>, TCallback>
 					where TCallback : global::System.Delegate
 				{
-					internal AdornmentsForvoidPointerPointer2(HandlerForvoidPointerPointer2<TCallback> handler) 
+					internal AdornmentsForvoidPointerPointer(HandlerForvoidPointerPointer<TCallback> handler) 
 						: base(handler) 
 					{ }
 				
-					internal AdornmentsForvoidPointerPointer2<TCallback> ReturnValue(void** returnValue)
+					internal AdornmentsForvoidPointerPointer<TCallback> ReturnValue(void** returnValue)
 					{
 						this.handler.ReturnValue = returnValue;
 						return this;
@@ -61,7 +60,7 @@ public static class PointerGeneratorV4Tests
 				: global::Rocks.Expectations.ExpectationsV4
 			{
 				internal sealed class Handler0
-					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointer2<global::ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598>
+					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointer<global::ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -112,7 +111,7 @@ public static class PointerGeneratorV4Tests
 					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointer2<global::ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
+					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointer<global::ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -178,22 +177,22 @@ public static class PointerGeneratorV4Tests
 			namespace ProjectionsForIPointerUsage
 			{
 				internal unsafe delegate void*** Callback_454293505151760244294537034129468955159423240205();
-				internal unsafe class HandlerForvoidPointerPointerPointer3<TCallback>
+				internal unsafe class HandlerForvoidPointerPointerPointer<TCallback>
 					: global::Rocks.HandlerV4<TCallback>
 					where TCallback : global::System.Delegate
 				{
 					public void*** ReturnValue { get; set; }
 				}
 				
-				internal unsafe sealed class AdornmentsForvoidPointerPointerPointer3<TCallback>
-					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointerPointer3<TCallback>, TCallback>
+				internal unsafe sealed class AdornmentsForvoidPointerPointerPointer<TCallback>
+					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointerPointer<TCallback>, TCallback>
 					where TCallback : global::System.Delegate
 				{
-					internal AdornmentsForvoidPointerPointerPointer3(HandlerForvoidPointerPointerPointer3<TCallback> handler) 
+					internal AdornmentsForvoidPointerPointerPointer(HandlerForvoidPointerPointerPointer<TCallback> handler) 
 						: base(handler) 
 					{ }
 				
-					internal AdornmentsForvoidPointerPointerPointer3<TCallback> ReturnValue(void*** returnValue)
+					internal AdornmentsForvoidPointerPointerPointer<TCallback> ReturnValue(void*** returnValue)
 					{
 						this.handler.ReturnValue = returnValue;
 						return this;
@@ -205,7 +204,7 @@ public static class PointerGeneratorV4Tests
 				: global::Rocks.Expectations.ExpectationsV4
 			{
 				internal sealed class Handler0
-					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointer3<global::ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205>
+					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointer<global::ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -256,7 +255,7 @@ public static class PointerGeneratorV4Tests
 					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointer3<global::ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
+					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointer<global::ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -322,22 +321,22 @@ public static class PointerGeneratorV4Tests
 			namespace ProjectionsForIPointerUsage
 			{
 				internal unsafe delegate void**** Callback_151894571580036554918620607107927567135334329577();
-				internal unsafe class HandlerForvoidPointerPointerPointerPointer4<TCallback>
+				internal unsafe class HandlerForvoidPointerPointerPointerPointer<TCallback>
 					: global::Rocks.HandlerV4<TCallback>
 					where TCallback : global::System.Delegate
 				{
 					public void**** ReturnValue { get; set; }
 				}
 				
-				internal unsafe sealed class AdornmentsForvoidPointerPointerPointerPointer4<TCallback>
-					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointerPointerPointer4<TCallback>, TCallback>
+				internal unsafe sealed class AdornmentsForvoidPointerPointerPointerPointer<TCallback>
+					: global::Rocks.AdornmentsV4<HandlerForvoidPointerPointerPointerPointer<TCallback>, TCallback>
 					where TCallback : global::System.Delegate
 				{
-					internal AdornmentsForvoidPointerPointerPointerPointer4(HandlerForvoidPointerPointerPointerPointer4<TCallback> handler) 
+					internal AdornmentsForvoidPointerPointerPointerPointer(HandlerForvoidPointerPointerPointerPointer<TCallback> handler) 
 						: base(handler) 
 					{ }
 				
-					internal AdornmentsForvoidPointerPointerPointerPointer4<TCallback> ReturnValue(void**** returnValue)
+					internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> ReturnValue(void**** returnValue)
 					{
 						this.handler.ReturnValue = returnValue;
 						return this;
@@ -349,7 +348,7 @@ public static class PointerGeneratorV4Tests
 				: global::Rocks.Expectations.ExpectationsV4
 			{
 				internal sealed class Handler0
-					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointerPointer4<global::ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577>
+					: global::ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointerPointer<global::ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -400,7 +399,7 @@ public static class PointerGeneratorV4Tests
 					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointerPointer4<global::ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
+					internal global::ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointerPointer<global::ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -466,28 +465,39 @@ public static class PointerGeneratorV4Tests
 			namespace ProjectionsForISurface
 			{
 				internal unsafe delegate void Callback_455733297849133658792680279988631751332086808415<T>(T* @allocator) where T : unmanaged;
-				internal unsafe delegate bool ArgumentEvaluationForTPointer1<T>(T* @value) where T : unmanaged;
+				internal unsafe delegate bool ArgumentEvaluationForTPointer<T>(T* @value) where T : unmanaged;
 				
-				internal unsafe sealed class ArgumentForTPointer1<T>
+				internal unsafe sealed class ArgumentForTPointer<T>
 					: global::Rocks.Argument where T : unmanaged
 				{
-					private readonly global::ProjectionsForISurface.ArgumentEvaluationForTPointer1<T>? evaluation;
+					private readonly global::ProjectionsForISurface.ArgumentEvaluationForTPointer<T>? evaluation;
+					private readonly T* value;
 					private readonly global::Rocks.ValidationState validation;
 					
-					internal ArgumentForTPointer1() => this.validation = global::Rocks.ValidationState.None;
+					internal ArgumentForTPointer() => this.validation = global::Rocks.ValidationState.None;
 					
-					internal ArgumentForTPointer1(global::ProjectionsForISurface.ArgumentEvaluationForTPointer1<T> @evaluation)
+					internal ArgumentForTPointer(T* @value)
+					{
+						this.value = @value;
+						this.validation = global::Rocks.ValidationState.Value;
+					}
+					
+					internal ArgumentForTPointer(global::ProjectionsForISurface.ArgumentEvaluationForTPointer<T> @evaluation)
 					{
 						this.evaluation = @evaluation;
 						this.validation = global::Rocks.ValidationState.Evaluation;
 					}
 					
+					public static implicit operator ArgumentForTPointer<T>(T* @value) => new(@value);
+					
 					public bool IsValid(T* @value) =>
 						this.validation switch
 						{
 							global::Rocks.ValidationState.None => true,
+							global::Rocks.ValidationState.Value => @value == this.value,
 							global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-							_ => throw new global::System.NotSupportedException("Invalid validation state."),
+							global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+							_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 						};
 				}
 			}
@@ -501,7 +511,7 @@ public static class PointerGeneratorV4Tests
 					: global::Rocks.HandlerV4<global::ProjectionsForISurface.Callback_455733297849133658792680279988631751332086808415<T>>
 					where T : unmanaged
 				{
-					public global::ProjectionsForISurface.ArgumentForTPointer1<T> @allocator { get; set; }
+					public global::ProjectionsForISurface.ArgumentForTPointer<T> @allocator { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -572,7 +582,7 @@ public static class PointerGeneratorV4Tests
 					internal ISurfaceMethodExpectations(global::ISurfaceCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.AdornmentsV4<global::ISurfaceCreateExpectations.Handler0<T>, global::ProjectionsForISurface.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ProjectionsForISurface.ArgumentForTPointer1<T> @allocator) where T : unmanaged
+					internal global::Rocks.AdornmentsV4<global::ISurfaceCreateExpectations.Handler0<T>, global::ProjectionsForISurface.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ProjectionsForISurface.ArgumentForTPointer<T> @allocator) where T : unmanaged
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
 						
@@ -652,28 +662,39 @@ public static class PointerGeneratorV4Tests
 				namespace ProjectionsForIHavePointers
 				{
 					internal unsafe delegate void Callback_675345066879799784342630291957923402524406707040(int* @value);
-					internal unsafe delegate bool ArgumentEvaluationForintPointer1(int* @value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
 					
-					internal unsafe sealed class ArgumentForintPointer1
+					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
 					{
-						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1? evaluation;
+						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+						private readonly int* value;
 						private readonly global::Rocks.ValidationState validation;
 						
-						internal ArgumentForintPointer1() => this.validation = global::Rocks.ValidationState.None;
+						internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentForintPointer1(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1 @evaluation)
+						internal ArgumentForintPointer(int* @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
+						
+						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
 						{
 							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
+						public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
+						
 						public bool IsValid(int* @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								global::Rocks.ValidationState.Value => @value == this.value,
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 				}
@@ -686,7 +707,7 @@ public static class PointerGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040>
 					{
-						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value { get; set; }
+						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -753,7 +774,7 @@ public static class PointerGeneratorV4Tests
 						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value)
+						internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -834,22 +855,22 @@ public static class PointerGeneratorV4Tests
 				namespace ProjectionsForIHavePointers
 				{
 					internal unsafe delegate int* Callback_286972840454368885027555790883633245835670430575();
-					internal unsafe class HandlerForintPointer1<TCallback>
+					internal unsafe class HandlerForintPointer<TCallback>
 						: global::Rocks.HandlerV4<TCallback>
 						where TCallback : global::System.Delegate
 					{
 						public int* ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForintPointer1<TCallback>
-						: global::Rocks.AdornmentsV4<HandlerForintPointer1<TCallback>, TCallback>
+					internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						: global::Rocks.AdornmentsV4<HandlerForintPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForintPointer1(HandlerForintPointer1<TCallback> handler) 
+						internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
 							: base(handler) 
 						{ }
 					
-						internal AdornmentsForintPointer1<TCallback> ReturnValue(int* returnValue)
+						internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -861,7 +882,7 @@ public static class PointerGeneratorV4Tests
 					: global::Rocks.Expectations.ExpectationsV4
 				{
 					internal sealed class Handler0
-						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
+						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
 					{ }
 					
 					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
@@ -912,7 +933,7 @@ public static class PointerGeneratorV4Tests
 						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
+						internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
 						{
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -993,9 +1014,16 @@ public static class PointerGeneratorV4Tests
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+						private readonly delegate*<int, void> value;
 						private readonly global::Rocks.ValidationState validation;
 						
 						internal ArgumentFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
+						
+						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
 						
 						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 						{
@@ -1007,8 +1035,12 @@ public static class PointerGeneratorV4Tests
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								#pragma warning disable CS8909
+								global::Rocks.ValidationState.Value => @value == this.value,
+								#pragma warning restore CS8909
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 				}
@@ -1323,46 +1355,57 @@ public static class PointerGeneratorV4Tests
 				{
 					internal unsafe delegate int* Callback_286972840454368885027555790883633245835670430575();
 					internal unsafe delegate void Callback_675345066879799784342630291957923402524406707040(int* @value);
-					internal unsafe delegate bool ArgumentEvaluationForintPointer1(int* @value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
 					
-					internal unsafe sealed class ArgumentForintPointer1
+					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
 					{
-						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1? evaluation;
+						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+						private readonly int* value;
 						private readonly global::Rocks.ValidationState validation;
 						
-						internal ArgumentForintPointer1() => this.validation = global::Rocks.ValidationState.None;
+						internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentForintPointer1(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1 @evaluation)
+						internal ArgumentForintPointer(int* @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
+						
+						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
 						{
 							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
+						public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
+						
 						public bool IsValid(int* @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								global::Rocks.ValidationState.Value => @value == this.value,
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
-					internal unsafe class HandlerForintPointer1<TCallback>
+					internal unsafe class HandlerForintPointer<TCallback>
 						: global::Rocks.HandlerV4<TCallback>
 						where TCallback : global::System.Delegate
 					{
 						public int* ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForintPointer1<TCallback>
-						: global::Rocks.AdornmentsV4<HandlerForintPointer1<TCallback>, TCallback>
+					internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						: global::Rocks.AdornmentsV4<HandlerForintPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForintPointer1(HandlerForintPointer1<TCallback> handler) 
+						internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
 							: base(handler) 
 						{ }
 					
-						internal AdornmentsForintPointer1<TCallback> ReturnValue(int* returnValue)
+						internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -1376,13 +1419,13 @@ public static class PointerGeneratorV4Tests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
+						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
 					{ }
 					
 					internal sealed class Handler1
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040>
 					{
-						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value { get; set; }
+						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1469,7 +1512,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersPropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> Data()
+							internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> Data()
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
@@ -1483,7 +1526,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersPropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value)
+							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value)
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
@@ -1575,9 +1618,16 @@ public static class PointerGeneratorV4Tests
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+						private readonly delegate*<int, void> value;
 						private readonly global::Rocks.ValidationState validation;
 						
 						internal ArgumentFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
+						
+						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
 						
 						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 						{
@@ -1589,8 +1639,12 @@ public static class PointerGeneratorV4Tests
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								#pragma warning disable CS8909
+								global::Rocks.ValidationState.Value => @value == this.value,
+								#pragma warning restore CS8909
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 					internal unsafe class HandlerFordelegatePointerOfint__void<TCallback>
@@ -1815,28 +1869,39 @@ public static class PointerGeneratorV4Tests
 				{
 					internal unsafe delegate string Callback_651512256251275256331491675489899036574746642609(int* @index);
 					internal unsafe delegate void Callback_212973048794667040959187979763248770796810688032(int* @index, string @value);
-					internal unsafe delegate bool ArgumentEvaluationForintPointer1(int* @value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
 					
-					internal unsafe sealed class ArgumentForintPointer1
+					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
 					{
-						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1? evaluation;
+						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+						private readonly int* value;
 						private readonly global::Rocks.ValidationState validation;
 						
-						internal ArgumentForintPointer1() => this.validation = global::Rocks.ValidationState.None;
+						internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentForintPointer1(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1 @evaluation)
+						internal ArgumentForintPointer(int* @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
+						
+						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
 						{
 							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
+						public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
+						
 						public bool IsValid(int* @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								global::Rocks.ValidationState.Value => @value == this.value,
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 				}
@@ -1849,13 +1914,13 @@ public static class PointerGeneratorV4Tests
 					internal sealed class Handler0
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.Callback_651512256251275256331491675489899036574746642609, string>
 					{
-						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @index { get; set; }
+						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @index { get; set; }
 					}
 					
 					internal sealed class Handler1
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.Callback_212973048794667040959187979763248770796810688032>
 					{
-						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @index { get; set; }
+						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @index { get; set; }
 						public global::Rocks.Argument<string> @value { get; set; }
 					}
 					
@@ -1943,7 +2008,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.ProjectionsForIHavePointers.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @index)
+							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.ProjectionsForIHavePointers.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -1963,7 +2028,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @index)
+							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -2053,46 +2118,57 @@ public static class PointerGeneratorV4Tests
 				{
 					internal unsafe delegate int* Callback_233526433170798729291170303027806441120958052344(string @index);
 					internal unsafe delegate void Callback_358052978580071937655814761903436805080473631030(string @index, int* @value);
-					internal unsafe delegate bool ArgumentEvaluationForintPointer1(int* @value);
+					internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
 					
-					internal unsafe sealed class ArgumentForintPointer1
+					internal unsafe sealed class ArgumentForintPointer
 						: global::Rocks.Argument
 					{
-						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1? evaluation;
+						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+						private readonly int* value;
 						private readonly global::Rocks.ValidationState validation;
 						
-						internal ArgumentForintPointer1() => this.validation = global::Rocks.ValidationState.None;
+						internal ArgumentForintPointer() => this.validation = global::Rocks.ValidationState.None;
 						
-						internal ArgumentForintPointer1(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer1 @evaluation)
+						internal ArgumentForintPointer(int* @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
+						
+						internal ArgumentForintPointer(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
 						{
 							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
 						}
 						
+						public static implicit operator ArgumentForintPointer(int* @value) => new(@value);
+						
 						public bool IsValid(int* @value) =>
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								global::Rocks.ValidationState.Value => @value == this.value,
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
-					internal unsafe class HandlerForintPointer1<TCallback>
+					internal unsafe class HandlerForintPointer<TCallback>
 						: global::Rocks.HandlerV4<TCallback>
 						where TCallback : global::System.Delegate
 					{
 						public int* ReturnValue { get; set; }
 					}
 					
-					internal unsafe sealed class AdornmentsForintPointer1<TCallback>
-						: global::Rocks.AdornmentsV4<HandlerForintPointer1<TCallback>, TCallback>
+					internal unsafe sealed class AdornmentsForintPointer<TCallback>
+						: global::Rocks.AdornmentsV4<HandlerForintPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForintPointer1(HandlerForintPointer1<TCallback> handler) 
+						internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
 							: base(handler) 
 						{ }
 					
-						internal AdornmentsForintPointer1<TCallback> ReturnValue(int* returnValue)
+						internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 						{
 							this.handler.ReturnValue = returnValue;
 							return this;
@@ -2106,7 +2182,7 @@ public static class PointerGeneratorV4Tests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344>
+						: global::MockTests.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
 					}
@@ -2115,7 +2191,7 @@ public static class PointerGeneratorV4Tests
 						: global::Rocks.HandlerV4<global::MockTests.ProjectionsForIHavePointers.Callback_358052978580071937655814761903436805080473631030>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
-						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value { get; set; }
+						public global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -2202,7 +2278,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer1<global::MockTests.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
+							internal global::MockTests.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -2222,7 +2298,7 @@ public static class PointerGeneratorV4Tests
 							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer1 @value, global::Rocks.Argument<string> @index)
+							internal global::Rocks.AdornmentsV4<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.ProjectionsForIHavePointers.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.ProjectionsForIHavePointers.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -2318,9 +2394,16 @@ public static class PointerGeneratorV4Tests
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+						private readonly delegate*<int, void> value;
 						private readonly global::Rocks.ValidationState validation;
 						
 						internal ArgumentFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
+						
+						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
 						
 						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 						{
@@ -2332,8 +2415,12 @@ public static class PointerGeneratorV4Tests
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								#pragma warning disable CS8909
+								global::Rocks.ValidationState.Value => @value == this.value,
+								#pragma warning restore CS8909
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 				}
@@ -2556,9 +2643,16 @@ public static class PointerGeneratorV4Tests
 						: global::Rocks.Argument
 					{
 						private readonly global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+						private readonly delegate*<int, void> value;
 						private readonly global::Rocks.ValidationState validation;
 						
 						internal ArgumentFordelegatePointerOfint__void() => this.validation = global::Rocks.ValidationState.None;
+						
+						internal ArgumentFordelegatePointerOfint__void(delegate*<int, void> @value)
+						{
+							this.value = @value;
+							this.validation = global::Rocks.ValidationState.Value;
+						}
 						
 						internal ArgumentFordelegatePointerOfint__void(global::MockTests.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 						{
@@ -2570,8 +2664,12 @@ public static class PointerGeneratorV4Tests
 							this.validation switch
 							{
 								global::Rocks.ValidationState.None => true,
+								#pragma warning disable CS8909
+								global::Rocks.ValidationState.Value => @value == this.value,
+								#pragma warning restore CS8909
 								global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
-								_ => throw new global::System.NotSupportedException("Invalid validation state."),
+								global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
+								_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 							};
 					}
 					internal unsafe class HandlerFordelegatePointerOfint__void<TCallback>

@@ -42,7 +42,10 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName = ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName = 
+							_.Type.IsRefLikeType ?
+								RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType) :
+								PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else
@@ -149,7 +152,9 @@ internal static class IndexerExpectationsIndexerBuilderV4
 			var lastParameterRequiresNullable = lastParameter.RequiresNullableAnnotation ? "?" : string.Empty;
 			var valueParameterArgument =
 				lastParameter.Type.IsEsoteric ?
-					ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
+					lastParameter.Type.IsRefLikeType ?
+						RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
+						PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(lastParameter.Type, property.MockType) :
 					$"global::Rocks.Argument<{lastParameter.Type.FullyQualifiedName}{lastParameterRequiresNullable}>";
 			var valueParameter = $"{valueParameterArgument} @{lastParameter.Name}";
 
@@ -167,7 +172,10 @@ internal static class IndexerExpectationsIndexerBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var argName = ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
+						var argName =
+							_.Type.IsRefLikeType ?
+								RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType) :
+								PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else

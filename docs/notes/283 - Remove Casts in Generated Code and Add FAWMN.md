@@ -209,10 +209,17 @@ OK, down to 7 errors in code gen.
 
 YAY! No more test or code gen test errors!
 
+* Issue with `IHaveRefAndOutV4`, specifically with `ref` parameters, not passed in with `ref`. Actually, it's this one: `public void OutArgument(out int @a)`, the gen'd callback has it as a `ref` and it should be `out`
+
+Man, I just keep going back with esoteric types :(. I don't need the pointer number, but `void****` isn't being recognized as a pointer now. What.
+
+
 * Tests to add:
     * Multiple `ref structs`, pointers, and function pointers
-* Add perf tests to see how generators compare as well as mocking perf
+* DONE - Add perf tests to see how generators compare as well as mocking perf
+* Consider letting `RockAttributeGenerator` target types and methods, may make things more convenient.
 * Update Rocks.IntegrationTests to use new approach
+    * Comment out
 * Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
 * Can WriteLines() be updated with a Write() + WriteLine()?
 * Update documentation

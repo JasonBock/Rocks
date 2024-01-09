@@ -11,7 +11,14 @@ internal static class MockProjectedArgTypeBuilderV4
 	{
 		foreach (var esotericType in GetEsotericTypes(type))
 		{
-			ProjectedArgTypeBuilderV4.Build(writer, esotericType, type);
+			if (esotericType.IsPointer)
+			{
+				PointerArgTypeBuilderV4.Build(writer, esotericType, type);
+			}
+			else
+			{
+				RefLikeArgTypeBuilderV4.Build(writer, esotericType, type);
+			}
 		}
 	}
 

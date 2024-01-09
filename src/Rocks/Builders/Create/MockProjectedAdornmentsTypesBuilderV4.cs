@@ -8,7 +8,7 @@ namespace Rocks.Builders.Create;
 internal static partial class MockProjectedAdornmentsTypesBuilderV4
 {
 	internal static string GetProjectedAdornmentsName(TypeReferenceModel type) =>
-		$"AdornmentsFor{type.FlattenedName}{(type.PointerCount > 0 ? type.PointerCount : string.Empty)}";
+		$"AdornmentsFor{type.FlattenedName}";
 
 	internal static string GetProjectedAdornmentsFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
@@ -18,7 +18,7 @@ internal static partial class MockProjectedAdornmentsTypesBuilderV4
 	}
 
 	internal static string GetProjectedHandlerName(TypeReferenceModel type) =>
-		$"HandlerFor{type.FlattenedName}{(type.PointerCount > 0 ? type.PointerCount : string.Empty)}";
+		$"HandlerFor{type.FlattenedName}";
 
 	internal static string GetProjectedHandlerFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{

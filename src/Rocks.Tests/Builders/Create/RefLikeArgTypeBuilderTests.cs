@@ -31,7 +31,7 @@ public static class RefLikeArgTypeBuilderTests
 			""";
 		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
 		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgForSpanOfint"));
+		Assert.That(model.RefLikeArgProjectedName, Is.EqualTo("ArgumentForSpanOfint"));
 	}
 
 	[Test]
@@ -62,7 +62,7 @@ public static class RefLikeArgTypeBuilderTests
 		var (typeToMock, type, compilation, _) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
 		var name = RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ArgForSpanOfint"));
+		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ArgumentForSpanOfint"));
 	}
 
 	[Test]
@@ -77,7 +77,7 @@ public static class RefLikeArgTypeBuilderTests
 			""";
 		var (type, compilation) = RefLikeArgTypeBuilderTests.GetTypeSymbolFromParameter(code);
 		var model = new TypeReferenceModel(type, compilation);
-		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgEvaluationForSpan<TSource>"));
+		Assert.That(model.RefLikeArgProjectedEvaluationDelegateName, Is.EqualTo("ArgumentEvaluationForSpan<TSource>"));
 	}
 
 	[TestCase(
@@ -92,7 +92,7 @@ public static class RefLikeArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgEvaluationForintPointer")]
+		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
 	[TestCase(
 		"""
 		using System;
@@ -105,7 +105,7 @@ public static class RefLikeArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgEvaluationForSpanOfint")]
+		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);

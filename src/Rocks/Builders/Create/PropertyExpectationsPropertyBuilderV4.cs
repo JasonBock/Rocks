@@ -50,7 +50,9 @@ internal static class PropertyExpectationsPropertyBuilderV4
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
 			propertyParameterType.IsEsoteric ?
-				ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
+				propertyParameterType.IsRefLikeType ?
+					RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
+					PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(propertyParameterType, property.MockType) :
 				$"global::Rocks.Argument<{propertyParameterType.FullyQualifiedName}>";
 		var callbackDelegateTypeName = property.SetMethod!.RequiresProjectedDelegate ?
 			MockProjectedDelegateBuilderV4.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :

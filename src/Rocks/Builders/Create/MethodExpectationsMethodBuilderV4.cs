@@ -19,8 +19,9 @@ internal static class MethodExpectationsMethodBuilderV4
 				{
 					if (_.Type.IsEsoteric)
 					{
-						var typeArgument = _.Type.IsPointer && _.Type.IsBasedOnTypeParameter ? $"<{_.Type.PointerArgParameterType}>" : string.Empty;
-						var argName = $"{ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, _.MockType)}{typeArgument}";
+						var argName = _.Type.IsPointer ?
+							PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, method.MockType) :
+							RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(_.Type, method.MockType);
 						return $"{argName} @{_.Name}";
 					}
 					else

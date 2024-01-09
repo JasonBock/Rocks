@@ -2,7 +2,6 @@
 using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Reflection.Metadata;
 
 namespace Rocks.Builders.Create;
 
@@ -126,10 +125,11 @@ internal static class MockHandlerListBuilderV4
 			{
 				var requiresNullable = parameter.RequiresNullableAnnotation ? "?" : string.Empty;
 				var name = names[parameter.Name];
-				var typeArgument = parameter.Type.IsPointer && parameter.Type.IsBasedOnTypeParameter ? $"<{parameter.Type.PointerArgParameterType}>" : string.Empty;
 				var argumentTypeName =
 					parameter.Type.IsEsoteric ?
-						$"public {ProjectedArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}{typeArgument}" :
+						parameter.Type.IsPointer ?
+							$"public {PointerArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" :
+							$"public {RefLikeArgTypeBuilderV4.GetProjectedFullyQualifiedName(parameter.Type, method.MockType)}" : 
 						$"public global::Rocks.Argument<{parameter.Type.FullyQualifiedName}{requiresNullable}>";
 
 				writer.WriteLine($"{argumentTypeName} @{name} {{ get; set; }}");

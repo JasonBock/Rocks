@@ -95,7 +95,7 @@ internal static class PointerArgTypeBuilderV4
 			$$$"""
 						global::Rocks.ValidationState.Evaluation => this.evaluation!(@value),
 						global::Rocks.ValidationState.DefaultValue => throw new global::System.NotSupportedException("Cannot validate an argument value in the ValidationState.DefaultValue state."),
-						_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {{this.validation}}")
+						_ => throw new global::System.ComponentModel.InvalidEnumArgumentException($"Invalid value for validation: {this.validation}")
 					};
 			}
 			""");
