@@ -11,12 +11,13 @@ public interface IHaveParams
 public static class ParamsTests
 {
 	[Test]
+	[RockCreate<IHaveParams>]
 	public static void CreateMembersWithParamsArgumentsSpecified()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IHaveParams>();
-		expectations.Methods().Foo(1, new[] { "b" });
-		expectations.Indexers().Getters().This(1, new[] { "b" }).Returns(returnValue);
+		var expectations = new IHaveParamsCreateExpectations();
+		expectations.Methods.Foo(1, new[] { "b" });
+		expectations.Indexers.Getters.This(1, new[] { "b" }).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1, "b");
@@ -28,9 +29,10 @@ public static class ParamsTests
 	}
 
 	[Test]
+	[RockMake<IHaveParams>]
 	public static void MakeMembersWithParamsArgumentsSpecified()
 	{
-		var mock = Rock.Make<IHaveParams>().Instance();
+		var mock = new IHaveParamsMakeExpectations().Instance();
 		var value = mock[1, "b"];
 
 		Assert.Multiple(() =>
@@ -41,12 +43,13 @@ public static class ParamsTests
 	}
 
 	[Test]
+	[RockCreate<IHaveParams>]
 	public static void CreateMembersWithParamsArgumentsNotSpecified()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IHaveParams>();
-		expectations.Methods().Foo(1, Array.Empty<string>());
-		expectations.Indexers().Getters().This(1, Array.Empty<string>()).Returns(returnValue);
+		var expectations = new IHaveParamsCreateExpectations();
+		expectations.Methods.Foo(1, Array.Empty<string>());
+		expectations.Indexers.Getters.This(1, Array.Empty<string>()).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
@@ -58,9 +61,10 @@ public static class ParamsTests
 	}
 
 	[Test]
+	[RockMake<IHaveParams>]
 	public static void MakeMembersWithParamsArgumentsNotSpecified()
 	{
-		var mock = Rock.Make<IHaveParams>().Instance();
+		var mock = new IHaveParamsMakeExpectations().Instance();
 		var value = mock[1];
 
 		Assert.Multiple(() =>

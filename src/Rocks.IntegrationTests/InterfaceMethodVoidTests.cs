@@ -13,10 +13,11 @@ public interface IInterfaceMethodVoid
 public static class InterfaceMethodVoidTests
 {
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParameters()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().NoParameters();
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -25,18 +26,20 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceMethodVoid>]
 	public static void MakeWithNoParameters()
 	{
-		var mock = Rock.Make<IInterfaceMethodVoid>().Instance();
+		var mock = new IInterfaceMethodVoidMakeExpectations().Instance();
 
 		Assert.That(mock.NoParameters, Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParametersMultipleCalls()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().NoParameters().CallCount(2);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -46,10 +49,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParametersMultipleCallsNotMet()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().NoParameters().CallCount(2);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.NoParameters().ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -58,12 +62,13 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParametersAndCallback()
 	{
 		var wasCallbackInvoked = false;
 
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().NoParameters().Callback(() => wasCallbackInvoked = true);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.NoParameters().Callback(() => wasCallbackInvoked = true);
 
 		var mock = expectations.Instance();
 		mock.NoParameters();
@@ -73,9 +78,10 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParametersNoExpectationSet()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
 
 		var mock = expectations.Instance();
 
@@ -83,10 +89,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithNoParametersExpectationsNotMet()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().NoParameters();
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance();
 
@@ -94,10 +101,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithOneParameter()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().OneParameter(3);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.OneParameter(3);
 
 		var mock = expectations.Instance();
 		mock.OneParameter(3);
@@ -106,19 +114,21 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceMethodVoid>]
 	public static void MakeWithOneParameter()
 	{
-		var mock = Rock.Make<IInterfaceMethodVoid>().Instance();
+		var mock = new IInterfaceMethodVoidMakeExpectations().Instance();
 
 		Assert.That(() => mock.OneParameter(3), Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithOneParameterWithCallback()
 	{
 		var aValue = 0;
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().OneParameter(3).Callback(a => aValue = a);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.OneParameter(3).Callback(a => aValue = a);
 
 		var mock = expectations.Instance();
 		mock.OneParameter(3);
@@ -129,10 +139,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithOneParameterArgExpectationNotMet()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().OneParameter(3);
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.OneParameter(3);
 
 		var mock = expectations.Instance();
 
@@ -140,10 +151,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithMultipleParameters()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().MultipleParameters(3, "b");
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
@@ -152,20 +164,22 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceMethodVoid>]
 	public static void MakeWithMultipleParameters()
 	{
-		var mock = Rock.Make<IInterfaceMethodVoid>().Instance();
+		var mock = new IInterfaceMethodVoidMakeExpectations().Instance();
 
 		Assert.That(() => mock.MultipleParameters(3, "b"), Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithMultipleParametersWithCallback()
 	{
 		var aValue = 0;
 		var bValue = string.Empty;
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b").Callback((a, b) => (aValue, bValue) = (a, b));
 
 		var mock = expectations.Instance();
 		mock.MultipleParameters(3, "b");
@@ -180,10 +194,11 @@ public static class InterfaceMethodVoidTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodVoid>]
 	public static void CreateWithMultipleParametersArgExpectationNotMet()
 	{
-		var expectations = Rock.Create<IInterfaceMethodVoid>();
-		expectations.Methods().MultipleParameters(3, "b");
+		var expectations = new IInterfaceMethodVoidCreateExpectations();
+		expectations.Methods.MultipleParameters(3, "b");
 
 		var mock = expectations.Instance();
 

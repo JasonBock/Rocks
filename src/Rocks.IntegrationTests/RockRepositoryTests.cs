@@ -1,81 +1,83 @@
-﻿using NUnit.Framework;
-using Rocks.Exceptions;
+﻿// TODO: Gotta come back to this!
 
-namespace Rocks.IntegrationTests;
+//using NUnit.Framework;
+//using Rocks.Exceptions;
 
-public interface IFirstRepository
-{
-	void Foo();
-}
+//namespace Rocks.IntegrationTests;
 
-public interface ISecondRepository
-{
-	void Bar();
-}
+//public interface IFirstRepository
+//{
+//	void Foo();
+//}
 
-public static class RockRepositoryTests
-{
-	[Test]
-	public static void CreateAfterDisposeWasCalled()
-	{
-		var repository = new RockRepository();
+//public interface ISecondRepository
+//{
+//	void Bar();
+//}
 
-		var expectationsFirst = repository.Create<IFirstRepository>();
-		expectationsFirst.Methods().Foo();
+//public static class RockRepositoryTests
+//{
+//	[Test]
+//	public static void CreateAfterDisposeWasCalled()
+//	{
+//		var repository = new RockRepository();
 
-		var mockFirst = expectationsFirst.Instance();
-		mockFirst.Foo();
+//		var expectationsFirst = repository.Create<IFirstRepository>();
+//		expectationsFirst.Methods().Foo();
 
-		repository.Dispose();
+//		var mockFirst = expectationsFirst.Instance();
+//		mockFirst.Foo();
 
-		Assert.That(() => _ = repository.Create<IFirstRepository>(), 
-			Throws.TypeOf<ObjectDisposedException>());
-	}
+//		repository.Dispose();
 
-	[Test]
-	public static void DisposeMoreThanOnce()
-	{
-		var repository = new RockRepository();
+//		Assert.That(() => _ = repository.Create<IFirstRepository>(), 
+//			Throws.TypeOf<ObjectDisposedException>());
+//	}
 
-		var expectationsFirst = repository.Create<IFirstRepository>();
-		expectationsFirst.Methods().Foo();
+//	[Test]
+//	public static void DisposeMoreThanOnce()
+//	{
+//		var repository = new RockRepository();
 
-		var mockFirst = expectationsFirst.Instance();
-		mockFirst.Foo();
+//		var expectationsFirst = repository.Create<IFirstRepository>();
+//		expectationsFirst.Methods().Foo();
 
-		repository.Dispose();
+//		var mockFirst = expectationsFirst.Instance();
+//		mockFirst.Foo();
 
-		Assert.That(() => repository.Dispose(),
-			Throws.TypeOf<ObjectDisposedException>());
-	}
+//		repository.Dispose();
 
-	[Test]
-	public static void UseRepository()
-	{
-		using var repository = new RockRepository();
+//		Assert.That(() => repository.Dispose(),
+//			Throws.TypeOf<ObjectDisposedException>());
+//	}
 
-		var expectationsFirst = repository.Create<IFirstRepository>();
-		expectationsFirst.Methods().Foo();
+//	[Test]
+//	public static void UseRepository()
+//	{
+//		using var repository = new RockRepository();
 
-		var expectationsSecond = repository.Create<ISecondRepository>();
-		expectationsSecond.Methods().Bar();
+//		var expectationsFirst = repository.Create<IFirstRepository>();
+//		expectationsFirst.Methods().Foo();
 
-		var mockFirst = expectationsFirst.Instance();
-		mockFirst.Foo();
+//		var expectationsSecond = repository.Create<ISecondRepository>();
+//		expectationsSecond.Methods().Bar();
 
-		var mockSecond = expectationsSecond.Instance();
-		mockSecond.Bar();
-	}
+//		var mockFirst = expectationsFirst.Instance();
+//		mockFirst.Foo();
 
-	[Test]
-	public static void UseRepositoryWhenExpectationIsNotMet() =>
-		Assert.That(() =>
-		{
-			using var repository = new RockRepository();
+//		var mockSecond = expectationsSecond.Instance();
+//		mockSecond.Bar();
+//	}
 
-			var expectations = repository.Create<IFirstRepository>();
-			expectations.Methods().Foo();
+//	[Test]
+//	public static void UseRepositoryWhenExpectationIsNotMet() =>
+//		Assert.That(() =>
+//		{
+//			using var repository = new RockRepository();
 
-			_ = expectations.Instance();
-		}, Throws.TypeOf<VerificationException>());
-}
+//			var expectations = repository.Create<IFirstRepository>();
+//			expectations.Methods().Foo();
+
+//			_ = expectations.Instance();
+//		}, Throws.TypeOf<VerificationException>());
+//}

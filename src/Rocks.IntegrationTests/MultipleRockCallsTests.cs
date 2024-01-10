@@ -16,13 +16,14 @@ public interface IMultipleRockCalls
 public static class MultipleRockCallsTests
 {
 	[Test]
+	[RockCreate<IMultipleRockCalls>]
 	public static void CreateMocks()
 	{
-		var expectations1 = Rock.Create<IMultipleRockCalls>();
-		var expectations2 = Rock.Create<IMultipleRockCalls>();
+		var expectations1 = new IMultipleRockCallsCreateExpectations();
+		var expectations2 = new IMultipleRockCallsCreateExpectations();
 
-		expectations1.Methods().Foo();
-		expectations2.Methods().Foo();
+		expectations1.Methods.Foo();
+		expectations2.Methods.Foo();
 
 		var mock1 = expectations1.Instance();
 		var mock2 = expectations2.Instance();
@@ -35,9 +36,10 @@ public static class MultipleRockCallsTests
 	}
 
 	[Test]
+	[RockMake<IMultipleRockCalls>]
 	public static void MakeMocks()
 	{
-		Rock.Make<IMultipleRockCalls>().Instance().Foo();
-		Rock.Make<IMultipleRockCalls>().Instance().Foo();
+		new IMultipleRockCallsMakeExpectations().Instance().Foo();
+		new IMultipleRockCallsMakeExpectations().Instance().Foo();
 	}
 }

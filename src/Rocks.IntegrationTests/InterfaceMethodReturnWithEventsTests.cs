@@ -11,10 +11,11 @@ public interface IInterfaceMethodReturnWithEvents
 public static class InterfaceMethodReturnWithEventsTests
 {
 	[Test]
+	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEvent()
 	{
-		var expectations = Rock.Create<IInterfaceMethodReturnWithEvents>();
-		expectations.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
+		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters().AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -31,17 +32,18 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = Rock.Create<IInterfaceMethodReturnWithEvents>();
-		expectations.Methods().NoParameters()
+		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
 			.Callback(() =>
 			{
 				wasCallbackInvoked = true;
 				return 3;
 			})
-			.RaisesMyEvent(EventArgs.Empty);
+			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -59,12 +61,13 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithMultipleCalls()
 	{
-		var expectations = Rock.Create<IInterfaceMethodReturnWithEvents>();
-		expectations.Methods().NoParameters()
-			.CallCount(2)
-			.RaisesMyEvent(EventArgs.Empty);
+		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
+			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();
@@ -83,18 +86,19 @@ public static class InterfaceMethodReturnWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceMethodReturnWithEvents>]
 	public static void CreateRaiseEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;
-		var expectations = Rock.Create<IInterfaceMethodReturnWithEvents>();
-		expectations.Methods().NoParameters()
-			.CallCount(2)
+		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
 			.Callback(() =>
 			{
 				callbackInvokedCount++;
 				return 3;
 			})
-			.RaisesMyEvent(EventArgs.Empty);
+			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();

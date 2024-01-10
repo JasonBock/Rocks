@@ -6,6 +6,7 @@ namespace Rocks.IntegrationTests;
 public static class HttpMessageHandlerTests
 {
 	[Test]
+	[RockCreate<HttpMessageHandler>]
 	public static async Task CreateAsync()
 	{
 		using var response = new HttpResponseMessage
@@ -13,9 +14,9 @@ public static class HttpMessageHandlerTests
 			StatusCode = HttpStatusCode.OK,
 			Content = new StringContent("OK")
 		};
-		var expectations = Rock.Create<HttpMessageHandler>();
-		expectations.Methods().SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
-			.Returns(Task.FromResult(response));
+		var expectations = new HttpMessageHandlerCreateExpectations();
+		expectations.Methods.SendAsync(Arg.Any<HttpRequestMessage>(), Arg.Any<CancellationToken>())
+			.ReturnValue(Task.FromResult(response));
 
 		using var mock = expectations.Instance();
 		using var client = new HttpClient(mock);

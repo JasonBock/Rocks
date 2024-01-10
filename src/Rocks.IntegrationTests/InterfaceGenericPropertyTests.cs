@@ -17,11 +17,12 @@ public interface IInterfaceGenericPropertyGetAndInit<T>
 public static class InterfaceGenericPropertyTests
 {
 	[Test]
+	[RockCreate<IInterfaceGenericProperty<int>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<IInterfaceGenericProperty<int>>();
-		expectations.Properties().Getters().Values().Returns(returnValue);
+		var expectations = new IInterfaceGenericPropertyOfintCreateExpectations();
+		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Values;
@@ -32,11 +33,12 @@ public static class InterfaceGenericPropertyTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericPropertyGetAndInit<int>>]
 	public static void CreateUsingGenericTypeWithInit()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<IInterfaceGenericPropertyGetAndInit<int>>();
-		expectations.Properties().Getters().Values().Returns(returnValue);
+		var expectations = new IInterfaceGenericPropertyGetAndInitOfintCreateExpectations();
+		expectations.Properties.Getters.Values().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Values;
@@ -47,29 +49,32 @@ public static class InterfaceGenericPropertyTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericProperty<int>>]
 	public static void MakeUsingGenericType()
 	{
-		var mock = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
+		var mock = new IInterfaceGenericPropertyOfintMakeExpectations().Instance();
 		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericPropertyGetAndInit<int>>]
 	public static void MakeUsingGenericTypeWithInit()
 	{
-		var mock = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance(null);
+		var mock = new IInterfaceGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
 		var value = mock.Values;
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericProperty<int>>]
 	public static void CreateUsingGenericTypeParameter()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IInterfaceGenericProperty<int>>();
-		expectations.Properties().Getters().Data().Returns(returnValue);
+		var expectations = new IInterfaceGenericPropertyOfintCreateExpectations();
+		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.Data;
@@ -80,11 +85,12 @@ public static class InterfaceGenericPropertyTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericPropertyGetAndInit<int>>]
 	public static void CreateUsingGenericTypeParameterWithInit()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IInterfaceGenericPropertyGetAndInit<int>>();
-		expectations.Properties().Getters().Data().Returns(returnValue);
+		var expectations = new IInterfaceGenericPropertyGetAndInitOfintCreateExpectations();
+		expectations.Properties.Getters.Data().ReturnValue(returnValue);
 
 		var mock = expectations.Instance(null);
 		var value = mock.Data;
@@ -95,18 +101,20 @@ public static class InterfaceGenericPropertyTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericProperty<int>>]
 	public static void MakeUsingGenericTypeParameter()
 	{
-		var mock = Rock.Make<IInterfaceGenericProperty<int>>().Instance();
+		var mock = new IInterfaceGenericPropertyOfintMakeExpectations().Instance();
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericPropertyGetAndInit<int>>]
 	public static void MakeUsingGenericTypeParameterWithInit()
 	{
-		var mock = Rock.Make<IInterfaceGenericPropertyGetAndInit<int>>().Instance(null);
+		var mock = new IInterfaceGenericPropertyGetAndInitOfintMakeExpectations().Instance(null);
 		var value = mock.Data;
 
 		Assert.That(value, Is.EqualTo(default(int)));

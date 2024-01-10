@@ -10,10 +10,11 @@ public record MyRecord
 public static class RecordTests
 {
 	[Test]
+	[RockCreate<MyRecord>]
 	public static void Create()
 	{
-		var expectations = Rock.Create<MyRecord>();
-		expectations.Methods().Foo();
+		var expectations = new MyRecordCreateExpectations();
+		expectations.Methods.Foo();
 
 		var mock = expectations.Instance();
 		mock.Foo();
@@ -22,9 +23,10 @@ public static class RecordTests
 	}
 
 	[Test]
+	[RockMake<MyRecord>]
 	public static void Make()
 	{
-		var mock = Rock.Make<MyRecord>().Instance();
+		var mock = new MyRecordMakeExpectations().Instance();
 		Assert.That(mock.Foo, Throws.Nothing);
 	}
 }

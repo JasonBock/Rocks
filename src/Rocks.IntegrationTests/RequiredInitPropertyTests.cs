@@ -27,10 +27,11 @@ public class Inits
 public static class RequiredInitPropertyTests
 {
 	[Test]
+	[RockCreate<Inits>]
 	public static void InitPropertiesWithCreate()
 	{
-		var expectations = Rock.Create<Inits>();
-		expectations.Methods().Foo();
+		var expectations = new InitsCreateExpectations();
+		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
@@ -48,9 +49,10 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockMake<Inits>]
 	public static void InitPropertiesWithMake()
 	{
-		var mock = Rock.Make<Inits>().Instance(
+		var mock = new InitsMakeExpectations().Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
@@ -64,10 +66,11 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockCreate<Inits>]
 	public static void InitPropertiesWithNullWithCreate()
 	{
-		var expectations = Rock.Create<Inits>();
-		expectations.Methods().Foo();
+		var expectations = new InitsCreateExpectations();
+		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(null);
 		mock.Foo();
@@ -84,9 +87,10 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockMake<Inits>]
 	public static void InitPropertiesWithNullWithMake()
 	{
-		var mock = Rock.Make<Inits>().Instance(null);
+		var mock = new InitsMakeExpectations().Instance(null);
 		mock.Foo();
 
 		Assert.Multiple(() =>
@@ -99,10 +103,11 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockCreate<Requireds>]
 	public static void RequiredPropertiesWithCreate()
 	{
-		var expectations = Rock.Create<Requireds>();
-		expectations.Methods().Foo();
+		var expectations = new RequiredsCreateExpectations();
+		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
@@ -120,9 +125,10 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockMake<Requireds>]
 	public static void RequiredPropertiesWithMake()
 	{
-		var mock = Rock.Make<Requireds>().Instance(
+		var mock = new RequiredsMakeExpectations().Instance(
 			new() { NonNullableValueType = 3, NullableValueType = 2, NonNullableReferenceType = "3", NullableReferenceType = "2" });
 		mock.Foo();
 
@@ -136,15 +142,17 @@ public static class RequiredInitPropertyTests
 	}
 
 	[Test]
+	[RockCreate<Requireds>]
 	public static void RequiredPropertiesWithNullWithCreate()
 	{
-		var expectations = Rock.Create<Requireds>();
-		expectations.Methods().Foo();
+		var expectations = new RequiredsCreateExpectations();
+		expectations.Methods.Foo();
 
 		Assert.That(() => expectations.Instance(null!), Throws.TypeOf<ArgumentNullException>());
 	}
 
 	[Test]
+	[RockMake<Requireds>]
 	public static void RequiredPropertiesWithNullWithMake() => 
-		Assert.That(() => Rock.Make<Requireds>().Instance(null!), Throws.TypeOf<ArgumentNullException>());
+		Assert.That(() => new RequiredsMakeExpectations().Instance(null!), Throws.TypeOf<ArgumentNullException>());
 }

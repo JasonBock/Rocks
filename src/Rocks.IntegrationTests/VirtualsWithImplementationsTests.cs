@@ -51,10 +51,11 @@ public class PropertyPolygon
 public static class VirtualsWithImplementationsTests
 {
 	[Test]
+	[RockCreate<IIndexerPolygon>]
 	public static void CallVirtualIndexerOnInterfaceWithNoExpectation()
 	{
-		var expectations = Rock.Create<IIndexerPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
+		var expectations = new IIndexerPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
@@ -63,11 +64,12 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
+	[RockCreate<IMethodPolygon>]
 	public static void CallVirtualMethodOnInterfaceWithNoExpectation()
 	{
-		var expectations = Rock.Create<IMethodPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
-		expectations.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = new IMethodPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
@@ -76,11 +78,12 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
+	[RockCreate<IPropertyPolygon>]
 	public static void CallVirtualPropertyOnInterfaceWithNoExpectation()
 	{
-		var expectations = Rock.Create<IPropertyPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
-		expectations.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = new IPropertyPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));
@@ -89,10 +92,11 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
+	[RockCreate<IndexerPolygon>]
 	public static void CallVirtualIndexerOnClassWithNoExpectation()
 	{
-		var expectations = Rock.Create<IndexerPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
+		var expectations = new IndexerPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
 
 		var mock = expectations.Instance();
 		Assert.That(mock[5], Is.EqualTo(15));
@@ -101,11 +105,12 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
+	[RockCreate<MethodPolygon>]
 	public static void CallVirtualMethodOnClassWithNoExpectation()
 	{
-		var expectations = Rock.Create<MethodPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
-		expectations.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = new MethodPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.GetPerimeter(), Is.EqualTo(15));
@@ -114,11 +119,12 @@ public static class VirtualsWithImplementationsTests
 	}
 
 	[Test]
+	[RockCreate<PropertyPolygon>]
 	public static void CallVirtualPropertyOnClassWithNoExpectation()
 	{
-		var expectations = Rock.Create<PropertyPolygon>();
-		expectations.Properties().Getters().SideLength().Returns(3);
-		expectations.Properties().Getters().NumberOfSides().Returns(5);
+		var expectations = new PropertyPolygonCreateExpectations();
+		expectations.Properties.Getters.SideLength().ReturnValue(3);
+		expectations.Properties.Getters.NumberOfSides().ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Perimeter, Is.EqualTo(15));

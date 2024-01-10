@@ -24,6 +24,7 @@ public interface IRequest<T>
 public static class InterfaceGenericMethodTests
 {
 	[Test]
+	[RockCreate<IRequest<object>>]
 	public static async Task CreateWhenMatchesOccurAsync()
 	{
 		var requestId = Guid.NewGuid();
@@ -31,9 +32,9 @@ public static class InterfaceGenericMethodTests
 		var message = new object();
 		var result = new object();
 
-		var expectations = Rock.Create<IRequest<object>>();
-		expectations.Methods().Send(requestId, values).Returns(Task.FromResult(result));
-		expectations.ExplicitMethodsForIRequestOfobject().Send(requestId, message).Returns(Task.CompletedTask);
+		var expectations = new IRequestOfobjectCreateExpectations();
+		expectations.Methods.Send(requestId, values).ReturnValue(Task.FromResult(result));
+		expectations.ExplicitMethodsForIRequestOfobject.Send(requestId, message).ReturnValue(Task.CompletedTask);
 
 		var mock = expectations.Instance();
 		var sendResult = await mock.Send(requestId, values: values).ConfigureAwait(false);
@@ -45,10 +46,11 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateUsingGenericType()
 	{
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().Foo(Arg.Any<List<string>>());
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.Foo(Arg.Any<List<string>>());
 
 		var mock = expectations.Instance();
 		mock.Foo([]);
@@ -57,18 +59,20 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeUsingGenericType()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 
 		Assert.That(() => mock.Foo([]), Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericTypeParameter()
 	{
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().Quux(Arg.Any<int>());
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.Quux(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Quux(3);
@@ -77,18 +81,20 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeWithGenericTypeParameter()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 
 		Assert.That(() => mock.Quux(3), Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericParameterType()
 	{
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().Bar(Arg.Any<int>());
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 		mock.Bar(3);
@@ -97,18 +103,20 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeWithGenericParameterType()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 
 		Assert.That(() => mock.Bar(3), Throws.Nothing);
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericParameterTypeThatDoesNotMatch()
 	{
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().Bar(Arg.Any<int>());
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.Bar(Arg.Any<int>());
 
 		var mock = expectations.Instance();
 
@@ -116,11 +124,12 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateUsingGenericTypeAsReturn()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().FooReturn().Returns(returnValue);
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.FooReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.FooReturn();
@@ -131,20 +140,22 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeUsingGenericTypeAsReturn()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.FooReturn();
 
 		Assert.That(value, Is.SameAs(default(List<string>)));
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericTypeParameterAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().QuuxReturn().Returns(returnValue);
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.QuuxReturn().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.QuuxReturn();
@@ -155,20 +166,22 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeWithGenericTypeParameterAsReturn()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.QuuxReturn();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericParameterTypeAsReturn()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().BarReturn<int>().Returns(returnValue);
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.BarReturn<int>();
@@ -179,20 +192,22 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeWithGenericParameterTypeAsReturn()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.BarReturn<int>();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithGenericParameterTypeAsReturnThatDoesNotMatch()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().BarReturn<int>().Returns(returnValue);
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.BarReturn<int>().ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 
@@ -200,11 +215,12 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockCreate<IInterfaceGenericMethod<int>>]
 	public static void CreateWithNullableGenericParameterTypes()
 	{
 		var returnValue = "c";
-		var expectations = Rock.Create<IInterfaceGenericMethod<int>>();
-		expectations.Methods().NullableValues<string>("b").Returns(returnValue);
+		var expectations = new IInterfaceGenericMethodOfintCreateExpectations();
+		expectations.Methods.NullableValues<string>("b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		var value = mock.NullableValues("b");
@@ -215,9 +231,10 @@ public static class InterfaceGenericMethodTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceGenericMethod<int>>]
 	public static void MakeWithNullableGenericParameterTypes()
 	{
-		var mock = Rock.Make<IInterfaceGenericMethod<int>>().Instance();
+		var mock = new IInterfaceGenericMethodOfintMakeExpectations().Instance();
 		var value = mock.NullableValues("b");
 
 		Assert.That(value, Is.EqualTo(default(string)));

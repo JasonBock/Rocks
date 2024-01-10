@@ -16,11 +16,12 @@ public interface IInterfaceGenericEvents<T>
 public static class InterfaceGenericEventsTests
 {
 	[Test]
+	[RockCreate<IInterfaceGenericEvents<InterfaceEventArgs>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<IInterfaceGenericEvents<InterfaceEventArgs>>();
-		expectations.Methods().Foo().RaisesMyEvent(new InterfaceEventArgs());
+		var expectations = new IInterfaceGenericEventsOfInterfaceEventArgsCreateExpectations();
+		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new InterfaceEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

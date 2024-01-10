@@ -32,11 +32,12 @@ public struct OptionalDefault { }
 public static class OptionalArgumentsTests
 {
 	[Test]
+	[RockCreate<NeedNullableAnnotation>]
 	public static void CreateForcedNullableAnnotation()
 	{
-		var expectations = Rock.Create<NeedNullableAnnotation>();
-		expectations.Methods().IntReturn(Arg.Is<object?>(null));
-		expectations.Methods().VoidReturn(Arg.Is<object?>(null));
+		var expectations = new NeedNullableAnnotationCreateExpectations();
+		expectations.Methods.IntReturn(Arg.Is<object?>(null));
+		expectations.Methods.VoidReturn(Arg.Is<object?>(null));
 
 		var mock = expectations.Instance(Arg.Is<object?>(null));
 		_ = mock.IntReturn();
@@ -46,18 +47,20 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
+	[RockMake<NeedNullableAnnotation>]
 	public static void MakeForcedNullableAnnotation()
 	{
-		var mock = Rock.Make<NeedNullableAnnotation>().Instance(Arg.Is<object?>(null));
+		var mock = new NeedNullableAnnotationMakeExpectations().Instance(Arg.Is<object?>(null));
 		_ = mock.IntReturn();
 		mock.VoidReturn();
 	}
 
 	[Test]
+	[RockCreate<IHaveOptionalStructDefaultArgument>]
 	public static void CreateMembersWithOptionalDefaultStructArgument()
 	{
-		var expectations = Rock.Create<IHaveOptionalStructDefaultArgument>();
-		expectations.Methods().Foo(Arg.IsDefault<OptionalDefault>());
+		var expectations = new IHaveOptionalStructDefaultArgumentCreateExpectations();
+		expectations.Methods.Foo(Arg.IsDefault<OptionalDefault>());
 
 		var mock = expectations.Instance();
 		mock.Foo();
@@ -66,12 +69,13 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
+	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsSpecified()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IHaveOptionalArguments>();
-		expectations.Methods().Foo(1, "b", 3.2);
-		expectations.Indexers().Getters().This(1, "b").Returns(returnValue);
+		var expectations = new IHaveOptionalArgumentsCreateExpectations();
+		expectations.Methods.Foo(1, "b", 3.2);
+		expectations.Indexers.Getters.This(1, "b").ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
@@ -83,9 +87,10 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
+	[RockMake<IHaveOptionalArguments>]
 	public static void MakeMembersWithOptionalArguments()
 	{
-		var mock = Rock.Make<IHaveOptionalArguments>().Instance();
+		var mock = new IHaveOptionalArgumentsMakeExpectations().Instance();
 		var value = mock[1];
 
 		Assert.Multiple(() =>
@@ -96,12 +101,13 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
+	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsNotSpecified()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IHaveOptionalArguments>();
-		expectations.Methods().Foo(1, Arg.IsDefault<string>(), Arg.IsDefault<double>());
-		expectations.Indexers().Getters().This(1, Arg.IsDefault<string>()).Returns(returnValue);
+		var expectations = new IHaveOptionalArgumentsCreateExpectations();
+		expectations.Methods.Foo(1, Arg.IsDefault<string>(), Arg.IsDefault<double>());
+		expectations.Indexers.Getters.This(1, Arg.IsDefault<string>()).ReturnValue(returnValue);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);
@@ -113,13 +119,14 @@ public static class OptionalArgumentsTests
 	}
 
 	[Test]
+	[RockCreate<IHaveOptionalArguments>]
 	public static void CreateMembersWithOptionalArgumentsNotSpecifiedUsingOverload()
 	{
 		var returnValue = 3;
-		var expectations = Rock.Create<IHaveOptionalArguments>();
-		expectations.Methods().Foo(1);
-		expectations.Indexers().Getters().This(2).Returns(returnValue);
-		expectations.Indexers().Setters().This(52, 3);
+		var expectations = new IHaveOptionalArgumentsCreateExpectations();
+		expectations.Methods.Foo(1);
+		expectations.Indexers.Getters.This(2).ReturnValue(returnValue);
+		expectations.Indexers.Setters.This(52, 3);
 
 		var mock = expectations.Instance();
 		mock.Foo(1);

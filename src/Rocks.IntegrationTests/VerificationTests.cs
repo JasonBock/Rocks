@@ -13,10 +13,11 @@ public interface IData
 public static class VerificationTests
 {
 	[Test]
+	[RockCreate<IData>]
 	public static void VerifyWhenVoidCallbackThrowsException()
 	{
-		var expectations = Rock.Create<IData>();
-		expectations.Methods().Calculate().Callback(() => throw new NotSupportedException());
+		var expectations = new IDataCreateExpectations();
+		expectations.Methods.Calculate().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Calculate(), Throws.TypeOf<NotSupportedException>());
@@ -25,10 +26,11 @@ public static class VerificationTests
 	}
 
 	[Test]
+	[RockCreate<IData>]
 	public static void VerifyWhenIntCallbackThrowsException()
 	{
-		var expectations = Rock.Create<IData>();
-		expectations.Methods().CalculateValue().Callback(() => throw new NotSupportedException());
+		var expectations = new IDataCreateExpectations();
+		expectations.Methods.CalculateValue().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.CalculateValue(), Throws.TypeOf<NotSupportedException>());
@@ -37,10 +39,11 @@ public static class VerificationTests
 	}
 
 	[Test]
+	[RockCreate<IData>]
 	public static void VerifyWhenGetterCallbackThrowsException()
 	{
-		var expectations = Rock.Create<IData>();
-		expectations.Properties().Getters().Value().Callback(() => throw new NotSupportedException());
+		var expectations = new IDataCreateExpectations();
+		expectations.Properties.Getters.Value().Callback(() => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value, Throws.TypeOf<NotSupportedException>());
@@ -49,10 +52,11 @@ public static class VerificationTests
 	}
 
 	[Test]
+	[RockCreate<IData>]
 	public static void VerifyWhenSetterCallbackThrowsException()
 	{
-		var expectations = Rock.Create<IData>();
-		expectations.Properties().Setters().Value("x").Callback(_ => throw new NotSupportedException());
+		var expectations = new IDataCreateExpectations();
+		expectations.Properties.Setters.Value("x").Callback(_ => throw new NotSupportedException());
 
 		var data = expectations.Instance();
 		Assert.That(() => data.Value = "x", Throws.TypeOf<NotSupportedException>());
@@ -61,16 +65,17 @@ public static class VerificationTests
 	}
 
 	[Test]
+	[RockCreate<IData>]
 	public static void VerifyWhenPropertyExpectationIsNotMet()
 	{
-		var expectations = Rock.Create<IData>();
-		expectations.Properties().Setters().Value("3");
+		var expectations = new IDataCreateExpectations();
+		expectations.Properties.Setters.Value("3");
 
 		_ = expectations.Instance();
 
 		Assert.That(expectations.Verify, 
 			Throws.TypeOf<VerificationException>()
 				.And.Message.EqualTo(
-					"The following verification failure(s) occured: Type: Rocks.IntegrationTests.IData, mock type: Rocks.IntegrationTests.CreateExpectationsOfIDataExtensions+RockIData, member: set_Value(value), message: The expected call count is incorrect. Expected: 1, received: 0."));
+					"The following verification failure(s) occured: Mock type: Rocks.IntegrationTests.IDataCreateExpectations+RockIData, member: int CalculateValue(), messsage: The expected call count is incorrect. Expected: 1, received: 0."));
 	}
 }

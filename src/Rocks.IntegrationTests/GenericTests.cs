@@ -26,14 +26,15 @@ public interface IGenericContainer
 public static class GenericTests
 {
 	[Test]
+	[RockCreate<GenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnThatUsesGenericFromClass()
 	{
 		var referencedContainerOne = new ReferencedContainer<ReferenceTypeOne>();
 		var referencedContainerTwo = new ReferencedContainer<ReferenceTypeTwo>();
 
-		var expectations = Rock.Create<GenericContainer>();
-		expectations.Methods().SetThings<ReferenceTypeOne>().Returns(referencedContainerOne);
-		expectations.Methods().SetThings<ReferenceTypeTwo>().Returns(referencedContainerTwo);
+		var expectations = new GenericContainerCreateExpectations();
+		expectations.Methods.SetThings<ReferenceTypeOne>().ReturnValue(referencedContainerOne);
+		expectations.Methods.SetThings<ReferenceTypeTwo>().ReturnValue(referencedContainerTwo);
 
 		var mock = expectations.Instance();
 		Assert.Multiple(() =>
@@ -45,13 +46,14 @@ public static class GenericTests
 	}
 
 	[Test]
+	[RockCreate<GenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnFromClass()
 	{
 		var guidReturn = Guid.NewGuid();
 
-		var expectations = Rock.Create<GenericContainer>();
-		expectations.Methods().Run<int>().Returns(4);
-		expectations.Methods().Run<Guid>().Returns(guidReturn);
+		var expectations = new GenericContainerCreateExpectations();
+		expectations.Methods.Run<int>().ReturnValue(4);
+		expectations.Methods.Run<Guid>().ReturnValue(guidReturn);
 
 		var mock = expectations.Instance();
 		Assert.Multiple(() =>
@@ -63,13 +65,14 @@ public static class GenericTests
 	}
 
 	[Test]
+	[RockCreate<IGenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForReturnFromInterface()
 	{
 		var guidReturn = Guid.NewGuid();
 
-		var expectations = Rock.Create<IGenericContainer>();
-		expectations.Methods().Run<int>().Returns(4);
-		expectations.Methods().Run<Guid>().Returns(guidReturn);
+		var expectations = new IGenericContainerCreateExpectations();
+		expectations.Methods.Run<int>().ReturnValue(4);
+		expectations.Methods.Run<Guid>().ReturnValue(guidReturn);
 
 		var mock = expectations.Instance();
 		Assert.That(mock.Run<int>(), Is.EqualTo(4));
@@ -79,14 +82,15 @@ public static class GenericTests
 	}
 
 	[Test]
+	[RockCreate<IGenericContainer>]
 	public static void CreateWithMultipleExpectationsOfDifferentTypesForParameterAndReturnFromInterface()
 	{
 		var guidReturn = Guid.NewGuid();
 		var guidArgument = Guid.NewGuid();
 
-		var expectations = Rock.Create<IGenericContainer>();
-		expectations.Methods().Run<int, Guid>(4).Returns(guidReturn);
-		expectations.Methods().Run<Guid, int>(guidArgument).Returns(5);
+		var expectations = new IGenericContainerCreateExpectations();
+		expectations.Methods.Run<int, Guid>(4).ReturnValue(guidReturn);
+		expectations.Methods.Run<Guid, int>(guidArgument).ReturnValue(5);
 
 		var mock = expectations.Instance();
 		Assert.Multiple(() =>
