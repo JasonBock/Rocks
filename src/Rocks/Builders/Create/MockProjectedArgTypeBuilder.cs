@@ -1,4 +1,5 @@
-﻿using Rocks.Models;
+﻿using Microsoft.CodeAnalysis;
+using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
 
@@ -23,19 +24,15 @@ internal static class MockProjectedArgTypeBuilder
 
 	private static HashSet<TypeReferenceModel> GetEsotericTypes(TypeMockModel type)
 	{
-		static void GetEsotericTypes(ImmutableArray<ParameterModel> parameters, TypeReferenceModel? returnType, HashSet<TypeReferenceModel> types)
+		static void GetEsotericTypes(ImmutableArray<ParameterModel> parameters, HashSet<TypeReferenceModel> types)
 		{
-			foreach (var methodParameter in parameters)
+			foreach (var parameter in parameters)
 			{
-				if (methodParameter.Type.IsEsoteric)
+				if (parameter.Type.IsRefLikeType || parameter.Type.TypeKind == TypeKind.FunctionPointer ||
+					parameter.Type.TypeKind == TypeKind.Pointer)
 				{
-					types.Add(methodParameter.Type);
+					types.Add(parameter.Type);
 				}
-			}
-
-			if (returnType is not null && returnType.IsEsoteric)
-			{
-				types.Add(returnType);
 			}
 		}
 
@@ -43,21 +40,20 @@ internal static class MockProjectedArgTypeBuilder
 
 		foreach (var method in type.Methods)
 		{
-			GetEsotericTypes(method.Parameters, method.ReturnsVoid ? null : method.ReturnType, types);
+			GetEsotericTypes(method.Parameters, types);
 		}
 
 		foreach (var property in type.Properties)
 		{
 			if (property.IsIndexer)
 			{
-				GetEsotericTypes(property.Parameters, property.Type, types);
+				GetEsotericTypes(property.Parameters, types);
 			}
-			else
+
+			if (property.Type.IsRefLikeType || property.Type.TypeKind == TypeKind.FunctionPointer ||
+				property.Type.TypeKind == TypeKind.Pointer)
 			{
-				if (property.Type.IsEsoteric)
-				{
-					types.Add(property.Type);
-				}
+				types.Add(property.Type);
 			}
 		}
 

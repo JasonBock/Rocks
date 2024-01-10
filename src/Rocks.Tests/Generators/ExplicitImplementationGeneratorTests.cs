@@ -12,6 +12,8 @@ public static class ExplicitImplementationGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<MockTests.IHtmlMediaElement>]
+
 			namespace EventStuff
 			{
 				public class Event : EventArgs { }
@@ -42,14 +44,6 @@ public static class ExplicitImplementationGeneratorTests
 				{
 					void Foo();
 				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Create<IHtmlMediaElement>();
-					}
-				}
 			}
 			""";
 
@@ -65,56 +59,53 @@ public static class ExplicitImplementationGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfIHtmlMediaElementExtensions
+				internal sealed class IHtmlMediaElementCreateExpectations
+					: global::Rocks.Expectations
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHtmlMediaElement> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @self) =>
-						new(@self);
+					internal sealed class Handler0
+						: global::Rocks.Handler<global::System.Action>
+					{ }
 					
-					internal static global::MockTests.IHtmlMediaElement Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @self)
+					private readonly global::System.Collections.Generic.List<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0> @handlers0 = new();
+					
+					public override void Verify()
 					{
-						if (!@self.WasInstanceInvoked)
+						if (this.WasInstanceInvoked)
 						{
-							@self.WasInstanceInvoked = true;
-							var @mock = new RockIHtmlMediaElement(@self);
-							@self.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							var failures = new global::System.Collections.Generic.List<string>();
+					
+							failures.AddRange(this.Verify(handlers0));
+					
+							if (failures.Count > 0)
+							{
+								throw new global::Rocks.Exceptions.VerificationException(failures);
+							}
 						}
 					}
 					
 					private sealed class RockIHtmlMediaElement
 						: global::MockTests.IHtmlMediaElement, global::Rocks.IRaiseEvents
 					{
-						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-						
-						public RockIHtmlMediaElement(global::Rocks.Expectations.Expectations<global::MockTests.IHtmlMediaElement> @expectations)
+						public RockIHtmlMediaElement(global::MockTests.IHtmlMediaElementCreateExpectations @expectations)
 						{
-							this.handlers = @expectations.Handlers;
+							this.Expectations = @expectations;
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								if (@methodHandler.Method is not null)
-								{
-									((global::System.Action)@methodHandler.Method)();
-								}
-								
-								@methodHandler.RaiseEvents(this);
+								var @handler = this.Expectations.handlers0[0];
+								@handler.CallCount++;
+								@handler.Callback?.Invoke();
+								@handler.RaiseEvents(this);
 							}
 							else
 							{
 								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for void Foo()");
 							}
 						}
-						
 						
 						#pragma warning disable CS0067
 						private global::EventStuff.DomEventHandler? IGlobalEventHandlers_CanPlay;
@@ -145,36 +136,50 @@ public static class ExplicitImplementationGeneratorTests
 								}
 							}
 						}
+						
+						private global::MockTests.IHtmlMediaElementCreateExpectations Expectations { get; }
 					}
-				}
-				
-				internal static class MethodExpectationsOfIHtmlMediaElementExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, global::System.Action> Foo(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHtmlMediaElement> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				}
-				
-				internal static class MethodAdornmentsOfIHtmlMediaElementExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> RaisesCanPlayOnIGlobalEventHandlers<TCallback>(this global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> @self, global::EventStuff.Event @args)
-						where TCallback : global::System.Delegate
+					
+					internal sealed class IHtmlMediaElementMethodExpectations
 					{
-						@self.Handler.AddRaiseEvent(new("IGlobalEventHandlers_CanPlay", @args));
-						return @self;
+						internal IHtmlMediaElementMethodExpectations(global::MockTests.IHtmlMediaElementCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> Foo()
+						{
+							var handler = new global::MockTests.IHtmlMediaElementCreateExpectations.Handler0();
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						
+						private global::MockTests.IHtmlMediaElementCreateExpectations Expectations { get; }
 					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> RaisesCanPlayOnIMediaController<TCallback>(this global::Rocks.MethodAdornments<global::MockTests.IHtmlMediaElement, TCallback> @self, global::EventStuff.Event @args)
-						where TCallback : global::System.Delegate
+					
+					internal global::MockTests.IHtmlMediaElementCreateExpectations.IHtmlMediaElementMethodExpectations Methods { get; }
+					
+					internal IHtmlMediaElementCreateExpectations() =>
+						(this.Methods) = (new(this));
+					
+					internal global::MockTests.IHtmlMediaElement Instance()
 					{
-						@self.Handler.AddRaiseEvent(new("IMediaController_CanPlay", @args));
-						return @self;
+						if (!this.WasInstanceInvoked)
+						{
+							this.WasInstanceInvoked = true;
+							var @mock = new RockIHtmlMediaElement(this);
+							this.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.IHtmlMediaElement_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -185,6 +190,8 @@ public static class ExplicitImplementationGeneratorTests
 			"""
 			using Rocks;
 			using System;
+
+			[assembly: RockMake<MockTests.IHtmlMediaElement>]
 
 			namespace EventStuff
 			{
@@ -216,14 +223,6 @@ public static class ExplicitImplementationGeneratorTests
 				{
 					void Foo();
 				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<IHtmlMediaElement>();
-					}
-				}
 			}
 			""";
 
@@ -235,9 +234,9 @@ public static class ExplicitImplementationGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfIHtmlMediaElementExtensions
+				internal sealed class IHtmlMediaElementMakeExpectations
 				{
-					internal static global::MockTests.IHtmlMediaElement Instance(this global::Rocks.MakeGeneration<global::MockTests.IHtmlMediaElement> @self)
+					internal global::MockTests.IHtmlMediaElement Instance()
 					{
 						return new RockIHtmlMediaElement();
 					}
@@ -270,11 +269,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.IHtmlMediaElement_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -285,6 +283,8 @@ public static class ExplicitImplementationGeneratorTests
 			"""
 			using Rocks;
 			
+			[assembly: RockCreate<ILeftRight>]
+
 			namespace Values
 			{
 				public sealed class Information { }
@@ -302,14 +302,6 @@ public static class ExplicitImplementationGeneratorTests
 
 			public interface ILeftRight
 				: ILeft, IRight { }
-						
-			public static class Test
-			{
-				public static void Go()
-				{
-					var expectations = Rock.Create<ILeftRight>();
-				}
-			}
 			""";
 
 		var generatedCode =
@@ -322,49 +314,62 @@ public static class ExplicitImplementationGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfILeftRightExtensions
+			internal sealed class ILeftRightCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> ExplicitPropertiesForILeft(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::ILeft> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::Values.Information>, global::Values.Information>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::ILeft> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> ExplicitPropertiesForIRight(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::IRight> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> Setters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::ILeftRight, global::IRight> @self) =>
-					new(@self);
-				
-				internal static global::ILeftRight Instance(this global::Rocks.Expectations.Expectations<global::ILeftRight> @self)
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Action<global::Values.Information>>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<global::Values.Information> @value { get; set; }
+				}
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<global::Values.Information>, global::Values.Information>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Action<global::Values.Information>>
+				{
+					public global::Rocks.Argument<global::Values.Information> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler3> @handlers3 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockILeftRight(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockILeftRight
 					: global::ILeftRight
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockILeftRight(global::Rocks.Expectations.Expectations<global::ILeftRight> @expectations)
+					public RockILeftRight(global::ILeftRightCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::ILeft.get_Value()")]
@@ -373,13 +378,12 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::Values.Information>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::Values.Information>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers0[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -387,20 +391,16 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -423,13 +423,12 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::Values.Information>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::Values.Information>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -437,20 +436,16 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers3)
 								{
-									if (((global::Rocks.Argument<global::Values.Information>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<global::Values.Information>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -467,34 +462,113 @@ public static class ExplicitImplementationGeneratorTests
 							}
 						}
 					}
+					
+					private global::ILeftRightCreateExpectations Expectations { get; }
+				}
+				internal sealed class ILeftRightExplicitPropertyExpectationsForILeft
+				{
+					internal sealed class ILeftRightExplicitPropertyGetterExpectationsForILeft
+					{
+						internal ILeftRightExplicitPropertyGetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler0, global::System.Func<global::Values.Information>, global::Values.Information> Value()
+						{
+							var handler = new global::ILeftRightCreateExpectations.Handler0();
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						private global::ILeftRightCreateExpectations Expectations { get; }
+					}
+					internal sealed class ILeftRightExplicitPropertySetterExpectationsForILeft
+					{
+						internal ILeftRightExplicitPropertySetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler1, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
+						{
+							var handler = new global::ILeftRightCreateExpectations.Handler1
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						private global::ILeftRightCreateExpectations Expectations { get; }
+					}
+					
+					internal ILeftRightExplicitPropertyExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft.ILeftRightExplicitPropertyGetterExpectationsForILeft Getters { get; }
+					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft.ILeftRightExplicitPropertySetterExpectationsForILeft Setters { get; }
+				}
+				internal sealed class ILeftRightExplicitPropertyExpectationsForIRight
+				{
+					internal sealed class ILeftRightExplicitPropertyGetterExpectationsForIRight
+					{
+						internal ILeftRightExplicitPropertyGetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler2, global::System.Func<global::Values.Information>, global::Values.Information> Value()
+						{
+							var handler = new global::ILeftRightCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						private global::ILeftRightCreateExpectations Expectations { get; }
+					}
+					internal sealed class ILeftRightExplicitPropertySetterExpectationsForIRight
+					{
+						internal ILeftRightExplicitPropertySetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler3, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
+						{
+							var handler = new global::ILeftRightCreateExpectations.Handler3
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						private global::ILeftRightCreateExpectations Expectations { get; }
+					}
+					
+					internal ILeftRightExplicitPropertyExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight.ILeftRightExplicitPropertyGetterExpectationsForIRight Getters { get; }
+					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight.ILeftRightExplicitPropertySetterExpectationsForIRight Setters { get; }
+				}
+				
+				internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft ExplicitPropertiesForILeft { get; }
+				internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight ExplicitPropertiesForIRight { get; }
+				
+				internal ILeftRightCreateExpectations() =>
+					(this.ExplicitPropertiesForILeft, this.ExplicitPropertiesForIRight) = (new(this), new(this));
+				
+				internal global::ILeftRight Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockILeftRight(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class ExplicitPropertyGetterExpectationsOfILeftRightForILeftExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information> Value(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::ILeft> @self) =>
-					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information>(@self.Add<global::Values.Information>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitPropertyGetterExpectationsOfILeftRightForIRightExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information> Value(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::ILeftRight, global::IRight> @self) =>
-					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Func<global::Values.Information>, global::Values.Information>(@self.Add<global::Values.Information>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitPropertySetterExpectationsOfILeftRightForILeftExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::ILeft> @self, global::Rocks.Argument<global::Values.Information> value) =>
-					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
-			}
-			internal static class ExplicitPropertySetterExpectationsOfILeftRightForIRightExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>> Value(this global::Rocks.Expectations.ExplicitPropertySetterExpectations<global::ILeftRight, global::IRight> @self, global::Rocks.Argument<global::Values.Information> value) =>
-					new global::Rocks.PropertyAdornments<global::ILeftRight, global::System.Action<global::Values.Information>>(@self.Add(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { value }));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ILeftRight_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -505,6 +579,8 @@ public static class ExplicitImplementationGeneratorTests
 			"""
 			using Rocks;
 			
+			[assembly: RockCreate<IIterable<string>>]
+
 			public interface IIterator
 			{
 				void Iterate();
@@ -526,14 +602,6 @@ public static class ExplicitImplementationGeneratorTests
 			{
 				new IIterator<T> GetIterator();
 			}
-
-			public static class Test
-			{
-				public static void Go()
-				{
-					var expectations = Rock.Create<IIterable<string>>();
-				}
-			}
 			""";
 
 		var generatedCode =
@@ -546,49 +614,53 @@ public static class ExplicitImplementationGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIIterableOfstringExtensions
+			internal sealed class IIterableOfstringCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IIterable<string>> Methods(this global::Rocks.Expectations.Expectations<global::IIterable<string>> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::IIterator<string>>, global::IIterator<string>>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitMethodExpectations<global::IIterable<string>, global::IIterable> ExplicitMethodsForIIterable(this global::Rocks.Expectations.Expectations<global::IIterable<string>> @self) =>
-					new(@self);
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<global::IIterator>, global::IIterator>
+				{ }
 				
-				internal static global::IIterable<string> Instance(this global::Rocks.Expectations.Expectations<global::IIterable<string>> @self)
+				private readonly global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler1> @handlers1 = new();
+				
+				public override void Verify()
 				{
-					if (!@self.WasInstanceInvoked)
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIIterableOfstring(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockIIterableOfstring
 					: global::IIterable<string>
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIIterableOfstring(global::Rocks.Expectations.Expectations<global::IIterable<string>> @expectations)
+					public RockIIterableOfstring(global::IIterableOfstringCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::IIterator<string> GetIterator()")]
 					public global::IIterator<string> GetIterator()
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::IIterator<string>>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::IIterator<string>>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers0[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						
@@ -598,37 +670,75 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "global::IIterator global::IIterable.GetIterator()")]
 					global::IIterator global::IIterable.GetIterator()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::IIterator>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::IIterator>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						
 						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IIterator global::IIterable.GetIterator()");
 					}
 					
+					private global::IIterableOfstringCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class IIterableOfstringMethodExpectations
+				{
+					internal IIterableOfstringMethodExpectations(global::IIterableOfstringCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler0, global::System.Func<global::IIterator<string>>, global::IIterator<string>> GetIterator()
+					{
+						var handler = new global::IIterableOfstringCreateExpectations.Handler0();
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					private global::IIterableOfstringCreateExpectations Expectations { get; }
+				}
+				internal sealed class IIterableOfstringExplicitMethodExpectationsForIIterable
+				{
+					internal IIterableOfstringExplicitMethodExpectationsForIIterable(global::IIterableOfstringCreateExpectations expectations) =>
+						this.Expectations = expectations;
+				
+					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler1, global::System.Func<global::IIterator>, global::IIterator> GetIterator()
+					{
+						var handler = new global::IIterableOfstringCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					private global::IIterableOfstringCreateExpectations Expectations { get; }
+				}
+				
+				internal global::IIterableOfstringCreateExpectations.IIterableOfstringMethodExpectations Methods { get; }
+				internal global::IIterableOfstringCreateExpectations.IIterableOfstringExplicitMethodExpectationsForIIterable ExplicitMethodsForIIterable { get; }
+				
+				internal IIterableOfstringCreateExpectations() =>
+					(this.Methods, this.ExplicitMethodsForIIterable) = (new(this), new(this));
+				
+				internal global::IIterable<string> Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIIterableOfstring(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfIIterableOfstringExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IIterable<string>, global::System.Func<global::IIterator<string>>, global::IIterator<string>> GetIterator(this global::Rocks.Expectations.MethodExpectations<global::IIterable<string>> @self) =>
-					new global::Rocks.MethodAdornments<global::IIterable<string>, global::System.Func<global::IIterator<string>>, global::IIterator<string>>(@self.Add<global::IIterator<string>>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitMethodExpectationsOfIIterableOfstringForIIterableExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IIterable<string>, global::System.Func<global::IIterator>, global::IIterator> GetIterator(this global::Rocks.Expectations.ExplicitMethodExpectations<global::IIterable<string>, global::IIterable> @self) =>
-					new global::Rocks.MethodAdornments<global::IIterable<string>, global::System.Func<global::IIterator>, global::IIterator>(@self.Add<global::IIterator>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IIterablestring_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -641,18 +751,12 @@ public static class ExplicitImplementationGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			
+			[assembly: RockCreate<ISetupList>]
+
 			public interface ISetup { }
 
 			public interface ISetupList
 				: IEnumerable<ISetup> { }
-
-			public static class Test
-			{
-				public static void Go()
-				{
-					var expectations = Rock.Create<ISetupList>();
-				}
-			}
 			""";
 
 		var generatedCode =
@@ -665,49 +769,53 @@ public static class ExplicitImplementationGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfISetupListExtensions
+			internal sealed class ISetupListCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::ISetupList> Methods(this global::Rocks.Expectations.Expectations<global::ISetupList> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitMethodExpectations<global::ISetupList, global::System.Collections.IEnumerable> ExplicitMethodsForIEnumerable(this global::Rocks.Expectations.Expectations<global::ISetupList> @self) =>
-					new(@self);
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator>
+				{ }
 				
-				internal static global::ISetupList Instance(this global::Rocks.Expectations.Expectations<global::ISetupList> @self)
+				private readonly global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler1> @handlers1 = new();
+				
+				public override void Verify()
 				{
-					if (!@self.WasInstanceInvoked)
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockISetupList(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockISetupList
 					: global::ISetupList
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockISetupList(global::Rocks.Expectations.Expectations<global::ISetupList> @expectations)
+					public RockISetupList(global::ISetupListCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()")]
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::System.Collections.Generic.IEnumerator<global::ISetup>>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers0[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						
@@ -717,37 +825,75 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()")]
 					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::System.Collections.IEnumerator>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::System.Collections.IEnumerator>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						
 						throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()");
 					}
 					
+					private global::ISetupListCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class ISetupListMethodExpectations
+				{
+					internal ISetupListMethodExpectations(global::ISetupListCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler0, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>> GetEnumerator()
+					{
+						var handler = new global::ISetupListCreateExpectations.Handler0();
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					private global::ISetupListCreateExpectations Expectations { get; }
+				}
+				internal sealed class ISetupListExplicitMethodExpectationsForIEnumerable
+				{
+					internal ISetupListExplicitMethodExpectationsForIEnumerable(global::ISetupListCreateExpectations expectations) =>
+						this.Expectations = expectations;
+				
+					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler1, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator> GetEnumerator()
+					{
+						var handler = new global::ISetupListCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					private global::ISetupListCreateExpectations Expectations { get; }
+				}
+				
+				internal global::ISetupListCreateExpectations.ISetupListMethodExpectations Methods { get; }
+				internal global::ISetupListCreateExpectations.ISetupListExplicitMethodExpectationsForIEnumerable ExplicitMethodsForIEnumerable { get; }
+				
+				internal ISetupListCreateExpectations() =>
+					(this.Methods, this.ExplicitMethodsForIEnumerable) = (new(this), new(this));
+				
+				internal global::ISetupList Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockISetupList(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfISetupListExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::ISetupList, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>> GetEnumerator(this global::Rocks.Expectations.MethodExpectations<global::ISetupList> @self) =>
-					new global::Rocks.MethodAdornments<global::ISetupList, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>>(@self.Add<global::System.Collections.Generic.IEnumerator<global::ISetup>>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitMethodExpectationsOfISetupListForIEnumerableExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::ISetupList, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator> GetEnumerator(this global::Rocks.Expectations.ExplicitMethodExpectations<global::ISetupList, global::System.Collections.IEnumerable> @self) =>
-					new global::Rocks.MethodAdornments<global::ISetupList, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator>(@self.Add<global::System.Collections.IEnumerator>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ISetupList_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ISetupList_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -760,18 +906,12 @@ public static class ExplicitImplementationGeneratorTests
 			using System;
 			using System.Collections.Generic;
 			
+			[assembly: RockMake<ISetupList>]
+
 			public interface ISetup { }
 
 			public interface ISetupList
 				: IEnumerable<ISetup> { }
-
-			public static class Test
-			{
-				public static void Go()
-				{
-					var expectations = Rock.Make<ISetupList>();
-				}
-			}
 			""";
 
 		var generatedCode =
@@ -780,9 +920,9 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfISetupListExtensions
+			internal sealed class ISetupListMakeExpectations
 			{
-				internal static global::ISetupList Instance(this global::Rocks.MakeGeneration<global::ISetupList> @self)
+				internal global::ISetupList Instance()
 				{
 					return new RockISetupList();
 				}
@@ -804,11 +944,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ISetupList_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -819,6 +958,8 @@ public static class ExplicitImplementationGeneratorTests
 			"""
 			using Rocks;
 			
+			[assembly: RockMake<IIterable<string>>]
+
 			public interface IIterator
 			{
 				void Iterate();
@@ -840,14 +981,6 @@ public static class ExplicitImplementationGeneratorTests
 			{
 				new IIterator<T> GetIterator();
 			}
-
-			public static class Test
-			{
-				public static void Go()
-				{
-					var expectations = Rock.Make<IIterable<string>>();
-				}
-			}
 			""";
 
 		var generatedCode =
@@ -856,9 +989,9 @@ public static class ExplicitImplementationGeneratorTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfIIterableOfstringExtensions
+			internal sealed class IIterableOfstringMakeExpectations
 			{
-				internal static global::IIterable<string> Instance(this global::Rocks.MakeGeneration<global::IIterable<string>> @self)
+				internal global::IIterable<string> Instance()
 				{
 					return new RockIIterableOfstring();
 				}
@@ -880,11 +1013,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IIterablestring_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IIterablestring_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

@@ -31,7 +31,7 @@ internal sealed class RockMakeBuilder
 		{
 			var requiredAliases = this.MockType.Aliases
 				.Select(_ => $"extern alias {_};").ToArray();
-			foreach ( var requiredAlias in requiredAliases) 
+			foreach (var requiredAlias in requiredAliases)
 			{
 				indentWriter.WriteLine(requiredAlias);
 			}
@@ -48,16 +48,16 @@ internal sealed class RockMakeBuilder
 			indentWriter.Indent++;
 		}
 
-		MockExtensionsBuilder.Build(indentWriter, this.MockType);
+		MockExpectationBuilder.Build(indentWriter, this.MockType);
 
 		if (mockNamespace.Length > 0)
 		{
 			indentWriter.Indent--;
-			indentWriter.WriteLine("}");
+			indentWriter.Write("}");
 		}
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);
-		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Make.g.cs"; 
+		var name = $"{this.MockType.Type.FullyQualifiedName.GenerateFileName()}_Rock_Make.g.cs";
 		return (name, text);
 	}
 

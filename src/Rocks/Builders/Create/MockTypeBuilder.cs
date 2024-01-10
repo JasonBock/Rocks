@@ -8,12 +8,12 @@ namespace Rocks.Builders.Create;
 
 internal static class MockTypeBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
 	{
 		var kind = type.Type.IsRecord ? "record" : "class";
 		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
-		if(type.Type.AttributesDescription.Length > 0)
+		if (type.Type.AttributesDescription.Length > 0)
 		{
 			writer.WriteLine(type.Type.AttributesDescription);
 		}
@@ -32,19 +32,16 @@ internal static class MockTypeBuilder
 		MockTypeBuilder.BuildShimFields(writer, type);
 		MockTypeBuilder.BuildRefReturnFields(writer, type);
 
-		writer.WriteLine($"private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;");
-		writer.WriteLine();
-
 		if (type.Constructors.Length > 0)
 		{
 			foreach (var constructor in type.Constructors)
 			{
-				MockConstructorBuilder.Build(writer, type, constructor.Parameters, type.Shims);
+				MockConstructorBuilder.Build(writer, type, constructor.Parameters, type.Shims, expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
-			MockConstructorBuilder.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims);
+			MockConstructorBuilder.Build(writer, type, ImmutableArray<ParameterModel>.Empty, type.Shims, expectationsFullyQualifiedName);
 		}
 
 		writer.WriteLine();
@@ -53,31 +50,49 @@ internal static class MockTypeBuilder
 		{
 			if (method.ReturnsVoid)
 			{
-				MockMethodVoidBuilder.Build(writer, method, canRaiseEvents);
+				MockMethodVoidBuilder.Build(writer, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 			else
 			{
-				MockMethodValueBuilder.Build(writer, method, canRaiseEvents);
+				MockMethodValueBuilder.Build(writer, method, canRaiseEvents, expectationsFullyQualifiedName);
 			}
 		}
 
+		var hasProperties = false;
+
 		foreach (var property in type.Properties.Where(_ => !_.IsIndexer))
 		{
+			hasProperties = true;
 			MockPropertyBuilder.Build(writer, property, canRaiseEvents);
 		}
 
+		if (hasProperties)
+		{
+			writer.WriteLine();
+		}
+
+		var hasIndexers = false;
+
 		foreach (var indexer in type.Properties.Where(_ => _.IsIndexer))
 		{
+			hasIndexers = true;
 			MockIndexerBuilder.Build(writer, indexer, canRaiseEvents);
+		}
+
+		if (hasIndexers)
+		{
+			writer.WriteLine();
 		}
 
 		if (canRaiseEvents)
 		{
-			writer.WriteLine();
 			MockEventsBuilder.Build(writer, type.Events);
+			writer.WriteLine();
 		}
 
 		MockTypeBuilder.BuildShimTypes(writer, type, mockTypeName);
+
+		writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
 
 		writer.Indent--;
 		writer.WriteLine("}");

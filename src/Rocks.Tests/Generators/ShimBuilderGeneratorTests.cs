@@ -14,6 +14,8 @@ public static class ShimBuilderGeneratorTests
 			using System.Linq;
 			using System.Collections.Generic;
 
+			[assembly: RockCreate<IRuntimeKey>]
+
 			public interface IReadOnlyProperty 
 			{ 
 				Type ClrType { get; }
@@ -39,11 +41,6 @@ public static class ShimBuilderGeneratorTests
 
 			public interface IRuntimeKey 
 				: IKey { }
-
-			public static class Test
-			{
-				public static void Go() => Rock.Create<IRuntimeKey>();
-			}
 			""";
 
 		var generatedCode =
@@ -56,35 +53,45 @@ public static class ShimBuilderGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIRuntimeKeyExtensions
+			internal sealed class IRuntimeKeyCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> Methods(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::System.Type>, global::System.Type>
+				{ }
 				
-				internal static global::Rocks.Expectations.PropertyExpectations<global::IRuntimeKey> Properties(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
-					new(@self);
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<bool>, bool>
+				{ }
 				
-				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::IRuntimeKey> Getters(this global::Rocks.Expectations.PropertyExpectations<global::IRuntimeKey> @self) =>
-					new(@self);
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IRuntimeKey, global::IReadOnlyKey> ExplicitPropertiesForIReadOnlyKey(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self) =>
-					new(@self);
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IRuntimeKey, global::IReadOnlyKey> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IRuntimeKey, global::IReadOnlyKey> @self) =>
-					new(@self);
+				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler3> @handlers3 = new();
 				
-				internal static global::IRuntimeKey Instance(this global::Rocks.Expectations.Expectations<global::IRuntimeKey> @self)
+				public override void Verify()
 				{
-					if (!@self.WasInstanceInvoked)
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIRuntimeKey(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
@@ -93,23 +100,20 @@ public static class ShimBuilderGeneratorTests
 				{
 					private readonly global::IKey shimForIKey;
 					private readonly global::IReadOnlyKey shimForIReadOnlyKey;
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIRuntimeKey(global::Rocks.Expectations.Expectations<global::IRuntimeKey> @expectations)
+					public RockIRuntimeKey(global::IRuntimeKeyCreateExpectations @expectations)
 					{
-						(this.handlers, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations.Handlers, new ShimIKey55018818661256234156060084750235742359064106137(this), new ShimIReadOnlyKey550014593303283198411825442751878980310579223223(this));
+						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey55018818661256234156060084750235742359064106137(this), new ShimIReadOnlyKey550014593303283198411825442751878980310579223223(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::System.Type GetKeyType()")]
 					public global::System.Type GetKeyType()
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<global::System.Type>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<global::System.Type>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers0[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -121,13 +125,12 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "bool IsPrimaryKey()")]
 					public bool IsPrimaryKey()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<bool>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -141,13 +144,12 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -159,19 +161,19 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers3[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlyKey.get_Properties())");
 						}
 					}
+					
 					
 					private sealed class ShimIKey55018818661256234156060084750235742359064106137
 						: global::IKey
@@ -205,32 +207,101 @@ public static class ShimBuilderGeneratorTests
 							get => ((global::IReadOnlyKey)this.mock).Properties!;
 						}
 					}
+					private global::IRuntimeKeyCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class IRuntimeKeyMethodExpectations
+				{
+					internal IRuntimeKeyMethodExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler0, global::System.Func<global::System.Type>, global::System.Type> GetKeyType()
+					{
+						var handler = new global::IRuntimeKeyCreateExpectations.Handler0();
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler1, global::System.Func<bool>, bool> IsPrimaryKey()
+					{
+						var handler = new global::IRuntimeKeyCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					private global::IRuntimeKeyCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class IRuntimeKeyPropertyExpectations
+				{
+					internal sealed class IRuntimeKeyPropertyGetterExpectations
+					{
+						internal IRuntimeKeyPropertyGetterExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler2, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties()
+						{
+							var handler = new global::IRuntimeKeyCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						private global::IRuntimeKeyCreateExpectations Expectations { get; }
+					}
+					
+					
+					internal IRuntimeKeyPropertyExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyPropertyExpectations.IRuntimeKeyPropertyGetterExpectations Getters { get; }
+				}
+				internal sealed class IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey
+				{
+					internal sealed class IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey
+					{
+						internal IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler3, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties()
+						{
+							var handler = new global::IRuntimeKeyCreateExpectations.Handler3();
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						private global::IRuntimeKeyCreateExpectations Expectations { get; }
+					}
+					
+					internal IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey.IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey Getters { get; }
+				}
+				
+				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyMethodExpectations Methods { get; }
+				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyPropertyExpectations Properties { get; }
+				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey ExplicitPropertiesForIReadOnlyKey { get; }
+				
+				internal IRuntimeKeyCreateExpectations() =>
+					(this.Methods, this.Properties, this.ExplicitPropertiesForIReadOnlyKey) = (new(this), new(this), new(this));
+				
+				internal global::IRuntimeKey Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIRuntimeKey(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfIRuntimeKeyExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<global::System.Type>, global::System.Type> GetKeyType(this global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> @self) =>
-					new global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<global::System.Type>, global::System.Type>(@self.Add<global::System.Type>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<bool>, bool> IsPrimaryKey(this global::Rocks.Expectations.MethodExpectations<global::IRuntimeKey> @self) =>
-					new global::Rocks.MethodAdornments<global::IRuntimeKey, global::System.Func<bool>, bool>(@self.Add<bool>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
-			internal static class PropertyGetterExpectationsOfIRuntimeKeyExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties(this global::Rocks.Expectations.PropertyGetterExpectations<global::IRuntimeKey> @self) =>
-					new global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>>(@self.Add<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitPropertyGetterExpectationsOfIRuntimeKeyForIReadOnlyKeyExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IRuntimeKey, global::IReadOnlyKey> @self) =>
-					new global::Rocks.PropertyAdornments<global::IRuntimeKey, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>(@self.Add<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IRuntimeKey_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IRuntimeKey_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -240,6 +311,8 @@ public static class ShimBuilderGeneratorTests
 		var code =
 			"""
 			using Rocks;
+
+			[assembly: RockCreate<IHaveDims>]
 
 			public interface IDoNotHaveDims
 			{
@@ -255,11 +328,6 @@ public static class ShimBuilderGeneratorTests
 				int AmADim { get => 2; }
 				int this[string dimKey, int dimValue] { get => dimKey.GetHashCode() + dimValue; }
 			}
-			
-			public static class Test
-			{
-				public static void Go() => Rock.Create<IHaveDims>();
-			}
 			""";
 
 		var generatedCode =
@@ -272,35 +340,66 @@ public static class ShimBuilderGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIHaveDimsExtensions
+			internal sealed class IHaveDimsCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IHaveDims> Methods(this global::Rocks.Expectations.Expectations<global::IHaveDims> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.PropertyExpectations<global::IHaveDims> Properties(this global::Rocks.Expectations.Expectations<global::IHaveDims> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
 				
-				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::IHaveDims> Getters(this global::Rocks.Expectations.PropertyExpectations<global::IHaveDims> @self) =>
-					new(@self);
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
 				
-				internal static global::Rocks.Expectations.IndexerExpectations<global::IHaveDims> Indexers(this global::Rocks.Expectations.Expectations<global::IHaveDims> @self) =>
-					new(@self);
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
 				
-				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveDims> Getters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveDims> @self) =>
-					new(@self);
-				
-				internal static global::IHaveDims Instance(this global::Rocks.Expectations.Expectations<global::IHaveDims> @self)
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<string, int, int>, int>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<string> @dimKey { get; set; }
+					public global::Rocks.Argument<int> @dimValue { get; set; }
+				}
+				
+				internal sealed class Handler4
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler5
+					: global::Rocks.Handler<global::System.Func<string, int>, int>
+				{
+					public global::Rocks.Argument<string> @notDimKey { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler4> @handlers4 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler5> @handlers5 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIHaveDims(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers4));
+						failures.AddRange(this.Verify(handlers5));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
@@ -308,23 +407,20 @@ public static class ShimBuilderGeneratorTests
 					: global::IHaveDims
 				{
 					private readonly global::IHaveDims shimForIHaveDims;
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIHaveDims(global::Rocks.Expectations.Expectations<global::IHaveDims> @expectations)
+					public RockIHaveDims(global::IHaveDimsCreateExpectations @expectations)
 					{
-						(this.handlers, this.shimForIHaveDims) = (@expectations.Handlers, new ShimIHaveDims531557381186657891604647139828315705947108387206(this));
+						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims531557381186657891604647139828315705947108387206(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "int IAmADim()")]
 					public int IAmADim()
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers0[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -336,13 +432,12 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int IAmNotADim()")]
 					public int IAmNotADim()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						
@@ -354,13 +449,12 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<int>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -374,35 +468,34 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							if (this.Expectations.handlers4.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<int>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers4[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for get_NotDim())");
 						}
 					}
+					
 					[global::Rocks.MemberIdentifier(3, "this[string @dimKey, int @dimValue]")]
 					public int this[string @dimKey, int @dimValue]
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers3)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@dimKey!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@dimValue!))
+									if (@handler.@dimKey.IsValid(@dimKey!) &&
+										@handler.@dimValue.IsValid(@dimValue!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, int, int>)@methodHandler.Method)(@dimKey!, @dimValue!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@dimKey!, @dimValue!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -420,16 +513,15 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							if (this.Expectations.handlers5.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers5)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@notDimKey!))
+									if (@handler.@notDimKey.IsValid(@notDimKey!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, int>)@methodHandler.Method)(@notDimKey!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@notDimKey!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -440,6 +532,7 @@ public static class ShimBuilderGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @notDimKey])");
 						}
 					}
+					
 					
 					private sealed class ShimIHaveDims531557381186657891604647139828315705947108387206
 						: global::IHaveDims
@@ -462,43 +555,128 @@ public static class ShimBuilderGeneratorTests
 							get => ((global::IHaveDims)this.mock)[@notDimKey]!;
 						}
 					}
+					private global::IHaveDimsCreateExpectations Expectations { get; }
 				}
-			}
-			
-			internal static class MethodExpectationsOfIHaveDimsExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IHaveDims, global::System.Func<int>, int> IAmADim(this global::Rocks.Expectations.MethodExpectations<global::IHaveDims> @self) =>
-					new global::Rocks.MethodAdornments<global::IHaveDims, global::System.Func<int>, int>(@self.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::IHaveDims, global::System.Func<int>, int> IAmNotADim(this global::Rocks.Expectations.MethodExpectations<global::IHaveDims> @self) =>
-					new global::Rocks.MethodAdornments<global::IHaveDims, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
-			internal static class PropertyGetterExpectationsOfIHaveDimsExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IHaveDims, global::System.Func<int>, int> AmADim(this global::Rocks.Expectations.PropertyGetterExpectations<global::IHaveDims> @self) =>
-					new global::Rocks.PropertyAdornments<global::IHaveDims, global::System.Func<int>, int>(@self.Add<int>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.PropertyAdornments<global::IHaveDims, global::System.Func<int>, int> NotDim(this global::Rocks.Expectations.PropertyGetterExpectations<global::IHaveDims> @self) =>
-					new global::Rocks.PropertyAdornments<global::IHaveDims, global::System.Func<int>, int>(@self.Add<int>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class IndexerGetterExpectationsOfIHaveDimsExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveDims, global::System.Func<string, int, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveDims> @self, global::Rocks.Argument<string> @dimKey, global::Rocks.Argument<int> @dimValue)
+				
+				internal sealed class IHaveDimsMethodExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@dimKey);
-					global::System.ArgumentNullException.ThrowIfNull(@dimValue);
-					return new global::Rocks.IndexerAdornments<global::IHaveDims, global::System.Func<string, int, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @dimKey, @dimValue }));
+					internal IHaveDimsMethodExpectations(global::IHaveDimsCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler0, global::System.Func<int>, int> IAmADim()
+					{
+						var handler = new global::IHaveDimsCreateExpectations.Handler0();
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler1, global::System.Func<int>, int> IAmNotADim()
+					{
+						var handler = new global::IHaveDimsCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					private global::IHaveDimsCreateExpectations Expectations { get; }
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveDims, global::System.Func<string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveDims> @self, global::Rocks.Argument<string> @notDimKey)
+				
+				internal sealed class IHaveDimsPropertyExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@notDimKey);
-					return new global::Rocks.IndexerAdornments<global::IHaveDims, global::System.Func<string, int>, int>(@self.Add<int>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @notDimKey }));
+					internal sealed class IHaveDimsPropertyGetterExpectations
+					{
+						internal IHaveDimsPropertyGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler2, global::System.Func<int>, int> AmADim()
+						{
+							var handler = new global::IHaveDimsCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler4, global::System.Func<int>, int> NotDim()
+						{
+							var handler = new global::IHaveDimsCreateExpectations.Handler4();
+							this.Expectations.handlers4.Add(handler);
+							return new(handler);
+						}
+						private global::IHaveDimsCreateExpectations Expectations { get; }
+					}
+					
+					
+					internal IHaveDimsPropertyExpectations(global::IHaveDimsCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IHaveDimsCreateExpectations.IHaveDimsPropertyExpectations.IHaveDimsPropertyGetterExpectations Getters { get; }
+				}
+				internal sealed class IHaveDimsIndexerExpectations
+				{
+					internal sealed class IHaveDimsIndexerGetterExpectations
+					{
+						internal IHaveDimsIndexerGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler3, global::System.Func<string, int, int>, int> This(global::Rocks.Argument<string> @dimKey, global::Rocks.Argument<int> @dimValue)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@dimKey);
+							global::System.ArgumentNullException.ThrowIfNull(@dimValue);
+							
+							var handler = new global::IHaveDimsCreateExpectations.Handler3
+							{
+								@dimKey = @dimKey,
+								@dimValue = @dimValue,
+							};
+							
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler5, global::System.Func<string, int>, int> This(global::Rocks.Argument<string> @notDimKey)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@notDimKey);
+							
+							var handler = new global::IHaveDimsCreateExpectations.Handler5
+							{
+								@notDimKey = @notDimKey,
+							};
+							
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						private global::IHaveDimsCreateExpectations Expectations { get; }
+					}
+					
+					
+					internal IHaveDimsIndexerExpectations(global::IHaveDimsCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IHaveDimsCreateExpectations.IHaveDimsIndexerExpectations.IHaveDimsIndexerGetterExpectations Getters { get; }
+				}
+				
+				internal global::IHaveDimsCreateExpectations.IHaveDimsMethodExpectations Methods { get; }
+				internal global::IHaveDimsCreateExpectations.IHaveDimsPropertyExpectations Properties { get; }
+				internal global::IHaveDimsCreateExpectations.IHaveDimsIndexerExpectations Indexers { get; }
+				
+				internal IHaveDimsCreateExpectations() =>
+					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
+				
+				internal global::IHaveDims Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIHaveDims(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveDims_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IHaveDims_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

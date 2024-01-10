@@ -10,15 +10,15 @@ namespace Rocks.Builders.Create;
 internal static class MockConstructorBuilder
 {
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, 
-		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims)
+		ImmutableArray<ParameterModel> parameters, ImmutableArray<TypeMockModel> shims, string expectationsFullyQualifiedName)
 	{
 		var typeToMockName = type.Type.FullyQualifiedName;
 		var namingContext = new VariableNamingContext(parameters);
 		var hasRequiredProperties = type.ConstructorProperties.Any(_ => _.IsRequired);
 
 		var contextParameters = type.ConstructorProperties.Length == 0 ?
-			$"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}" :
-			$"global::Rocks.Expectations.Expectations<{typeToMockName}> @{namingContext["expectations"]}, ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}";
+			$"{expectationsFullyQualifiedName} @{namingContext["expectations"]}" :
+			$"{expectationsFullyQualifiedName} @{namingContext["expectations"]}, ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}";
 		var instanceParameters = parameters.Length == 0 ?
 			contextParameters :
 			string.Join(", ", contextParameters,
@@ -86,13 +86,13 @@ internal static class MockConstructorBuilder
 	{
 		if (shims.Length == 0)
 		{
-			writer.WriteLine($"this.handlers = @{namingContext["expectations"]}.Handlers;");
+			writer.WriteLine($"this.Expectations = @{namingContext["expectations"]};");
 		}
 		else
 		{
 			var shimFields = string.Join(", ", shims.Select(_ => $"this.shimFor{_.Type.FlattenedName}"));
 			var shimConstructors = string.Join(", ", shims.Select(_ => $"new {ShimBuilder.GetShimName(_.Type)}(this)"));
-			writer.WriteLine($"(this.handlers, {shimFields}) = (@{namingContext["expectations"]}.Handlers, {shimConstructors});");
+			writer.WriteLine($"(this.Expectations, {shimFields}) = (@{namingContext["expectations"]}, {shimConstructors});");
 		}
 
 		if (constructorProperties.Length > 0)

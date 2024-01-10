@@ -15,6 +15,8 @@ public static class AsyncIteratorGeneratorTests
 			using System.Threading;
 			using System.Threading.Tasks;
 			
+			[assembly: RockCreate<AsyncEnumeration>]
+
 			public class AsyncEnumeration
 			{
 				public virtual async IAsyncEnumerable<string> GetRecordsAsync(
@@ -22,14 +24,6 @@ public static class AsyncIteratorGeneratorTests
 				{
 					await Task.CompletedTask;
 					yield return "y";
-				}
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<AsyncEnumeration>();
 				}
 			}
 			""";
@@ -44,49 +38,76 @@ public static class AsyncIteratorGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfAsyncEnumerationExtensions
+			internal sealed class AsyncEnumerationCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> Methods(this global::Rocks.Expectations.Expectations<global::AsyncEnumeration> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::AsyncEnumeration Instance(this global::Rocks.Expectations.Expectations<global::AsyncEnumeration> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>
+				{
+					public global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler3> @handlers3 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockAsyncEnumeration(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockAsyncEnumeration
 					: global::AsyncEnumeration
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockAsyncEnumeration(global::Rocks.Expectations.Expectations<global::AsyncEnumeration> @expectations)
+					public RockAsyncEnumeration(global::AsyncEnumerationCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -102,13 +123,12 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -120,13 +140,12 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -138,16 +157,15 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken)")]
 					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)
 					{
-						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						if (this.Expectations.handlers3.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers3)
 							{
-								if (((global::Rocks.Argument<global::System.Threading.CancellationToken>)@methodHandler.Expectations[0]).IsValid(@cancellationToken!))
+								if (@handler.@cancellationToken.IsValid(@cancellationToken!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>)@methodHandler.Method)(@cancellationToken!) :
-										((global::Rocks.HandlerInformation<global::System.Collections.Generic.IAsyncEnumerable<string>>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@cancellationToken!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -160,33 +178,83 @@ public static class AsyncIteratorGeneratorTests
 						}
 					}
 					
+					private global::AsyncEnumerationCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class AsyncEnumerationMethodExpectations
+				{
+					internal AsyncEnumerationMethodExpectations(global::AsyncEnumerationCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::AsyncEnumerationCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::AsyncEnumerationCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::AsyncEnumerationCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
+						
+						var handler = new global::AsyncEnumerationCreateExpectations.Handler3
+						{
+							@cancellationToken = @cancellationToken.Transform(default),
+						};
+						
+						this.Expectations.handlers3.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default) =>
+						this.GetRecordsAsync(global::Rocks.Arg.Is(@cancellationToken));
+					
+					private global::AsyncEnumerationCreateExpectations Expectations { get; }
+				}
+				
+				internal global::AsyncEnumerationCreateExpectations.AsyncEnumerationMethodExpectations Methods { get; }
+				
+				internal AsyncEnumerationCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::AsyncEnumeration Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockAsyncEnumeration(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfAsyncEnumerationExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self, global::Rocks.Argument<object?> @obj)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-				}
-				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self) =>
-					new global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self) =>
-					new global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self, global::Rocks.Argument<global::System.Threading.CancellationToken> @cancellationToken)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
-					return new global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>>(@self.Add<global::System.Collections.Generic.IAsyncEnumerable<string>>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @cancellationToken.Transform(default) }));
-				}
-				internal static global::Rocks.MethodAdornments<global::AsyncEnumeration, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(this global::Rocks.Expectations.MethodExpectations<global::AsyncEnumeration> @self, global::System.Threading.CancellationToken @cancellationToken = default) =>
-					@self.GetRecordsAsync(global::Rocks.Arg.Is(@cancellationToken));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -201,21 +269,15 @@ public static class AsyncIteratorGeneratorTests
 			using System.Threading;
 			using System.Threading.Tasks;
 			
+			[assembly: RockMake<AsyncEnumeration>]
+
 			public class AsyncEnumeration
 			{
 				public virtual async IAsyncEnumerable<string> GetRecordsAsync(
-			        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+					[EnumeratorCancellation] CancellationToken cancellationToken = default)
 				{
 					await Task.CompletedTask;
 					yield return "y";
-				}
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<AsyncEnumeration>();
 				}
 			}
 			""";
@@ -226,9 +288,9 @@ public static class AsyncIteratorGeneratorTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfAsyncEnumerationExtensions
+			internal sealed class AsyncEnumerationMakeExpectations
 			{
-				internal static global::AsyncEnumeration Instance(this global::Rocks.MakeGeneration<global::AsyncEnumeration> @self)
+				internal global::AsyncEnumeration Instance()
 				{
 					return new RockAsyncEnumeration();
 				}
@@ -258,11 +320,10 @@ public static class AsyncIteratorGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

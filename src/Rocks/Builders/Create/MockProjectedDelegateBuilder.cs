@@ -10,7 +10,10 @@ internal static class MockProjectedDelegateBuilder
 	{
 		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var delegateName = method.ProjectedCallbackDelegateName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}";
+		var typeArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
+
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}{typeArguments}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
@@ -34,47 +37,53 @@ internal static class MockProjectedDelegateBuilder
 		var constraints = method.Constraints;
 		var methodConstraints = constraints.Length > 0 ?
 			$" {string.Join(" ", constraints)}" : string.Empty;
+		var typeArguments = method.TypeArguments.Length > 0 ?
+			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
-		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}({methodParameters}){methodConstraints};";
+		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";
 	}
 
 	// TODO: this could go on the MethodModel itself.
 	internal static string GetProjectedReturnValueDelegate(MethodModel method) =>
-		$"internal delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
+		$"internal {(method.IsUnsafe ? "unsafe " : string.Empty)}delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)
 	{
-		static void BuildDelegate(IndentedTextWriter writer, MethodModel method)
+		static void BuildDelegate(IndentedTextWriter writer, MethodModel method, HashSet<string> generatedDelegates)
 		{
-			writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+			if (generatedDelegates.Add(method.ProjectedCallbackDelegateName!))
+			{
+				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedDelegate(method));
+			}
 
-			if (method.ReturnType.IsRefLikeType)
+			if (method.ReturnType.IsRefLikeType &&
+				generatedDelegates.Add(method.ProjectedReturnValueDelegateName!))
 			{
 				writer.WriteLine(MockProjectedDelegateBuilder.GetProjectedReturnValueDelegate(method));
 			}
 		}
 
-		static void BuildDelegates(IndentedTextWriter writer, IEnumerable<MethodModel> methods)
+		static void BuildDelegates(IndentedTextWriter writer, IEnumerable<MethodModel> methods, HashSet<string> generatedDelegates)
 		{
 			foreach (var method in methods)
 			{
-				BuildDelegate(writer, method);
+				BuildDelegate(writer, method, generatedDelegates);
 			}
 		}
 
-		static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType)
+		static void BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, HashSet<string> generatedDelegates)
 		{
 			var getPropertyMethods = mockType.Properties
 				.Where(_ => _.GetMethod is not null && _.GetMethod.RequiresProjectedDelegate &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.GetMethod!);
-			BuildDelegates(writer, getPropertyMethods);
+			BuildDelegates(writer, getPropertyMethods, generatedDelegates);
 
 			var setPropertyMethods = mockType.Properties
 				.Where(_ => _.SetMethod is not null && _.SetMethod.RequiresProjectedDelegate &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No)
 				.Select(_ => _.SetMethod!);
-			BuildDelegates(writer, setPropertyMethods);
+			BuildDelegates(writer, setPropertyMethods, generatedDelegates);
 
 			var explicitGetPropertyMethodGroups = mockType.Properties
 				.Where(_ => _.GetMethod is not null && _.GetMethod.RequiresProjectedDelegate &&
@@ -83,7 +92,7 @@ internal static class MockProjectedDelegateBuilder
 
 			foreach (var explicitGetPropertyMethodGroup in explicitGetPropertyMethodGroups)
 			{
-				BuildDelegate(writer, explicitGetPropertyMethodGroup.First().GetMethod!);
+				BuildDelegate(writer, explicitGetPropertyMethodGroup.First().GetMethod!, generatedDelegates);
 			}
 
 			var explicitSetPropertyMethodGroups = mockType.Properties
@@ -93,16 +102,18 @@ internal static class MockProjectedDelegateBuilder
 
 			foreach (var explicitSetPropertyMethodGroup in explicitSetPropertyMethodGroups)
 			{
-				BuildDelegate(writer, explicitSetPropertyMethodGroup.First().SetMethod!);
+				BuildDelegate(writer, explicitSetPropertyMethodGroup.First().SetMethod!, generatedDelegates);
 			}
 		}
+
+		var generatedDelegates = new HashSet<string>();
 
 		if (type.Methods.Length > 0)
 		{
 			var methods = type.Methods
 				.Where(_ => _.RequiresProjectedDelegate &&
 					_.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No);
-			BuildDelegates(writer, methods);
+			BuildDelegates(writer, methods, generatedDelegates);
 
 			var explicitMethodGroups = type.Methods
 				.Where(_ => _.RequiresProjectedDelegate &&
@@ -111,13 +122,13 @@ internal static class MockProjectedDelegateBuilder
 
 			foreach (var explicitMethodGroup in explicitMethodGroups)
 			{
-				BuildDelegate(writer, explicitMethodGroup.First());
+				BuildDelegate(writer, explicitMethodGroup.First(), generatedDelegates);
 			}
 		}
 
 		if (type.Properties.Length > 0)
 		{
-			BuildProperties(writer, type);
+			BuildProperties(writer, type, generatedDelegates);
 		}
 	}
 }

@@ -29,11 +29,13 @@ static void TestTypeValidity() =>
 
 static void TestWithCode()
 {
-	TestGenerator.Generate(new RockCreateGenerator(),
+	TestGenerator.Generate(new RockAttributeGenerator(),
 		"""
 		using Rocks;
 		using System;
 		
+		[assembly: RockCreate<Generator>]
+
 		#nullable enable
 
 		public abstract class GeneratorBase
@@ -45,14 +47,6 @@ static void TestWithCode()
 			: GeneratorBase
 		{
 			protected override string GetBuildArtifactsDirectoryPath(string buildPartition, string programName) => "";
-		}
-
-		public static class Test
-		{
-		    public static void Go()
-		    {
-		        var expectations = Rock.Create<Generator>();
-		    }
 		}
 		""",
 		[]);
@@ -198,12 +192,12 @@ static void TestWithTypes()
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
 			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, []);
 
-			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockCreateGenerator)}");
+			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
 			var createIssues = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
-			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {nameof(RockMakeGenerator)}");
+			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
 			var makeIssues = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));

@@ -35,8 +35,6 @@ internal static class MockMakeBuilder
 
 		writer.WriteLine();
 
-		var memberIdentifier = 0u;
-
 		foreach (var method in mockType.Methods)
 		{
 			if (method.ReturnsVoid)
@@ -47,8 +45,6 @@ internal static class MockMakeBuilder
 			{
 				MockMethodValueBuilder.Build(writer, method);
 			}
-
-			memberIdentifier++;
 		}
 
 		foreach (var property in mockType.Properties.Where(_ => !_.IsIndexer))

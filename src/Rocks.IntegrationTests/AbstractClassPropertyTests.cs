@@ -231,7 +231,7 @@ public static class AbstractClassPropertyTests
 	[RockMake<AbstractClassProperty>]
 	public static void MakeGetAndInit()
 	{
-		var mock = Rock.Make<AbstractClassProperty>().Instance(null);
+		var mock = new AbstractClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndInitData;
 
 		Assert.Multiple(() =>
@@ -244,7 +244,7 @@ public static class AbstractClassPropertyTests
 	[RockMake<AbstractClassProperty>]
 	public static void MakeGetAndSet()
 	{
-		var mock = Rock.Make<AbstractClassProperty>().Instance(null);
+		var mock = new AbstractClassPropertyMakeExpectations().Instance(null);
 		var value = mock.GetAndSetData;
 
 		Assert.Multiple(() =>

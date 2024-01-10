@@ -12,7 +12,10 @@ public static class PropertyInitMakeGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockMake<MockTests.ITest>]
+
 			#nullable enable
+
 			namespace MockTests
 			{
 				public interface ITest
@@ -21,14 +24,6 @@ public static class PropertyInitMakeGeneratorTests
 					int? NullableValueType { get; init; }
 					string NonNullableReferenceType { get; init; }
 					string? NullableReferenceType { get; init; }
-				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<ITest>();
-					}
 				}
 			}
 			""";
@@ -41,7 +36,7 @@ public static class PropertyInitMakeGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfITestExtensions
+				internal sealed class ITestMakeExpectations
 				{
 					internal sealed class ConstructorProperties
 					{
@@ -51,7 +46,7 @@ public static class PropertyInitMakeGeneratorTests
 						internal string? NullableReferenceType { get; init; }
 					}
 					
-					internal static global::MockTests.ITest Instance(this global::Rocks.MakeGeneration<global::MockTests.ITest> @self, ConstructorProperties? @constructorProperties)
+					internal global::MockTests.ITest Instance(global::MockTests.ITestMakeExpectations.ConstructorProperties? @constructorProperties)
 					{
 						return new RockITest(@constructorProperties);
 					}
@@ -93,11 +88,10 @@ public static class PropertyInitMakeGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -106,11 +100,13 @@ public static class PropertyInitMakeGeneratorTests
 	{
 		var code =
 			"""
-			#nullable enable
-			
 			using Rocks;
 			using System;
 
+			[assembly: RockMake<MockTests.Test>]
+
+			#nullable enable
+			
 			namespace MockTests
 			{
 				public class Test
@@ -120,14 +116,6 @@ public static class PropertyInitMakeGeneratorTests
 					public required int? NullableValueType { get; init; }
 					public required string NonNullableReferenceType { get; init; }
 					public required string? NullableReferenceType { get; init; }
-				}
-			
-				public static class MockTest
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<Test>();
-					}
 				}
 			}
 			""";
@@ -140,7 +128,7 @@ public static class PropertyInitMakeGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfTestExtensions
+				internal sealed class TestMakeExpectations
 				{
 					internal sealed class ConstructorProperties
 					{
@@ -150,12 +138,9 @@ public static class PropertyInitMakeGeneratorTests
 						internal required string? NullableReferenceType { get; init; }
 					}
 					
-					internal static global::MockTests.Test Instance(this global::Rocks.MakeGeneration<global::MockTests.Test> @self, ConstructorProperties @constructorProperties)
+					internal global::MockTests.Test Instance(global::MockTests.TestMakeExpectations.ConstructorProperties @constructorProperties)
 					{
-						if (@constructorProperties is null)
-						{
-							throw new global::System.ArgumentNullException(nameof(@constructorProperties));
-						}
+						global::System.ArgumentNullException.ThrowIfNull(constructorProperties);
 						return new RockTest(@constructorProperties);
 					}
 					
@@ -189,11 +174,10 @@ public static class PropertyInitMakeGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

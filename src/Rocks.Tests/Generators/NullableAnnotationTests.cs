@@ -12,19 +12,13 @@ public static class NullableAnnotationTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<IType<int?>>]
+
 			#nullable enable
 
 			public interface IType<T>
 			{
 				void Foo(T value);
-			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<IType<int?>>();
-				}
 			}
 			""";
 
@@ -38,54 +32,58 @@ public static class NullableAnnotationTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfITypeOfNullableOfintExtensions
+			internal sealed class ITypeOfNullableOfintCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IType<int?>> Methods(this global::Rocks.Expectations.Expectations<global::IType<int?>> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::IType<int?> Instance(this global::Rocks.Expectations.Expectations<global::IType<int?>> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action<int?>>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<int?> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::ITypeOfNullableOfintCreateExpectations.Handler0> @handlers0 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockITypeOfNullableOfint(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockITypeOfNullableOfint
 					: global::IType<int?>
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockITypeOfNullableOfint(global::Rocks.Expectations.Expectations<global::IType<int?>> @expectations)
+					public RockITypeOfNullableOfint(global::ITypeOfNullableOfintCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "void Foo(int? @value)")]
 					public void Foo(int? @value)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
 							var @foundMatch = false;
 							
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<int?>)@methodHandler.Expectations[0]).IsValid(@value!))
+								if (@handler.@value.IsValid(@value!))
 								{
 									@foundMatch = true;
-									
-									@methodHandler.IncrementCallCount();
-									if (@methodHandler.Method is not null)
-									{
-										((global::System.Action<int?>)@methodHandler.Method)(@value!);
-									}
+									@handler.CallCount++;
+									@handler.Callback?.Invoke(@value!);
 									break;
 								}
 							}
@@ -101,22 +99,54 @@ public static class NullableAnnotationTests
 						}
 					}
 					
+					private global::ITypeOfNullableOfintCreateExpectations Expectations { get; }
 				}
-			}
-			
-			internal static class MethodExpectationsOfITypeOfNullableOfintExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IType<int?>, global::System.Action<int?>> Foo(this global::Rocks.Expectations.MethodExpectations<global::IType<int?>> @self, global::Rocks.Argument<int?> @value)
+				
+				internal sealed class ITypeOfNullableOfintMethodExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.MethodAdornments<global::IType<int?>, global::System.Action<int?>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+					internal ITypeOfNullableOfintMethodExpectations(global::ITypeOfNullableOfintCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::ITypeOfNullableOfintCreateExpectations.Handler0, global::System.Action<int?>> Foo(global::Rocks.Argument<int?> @value)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@value);
+						
+						var handler = new global::ITypeOfNullableOfintCreateExpectations.Handler0
+						{
+							@value = @value,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					private global::ITypeOfNullableOfintCreateExpectations Expectations { get; }
+				}
+				
+				internal global::ITypeOfNullableOfintCreateExpectations.ITypeOfNullableOfintMethodExpectations Methods { get; }
+				
+				internal ITypeOfNullableOfintCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::IType<int?> Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockITypeOfNullableOfint(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ITypeint_null__Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ITypeint_null__Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -127,17 +157,11 @@ public static class NullableAnnotationTests
 			"""
 			using Rocks;
 
+			[assembly: RockCreate<NeedNullable>]
+
 			public class NeedNullable
 			{
 				public NeedNullable(object initializationData = null) { }
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<NeedNullable>();
-				}
 			}
 			""";
 
@@ -151,50 +175,69 @@ public static class NullableAnnotationTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfNeedNullableExtensions
+			internal sealed class NeedNullableCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::NeedNullable> Methods(this global::Rocks.Expectations.Expectations<global::NeedNullable> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::NeedNullable Instance(this global::Rocks.Expectations.Expectations<global::NeedNullable> @self, object? @initializationData)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2> @handlers2 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockNeedNullable(@self, @initializationData!);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockNeedNullable
 					: global::NeedNullable
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockNeedNullable(global::Rocks.Expectations.Expectations<global::NeedNullable> @expectations, object? @initializationData)
+					public RockNeedNullable(global::NeedNullableCreateExpectations @expectations, object? @initializationData)
 						: base(@initializationData!)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -210,13 +253,12 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -228,13 +270,12 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -243,26 +284,68 @@ public static class NullableAnnotationTests
 						}
 					}
 					
+					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
-			}
-			
-			internal static class MethodExpectationsOfNeedNullableExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, global::Rocks.Argument<object?> @obj)
+				
+				internal sealed class NeedNullableMethodExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+					internal NeedNullableMethodExpectations(global::NeedNullableCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::NeedNullableCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::NeedNullableCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::NeedNullableCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self) =>
-					new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self) =>
-					new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				
+				internal global::NeedNullableCreateExpectations.NeedNullableMethodExpectations Methods { get; }
+				
+				internal NeedNullableCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::NeedNullable Instance(object? @initializationData)
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockNeedNullable(this, @initializationData!);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "NeedNullable_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "NeedNullable_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -273,17 +356,11 @@ public static class NullableAnnotationTests
 			"""
 			using Rocks;
 
+			[assembly: RockMake<NeedNullable>]
+
 			public class NeedNullable
 			{
 				public NeedNullable(object initializationData = null) { }
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<NeedNullable>();
-				}
 			}
 			""";
 
@@ -293,9 +370,9 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfNeedNullableExtensions
+			internal sealed class NeedNullableMakeExpectations
 			{
-				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self, object? @initializationData)
+				internal global::NeedNullable Instance(object? @initializationData)
 				{
 					return new RockNeedNullable(@initializationData!);
 				}
@@ -322,11 +399,10 @@ public static class NullableAnnotationTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -337,18 +413,12 @@ public static class NullableAnnotationTests
 			"""
 			using Rocks;
 
+			[assembly: RockCreate<NeedNullable>]
+
 			public class NeedNullable
 			{
 			    public virtual int IntReturn(object initializationData = null) => 0;
 			    public virtual void VoidReturn(object initializationData = null) { }
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<NeedNullable>();
-				}
 			}
 			""";
 
@@ -362,49 +432,84 @@ public static class NullableAnnotationTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfNeedNullableExtensions
+			internal sealed class NeedNullableCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::NeedNullable> Methods(this global::Rocks.Expectations.Expectations<global::NeedNullable> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::NeedNullable Instance(this global::Rocks.Expectations.Expectations<global::NeedNullable> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<object?, int>, int>
+				{
+					public global::Rocks.Argument<object?> @initializationData { get; set; }
+				}
+				
+				internal sealed class Handler4
+					: global::Rocks.Handler<global::System.Action<object?>>
+				{
+					public global::Rocks.Argument<object?> @initializationData { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler4> @handlers4 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockNeedNullable(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers4));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockNeedNullable
 					: global::NeedNullable
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockNeedNullable(global::Rocks.Expectations.Expectations<global::NeedNullable> @expectations)
+					public RockNeedNullable(global::NeedNullableCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -420,13 +525,12 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -438,13 +542,12 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -456,16 +559,15 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(3, "int IntReturn(object? @initializationData)")]
 					public override int IntReturn(object? @initializationData = null)
 					{
-						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						if (this.Expectations.handlers3.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers3)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData!))
+								if (@handler.@initializationData.IsValid(@initializationData!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, int>)@methodHandler.Method)(@initializationData!) :
-										((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@initializationData!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -481,21 +583,17 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(4, "void VoidReturn(object? @initializationData)")]
 					public override void VoidReturn(object? @initializationData = null)
 					{
-						if (this.handlers.TryGetValue(4, out var @methodHandlers))
+						if (this.Expectations.handlers4.Count > 0)
 						{
 							var @foundMatch = false;
 							
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers4)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@initializationData!))
+								if (@handler.@initializationData.IsValid(@initializationData!))
 								{
 									@foundMatch = true;
-									
-									@methodHandler.IncrementCallCount();
-									if (@methodHandler.Method is not null)
-									{
-										((global::System.Action<object?>)@methodHandler.Method)(@initializationData!);
-									}
+									@handler.CallCount++;
+									@handler.Callback?.Invoke(@initializationData!);
 									break;
 								}
 							}
@@ -511,40 +609,98 @@ public static class NullableAnnotationTests
 						}
 					}
 					
+					private global::NeedNullableCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class NeedNullableMethodExpectations
+				{
+					internal NeedNullableMethodExpectations(global::NeedNullableCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::NeedNullableCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::NeedNullableCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::NeedNullableCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int> IntReturn(global::Rocks.Argument<object?> @initializationData)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@initializationData);
+						
+						var handler = new global::NeedNullableCreateExpectations.Handler3
+						{
+							@initializationData = @initializationData.Transform(null),
+						};
+						
+						this.Expectations.handlers3.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler3, global::System.Func<object?, int>, int> IntReturn(object? @initializationData = null) =>
+						this.IntReturn(global::Rocks.Arg.Is(@initializationData));
+					
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>> VoidReturn(global::Rocks.Argument<object?> @initializationData)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@initializationData);
+						
+						var handler = new global::NeedNullableCreateExpectations.Handler4
+						{
+							@initializationData = @initializationData.Transform(null),
+						};
+						
+						this.Expectations.handlers4.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler4, global::System.Action<object?>> VoidReturn(object? @initializationData = null) =>
+						this.VoidReturn(global::Rocks.Arg.Is(@initializationData));
+					
+					private global::NeedNullableCreateExpectations Expectations { get; }
+				}
+				
+				internal global::NeedNullableCreateExpectations.NeedNullableMethodExpectations Methods { get; }
+				
+				internal NeedNullableCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::NeedNullable Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockNeedNullable(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfNeedNullableExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, global::Rocks.Argument<object?> @obj)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-				}
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self) =>
-					new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self) =>
-					new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, int>, int> IntReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, global::Rocks.Argument<object?> @initializationData)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@initializationData);
-					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initializationData.Transform(null) }));
-				}
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Func<object?, int>, int> IntReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, object? @initializationData = null) =>
-					@self.IntReturn(global::Rocks.Arg.Is(@initializationData));
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>> VoidReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, global::Rocks.Argument<object?> @initializationData)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@initializationData);
-					return new global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @initializationData.Transform(null) }));
-				}
-				internal static global::Rocks.MethodAdornments<global::NeedNullable, global::System.Action<object?>> VoidReturn(this global::Rocks.Expectations.MethodExpectations<global::NeedNullable> @self, object? @initializationData = null) =>
-					@self.VoidReturn(global::Rocks.Arg.Is(@initializationData));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "NeedNullable_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "NeedNullable_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -555,18 +711,12 @@ public static class NullableAnnotationTests
 			"""
 			using Rocks;
 
+			[assembly: RockMake<NeedNullable>]
+
 			public class NeedNullable
 			{
 			    public virtual int IntReturn(object initializationData = null) => 0;
 			    public virtual void VoidReturn(object initializationData = null) { }
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<NeedNullable>();
-				}
 			}
 			""";
 
@@ -576,9 +726,9 @@ public static class NullableAnnotationTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfNeedNullableExtensions
+			internal sealed class NeedNullableMakeExpectations
 			{
-				internal static global::NeedNullable Instance(this global::Rocks.MakeGeneration<global::NeedNullable> @self)
+				internal global::NeedNullable Instance()
 				{
 					return new RockNeedNullable();
 				}
@@ -611,11 +761,10 @@ public static class NullableAnnotationTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "NeedNullable_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

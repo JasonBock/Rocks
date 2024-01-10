@@ -168,9 +168,10 @@ public static class InterfaceMethodReturnTests
 	}
 
 	[Test]
+	[RockMake<IInterfaceMethodReturn>]
 	public static void MakeWithOneParameterWithReturn()
 	{
-		var mock = Rock.Make<IInterfaceMethodReturn>().Instance();
+		var mock = new IInterfaceMethodReturnMakeExpectations().Instance();
 		var value = mock.OneParameter(3);
 
 		Assert.That(value, Is.EqualTo(default(int)));

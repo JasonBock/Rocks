@@ -8,8 +8,17 @@ namespace Rocks.Builders.Create;
 
 internal static class MockConstructorExtensionsBuilder
 {
-	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType)
+	internal static void Build(IndentedTextWriter writer, TypeMockModel mockType,
+		string expectationsFullyQualifiedName, List<ExpectationMapping> expectationMappings)
 	{
+		writer.WriteLine($"internal {mockType.Type.FlattenedName}CreateExpectations() =>");
+		writer.Indent++;
+		var thisExpectations = $"({string.Join(", ", expectationMappings.Select(_ => $"this.{_.PropertyName}"))})";
+		var newExpectations = $"({string.Join(", ", expectationMappings.Select(_ => "new(this)"))})";
+		writer.WriteLine($"{thisExpectations} = {newExpectations};");
+		writer.Indent--;
+		writer.WriteLine();
+
 		var constructorProperties = mockType.ConstructorProperties;
 		var requiredInitProperties = constructorProperties.Where(_ => !_.IsIndexer).ToArray();
 		var requiredInitIndexers = constructorProperties.Where(_ => _.IsIndexer).ToArray();
@@ -112,44 +121,43 @@ internal static class MockConstructorExtensionsBuilder
 			foreach (var constructor in mockType.Constructors)
 			{
 				MockConstructorExtensionsBuilder.Build(writer, mockType,
-					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties);
+					constructor.Parameters, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+					expectationsFullyQualifiedName);
 			}
 		}
 		else
 		{
 			MockConstructorExtensionsBuilder.Build(writer, mockType,
-				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties);
+				ImmutableArray<ParameterModel>.Empty, requiredInitProperties.Length > 0 || requiredInitIndexers.Length > 0, hasRequiredProperties,
+				expectationsFullyQualifiedName);
 		}
 	}
 
-	private static void Build(IndentedTextWriter writer, TypeMockModel mockType, EquatableArray<ParameterModel> parameters, 
-		bool requiredInitObjectInitialization, bool hasRequiredProperties)
+	private static void Build(IndentedTextWriter writer, TypeMockModel mockType, EquatableArray<ParameterModel> parameters,
+		bool requiredInitObjectInitialization, bool hasRequiredProperties, string expectationsFullyQualifiedName)
 	{
 		var namingContext = new VariableNamingContext(parameters);
 		var constructorPropertiesParameter =
 			requiredInitObjectInitialization ?
-				$", ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}" :
-				string.Empty;
-		var selfParameter =
-			$"this global::Rocks.Expectations.Expectations<{mockType.Type.FullyQualifiedName}> @{namingContext["self"]}{constructorPropertiesParameter}";
-		var instanceParameters = parameters.Length == 0 ? selfParameter :
-			string.Join(", ", selfParameter,
-				string.Join(", ", parameters.Select(_ =>
+				[$"{expectationsFullyQualifiedName}.ConstructorProperties{(!hasRequiredProperties ? "?" : string.Empty)} @{namingContext["constructorProperties"]}"] :
+				Array.Empty<string>();
+		var instanceParameters = 
+			$"{string.Join(", ", constructorPropertiesParameter.Concat(parameters.Select(_ =>
+			{
+				var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
+				var direction = _.RefKind switch
 				{
-					var requiresNullable = _.RequiresNullableAnnotation ? "?" : string.Empty;
-					var direction = _.RefKind switch
-					{
-						RefKind.Ref => "ref ",
-						RefKind.Out => "out ",
-						RefKind.In => "in ",
-						_ => string.Empty
-					};
-					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
-				})));
+					RefKind.Ref => "ref ",
+					RefKind.Out => "out ",
+					RefKind.In => "in ",
+					_ => string.Empty
+				};
+				return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
+			})))}";
 		var isUnsafe = false;
 		var contextParameters = requiredInitObjectInitialization ?
-			$"@{namingContext["self"]}, @{namingContext["constructorProperties"]}" :
-			$"@{namingContext["self"]}";
+			$"this, @{namingContext["constructorProperties"]}" :
+			"this";
 		var rockInstanceParameters = parameters.Length == 0 ? contextParameters :
 			string.Join(", ", contextParameters, string.Join(", ", parameters.Select(_ =>
 			{
@@ -165,7 +173,7 @@ internal static class MockConstructorExtensionsBuilder
 				return $"{direction}@{_.Name}{requiresNullable}";
 			})));
 
-		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}static {mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
+		writer.WriteLine($"internal {(isUnsafe ? "unsafe " : string.Empty)}{mockType.Type.FullyQualifiedName} Instance({instanceParameters})");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -182,11 +190,11 @@ internal static class MockConstructorExtensionsBuilder
 
 		writer.WriteLines(
 			$$"""
-			if (!@{{namingContext["self"]}}.WasInstanceInvoked)
+			if (!this.WasInstanceInvoked)
 			{
-				@{{namingContext["self"]}}.WasInstanceInvoked = true;
+				this.WasInstanceInvoked = true;
 				var @{{namingContext["mock"]}} = new Rock{{mockType.Type.FlattenedName}}({{rockInstanceParameters}});
-				@{{namingContext["self"]}}.MockType = @{{namingContext["mock"]}}.GetType();
+				this.MockType = @{{namingContext["mock"]}}.GetType();
 				return @{{namingContext["mock"]}};
 			}
 			else

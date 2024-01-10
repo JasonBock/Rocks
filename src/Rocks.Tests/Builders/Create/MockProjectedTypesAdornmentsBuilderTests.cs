@@ -11,99 +11,65 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 {
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		AdornmentType.Method, false,
-		"MethodAdornmentsForTarget")]
+		"AdornmentsForTarget")]
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		AdornmentType.Method, true,
-		"ExplicitMethodAdornmentsForTarget")]
+		"AdornmentsForTarget")]
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		AdornmentType.Method, false,
-		"MethodAdornmentsForTargetOfstring")]
+		"AdornmentsForTargetOfstring")]
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		AdornmentType.Method, true,
-		"ExplicitMethodAdornmentsForTargetOfstring")]
-	public static void GetProjectedAdornmentName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
+		"AdornmentsForTargetOfstring")]
+	public static void GetProjectedAdornmentName(string code, string expectedValue)
 	{
 		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentName(
-			new TypeReferenceModel(type, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
-	}
-
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		AdornmentType.Method, false,
-		"global::Mock.ProjectionsForIMock.MethodAdornmentsForTarget")]
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		AdornmentType.Method, true,
-		"global::Mock.ProjectionsForIMock.ExplicitMethodAdornmentsForTarget")]
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		AdornmentType.Method, false,
-		"global::Mock.ProjectionsForIMock.MethodAdornmentsForTargetOfstring")]
-	[TestCase(
-		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		AdornmentType.Method, true,
-		"global::Mock.ProjectionsForIMock.ExplicitMethodAdornmentsForTargetOfstring")]
-	public static void GetProjectedAdornmentFullyQualifiedNameName(string code, AdornmentType adornment, bool isExplicit, string expectedValue)
-	{
-		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAdornmentFullyQualifiedNameName(
-			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation), adornment, isExplicit), Is.EqualTo(expectedValue));
-	}
-
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"HandlerInformationForTarget")]
-	[TestCase(
-		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"HandlerInformationForTargetOfstring")]
-	public static void GetProjectedHandlerInformationName(string code, string expectedValue)
-	{
-		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationName(
+		Assert.That(MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsName(
 			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.HandlerInformationForTarget")]
+		"global::Mock.ProjectionsForIMock.AdornmentsForTarget")]
+	[TestCase(
+		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
+		"global::Mock.ProjectionsForIMock.AdornmentsForTarget")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.HandlerInformationForTargetOfstring")]
-	public static void GetProjectedHandlerInformationFullyQualifiedNameName(string code, string expectedValue)
+		"global::Mock.ProjectionsForIMock.AdornmentsForTargetOfstring")]
+	[TestCase(
+		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
+		"global::Mock.ProjectionsForIMock.AdornmentsForTargetOfstring")]
+	public static void GetProjectedAdornmentFullyQualifiedNameName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedHandlerInformationFullyQualifiedNameName(
+		Assert.That(MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsFullyQualifiedNameName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"AddForTarget")]
+		"HandlerForTarget")]
 	[TestCase(
 		"namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"AddForTargetOfstring")]
-	public static void GetProjectedAddExtensionMethodName(string code, string expectedValue)
+		"HandlerForTargetOfstring")]
+	public static void GetProjectedHandlerInformationName(string code, string expectedValue)
 	{
 		var (type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbolFromParameter(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodName(
+		Assert.That(MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerName(
 			new TypeReferenceModel(type, compilation)), Is.EqualTo(expectedValue));
 	}
 
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.ProjectionsForIMock.AddForTarget")]
+		"global::Mock.ProjectionsForIMock.HandlerForTarget")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.ProjectionsForIMock.AddForTargetOfstring")]
-	public static void GetProjectedAddExtensionMethodFullyQualifiedName(string code, string expectedValue)
+		"global::Mock.ProjectionsForIMock.HandlerForTargetOfstring")]
+	public static void GetProjectedHandlerInformationFullyQualifiedNameName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
-		Assert.That(MockProjectedTypesAdornmentsBuilder.GetProjectedAddExtensionMethodFullyQualifiedName(
+		Assert.That(MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerFullyQualifiedNameName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation)), Is.EqualTo(expectedValue));
 	}
 

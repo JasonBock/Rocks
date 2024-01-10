@@ -90,7 +90,7 @@ namespace Rocks.CodeGenerationTest.Extensions
 					.OfType<PropertyDeclarationSyntax>().Single();
 				var symbol = model.GetDeclaredSymbol(propertySyntax)!.Type;
 				var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
-				var mockModel = MockModelV4.Create(invocation, symbol!, model, BuildType.Create, true);
+				var mockModel = MockModel.Create(invocation, symbol!, model, BuildType.Create, true);
 				return mockModel.Type is not null;
 			}
 

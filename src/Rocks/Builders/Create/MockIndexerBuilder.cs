@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
 using System.Collections.Immutable;
@@ -19,17 +20,19 @@ internal static class MockIndexerBuilder
 			methodVisibility : string.Empty;
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"{visibility}get");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.WriteLines(
+			$$"""
+			{{visibility}}get
+			{
+				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
+				{
+					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
+					{
+			""");
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.Indent += 3;
 
-		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
-		writer.WriteLine("{");
-		writer.Indent++;
+		var handlerNamingContext = HandlerVariableNamingContext.Create();
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -38,7 +41,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -48,7 +51,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -59,7 +62,6 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-
 		MockMethodValueBuilder.BuildMethodHandler(
 			writer, method, indexer.MockType, namingContext,
 			raiseEvents, shouldThrowDoesNotReturnException, indexer.MemberIdentifier);
@@ -127,17 +129,19 @@ internal static class MockIndexerBuilder
 		var accessor = indexer.Accessors == PropertyAccessor.Init || indexer.Accessors == PropertyAccessor.GetAndInit ?
 			"init" : "set";
 
-		writer.WriteLine($"{visibility}{accessor}");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.WriteLines(
+			$$"""
+			{{visibility}}{{accessor}}
+			{
+				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
+				{
+					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
+					{
+			""");
 
-		writer.WriteLine($"if (this.handlers.TryGetValue({memberIdentifier}, out var @{namingContext["methodHandlers"]}))");
-		writer.WriteLine("{");
-		writer.Indent++;
+		writer.Indent += 3;
 
-		writer.WriteLine($"foreach (var @{namingContext["methodHandler"]} in @{namingContext["methodHandlers"]})");
-		writer.WriteLine("{");
-		writer.Indent++;
+		var handlerNamingContext = HandlerVariableNamingContext.Create();
 
 		for (var i = 0; i < method.Parameters.Length; i++)
 		{
@@ -146,7 +150,7 @@ internal static class MockIndexerBuilder
 			if (i == 0)
 			{
 				writer.WriteLine(
-					$"if (((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"if (@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 			}
 			else
 			{
@@ -156,7 +160,7 @@ internal static class MockIndexerBuilder
 				}
 
 				writer.WriteLine(
-					$"((global::Rocks.Argument<{parameter.Type.FullyQualifiedName}>)@{namingContext["methodHandler"]}.Expectations[{i}]).IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
+					$"@{namingContext["handler"]}.@{handlerNamingContext[parameter.Name]}.IsValid(@{parameter.Name}!){(i == method.Parameters.Length - 1 ? ")" : " &&")}");
 
 				if (i == method.Parameters.Length - 1)
 				{
@@ -167,7 +171,6 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-
 		MockMethodVoidBuilder.BuildMethodHandler(writer, method, indexer.MockType, namingContext, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)

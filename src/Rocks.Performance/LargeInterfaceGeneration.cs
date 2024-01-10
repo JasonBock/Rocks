@@ -35,6 +35,8 @@ public class LargeInterfaceGeneration
 			"""
 			using Rocks;
 			
+			[assembly: RockCreate<IHaveLotsOfMembers>]
+
 			public interface IHaveLotsOfMembers
 			{
 				int SomeProp { get; }
@@ -421,11 +423,6 @@ public class LargeInterfaceGeneration
 				int SomeProp381 { get; }
 				int SomeMethod();
 			}
-			
-			public static class MockTest
-			{
-				public static void Create() => Rock.Create<IHaveLotsOfMembers>();
-			}
 			""";
 		var tree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
@@ -433,11 +430,11 @@ public class LargeInterfaceGeneration
 			.Select(_ => MetadataReference.CreateFromFile(_.Location))
 			.Concat(new[]
 			{
-				MetadataReference.CreateFromFile(typeof(Rock).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
 			});
 		this.compilation = CSharpCompilation.Create("generator", new[] { tree },
 			references, new(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
-		this.driver = CSharpGeneratorDriver.Create(new RockCreateGenerator());
+		this.driver = CSharpGeneratorDriver.Create(new RockAttributeGenerator());
 	}
 
 	[Benchmark]

@@ -14,6 +14,8 @@ public static class NullabilityGeneratorTests
 			using Rocks;
 			using System.Diagnostics.CodeAnalysis;
 
+			[assembly: RockCreate<ConnectionBuilder<object>>]
+
 			#nullable enable
 
 			public interface IGraphType { }
@@ -23,11 +25,6 @@ public static class NullabilityGeneratorTests
 				public virtual ConnectionBuilder<TSourceType> Argument<TArgumentGraphType, TArgumentType>(string name, string? description,
 					[AllowNull] TArgumentType defaultValue = default!)
 						where TArgumentGraphType : IGraphType => new();
-			}
-
-			public static class Test
-			{
-				public static void Go() => Rock.Create<ConnectionBuilder<object>>();
 			}
 			""";
 
@@ -41,49 +38,79 @@ public static class NullabilityGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfConnectionBuilderOfobjectExtensions
+			internal sealed class ConnectionBuilderOfobjectCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> Methods(this global::Rocks.Expectations.Expectations<global::ConnectionBuilder<object>> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::ConnectionBuilder<object> Instance(this global::Rocks.Expectations.Expectations<global::ConnectionBuilder<object>> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3<TArgumentGraphType, TArgumentType>
+					: global::Rocks.Handler<global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>>
+					where TArgumentGraphType : global::IGraphType
+				{
+					public global::Rocks.Argument<string> @name { get; set; }
+					public global::Rocks.Argument<string?> @description { get; set; }
+					public global::Rocks.Argument<TArgumentType> @defaultValue { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers3 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockConnectionBuilderOfobject(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockConnectionBuilderOfobject
 					: global::ConnectionBuilder<object>
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockConnectionBuilderOfobject(global::Rocks.Expectations.Expectations<global::ConnectionBuilder<object>> @expectations)
+					public RockConnectionBuilderOfobject(global::ConnectionBuilderOfobjectCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -99,13 +126,12 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -117,13 +143,12 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -135,20 +160,19 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, TArgumentType @defaultValue)")]
 					public override global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)
 					{
-						if (this.handlers.TryGetValue(3, out var @methodHandlers))
+						if (this.Expectations.handlers3.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @genericHandler in this.Expectations.handlers3)
 							{
-								if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>) || @methodHandler is global::Rocks.HandlerInformation<global::ConnectionBuilder<object>>)
+								if (@genericHandler is global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType> @handler)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@name!) &&
-										((global::Rocks.Argument<string?>)@methodHandler.Expectations[1]).IsValid(@description!) &&
-										((@methodHandler.Expectations[2] as global::Rocks.Argument<TArgumentType>)?.IsValid(@defaultValue!) ?? false))
+									if (@handler.@name.IsValid(@name!) &&
+										@handler.@description.IsValid(@description!) &&
+										@handler.@defaultValue.IsValid(@defaultValue!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>)@methodHandler.Method)(@name!, @description!, @defaultValue!) :
-											((global::Rocks.HandlerInformation<global::ConnectionBuilder<object>>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@name!, @description!, @defaultValue!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -162,35 +186,87 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
+					private global::ConnectionBuilderOfobjectCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class ConnectionBuilderOfobjectMethodExpectations
+				{
+					internal ConnectionBuilderOfobjectMethodExpectations(global::ConnectionBuilderOfobjectCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@name);
+						global::System.ArgumentNullException.ThrowIfNull(@description);
+						global::System.ArgumentNullException.ThrowIfNull(@defaultValue);
+						
+						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>
+						{
+							@name = @name,
+							@description = @description,
+							@defaultValue = @defaultValue.Transform(default!),
+						};
+						
+						this.Expectations.handlers3.Add(handler);
+						return new(handler);
+					}
+					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
+						this.Argument<TArgumentGraphType, TArgumentType>(@name, @description, global::Rocks.Arg.Is(@defaultValue));
+					
+					private global::ConnectionBuilderOfobjectCreateExpectations Expectations { get; }
+				}
+				
+				internal global::ConnectionBuilderOfobjectCreateExpectations.ConnectionBuilderOfobjectMethodExpectations Methods { get; }
+				
+				internal ConnectionBuilderOfobjectCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::ConnectionBuilder<object> Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockConnectionBuilderOfobject(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfConnectionBuilderOfobjectExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> @self, global::Rocks.Argument<object?> @obj)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-				}
-				internal static global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> @self) =>
-					new global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> @self) =>
-					new global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(this global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> @self, global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@name);
-					global::System.ArgumentNullException.ThrowIfNull(@description);
-					global::System.ArgumentNullException.ThrowIfNull(@defaultValue);
-					return new global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>>(@self.Add<global::ConnectionBuilder<object>>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @name, @description, @defaultValue.Transform(default!) }));
-				}
-				internal static global::Rocks.MethodAdornments<global::ConnectionBuilder<object>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(this global::Rocks.Expectations.MethodExpectations<global::ConnectionBuilder<object>> @self, global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
-					@self.Argument<TArgumentGraphType, TArgumentType>(@name, @description, global::Rocks.Arg.Is(@defaultValue));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "ConnectionBuilderobject_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "ConnectionBuilderobject_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -200,6 +276,8 @@ public static class NullabilityGeneratorTests
 		var code =
 			"""
 			using Rocks;
+
+			[assembly: RockCreate<SubTracer>]
 
 			#nullable enable
 
@@ -219,11 +297,6 @@ public static class NullabilityGeneratorTests
 					string format, params object[] args)
 				{ }
 			}
-
-			public static class Test
-			{
-				public static void Go() => Rock.Create<SubTracer>();
-			}
 			""";
 
 		var generatedCode =
@@ -236,49 +309,81 @@ public static class NullabilityGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfSubTracerExtensions
+			internal sealed class SubTracerCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::SubTracer> Methods(this global::Rocks.Expectations.Expectations<global::SubTracer> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::SubTracer Instance(this global::Rocks.Expectations.Expectations<global::SubTracer> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler4
+					: global::Rocks.Handler<global::System.Action<string, string, string, int, string, object[]>>
+				{
+					public global::Rocks.Argument<string> @eventCache { get; set; }
+					public global::Rocks.Argument<string> @source { get; set; }
+					public global::Rocks.Argument<string> @eventType { get; set; }
+					public global::Rocks.Argument<int> @id { get; set; }
+					public global::Rocks.Argument<string> @format { get; set; }
+					public global::Rocks.Argument<object[]> @args { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler4> @handlers4 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockSubTracer(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers4));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockSubTracer
 					: global::SubTracer
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockSubTracer(global::Rocks.Expectations.Expectations<global::SubTracer> @expectations)
+					public RockSubTracer(global::SubTracerCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -294,13 +399,12 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -312,13 +416,12 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -330,26 +433,22 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)")]
 					public override void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)
 					{
-						if (this.handlers.TryGetValue(4, out var @methodHandlers))
+						if (this.Expectations.handlers4.Count > 0)
 						{
 							var @foundMatch = false;
 							
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers4)
 							{
-								if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@eventCache!) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@source!) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@eventType!) &&
-									((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@id!) &&
-									((global::Rocks.Argument<string>)@methodHandler.Expectations[4]).IsValid(@format!) &&
-									((global::Rocks.Argument<object[]>)@methodHandler.Expectations[5]).IsValid(@args!))
+								if (@handler.@eventCache.IsValid(@eventCache!) &&
+									@handler.@source.IsValid(@source!) &&
+									@handler.@eventType.IsValid(@eventType!) &&
+									@handler.@id.IsValid(@id!) &&
+									@handler.@format.IsValid(@format!) &&
+									@handler.@args.IsValid(@args!))
 								{
 									@foundMatch = true;
-									
-									@methodHandler.IncrementCallCount();
-									if (@methodHandler.Method is not null)
-									{
-										((global::System.Action<string, string, string, int, string, object[]>)@methodHandler.Method)(@eventCache!, @source!, @eventType!, @id!, @format!, @args!);
-									}
+									@handler.CallCount++;
+									@handler.Callback?.Invoke(@eventCache!, @source!, @eventType!, @id!, @format!, @args!);
 									break;
 								}
 							}
@@ -365,48 +464,103 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
+					private global::SubTracerCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class SubTracerMethodExpectations
+				{
+					internal SubTracerMethodExpectations(global::SubTracerCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::SubTracerCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::SubTracerCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::SubTracerCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					internal global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler4, global::System.Action<string, string, string, int, string, object[]>> TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@eventCache);
+						global::System.ArgumentNullException.ThrowIfNull(@source);
+						global::System.ArgumentNullException.ThrowIfNull(@eventType);
+						global::System.ArgumentNullException.ThrowIfNull(@id);
+						global::System.ArgumentNullException.ThrowIfNull(@format);
+						global::System.ArgumentNullException.ThrowIfNull(@args);
+						
+						var handler = new global::SubTracerCreateExpectations.Handler4
+						{
+							@eventCache = @eventCache,
+							@source = @source,
+							@eventType = @eventType,
+							@id = @id,
+							@format = @format,
+							@args = @args,
+						};
+						
+						this.Expectations.handlers4.Add(handler);
+						return new(handler);
+					}
+					
+					private global::SubTracerCreateExpectations Expectations { get; }
+				}
+				
+				internal global::SubTracerCreateExpectations.SubTracerMethodExpectations Methods { get; }
+				
+				internal SubTracerCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::SubTracer Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockSubTracer(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfSubTracerExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::SubTracer> @self, global::Rocks.Argument<object?> @obj)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-				}
-				internal static global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::SubTracer> @self) =>
-					new global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::SubTracer> @self) =>
-					new global::Rocks.MethodAdornments<global::SubTracer, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::SubTracer, global::System.Action<string, string, string, int, string, object[]>> TraceEvent(this global::Rocks.Expectations.MethodExpectations<global::SubTracer> @self, global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@eventCache);
-					global::System.ArgumentNullException.ThrowIfNull(@source);
-					global::System.ArgumentNullException.ThrowIfNull(@eventType);
-					global::System.ArgumentNullException.ThrowIfNull(@id);
-					global::System.ArgumentNullException.ThrowIfNull(@format);
-					global::System.ArgumentNullException.ThrowIfNull(@args);
-					return new global::Rocks.MethodAdornments<global::SubTracer, global::System.Action<string, string, string, int, string, object[]>>(@self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(6) { @eventCache, @source, @eventType, @id, @format, @args }));
-				}
-			}
-			
 			""";
 
 		// The two diagnostic IDs are actually warnings, so they
 		// can be ignored/suppressed. They show up because the override
 		// continues the problem that the subtype introduces when it changes
 		// the nullability annotations.
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "SubTracer_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "SubTracer_Rock_Create.g.cs", generatedCode) },
 			new[]
 			{
 				new DiagnosticResult("CS8610", DiagnosticSeverity.Error)
-					.WithSpan(16, 23, 16, 33).WithArguments("args"),
+					.WithSpan(18, 23, 18, 33).WithArguments("args"),
 				new DiagnosticResult("CS8765", DiagnosticSeverity.Error)
-					.WithSpan(16, 23, 16, 33).WithArguments("eventCache"),
+					.WithSpan(18, 23, 18, 33).WithArguments("eventCache"),
 				new DiagnosticResult("CS8765", DiagnosticSeverity.Error)
-					.WithSpan(16, 23, 16, 33).WithArguments("format"),
+					.WithSpan(18, 23, 18, 33).WithArguments("format"),
 			}).ConfigureAwait(false);
 	}
 
@@ -416,6 +570,8 @@ public static class NullabilityGeneratorTests
 		var code =
 			"""
 			using Rocks;
+
+			[assembly: RockCreate<IConventionSkipNavigation>]
 
 			#nullable enable
 
@@ -443,11 +599,6 @@ public static class NullabilityGeneratorTests
 					get => (IConventionSkipNavigation?)((IReadOnlySkipNavigation)this).Inverse;
 				}
 			}
-
-			public static class Test
-			{
-				public static void Go() => Rock.Create<IConventionSkipNavigation>();
-			}
 			""";
 
 		var generatedCode =
@@ -460,38 +611,39 @@ public static class NullabilityGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIConventionSkipNavigationExtensions
+			internal sealed class IConventionSkipNavigationCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.PropertyExpectations<global::IConventionSkipNavigation> Properties(this global::Rocks.Expectations.Expectations<global::IConventionSkipNavigation> @self) =>
-					new(@self);
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?>
+				{ }
 				
-				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::IConventionSkipNavigation> Getters(this global::Rocks.Expectations.PropertyExpectations<global::IConventionSkipNavigation> @self) =>
-					new(@self);
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IConventionSkipNavigation, global::IReadOnlySkipNavigation> ExplicitPropertiesForIReadOnlySkipNavigation(this global::Rocks.Expectations.Expectations<global::IConventionSkipNavigation> @self) =>
-					new(@self);
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>
+				{ }
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IConventionSkipNavigation, global::IReadOnlySkipNavigation> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IConventionSkipNavigation, global::IReadOnlySkipNavigation> @self) =>
-					new(@self);
+				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler2> @handlers2 = new();
 				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IConventionSkipNavigation, global::IReadOnlyNavigationBase> ExplicitPropertiesForIReadOnlyNavigationBase(this global::Rocks.Expectations.Expectations<global::IConventionSkipNavigation> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IConventionSkipNavigation, global::IReadOnlyNavigationBase> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IConventionSkipNavigation, global::IReadOnlyNavigationBase> @self) =>
-					new(@self);
-				
-				internal static global::IConventionSkipNavigation Instance(this global::Rocks.Expectations.Expectations<global::IConventionSkipNavigation> @self)
+				public override void Verify()
 				{
-					if (!@self.WasInstanceInvoked)
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIConventionSkipNavigation(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
@@ -499,11 +651,9 @@ public static class NullabilityGeneratorTests
 					: global::IConventionSkipNavigation
 				{
 					private readonly global::IConventionSkipNavigation shimForIConventionSkipNavigation;
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIConventionSkipNavigation(global::Rocks.Expectations.Expectations<global::IConventionSkipNavigation> @expectations)
+					public RockIConventionSkipNavigation(global::IConventionSkipNavigationCreateExpectations @expectations)
 					{
-						(this.handlers, this.shimForIConventionSkipNavigation) = (@expectations.Handlers, new ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(this));
+						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "get_Inverse()")]
@@ -511,13 +661,12 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::IConventionSkipNavigation?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::IConventionSkipNavigation?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers0[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -531,13 +680,12 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::IReadOnlySkipNavigation>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::IReadOnlySkipNavigation>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers1[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
@@ -549,19 +697,19 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<global::IReadOnlyNavigationBase?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<global::IReadOnlyNavigationBase?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IReadOnlyNavigationBase.get_Inverse())");
 						}
 					}
+					
 					
 					private sealed class ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515
 						: global::IConventionSkipNavigation
@@ -581,29 +729,99 @@ public static class NullabilityGeneratorTests
 							get => ((global::IConventionSkipNavigation)this.mock).Inverse!;
 						}
 					}
+					private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
+				}
+				internal sealed class IConventionSkipNavigationPropertyExpectations
+				{
+					internal sealed class IConventionSkipNavigationPropertyGetterExpectations
+					{
+						internal IConventionSkipNavigationPropertyGetterExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?> Inverse()
+						{
+							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler0();
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
+					}
+					
+					
+					internal IConventionSkipNavigationPropertyExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationPropertyExpectations.IConventionSkipNavigationPropertyGetterExpectations Getters { get; }
+				}
+				internal sealed class IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation
+				{
+					internal sealed class IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation
+					{
+						internal IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation> Inverse()
+						{
+							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler1();
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
+					}
+					
+					internal IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation.IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation Getters { get; }
+				}
+				internal sealed class IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase
+				{
+					internal sealed class IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase
+					{
+						internal IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?> Inverse()
+						{
+							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
+					}
+					
+					internal IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase.IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase Getters { get; }
+				}
+				
+				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationPropertyExpectations Properties { get; }
+				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation ExplicitPropertiesForIReadOnlySkipNavigation { get; }
+				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase ExplicitPropertiesForIReadOnlyNavigationBase { get; }
+				
+				internal IConventionSkipNavigationCreateExpectations() =>
+					(this.Properties, this.ExplicitPropertiesForIReadOnlySkipNavigation, this.ExplicitPropertiesForIReadOnlyNavigationBase) = (new(this), new(this), new(this));
+				
+				internal global::IConventionSkipNavigation Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIConventionSkipNavigation(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class PropertyGetterExpectationsOfIConventionSkipNavigationExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?> Inverse(this global::Rocks.Expectations.PropertyGetterExpectations<global::IConventionSkipNavigation> @self) =>
-					new global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?>(@self.Add<global::IConventionSkipNavigation?>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitPropertyGetterExpectationsOfIConventionSkipNavigationForIReadOnlySkipNavigationExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation> Inverse(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IConventionSkipNavigation, global::IReadOnlySkipNavigation> @self) =>
-					new global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation>(@self.Add<global::IReadOnlySkipNavigation>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class ExplicitPropertyGetterExpectationsOfIConventionSkipNavigationForIReadOnlyNavigationBaseExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?> Inverse(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IConventionSkipNavigation, global::IReadOnlyNavigationBase> @self) =>
-					new global::Rocks.PropertyAdornments<global::IConventionSkipNavigation, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>(@self.Add<global::IReadOnlyNavigationBase?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -614,14 +832,11 @@ public static class NullabilityGeneratorTests
 			"""
 			using Rocks;
 
+			[assembly: RockCreate<IDestination<object>>]
+
 			public interface IDestination<TDestination>
 			{
 				void As<T>() where T : TDestination;
-			}
-
-			public static class Test
-			{
-				public static void Go() => Rock.Create<IDestination<object>>();
 			}
 			""";
 
@@ -635,47 +850,54 @@ public static class NullabilityGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIDestinationOfobjectExtensions
+			internal sealed class IDestinationOfobjectCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::IDestination<object>> Methods(this global::Rocks.Expectations.Expectations<global::IDestination<object>> @self) =>
-					new(@self);
+				internal sealed class Handler0<T>
+					: global::Rocks.Handler<global::System.Action>
+					where T : notnull
+				{ }
 				
-				internal static global::IDestination<object> Instance(this global::Rocks.Expectations.Expectations<global::IDestination<object>> @self)
+				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+				
+				public override void Verify()
 				{
-					if (!@self.WasInstanceInvoked)
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIDestinationOfobject(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockIDestinationOfobject
 					: global::IDestination<object>
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIDestinationOfobject(global::Rocks.Expectations.Expectations<global::IDestination<object>> @expectations)
+					public RockIDestinationOfobject(global::IDestinationOfobjectCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "void As<T>()")]
 					public void As<T>()
 						where T : notnull
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action @method)
+							var @genericHandler = this.Expectations.handlers0[0];
+							if (@genericHandler is global::IDestinationOfobjectCreateExpectations.Handler0<T> @handler)
 							{
-								@method();
+								@handler.CallCount++;
+								@handler.Callback?.Invoke();
+							}
+							else
+							{
+								throw new global::Rocks.Exceptions.ExpectationException("The provided handler does not match for void As<T>()");
 							}
 						}
 						else
@@ -684,19 +906,48 @@ public static class NullabilityGeneratorTests
 						}
 					}
 					
+					private global::IDestinationOfobjectCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class IDestinationOfobjectMethodExpectations
+				{
+					internal IDestinationOfobjectMethodExpectations(global::IDestinationOfobjectCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::IDestinationOfobjectCreateExpectations.Handler0<T>, global::System.Action> As<T>() where T : notnull
+					{
+						var handler = new global::IDestinationOfobjectCreateExpectations.Handler0<T>();
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					private global::IDestinationOfobjectCreateExpectations Expectations { get; }
+				}
+				
+				internal global::IDestinationOfobjectCreateExpectations.IDestinationOfobjectMethodExpectations Methods { get; }
+				
+				internal IDestinationOfobjectCreateExpectations() =>
+					(this.Methods) = (new(this));
+				
+				internal global::IDestination<object> Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIDestinationOfobject(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfIDestinationOfobjectExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::IDestination<object>, global::System.Action> As<T>(this global::Rocks.Expectations.MethodExpectations<global::IDestination<object>> @self) where T : notnull =>
-					new global::Rocks.MethodAdornments<global::IDestination<object>, global::System.Action>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

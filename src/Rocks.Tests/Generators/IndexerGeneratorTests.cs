@@ -12,18 +12,12 @@ public static class IndexerGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<AbstractClassIndexerGetterSetter>]
+
 			public abstract class AbstractClassIndexerGetterSetter
 			{
 				public abstract int this[int a] { get; set; }
 				public abstract int this[int a, string b] { get; set; }
-			}
-						
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<AbstractClassIndexerGetterSetter>();
-				}
 			}
 			""";
 
@@ -37,58 +31,104 @@ public static class IndexerGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfAbstractClassIndexerGetterSetterExtensions
+			internal sealed class AbstractClassIndexerGetterSetterCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::AbstractClassIndexerGetterSetter> Methods(this global::Rocks.Expectations.Expectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.IndexerExpectations<global::AbstractClassIndexerGetterSetter> Indexers(this global::Rocks.Expectations.Expectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::AbstractClassIndexerGetterSetter> Getters(this global::Rocks.Expectations.IndexerExpectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.IndexerSetterExpectations<global::AbstractClassIndexerGetterSetter> Setters(this global::Rocks.Expectations.IndexerExpectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new(@self);
-				
-				internal static global::AbstractClassIndexerGetterSetter Instance(this global::Rocks.Expectations.Expectations<global::AbstractClassIndexerGetterSetter> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<int, int>, int>
+				{
+					public global::Rocks.Argument<int> @a { get; set; }
+				}
+				
+				internal sealed class Handler4
+					: global::Rocks.Handler<global::System.Action<int, int>>
+				{
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
+				}
+				
+				internal sealed class Handler5
+					: global::Rocks.Handler<global::System.Func<int, string, int>, int>
+				{
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+				}
+				
+				internal sealed class Handler6
+					: global::Rocks.Handler<global::System.Action<int, string, int>>
+				{
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4> @handlers4 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5> @handlers5 = new();
+				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6> @handlers6 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockAbstractClassIndexerGetterSetter(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers4));
+						failures.AddRange(this.Verify(handlers5));
+						failures.AddRange(this.Verify(handlers6));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockAbstractClassIndexerGetterSetter
 					: global::AbstractClassIndexerGetterSetter
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockAbstractClassIndexerGetterSetter(global::Rocks.Expectations.Expectations<global::AbstractClassIndexerGetterSetter> @expectations)
+					public RockAbstractClassIndexerGetterSetter(global::AbstractClassIndexerGetterSetterCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -104,13 +144,12 @@ public static class IndexerGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -122,13 +161,12 @@ public static class IndexerGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -143,16 +181,15 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers3)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!))
+									if (@handler.@a.IsValid(@a!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, int>)@methodHandler.Method)(@a!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@a!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -164,18 +201,15 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							if (this.Expectations.handlers4.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers4)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<int, int>)@methodHandler.Method)(@a!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @value!);
 										return;
 									}
 								}
@@ -192,17 +226,16 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							if (this.Expectations.handlers5.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers5)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@a!, @b!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@a!, @b!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -214,19 +247,16 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(6, out var @methodHandlers))
+							if (this.Expectations.handlers6.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers6)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[2]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<int, string, int>)@methodHandler.Method)(@a!, @b!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @b!, @value!);
 										return;
 									}
 								}
@@ -237,57 +267,151 @@ public static class IndexerGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b])");
 						}
 					}
+					
+					private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class AbstractClassIndexerGetterSetterMethodExpectations
+				{
+					internal AbstractClassIndexerGetterSetterMethodExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class AbstractClassIndexerGetterSetterIndexerExpectations
+				{
+					internal sealed class AbstractClassIndexerGetterSetterIndexerGetterExpectations
+					{
+						internal AbstractClassIndexerGetterSetterIndexerGetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							
+							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3
+							{
+								@a = @a,
+							};
+							
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							
+							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5
+							{
+								@a = @a,
+								@b = @b,
+							};
+							
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class AbstractClassIndexerGetterSetterIndexerSetterExpectations
+					{
+						internal AbstractClassIndexerGetterSetterIndexerSetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4
+							{
+								@a = @a,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers4.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6
+							{
+								@a = @a,
+								@b = @b,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers6.Add(handler);
+							return new(handler);
+						}
+						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
+					}
+					
+					internal AbstractClassIndexerGetterSetterIndexerExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations.AbstractClassIndexerGetterSetterIndexerGetterExpectations Getters { get; }
+					internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations.AbstractClassIndexerGetterSetterIndexerSetterExpectations Setters { get; }
+				}
+				
+				internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterMethodExpectations Methods { get; }
+				internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations Indexers { get; }
+				
+				internal AbstractClassIndexerGetterSetterCreateExpectations() =>
+					(this.Methods, this.Indexers) = (new(this), new(this));
+				
+				internal global::AbstractClassIndexerGetterSetter Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockAbstractClassIndexerGetterSetter(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class MethodExpectationsOfAbstractClassIndexerGetterSetterExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::AbstractClassIndexerGetterSetter> @self, global::Rocks.Argument<object?> @obj)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-				}
-				internal static global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::AbstractClassIndexerGetterSetter> @self) =>
-					new global::Rocks.MethodAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
-			internal static class IndexerGetterExpectationsOfAbstractClassIndexerGetterSetterExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::AbstractClassIndexerGetterSetter> @self, global::Rocks.Argument<int> @a)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					return new global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @a }));
-				}
-				internal static global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int, string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::AbstractClassIndexerGetterSetter> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					return new global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Func<int, string, int>, int>(@self.Add<int>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b }));
-				}
-			}
-			internal static class IndexerSetterExpectationsOfAbstractClassIndexerGetterSetterExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::AbstractClassIndexerGetterSetter> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Action<int, int>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
-				}
-				internal static global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::AbstractClassIndexerGetterSetter> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::AbstractClassIndexerGetterSetter, global::System.Action<int, string, int>>(self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b, @value }));
-				}
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -299,17 +423,11 @@ public static class IndexerGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<IHaveOptionalArguments>]
+
 			public interface IHaveOptionalArguments
 			{
 				int this[int a, string b = "b"] { get; set; }
-			}
-			
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<IHaveOptionalArguments>();
-				}
 			}
 			""";
 
@@ -323,40 +441,53 @@ public static class IndexerGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIHaveOptionalArgumentsExtensions
+			internal sealed class IHaveOptionalArgumentsCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.IndexerExpectations<global::IHaveOptionalArguments> Indexers(this global::Rocks.Expectations.Expectations<global::IHaveOptionalArguments> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveOptionalArguments> Getters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveOptionalArguments> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> Setters(this global::Rocks.Expectations.IndexerExpectations<global::IHaveOptionalArguments> @self) =>
-					new(@self);
-				
-				internal static global::IHaveOptionalArguments Instance(this global::Rocks.Expectations.Expectations<global::IHaveOptionalArguments> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<int, string, int>, int>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Action<int, string, int>>
+				{
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler1> @handlers1 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIHaveOptionalArguments(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockIHaveOptionalArguments
 					: global::IHaveOptionalArguments
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIHaveOptionalArguments(global::Rocks.Expectations.Expectations<global::IHaveOptionalArguments> @expectations)
+					public RockIHaveOptionalArguments(global::IHaveOptionalArgumentsCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "this[int @a, string @b = \"b\"]")]
@@ -365,17 +496,16 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@a!, @b!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@a!, @b!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -387,19 +517,16 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[2]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<int, string, int>)@methodHandler.Method)(@a!, @b!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @b!, @value!);
 										return;
 									}
 								}
@@ -410,37 +537,92 @@ public static class IndexerGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a, string @b = \"b\"])");
 						}
 					}
+					
+					private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 				}
-			}
-			
-			internal static class IndexerGetterExpectationsOfIHaveOptionalArgumentsExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Func<int, string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+				internal sealed class IHaveOptionalArgumentsIndexerExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					return new global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Func<int, string, int>, int>(@self.Add<int>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @b.Transform("b") }));
+					internal sealed class IHaveOptionalArgumentsIndexerGetterExpectations
+					{
+						internal IHaveOptionalArgumentsIndexerGetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							
+							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
+							{
+								@a = @a,
+								@b = @b.Transform("b"),
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, string @b = "b") =>
+							this.This(@a, global::Rocks.Arg.Is(@b));
+						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class IHaveOptionalArgumentsIndexerSetterExpectations
+					{
+						internal IHaveOptionalArgumentsIndexerSetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
+							{
+								@a = @a,
+								@b = @b.Transform("b"),
+								@value = @value,
+							};
+							
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, string @b = "b") =>
+							this.This(@value, @a, global::Rocks.Arg.Is(@b));
+						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
+					}
+					
+					internal IHaveOptionalArgumentsIndexerExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations.IHaveOptionalArgumentsIndexerGetterExpectations Getters { get; }
+					internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations.IHaveOptionalArgumentsIndexerSetterExpectations Setters { get; }
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Func<int, string, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @a, string @b = "b") =>
-					@self.This(@a, global::Rocks.Arg.Is(@b));
-			}
-			internal static class IndexerSetterExpectationsOfIHaveOptionalArgumentsExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+				
+				internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations Indexers { get; }
+				
+				internal IHaveOptionalArgumentsCreateExpectations() =>
+					(this.Indexers) = (new(this));
+				
+				internal global::IHaveOptionalArguments Instance()
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b.Transform("b"), @value }));
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIHaveOptionalArguments(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveOptionalArguments, global::System.Action<int, string, int>> This(this global::Rocks.Expectations.IndexerSetterExpectations<global::IHaveOptionalArguments> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, string @b = "b") =>
-					@self.This(@value, @a, global::Rocks.Arg.Is(@b));
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -452,20 +634,14 @@ public static class IndexerGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<IHaveIndexersWithInit>]
+
 			public interface IHaveIndexersWithInit
 			{
 				double this[uint a] { init; }
 				string this[int a, string b] { init; }
 				int this[string a, int b, Guid c] { init; }
 			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<IHaveIndexersWithInit>();
-				}
-			}			
 			""";
 
 		var generatedCode =
@@ -478,85 +654,64 @@ public static class IndexerGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIHaveIndexersWithInitExtensions
+			internal sealed class IHaveIndexersWithInitCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.IndexerExpectations<global::IHaveIndexersWithInit> Indexers(this global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> Initializers(this global::Rocks.Expectations.IndexerExpectations<global::IHaveIndexersWithInit> @self) =>
-					new(@self);
-				
-				internal sealed class ConstructorProperties
-					: global::System.Collections.Generic.IEnumerable<uint>, global::System.Collections.Generic.IEnumerable<(int, string)>, global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action<uint, double>>
 				{
-					private readonly global::System.Collections.Generic.Dictionary<uint, double> i0 = new();
-					private readonly global::System.Collections.Generic.Dictionary<(int, string), string> i1 = new();
-					private readonly global::System.Collections.Generic.Dictionary<(string, int, global::System.Guid), int> i2 = new();
-					
-					global::System.Collections.Generic.IEnumerator<uint> global::System.Collections.Generic.IEnumerable<uint>.GetEnumerator()
-					{
-						foreach(var key in this.i0.Keys)
-						{
-							yield return key;
-						}
-					}
-					global::System.Collections.Generic.IEnumerator<(int, string)> global::System.Collections.Generic.IEnumerable<(int, string)>.GetEnumerator()
-					{
-						foreach(var key in this.i1.Keys)
-						{
-							yield return key;
-						}
-					}
-					global::System.Collections.Generic.IEnumerator<(string, int, global::System.Guid)> global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>.GetEnumerator()
-					{
-						foreach(var key in this.i2.Keys)
-						{
-							yield return key;
-						}
-					}
-					
-					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();
-					
-					internal double this[uint a]
-					{
-						get => this.i0[a];
-						init => this.i0[a] = value;
-					}
-					internal string this[int a, string b]
-					{
-						get => this.i1[(a, b)];
-						init => this.i1[(a, b)] = value;
-					}
-					internal int this[string a, int b, global::System.Guid c]
-					{
-						get => this.i2[(a, b, c)];
-						init => this.i2[(a, b, c)] = value;
-					}
+					public global::Rocks.Argument<uint> @a { get; set; }
+					public global::Rocks.Argument<double> @value { get; set; }
 				}
 				
-				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Action<int, string, string>>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<int> @a { get; set; }
+					public global::Rocks.Argument<string> @b { get; set; }
+					public global::Rocks.Argument<string> @value { get; set; }
+				}
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Action<string, int, global::System.Guid, int>>
+				{
+					public global::Rocks.Argument<string> @a { get; set; }
+					public global::Rocks.Argument<int> @b { get; set; }
+					public global::Rocks.Argument<global::System.Guid> @c { get; set; }
+					public global::Rocks.Argument<int> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler2> @handlers2 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIHaveIndexersWithInit(@self, @constructorProperties);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockIHaveIndexersWithInit
 					: global::IHaveIndexersWithInit
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIHaveIndexersWithInit(global::Rocks.Expectations.Expectations<global::IHaveIndexersWithInit> @expectations, ConstructorProperties? @constructorProperties)
+					public RockIHaveIndexersWithInit(global::IHaveIndexersWithInitCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 						if (@constructorProperties is not null)
 						{
 							foreach (var a in ((global::System.Collections.Generic.IEnumerable<uint>)@constructorProperties))
@@ -579,18 +734,15 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (((global::Rocks.Argument<uint>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<double>)@methodHandler.Expectations[1]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<uint, double>)@methodHandler.Method)(@a!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @value!);
 										return;
 									}
 								}
@@ -606,19 +758,16 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers1)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@b!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[2]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<int, string, string>)@methodHandler.Method)(@a!, @b!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @b!, @value!);
 										return;
 									}
 								}
@@ -634,20 +783,17 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers2)
 								{
-									if (((global::Rocks.Argument<string>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@b!) &&
-										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@c!) &&
-										((global::Rocks.Argument<int>)@methodHandler.Expectations[3]).IsValid(@value!))
+									if (@handler.@a.IsValid(@a!) &&
+										@handler.@b.IsValid(@b!) &&
+										@handler.@c.IsValid(@c!) &&
+										@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<string, int, global::System.Guid, int>)@methodHandler.Method)(@a!, @b!, @c!, @value!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@a!, @b!, @c!, @value!);
 										return;
 									}
 								}
@@ -658,38 +804,145 @@ public static class IndexerGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[string @a, int @b, global::System.Guid @c])");
 						}
 					}
+					
+					private global::IHaveIndexersWithInitCreateExpectations Expectations { get; }
+				}
+				internal sealed class IHaveIndexersWithInitIndexerExpectations
+				{
+					internal sealed class IHaveIndexersWithInitIndexerInitializerExpectations
+					{
+						internal IHaveIndexersWithInitIndexerInitializerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler0, global::System.Action<uint, double>> This(global::Rocks.Argument<double> @value, global::Rocks.Argument<uint> @a)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler0
+							{
+								@a = @a,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler1, global::System.Action<int, string, string>> This(global::Rocks.Argument<string> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler1
+							{
+								@a = @a,
+								@b = @b,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler2, global::System.Action<string, int, global::System.Guid, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@a);
+							global::System.ArgumentNullException.ThrowIfNull(@b);
+							global::System.ArgumentNullException.ThrowIfNull(@c);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler2
+							{
+								@a = @a,
+								@b = @b,
+								@c = @c,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						private global::IHaveIndexersWithInitCreateExpectations Expectations { get; }
+					}
+					
+					internal IHaveIndexersWithInitIndexerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
+						(this.Initializers) = (new(expectations));
+					
+					internal global::IHaveIndexersWithInitCreateExpectations.IHaveIndexersWithInitIndexerExpectations.IHaveIndexersWithInitIndexerInitializerExpectations Initializers { get; }
+				}
+				
+				internal global::IHaveIndexersWithInitCreateExpectations.IHaveIndexersWithInitIndexerExpectations Indexers { get; }
+				
+				internal IHaveIndexersWithInitCreateExpectations() =>
+					(this.Indexers) = (new(this));
+				
+				internal sealed class ConstructorProperties
+					: global::System.Collections.Generic.IEnumerable<uint>, global::System.Collections.Generic.IEnumerable<(int, string)>, global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>
+				{
+					private readonly global::System.Collections.Generic.Dictionary<uint, double> i0 = new();
+					private readonly global::System.Collections.Generic.Dictionary<(int, string), string> i1 = new();
+					private readonly global::System.Collections.Generic.Dictionary<(string, int, global::System.Guid), int> i2 = new();
+					
+					global::System.Collections.Generic.IEnumerator<uint> global::System.Collections.Generic.IEnumerable<uint>.GetEnumerator()
+					{
+						foreach(var key in this.i0.Keys)
+						{
+							yield return key;
+						}
+					}
+					global::System.Collections.Generic.IEnumerator<(int, string)> global::System.Collections.Generic.IEnumerable<(int, string)>.GetEnumerator()
+					{
+						foreach(var key in this.i1.Keys)
+						{
+							yield return key;
+						}
+					}
+					global::System.Collections.Generic.IEnumerator<(string, int, global::System.Guid)> global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>.GetEnumerator()
+					{
+						foreach(var key in this.i2.Keys)
+						{
+							yield return key;
+						}
+					}
+					
+					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw new global::System.NotImplementedException();
+					
+					internal double this[uint a]
+					{
+						get => this.i0[a];
+						init => this.i0[a] = value;
+					}
+					internal string this[int a, string b]
+					{
+						get => this.i1[(a, b)];
+						init => this.i1[(a, b)] = value;
+					}
+					internal int this[string a, int b, global::System.Guid c]
+					{
+						get => this.i2[(a, b, c)];
+						init => this.i2[(a, b, c)] = value;
+					}
+				}
+				
+				internal global::IHaveIndexersWithInit Instance(global::IHaveIndexersWithInitCreateExpectations.ConstructorProperties? @constructorProperties)
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIHaveIndexersWithInit(this, @constructorProperties);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class IndexerInitializerExpectationsOfIHaveIndexersWithInitExtensions
-			{
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<double> @value, global::Rocks.Argument<uint> @a)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<uint, double>>(self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
-				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<string> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<int, string, string>>(self.Add(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @a, @b, @value }));
-				}
-				internal static global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::IHaveIndexersWithInit> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c)
-				{
-					global::System.ArgumentNullException.ThrowIfNull(@a);
-					global::System.ArgumentNullException.ThrowIfNull(@b);
-					global::System.ArgumentNullException.ThrowIfNull(@c);
-					global::System.ArgumentNullException.ThrowIfNull(@value);
-					return new global::Rocks.IndexerAdornments<global::IHaveIndexersWithInit, global::System.Action<string, int, global::System.Guid, int>>(self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(4) { @a, @b, @c, @value }));
-				}
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -701,20 +954,14 @@ public static class IndexerGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockMake<IHaveIndexersWithInit>]
+
 			public interface IHaveIndexersWithInit
 			{
 				double this[uint a] { init; }
 				string this[int a, string b] { init; }
 				int this[string a, int b, Guid c] { init; }
 			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<IHaveIndexersWithInit>();
-				}
-			}			
 			""";
 
 		var generatedCode =
@@ -723,7 +970,7 @@ public static class IndexerGeneratorTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfIHaveIndexersWithInitExtensions
+			internal sealed class IHaveIndexersWithInitMakeExpectations
 			{
 				internal sealed class ConstructorProperties
 					: global::System.Collections.Generic.IEnumerable<uint>, global::System.Collections.Generic.IEnumerable<(int, string)>, global::System.Collections.Generic.IEnumerable<(string, int, global::System.Guid)>
@@ -774,7 +1021,7 @@ public static class IndexerGeneratorTests
 					
 				}
 				
-				internal static global::IHaveIndexersWithInit Instance(this global::Rocks.MakeGeneration<global::IHaveIndexersWithInit> @self, ConstructorProperties? @constructorProperties)
+				internal global::IHaveIndexersWithInit Instance(global::IHaveIndexersWithInitMakeExpectations.ConstructorProperties? @constructorProperties)
 				{
 					return new RockIHaveIndexersWithInit(@constructorProperties);
 				}
@@ -815,11 +1062,10 @@ public static class IndexerGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -831,19 +1077,13 @@ public static class IndexerGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<MockTests.Target>]
+
 			namespace MockTests
 			{
 				public abstract class Target
 				{
 					public abstract int this[int a] { get; init; }
-				}
-	
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Create<Target>();
-					}
 				}
 			}
 			""";
@@ -860,19 +1100,278 @@ public static class IndexerGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfTargetExtensions
+				internal sealed class TargetCreateExpectations
+					: global::Rocks.Expectations
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.Target> @self) =>
-						new(@self);
+					#pragma warning disable CS8618
 					
-					internal static global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> Indexers(this global::Rocks.Expectations.Expectations<global::MockTests.Target> @self) =>
-						new(@self);
+					internal sealed class Handler0
+						: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+					{
+						public global::Rocks.Argument<object?> @obj { get; set; }
+					}
 					
-					internal static global::Rocks.Expectations.IndexerGetterExpectations<global::MockTests.Target> Getters(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> @self) =>
-						new(@self);
+					internal sealed class Handler1
+						: global::Rocks.Handler<global::System.Func<int>, int>
+					{ }
 					
-					internal static global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> Initializers(this global::Rocks.Expectations.IndexerExpectations<global::MockTests.Target> @self) =>
-						new(@self);
+					internal sealed class Handler2
+						: global::Rocks.Handler<global::System.Func<string?>, string?>
+					{ }
+					
+					internal sealed class Handler3
+						: global::Rocks.Handler<global::System.Func<int, int>, int>
+					{
+						public global::Rocks.Argument<int> @a { get; set; }
+					}
+					
+					internal sealed class Handler4
+						: global::Rocks.Handler<global::System.Action<int, int>>
+					{
+						public global::Rocks.Argument<int> @a { get; set; }
+						public global::Rocks.Argument<int> @value { get; set; }
+					}
+					
+					#pragma warning restore CS8618
+					
+					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler0> @handlers0 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler1> @handlers1 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler2> @handlers2 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler3> @handlers3 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler4> @handlers4 = new();
+					
+					public override void Verify()
+					{
+						if (this.WasInstanceInvoked)
+						{
+							var failures = new global::System.Collections.Generic.List<string>();
+					
+							failures.AddRange(this.Verify(handlers0));
+							failures.AddRange(this.Verify(handlers1));
+							failures.AddRange(this.Verify(handlers2));
+							failures.AddRange(this.Verify(handlers3));
+							failures.AddRange(this.Verify(handlers4));
+					
+							if (failures.Count > 0)
+							{
+								throw new global::Rocks.Exceptions.VerificationException(failures);
+							}
+						}
+					}
+					
+					private sealed class RockTarget
+						: global::MockTests.Target
+					{
+						public RockTarget(global::MockTests.TargetCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
+						{
+							this.Expectations = @expectations;
+							if (@constructorProperties is not null)
+							{
+								foreach (var a in ((global::System.Collections.Generic.IEnumerable<int>)@constructorProperties))
+								{
+									this[a] = constructorProperties[a];
+								}
+							}
+						}
+						
+						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+						public override bool Equals(object? @obj)
+						{
+							if (this.Expectations.handlers0.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers0)
+								{
+									if (@handler.@obj.IsValid(@obj!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@obj!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+							}
+							else
+							{
+								return base.Equals(obj: @obj!);
+							}
+						}
+						
+						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+						public override int GetHashCode()
+						{
+							if (this.Expectations.handlers1.Count > 0)
+							{
+								var @handler = this.Expectations.handlers1[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
+								return @result!;
+							}
+							else
+							{
+								return base.GetHashCode();
+							}
+						}
+						
+						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+						public override string? ToString()
+						{
+							if (this.Expectations.handlers2.Count > 0)
+							{
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
+								return @result!;
+							}
+							else
+							{
+								return base.ToString();
+							}
+						}
+						
+						[global::Rocks.MemberIdentifier(3, "this[int @a]")]
+						[global::Rocks.MemberIdentifier(4, "this[int @a]")]
+						public override int this[int @a]
+						{
+							get
+							{
+								if (this.Expectations.handlers3.Count > 0)
+								{
+									foreach (var @handler in this.Expectations.handlers3)
+									{
+										if (@handler.@a.IsValid(@a!))
+										{
+											@handler.CallCount++;
+											var @result = @handler.Callback is not null ?
+												@handler.Callback(@a!) : @handler.ReturnValue;
+											return @result!;
+										}
+									}
+									
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a]");
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a])");
+							}
+							init
+							{
+								if (this.Expectations.handlers4.Count > 0)
+								{
+									foreach (var @handler in this.Expectations.handlers4)
+									{
+										if (@handler.@a.IsValid(@a!) &&
+											@handler.@value.IsValid(@value!))
+										{
+											@handler.CallCount++;
+											@handler.Callback?.Invoke(@a!, @value!);
+											return;
+										}
+									}
+									
+									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a]");
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a])");
+							}
+						}
+						
+						private global::MockTests.TargetCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class TargetMethodExpectations
+					{
+						internal TargetMethodExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@obj);
+							
+							var handler = new global::MockTests.TargetCreateExpectations.Handler0
+							{
+								@obj = @obj,
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						
+						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						{
+							var handler = new global::MockTests.TargetCreateExpectations.Handler1();
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						
+						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						{
+							var handler = new global::MockTests.TargetCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						
+						private global::MockTests.TargetCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class TargetIndexerExpectations
+					{
+						internal sealed class TargetIndexerGetterExpectations
+						{
+							internal TargetIndexerGetterExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+								this.Expectations = expectations;
+							
+							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
+							{
+								global::System.ArgumentNullException.ThrowIfNull(@a);
+								
+								var handler = new global::MockTests.TargetCreateExpectations.Handler3
+								{
+									@a = @a,
+								};
+								
+								this.Expectations.handlers3.Add(handler);
+								return new(handler);
+							}
+							private global::MockTests.TargetCreateExpectations Expectations { get; }
+						}
+						
+						internal sealed class TargetIndexerInitializerExpectations
+						{
+							internal TargetIndexerInitializerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+								this.Expectations = expectations;
+							
+							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
+							{
+								global::System.ArgumentNullException.ThrowIfNull(@a);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+								
+								var handler = new global::MockTests.TargetCreateExpectations.Handler4
+								{
+									@a = @a,
+									@value = @value,
+								};
+								
+								this.Expectations.handlers4.Add(handler);
+								return new(handler);
+							}
+							private global::MockTests.TargetCreateExpectations Expectations { get; }
+						}
+						
+						internal TargetIndexerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+							(this.Getters, this.Initializers) = (new(expectations), new(expectations));
+						
+						internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations.TargetIndexerGetterExpectations Getters { get; }
+						internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations.TargetIndexerInitializerExpectations Initializers { get; }
+					}
+					
+					internal global::MockTests.TargetCreateExpectations.TargetMethodExpectations Methods { get; }
+					internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations Indexers { get; }
+					
+					internal TargetCreateExpectations() =>
+						(this.Methods, this.Indexers) = (new(this), new(this));
 					
 					internal sealed class ConstructorProperties
 						: global::System.Collections.Generic.IEnumerable<int>
@@ -896,13 +1395,13 @@ public static class IndexerGeneratorTests
 						}
 					}
 					
-					internal static global::MockTests.Target Instance(this global::Rocks.Expectations.Expectations<global::MockTests.Target> @self, ConstructorProperties? @constructorProperties)
+					internal global::MockTests.Target Instance(global::MockTests.TargetCreateExpectations.ConstructorProperties? @constructorProperties)
 					{
-						if (!@self.WasInstanceInvoked)
+						if (!this.WasInstanceInvoked)
 						{
-							@self.WasInstanceInvoked = true;
-							var @mock = new RockTarget(@self, @constructorProperties);
-							@self.MockType = @mock.GetType();
+							this.WasInstanceInvoked = true;
+							var @mock = new RockTarget(this, @constructorProperties);
+							this.MockType = @mock.GetType();
 							return @mock;
 						}
 						else
@@ -910,173 +1409,12 @@ public static class IndexerGeneratorTests
 							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
 						}
 					}
-					
-					private sealed class RockTarget
-						: global::MockTests.Target
-					{
-						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-						
-						public RockTarget(global::Rocks.Expectations.Expectations<global::MockTests.Target> @expectations, ConstructorProperties? @constructorProperties)
-						{
-							this.handlers = @expectations.Handlers;
-							if (@constructorProperties is not null)
-							{
-								foreach (var a in ((global::System.Collections.Generic.IEnumerable<int>)@constructorProperties))
-								{
-									this[a] = constructorProperties[a];
-								}
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
-						public override bool Equals(object? @obj)
-						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
-							{
-								foreach (var @methodHandler in @methodHandlers)
-								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
-									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
-										return @result!;
-									}
-								}
-								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
-							}
-							else
-							{
-								return base.Equals(obj: @obj!);
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
-						public override int GetHashCode()
-						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
-							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<int>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.GetHashCode();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
-						public override string? ToString()
-						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
-							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<string?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
-								return @result!;
-							}
-							else
-							{
-								return base.ToString();
-							}
-						}
-						
-						[global::Rocks.MemberIdentifier(3, "this[int @a]")]
-						[global::Rocks.MemberIdentifier(4, "this[int @a]")]
-						public override int this[int @a]
-						{
-							get
-							{
-								if (this.handlers.TryGetValue(3, out var @methodHandlers))
-								{
-									foreach (var @methodHandler in @methodHandlers)
-									{
-										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!))
-										{
-											@methodHandler.IncrementCallCount();
-											var @result = @methodHandler.Method is not null ?
-												((global::System.Func<int, int>)@methodHandler.Method)(@a!) :
-												((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
-											return @result!;
-										}
-									}
-									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a]");
-								}
-								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a])");
-							}
-							init
-							{
-								if (this.handlers.TryGetValue(4, out var @methodHandlers))
-								{
-									foreach (var @methodHandler in @methodHandlers)
-									{
-										if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@a!) &&
-											((global::Rocks.Argument<int>)@methodHandler.Expectations[1]).IsValid(@value!))
-										{
-											@methodHandler.IncrementCallCount();
-											if (@methodHandler.Method is not null)
-											{
-												((global::System.Action<int, int>)@methodHandler.Method)(@a!, @value!);
-											}
-											return;
-										}
-									}
-									
-									throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @a]");
-								}
-								
-								throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for this[int @a])");
-							}
-						}
-					}
-				}
-				
-				internal static class MethodExpectationsOfTargetExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> @self, global::Rocks.Argument<object?> @obj)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@obj);
-						return new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
-					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.Target> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.Target, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				}
-				
-				internal static class IndexerGetterExpectationsOfTargetExtensions
-				{
-					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int> This(this global::Rocks.Expectations.IndexerGetterExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @a)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@a);
-						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Func<int, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @a }));
-					}
-				}
-				internal static class IndexerInitializerExpectationsOfTargetExtensions
-				{
-					internal static global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>> This(this global::Rocks.Expectations.IndexerInitializerExpectations<global::MockTests.Target> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@a);
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						return new global::Rocks.IndexerAdornments<global::MockTests.Target, global::System.Action<int, int>>(self.Add(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @a, @value }));
-					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

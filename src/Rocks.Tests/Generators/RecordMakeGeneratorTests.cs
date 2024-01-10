@@ -12,6 +12,8 @@ public static class RecordMakeGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockMake<MockTests.RecordTest>]
+
 			namespace MockTests
 			{
 				public record RecordTest
@@ -19,14 +21,6 @@ public static class RecordMakeGeneratorTests
 					public RecordTest() { }
 
 					public virtual void Foo() { }
-				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<RecordTest>();
-					}
 				}
 			}
 			""";
@@ -39,13 +33,13 @@ public static class RecordMakeGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfRecordTestExtensions
+				internal sealed class RecordTestMakeExpectations
 				{
-					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self)
+					internal global::MockTests.RecordTest Instance()
 					{
 						return new RockRecordTest();
 					}
-					internal static global::MockTests.RecordTest Instance(this global::Rocks.MakeGeneration<global::MockTests.RecordTest> @self, global::MockTests.RecordTest @original)
+					internal global::MockTests.RecordTest Instance(global::MockTests.RecordTest @original)
 					{
 						return new RockRecordTest(@original);
 					}
@@ -83,11 +77,10 @@ public static class RecordMakeGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.RecordTest_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

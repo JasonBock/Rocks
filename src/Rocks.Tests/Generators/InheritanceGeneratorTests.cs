@@ -11,6 +11,8 @@ public static class InheritanceGeneratorTests
 			"""
 			using Rocks;
 
+			[assembly: RockCreate<MockTests.JsBinaryOperator>]
+
 			namespace MockTests
 			{
 				public struct ScriptScopeContext { }
@@ -31,14 +33,6 @@ public static class InheritanceGeneratorTests
 				{
 					public abstract object Evaluate(object target);
 				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Create<JsBinaryOperator>();
-					}
-				}
 			}
 			""";
 
@@ -54,49 +48,84 @@ public static class InheritanceGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfJsBinaryOperatorExtensions
+				internal sealed class JsBinaryOperatorCreateExpectations
+					: global::Rocks.Expectations
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.JsBinaryOperator> @self) =>
-						new(@self);
+					#pragma warning disable CS8618
 					
-					internal static global::MockTests.JsBinaryOperator Instance(this global::Rocks.Expectations.Expectations<global::MockTests.JsBinaryOperator> @self)
+					internal sealed class Handler0
+						: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 					{
-						if (!@self.WasInstanceInvoked)
+						public global::Rocks.Argument<object?> @obj { get; set; }
+					}
+					
+					internal sealed class Handler1
+						: global::Rocks.Handler<global::System.Func<int>, int>
+					{ }
+					
+					internal sealed class Handler2
+						: global::Rocks.Handler<global::System.Func<string?>, string?>
+					{ }
+					
+					internal sealed class Handler4
+						: global::Rocks.Handler<global::System.Func<global::MockTests.ScriptScopeContext, object>, object>
+					{
+						public global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope { get; set; }
+					}
+					
+					internal sealed class Handler5
+						: global::Rocks.Handler<global::System.Func<object, object>, object>
+					{
+						public global::Rocks.Argument<object> @target { get; set; }
+					}
+					
+					#pragma warning restore CS8618
+					
+					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0> @handlers0 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1> @handlers1 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2> @handlers2 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4> @handlers4 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5> @handlers5 = new();
+					
+					public override void Verify()
+					{
+						if (this.WasInstanceInvoked)
 						{
-							@self.WasInstanceInvoked = true;
-							var @mock = new RockJsBinaryOperator(@self);
-							@self.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							var failures = new global::System.Collections.Generic.List<string>();
+					
+							failures.AddRange(this.Verify(handlers0));
+							failures.AddRange(this.Verify(handlers1));
+							failures.AddRange(this.Verify(handlers2));
+							failures.AddRange(this.Verify(handlers4));
+							failures.AddRange(this.Verify(handlers5));
+					
+							if (failures.Count > 0)
+							{
+								throw new global::Rocks.Exceptions.VerificationException(failures);
+							}
 						}
 					}
 					
 					private sealed class RockJsBinaryOperator
 						: global::MockTests.JsBinaryOperator
 					{
-						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-						
-						public RockJsBinaryOperator(global::Rocks.Expectations.Expectations<global::MockTests.JsBinaryOperator> @expectations)
+						public RockJsBinaryOperator(global::MockTests.JsBinaryOperatorCreateExpectations @expectations)
 						{
-							this.handlers = @expectations.Handlers;
+							this.Expectations = @expectations;
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+									if (@handler.@obj.IsValid(@obj!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-											((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@obj!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -112,13 +141,12 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<int>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers1[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -130,13 +158,12 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<string?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers2[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -148,16 +175,15 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(4, "object Evaluate(global::MockTests.ScriptScopeContext @scope)")]
 						public override object Evaluate(global::MockTests.ScriptScopeContext @scope)
 						{
-							if (this.handlers.TryGetValue(4, out var @methodHandlers))
+							if (this.Expectations.handlers4.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers4)
 								{
-									if (((global::Rocks.Argument<global::MockTests.ScriptScopeContext>)@methodHandler.Expectations[0]).IsValid(@scope!))
+									if (@handler.@scope.IsValid(@scope!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<global::MockTests.ScriptScopeContext, object>)@methodHandler.Method)(@scope!) :
-											((global::Rocks.HandlerInformation<object>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@scope!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -173,16 +199,15 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(5, "object Evaluate(object @target)")]
 						public override object Evaluate(object @target)
 						{
-							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							if (this.Expectations.handlers5.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers5)
 								{
-									if (((global::Rocks.Argument<object>)@methodHandler.Expectations[0]).IsValid(@target!))
+									if (@handler.@target.IsValid(@target!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<object, object>)@methodHandler.Method)(@target!) :
-											((global::Rocks.HandlerInformation<object>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@target!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -193,37 +218,95 @@ public static class InheritanceGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for object Evaluate(object @target)");
 						}
 						
+						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }
 					}
-				}
-				
-				internal static class MethodExpectationsOfJsBinaryOperatorExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> @self, global::Rocks.Argument<object?> @obj)
+					
+					internal sealed class JsBinaryOperatorMethodExpectations
 					{
-						global::System.ArgumentNullException.ThrowIfNull(@obj);
-						return new global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+						internal JsBinaryOperatorMethodExpectations(global::MockTests.JsBinaryOperatorCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@obj);
+							
+							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler0
+							{
+								@obj = @obj,
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						
+						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+						{
+							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler1();
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						
+						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+						{
+							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler2();
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						
+						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4, global::System.Func<global::MockTests.ScriptScopeContext, object>, object> Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@scope);
+							
+							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler4
+							{
+								@scope = @scope,
+							};
+							
+							this.Expectations.handlers4.Add(handler);
+							return new(handler);
+						}
+						
+						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object> Evaluate(global::Rocks.Argument<object> @target)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@target);
+							
+							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler5
+							{
+								@target = @target,
+							};
+							
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						
+						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }
 					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> @self) =>
-						new global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-					internal static global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<global::MockTests.ScriptScopeContext, object>, object> Evaluate(this global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> @self, global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
+					
+					internal global::MockTests.JsBinaryOperatorCreateExpectations.JsBinaryOperatorMethodExpectations Methods { get; }
+					
+					internal JsBinaryOperatorCreateExpectations() =>
+						(this.Methods) = (new(this));
+					
+					internal global::MockTests.JsBinaryOperator Instance()
 					{
-						global::System.ArgumentNullException.ThrowIfNull(@scope);
-						return new global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<global::MockTests.ScriptScopeContext, object>, object>(@self.Add<object>(4, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @scope }));
-					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<object, object>, object> Evaluate(this global::Rocks.Expectations.MethodExpectations<global::MockTests.JsBinaryOperator> @self, global::Rocks.Argument<object> @target)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@target);
-						return new global::Rocks.MethodAdornments<global::MockTests.JsBinaryOperator, global::System.Func<object, object>, object>(@self.Add<object>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @target }));
+						if (!this.WasInstanceInvoked)
+						{
+							this.WasInstanceInvoked = true;
+							var @mock = new RockJsBinaryOperator(this);
+							this.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MockTests.JsBinaryOperator_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.JsBinaryOperator_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

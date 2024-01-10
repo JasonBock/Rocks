@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Thrown if an <c>Instance()</c> extension method is called
-/// more than once on an <see cref="Expectations.Expectations{T}"/> instance.
+/// more than once on an <see cref="Expectations"/> instance.
 /// </summary>
 [Serializable]
 public sealed class NewMockInstanceException

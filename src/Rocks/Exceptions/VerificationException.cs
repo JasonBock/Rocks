@@ -2,7 +2,7 @@
 
 /// <summary>
 /// Thrown when expectations on a mock have not been met.
-/// This is thrown in <see cref="Expectations.Expectations{T}.Verify"/>.
+/// This is thrown in <see cref="Expectations.Verify"/>.
 /// </summary>
 [Serializable]
 public sealed class VerificationException

@@ -12,24 +12,14 @@ public static class MultipleModelGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<MockTests.ITarget>]
+			[assembly: RockCreate<MockTests.ITarget>]
+			
 			namespace MockTests
 			{
 				public interface ITarget
 				{
 					string Retrieve(int value);
-				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Create<ITarget>();
-					}
-
-					public static void GenerateAgain()
-					{
-						var rock = Rock.Create<ITarget>();
-					}
 				}
 			}
 			""";
@@ -43,52 +33,59 @@ public static class MultipleModelGeneratorTests
 			using Rocks.Extensions;
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
-
+			
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfITargetExtensions
+				internal sealed class ITargetCreateExpectations
+					: global::Rocks.Expectations
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.ITarget> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.ITarget> @self) =>
-						new(@self);
+					#pragma warning disable CS8618
 					
-					internal static global::MockTests.ITarget Instance(this global::Rocks.Expectations.Expectations<global::MockTests.ITarget> @self)
+					internal sealed class Handler0
+						: global::Rocks.Handler<global::System.Func<int, string>, string>
 					{
-						if (!@self.WasInstanceInvoked)
+						public global::Rocks.Argument<int> @value { get; set; }
+					}
+					
+					#pragma warning restore CS8618
+					
+					private readonly global::System.Collections.Generic.List<global::MockTests.ITargetCreateExpectations.Handler0> @handlers0 = new();
+					
+					public override void Verify()
+					{
+						if (this.WasInstanceInvoked)
 						{
-							@self.WasInstanceInvoked = true;
-							var @mock = new RockITarget(@self);
-							@self.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							var failures = new global::System.Collections.Generic.List<string>();
+					
+							failures.AddRange(this.Verify(handlers0));
+					
+							if (failures.Count > 0)
+							{
+								throw new global::Rocks.Exceptions.VerificationException(failures);
+							}
 						}
 					}
 					
 					private sealed class RockITarget
 						: global::MockTests.ITarget
 					{
-						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-						
-						public RockITarget(global::Rocks.Expectations.Expectations<global::MockTests.ITarget> @expectations)
+						public RockITarget(global::MockTests.ITargetCreateExpectations @expectations)
 						{
-							this.handlers = @expectations.Handlers;
+							this.Expectations = @expectations;
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "string Retrieve(int @value)")]
 						public string Retrieve(int @value)
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!))
+									if (@handler.@value.IsValid(@value!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string>)@methodHandler.Method)(@value!) :
-											((global::Rocks.HandlerInformation<string>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@value!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -99,23 +96,55 @@ public static class MultipleModelGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for string Retrieve(int @value)");
 						}
 						
+						private global::MockTests.ITargetCreateExpectations Expectations { get; }
 					}
-				}
-				
-				internal static class MethodExpectationsOfITargetExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.ITarget, global::System.Func<int, string>, string> Retrieve(this global::Rocks.Expectations.MethodExpectations<global::MockTests.ITarget> @self, global::Rocks.Argument<int> @value)
+					
+					internal sealed class ITargetMethodExpectations
 					{
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						return new global::Rocks.MethodAdornments<global::MockTests.ITarget, global::System.Func<int, string>, string>(@self.Add<string>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
+						internal ITargetMethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::MockTests.ITargetCreateExpectations.Handler0
+							{
+								@value = @value,
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						
+						private global::MockTests.ITargetCreateExpectations Expectations { get; }
+					}
+					
+					internal global::MockTests.ITargetCreateExpectations.ITargetMethodExpectations Methods { get; }
+					
+					internal ITargetCreateExpectations() =>
+						(this.Methods) = (new(this));
+					
+					internal global::MockTests.ITarget Instance()
+					{
+						if (!this.WasInstanceInvoked)
+						{
+							this.WasInstanceInvoked = true;
+							var @mock = new RockITarget(this);
+							this.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -127,24 +156,14 @@ public static class MultipleModelGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockMake<MockTests.ITarget>]
+			[assembly: RockMake<MockTests.ITarget>]
+			
 			namespace MockTests
 			{
 				public interface ITarget
 				{
 					string Retrieve(int value);
-				}
-
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Make<ITarget>();
-					}
-
-					public static void GenerateAgain()
-					{
-						var rock = Rock.Make<ITarget>();
-					}
 				}
 			}
 			""";
@@ -157,9 +176,9 @@ public static class MultipleModelGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class MakeExpectationsOfITargetExtensions
+				internal sealed class ITargetMakeExpectations
 				{
-					internal static global::MockTests.ITarget Instance(this global::Rocks.MakeGeneration<global::MockTests.ITarget> @self)
+					internal global::MockTests.ITarget Instance()
 					{
 						return new RockITarget();
 					}
@@ -178,11 +197,10 @@ public static class MultipleModelGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MockTests.ITarget_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.ITarget_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

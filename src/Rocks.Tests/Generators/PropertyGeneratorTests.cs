@@ -11,6 +11,8 @@ public static class PropertyGeneratorTests
 			"""
 			using Rocks;
 
+			[assembly: RockCreate<IMessagePublishTopologyConfigurator>]
+
 			public interface IMessagePublishTopology
 			{
 				bool Exclude { get; }
@@ -20,14 +22,6 @@ public static class PropertyGeneratorTests
 				IMessagePublishTopology
 			{
 				new bool Exclude { set; }
-			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<IMessagePublishTopologyConfigurator>();
-				}
 			}
 			""";
 
@@ -41,43 +35,48 @@ public static class PropertyGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfIMessagePublishTopologyConfiguratorExtensions
+			internal sealed class IMessagePublishTopologyConfiguratorCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.PropertyExpectations<global::IMessagePublishTopologyConfigurator> Properties(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.PropertySetterExpectations<global::IMessagePublishTopologyConfigurator> Setters(this global::Rocks.Expectations.PropertyExpectations<global::IMessagePublishTopologyConfigurator> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertyExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> ExplicitPropertiesForIMessagePublishTopology(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> Getters(this global::Rocks.Expectations.ExplicitPropertyExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> @self) =>
-					new(@self);
-				
-				internal static global::IMessagePublishTopologyConfigurator Instance(this global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Action<bool>>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<bool> @value { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<bool>, bool>
+				{ }
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1> @handlers1 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockIMessagePublishTopologyConfigurator(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
 				private sealed class RockIMessagePublishTopologyConfigurator
 					: global::IMessagePublishTopologyConfigurator
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockIMessagePublishTopologyConfigurator(global::Rocks.Expectations.Expectations<global::IMessagePublishTopologyConfigurator> @expectations)
+					public RockIMessagePublishTopologyConfigurator(global::IMessagePublishTopologyConfiguratorCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "set_Exclude(value)")]
@@ -85,20 +84,16 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers0)
 								{
-									if (((global::Rocks.Argument<bool>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<bool>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -120,65 +115,114 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<bool>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers1[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for global::IMessagePublishTopology.get_Exclude())");
 						}
 					}
+					
+					private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
+				}
+				internal sealed class IMessagePublishTopologyConfiguratorPropertyExpectations
+				{
+					internal sealed class IMessagePublishTopologyConfiguratorPropertySetterExpectations
+					{
+						internal IMessagePublishTopologyConfiguratorPropertySetterExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0, global::System.Action<bool>> Exclude(global::Rocks.Argument<bool> @value)
+						{
+							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
+					}
+					
+					internal IMessagePublishTopologyConfiguratorPropertyExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+						(this.Setters) = (new(expectations));
+					
+					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorPropertyExpectations.IMessagePublishTopologyConfiguratorPropertySetterExpectations Setters { get; }
+				}
+				internal sealed class IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology
+				{
+					internal sealed class IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology
+					{
+						internal IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1, global::System.Func<bool>, bool> Exclude()
+						{
+							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1();
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
+					}
+					
+					internal IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+						(this.Getters) = (new(expectations));
+					
+					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology.IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology Getters { get; }
+				}
+				
+				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorPropertyExpectations Properties { get; }
+				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology ExplicitPropertiesForIMessagePublishTopology { get; }
+				
+				internal IMessagePublishTopologyConfiguratorCreateExpectations() =>
+					(this.Properties, this.ExplicitPropertiesForIMessagePublishTopology) = (new(this), new(this));
+				
+				internal global::IMessagePublishTopologyConfigurator Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockIMessagePublishTopologyConfigurator(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
 				}
 			}
-			
-			internal static class PropertySetterExpectationsOfIMessagePublishTopologyConfiguratorExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Action<bool>> Exclude(this global::Rocks.Expectations.PropertySetterExpectations<global::IMessagePublishTopologyConfigurator> @self, global::Rocks.Argument<bool> @value) =>
-					new global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Action<bool>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
-			}
-			internal static class ExplicitPropertyGetterExpectationsOfIMessagePublishTopologyConfiguratorForIMessagePublishTopologyExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Func<bool>, bool> Exclude(this global::Rocks.Expectations.ExplicitPropertyGetterExpectations<global::IMessagePublishTopologyConfigurator, global::IMessagePublishTopology> @self) =>
-					new global::Rocks.PropertyAdornments<global::IMessagePublishTopologyConfigurator, global::System.Func<bool>, bool>(@self.Add<bool>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
 	[Test]
-	public static async Task CreateWithMixedVisibilityAsync()
+	public static async Task CreateWithMultiplePrivatePublicPropertyAsync()
 	{
 		var code =
 			"""
 			using System;
 			using Rocks;
 
+			[assembly: RockCreate<PrivatePublicProperties>]
+
 			#nullable enable
 
-			public class MixedProperties
+			public class PrivatePublicProperties
 			{
-				public virtual string? PublicGetPrivateSet { get; private set; }
-				public virtual string? PublicGetProtectedSet { get; protected set; }
-				public virtual string? PrivateGetPublicSet { private get; set; }
-				public virtual string? ProtectedGetPublicSet { protected get; set; }
+				public virtual string? PrivateGetPublicSet1 { private get; set; }
+				public virtual string? PrivateGetPublicSet2 { private get; set; }
+				public virtual string? PrivateGetPublicSet3 { private get; set; }
 			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Create<MixedProperties>();
-				}
-			}			
 			""";
 
 		var generatedCode =
@@ -191,58 +235,92 @@ public static class PropertyGeneratorTests
 			using System.Collections.Generic;
 			using System.Collections.Immutable;
 			
-			internal static class CreateExpectationsOfMixedPropertiesExtensions
+			internal sealed class PrivatePublicPropertiesCreateExpectations
+				: global::Rocks.Expectations
 			{
-				internal static global::Rocks.Expectations.MethodExpectations<global::MixedProperties> Methods(this global::Rocks.Expectations.Expectations<global::MixedProperties> @self) =>
-					new(@self);
+				#pragma warning disable CS8618
 				
-				internal static global::Rocks.Expectations.PropertyExpectations<global::MixedProperties> Properties(this global::Rocks.Expectations.Expectations<global::MixedProperties> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.PropertyGetterExpectations<global::MixedProperties> Getters(this global::Rocks.Expectations.PropertyExpectations<global::MixedProperties> @self) =>
-					new(@self);
-				
-				internal static global::Rocks.Expectations.PropertySetterExpectations<global::MixedProperties> Setters(this global::Rocks.Expectations.PropertyExpectations<global::MixedProperties> @self) =>
-					new(@self);
-				
-				internal static global::MixedProperties Instance(this global::Rocks.Expectations.Expectations<global::MixedProperties> @self)
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
 				{
-					if (!@self.WasInstanceInvoked)
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler5
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler7
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler5> @handlers5 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler7> @handlers7 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
 					{
-						@self.WasInstanceInvoked = true;
-						var @mock = new RockMixedProperties(@self);
-						@self.MockType = @mock.GetType();
-						return @mock;
-					}
-					else
-					{
-						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers5));
+						failures.AddRange(this.Verify(handlers7));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
 					}
 				}
 				
-				private sealed class RockMixedProperties
-					: global::MixedProperties
+				private sealed class RockPrivatePublicProperties
+					: global::PrivatePublicProperties
 				{
-					private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-					
-					public RockMixedProperties(global::Rocks.Expectations.Expectations<global::MixedProperties> @expectations)
+					public RockPrivatePublicProperties(global::PrivatePublicPropertiesCreateExpectations @expectations)
 					{
-						this.handlers = @expectations.Handlers;
+						this.Expectations = @expectations;
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.handlers.TryGetValue(0, out var @methodHandlers))
+						if (this.Expectations.handlers0.Count > 0)
 						{
-							foreach (var @methodHandler in @methodHandlers)
+							foreach (var @handler in this.Expectations.handlers0)
 							{
-								if (((global::Rocks.Argument<object?>)@methodHandler.Expectations[0]).IsValid(@obj!))
+								if (@handler.@obj.IsValid(@obj!))
 								{
-									@methodHandler.IncrementCallCount();
-									var @result = @methodHandler.Method is not null ?
-										((global::System.Func<object?, bool>)@methodHandler.Method)(@obj!) :
-										((global::Rocks.HandlerInformation<bool>)@methodHandler).ReturnValue;
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
 									return @result!;
 								}
 							}
@@ -258,13 +336,12 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.handlers.TryGetValue(1, out var @methodHandlers))
+						if (this.Expectations.handlers1.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<int>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -276,13 +353,1177 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.handlers.TryGetValue(2, out var @methodHandlers))
+						if (this.Expectations.handlers2.Count > 0)
 						{
-							var @methodHandler = @methodHandlers[0];
-							@methodHandler.IncrementCallCount();
-							var @result = @methodHandler.Method is not null ?
-								((global::System.Func<string?>)@methodHandler.Method)() :
-								((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "set_PrivateGetPublicSet1(value)")]
+					public override string? PrivateGetPublicSet1
+					{
+						set
+						{
+							if (this.Expectations.handlers3.Count > 0)
+							{
+								var @foundMatch = false;
+								foreach (var @handler in this.Expectations.handlers3)
+								{
+									if (@handler.value.IsValid(value!))
+									{
+										@handler.CallCount++;
+										@foundMatch = true;
+										@handler.Callback?.Invoke(value!);
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet1(value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								base.PrivateGetPublicSet1 = value!;
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(5, "set_PrivateGetPublicSet2(value)")]
+					public override string? PrivateGetPublicSet2
+					{
+						set
+						{
+							if (this.Expectations.handlers5.Count > 0)
+							{
+								var @foundMatch = false;
+								foreach (var @handler in this.Expectations.handlers5)
+								{
+									if (@handler.value.IsValid(value!))
+									{
+										@handler.CallCount++;
+										@foundMatch = true;
+										@handler.Callback?.Invoke(value!);
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet2(value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								base.PrivateGetPublicSet2 = value!;
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(7, "set_PrivateGetPublicSet3(value)")]
+					public override string? PrivateGetPublicSet3
+					{
+						set
+						{
+							if (this.Expectations.handlers7.Count > 0)
+							{
+								var @foundMatch = false;
+								foreach (var @handler in this.Expectations.handlers7)
+								{
+									if (@handler.value.IsValid(value!))
+									{
+										@handler.CallCount++;
+										@foundMatch = true;
+										@handler.Callback?.Invoke(value!);
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet3(value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								base.PrivateGetPublicSet3 = value!;
+							}
+						}
+					}
+					
+					private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class PrivatePublicPropertiesMethodExpectations
+				{
+					internal PrivatePublicPropertiesMethodExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class PrivatePublicPropertiesPropertyExpectations
+				{
+					internal sealed class PrivatePublicPropertiesPropertySetterExpectations
+					{
+						internal PrivatePublicPropertiesPropertySetterExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet1(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler3
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler5, global::System.Action<string?>> PrivateGetPublicSet2(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler5
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler7, global::System.Action<string?>> PrivateGetPublicSet3(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler7
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers7.Add(handler);
+							return new(handler);
+						}
+						private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
+					}
+					
+					internal PrivatePublicPropertiesPropertyExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+						(this.Setters) = (new(expectations));
+					
+					internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesPropertyExpectations.PrivatePublicPropertiesPropertySetterExpectations Setters { get; }
+				}
+				
+				internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesMethodExpectations Methods { get; }
+				internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesPropertyExpectations Properties { get; }
+				
+				internal PrivatePublicPropertiesCreateExpectations() =>
+					(this.Methods, this.Properties) = (new(this), new(this));
+				
+				internal global::PrivatePublicProperties Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockPrivatePublicProperties(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "PrivatePublicProperties_Rock_Create.g.cs", generatedCode) },
+			[]).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task CreateWithPrivatePublicPropertyAsync()
+	{
+		var code =
+			"""
+			using System;
+			using Rocks;
+
+			[assembly: RockCreate<PrivatePublicProperty>]
+
+			#nullable enable
+
+			public class PrivatePublicProperty
+			{
+				public virtual string? PrivateGetPublicSet { private get; set; }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			// <auto-generated/>
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			
+			internal sealed class PrivatePublicPropertyCreateExpectations
+				: global::Rocks.Expectations
+			{
+				#pragma warning disable CS8618
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+				{
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler3> @handlers3 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class RockPrivatePublicProperty
+					: global::PrivatePublicProperty
+				{
+					public RockPrivatePublicProperty(global::PrivatePublicPropertyCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.Expectations.handlers0.Count > 0)
+						{
+							foreach (var @handler in this.Expectations.handlers0)
+							{
+								if (@handler.@obj.IsValid(@obj!))
+								{
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(obj: @obj!);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.Expectations.handlers1.Count > 0)
+						{
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.Expectations.handlers2.Count > 0)
+						{
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "set_PrivateGetPublicSet(value)")]
+					public override string? PrivateGetPublicSet
+					{
+						set
+						{
+							if (this.Expectations.handlers3.Count > 0)
+							{
+								var @foundMatch = false;
+								foreach (var @handler in this.Expectations.handlers3)
+								{
+									if (@handler.value.IsValid(value!))
+									{
+										@handler.CallCount++;
+										@foundMatch = true;
+										@handler.Callback?.Invoke(value!);
+										
+										if (!@foundMatch)
+										{
+											throw new global::Rocks.Exceptions.ExpectationException("No handlers match for set_PrivateGetPublicSet(value)");
+										}
+										
+										break;
+									}
+								}
+							}
+							else
+							{
+								base.PrivateGetPublicSet = value!;
+							}
+						}
+					}
+					
+					private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class PrivatePublicPropertyMethodExpectations
+				{
+					internal PrivatePublicPropertyMethodExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class PrivatePublicPropertyPropertyExpectations
+				{
+					internal sealed class PrivatePublicPropertyPropertySetterExpectations
+					{
+						internal PrivatePublicPropertyPropertySetterExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::PrivatePublicPropertyCreateExpectations.Handler3
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
+					}
+					
+					internal PrivatePublicPropertyPropertyExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+						(this.Setters) = (new(expectations));
+					
+					internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyPropertyExpectations.PrivatePublicPropertyPropertySetterExpectations Setters { get; }
+				}
+				
+				internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyMethodExpectations Methods { get; }
+				internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyPropertyExpectations Properties { get; }
+				
+				internal PrivatePublicPropertyCreateExpectations() =>
+					(this.Methods, this.Properties) = (new(this), new(this));
+				
+				internal global::PrivatePublicProperty Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockPrivatePublicProperty(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "PrivatePublicProperty_Rock_Create.g.cs", generatedCode) },
+			[]).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task CreateWithMixedIndexerVisibilityAsync()
+	{
+		var code =
+			"""
+			using System;
+			using Rocks;
+
+			[assembly: RockCreate<MixedIndexers>]
+
+			#nullable enable
+
+			public class MixedIndexers
+			{
+				public virtual string? this[int index] { get => string.Empty; private set { } }
+				public virtual string? this[long index] { get => string.Empty; protected set { } }
+				public virtual string? this[Guid index] { private get => string.Empty; set { } }
+				public virtual string? this[string index] { protected get => string.Empty; set { } }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			// <auto-generated/>
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			
+			internal sealed class MixedIndexersCreateExpectations
+				: global::Rocks.Expectations
+			{
+				#pragma warning disable CS8618
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+				{
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<int, string?>, string?>
+				{
+					public global::Rocks.Argument<int> @index { get; set; }
+				}
+				
+				internal sealed class Handler5
+					: global::Rocks.Handler<global::System.Func<long, string?>, string?>
+				{
+					public global::Rocks.Argument<long> @index { get; set; }
+				}
+				
+				internal sealed class Handler6
+					: global::Rocks.Handler<global::System.Action<long, string?>>
+				{
+					public global::Rocks.Argument<long> @index { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler7
+					: global::Rocks.Handler<global::System.Action<global::System.Guid, string?>>
+				{
+					public global::Rocks.Argument<global::System.Guid> @index { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler9
+					: global::Rocks.Handler<global::System.Func<string, string?>, string?>
+				{
+					public global::Rocks.Argument<string> @index { get; set; }
+				}
+				
+				internal sealed class Handler10
+					: global::Rocks.Handler<global::System.Action<string, string?>>
+				{
+					public global::Rocks.Argument<string> @index { get; set; }
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler5> @handlers5 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler6> @handlers6 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler7> @handlers7 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler9> @handlers9 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler10> @handlers10 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers5));
+						failures.AddRange(this.Verify(handlers6));
+						failures.AddRange(this.Verify(handlers7));
+						failures.AddRange(this.Verify(handlers9));
+						failures.AddRange(this.Verify(handlers10));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class RockMixedIndexers
+					: global::MixedIndexers
+				{
+					public RockMixedIndexers(global::MixedIndexersCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.Expectations.handlers0.Count > 0)
+						{
+							foreach (var @handler in this.Expectations.handlers0)
+							{
+								if (@handler.@obj.IsValid(@obj!))
+								{
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(obj: @obj!);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.Expectations.handlers1.Count > 0)
+						{
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.Expectations.handlers2.Count > 0)
+						{
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.ToString();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(3, "this[int @index]")]
+					public override string? this[int @index]
+					{
+						get
+						{
+							if (this.Expectations.handlers3.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers3)
+								{
+									if (@handler.@index.IsValid(@index!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@index!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[int @index]");
+							}
+							else
+							{
+								return base[index: @index!];
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(5, "this[long @index]")]
+					[global::Rocks.MemberIdentifier(6, "this[long @index]")]
+					public override string? this[long @index]
+					{
+						get
+						{
+							if (this.Expectations.handlers5.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers5)
+								{
+									if (@handler.@index.IsValid(@index!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@index!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+							}
+							else
+							{
+								return base[index: @index!];
+							}
+						}
+						protected set
+						{
+							if (this.Expectations.handlers6.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers6)
+								{
+									if (@handler.@index.IsValid(@index!) &&
+										@handler.@value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@index!, @value!);
+										return;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[long @index]");
+							}
+							else
+							{
+								base[index: @index!] = @value!;
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(7, "this[global::System.Guid @index]")]
+					public override string? this[global::System.Guid @index]
+					{
+						set
+						{
+							if (this.Expectations.handlers7.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers7)
+								{
+									if (@handler.@index.IsValid(@index!) &&
+										@handler.@value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@index!, @value!);
+										return;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[global::System.Guid @index]");
+							}
+							else
+							{
+								base[index: @index!] = @value!;
+							}
+						}
+					}
+					[global::Rocks.MemberIdentifier(9, "this[string @index]")]
+					[global::Rocks.MemberIdentifier(10, "this[string @index]")]
+					public override string? this[string @index]
+					{
+						protected get
+						{
+							if (this.Expectations.handlers9.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers9)
+								{
+									if (@handler.@index.IsValid(@index!))
+									{
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@index!) : @handler.ReturnValue;
+										return @result!;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+							}
+							else
+							{
+								return base[index: @index!];
+							}
+						}
+						set
+						{
+							if (this.Expectations.handlers10.Count > 0)
+							{
+								foreach (var @handler in this.Expectations.handlers10)
+								{
+									if (@handler.@index.IsValid(@index!) &&
+										@handler.@value.IsValid(@value!))
+									{
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@index!, @value!);
+										return;
+									}
+								}
+								
+								throw new global::Rocks.Exceptions.ExpectationException("No handlers match for this[string @index]");
+							}
+							else
+							{
+								base[index: @index!] = @value!;
+							}
+						}
+					}
+					
+					private global::MixedIndexersCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class MixedIndexersMethodExpectations
+				{
+					internal MixedIndexersMethodExpectations(global::MixedIndexersCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::MixedIndexersCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::MixedIndexersCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::MixedIndexersCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::MixedIndexersCreateExpectations Expectations { get; }
+				}
+				
+				internal sealed class MixedIndexersIndexerExpectations
+				{
+					internal sealed class MixedIndexersIndexerGetterExpectations
+					{
+						internal MixedIndexersIndexerGetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler3, global::System.Func<int, string?>, string?> This(global::Rocks.Argument<int> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler3
+							{
+								@index = @index,
+							};
+							
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler5, global::System.Func<long, string?>, string?> This(global::Rocks.Argument<long> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler5
+							{
+								@index = @index,
+							};
+							
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler9, global::System.Func<string, string?>, string?> This(global::Rocks.Argument<string> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler9
+							{
+								@index = @index,
+							};
+							
+							this.Expectations.handlers9.Add(handler);
+							return new(handler);
+						}
+						private global::MixedIndexersCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class MixedIndexersIndexerSetterExpectations
+					{
+						internal MixedIndexersIndexerSetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler6, global::System.Action<long, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<long> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler6
+							{
+								@index = @index,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers6.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler7, global::System.Action<global::System.Guid, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<global::System.Guid> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler7
+							{
+								@index = @index,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers7.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler10, global::System.Action<string, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<string> @index)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@index);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							
+							var handler = new global::MixedIndexersCreateExpectations.Handler10
+							{
+								@index = @index,
+								@value = @value,
+							};
+							
+							this.Expectations.handlers10.Add(handler);
+							return new(handler);
+						}
+						private global::MixedIndexersCreateExpectations Expectations { get; }
+					}
+					
+					internal MixedIndexersIndexerExpectations(global::MixedIndexersCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations.MixedIndexersIndexerGetterExpectations Getters { get; }
+					internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations.MixedIndexersIndexerSetterExpectations Setters { get; }
+				}
+				
+				internal global::MixedIndexersCreateExpectations.MixedIndexersMethodExpectations Methods { get; }
+				internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations Indexers { get; }
+				
+				internal MixedIndexersCreateExpectations() =>
+					(this.Methods, this.Indexers) = (new(this), new(this));
+				
+				internal global::MixedIndexers Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockMixedIndexers(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
+			}
+			""";
+
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MixedIndexers_Rock_Create.g.cs", generatedCode) },
+			[]).ConfigureAwait(false);
+	}
+
+	[Test]
+	public static async Task CreateWithMixedPropertyVisibilityAsync()
+	{
+		var code =
+			"""
+			using System;
+			using Rocks;
+
+			[assembly: RockCreate<MixedProperties>]
+
+			#nullable enable
+
+			public class MixedProperties
+			{
+				public virtual string? PublicGetPrivateSet { get; private set; }
+				public virtual string? PublicGetProtectedSet { get; protected set; }
+				public virtual string? PrivateGetPublicSet { private get; set; }
+				public virtual string? ProtectedGetPublicSet { protected get; set; }
+			}
+			""";
+
+		var generatedCode =
+			"""
+			// <auto-generated/>
+			
+			#nullable enable
+			
+			using Rocks.Extensions;
+			using System.Collections.Generic;
+			using System.Collections.Immutable;
+			
+			internal sealed class MixedPropertiesCreateExpectations
+				: global::Rocks.Expectations
+			{
+				#pragma warning disable CS8618
+				
+				internal sealed class Handler0
+					: global::Rocks.Handler<global::System.Func<object?, bool>, bool>
+				{
+					public global::Rocks.Argument<object?> @obj { get; set; }
+				}
+				
+				internal sealed class Handler1
+					: global::Rocks.Handler<global::System.Func<int>, int>
+				{ }
+				
+				internal sealed class Handler2
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler3
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler5
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler6
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler7
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				internal sealed class Handler9
+					: global::Rocks.Handler<global::System.Func<string?>, string?>
+				{ }
+				
+				internal sealed class Handler10
+					: global::Rocks.Handler<global::System.Action<string?>>
+				{
+					public global::Rocks.Argument<string?> @value { get; set; }
+				}
+				
+				#pragma warning restore CS8618
+				
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler0> @handlers0 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler1> @handlers1 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler2> @handlers2 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler3> @handlers3 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler5> @handlers5 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler6> @handlers6 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler7> @handlers7 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler9> @handlers9 = new();
+				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler10> @handlers10 = new();
+				
+				public override void Verify()
+				{
+					if (this.WasInstanceInvoked)
+					{
+						var failures = new global::System.Collections.Generic.List<string>();
+				
+						failures.AddRange(this.Verify(handlers0));
+						failures.AddRange(this.Verify(handlers1));
+						failures.AddRange(this.Verify(handlers2));
+						failures.AddRange(this.Verify(handlers3));
+						failures.AddRange(this.Verify(handlers5));
+						failures.AddRange(this.Verify(handlers6));
+						failures.AddRange(this.Verify(handlers7));
+						failures.AddRange(this.Verify(handlers9));
+						failures.AddRange(this.Verify(handlers10));
+				
+						if (failures.Count > 0)
+						{
+							throw new global::Rocks.Exceptions.VerificationException(failures);
+						}
+					}
+				}
+				
+				private sealed class RockMixedProperties
+					: global::MixedProperties
+				{
+					public RockMixedProperties(global::MixedPropertiesCreateExpectations @expectations)
+					{
+						this.Expectations = @expectations;
+					}
+					
+					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
+					public override bool Equals(object? @obj)
+					{
+						if (this.Expectations.handlers0.Count > 0)
+						{
+							foreach (var @handler in this.Expectations.handlers0)
+							{
+								if (@handler.@obj.IsValid(@obj!))
+								{
+									@handler.CallCount++;
+									var @result = @handler.Callback is not null ?
+										@handler.Callback(@obj!) : @handler.ReturnValue;
+									return @result!;
+								}
+							}
+							
+							throw new global::Rocks.Exceptions.ExpectationException("No handlers match for bool Equals(object? @obj)");
+						}
+						else
+						{
+							return base.Equals(obj: @obj!);
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
+					public override int GetHashCode()
+					{
+						if (this.Expectations.handlers1.Count > 0)
+						{
+							var @handler = this.Expectations.handlers1[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
+							return @result!;
+						}
+						else
+						{
+							return base.GetHashCode();
+						}
+					}
+					
+					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
+					public override string? ToString()
+					{
+						if (this.Expectations.handlers2.Count > 0)
+						{
+							var @handler = this.Expectations.handlers2[0];
+							@handler.CallCount++;
+							var @result = @handler.Callback is not null ?
+								@handler.Callback() : @handler.ReturnValue;
 							return @result!;
 						}
 						else
@@ -296,13 +1537,12 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<string?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers3[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -317,13 +1557,12 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.handlers.TryGetValue(5, out var @methodHandlers))
+							if (this.Expectations.handlers5.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<string?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers5[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -333,20 +1572,16 @@ public static class PropertyGeneratorTests
 						}
 						protected set
 						{
-							if (this.handlers.TryGetValue(6, out var @methodHandlers))
+							if (this.Expectations.handlers6.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers6)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<string?>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -368,20 +1603,16 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.handlers.TryGetValue(7, out var @methodHandlers))
+							if (this.Expectations.handlers7.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers7)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<string?>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -404,13 +1635,12 @@ public static class PropertyGeneratorTests
 					{
 						protected get
 						{
-							if (this.handlers.TryGetValue(9, out var @methodHandlers))
+							if (this.Expectations.handlers9.Count > 0)
 							{
-								var @methodHandler = @methodHandlers[0];
-								@methodHandler.IncrementCallCount();
-								var @result = @methodHandler.Method is not null ?
-									((global::System.Func<string?>)@methodHandler.Method)() :
-									((global::Rocks.HandlerInformation<string?>)@methodHandler).ReturnValue;
+								var @handler = this.Expectations.handlers9[0];
+								@handler.CallCount++;
+								var @result = @handler.Callback is not null ?
+									@handler.Callback() : @handler.ReturnValue;
 								return @result!;
 							}
 							else
@@ -420,20 +1650,16 @@ public static class PropertyGeneratorTests
 						}
 						set
 						{
-							if (this.handlers.TryGetValue(10, out var @methodHandlers))
+							if (this.Expectations.handlers10.Count > 0)
 							{
 								var @foundMatch = false;
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers10)
 								{
-									if (((global::Rocks.Argument<string?>)@methodHandler.Expectations[0]).IsValid(value!))
+									if (@handler.value.IsValid(value!))
 									{
-										@methodHandler.IncrementCallCount();
+										@handler.CallCount++;
 										@foundMatch = true;
-										
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<string?>)@methodHandler.Method)(value!);
-										}
+										@handler.Callback?.Invoke(value!);
 										
 										if (!@foundMatch)
 										{
@@ -450,45 +1676,143 @@ public static class PropertyGeneratorTests
 							}
 						}
 					}
+					
+					private global::MixedPropertiesCreateExpectations Expectations { get; }
 				}
-			}
-			
-			internal static class MethodExpectationsOfMixedPropertiesExtensions
-			{
-				internal static global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<object?, bool>, bool> Equals(this global::Rocks.Expectations.MethodExpectations<global::MixedProperties> @self, global::Rocks.Argument<object?> @obj)
+				
+				internal sealed class MixedPropertiesMethodExpectations
 				{
-					global::System.ArgumentNullException.ThrowIfNull(@obj);
-					return new global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<object?, bool>, bool>(@self.Add<bool>(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @obj }));
+					internal MixedPropertiesMethodExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+						this.Expectations = expectations;
+					
+					internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
+					{
+						global::System.ArgumentNullException.ThrowIfNull(@obj);
+						
+						var handler = new global::MixedPropertiesCreateExpectations.Handler0
+						{
+							@obj = @obj,
+						};
+						
+						this.Expectations.handlers0.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
+					{
+						var handler = new global::MixedPropertiesCreateExpectations.Handler1();
+						this.Expectations.handlers1.Add(handler);
+						return new(handler);
+					}
+					
+					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
+					{
+						var handler = new global::MixedPropertiesCreateExpectations.Handler2();
+						this.Expectations.handlers2.Add(handler);
+						return new(handler);
+					}
+					
+					private global::MixedPropertiesCreateExpectations Expectations { get; }
 				}
-				internal static global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<int>, int> GetHashCode(this global::Rocks.Expectations.MethodExpectations<global::MixedProperties> @self) =>
-					new global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<int>, int>(@self.Add<int>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<string?>, string?> ToString(this global::Rocks.Expectations.MethodExpectations<global::MixedProperties> @self) =>
-					new global::Rocks.MethodAdornments<global::MixedProperties, global::System.Func<string?>, string?>(@self.Add<string?>(2, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
+				
+				internal sealed class MixedPropertiesPropertyExpectations
+				{
+					internal sealed class MixedPropertiesPropertyGetterExpectations
+					{
+						internal MixedPropertiesPropertyGetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler3, global::System.Func<string?>, string?> PublicGetPrivateSet()
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler3();
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler5, global::System.Func<string?>, string?> PublicGetProtectedSet()
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler5();
+							this.Expectations.handlers5.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler9, global::System.Func<string?>, string?> ProtectedGetPublicSet()
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler9();
+							this.Expectations.handlers9.Add(handler);
+							return new(handler);
+						}
+						private global::MixedPropertiesCreateExpectations Expectations { get; }
+					}
+					
+					internal sealed class MixedPropertiesPropertySetterExpectations
+					{
+						internal MixedPropertiesPropertySetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler6, global::System.Action<string?>> PublicGetProtectedSet(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler6
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers6.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler7, global::System.Action<string?>> PrivateGetPublicSet(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler7
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers7.Add(handler);
+							return new(handler);
+						}
+						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler10, global::System.Action<string?>> ProtectedGetPublicSet(global::Rocks.Argument<string?> @value)
+						{
+							var handler = new global::MixedPropertiesCreateExpectations.Handler10
+							{
+								value = @value,
+							};
+						
+							this.Expectations.handlers10.Add(handler);
+							return new(handler);
+						}
+						private global::MixedPropertiesCreateExpectations Expectations { get; }
+					}
+					
+					internal MixedPropertiesPropertyExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+						(this.Getters, this.Setters) = (new(expectations), new(expectations));
+					
+					internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations.MixedPropertiesPropertyGetterExpectations Getters { get; }
+					internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations.MixedPropertiesPropertySetterExpectations Setters { get; }
+				}
+				
+				internal global::MixedPropertiesCreateExpectations.MixedPropertiesMethodExpectations Methods { get; }
+				internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations Properties { get; }
+				
+				internal MixedPropertiesCreateExpectations() =>
+					(this.Methods, this.Properties) = (new(this), new(this));
+				
+				internal global::MixedProperties Instance()
+				{
+					if (!this.WasInstanceInvoked)
+					{
+						this.WasInstanceInvoked = true;
+						var @mock = new RockMixedProperties(this);
+						this.MockType = @mock.GetType();
+						return @mock;
+					}
+					else
+					{
+						throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+					}
+				}
 			}
-			
-			internal static class PropertyGetterExpectationsOfMixedPropertiesExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?> PublicGetPrivateSet(this global::Rocks.Expectations.PropertyGetterExpectations<global::MixedProperties> @self) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?>(@self.Add<string?>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?> PublicGetProtectedSet(this global::Rocks.Expectations.PropertyGetterExpectations<global::MixedProperties> @self) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?>(@self.Add<string?>(5, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?> ProtectedGetPublicSet(this global::Rocks.Expectations.PropertyGetterExpectations<global::MixedProperties> @self) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Func<string?>, string?>(@self.Add<string?>(9, new global::System.Collections.Generic.List<global::Rocks.Argument>()));
-			}
-			internal static class PropertySetterExpectationsOfMixedPropertiesExtensions
-			{
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>> PublicGetProtectedSet(this global::Rocks.Expectations.PropertySetterExpectations<global::MixedProperties> @self, global::Rocks.Argument<string?> @value) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>>(@self.Add(6, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>> PrivateGetPublicSet(this global::Rocks.Expectations.PropertySetterExpectations<global::MixedProperties> @self, global::Rocks.Argument<string?> @value) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>>(@self.Add(8, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
-				internal static global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>> ProtectedGetPublicSet(this global::Rocks.Expectations.PropertySetterExpectations<global::MixedProperties> @self, global::Rocks.Argument<string?> @value) =>
-					new global::Rocks.PropertyAdornments<global::MixedProperties, global::System.Action<string?>>(@self.Add(10, new global::System.Collections.Generic.List<global::Rocks.Argument>(1) { @value }));
-			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 
@@ -497,11 +1821,13 @@ public static class PropertyGeneratorTests
 	{
 		var code =
 			"""
-			#nullable enable
-			
 			using System;
 			using Rocks;
 
+			[assembly: RockMake<MixedProperties>]
+			
+			#nullable enable
+			
 			public class MixedProperties
 			{
 				public virtual string? PublicGetPrivateSet { get; private set; }
@@ -509,14 +1835,6 @@ public static class PropertyGeneratorTests
 				public virtual string? PrivateGetPublicSet { private get; set; }
 				public virtual string? ProtectedGetPublicSet { protected get; set; }
 			}
-
-			public static class Test
-			{
-				public static void Generate()
-				{
-					var rock = Rock.Make<MixedProperties>();
-				}
-			}			
 			""";
 
 		var generatedCode =
@@ -525,9 +1843,9 @@ public static class PropertyGeneratorTests
 			
 			#nullable enable
 			
-			internal static class MakeExpectationsOfMixedPropertiesExtensions
+			internal sealed class MixedPropertiesMakeExpectations
 			{
-				internal static global::MixedProperties Instance(this global::Rocks.MakeGeneration<global::MixedProperties> @self)
+				internal global::MixedProperties Instance()
 				{
 					return new RockMixedProperties();
 				}
@@ -571,11 +1889,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockMakeGenerator>(code,
-			new[] { (typeof(RockMakeGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

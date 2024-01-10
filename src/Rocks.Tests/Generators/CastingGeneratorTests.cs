@@ -12,6 +12,8 @@ public static class CastingGeneratorTests
 			using Rocks;
 			using System;
 
+			[assembly: RockCreate<MockTests.IHaveOpenGenerics<Guid>>]
+
 			namespace MockTests
 			{
 				public interface IHaveOpenGenerics<Q>
@@ -20,14 +22,6 @@ public static class CastingGeneratorTests
 					T HasGenericsWithReturn<T>(T value, string data, Q information);
 					void NoGenerics(int value, string data);
 					int NoGenericsWithReturn(int value, string data);
-				}
-	
-				public static class Test
-				{
-					public static void Generate()
-					{
-						var rock = Rock.Create<IHaveOpenGenerics<Guid>>();
-					}
 				}
 			}
 			""";
@@ -44,57 +38,94 @@ public static class CastingGeneratorTests
 			
 			namespace MockTests
 			{
-				internal static class CreateExpectationsOfIHaveOpenGenericsOfGuidExtensions
+				internal sealed class IHaveOpenGenericsOfGuidCreateExpectations
+					: global::Rocks.Expectations
 				{
-					internal static global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> Methods(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self) =>
-						new(@self);
+					#pragma warning disable CS8618
 					
-					internal static global::MockTests.IHaveOpenGenerics<global::System.Guid> Instance(this global::Rocks.Expectations.Expectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self)
+					internal sealed class Handler0<T>
+						: global::Rocks.Handler<global::System.Action<T, string, global::System.Guid>>
 					{
-						if (!@self.WasInstanceInvoked)
+						public global::Rocks.Argument<T> @value { get; set; }
+						public global::Rocks.Argument<string> @data { get; set; }
+						public global::Rocks.Argument<global::System.Guid> @information { get; set; }
+					}
+					
+					internal sealed class Handler1<T>
+						: global::Rocks.Handler<global::System.Func<T, string, global::System.Guid, T>, T>
+					{
+						public global::Rocks.Argument<T> @value { get; set; }
+						public global::Rocks.Argument<string> @data { get; set; }
+						public global::Rocks.Argument<global::System.Guid> @information { get; set; }
+					}
+					
+					internal sealed class Handler2
+						: global::Rocks.Handler<global::System.Action<int, string>>
+					{
+						public global::Rocks.Argument<int> @value { get; set; }
+						public global::Rocks.Argument<string> @data { get; set; }
+					}
+					
+					internal sealed class Handler3
+						: global::Rocks.Handler<global::System.Func<int, string, int>, int>
+					{
+						public global::Rocks.Argument<int> @value { get; set; }
+						public global::Rocks.Argument<string> @data { get; set; }
+					}
+					
+					#pragma warning restore CS8618
+					
+					private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+					private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers1 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2> @handlers2 = new();
+					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3> @handlers3 = new();
+					
+					public override void Verify()
+					{
+						if (this.WasInstanceInvoked)
 						{
-							@self.WasInstanceInvoked = true;
-							var @mock = new RockIHaveOpenGenericsOfGuid(@self);
-							@self.MockType = @mock.GetType();
-							return @mock;
-						}
-						else
-						{
-							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+							var failures = new global::System.Collections.Generic.List<string>();
+					
+							failures.AddRange(this.Verify(handlers0));
+							failures.AddRange(this.Verify(handlers1));
+							failures.AddRange(this.Verify(handlers2));
+							failures.AddRange(this.Verify(handlers3));
+					
+							if (failures.Count > 0)
+							{
+								throw new global::Rocks.Exceptions.VerificationException(failures);
+							}
 						}
 					}
 					
 					private sealed class RockIHaveOpenGenericsOfGuid
 						: global::MockTests.IHaveOpenGenerics<global::System.Guid>
 					{
-						private readonly global::System.Collections.Generic.Dictionary<int, global::System.Collections.Generic.List<global::Rocks.HandlerInformation>> handlers;
-						
-						public RockIHaveOpenGenericsOfGuid(global::Rocks.Expectations.Expectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @expectations)
+						public RockIHaveOpenGenericsOfGuid(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations @expectations)
 						{
-							this.handlers = @expectations.Handlers;
+							this.Expectations = @expectations;
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "void HasGenerics<T>(T @value, string @data, global::System.Guid @information)")]
 						public void HasGenerics<T>(T @value, string @data, global::System.Guid @information)
 						{
-							if (this.handlers.TryGetValue(0, out var @methodHandlers))
+							if (this.Expectations.handlers0.Count > 0)
 							{
 								var @foundMatch = false;
 								
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @genericHandler in this.Expectations.handlers0)
 								{
-									if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!) &&
-										((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information!))
+									if (@genericHandler is global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T> @handler)
 									{
-										@foundMatch = true;
-										
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null && @methodHandler.Method is global::System.Action<T, string, global::System.Guid> @method)
+										if (@handler.@value.IsValid(@value!) &&
+											@handler.@data.IsValid(@data!) &&
+											@handler.@information.IsValid(@information!))
 										{
-											@method(@value!, @data!, @information!);
+											@foundMatch = true;
+											@handler.CallCount++;
+											@handler.Callback?.Invoke(@value!, @data!, @information!);
+											break;
 										}
-										break;
 									}
 								}
 								
@@ -112,22 +143,19 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)")]
 						public T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)
 						{
-							if (this.handlers.TryGetValue(1, out var @methodHandlers))
+							if (this.Expectations.handlers1.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @genericHandler in this.Expectations.handlers1)
 								{
-									if ((@methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T>) || @methodHandler is global::Rocks.HandlerInformation<T>)
+									if (@genericHandler is global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T> @handler)
 									{
-										if (((@methodHandler.Expectations[0] as global::Rocks.Argument<T>)?.IsValid(@value!) ?? false) &&
-											((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!) &&
-											((global::Rocks.Argument<global::System.Guid>)@methodHandler.Expectations[2]).IsValid(@information!))
+										if (@handler.@value.IsValid(@value!) &&
+											@handler.@data.IsValid(@data!) &&
+											@handler.@information.IsValid(@information!))
 										{
-											@methodHandler.IncrementCallCount();
-											var @result = @methodHandler.Method is not null && @methodHandler.Method is global::System.Func<T, string, global::System.Guid, T> @methodReturn ?
-												@methodReturn(@value!, @data!, @information!) :
-												@methodHandler is global::Rocks.HandlerInformation<T> @returnValue ?
-													@returnValue.ReturnValue :
-													throw new global::Rocks.Exceptions.NoReturnValueException("No return value could be obtained for T.");
+											@handler.CallCount++;
+											var @result = @handler.Callback is not null ?
+												@handler.Callback(@value!, @data!, @information!) : @handler.ReturnValue;
 											return @result!;
 										}
 									}
@@ -142,22 +170,18 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "void NoGenerics(int @value, string @data)")]
 						public void NoGenerics(int @value, string @data)
 						{
-							if (this.handlers.TryGetValue(2, out var @methodHandlers))
+							if (this.Expectations.handlers2.Count > 0)
 							{
 								var @foundMatch = false;
 								
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers2)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!))
+									if (@handler.@value.IsValid(@value!) &&
+										@handler.@data.IsValid(@data!))
 									{
 										@foundMatch = true;
-										
-										@methodHandler.IncrementCallCount();
-										if (@methodHandler.Method is not null)
-										{
-											((global::System.Action<int, string>)@methodHandler.Method)(@value!, @data!);
-										}
+										@handler.CallCount++;
+										@handler.Callback?.Invoke(@value!, @data!);
 										break;
 									}
 								}
@@ -176,17 +200,16 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "int NoGenericsWithReturn(int @value, string @data)")]
 						public int NoGenericsWithReturn(int @value, string @data)
 						{
-							if (this.handlers.TryGetValue(3, out var @methodHandlers))
+							if (this.Expectations.handlers3.Count > 0)
 							{
-								foreach (var @methodHandler in @methodHandlers)
+								foreach (var @handler in this.Expectations.handlers3)
 								{
-									if (((global::Rocks.Argument<int>)@methodHandler.Expectations[0]).IsValid(@value!) &&
-										((global::Rocks.Argument<string>)@methodHandler.Expectations[1]).IsValid(@data!))
+									if (@handler.@value.IsValid(@value!) &&
+										@handler.@data.IsValid(@data!))
 									{
-										@methodHandler.IncrementCallCount();
-										var @result = @methodHandler.Method is not null ?
-											((global::System.Func<int, string, int>)@methodHandler.Method)(@value!, @data!) :
-											((global::Rocks.HandlerInformation<int>)@methodHandler).ReturnValue;
+										@handler.CallCount++;
+										var @result = @handler.Callback is not null ?
+											@handler.Callback(@value!, @data!) : @handler.ReturnValue;
 										return @result!;
 									}
 								}
@@ -197,44 +220,106 @@ public static class CastingGeneratorTests
 							throw new global::Rocks.Exceptions.ExpectationException("No handlers were found for int NoGenericsWithReturn(int @value, string @data)");
 						}
 						
+						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }
 					}
-				}
-				
-				internal static class MethodExpectationsOfIHaveOpenGenericsOfGuidExtensions
-				{
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self, global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+					
+					internal sealed class IHaveOpenGenericsOfGuidMethodExpectations
 					{
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						global::System.ArgumentNullException.ThrowIfNull(@data);
-						global::System.ArgumentNullException.ThrowIfNull(@information);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Action<T, string, global::System.Guid>>(@self.Add(0, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @value, @data, @information }));
+						internal IHaveOpenGenericsOfGuidMethodExpectations(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations expectations) =>
+							this.Expectations = expectations;
+						
+						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							global::System.ArgumentNullException.ThrowIfNull(@data);
+							global::System.ArgumentNullException.ThrowIfNull(@information);
+							
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>
+							{
+								@value = @value,
+								@data = @data,
+								@information = @information,
+							};
+							
+							this.Expectations.handlers0.Add(handler);
+							return new(handler);
+						}
+						
+						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							global::System.ArgumentNullException.ThrowIfNull(@data);
+							global::System.ArgumentNullException.ThrowIfNull(@information);
+							
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>
+							{
+								@value = @value,
+								@data = @data,
+								@information = @information,
+							};
+							
+							this.Expectations.handlers1.Add(handler);
+							return new(handler);
+						}
+						
+						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2, global::System.Action<int, string>> NoGenerics(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							global::System.ArgumentNullException.ThrowIfNull(@data);
+							
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2
+							{
+								@value = @value,
+								@data = @data,
+							};
+							
+							this.Expectations.handlers2.Add(handler);
+							return new(handler);
+						}
+						
+						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3, global::System.Func<int, string, int>, int> NoGenericsWithReturn(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
+						{
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+							global::System.ArgumentNullException.ThrowIfNull(@data);
+							
+							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3
+							{
+								@value = @value,
+								@data = @data,
+							};
+							
+							this.Expectations.handlers3.Add(handler);
+							return new(handler);
+						}
+						
+						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }
 					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self, global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
+					
+					internal global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.IHaveOpenGenericsOfGuidMethodExpectations Methods { get; }
+					
+					internal IHaveOpenGenericsOfGuidCreateExpectations() =>
+						(this.Methods) = (new(this));
+					
+					internal global::MockTests.IHaveOpenGenerics<global::System.Guid> Instance()
 					{
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						global::System.ArgumentNullException.ThrowIfNull(@data);
-						global::System.ArgumentNullException.ThrowIfNull(@information);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Func<T, string, global::System.Guid, T>, T>(@self.Add<T>(1, new global::System.Collections.Generic.List<global::Rocks.Argument>(3) { @value, @data, @information }));
-					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Action<int, string>> NoGenerics(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						global::System.ArgumentNullException.ThrowIfNull(@data);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Action<int, string>>(@self.Add(2, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @data }));
-					}
-					internal static global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Func<int, string, int>, int> NoGenericsWithReturn(this global::Rocks.Expectations.MethodExpectations<global::MockTests.IHaveOpenGenerics<global::System.Guid>> @self, global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
-					{
-						global::System.ArgumentNullException.ThrowIfNull(@value);
-						global::System.ArgumentNullException.ThrowIfNull(@data);
-						return new global::Rocks.MethodAdornments<global::MockTests.IHaveOpenGenerics<global::System.Guid>, global::System.Func<int, string, int>, int>(@self.Add<int>(3, new global::System.Collections.Generic.List<global::Rocks.Argument>(2) { @value, @data }));
+						if (!this.WasInstanceInvoked)
+						{
+							this.WasInstanceInvoked = true;
+							var @mock = new RockIHaveOpenGenericsOfGuid(this);
+							this.MockType = @mock.GetType();
+							return @mock;
+						}
+						else
+						{
+							throw new global::Rocks.Exceptions.NewMockInstanceException("Can only create a new mock once.");
+						}
 					}
 				}
 			}
-			
 			""";
 
-		await TestAssistants.RunAsync<RockCreateGenerator>(code,
-			new[] { (typeof(RockCreateGenerator), "MockTests.IHaveOpenGenericsSystem.Guid_Rock_Create.g.cs", generatedCode) },
+		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveOpenGenericsSystem.Guid_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
 	}
 }

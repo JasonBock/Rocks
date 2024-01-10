@@ -17,7 +17,7 @@ internal static class MockProjectedTypesBuilder
 
 		MockProjectedDelegateBuilder.Build(projectedIndentWriter, type);
 		MockProjectedArgTypeBuilder.Build(projectedIndentWriter, type);
-		MockProjectedTypesAdornmentsBuilder.Build(projectedIndentWriter, type);
+		MockProjectedAdornmentsTypesBuilder.Build(projectedIndentWriter, type);
 
 		var projectedCode = projectedWriter.ToString();
 
