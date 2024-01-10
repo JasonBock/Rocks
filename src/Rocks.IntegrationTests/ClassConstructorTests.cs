@@ -19,7 +19,7 @@ public class ClassConstructorWithSpecialParameters
 	public string C { get; }
 
 #pragma warning disable CA1819 // Properties should not return arrays
-   public string[] D { get; }
+	public string[] D { get; }
 #pragma warning restore CA1819 // Properties should not return arrays
 }
 
@@ -39,14 +39,15 @@ public class ClassConstructor
 public static class ClassConstructorTests
 {
 	[Test]
+	[RockCreate<ClassConstructorWithSpecialParameters>]
 	public static void CreateSpecialConstructor()
 	{
 		var bValue = "b";
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var expectations = Rock.Create<ClassConstructorWithSpecialParameters>();
-		expectations.Methods().Foo();
+		var expectations = new ClassConstructorWithSpecialParametersCreateExpectations();
+		expectations.Methods.Foo();
 
 		var mock = expectations.Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 		mock.Foo();
@@ -57,20 +58,21 @@ public static class ClassConstructorTests
 			Assert.That(mock.B, Is.EqualTo("b"));
 			Assert.That(mock.C, Is.EqualTo("42"));
 			Assert.That(cValue, Is.EqualTo("42"));
-			Assert.That(mock.D, Is.EquivalentTo(new [] { d1Value, d2Value }));
+			Assert.That(mock.D, Is.EquivalentTo(new[] { d1Value, d2Value }));
 		});
 
 		expectations.Verify();
 	}
 
 	[Test]
+	[RockMake<ClassConstructorWithSpecialParameters>]
 	public static void MakeSpecialConstructor()
 	{
 		var bValue = "b";
 		var d1Value = "d1";
 		var d2Value = "d2";
 
-		var mock = Rock.Make<ClassConstructorWithSpecialParameters>().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
+		var mock = new ClassConstructorWithSpecialParametersMakeExpectations().Instance(2, ref bValue, out var cValue, d1Value, d2Value);
 
 		Assert.Multiple(() =>
 		{
@@ -83,10 +85,11 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
+	[RockCreate<ClassConstructor>]
 	public static void CreateWithNoParametersAndPublicConstructor()
 	{
-		var expectations = Rock.Create<ClassConstructor>();
-		expectations.Methods().NoParameters();
+		var expectations = new ClassConstructorCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance(3);
 		var value = mock.NoParameters();
@@ -101,19 +104,21 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
+	[RockMake<ClassConstructor>]
 	public static void MakeWithNoParametersAndPublicConstructor()
 	{
-		var mock = Rock.Make<ClassConstructor>().Instance(3);
+		var mock = new ClassConstructorMakeExpectations().Instance(3);
 		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));
 	}
 
 	[Test]
+	[RockCreate<ClassConstructor>]
 	public static void CreateWithNoParametersAndProtectedConstructor()
 	{
-		var expectations = Rock.Create<ClassConstructor>();
-		expectations.Methods().NoParameters();
+		var expectations = new ClassConstructorCreateExpectations();
+		expectations.Methods.NoParameters();
 
 		var mock = expectations.Instance("b");
 		var value = mock.NoParameters();
@@ -128,9 +133,10 @@ public static class ClassConstructorTests
 	}
 
 	[Test]
+	[RockMake<ClassConstructor>]
 	public static void MakeWithNoParametersAndProtectedConstructor()
 	{
-		var mock = Rock.Make<ClassConstructor>().Instance("b");
+		var mock = new ClassConstructorMakeExpectations().Instance("b");
 		var value = mock.NoParameters();
 
 		Assert.That(value, Is.EqualTo(default(int)));

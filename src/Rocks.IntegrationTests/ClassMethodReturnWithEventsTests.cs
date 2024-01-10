@@ -4,117 +4,121 @@ namespace Rocks.IntegrationTests;
 
 public class ClassMethodReturnWithEvents
 {
-   public virtual int NoParameters() => default;
+	public virtual int NoParameters() => default;
 
 #pragma warning disable CA1070 // Do not declare event fields as virtual
 #pragma warning disable CS0067
-   public virtual event EventHandler? MyEvent;
+	public virtual event EventHandler? MyEvent;
 #pragma warning restore CS0067
 #pragma warning restore CA1070 // Do not declare event fields as virtual
 }
 
 public static class ClassMethodReturnWithEventsTests
 {
-   [Test]
-   public static void CreateRaiseEvent()
-   {
-	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
-	  expectations.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
+	[Test]
+	[RockCreate<ClassMethodReturnWithEvents>]
+	public static void CreateRaiseEvent()
+	{
+		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters().AddRaiseEvent(new(nameof(ClassMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
-	  var wasEventRaised = false;
-	  var mock = expectations.Instance();
-	  mock.MyEvent += (s, e) => wasEventRaised = true;
-	  var value = mock.NoParameters();
+		var wasEventRaised = false;
+		var mock = expectations.Instance();
+		mock.MyEvent += (s, e) => wasEventRaised = true;
+		var value = mock.NoParameters();
 
-	  expectations.Verify();
+		expectations.Verify();
 
-	  Assert.Multiple(() =>
-	  {
-		 Assert.That(wasEventRaised, Is.True);
-		 Assert.That(value, Is.EqualTo(default(int)));
-	  });
-   }
+		Assert.Multiple(() =>
+		{
+			Assert.That(wasEventRaised, Is.True);
+			Assert.That(value, Is.EqualTo(default(int)));
+		});
+	}
 
-   [Test]
-   public static void CreateRaiseEventWithCallback()
-   {
-	  var wasCallbackInvoked = false;
-	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
-	  expectations.Methods().NoParameters()
-		  .Callback(() =>
-		  {
-			 wasCallbackInvoked = true;
-			 return 3;
-		  })
-		  .RaisesMyEvent(EventArgs.Empty);
+	[Test]
+	[RockCreate<ClassMethodReturnWithEvents>]
+	public static void CreateRaiseEventWithCallback()
+	{
+		var wasCallbackInvoked = false;
+		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.Callback(() =>
+			{
+				wasCallbackInvoked = true;
+				return 3;
+			})
+			.AddRaiseEvent(new(nameof(ClassMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
-	  var wasEventRaised = false;
-	  var mock = expectations.Instance();
-	  mock.MyEvent += (s, e) => wasEventRaised = true;
-	  var value = mock.NoParameters();
+		var wasEventRaised = false;
+		var mock = expectations.Instance();
+		mock.MyEvent += (s, e) => wasEventRaised = true;
+		var value = mock.NoParameters();
 
-	  expectations.Verify();
+		expectations.Verify();
 
-	  Assert.Multiple(() =>
-	  {
-		 Assert.That(wasEventRaised, Is.True);
-		 Assert.That(wasCallbackInvoked, Is.True);
-		 Assert.That(value, Is.EqualTo(3));
-	  });
-   }
+		Assert.Multiple(() =>
+		{
+			Assert.That(wasEventRaised, Is.True);
+			Assert.That(wasCallbackInvoked, Is.True);
+			Assert.That(value, Is.EqualTo(3));
+		});
+	}
 
-   [Test]
-   public static void CreateRaiseEventWithMultipleCalls()
-   {
-	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
-	  expectations.Methods().NoParameters()
-		  .CallCount(2)
-		  .RaisesMyEvent(EventArgs.Empty);
+	[Test]
+	[RockCreate<ClassMethodReturnWithEvents>]
+	public static void CreateRaiseEventWithMultipleCalls()
+	{
+		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
+			.AddRaiseEvent(new(nameof(ClassMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
-	  var eventRaisedCount = 0;
-	  var mock = expectations.Instance();
-	  mock.MyEvent += (s, e) => eventRaisedCount++;
-	  var valueOne = mock.NoParameters();
-	  var valueTwo = mock.NoParameters();
+		var eventRaisedCount = 0;
+		var mock = expectations.Instance();
+		mock.MyEvent += (s, e) => eventRaisedCount++;
+		var valueOne = mock.NoParameters();
+		var valueTwo = mock.NoParameters();
 
-	  expectations.Verify();
+		expectations.Verify();
 
-	  Assert.Multiple(() =>
-	  {
-		 Assert.That(eventRaisedCount, Is.EqualTo(2));
-		 Assert.That(valueOne, Is.EqualTo(default(int)));
-		 Assert.That(valueTwo, Is.EqualTo(default(int)));
-	  });
-   }
+		Assert.Multiple(() =>
+		{
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
+			Assert.That(valueOne, Is.EqualTo(default(int)));
+			Assert.That(valueTwo, Is.EqualTo(default(int)));
+		});
+	}
 
-   [Test]
-   public static void CreateRaiseEventWithMultipleCallsWithCallback()
-   {
-	  var callbackInvokedCount = 0;
-	  var expectations = Rock.Create<ClassMethodReturnWithEvents>();
-	  expectations.Methods().NoParameters()
-		  .CallCount(2)
-		  .Callback(() =>
-		  {
-			 callbackInvokedCount++;
-			 return 3;
-		  })
-		  .RaisesMyEvent(EventArgs.Empty);
+	[Test]
+	[RockCreate<ClassMethodReturnWithEvents>]
+	public static void CreateRaiseEventWithMultipleCallsWithCallback()
+	{
+		var callbackInvokedCount = 0;
+		var expectations = new ClassMethodReturnWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
+			.Callback(() =>
+			{
+				callbackInvokedCount++;
+				return 3;
+			})
+			.AddRaiseEvent(new(nameof(ClassMethodReturnWithEvents.MyEvent), EventArgs.Empty));
 
-	  var eventRaisedCount = 0;
-	  var mock = expectations.Instance();
-	  mock.MyEvent += (s, e) => eventRaisedCount++;
-	  var valueOne = mock.NoParameters();
-	  var valueTwo = mock.NoParameters();
+		var eventRaisedCount = 0;
+		var mock = expectations.Instance();
+		mock.MyEvent += (s, e) => eventRaisedCount++;
+		var valueOne = mock.NoParameters();
+		var valueTwo = mock.NoParameters();
 
-	  expectations.Verify();
+		expectations.Verify();
 
-	  Assert.Multiple(() =>
-	  {
-		 Assert.That(eventRaisedCount, Is.EqualTo(2));
-		 Assert.That(callbackInvokedCount, Is.EqualTo(2));
-		 Assert.That(valueOne, Is.EqualTo(3));
-		 Assert.That(valueTwo, Is.EqualTo(3));
-	  });
-   }
+		Assert.Multiple(() =>
+		{
+			Assert.That(eventRaisedCount, Is.EqualTo(2));
+			Assert.That(callbackInvokedCount, Is.EqualTo(2));
+			Assert.That(valueOne, Is.EqualTo(3));
+			Assert.That(valueTwo, Is.EqualTo(3));
+		});
+	}
 }

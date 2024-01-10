@@ -21,13 +21,14 @@ public class ConventionDispatcher
 public static class AttributeTests
 {
 	[Test]
+	[RockCreate<NotNullIfNotCases>]
 	public static void CreateWithNotNullIfNotNull()
 	{
 		var node = new object();
 		var result = new object();
 
-		var expectations = Rock.Create<NotNullIfNotCases>();
-		expectations.Methods().VisitMethod(node).Returns(result);
+		var expectations = new NotNullIfNotCasesCreateExpectations();
+		expectations.Methods.VisitMethod(node).ReturnValue(result);
 
 		var mock = expectations.Instance();
 		var mockResult = mock.VisitMethod(node);
@@ -38,10 +39,11 @@ public static class AttributeTests
 	}
 
 	[Test]
+	[RockCreate<ConventionDispatcher>]
 	public static void CreateWithConditional()
 	{
-		var expectations = Rock.Create<ConventionDispatcher>();
-		expectations.Methods().AssertNoScope();
+		var expectations = new ConventionDispatcherCreateExpectations();
+		expectations.Methods.AssertNoScope();
 
 		var mock = expectations.Instance();
 		mock.AssertNoScope();

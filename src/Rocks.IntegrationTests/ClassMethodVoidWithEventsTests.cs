@@ -16,10 +16,11 @@ public class ClassMethodVoidWithEvents
 public static class ClassMethodVoidWithEventsTests
 {
 	[Test]
+	[RockCreate<ClassMethodVoidWithEvents>]
 	public static void CreateEvent()
 	{
-		var expectations = Rock.Create<ClassMethodVoidWithEvents>();
-		expectations.Methods().NoParameters().RaisesMyEvent(EventArgs.Empty);
+		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		expectations.Methods.NoParameters().AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -32,13 +33,14 @@ public static class ClassMethodVoidWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<ClassMethodVoidWithEvents>]
 	public static void CreateEventWithCallback()
 	{
 		var wasCallbackInvoked = false;
-		var expectations = Rock.Create<ClassMethodVoidWithEvents>();
-		expectations.Methods().NoParameters()
+		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
-			.RaisesMyEvent(EventArgs.Empty);
+			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -55,12 +57,13 @@ public static class ClassMethodVoidWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<ClassMethodVoidWithEvents>]
 	public static void CreateEventWithMultipleCalls()
 	{
-		var expectations = Rock.Create<ClassMethodVoidWithEvents>();
-		expectations.Methods().NoParameters()
-			.CallCount(2)
-			.RaisesMyEvent(EventArgs.Empty);
+		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
+			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();
@@ -74,14 +77,15 @@ public static class ClassMethodVoidWithEventsTests
 	}
 
 	[Test]
+	[RockCreate<ClassMethodVoidWithEvents>]
 	public static void CreateEventWithMultipleCallsWithCallback()
 	{
 		var callbackInvokedCount = 0;
-		var expectations = Rock.Create<ClassMethodVoidWithEvents>();
-		expectations.Methods().NoParameters()
-			.CallCount(2)
+		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
+		expectations.Methods.NoParameters()
+			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
-			.RaisesMyEvent(EventArgs.Empty);
+			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();

@@ -15,10 +15,11 @@ public abstract class BaseForConstraintCase<T>
 public static class ConstraintTests
 {
 	[Test]
+	[RockCreate<BaseForConstraintCase<string>>]
 	public static void Create()
 	{
-		var expectations = Rock.Create<BaseForConstraintCase<string>>();
-		expectations.Methods().As<string>();
+		var expectations = new BaseForConstraintCaseOfstringCreateExpectations();
+		expectations.Methods.As<string>();
 
 		var mock = expectations.Instance();
 		mock.As<string>();

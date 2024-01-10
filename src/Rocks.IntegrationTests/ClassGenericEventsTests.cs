@@ -20,11 +20,12 @@ public class ClassGenericEvents<T>
 public static class ClassGenericEventsTests
 {
 	[Test]
+	[RockCreate<ClassGenericEvents<ClassEventArgs>>]
 	public static void CreateUsingGenericType()
 	{
 		var returnValue = new List<string>();
-		var expectations = Rock.Create<ClassGenericEvents<ClassEventArgs>>();
-		expectations.Methods().Foo().RaisesMyEvent(new ClassEventArgs());
+		var expectations = new ClassGenericEventsOfClassEventArgsCreateExpectations();
+		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new ClassEventArgs()));
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

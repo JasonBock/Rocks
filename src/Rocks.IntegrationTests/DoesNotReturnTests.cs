@@ -16,10 +16,11 @@ public class UsesDoesNotReturn
 public static class DoesNotReturnTests
 {
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatHasHandler()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
-		expectations.Methods().VoidMethod().Callback(() => throw new NotImplementedException());
+		var expectations = new UsesDoesNotReturnCreateExpectations();
+		expectations.Methods.VoidMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
@@ -29,10 +30,11 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatDoesNotHaveHandler()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
-		expectations.Methods().VoidMethod();
+		var expectations = new UsesDoesNotReturnCreateExpectations();
+		expectations.Methods.VoidMethod();
 
 		var mock = expectations.Instance();
 
@@ -42,9 +44,10 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithVoidCallThatDoesNotHaveExpectation()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
+		var expectations = new UsesDoesNotReturnCreateExpectations();
 		var mock = expectations.Instance();
 
 		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<NotSupportedException>());
@@ -53,10 +56,11 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatHasHandler()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
-		expectations.Methods().IntMethod().Callback(() => throw new NotImplementedException());
+		var expectations = new UsesDoesNotReturnCreateExpectations();
+		expectations.Methods.IntMethod().Callback(() => throw new NotImplementedException());
 
 		var mock = expectations.Instance();
 
@@ -66,10 +70,11 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatDoesNotHaveHandler()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
-		expectations.Methods().IntMethod().Returns(1);
+		var expectations = new UsesDoesNotReturnCreateExpectations();
+		expectations.Methods.IntMethod().ReturnValue(1);
 
 		var mock = expectations.Instance();
 
@@ -79,9 +84,10 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockCreate<UsesDoesNotReturn>]
 	public static void CreateWithIntCallThatDoesNotHaveExpectation()
 	{
-		var expectations = Rock.Create<UsesDoesNotReturn>();
+		var expectations = new UsesDoesNotReturnCreateExpectations();
 		var mock = expectations.Instance();
 
 		Assert.That(() => mock.IntMethod(), Throws.TypeOf<NotSupportedException>());
@@ -90,16 +96,18 @@ public static class DoesNotReturnTests
 	}
 
 	[Test]
+	[RockMake<UsesDoesNotReturn>]
 	public static void MakeWithVoidCall()
 	{
-		var mock = Rock.Make<UsesDoesNotReturn>().Instance();
+		var mock = new UsesDoesNotReturnMakeExpectations().Instance();
 		Assert.That(() => mock.VoidMethod(), Throws.TypeOf<DoesNotReturnException>());
 	}
 
 	[Test]
+	[RockMake<UsesDoesNotReturn>]
 	public static void MakeWithIntCall()
 	{
-		var mock = Rock.Make<UsesDoesNotReturn>().Instance();
+		var mock = new UsesDoesNotReturnMakeExpectations().Instance();
 		Assert.That(() => mock.IntMethod(), Throws.TypeOf<DoesNotReturnException>());
 	}
 }
