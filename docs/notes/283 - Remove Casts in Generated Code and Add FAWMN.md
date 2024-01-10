@@ -243,8 +243,7 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
     * DONE - Multiple `ref structs`, pointers, and function pointers
 * DONE - Add perf tests to see how generators compare as well as mocking perf
 * DONE - Consider letting `RockAttributeGenerator` target types and methods, may make things more convenient.
-* Update Rocks.IntegrationTests to use new approach
-    * Go through all of them when updated, and add the attributes at the class level, especially after I add open generic support.
+* DONE - Update Rocks.IntegrationTests to use new approach
 * BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work.
 * I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 * Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
