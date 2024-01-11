@@ -81,10 +81,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockVoidMethodWithParams
+					private sealed class Mock
 						: global::MockTests.VoidMethodWithParams
 					{
-						public RockVoidMethodWithParams(global::MockTests.VoidMethodWithParamsCreateExpectations @expectations)
+						public Mock(global::MockTests.VoidMethodWithParamsCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -179,9 +179,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.VoidMethodWithParamsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class VoidMethodWithParamsMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal VoidMethodWithParamsMethodExpectations(global::MockTests.VoidMethodWithParamsCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.VoidMethodWithParamsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.VoidMethodWithParamsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -227,7 +227,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.VoidMethodWithParamsCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.VoidMethodWithParamsCreateExpectations.VoidMethodWithParamsMethodExpectations Methods { get; }
+					internal global::MockTests.VoidMethodWithParamsCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal VoidMethodWithParamsCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -237,7 +237,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockVoidMethodWithParams(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -332,10 +332,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockValueMethodWithParams
+					private sealed class Mock
 						: global::MockTests.ValueMethodWithParams
 					{
-						public RockValueMethodWithParams(global::MockTests.ValueMethodWithParamsCreateExpectations @expectations)
+						public Mock(global::MockTests.ValueMethodWithParamsCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -425,9 +425,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.ValueMethodWithParamsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ValueMethodWithParamsMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ValueMethodWithParamsMethodExpectations(global::MockTests.ValueMethodWithParamsCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ValueMethodWithParamsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ValueMethodWithParamsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -473,7 +473,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.ValueMethodWithParamsCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ValueMethodWithParamsCreateExpectations.ValueMethodWithParamsMethodExpectations Methods { get; }
+					internal global::MockTests.ValueMethodWithParamsCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ValueMethodWithParamsCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -483,7 +483,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockValueMethodWithParams(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -552,11 +552,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveImplementation
+					private sealed class Mock
 						: global::MockTests.IHaveImplementation
 					{
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
-						public RockIHaveImplementation(global::MockTests.IHaveImplementationCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
 							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
 						}
@@ -580,17 +580,17 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
 							: global::MockTests.IHaveImplementation
 						{
-							private readonly RockIHaveImplementation mock;
+							private readonly Mock mock;
 							
-							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(RockIHaveImplementation @mock) =>
+							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(Mock @mock) =>
 								this.mock = @mock;
 						}
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveImplementationMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveImplementationMethodExpectations(global::MockTests.IHaveImplementationCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveImplementationCreateExpectations.Handler0, global::System.Action> Foo()
@@ -603,7 +603,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveImplementationCreateExpectations.IHaveImplementationMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -613,7 +613,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveImplementation(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -682,11 +682,11 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveImplementation
+					private sealed class Mock
 						: global::MockTests.IHaveImplementation
 					{
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
-						public RockIHaveImplementation(global::MockTests.IHaveImplementationCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
 							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
 						}
@@ -712,17 +712,17 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
 							: global::MockTests.IHaveImplementation
 						{
-							private readonly RockIHaveImplementation mock;
+							private readonly Mock mock;
 							
-							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(RockIHaveImplementation @mock) =>
+							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(Mock @mock) =>
 								this.mock = @mock;
 						}
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveImplementationMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveImplementationMethodExpectations(global::MockTests.IHaveImplementationCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveImplementationCreateExpectations.Handler0, global::System.Func<int>, int> Foo()
@@ -735,7 +735,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveImplementationCreateExpectations.IHaveImplementationMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -745,7 +745,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveImplementation(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -838,10 +838,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockHaveImplementation
+					private sealed class Mock
 						: global::MockTests.HaveImplementation
 					{
-						public RockHaveImplementation(global::MockTests.HaveImplementationCreateExpectations @expectations)
+						public Mock(global::MockTests.HaveImplementationCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -922,9 +922,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.HaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class HaveImplementationMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal HaveImplementationMethodExpectations(global::MockTests.HaveImplementationCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.HaveImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.HaveImplementationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -964,7 +964,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.HaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.HaveImplementationCreateExpectations.HaveImplementationMethodExpectations Methods { get; }
+					internal global::MockTests.HaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal HaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -974,7 +974,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockHaveImplementation(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1067,10 +1067,10 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 					}
 					
-					private sealed class RockHaveImplementation
+					private sealed class Mock
 						: global::MockTests.HaveImplementation
 					{
-						public RockHaveImplementation(global::MockTests.HaveImplementationCreateExpectations @expectations)
+						public Mock(global::MockTests.HaveImplementationCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1153,9 +1153,9 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.HaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class HaveImplementationMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal HaveImplementationMethodExpectations(global::MockTests.HaveImplementationCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.HaveImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.HaveImplementationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1195,7 +1195,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private global::MockTests.HaveImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.HaveImplementationCreateExpectations.HaveImplementationMethodExpectations Methods { get; }
+					internal global::MockTests.HaveImplementationCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal HaveImplementationCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1205,7 +1205,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockHaveImplementation(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

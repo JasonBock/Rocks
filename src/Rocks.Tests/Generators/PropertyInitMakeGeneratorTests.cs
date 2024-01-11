@@ -48,13 +48,13 @@ public static class PropertyInitMakeGeneratorTests
 					
 					internal global::MockTests.ITest Instance(global::MockTests.ITestMakeExpectations.ConstructorProperties? @constructorProperties)
 					{
-						return new RockITest(@constructorProperties);
+						return new Mock(@constructorProperties);
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest(ConstructorProperties? @constructorProperties)
+						public Mock(ConstructorProperties? @constructorProperties)
 						{
 							if (@constructorProperties is not null)
 							{
@@ -141,14 +141,14 @@ public static class PropertyInitMakeGeneratorTests
 					internal global::MockTests.Test Instance(global::MockTests.TestMakeExpectations.ConstructorProperties @constructorProperties)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(constructorProperties);
-						return new RockTest(@constructorProperties);
+						return new Mock(@constructorProperties);
 					}
 					
-					private sealed class RockTest
+					private sealed class Mock
 						: global::MockTests.Test
 					{
 						[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
-						public RockTest(ConstructorProperties @constructorProperties)
+						public Mock(ConstructorProperties @constructorProperties)
 						{
 							this.NonNullableValueType = @constructorProperties.NonNullableValueType;
 							this.NullableValueType = @constructorProperties.NullableValueType;

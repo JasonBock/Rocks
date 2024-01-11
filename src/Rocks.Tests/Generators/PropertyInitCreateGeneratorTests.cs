@@ -114,10 +114,10 @@ public static class PropertyInitCreateGeneratorTests
 						}
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest(global::MockTests.ITestCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
+						public Mock(global::MockTests.ITestCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
 						{
 							this.Expectations = @expectations;
 							if (@constructorProperties is not null)
@@ -312,11 +312,11 @@ public static class PropertyInitCreateGeneratorTests
 						
 						private global::MockTests.ITestCreateExpectations Expectations { get; }
 					}
-					internal sealed class ITestPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class ITestPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal ITestPropertyGetterExpectations(global::MockTests.ITestCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Func<int>, int> NonNullableValueType()
@@ -346,9 +346,9 @@ public static class PropertyInitCreateGeneratorTests
 							private global::MockTests.ITestCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class ITestPropertyInitializerExpectations
+						internal sealed class PropertyInitializerExpectations
 						{
-							internal ITestPropertyInitializerExpectations(global::MockTests.ITestCreateExpectations expectations) =>
+							internal PropertyInitializerExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler1, global::System.Action<int>> NonNullableValueType(global::Rocks.Argument<int> @value)
@@ -394,14 +394,14 @@ public static class PropertyInitCreateGeneratorTests
 							private global::MockTests.ITestCreateExpectations Expectations { get; }
 						}
 						
-						internal ITestPropertyExpectations(global::MockTests.ITestCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 							(this.Getters, this.Initializers) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyGetterExpectations Getters { get; }
-						internal global::MockTests.ITestCreateExpectations.ITestPropertyExpectations.ITestPropertyInitializerExpectations Initializers { get; }
+						internal global::MockTests.ITestCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+						internal global::MockTests.ITestCreateExpectations.PropertyExpectations.PropertyInitializerExpectations Initializers { get; }
 					}
 					
-					internal global::MockTests.ITestCreateExpectations.ITestPropertyExpectations Properties { get; }
+					internal global::MockTests.ITestCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal ITestCreateExpectations() =>
 						(this.Properties) = (new(this));
@@ -419,7 +419,7 @@ public static class PropertyInitCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockITest(this, @constructorProperties);
+							var @mock = new Mock(this, @constructorProperties);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -515,11 +515,11 @@ public static class PropertyInitCreateGeneratorTests
 						}
 					}
 					
-					private sealed class RockTest
+					private sealed class Mock
 						: global::MockTests.Test
 					{
 						[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
-						public RockTest(global::MockTests.TestCreateExpectations @expectations, ConstructorProperties @constructorProperties)
+						public Mock(global::MockTests.TestCreateExpectations @expectations, ConstructorProperties @constructorProperties)
 						{
 							this.Expectations = @expectations;
 							this.Data = @constructorProperties.Data;
@@ -601,9 +601,9 @@ public static class PropertyInitCreateGeneratorTests
 						private global::MockTests.TestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class TestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal TestMethodExpectations(global::MockTests.TestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.TestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -643,7 +643,7 @@ public static class PropertyInitCreateGeneratorTests
 						private global::MockTests.TestCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.TestCreateExpectations.TestMethodExpectations Methods { get; }
+					internal global::MockTests.TestCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal TestCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -662,7 +662,7 @@ public static class PropertyInitCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockTest(this, @constructorProperties);
+							var @mock = new Mock(this, @constructorProperties);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

@@ -91,12 +91,12 @@ public static class ShimBuilderGeneratorTests
 					}
 				}
 				
-				private sealed class RockIRuntimeKey
+				private sealed class Mock
 					: global::IRuntimeKey
 				{
 					private readonly global::IKey shimForIKey;
 					private readonly global::IReadOnlyKey shimForIReadOnlyKey;
-					public RockIRuntimeKey(global::IRuntimeKeyCreateExpectations @expectations)
+					public Mock(global::IRuntimeKeyCreateExpectations @expectations)
 					{
 						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey55018818661256234156060084750235742359064106137(this), new ShimIReadOnlyKey550014593303283198411825442751878980310579223223(this));
 					}
@@ -174,9 +174,9 @@ public static class ShimBuilderGeneratorTests
 					private sealed class ShimIKey55018818661256234156060084750235742359064106137
 						: global::IKey
 					{
-						private readonly RockIRuntimeKey mock;
+						private readonly Mock mock;
 						
-						public ShimIKey55018818661256234156060084750235742359064106137(RockIRuntimeKey @mock) =>
+						public ShimIKey55018818661256234156060084750235742359064106137(Mock @mock) =>
 							this.mock = @mock;
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
@@ -193,9 +193,9 @@ public static class ShimBuilderGeneratorTests
 					private sealed class ShimIReadOnlyKey550014593303283198411825442751878980310579223223
 						: global::IReadOnlyKey
 					{
-						private readonly RockIRuntimeKey mock;
+						private readonly Mock mock;
 						
-						public ShimIReadOnlyKey550014593303283198411825442751878980310579223223(RockIRuntimeKey @mock) =>
+						public ShimIReadOnlyKey550014593303283198411825442751878980310579223223(Mock @mock) =>
 							this.mock = @mock;
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> Properties
@@ -206,9 +206,9 @@ public static class ShimBuilderGeneratorTests
 					private global::IRuntimeKeyCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IRuntimeKeyMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IRuntimeKeyMethodExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+					internal MethodExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler0, global::System.Func<global::System.Type>, global::System.Type> GetKeyType()
@@ -228,11 +228,11 @@ public static class ShimBuilderGeneratorTests
 					private global::IRuntimeKeyCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IRuntimeKeyPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IRuntimeKeyPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IRuntimeKeyPropertyGetterExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler2, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties()
@@ -245,16 +245,16 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					
-					internal IRuntimeKeyPropertyExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IRuntimeKeyCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyPropertyExpectations.IRuntimeKeyPropertyGetterExpectations Getters { get; }
+					internal global::IRuntimeKeyCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
-				internal sealed class IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey
+				internal sealed class ExplicitPropertyExpectationsForIReadOnlyKey
 				{
-					internal sealed class IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey
+					internal sealed class ExplicitPropertyGetterExpectationsForIReadOnlyKey
 					{
-						internal IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler3, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties()
@@ -266,15 +266,15 @@ public static class ShimBuilderGeneratorTests
 						private global::IRuntimeKeyCreateExpectations Expectations { get; }
 					}
 					
-					internal IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIReadOnlyKey(global::IRuntimeKeyCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey.IRuntimeKeyExplicitPropertyGetterExpectationsForIReadOnlyKey Getters { get; }
+					internal global::IRuntimeKeyCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyKey.ExplicitPropertyGetterExpectationsForIReadOnlyKey Getters { get; }
 				}
 				
-				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyMethodExpectations Methods { get; }
-				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyPropertyExpectations Properties { get; }
-				internal global::IRuntimeKeyCreateExpectations.IRuntimeKeyExplicitPropertyExpectationsForIReadOnlyKey ExplicitPropertiesForIReadOnlyKey { get; }
+				internal global::IRuntimeKeyCreateExpectations.MethodExpectations Methods { get; }
+				internal global::IRuntimeKeyCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::IRuntimeKeyCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyKey ExplicitPropertiesForIReadOnlyKey { get; }
 				
 				internal IRuntimeKeyCreateExpectations() =>
 					(this.Methods, this.Properties, this.ExplicitPropertiesForIReadOnlyKey) = (new(this), new(this), new(this));
@@ -284,7 +284,7 @@ public static class ShimBuilderGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIRuntimeKey(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -395,11 +395,11 @@ public static class ShimBuilderGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveDims
+				private sealed class Mock
 					: global::IHaveDims
 				{
 					private readonly global::IHaveDims shimForIHaveDims;
-					public RockIHaveDims(global::IHaveDimsCreateExpectations @expectations)
+					public Mock(global::IHaveDimsCreateExpectations @expectations)
 					{
 						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims531557381186657891604647139828315705947108387206(this));
 					}
@@ -529,9 +529,9 @@ public static class ShimBuilderGeneratorTests
 					private sealed class ShimIHaveDims531557381186657891604647139828315705947108387206
 						: global::IHaveDims
 					{
-						private readonly RockIHaveDims mock;
+						private readonly Mock mock;
 						
-						public ShimIHaveDims531557381186657891604647139828315705947108387206(RockIHaveDims @mock) =>
+						public ShimIHaveDims531557381186657891604647139828315705947108387206(Mock @mock) =>
 							this.mock = @mock;
 						
 						public int IAmNotADim() =>
@@ -550,9 +550,9 @@ public static class ShimBuilderGeneratorTests
 					private global::IHaveDimsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IHaveDimsMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IHaveDimsMethodExpectations(global::IHaveDimsCreateExpectations expectations) =>
+					internal MethodExpectations(global::IHaveDimsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler0, global::System.Func<int>, int> IAmADim()
@@ -572,11 +572,11 @@ public static class ShimBuilderGeneratorTests
 					private global::IHaveDimsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IHaveDimsPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IHaveDimsPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IHaveDimsPropertyGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler2, global::System.Func<int>, int> AmADim()
@@ -595,16 +595,16 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					
-					internal IHaveDimsPropertyExpectations(global::IHaveDimsCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IHaveDimsCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IHaveDimsCreateExpectations.IHaveDimsPropertyExpectations.IHaveDimsPropertyGetterExpectations Getters { get; }
+					internal global::IHaveDimsCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
-				internal sealed class IHaveDimsIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class IHaveDimsIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal IHaveDimsIndexerGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::IHaveDimsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler3, global::System.Func<string, int, int>, int> This(global::Rocks.Argument<string> @dimKey, global::Rocks.Argument<int> @dimValue)
@@ -637,15 +637,15 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					
-					internal IHaveDimsIndexerExpectations(global::IHaveDimsCreateExpectations expectations) =>
+					internal IndexerExpectations(global::IHaveDimsCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IHaveDimsCreateExpectations.IHaveDimsIndexerExpectations.IHaveDimsIndexerGetterExpectations Getters { get; }
+					internal global::IHaveDimsCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
 				}
 				
-				internal global::IHaveDimsCreateExpectations.IHaveDimsMethodExpectations Methods { get; }
-				internal global::IHaveDimsCreateExpectations.IHaveDimsPropertyExpectations Properties { get; }
-				internal global::IHaveDimsCreateExpectations.IHaveDimsIndexerExpectations Indexers { get; }
+				internal global::IHaveDimsCreateExpectations.MethodExpectations Methods { get; }
+				internal global::IHaveDimsCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::IHaveDimsCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal IHaveDimsCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
@@ -655,7 +655,7 @@ public static class ShimBuilderGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveDims(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}

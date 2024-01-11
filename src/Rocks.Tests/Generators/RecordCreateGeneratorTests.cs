@@ -87,14 +87,14 @@ public static class RecordCreateGeneratorTests
 						}
 					}
 					
-					private sealed record RockRecordTest
+					private sealed record Mock
 						: global::MockTests.RecordTest
 					{
-						public RockRecordTest(global::MockTests.RecordTestCreateExpectations @expectations)
+						public Mock(global::MockTests.RecordTestCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
-						public RockRecordTest(global::MockTests.RecordTestCreateExpectations @expectations, global::MockTests.RecordTest @original)
+						public Mock(global::MockTests.RecordTestCreateExpectations @expectations, global::MockTests.RecordTest @original)
 							: base(@original)
 						{
 							this.Expectations = @expectations;
@@ -196,9 +196,9 @@ public static class RecordCreateGeneratorTests
 						private global::MockTests.RecordTestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class RecordTestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal RecordTestMethodExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler2, global::System.Action> Foo()
@@ -238,11 +238,11 @@ public static class RecordCreateGeneratorTests
 						private global::MockTests.RecordTestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class RecordTestPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class RecordTestPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal RecordTestPropertyGetterExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler6, global::System.Func<global::System.Type>, global::System.Type> EqualityContract()
@@ -255,14 +255,14 @@ public static class RecordCreateGeneratorTests
 						}
 						
 						
-						internal RecordTestPropertyExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.RecordTestCreateExpectations expectations) =>
 							(this.Getters) = (new(expectations));
 						
-						internal global::MockTests.RecordTestCreateExpectations.RecordTestPropertyExpectations.RecordTestPropertyGetterExpectations Getters { get; }
+						internal global::MockTests.RecordTestCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 					}
 					
-					internal global::MockTests.RecordTestCreateExpectations.RecordTestMethodExpectations Methods { get; }
-					internal global::MockTests.RecordTestCreateExpectations.RecordTestPropertyExpectations Properties { get; }
+					internal global::MockTests.RecordTestCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.RecordTestCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal RecordTestCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
@@ -272,7 +272,7 @@ public static class RecordCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockRecordTest(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -286,7 +286,7 @@ public static class RecordCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockRecordTest(this, @original);
+							var @mock = new Mock(this, @original);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

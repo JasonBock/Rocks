@@ -37,20 +37,20 @@ public static class RecordMakeGeneratorTests
 				{
 					internal global::MockTests.RecordTest Instance()
 					{
-						return new RockRecordTest();
+						return new Mock();
 					}
 					internal global::MockTests.RecordTest Instance(global::MockTests.RecordTest @original)
 					{
-						return new RockRecordTest(@original);
+						return new Mock(@original);
 					}
 					
-					private sealed record RockRecordTest
+					private sealed record Mock
 						: global::MockTests.RecordTest
 					{
-						public RockRecordTest()
+						public Mock()
 						{
 						}
-						public RockRecordTest(global::MockTests.RecordTest @original)
+						public Mock(global::MockTests.RecordTest @original)
 							: base(@original)
 						{
 						}
