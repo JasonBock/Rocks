@@ -68,26 +68,12 @@ public static class IAssemblySymbolExtensionsTests
 	private static void CheckExposesInternalsTo(string sourceCode, bool expectedResult)
 	{
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", new SyntaxTree[] { sourceSyntaxTree },
-			sourceReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		var targetSyntaxTree = CSharpSyntaxTree.ParseText("public class Target { }");
-		var targetReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var targetCompilation = CSharpCompilation.Create("TargetAssembly", new SyntaxTree[] { targetSyntaxTree },
-			targetReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.That(sourceCompilation.Assembly.ExposesInternalsTo(targetCompilation.Assembly), Is.EqualTo(expectedResult));
 	}

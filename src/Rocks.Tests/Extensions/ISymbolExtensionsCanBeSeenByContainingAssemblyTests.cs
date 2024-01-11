@@ -92,15 +92,8 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
-			containingReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
 		{
@@ -122,15 +115,8 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
-			containingReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
 		{
@@ -175,15 +161,8 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
-			containingReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
 		{
@@ -205,15 +184,8 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 		var symbol = ISymbolExtensionsCanBeSeenByContainingAssemblyTests.GetSymbol(code);
 
 		var containingSyntaxTree = CSharpSyntaxTree.ParseText("public class Containing { }");
-		var containingReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			});
 		var containingCompilation = CSharpCompilation.Create(ContainingAssembly, new SyntaxTree[] { containingSyntaxTree },
-			containingReferences, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 		Assert.Multiple(() =>
 		{
@@ -224,11 +196,8 @@ public static class ISymbolExtensionsCanBeSeenByContainingAssemblyTests
 	private static ISymbol GetSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

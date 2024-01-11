@@ -906,13 +906,9 @@ public static class AttributeGeneratorTests
 				(nint Display, nuint Window)? X11 { get; }
 			}
 			""";
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location) as MetadataReference);
-
 		var tupleSyntaxTree = CSharpSyntaxTree.ParseText(tupleCode);
 		var tupleCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { tupleSyntaxTree },
-			references,
+			Shared.References.Value,
 			new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		using var tupleStream = new MemoryStream();
 		tupleCompilation.Emit(tupleStream);
@@ -1036,7 +1032,7 @@ public static class AttributeGeneratorTests
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode) },
 			[],
-			additionalReferences: references.Concat(new[] { tupleReference as MetadataReference })).ConfigureAwait(false);
+			additionalReferences: Shared.References.Value.Concat(new[] { tupleReference as MetadataReference })).ConfigureAwait(false);
 	}
 
 	[Test]

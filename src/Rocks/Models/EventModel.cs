@@ -25,8 +25,7 @@ internal sealed record EventModel
 	  var argsType = "global::System.EventArgs";
 
 	  if (@event.Type is INamedTypeSymbol eventNamedType &&
-		  eventNamedType.DelegateInvokeMethod is not null &&
-		  eventNamedType.DelegateInvokeMethod.Parameters is { Length: 2 })
+		  eventNamedType.DelegateInvokeMethod?.Parameters is { Length: 2 })
 	  {
 		 argsType = eventNamedType.DelegateInvokeMethod.Parameters[1].Type.GetFullyQualifiedName(compilation);
 	  }

@@ -313,11 +313,8 @@ public static class PropertyModelTests
 	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
@@ -330,11 +327,8 @@ public static class PropertyModelTests
 	private static (IPropertySymbol, ITypeSymbol, Compilation) GetSymbolsForIndexerCompilation(string code)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: true));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var typeSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

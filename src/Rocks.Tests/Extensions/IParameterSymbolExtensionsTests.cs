@@ -21,11 +21,8 @@ public static class IParameterSymbolExtensionsTests
 	private static IParameterSymbol GetParameterSymbol(string source)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location));
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+			Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 		var model = compilation.GetSemanticModel(syntaxTree, true);
 
 		var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

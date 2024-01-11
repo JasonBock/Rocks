@@ -314,13 +314,9 @@ public interface IA
 				}
 				""";
 
-			var references = AppDomain.CurrentDomain.GetAssemblies()
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location) as MetadataReference);
-
 			var internalSyntaxTree = CSharpSyntaxTree.ParseText(internalCode);
 			var internalCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { internalSyntaxTree },
-				references,
+				Shared.References.Value,
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 			var externalCode =
@@ -333,7 +329,7 @@ public interface IA
 
 			var externalSyntaxTree = CSharpSyntaxTree.ParseText(externalCode);
 			var externalCompilation = CSharpCompilation.Create("external", new SyntaxTree[] { externalSyntaxTree },
-				references.Concat(new[] { internalCompilation.ToMetadataReference() as MetadataReference }),
+				Shared.References.Value.Concat(new[] { internalCompilation.ToMetadataReference() as MetadataReference }),
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 			var externalModel = externalCompilation.GetSemanticModel(externalSyntaxTree, true);
@@ -348,11 +344,8 @@ public interface IA
 		private static (ImmutableArray<AttributeData>, Compilation) GetAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
-			var references = AppDomain.CurrentDomain.GetAssemblies()
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location));
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
 			var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)
@@ -365,11 +358,8 @@ public interface IA
 		private static (ImmutableArray<AttributeData>, Compilation) GetReturnAttributes(string source)
 		{
 			var syntaxTree = CSharpSyntaxTree.ParseText(source);
-			var references = AppDomain.CurrentDomain.GetAssemblies()
-				.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-				.Select(_ => MetadataReference.CreateFromFile(_.Location));
 			var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
-				references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
+				Shared.References.Value, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 			var model = compilation.GetSemanticModel(syntaxTree, true);
 
 			var methodSyntax = syntaxTree.GetRoot().DescendantNodes(_ => true)

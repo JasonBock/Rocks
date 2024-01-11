@@ -55,9 +55,7 @@ public static class MockModelTests
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(
 			$"public class Target {{ public void Test({targetTypeName} a) {{ }} }}");
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var references = Shared.References.Value
 			.Concat(new[]
 			{
 				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)
@@ -675,9 +673,7 @@ public static class MockModelTests
 		ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var references = Shared.References.Value
 			.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location) });
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: generalDiagnosticOption));

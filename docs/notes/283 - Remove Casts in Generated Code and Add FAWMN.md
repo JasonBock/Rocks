@@ -244,10 +244,30 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
 * DONE - Add perf tests to see how generators compare as well as mocking perf
 * DONE - Consider letting `RockAttributeGenerator` target types and methods, may make things more convenient.
 * DONE - Update Rocks.IntegrationTests to use new approach
-* BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work.
+* DONE - Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
+    * DONE - Note that Expectations is now in just the Rocks anmespace
+* DONE - I feel like I updated the code that is in `INamespaceSymbolExtensionsTests.GetNamespaceSymbol`. I wonder if I can cache things like `references` so I don't keep doing that lookup.
+* DONE (just leave it, it's fine) Can WriteLines() be updated with a Write() + WriteLine()?
 * I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
-* Remove all non-V4 members and rename V4 members to not have V4. This also means I need to search strings to remove it as well.
-* Can WriteLines() be updated with a Write() + WriteLine()?
+
+So, how do I add the extension methods for events?
+
+If the mock type has events, I capture the FQN for each adornment. Then, I generate a static `EventExtensions` class.
+
+For each event
+    For each adornment
+        I create this:
+        
+ ```
+ internal {AdornmentFQN} Raise{EventName}(this {AdornmentFQN} self, {EventArgsName} args) => 
+    self.AddRaiseEvent("{EventName}", args);
+ ```
+
+ This could be a lot of extension methods, but...it's better than passing those strings everywhere.
+
+ Once I do this, change all the integration tests that call `AddRaiseEvent` to use these extension methods. It may be better to change one integration test to ensure it's working correctly after a test with events passes. Then I can update all the broken tests and refactor all the integration tests.
+
+* BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
 * Update documentation
 * Check all TODOs
 * Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?

@@ -472,9 +472,7 @@ public static class NonPublicMembersGeneratorTests
 				internal abstract void CannotSee(string a);
 			}
 			""";
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var sourceReferences = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -509,9 +507,7 @@ public static class NonPublicMembersGeneratorTests
 				protected internal virtual bool OwnsHandle { get; protected set; }
 			}
 			""";
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var sourceReferences = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
@@ -826,13 +822,7 @@ public static class NonPublicMembersGeneratorTests
 				protected internal virtual bool OwnsHandle { get; protected set; }
 			}
 			""";
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			})
+		var sourceReferences = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList(); var sourceSyntaxTree = CSharpSyntaxTree.ParseText(source);
 		var sourceCompilation = CSharpCompilation.Create("internal", new SyntaxTree[] { sourceSyntaxTree },
@@ -922,13 +912,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			})
+		var sourceReferences = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", new SyntaxTree[] { sourceSyntaxTree },
@@ -1324,13 +1308,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		var sourceSyntaxTree = CSharpSyntaxTree.ParseText(sourceCode);
-		var sourceReferences = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ =>
-			{
-				var location = _.Location;
-				return MetadataReference.CreateFromFile(location);
-			})
+		var sourceReferences = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 		var sourceCompilation = CSharpCompilation.Create("SourceAssembly", new SyntaxTree[] { sourceSyntaxTree },

@@ -9,9 +9,7 @@ public static class NamingGeneratorTests
 	[Test]
 	public static async Task CreateWithDuplicateTypeNamesAsync()
 	{
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var references = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 
@@ -192,9 +190,7 @@ public static class NamingGeneratorTests
 	[Test]
 	public static async Task MakeWithDuplicateTypeNamesAsync()
 	{
-		var references = AppDomain.CurrentDomain.GetAssemblies()
-			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+		var references = Shared.References.Value
 			.Cast<MetadataReference>()
 			.ToList();
 

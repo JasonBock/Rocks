@@ -197,7 +197,7 @@ static void TestWithTypes()
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
 			issues.AddRange(createIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
 
-			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
+			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
 			var makeIssues = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
