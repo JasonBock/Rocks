@@ -28,21 +28,7 @@ internal sealed class RockCreateBuilder
 			indentWriter.Indent++;
 		}
 
-		// TODO: I'm not sure these need to be added anymore.
-		// Should try to remove these and see what happens.
-		var requiredNamespaces = new SortedSet<string>
-		{
-			"using Rocks.Extensions;",
-			"using System.Collections.Generic;",
-			"using System.Collections.Immutable;",
-		};
-
 		var wereTypesProjected = MockBuilder.Build(indentWriter, this.MockType);
-
-		if (wereTypesProjected)
-		{
-			requiredNamespaces.Add($"using {(mockNamespace.Length > 0 ? $"{mockNamespace}." : string.Empty)}ProjectionsFor{this.MockType.Type.FlattenedName};");
-		}
 
 		if (mockNamespace.Length > 0)
 		{
@@ -63,7 +49,7 @@ internal sealed class RockCreateBuilder
 			content.AddRange([string.Join(Environment.NewLine, requiredAliases), string.Empty]);
 		}
 
-		content.AddRange([string.Join(Environment.NewLine, requiredNamespaces), string.Empty, writer.ToString()]);
+		content.Add(writer.ToString());
 
 		var text = SourceText.From(
 			string.Join(Environment.NewLine, content),

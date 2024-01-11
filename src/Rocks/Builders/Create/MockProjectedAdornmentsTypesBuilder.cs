@@ -12,9 +12,9 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 
 	internal static string GetProjectedAdornmentsFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = MockProjectedAdornmentsTypesBuilder.GetProjectedAdornmentsName(type);
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
 	}
 
 	internal static string GetProjectedHandlerName(TypeReferenceModel type) =>
@@ -22,9 +22,9 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 
 	internal static string GetProjectedHandlerFullyQualifiedNameName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = MockProjectedAdornmentsTypesBuilder.GetProjectedHandlerName(type);
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type)

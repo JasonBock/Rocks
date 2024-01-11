@@ -10,24 +10,24 @@ internal static class PointerArgTypeBuilder
 	// TODO: Not sure this method is needed anymore...
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.PointerArgProjectedName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}{parameterType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}{parameterType}";
 	}
 
-	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
+	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.PointerArgProjectedEvaluationDelegateName;
 		var parameterType = type.PointerArgParameterType is not null ? $"<{type.PointerArgParameterType}>" : null;
-		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}{parameterType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}{parameterType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var validationDelegateName = type.PointerArgProjectedEvaluationDelegateName;
-		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel);
+		var validationDelegateFullyQualifiedName = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
 		var argName = type.PointerArgProjectedName;
 		var typeName = type.FullyQualifiedName;
 		var parameterType = type.PointerArgParameterType is not null ? 

@@ -34,10 +34,6 @@ public static class AsyncIteratorGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Extensions;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			internal sealed class AsyncEnumerationCreateExpectations
 				: global::Rocks.Expectations
 			{

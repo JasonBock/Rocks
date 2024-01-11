@@ -32,10 +32,6 @@ public static class CastingGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Extensions;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			namespace MockTests
 			{
 				internal sealed class IHaveOpenGenericsOfGuidCreateExpectations

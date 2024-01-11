@@ -8,19 +8,19 @@ internal static class MockProjectedDelegateBuilder
 {
 	internal static string GetProjectedCallbackDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var delegateName = method.ProjectedCallbackDelegateName;
 		var typeArguments = method.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}{typeArguments}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{delegateName}{typeArguments}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var delegateName = method.ProjectedReturnValueDelegateName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{delegateName}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{delegateName}";
 	}
 
 	// TODO: this could go on the MethodModel itself.

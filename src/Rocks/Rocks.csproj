@@ -5,10 +5,6 @@
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<Description>A mocking library based on the Compiler APIs (Roslyn + Mocks)</Description>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
-		<!-- 
-		TODO: This should be set to true, but that creates diagnostics
-		that I don't know how to address.
-		-->
 		<EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>

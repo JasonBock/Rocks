@@ -8,7 +8,9 @@ internal static class MockBuilder
 {
 	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
+		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
+			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
+			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
 
 		writer.WriteLines(
 			$$"""
@@ -18,9 +20,7 @@ internal static class MockBuilder
 			""");
 		writer.Indent++;
 
-		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
-			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
-			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
+		var wereTypesProjected = MockProjectedTypesBuilder.Build(writer, mockType);
 
 		MockHandlerListBuilder.Build(writer, mockType, expectationsFullyQualifiedName);
 		writer.WriteLine();

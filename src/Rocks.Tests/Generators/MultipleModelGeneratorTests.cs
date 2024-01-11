@@ -30,10 +30,6 @@ public static class MultipleModelGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Extensions;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			namespace MockTests
 			{
 				internal sealed class ITargetCreateExpectations

@@ -62,7 +62,7 @@ public static class RefLikeArgTypeBuilderTests
 		var (typeToMock, type, compilation, _) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
 		var name = RefLikeArgTypeBuilder.GetProjectedFullyQualifiedName(
 			new TypeReferenceModel(type, compilation), new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ArgumentForSpanOfint"));
+		Assert.That(name, Is.EqualTo("global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentForSpanOfint"));
 	}
 
 	[Test]
@@ -92,7 +92,7 @@ public static class RefLikeArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
 	[TestCase(
 		"""
 		using System;
@@ -105,13 +105,13 @@ public static class RefLikeArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = RefLikeArgTypeBuilderTests.GetTypeSymbols(code);
 		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }"));
 		var name = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!);
+			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!.Type);
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 

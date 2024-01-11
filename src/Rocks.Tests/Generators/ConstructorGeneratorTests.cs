@@ -109,10 +109,6 @@ public static class ConstructorGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Extensions;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			internal sealed class AnyOfOfstring_intCreateExpectations
 				: global::Rocks.Expectations
 			{

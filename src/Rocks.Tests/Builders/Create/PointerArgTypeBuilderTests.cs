@@ -68,7 +68,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentForOuter_Inner_TargetPointer")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentForOuter_Inner_TargetPointer")]
 	[TestCase(
 		"""
 		namespace Mock 
@@ -89,7 +89,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentForOuter_Inner_TargetOfstringPointer")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentForOuter_Inner_TargetOfstringPointer")]
 	public static void GetProjectedFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, _) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
@@ -149,7 +149,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
 	[TestCase(
 		"""
 		using System;
@@ -162,13 +162,13 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
+		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
 		var invocation = SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("public static void Foo() { }")); 
 		var name = PointerArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(
-			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!);
+			new TypeReferenceModel(type, compilation), MockModel.Create(invocation, typeToMock, model, BuildType.Create, true)!.Type!.Type);
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 

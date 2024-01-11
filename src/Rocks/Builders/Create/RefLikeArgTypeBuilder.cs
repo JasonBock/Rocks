@@ -9,22 +9,22 @@ internal static class RefLikeArgTypeBuilder
 	// TODO: Not sure this method is needed anymore...
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeToMock.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.RefLikeArgProjectedName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
 	}
 
-	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeMockModel typeModel)
+	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForNamespace = $"ProjectionsFor{typeModel.Type.FlattenedName}";
+		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
-		return $"global::{(typeModel.Type.Namespace.Length == 0 ? "" : $"{typeModel.Type.Namespace}.")}{projectionsForNamespace}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)
 	{
 		var validationDelegateName = type.RefLikeArgProjectedEvaluationDelegateName;
-		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel);
+		var validationDelegateFullyQualifiedName = RefLikeArgTypeBuilder.GetProjectedEvaluationDelegateFullyQualifiedName(type, typeModel.Type);
 		var argName = type.RefLikeArgProjectedName;
 		var argConstructorName = type.RefLikeArgConstructorProjectedName;
 		var typeName = type.FullyQualifiedName;

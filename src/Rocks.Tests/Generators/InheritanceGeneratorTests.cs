@@ -42,10 +42,6 @@ public static class InheritanceGeneratorTests
 			
 			#nullable enable
 			
-			using Rocks.Extensions;
-			using System.Collections.Generic;
-			using System.Collections.Immutable;
-			
 			namespace MockTests
 			{
 				internal sealed class JsBinaryOperatorCreateExpectations
