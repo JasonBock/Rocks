@@ -81,10 +81,10 @@ public static class ClassCreateGeneratorTests
 						}
 					}
 					
-					private sealed class RockClassTest
+					private sealed class Mock
 						: global::MockTests.ClassTest
 					{
-						public RockClassTest(global::MockTests.ClassTestCreateExpectations @expectations)
+						public Mock(global::MockTests.ClassTestCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -165,9 +165,9 @@ public static class ClassCreateGeneratorTests
 						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ClassTestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ClassTestMethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -207,7 +207,7 @@ public static class ClassCreateGeneratorTests
 						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ClassTestCreateExpectations.ClassTestMethodExpectations Methods { get; }
+					internal global::MockTests.ClassTestCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ClassTestCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -217,7 +217,7 @@ public static class ClassCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockClassTest(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -268,13 +268,13 @@ public static class ClassCreateGeneratorTests
 				{
 					internal global::MockTests.ClassTest Instance()
 					{
-						return new RockClassTest();
+						return new Mock();
 					}
 					
-					private sealed class RockClassTest
+					private sealed class Mock
 						: global::MockTests.ClassTest
 					{
-						public RockClassTest()
+						public Mock()
 						{
 						}
 						
@@ -381,10 +381,10 @@ public static class ClassCreateGeneratorTests
 						}
 					}
 					
-					private sealed class RockClassTest
+					private sealed class Mock
 						: global::MockTests.ClassTest
 					{
-						public RockClassTest(global::MockTests.ClassTestCreateExpectations @expectations)
+						public Mock(global::MockTests.ClassTestCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -465,9 +465,9 @@ public static class ClassCreateGeneratorTests
 						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ClassTestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ClassTestMethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ClassTestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ClassTestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -507,7 +507,7 @@ public static class ClassCreateGeneratorTests
 						private global::MockTests.ClassTestCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ClassTestCreateExpectations.ClassTestMethodExpectations Methods { get; }
+					internal global::MockTests.ClassTestCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ClassTestCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -517,7 +517,7 @@ public static class ClassCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockClassTest(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -542,13 +542,13 @@ public static class ClassCreateGeneratorTests
 				{
 					internal global::MockTests.ClassTest Instance()
 					{
-						return new RockClassTest();
+						return new Mock();
 					}
 					
-					private sealed class RockClassTest
+					private sealed class Mock
 						: global::MockTests.ClassTest
 					{
-						public RockClassTest()
+						public Mock()
 						{
 						}
 						

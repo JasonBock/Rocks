@@ -102,10 +102,10 @@ public static class InheritanceGeneratorTests
 						}
 					}
 					
-					private sealed class RockJsBinaryOperator
+					private sealed class Mock
 						: global::MockTests.JsBinaryOperator
 					{
-						public RockJsBinaryOperator(global::MockTests.JsBinaryOperatorCreateExpectations @expectations)
+						public Mock(global::MockTests.JsBinaryOperatorCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -217,9 +217,9 @@ public static class InheritanceGeneratorTests
 						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class JsBinaryOperatorMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal JsBinaryOperatorMethodExpectations(global::MockTests.JsBinaryOperatorCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.JsBinaryOperatorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -278,7 +278,7 @@ public static class InheritanceGeneratorTests
 						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.JsBinaryOperatorCreateExpectations.JsBinaryOperatorMethodExpectations Methods { get; }
+					internal global::MockTests.JsBinaryOperatorCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal JsBinaryOperatorCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -288,7 +288,7 @@ public static class InheritanceGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockJsBinaryOperator(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

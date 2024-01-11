@@ -75,10 +75,10 @@ public static class InterfaceGeneratorTests
 					}
 				}
 				
-				private sealed class RockISealed
+				private sealed class Mock
 					: global::ISealed, global::Rocks.IRaiseEvents
 				{
-					public RockISealed(global::ISealedCreateExpectations @expectations)
+					public Mock(global::ISealedCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -169,9 +169,9 @@ public static class InterfaceGeneratorTests
 					private global::ISealedCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISealedMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ISealedMethodExpectations(global::ISealedCreateExpectations expectations) =>
+					internal MethodExpectations(global::ISealedCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> NonSealedMethod()
@@ -184,11 +184,11 @@ public static class InterfaceGeneratorTests
 					private global::ISealedCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISealedPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class ISealedPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal ISealedPropertyGetterExpectations(global::ISealedCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::ISealedCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> NonSealedData()
@@ -200,9 +200,9 @@ public static class InterfaceGeneratorTests
 						private global::ISealedCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ISealedPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal ISealedPropertySetterExpectations(global::ISealedCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::ISealedCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> NonSealedData(global::Rocks.Argument<string> @value)
@@ -218,15 +218,15 @@ public static class InterfaceGeneratorTests
 						private global::ISealedCreateExpectations Expectations { get; }
 					}
 					
-					internal ISealedPropertyExpectations(global::ISealedCreateExpectations expectations) =>
+					internal PropertyExpectations(global::ISealedCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::ISealedCreateExpectations.ISealedPropertyExpectations.ISealedPropertyGetterExpectations Getters { get; }
-					internal global::ISealedCreateExpectations.ISealedPropertyExpectations.ISealedPropertySetterExpectations Setters { get; }
+					internal global::ISealedCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+					internal global::ISealedCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
 				
-				internal global::ISealedCreateExpectations.ISealedMethodExpectations Methods { get; }
-				internal global::ISealedCreateExpectations.ISealedPropertyExpectations Properties { get; }
+				internal global::ISealedCreateExpectations.MethodExpectations Methods { get; }
+				internal global::ISealedCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal ISealedCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
@@ -236,7 +236,7 @@ public static class InterfaceGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockISealed(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -306,10 +306,10 @@ public static class InterfaceGeneratorTests
 					}
 				}
 				
-				private sealed class RockIRequest
+				private sealed class Mock
 					: global::IRequest
 				{
-					public RockIRequest(global::IRequestCreateExpectations @expectations)
+					public Mock(global::IRequestCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -346,9 +346,9 @@ public static class InterfaceGeneratorTests
 					private global::IRequestCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IRequestMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IRequestMethodExpectations(global::IRequestCreateExpectations expectations) =>
+					internal MethodExpectations(global::IRequestCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IRequestCreateExpectations.Handler0, global::System.Action<int>> AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
@@ -367,7 +367,7 @@ public static class InterfaceGeneratorTests
 					private global::IRequestCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IRequestCreateExpectations.IRequestMethodExpectations Methods { get; }
+				internal global::IRequestCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IRequestCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -377,7 +377,7 @@ public static class InterfaceGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIRequest(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -451,10 +451,10 @@ public static class InterfaceGeneratorTests
 						}
 					}
 					
-					private sealed class RockITarget
+					private sealed class Mock
 						: global::MockTests.ITarget
 					{
-						public RockITarget(global::MockTests.ITargetCreateExpectations @expectations)
+						public Mock(global::MockTests.ITargetCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -484,9 +484,9 @@ public static class InterfaceGeneratorTests
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ITargetMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ITargetMethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
@@ -505,7 +505,7 @@ public static class InterfaceGeneratorTests
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ITargetCreateExpectations.ITargetMethodExpectations Methods { get; }
+					internal global::MockTests.ITargetCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ITargetCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -515,7 +515,7 @@ public static class InterfaceGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockITarget(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

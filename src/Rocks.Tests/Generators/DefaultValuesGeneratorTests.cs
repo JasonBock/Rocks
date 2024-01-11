@@ -76,10 +76,10 @@ public static class DefaultValuesGeneratorTests
 						}
 					}
 					
-					private sealed class RockIRequestOfobject
+					private sealed class Mock
 						: global::MockTests.IRequest<object>
 					{
-						public RockIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations @expectations)
+						public Mock(global::MockTests.IRequestOfobjectCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -133,9 +133,9 @@ public static class DefaultValuesGeneratorTests
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IRequestOfobjectMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IRequestOfobjectMethodExpectations(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler0, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>> Send(global::Rocks.Argument<object> @values, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
@@ -157,9 +157,9 @@ public static class DefaultValuesGeneratorTests
 						
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
-					internal sealed class IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject
+					internal sealed class ExplicitMethodExpectationsForIRequestOfobject
 					{
-						internal IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler1, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task> Send(global::Rocks.Argument<object> @message, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
@@ -182,8 +182,8 @@ public static class DefaultValuesGeneratorTests
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IRequestOfobjectCreateExpectations.IRequestOfobjectMethodExpectations Methods { get; }
-					internal global::MockTests.IRequestOfobjectCreateExpectations.IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject ExplicitMethodsForIRequestOfobject { get; }
+					internal global::MockTests.IRequestOfobjectCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.IRequestOfobjectCreateExpectations.ExplicitMethodExpectationsForIRequestOfobject ExplicitMethodsForIRequestOfobject { get; }
 					
 					internal IRequestOfobjectCreateExpectations() =>
 						(this.Methods, this.ExplicitMethodsForIRequestOfobject) = (new(this), new(this));
@@ -193,7 +193,7 @@ public static class DefaultValuesGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIRequestOfobject(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -263,10 +263,10 @@ public static class DefaultValuesGeneratorTests
 					}
 				}
 				
-				private sealed class RockIGenericDefault
+				private sealed class Mock
 					: global::IGenericDefault
 				{
-					public RockIGenericDefault(global::IGenericDefaultCreateExpectations @expectations)
+					public Mock(global::IGenericDefaultCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -306,9 +306,9 @@ public static class DefaultValuesGeneratorTests
 					private global::IGenericDefaultCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IGenericDefaultMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IGenericDefaultMethodExpectations(global::IGenericDefaultCreateExpectations expectations) =>
+					internal MethodExpectations(global::IGenericDefaultCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IGenericDefaultCreateExpectations.Handler0<T>, global::System.Action<T>> Setup<T>(global::Rocks.Argument<T> @initialValue)
@@ -329,7 +329,7 @@ public static class DefaultValuesGeneratorTests
 					private global::IGenericDefaultCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IGenericDefaultCreateExpectations.IGenericDefaultMethodExpectations Methods { get; }
+				internal global::IGenericDefaultCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IGenericDefaultCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -339,7 +339,7 @@ public static class DefaultValuesGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIGenericDefault(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -382,13 +382,13 @@ public static class DefaultValuesGeneratorTests
 			{
 				internal global::IGenericDefault Instance()
 				{
-					return new RockIGenericDefault();
+					return new Mock();
 				}
 				
-				private sealed class RockIGenericDefault
+				private sealed class Mock
 					: global::IGenericDefault
 				{
-					public RockIGenericDefault()
+					public Mock()
 					{
 					}
 					
@@ -456,10 +456,10 @@ public static class DefaultValuesGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUseInfinity
+				private sealed class Mock
 					: global::IUseInfinity
 				{
-					public RockIUseInfinity(global::IUseInfinityCreateExpectations @expectations)
+					public Mock(global::IUseInfinityCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -496,9 +496,9 @@ public static class DefaultValuesGeneratorTests
 					private global::IUseInfinityCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IUseInfinityMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IUseInfinityMethodExpectations(global::IUseInfinityCreateExpectations expectations) =>
+					internal MethodExpectations(global::IUseInfinityCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IUseInfinityCreateExpectations.Handler0, global::System.Action<double>> Use(global::Rocks.Argument<double> @value)
@@ -519,7 +519,7 @@ public static class DefaultValuesGeneratorTests
 					private global::IUseInfinityCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IUseInfinityCreateExpectations.IUseInfinityMethodExpectations Methods { get; }
+				internal global::IUseInfinityCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IUseInfinityCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -529,7 +529,7 @@ public static class DefaultValuesGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUseInfinity(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -572,13 +572,13 @@ public static class DefaultValuesGeneratorTests
 			{
 				internal global::IUseInfinity Instance()
 				{
-					return new RockIUseInfinity();
+					return new Mock();
 				}
 				
-				private sealed class RockIUseInfinity
+				private sealed class Mock
 					: global::IUseInfinity
 				{
-					public RockIUseInfinity()
+					public Mock()
 					{
 					}
 					

@@ -157,15 +157,15 @@ public static class ConstructorGeneratorTests
 					}
 				}
 				
-				private sealed class RockAnyOfOfstring_int
+				private sealed class Mock
 					: global::AnyOf<string, int>
 				{
-					public RockAnyOfOfstring_int(global::AnyOfOfstring_intCreateExpectations @expectations, string @value)
+					public Mock(global::AnyOfOfstring_intCreateExpectations @expectations, string @value)
 						: base(@value)
 					{
 						this.Expectations = @expectations;
 					}
-					public RockAnyOfOfstring_int(global::AnyOfOfstring_intCreateExpectations @expectations, int @value)
+					public Mock(global::AnyOfOfstring_intCreateExpectations @expectations, int @value)
 						: base(@value)
 					{
 						this.Expectations = @expectations;
@@ -249,9 +249,9 @@ public static class ConstructorGeneratorTests
 					private global::AnyOfOfstring_intCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class AnyOfOfstring_intMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal AnyOfOfstring_intMethodExpectations(global::AnyOfOfstring_intCreateExpectations expectations) =>
+					internal MethodExpectations(global::AnyOfOfstring_intCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -291,7 +291,7 @@ public static class ConstructorGeneratorTests
 					private global::AnyOfOfstring_intCreateExpectations Expectations { get; }
 				}
 				
-				internal global::AnyOfOfstring_intCreateExpectations.AnyOfOfstring_intMethodExpectations Methods { get; }
+				internal global::AnyOfOfstring_intCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal AnyOfOfstring_intCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -301,7 +301,7 @@ public static class ConstructorGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockAnyOfOfstring_int(this, @value);
+						var @mock = new Mock(this, @value);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -315,7 +315,7 @@ public static class ConstructorGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockAnyOfOfstring_int(this, @value);
+						var @mock = new Mock(this, @value);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}

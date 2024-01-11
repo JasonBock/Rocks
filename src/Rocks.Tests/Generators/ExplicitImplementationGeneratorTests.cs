@@ -79,10 +79,10 @@ public static class ExplicitImplementationGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHtmlMediaElement
+					private sealed class Mock
 						: global::MockTests.IHtmlMediaElement, global::Rocks.IRaiseEvents
 					{
-						public RockIHtmlMediaElement(global::MockTests.IHtmlMediaElementCreateExpectations @expectations)
+						public Mock(global::MockTests.IHtmlMediaElementCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -136,9 +136,9 @@ public static class ExplicitImplementationGeneratorTests
 						private global::MockTests.IHtmlMediaElementCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHtmlMediaElementMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHtmlMediaElementMethodExpectations(global::MockTests.IHtmlMediaElementCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHtmlMediaElementCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> Foo()
@@ -151,7 +151,7 @@ public static class ExplicitImplementationGeneratorTests
 						private global::MockTests.IHtmlMediaElementCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHtmlMediaElementCreateExpectations.IHtmlMediaElementMethodExpectations Methods { get; }
+					internal global::MockTests.IHtmlMediaElementCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHtmlMediaElementCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -161,7 +161,7 @@ public static class ExplicitImplementationGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHtmlMediaElement(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -234,13 +234,13 @@ public static class ExplicitImplementationGeneratorTests
 				{
 					internal global::MockTests.IHtmlMediaElement Instance()
 					{
-						return new RockIHtmlMediaElement();
+						return new Mock();
 					}
 					
-					private sealed class RockIHtmlMediaElement
+					private sealed class Mock
 						: global::MockTests.IHtmlMediaElement
 					{
-						public RockIHtmlMediaElement()
+						public Mock()
 						{
 						}
 						
@@ -356,10 +356,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 				
-				private sealed class RockILeftRight
+				private sealed class Mock
 					: global::ILeftRight
 				{
-					public RockILeftRight(global::ILeftRightCreateExpectations @expectations)
+					public Mock(global::ILeftRightCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -457,11 +457,11 @@ public static class ExplicitImplementationGeneratorTests
 					
 					private global::ILeftRightCreateExpectations Expectations { get; }
 				}
-				internal sealed class ILeftRightExplicitPropertyExpectationsForILeft
+				internal sealed class ExplicitPropertyExpectationsForILeft
 				{
-					internal sealed class ILeftRightExplicitPropertyGetterExpectationsForILeft
+					internal sealed class ExplicitPropertyGetterExpectationsForILeft
 					{
-						internal ILeftRightExplicitPropertyGetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler0, global::System.Func<global::Values.Information>, global::Values.Information> Value()
@@ -472,9 +472,9 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						private global::ILeftRightCreateExpectations Expectations { get; }
 					}
-					internal sealed class ILeftRightExplicitPropertySetterExpectationsForILeft
+					internal sealed class ExplicitPropertySetterExpectationsForILeft
 					{
-						internal ILeftRightExplicitPropertySetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+						internal ExplicitPropertySetterExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler1, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
@@ -490,17 +490,17 @@ public static class ExplicitImplementationGeneratorTests
 						private global::ILeftRightCreateExpectations Expectations { get; }
 					}
 					
-					internal ILeftRightExplicitPropertyExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForILeft(global::ILeftRightCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft.ILeftRightExplicitPropertyGetterExpectationsForILeft Getters { get; }
-					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft.ILeftRightExplicitPropertySetterExpectationsForILeft Setters { get; }
+					internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForILeft.ExplicitPropertyGetterExpectationsForILeft Getters { get; }
+					internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForILeft.ExplicitPropertySetterExpectationsForILeft Setters { get; }
 				}
-				internal sealed class ILeftRightExplicitPropertyExpectationsForIRight
+				internal sealed class ExplicitPropertyExpectationsForIRight
 				{
-					internal sealed class ILeftRightExplicitPropertyGetterExpectationsForIRight
+					internal sealed class ExplicitPropertyGetterExpectationsForIRight
 					{
-						internal ILeftRightExplicitPropertyGetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler2, global::System.Func<global::Values.Information>, global::Values.Information> Value()
@@ -511,9 +511,9 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						private global::ILeftRightCreateExpectations Expectations { get; }
 					}
-					internal sealed class ILeftRightExplicitPropertySetterExpectationsForIRight
+					internal sealed class ExplicitPropertySetterExpectationsForIRight
 					{
-						internal ILeftRightExplicitPropertySetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+						internal ExplicitPropertySetterExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler3, global::System.Action<global::Values.Information>> Value(global::Rocks.Argument<global::Values.Information> @value)
@@ -529,15 +529,15 @@ public static class ExplicitImplementationGeneratorTests
 						private global::ILeftRightCreateExpectations Expectations { get; }
 					}
 					
-					internal ILeftRightExplicitPropertyExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIRight(global::ILeftRightCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight.ILeftRightExplicitPropertyGetterExpectationsForIRight Getters { get; }
-					internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight.ILeftRightExplicitPropertySetterExpectationsForIRight Setters { get; }
+					internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForIRight.ExplicitPropertyGetterExpectationsForIRight Getters { get; }
+					internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForIRight.ExplicitPropertySetterExpectationsForIRight Setters { get; }
 				}
 				
-				internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForILeft ExplicitPropertiesForILeft { get; }
-				internal global::ILeftRightCreateExpectations.ILeftRightExplicitPropertyExpectationsForIRight ExplicitPropertiesForIRight { get; }
+				internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForILeft ExplicitPropertiesForILeft { get; }
+				internal global::ILeftRightCreateExpectations.ExplicitPropertyExpectationsForIRight ExplicitPropertiesForIRight { get; }
 				
 				internal ILeftRightCreateExpectations() =>
 					(this.ExplicitPropertiesForILeft, this.ExplicitPropertiesForIRight) = (new(this), new(this));
@@ -547,7 +547,7 @@ public static class ExplicitImplementationGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockILeftRight(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -632,10 +632,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 				
-				private sealed class RockIIterableOfstring
+				private sealed class Mock
 					: global::IIterable<string>
 				{
-					public RockIIterableOfstring(global::IIterableOfstringCreateExpectations @expectations)
+					public Mock(global::IIterableOfstringCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -673,9 +673,9 @@ public static class ExplicitImplementationGeneratorTests
 					private global::IIterableOfstringCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IIterableOfstringMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IIterableOfstringMethodExpectations(global::IIterableOfstringCreateExpectations expectations) =>
+					internal MethodExpectations(global::IIterableOfstringCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler0, global::System.Func<global::IIterator<string>>, global::IIterator<string>> GetIterator()
@@ -687,9 +687,9 @@ public static class ExplicitImplementationGeneratorTests
 					
 					private global::IIterableOfstringCreateExpectations Expectations { get; }
 				}
-				internal sealed class IIterableOfstringExplicitMethodExpectationsForIIterable
+				internal sealed class ExplicitMethodExpectationsForIIterable
 				{
-					internal IIterableOfstringExplicitMethodExpectationsForIIterable(global::IIterableOfstringCreateExpectations expectations) =>
+					internal ExplicitMethodExpectationsForIIterable(global::IIterableOfstringCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
 					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler1, global::System.Func<global::IIterator>, global::IIterator> GetIterator()
@@ -702,8 +702,8 @@ public static class ExplicitImplementationGeneratorTests
 					private global::IIterableOfstringCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IIterableOfstringCreateExpectations.IIterableOfstringMethodExpectations Methods { get; }
-				internal global::IIterableOfstringCreateExpectations.IIterableOfstringExplicitMethodExpectationsForIIterable ExplicitMethodsForIIterable { get; }
+				internal global::IIterableOfstringCreateExpectations.MethodExpectations Methods { get; }
+				internal global::IIterableOfstringCreateExpectations.ExplicitMethodExpectationsForIIterable ExplicitMethodsForIIterable { get; }
 				
 				internal IIterableOfstringCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIIterable) = (new(this), new(this));
@@ -713,7 +713,7 @@ public static class ExplicitImplementationGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIIterableOfstring(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -783,10 +783,10 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 				
-				private sealed class RockISetupList
+				private sealed class Mock
 					: global::ISetupList
 				{
-					public RockISetupList(global::ISetupListCreateExpectations @expectations)
+					public Mock(global::ISetupListCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -824,9 +824,9 @@ public static class ExplicitImplementationGeneratorTests
 					private global::ISetupListCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISetupListMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ISetupListMethodExpectations(global::ISetupListCreateExpectations expectations) =>
+					internal MethodExpectations(global::ISetupListCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler0, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>> GetEnumerator()
@@ -838,9 +838,9 @@ public static class ExplicitImplementationGeneratorTests
 					
 					private global::ISetupListCreateExpectations Expectations { get; }
 				}
-				internal sealed class ISetupListExplicitMethodExpectationsForIEnumerable
+				internal sealed class ExplicitMethodExpectationsForIEnumerable
 				{
-					internal ISetupListExplicitMethodExpectationsForIEnumerable(global::ISetupListCreateExpectations expectations) =>
+					internal ExplicitMethodExpectationsForIEnumerable(global::ISetupListCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
 					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler1, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator> GetEnumerator()
@@ -853,8 +853,8 @@ public static class ExplicitImplementationGeneratorTests
 					private global::ISetupListCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ISetupListCreateExpectations.ISetupListMethodExpectations Methods { get; }
-				internal global::ISetupListCreateExpectations.ISetupListExplicitMethodExpectationsForIEnumerable ExplicitMethodsForIEnumerable { get; }
+				internal global::ISetupListCreateExpectations.MethodExpectations Methods { get; }
+				internal global::ISetupListCreateExpectations.ExplicitMethodExpectationsForIEnumerable ExplicitMethodsForIEnumerable { get; }
 				
 				internal ISetupListCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIEnumerable) = (new(this), new(this));
@@ -864,7 +864,7 @@ public static class ExplicitImplementationGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockISetupList(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -908,13 +908,13 @@ public static class ExplicitImplementationGeneratorTests
 			{
 				internal global::ISetupList Instance()
 				{
-					return new RockISetupList();
+					return new Mock();
 				}
 				
-				private sealed class RockISetupList
+				private sealed class Mock
 					: global::ISetupList
 				{
-					public RockISetupList()
+					public Mock()
 					{
 					}
 					
@@ -977,13 +977,13 @@ public static class ExplicitImplementationGeneratorTests
 			{
 				internal global::IIterable<string> Instance()
 				{
-					return new RockIIterableOfstring();
+					return new Mock();
 				}
 				
-				private sealed class RockIIterableOfstring
+				private sealed class Mock
 					: global::IIterable<string>
 				{
-					public RockIIterableOfstring()
+					public Mock()
 					{
 					}
 					

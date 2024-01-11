@@ -68,10 +68,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						}
 					}
 					
-					private sealed class RockStaticToString
+					private sealed class Mock
 						: global::MockTests.StaticToString
 					{
-						public RockStaticToString(global::MockTests.StaticToStringCreateExpectations @expectations)
+						public Mock(global::MockTests.StaticToStringCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -120,9 +120,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.StaticToStringCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class StaticToStringMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal StaticToStringMethodExpectations(global::MockTests.StaticToStringCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.StaticToStringCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.StaticToStringCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -148,7 +148,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.StaticToStringCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.StaticToStringCreateExpectations.StaticToStringMethodExpectations Methods { get; }
+					internal global::MockTests.StaticToStringCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal StaticToStringCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -158,7 +158,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockStaticToString(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -208,13 +208,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 				{
 					internal global::MockTests.StaticToString Instance()
 					{
-						return new RockStaticToString();
+						return new Mock();
 					}
 					
-					private sealed class RockStaticToString
+					private sealed class Mock
 						: global::MockTests.StaticToString
 					{
-						public RockStaticToString()
+						public Mock()
 						{
 						}
 						
@@ -311,10 +311,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						}
 					}
 					
-					private sealed class RockIMatchObjectOfobject
+					private sealed class Mock
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations @expectations)
+						public Mock(global::MockTests.IMatchObjectOfobjectCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -382,9 +382,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject
+					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfobject
 					{
-						internal IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @other)
@@ -425,7 +425,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
+					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
 					
 					internal IMatchObjectOfobjectCreateExpectations() =>
 						(this.ExplicitMethodsForIMatchObjectOfobject) = (new(this));
@@ -435,7 +435,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIMatchObjectOfobject(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -487,13 +487,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 				{
 					internal global::MockTests.IMatchObject<object> Instance()
 					{
-						return new RockIMatchObjectOfobject();
+						return new Mock();
 					}
 					
-					private sealed class RockIMatchObjectOfobject
+					private sealed class Mock
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject()
+						public Mock()
 						{
 						}
 						
@@ -594,10 +594,10 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						}
 					}
 					
-					private sealed class RockIMatchObjectOfobject
+					private sealed class Mock
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations @expectations)
+						public Mock(global::MockTests.IMatchObjectOfobjectCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -665,9 +665,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject
+					internal sealed class ExplicitMethodExpectationsForIMatchObjectOfobject
 					{
-						internal IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIMatchObjectOfobject(global::MockTests.IMatchObjectOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0, global::System.Func<object?, string>, string> Equals(global::Rocks.Argument<object?> @other)
@@ -708,7 +708,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						private global::MockTests.IMatchObjectOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.IMatchObjectOfobjectExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
+					internal global::MockTests.IMatchObjectOfobjectCreateExpectations.ExplicitMethodExpectationsForIMatchObjectOfobject ExplicitMethodsForIMatchObjectOfobject { get; }
 					
 					internal IMatchObjectOfobjectCreateExpectations() =>
 						(this.ExplicitMethodsForIMatchObjectOfobject) = (new(this));
@@ -718,7 +718,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIMatchObjectOfobject(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -770,13 +770,13 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 				{
 					internal global::MockTests.IMatchObject<object> Instance()
 					{
-						return new RockIMatchObjectOfobject();
+						return new Mock();
 					}
 					
-					private sealed class RockIMatchObjectOfobject
+					private sealed class Mock
 						: global::MockTests.IMatchObject<object>
 					{
-						public RockIMatchObjectOfobject()
+						public Mock()
 						{
 						}
 						

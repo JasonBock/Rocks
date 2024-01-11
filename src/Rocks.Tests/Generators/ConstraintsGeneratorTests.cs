@@ -78,10 +78,10 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockBaseStuff
+				private sealed class Mock
 					: global::BaseStuff
 				{
-					public RockBaseStuff(global::BaseStuffCreateExpectations @expectations)
+					public Mock(global::BaseStuffCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -175,9 +175,9 @@ public static class ConstraintsGeneratorTests
 					private global::BaseStuffCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class BaseStuffMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal BaseStuffMethodExpectations(global::BaseStuffCreateExpectations expectations) =>
+					internal MethodExpectations(global::BaseStuffCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -223,7 +223,7 @@ public static class ConstraintsGeneratorTests
 					private global::BaseStuffCreateExpectations Expectations { get; }
 				}
 				
-				internal global::BaseStuffCreateExpectations.BaseStuffMethodExpectations Methods { get; }
+				internal global::BaseStuffCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal BaseStuffCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -233,7 +233,7 @@ public static class ConstraintsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockBaseStuff(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -280,7 +280,7 @@ public static class ConstraintsGeneratorTests
 			internal sealed class INeedDelegateCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForINeedDelegate
+				internal static class Projections
 				{
 					internal delegate void Callback_592396125302095547400633258221535774913220381582<T>(ref int @a, global::Frame<T> @frame) where T : unmanaged, global::IDot<T>;
 				}
@@ -288,7 +288,7 @@ public static class ConstraintsGeneratorTests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0<T>
-					: global::Rocks.Handler<global::INeedDelegateCreateExpectations.ProjectionsForINeedDelegate.Callback_592396125302095547400633258221535774913220381582<T>>
+					: global::Rocks.Handler<global::INeedDelegateCreateExpectations.Projections.Callback_592396125302095547400633258221535774913220381582<T>>
 					where T : unmanaged, global::IDot<T>
 				{
 					public global::Rocks.Argument<int> @a { get; set; }
@@ -314,10 +314,10 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockINeedDelegate
+				private sealed class Mock
 					: global::INeedDelegate
 				{
-					public RockINeedDelegate(global::INeedDelegateCreateExpectations @expectations)
+					public Mock(global::INeedDelegateCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -359,12 +359,12 @@ public static class ConstraintsGeneratorTests
 					private global::INeedDelegateCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class INeedDelegateMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal INeedDelegateMethodExpectations(global::INeedDelegateCreateExpectations expectations) =>
+					internal MethodExpectations(global::INeedDelegateCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::INeedDelegateCreateExpectations.Handler0<T>, global::INeedDelegateCreateExpectations.ProjectionsForINeedDelegate.Callback_592396125302095547400633258221535774913220381582<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
+					internal global::Rocks.Adornments<global::INeedDelegateCreateExpectations.Handler0<T>, global::INeedDelegateCreateExpectations.Projections.Callback_592396125302095547400633258221535774913220381582<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@frame);
@@ -382,7 +382,7 @@ public static class ConstraintsGeneratorTests
 					private global::INeedDelegateCreateExpectations Expectations { get; }
 				}
 				
-				internal global::INeedDelegateCreateExpectations.INeedDelegateMethodExpectations Methods { get; }
+				internal global::INeedDelegateCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal INeedDelegateCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -392,7 +392,7 @@ public static class ConstraintsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockINeedDelegate(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -521,10 +521,10 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockITypeConstraints
+				private sealed class Mock
 					: global::ITypeConstraints
 				{
-					public RockITypeConstraints(global::ITypeConstraintsCreateExpectations @expectations)
+					public Mock(global::ITypeConstraintsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -718,9 +718,9 @@ public static class ConstraintsGeneratorTests
 					private global::ITypeConstraintsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ITypeConstraintsMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ITypeConstraintsMethodExpectations(global::ITypeConstraintsCreateExpectations expectations) =>
+					internal MethodExpectations(global::ITypeConstraintsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler0<T>, global::System.Action> HasUnmanaged<T>() where T : unmanaged
@@ -788,7 +788,7 @@ public static class ConstraintsGeneratorTests
 					private global::ITypeConstraintsCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ITypeConstraintsCreateExpectations.ITypeConstraintsMethodExpectations Methods { get; }
+				internal global::ITypeConstraintsCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ITypeConstraintsCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -798,7 +798,7 @@ public static class ConstraintsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockITypeConstraints(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -852,13 +852,13 @@ public static class ConstraintsGeneratorTests
 			{
 				internal global::ITypeConstraints Instance()
 				{
-					return new RockITypeConstraints();
+					return new Mock();
 				}
 				
-				private sealed class RockITypeConstraints
+				private sealed class Mock
 					: global::ITypeConstraints
 				{
-					public RockITypeConstraints()
+					public Mock()
 					{
 					}
 					
@@ -1035,10 +1035,10 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockTypeConstraints
+				private sealed class Mock
 					: global::TypeConstraints
 				{
-					public RockTypeConstraints(global::TypeConstraintsCreateExpectations @expectations)
+					public Mock(global::TypeConstraintsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1289,9 +1289,9 @@ public static class ConstraintsGeneratorTests
 					private global::TypeConstraintsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class TypeConstraintsMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal TypeConstraintsMethodExpectations(global::TypeConstraintsCreateExpectations expectations) =>
+					internal MethodExpectations(global::TypeConstraintsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1386,7 +1386,7 @@ public static class ConstraintsGeneratorTests
 					private global::TypeConstraintsCreateExpectations Expectations { get; }
 				}
 				
-				internal global::TypeConstraintsCreateExpectations.TypeConstraintsMethodExpectations Methods { get; }
+				internal global::TypeConstraintsCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal TypeConstraintsCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1396,7 +1396,7 @@ public static class ConstraintsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockTypeConstraints(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1450,13 +1450,13 @@ public static class ConstraintsGeneratorTests
 			{
 				internal global::TypeConstraints Instance()
 				{
-					return new RockTypeConstraints();
+					return new Mock();
 				}
 				
-				private sealed class RockTypeConstraints
+				private sealed class Mock
 					: global::TypeConstraints
 				{
-					public RockTypeConstraints()
+					public Mock()
 					{
 					}
 					
@@ -1569,10 +1569,10 @@ public static class ConstraintsGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUnmanagedValue
+				private sealed class Mock
 					: global::IUnmanagedValue
 				{
-					public RockIUnmanagedValue(global::IUnmanagedValueCreateExpectations @expectations)
+					public Mock(global::IUnmanagedValueCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1613,9 +1613,9 @@ public static class ConstraintsGeneratorTests
 					private global::IUnmanagedValueCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IUnmanagedValueMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IUnmanagedValueMethodExpectations(global::IUnmanagedValueCreateExpectations expectations) =>
+					internal MethodExpectations(global::IUnmanagedValueCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IUnmanagedValueCreateExpectations.Handler0<TValue>, global::System.Action<global::Value<TValue>>> Use<TValue>(global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, global::IValue<TValue>
@@ -1634,7 +1634,7 @@ public static class ConstraintsGeneratorTests
 					private global::IUnmanagedValueCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IUnmanagedValueCreateExpectations.IUnmanagedValueMethodExpectations Methods { get; }
+				internal global::IUnmanagedValueCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IUnmanagedValueCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1644,7 +1644,7 @@ public static class ConstraintsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUnmanagedValue(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1740,10 +1740,10 @@ public static class ConstraintsGeneratorTests
 						}
 					}
 					
-					private sealed class RockThingOfstring
+					private sealed class Mock
 						: global::MockTests.Thing<string>
 					{
-						public RockThingOfstring(global::MockTests.ThingOfstringCreateExpectations @expectations)
+						public Mock(global::MockTests.ThingOfstringCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1834,9 +1834,9 @@ public static class ConstraintsGeneratorTests
 						private global::MockTests.ThingOfstringCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ThingOfstringMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ThingOfstringMethodExpectations(global::MockTests.ThingOfstringCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ThingOfstringCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1876,7 +1876,7 @@ public static class ConstraintsGeneratorTests
 						private global::MockTests.ThingOfstringCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ThingOfstringCreateExpectations.ThingOfstringMethodExpectations Methods { get; }
+					internal global::MockTests.ThingOfstringCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ThingOfstringCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1886,7 +1886,7 @@ public static class ConstraintsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockThingOfstring(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

@@ -67,10 +67,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 				
-				private sealed class RockIMessagePublishTopologyConfigurator
+				private sealed class Mock
 					: global::IMessagePublishTopologyConfigurator
 				{
-					public RockIMessagePublishTopologyConfigurator(global::IMessagePublishTopologyConfiguratorCreateExpectations @expectations)
+					public Mock(global::IMessagePublishTopologyConfiguratorCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -126,11 +126,11 @@ public static class PropertyGeneratorTests
 					
 					private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
 				}
-				internal sealed class IMessagePublishTopologyConfiguratorPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IMessagePublishTopologyConfiguratorPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal IMessagePublishTopologyConfiguratorPropertySetterExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0, global::System.Action<bool>> Exclude(global::Rocks.Argument<bool> @value)
@@ -146,16 +146,16 @@ public static class PropertyGeneratorTests
 						private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
 					}
 					
-					internal IMessagePublishTopologyConfiguratorPropertyExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
 						(this.Setters) = (new(expectations));
 					
-					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorPropertyExpectations.IMessagePublishTopologyConfiguratorPropertySetterExpectations Setters { get; }
+					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
-				internal sealed class IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology
+				internal sealed class ExplicitPropertyExpectationsForIMessagePublishTopology
 				{
-					internal sealed class IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology
+					internal sealed class ExplicitPropertyGetterExpectationsForIMessagePublishTopology
 					{
-						internal IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1, global::System.Func<bool>, bool> Exclude()
@@ -167,14 +167,14 @@ public static class PropertyGeneratorTests
 						private global::IMessagePublishTopologyConfiguratorCreateExpectations Expectations { get; }
 					}
 					
-					internal IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIMessagePublishTopology(global::IMessagePublishTopologyConfiguratorCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology.IMessagePublishTopologyConfiguratorExplicitPropertyGetterExpectationsForIMessagePublishTopology Getters { get; }
+					internal global::IMessagePublishTopologyConfiguratorCreateExpectations.ExplicitPropertyExpectationsForIMessagePublishTopology.ExplicitPropertyGetterExpectationsForIMessagePublishTopology Getters { get; }
 				}
 				
-				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorPropertyExpectations Properties { get; }
-				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.IMessagePublishTopologyConfiguratorExplicitPropertyExpectationsForIMessagePublishTopology ExplicitPropertiesForIMessagePublishTopology { get; }
+				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::IMessagePublishTopologyConfiguratorCreateExpectations.ExplicitPropertyExpectationsForIMessagePublishTopology ExplicitPropertiesForIMessagePublishTopology { get; }
 				
 				internal IMessagePublishTopologyConfiguratorCreateExpectations() =>
 					(this.Properties, this.ExplicitPropertiesForIMessagePublishTopology) = (new(this), new(this));
@@ -184,7 +184,7 @@ public static class PropertyGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIMessagePublishTopologyConfigurator(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -293,10 +293,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 				
-				private sealed class RockPrivatePublicProperties
+				private sealed class Mock
 					: global::PrivatePublicProperties
 				{
-					public RockPrivatePublicProperties(global::PrivatePublicPropertiesCreateExpectations @expectations)
+					public Mock(global::PrivatePublicPropertiesCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -456,9 +456,9 @@ public static class PropertyGeneratorTests
 					private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class PrivatePublicPropertiesMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal PrivatePublicPropertiesMethodExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+					internal MethodExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -491,11 +491,11 @@ public static class PropertyGeneratorTests
 					private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class PrivatePublicPropertiesPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class PrivatePublicPropertiesPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal PrivatePublicPropertiesPropertySetterExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet1(global::Rocks.Argument<string?> @value)
@@ -531,14 +531,14 @@ public static class PropertyGeneratorTests
 						private global::PrivatePublicPropertiesCreateExpectations Expectations { get; }
 					}
 					
-					internal PrivatePublicPropertiesPropertyExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
+					internal PropertyExpectations(global::PrivatePublicPropertiesCreateExpectations expectations) =>
 						(this.Setters) = (new(expectations));
 					
-					internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesPropertyExpectations.PrivatePublicPropertiesPropertySetterExpectations Setters { get; }
+					internal global::PrivatePublicPropertiesCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
 				
-				internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesMethodExpectations Methods { get; }
-				internal global::PrivatePublicPropertiesCreateExpectations.PrivatePublicPropertiesPropertyExpectations Properties { get; }
+				internal global::PrivatePublicPropertiesCreateExpectations.MethodExpectations Methods { get; }
+				internal global::PrivatePublicPropertiesCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal PrivatePublicPropertiesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
@@ -548,7 +548,7 @@ public static class PropertyGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockPrivatePublicProperties(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -639,10 +639,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 				
-				private sealed class RockPrivatePublicProperty
+				private sealed class Mock
 					: global::PrivatePublicProperty
 				{
-					public RockPrivatePublicProperty(global::PrivatePublicPropertyCreateExpectations @expectations)
+					public Mock(global::PrivatePublicPropertyCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -740,9 +740,9 @@ public static class PropertyGeneratorTests
 					private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class PrivatePublicPropertyMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal PrivatePublicPropertyMethodExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+					internal MethodExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -775,11 +775,11 @@ public static class PropertyGeneratorTests
 					private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class PrivatePublicPropertyPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class PrivatePublicPropertyPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal PrivatePublicPropertyPropertySetterExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet(global::Rocks.Argument<string?> @value)
@@ -795,14 +795,14 @@ public static class PropertyGeneratorTests
 						private global::PrivatePublicPropertyCreateExpectations Expectations { get; }
 					}
 					
-					internal PrivatePublicPropertyPropertyExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
+					internal PropertyExpectations(global::PrivatePublicPropertyCreateExpectations expectations) =>
 						(this.Setters) = (new(expectations));
 					
-					internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyPropertyExpectations.PrivatePublicPropertyPropertySetterExpectations Setters { get; }
+					internal global::PrivatePublicPropertyCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
 				
-				internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyMethodExpectations Methods { get; }
-				internal global::PrivatePublicPropertyCreateExpectations.PrivatePublicPropertyPropertyExpectations Properties { get; }
+				internal global::PrivatePublicPropertyCreateExpectations.MethodExpectations Methods { get; }
+				internal global::PrivatePublicPropertyCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal PrivatePublicPropertyCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
@@ -812,7 +812,7 @@ public static class PropertyGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockPrivatePublicProperty(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -949,10 +949,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 				
-				private sealed class RockMixedIndexers
+				private sealed class Mock
 					: global::MixedIndexers
 				{
-					public RockMixedIndexers(global::MixedIndexersCreateExpectations @expectations)
+					public Mock(global::MixedIndexersCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1169,9 +1169,9 @@ public static class PropertyGeneratorTests
 					private global::MixedIndexersCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MixedIndexersMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal MixedIndexersMethodExpectations(global::MixedIndexersCreateExpectations expectations) =>
+					internal MethodExpectations(global::MixedIndexersCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1204,11 +1204,11 @@ public static class PropertyGeneratorTests
 					private global::MixedIndexersCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MixedIndexersIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class MixedIndexersIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal MixedIndexersIndexerGetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler3, global::System.Func<int, string?>, string?> This(global::Rocks.Argument<int> @index)
@@ -1250,9 +1250,9 @@ public static class PropertyGeneratorTests
 						private global::MixedIndexersCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class MixedIndexersIndexerSetterExpectations
+					internal sealed class IndexerSetterExpectations
 					{
-						internal MixedIndexersIndexerSetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
+						internal IndexerSetterExpectations(global::MixedIndexersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler6, global::System.Action<long, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<long> @index)
@@ -1300,15 +1300,15 @@ public static class PropertyGeneratorTests
 						private global::MixedIndexersCreateExpectations Expectations { get; }
 					}
 					
-					internal MixedIndexersIndexerExpectations(global::MixedIndexersCreateExpectations expectations) =>
+					internal IndexerExpectations(global::MixedIndexersCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations.MixedIndexersIndexerGetterExpectations Getters { get; }
-					internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations.MixedIndexersIndexerSetterExpectations Setters { get; }
+					internal global::MixedIndexersCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+					internal global::MixedIndexersCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 				}
 				
-				internal global::MixedIndexersCreateExpectations.MixedIndexersMethodExpectations Methods { get; }
-				internal global::MixedIndexersCreateExpectations.MixedIndexersIndexerExpectations Indexers { get; }
+				internal global::MixedIndexersCreateExpectations.MethodExpectations Methods { get; }
+				internal global::MixedIndexersCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal MixedIndexersCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
@@ -1318,7 +1318,7 @@ public static class PropertyGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockMixedIndexers(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1446,10 +1446,10 @@ public static class PropertyGeneratorTests
 					}
 				}
 				
-				private sealed class RockMixedProperties
+				private sealed class Mock
 					: global::MixedProperties
 				{
-					public RockMixedProperties(global::MixedPropertiesCreateExpectations @expectations)
+					public Mock(global::MixedPropertiesCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1660,9 +1660,9 @@ public static class PropertyGeneratorTests
 					private global::MixedPropertiesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MixedPropertiesMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal MixedPropertiesMethodExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+					internal MethodExpectations(global::MixedPropertiesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1695,11 +1695,11 @@ public static class PropertyGeneratorTests
 					private global::MixedPropertiesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MixedPropertiesPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class MixedPropertiesPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal MixedPropertiesPropertyGetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler3, global::System.Func<string?>, string?> PublicGetPrivateSet()
@@ -1723,9 +1723,9 @@ public static class PropertyGeneratorTests
 						private global::MixedPropertiesCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class MixedPropertiesPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal MixedPropertiesPropertySetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::MixedPropertiesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler6, global::System.Action<string?>> PublicGetProtectedSet(global::Rocks.Argument<string?> @value)
@@ -1761,15 +1761,15 @@ public static class PropertyGeneratorTests
 						private global::MixedPropertiesCreateExpectations Expectations { get; }
 					}
 					
-					internal MixedPropertiesPropertyExpectations(global::MixedPropertiesCreateExpectations expectations) =>
+					internal PropertyExpectations(global::MixedPropertiesCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations.MixedPropertiesPropertyGetterExpectations Getters { get; }
-					internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations.MixedPropertiesPropertySetterExpectations Setters { get; }
+					internal global::MixedPropertiesCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+					internal global::MixedPropertiesCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
 				
-				internal global::MixedPropertiesCreateExpectations.MixedPropertiesMethodExpectations Methods { get; }
-				internal global::MixedPropertiesCreateExpectations.MixedPropertiesPropertyExpectations Properties { get; }
+				internal global::MixedPropertiesCreateExpectations.MethodExpectations Methods { get; }
+				internal global::MixedPropertiesCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal MixedPropertiesCreateExpectations() =>
 					(this.Methods, this.Properties) = (new(this), new(this));
@@ -1779,7 +1779,7 @@ public static class PropertyGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockMixedProperties(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1827,13 +1827,13 @@ public static class PropertyGeneratorTests
 			{
 				internal global::MixedProperties Instance()
 				{
-					return new RockMixedProperties();
+					return new Mock();
 				}
 				
-				private sealed class RockMixedProperties
+				private sealed class Mock
 					: global::MixedProperties
 				{
-					public RockMixedProperties()
+					public Mock()
 					{
 					}
 					

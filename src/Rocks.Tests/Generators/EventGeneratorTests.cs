@@ -58,10 +58,10 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveEvents
+					private sealed class Mock
 						: global::MockTests.IHaveEvents, global::Rocks.IRaiseEvents
 					{
-						public RockIHaveEvents(global::MockTests.IHaveEventsCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveEventsCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -104,9 +104,9 @@ public static class EventGeneratorTests
 						private global::MockTests.IHaveEventsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveEventsMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveEventsMethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
@@ -119,7 +119,7 @@ public static class EventGeneratorTests
 						private global::MockTests.IHaveEventsCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveEventsCreateExpectations.IHaveEventsMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveEventsCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveEventsCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -129,7 +129,7 @@ public static class EventGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveEvents(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -199,10 +199,10 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveEvents
+					private sealed class Mock
 						: global::MockTests.IHaveEvents, global::Rocks.IRaiseEvents
 					{
-						public RockIHaveEvents(global::MockTests.IHaveEventsCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveEventsCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -245,9 +245,9 @@ public static class EventGeneratorTests
 						private global::MockTests.IHaveEventsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveEventsMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveEventsMethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveEventsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
@@ -260,7 +260,7 @@ public static class EventGeneratorTests
 						private global::MockTests.IHaveEventsCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveEventsCreateExpectations.IHaveEventsMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveEventsCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveEventsCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -270,7 +270,7 @@ public static class EventGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveEvents(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -356,10 +356,10 @@ public static class EventGeneratorTests
 						}
 					}
 					
-					private sealed class RockIExplicitInterfaceImplementation
+					private sealed class Mock
 						: global::MockTests.IExplicitInterfaceImplementation, global::Rocks.IRaiseEvents
 					{
-						public RockIExplicitInterfaceImplementation(global::MockTests.IExplicitInterfaceImplementationCreateExpectations @expectations)
+						public Mock(global::MockTests.IExplicitInterfaceImplementationCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -429,9 +429,9 @@ public static class EventGeneratorTests
 						private global::MockTests.IExplicitInterfaceImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationOne
+					internal sealed class ExplicitMethodExpectationsForIExplicitInterfaceImplementationOne
 					{
-						internal IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationOne(global::MockTests.IExplicitInterfaceImplementationCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIExplicitInterfaceImplementationOne(global::MockTests.IExplicitInterfaceImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> A()
@@ -443,9 +443,9 @@ public static class EventGeneratorTests
 						
 						private global::MockTests.IExplicitInterfaceImplementationCreateExpectations Expectations { get; }
 					}
-					internal sealed class IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo
+					internal sealed class ExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo
 					{
-						internal IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo(global::MockTests.IExplicitInterfaceImplementationCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo(global::MockTests.IExplicitInterfaceImplementationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> A()
@@ -458,8 +458,8 @@ public static class EventGeneratorTests
 						private global::MockTests.IExplicitInterfaceImplementationCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IExplicitInterfaceImplementationCreateExpectations.IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationOne ExplicitMethodsForIExplicitInterfaceImplementationOne { get; }
-					internal global::MockTests.IExplicitInterfaceImplementationCreateExpectations.IExplicitInterfaceImplementationExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo ExplicitMethodsForIExplicitInterfaceImplementationTwo { get; }
+					internal global::MockTests.IExplicitInterfaceImplementationCreateExpectations.ExplicitMethodExpectationsForIExplicitInterfaceImplementationOne ExplicitMethodsForIExplicitInterfaceImplementationOne { get; }
+					internal global::MockTests.IExplicitInterfaceImplementationCreateExpectations.ExplicitMethodExpectationsForIExplicitInterfaceImplementationTwo ExplicitMethodsForIExplicitInterfaceImplementationTwo { get; }
 					
 					internal IExplicitInterfaceImplementationCreateExpectations() =>
 						(this.ExplicitMethodsForIExplicitInterfaceImplementationOne, this.ExplicitMethodsForIExplicitInterfaceImplementationTwo) = (new(this), new(this));
@@ -469,7 +469,7 @@ public static class EventGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIExplicitInterfaceImplementation(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

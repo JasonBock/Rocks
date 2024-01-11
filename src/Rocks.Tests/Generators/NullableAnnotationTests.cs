@@ -58,10 +58,10 @@ public static class NullableAnnotationTests
 					}
 				}
 				
-				private sealed class RockITypeOfNullableOfint
+				private sealed class Mock
 					: global::IType<int?>
 				{
-					public RockITypeOfNullableOfint(global::ITypeOfNullableOfintCreateExpectations @expectations)
+					public Mock(global::ITypeOfNullableOfintCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -98,9 +98,9 @@ public static class NullableAnnotationTests
 					private global::ITypeOfNullableOfintCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ITypeOfNullableOfintMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ITypeOfNullableOfintMethodExpectations(global::ITypeOfNullableOfintCreateExpectations expectations) =>
+					internal MethodExpectations(global::ITypeOfNullableOfintCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ITypeOfNullableOfintCreateExpectations.Handler0, global::System.Action<int?>> Foo(global::Rocks.Argument<int?> @value)
@@ -119,7 +119,7 @@ public static class NullableAnnotationTests
 					private global::ITypeOfNullableOfintCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ITypeOfNullableOfintCreateExpectations.ITypeOfNullableOfintMethodExpectations Methods { get; }
+				internal global::ITypeOfNullableOfintCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ITypeOfNullableOfintCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -129,7 +129,7 @@ public static class NullableAnnotationTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockITypeOfNullableOfint(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -209,10 +209,10 @@ public static class NullableAnnotationTests
 					}
 				}
 				
-				private sealed class RockNeedNullable
+				private sealed class Mock
 					: global::NeedNullable
 				{
-					public RockNeedNullable(global::NeedNullableCreateExpectations @expectations, object? @initializationData)
+					public Mock(global::NeedNullableCreateExpectations @expectations, object? @initializationData)
 						: base(@initializationData!)
 					{
 						this.Expectations = @expectations;
@@ -279,9 +279,9 @@ public static class NullableAnnotationTests
 					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class NeedNullableMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal NeedNullableMethodExpectations(global::NeedNullableCreateExpectations expectations) =>
+					internal MethodExpectations(global::NeedNullableCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -314,7 +314,7 @@ public static class NullableAnnotationTests
 					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
 				
-				internal global::NeedNullableCreateExpectations.NeedNullableMethodExpectations Methods { get; }
+				internal global::NeedNullableCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal NeedNullableCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -324,7 +324,7 @@ public static class NullableAnnotationTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockNeedNullable(this, @initializationData!);
+						var @mock = new Mock(this, @initializationData!);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -366,13 +366,13 @@ public static class NullableAnnotationTests
 			{
 				internal global::NeedNullable Instance(object? @initializationData)
 				{
-					return new RockNeedNullable(@initializationData!);
+					return new Mock(@initializationData!);
 				}
 				
-				private sealed class RockNeedNullable
+				private sealed class Mock
 					: global::NeedNullable
 				{
-					public RockNeedNullable(object? @initializationData)
+					public Mock(object? @initializationData)
 						: base(@initializationData!)
 					{
 					}
@@ -478,10 +478,10 @@ public static class NullableAnnotationTests
 					}
 				}
 				
-				private sealed class RockNeedNullable
+				private sealed class Mock
 					: global::NeedNullable
 				{
-					public RockNeedNullable(global::NeedNullableCreateExpectations @expectations)
+					public Mock(global::NeedNullableCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -600,9 +600,9 @@ public static class NullableAnnotationTests
 					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class NeedNullableMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal NeedNullableMethodExpectations(global::NeedNullableCreateExpectations expectations) =>
+					internal MethodExpectations(global::NeedNullableCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -665,7 +665,7 @@ public static class NullableAnnotationTests
 					private global::NeedNullableCreateExpectations Expectations { get; }
 				}
 				
-				internal global::NeedNullableCreateExpectations.NeedNullableMethodExpectations Methods { get; }
+				internal global::NeedNullableCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal NeedNullableCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -675,7 +675,7 @@ public static class NullableAnnotationTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockNeedNullable(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -718,13 +718,13 @@ public static class NullableAnnotationTests
 			{
 				internal global::NeedNullable Instance()
 				{
-					return new RockNeedNullable();
+					return new Mock();
 				}
 				
-				private sealed class RockNeedNullable
+				private sealed class Mock
 					: global::NeedNullable
 				{
-					public RockNeedNullable()
+					public Mock()
 					{
 					}
 					

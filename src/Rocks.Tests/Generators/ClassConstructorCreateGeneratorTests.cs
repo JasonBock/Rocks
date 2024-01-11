@@ -81,10 +81,10 @@ public static class ClassConstructorCreateGeneratorTests
 						}
 					}
 					
-					private sealed class RockBaseCtor
+					private sealed class Mock
 						: global::MockTests.BaseCtor
 					{
-						public RockBaseCtor(global::MockTests.BaseCtorCreateExpectations @expectations, int @a, ref string @b, out string @c, params string[] @d)
+						public Mock(global::MockTests.BaseCtorCreateExpectations @expectations, int @a, ref string @b, out string @c, params string[] @d)
 							: base(@a, ref @b, out @c, @d)
 						{
 							this.Expectations = @expectations;
@@ -166,9 +166,9 @@ public static class ClassConstructorCreateGeneratorTests
 						private global::MockTests.BaseCtorCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class BaseCtorMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal BaseCtorMethodExpectations(global::MockTests.BaseCtorCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.BaseCtorCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.BaseCtorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -208,7 +208,7 @@ public static class ClassConstructorCreateGeneratorTests
 						private global::MockTests.BaseCtorCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.BaseCtorCreateExpectations.BaseCtorMethodExpectations Methods { get; }
+					internal global::MockTests.BaseCtorCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal BaseCtorCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -218,7 +218,7 @@ public static class ClassConstructorCreateGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockBaseCtor(this, @a, ref @b, out @c, @d);
+							var @mock = new Mock(this, @a, ref @b, out @c, @d);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

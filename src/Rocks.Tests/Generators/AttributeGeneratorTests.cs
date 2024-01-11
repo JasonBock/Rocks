@@ -61,10 +61,10 @@ public static class AttributeGeneratorTests
 				}
 				
 				[type: global::System.ObsoleteAttribute("old")]
-				private sealed class RockIItems
+				private sealed class Mock
 					: global::IItems
 				{
-					public RockIItems(global::IItemsCreateExpectations @expectations)
+					public Mock(global::IItemsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -89,11 +89,11 @@ public static class AttributeGeneratorTests
 					
 					private global::IItemsCreateExpectations Expectations { get; }
 				}
-				internal sealed class IItemsPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IItemsPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IItemsPropertyGetterExpectations(global::IItemsCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IItemsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IItemsCreateExpectations.Handler0, global::System.Func<int>, int> Length()
@@ -106,13 +106,13 @@ public static class AttributeGeneratorTests
 					}
 					
 					
-					internal IItemsPropertyExpectations(global::IItemsCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IItemsCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IItemsCreateExpectations.IItemsPropertyExpectations.IItemsPropertyGetterExpectations Getters { get; }
+					internal global::IItemsCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
 				
-				internal global::IItemsCreateExpectations.IItemsPropertyExpectations Properties { get; }
+				internal global::IItemsCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal IItemsCreateExpectations() =>
 					(this.Properties) = (new(this));
@@ -122,7 +122,7 @@ public static class AttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIItems(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -210,10 +210,10 @@ public static class AttributeGeneratorTests
 					}
 				}
 				
-				private sealed class RockConventionDispatcher
+				private sealed class Mock
 					: global::ConventionDispatcher
 				{
-					public RockConventionDispatcher(global::ConventionDispatcherCreateExpectations @expectations)
+					public Mock(global::ConventionDispatcherCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -294,9 +294,9 @@ public static class AttributeGeneratorTests
 					private global::ConventionDispatcherCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ConventionDispatcherMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ConventionDispatcherMethodExpectations(global::ConventionDispatcherCreateExpectations expectations) =>
+					internal MethodExpectations(global::ConventionDispatcherCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ConventionDispatcherCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -336,7 +336,7 @@ public static class AttributeGeneratorTests
 					private global::ConventionDispatcherCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ConventionDispatcherCreateExpectations.ConventionDispatcherMethodExpectations Methods { get; }
+				internal global::ConventionDispatcherCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ConventionDispatcherCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -346,7 +346,7 @@ public static class AttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockConventionDispatcher(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -485,10 +485,10 @@ public static class AttributeGeneratorTests
 					}
 				}
 				
-				private sealed class RockNotNullIfNotCases
+				private sealed class Mock
 					: global::NotNullIfNotCases
 				{
-					public RockNotNullIfNotCases(global::NotNullIfNotCasesCreateExpectations @expectations)
+					public Mock(global::NotNullIfNotCasesCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -703,9 +703,9 @@ public static class AttributeGeneratorTests
 					private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class NotNullIfNotCasesMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal NotNullIfNotCasesMethodExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+					internal MethodExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -764,11 +764,11 @@ public static class AttributeGeneratorTests
 					private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class NotNullIfNotCasesPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class NotNullIfNotCasesPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal NotNullIfNotCasesPropertyGetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler5, global::System.Func<string?>, string?> VisitProperty()
@@ -780,9 +780,9 @@ public static class AttributeGeneratorTests
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class NotNullIfNotCasesPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal NotNullIfNotCasesPropertySetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler6, global::System.Action<string?>> VisitProperty(global::Rocks.Argument<string?> @value)
@@ -798,17 +798,17 @@ public static class AttributeGeneratorTests
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
 					
-					internal NotNullIfNotCasesPropertyExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+					internal PropertyExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesPropertyExpectations.NotNullIfNotCasesPropertyGetterExpectations Getters { get; }
-					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesPropertyExpectations.NotNullIfNotCasesPropertySetterExpectations Setters { get; }
+					internal global::NotNullIfNotCasesCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+					internal global::NotNullIfNotCasesCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
-				internal sealed class NotNullIfNotCasesIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class NotNullIfNotCasesIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal NotNullIfNotCasesIndexerGetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler7, global::System.Func<object?, string?>, string?> This(global::Rocks.Argument<object?> @node)
@@ -826,9 +826,9 @@ public static class AttributeGeneratorTests
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class NotNullIfNotCasesIndexerSetterExpectations
+					internal sealed class IndexerSetterExpectations
 					{
-						internal NotNullIfNotCasesIndexerSetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+						internal IndexerSetterExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler8, global::System.Action<object?, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<object?> @node)
@@ -848,16 +848,16 @@ public static class AttributeGeneratorTests
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
 					
-					internal NotNullIfNotCasesIndexerExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
+					internal IndexerExpectations(global::NotNullIfNotCasesCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesIndexerExpectations.NotNullIfNotCasesIndexerGetterExpectations Getters { get; }
-					internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesIndexerExpectations.NotNullIfNotCasesIndexerSetterExpectations Setters { get; }
+					internal global::NotNullIfNotCasesCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+					internal global::NotNullIfNotCasesCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 				}
 				
-				internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesMethodExpectations Methods { get; }
-				internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesPropertyExpectations Properties { get; }
-				internal global::NotNullIfNotCasesCreateExpectations.NotNullIfNotCasesIndexerExpectations Indexers { get; }
+				internal global::NotNullIfNotCasesCreateExpectations.MethodExpectations Methods { get; }
+				internal global::NotNullIfNotCasesCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::NotNullIfNotCasesCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal NotNullIfNotCasesCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
@@ -867,7 +867,7 @@ public static class AttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockNotNullIfNotCases(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -940,10 +940,10 @@ public static class AttributeGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUseTuples
+				private sealed class Mock
 					: global::IUseTuples
 				{
-					public RockIUseTuples(global::IUseTuplesCreateExpectations @expectations)
+					public Mock(global::IUseTuplesCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -968,11 +968,11 @@ public static class AttributeGeneratorTests
 					
 					private global::IUseTuplesCreateExpectations Expectations { get; }
 				}
-				internal sealed class IUseTuplesPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IUseTuplesPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IUseTuplesPropertyGetterExpectations(global::IUseTuplesCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IUseTuplesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IUseTuplesCreateExpectations.Handler0, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?> X11()
@@ -985,13 +985,13 @@ public static class AttributeGeneratorTests
 					}
 					
 					
-					internal IUseTuplesPropertyExpectations(global::IUseTuplesCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IUseTuplesCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IUseTuplesCreateExpectations.IUseTuplesPropertyExpectations.IUseTuplesPropertyGetterExpectations Getters { get; }
+					internal global::IUseTuplesCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
 				
-				internal global::IUseTuplesCreateExpectations.IUseTuplesPropertyExpectations Properties { get; }
+				internal global::IUseTuplesCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal IUseTuplesCreateExpectations() =>
 					(this.Properties) = (new(this));
@@ -1001,7 +1001,7 @@ public static class AttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUseTuples(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1091,10 +1091,10 @@ public static class AttributeGeneratorTests
 					}
 				}
 				
-				private sealed class RockHaveDynamic
+				private sealed class Mock
 					: global::HaveDynamic
 				{
-					public RockHaveDynamic(global::HaveDynamicCreateExpectations @expectations)
+					public Mock(global::HaveDynamicCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1177,9 +1177,9 @@ public static class AttributeGeneratorTests
 					private global::HaveDynamicCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class HaveDynamicMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal HaveDynamicMethodExpectations(global::HaveDynamicCreateExpectations expectations) =>
+					internal MethodExpectations(global::HaveDynamicCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::HaveDynamicCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1219,7 +1219,7 @@ public static class AttributeGeneratorTests
 					private global::HaveDynamicCreateExpectations Expectations { get; }
 				}
 				
-				internal global::HaveDynamicCreateExpectations.HaveDynamicMethodExpectations Methods { get; }
+				internal global::HaveDynamicCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal HaveDynamicCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1229,7 +1229,7 @@ public static class AttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockHaveDynamic(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1306,10 +1306,10 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveGenericAttribute
+					private sealed class Mock
 						: global::MockTests.IHaveGenericAttribute
 					{
-						public RockIHaveGenericAttribute(global::MockTests.IHaveGenericAttributeCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveGenericAttributeCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1333,9 +1333,9 @@ public static class AttributeGeneratorTests
 						private global::MockTests.IHaveGenericAttributeCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveGenericAttributeMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveGenericAttributeMethodExpectations(global::MockTests.IHaveGenericAttributeCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveGenericAttributeCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0, global::System.Action> Foo()
@@ -1348,7 +1348,7 @@ public static class AttributeGeneratorTests
 						private global::MockTests.IHaveGenericAttributeCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveGenericAttributeCreateExpectations.IHaveGenericAttributeMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveGenericAttributeCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveGenericAttributeCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1358,7 +1358,7 @@ public static class AttributeGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveGenericAttribute(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1442,10 +1442,10 @@ public static class AttributeGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveMultipleAttributes
+					private sealed class Mock
 						: global::MockTests.IHaveMultipleAttributes
 					{
-						public RockIHaveMultipleAttributes(global::MockTests.IHaveMultipleAttributesCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveMultipleAttributesCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1482,9 +1482,9 @@ public static class AttributeGeneratorTests
 						private global::MockTests.IHaveMultipleAttributesCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveMultipleAttributesMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveMultipleAttributesMethodExpectations(global::MockTests.IHaveMultipleAttributesCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveMultipleAttributesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0, global::System.Action<string>> Foo(global::Rocks.Argument<string> @data)
@@ -1503,7 +1503,7 @@ public static class AttributeGeneratorTests
 						private global::MockTests.IHaveMultipleAttributesCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.IHaveMultipleAttributesMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveMultipleAttributesCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveMultipleAttributesCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1513,7 +1513,7 @@ public static class AttributeGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveMultipleAttributes(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

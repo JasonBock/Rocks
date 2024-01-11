@@ -62,10 +62,10 @@ public static class MultipleModelGeneratorTests
 						}
 					}
 					
-					private sealed class RockITarget
+					private sealed class Mock
 						: global::MockTests.ITarget
 					{
-						public RockITarget(global::MockTests.ITargetCreateExpectations @expectations)
+						public Mock(global::MockTests.ITargetCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -95,9 +95,9 @@ public static class MultipleModelGeneratorTests
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ITargetMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ITargetMethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ITargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
@@ -116,7 +116,7 @@ public static class MultipleModelGeneratorTests
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ITargetCreateExpectations.ITargetMethodExpectations Methods { get; }
+					internal global::MockTests.ITargetCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ITargetCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -126,7 +126,7 @@ public static class MultipleModelGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockITarget(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -176,13 +176,13 @@ public static class MultipleModelGeneratorTests
 				{
 					internal global::MockTests.ITarget Instance()
 					{
-						return new RockITarget();
+						return new Mock();
 					}
 					
-					private sealed class RockITarget
+					private sealed class Mock
 						: global::MockTests.ITarget
 					{
-						public RockITarget()
+						public Mock()
 						{
 						}
 						

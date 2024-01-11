@@ -90,10 +90,10 @@ public static class HiddenMembersGeneratorTests
 						}
 					}
 					
-					private sealed class RockNewCopy
+					private sealed class Mock
 						: global::MockTests.NewCopy
 					{
-						public RockNewCopy(global::MockTests.NewCopyCreateExpectations @expectations)
+						public Mock(global::MockTests.NewCopyCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -174,9 +174,9 @@ public static class HiddenMembersGeneratorTests
 						private global::MockTests.NewCopyCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class NewCopyMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal NewCopyMethodExpectations(global::MockTests.NewCopyCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.NewCopyCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.NewCopyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -216,7 +216,7 @@ public static class HiddenMembersGeneratorTests
 						private global::MockTests.NewCopyCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.NewCopyCreateExpectations.NewCopyMethodExpectations Methods { get; }
+					internal global::MockTests.NewCopyCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal NewCopyCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -226,7 +226,7 @@ public static class HiddenMembersGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockNewCopy(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -353,10 +353,10 @@ public static class HiddenMembersGeneratorTests
 					}
 				}
 				
-				private sealed class RockSubClass
+				private sealed class Mock
 					: global::SubClass
 				{
-					public RockSubClass(global::SubClassCreateExpectations @expectations)
+					public Mock(global::SubClassCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -515,9 +515,9 @@ public static class HiddenMembersGeneratorTests
 					private global::SubClassCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class SubClassMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal SubClassMethodExpectations(global::SubClassCreateExpectations expectations) =>
+					internal MethodExpectations(global::SubClassCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -557,11 +557,11 @@ public static class HiddenMembersGeneratorTests
 					private global::SubClassCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class SubClassPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class SubClassPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal SubClassPropertyGetterExpectations(global::SubClassCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::SubClassCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler8, global::System.Func<int>, int> Data()
@@ -573,9 +573,9 @@ public static class HiddenMembersGeneratorTests
 						private global::SubClassCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class SubClassPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal SubClassPropertySetterExpectations(global::SubClassCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::SubClassCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler9, global::System.Action<int>> Data(global::Rocks.Argument<int> @value)
@@ -591,17 +591,17 @@ public static class HiddenMembersGeneratorTests
 						private global::SubClassCreateExpectations Expectations { get; }
 					}
 					
-					internal SubClassPropertyExpectations(global::SubClassCreateExpectations expectations) =>
+					internal PropertyExpectations(global::SubClassCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::SubClassCreateExpectations.SubClassPropertyExpectations.SubClassPropertyGetterExpectations Getters { get; }
-					internal global::SubClassCreateExpectations.SubClassPropertyExpectations.SubClassPropertySetterExpectations Setters { get; }
+					internal global::SubClassCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+					internal global::SubClassCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
-				internal sealed class SubClassIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class SubClassIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal SubClassIndexerGetterExpectations(global::SubClassCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::SubClassCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler10, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
@@ -622,15 +622,15 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					
-					internal SubClassIndexerExpectations(global::SubClassCreateExpectations expectations) =>
+					internal IndexerExpectations(global::SubClassCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::SubClassCreateExpectations.SubClassIndexerExpectations.SubClassIndexerGetterExpectations Getters { get; }
+					internal global::SubClassCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
 				}
 				
-				internal global::SubClassCreateExpectations.SubClassMethodExpectations Methods { get; }
-				internal global::SubClassCreateExpectations.SubClassPropertyExpectations Properties { get; }
-				internal global::SubClassCreateExpectations.SubClassIndexerExpectations Indexers { get; }
+				internal global::SubClassCreateExpectations.MethodExpectations Methods { get; }
+				internal global::SubClassCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::SubClassCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal SubClassCreateExpectations() =>
 					(this.Methods, this.Properties, this.Indexers) = (new(this), new(this), new(this));
@@ -640,7 +640,7 @@ public static class HiddenMembersGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockSubClass(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -774,10 +774,10 @@ public static class HiddenMembersGeneratorTests
 					}
 				}
 				
-				private sealed class RockISub
+				private sealed class Mock
 					: global::ISub
 				{
-					public RockISub(global::ISubCreateExpectations @expectations)
+					public Mock(global::ISubCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -957,9 +957,9 @@ public static class HiddenMembersGeneratorTests
 					private global::ISubCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISubMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ISubMethodExpectations(global::ISubCreateExpectations expectations) =>
+					internal MethodExpectations(global::ISubCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler0, global::System.Func<int>, int> Foo()
@@ -971,9 +971,9 @@ public static class HiddenMembersGeneratorTests
 					
 					private global::ISubCreateExpectations Expectations { get; }
 				}
-				internal sealed class ISubExplicitMethodExpectationsForIBase
+				internal sealed class ExplicitMethodExpectationsForIBase
 				{
-					internal ISubExplicitMethodExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+					internal ExplicitMethodExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 						this.Expectations = expectations;
 				
 					internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler1, global::System.Action> Foo()
@@ -986,11 +986,11 @@ public static class HiddenMembersGeneratorTests
 					private global::ISubCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISubPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class ISubPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal ISubPropertyGetterExpectations(global::ISubCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler2, global::System.Func<int>, int> Data()
@@ -1002,9 +1002,9 @@ public static class HiddenMembersGeneratorTests
 						private global::ISubCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ISubPropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal ISubPropertySetterExpectations(global::ISubCreateExpectations expectations) =>
+						internal PropertySetterExpectations(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler3, global::System.Action<int>> Data(global::Rocks.Argument<int> @value)
@@ -1020,17 +1020,17 @@ public static class HiddenMembersGeneratorTests
 						private global::ISubCreateExpectations Expectations { get; }
 					}
 					
-					internal ISubPropertyExpectations(global::ISubCreateExpectations expectations) =>
+					internal PropertyExpectations(global::ISubCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::ISubCreateExpectations.ISubPropertyExpectations.ISubPropertyGetterExpectations Getters { get; }
-					internal global::ISubCreateExpectations.ISubPropertyExpectations.ISubPropertySetterExpectations Setters { get; }
+					internal global::ISubCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+					internal global::ISubCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 				}
-				internal sealed class ISubIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class ISubIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal ISubIndexerGetterExpectations(global::ISubCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler4, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
@@ -1051,16 +1051,16 @@ public static class HiddenMembersGeneratorTests
 					}
 					
 					
-					internal ISubIndexerExpectations(global::ISubCreateExpectations expectations) =>
+					internal IndexerExpectations(global::ISubCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::ISubCreateExpectations.ISubIndexerExpectations.ISubIndexerGetterExpectations Getters { get; }
+					internal global::ISubCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
 				}
-				internal sealed class ISubExplicitPropertyExpectationsForIBase
+				internal sealed class ExplicitPropertyExpectationsForIBase
 				{
-					internal sealed class ISubExplicitPropertyGetterExpectationsForIBase
+					internal sealed class ExplicitPropertyGetterExpectationsForIBase
 					{
-						internal ISubExplicitPropertyGetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler5, global::System.Func<string>, string> Data()
@@ -1071,9 +1071,9 @@ public static class HiddenMembersGeneratorTests
 						}
 						private global::ISubCreateExpectations Expectations { get; }
 					}
-					internal sealed class ISubExplicitPropertySetterExpectationsForIBase
+					internal sealed class ExplicitPropertySetterExpectationsForIBase
 					{
-						internal ISubExplicitPropertySetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+						internal ExplicitPropertySetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler6, global::System.Action<string>> Data(global::Rocks.Argument<string> @value)
@@ -1089,17 +1089,17 @@ public static class HiddenMembersGeneratorTests
 						private global::ISubCreateExpectations Expectations { get; }
 					}
 					
-					internal ISubExplicitPropertyExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::ISubCreateExpectations.ISubExplicitPropertyExpectationsForIBase.ISubExplicitPropertyGetterExpectationsForIBase Getters { get; }
-					internal global::ISubCreateExpectations.ISubExplicitPropertyExpectationsForIBase.ISubExplicitPropertySetterExpectationsForIBase Setters { get; }
+					internal global::ISubCreateExpectations.ExplicitPropertyExpectationsForIBase.ExplicitPropertyGetterExpectationsForIBase Getters { get; }
+					internal global::ISubCreateExpectations.ExplicitPropertyExpectationsForIBase.ExplicitPropertySetterExpectationsForIBase Setters { get; }
 				}
-				internal sealed class ISubExplicitIndexerExpectationsForIBase
+				internal sealed class ExplicitIndexerExpectationsForIBase
 				{
-					internal sealed class ISubExplicitIndexerGetterExpectationsForIBase
+					internal sealed class ExplicitIndexerGetterExpectationsForIBase
 					{
-						internal ISubExplicitIndexerGetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+						internal ExplicitIndexerGetterExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler7, global::System.Func<int, string, string>, string> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
@@ -1119,18 +1119,18 @@ public static class HiddenMembersGeneratorTests
 						private global::ISubCreateExpectations Expectations { get; }
 					}
 					
-					internal ISubExplicitIndexerExpectationsForIBase(global::ISubCreateExpectations expectations) =>
+					internal ExplicitIndexerExpectationsForIBase(global::ISubCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::ISubCreateExpectations.ISubExplicitIndexerExpectationsForIBase.ISubExplicitIndexerGetterExpectationsForIBase Getters { get; }
+					internal global::ISubCreateExpectations.ExplicitIndexerExpectationsForIBase.ExplicitIndexerGetterExpectationsForIBase Getters { get; }
 				}
 				
-				internal global::ISubCreateExpectations.ISubMethodExpectations Methods { get; }
-				internal global::ISubCreateExpectations.ISubExplicitMethodExpectationsForIBase ExplicitMethodsForIBase { get; }
-				internal global::ISubCreateExpectations.ISubPropertyExpectations Properties { get; }
-				internal global::ISubCreateExpectations.ISubIndexerExpectations Indexers { get; }
-				internal global::ISubCreateExpectations.ISubExplicitPropertyExpectationsForIBase ExplicitPropertiesForIBase { get; }
-				internal global::ISubCreateExpectations.ISubExplicitIndexerExpectationsForIBase ExplicitIndexersForIBase { get; }
+				internal global::ISubCreateExpectations.MethodExpectations Methods { get; }
+				internal global::ISubCreateExpectations.ExplicitMethodExpectationsForIBase ExplicitMethodsForIBase { get; }
+				internal global::ISubCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::ISubCreateExpectations.IndexerExpectations Indexers { get; }
+				internal global::ISubCreateExpectations.ExplicitPropertyExpectationsForIBase ExplicitPropertiesForIBase { get; }
+				internal global::ISubCreateExpectations.ExplicitIndexerExpectationsForIBase ExplicitIndexersForIBase { get; }
 				
 				internal ISubCreateExpectations() =>
 					(this.Methods, this.ExplicitMethodsForIBase, this.Properties, this.Indexers, this.ExplicitPropertiesForIBase, this.ExplicitIndexersForIBase) = (new(this), new(this), new(this), new(this), new(this), new(this));
@@ -1140,7 +1140,7 @@ public static class HiddenMembersGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockISub(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}

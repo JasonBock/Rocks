@@ -28,7 +28,7 @@ public static class PointerGeneratorTests
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIPointerUsage
+				internal static class Projections
 				{
 					internal unsafe delegate void** Callback_311684193689074896480440330448335592561750954598();
 					internal unsafe class HandlerForvoidPointerPointer<TCallback>
@@ -55,7 +55,7 @@ public static class PointerGeneratorTests
 				}
 				
 				internal sealed class Handler0
-					: global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.HandlerForvoidPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598>
+					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -75,10 +75,10 @@ public static class PointerGeneratorTests
 					}
 				}
 				
-				private sealed class RockIPointerUsage
+				private sealed class Mock
 					: global::IPointerUsage
 				{
-					public RockIPointerUsage(global::IPointerUsageCreateExpectations @expectations)
+					public Mock(global::IPointerUsageCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -101,12 +101,12 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IPointerUsageMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
+					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -116,7 +116,7 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IPointerUsageCreateExpectations.IPointerUsageMethodExpectations Methods { get; }
+				internal global::IPointerUsageCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IPointerUsageCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -126,7 +126,7 @@ public static class PointerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIPointerUsage(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -167,7 +167,7 @@ public static class PointerGeneratorTests
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIPointerUsage
+				internal static class Projections
 				{
 					internal unsafe delegate void*** Callback_454293505151760244294537034129468955159423240205();
 					internal unsafe class HandlerForvoidPointerPointerPointer<TCallback>
@@ -194,7 +194,7 @@ public static class PointerGeneratorTests
 				}
 				
 				internal sealed class Handler0
-					: global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205>
+					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -214,10 +214,10 @@ public static class PointerGeneratorTests
 					}
 				}
 				
-				private sealed class RockIPointerUsage
+				private sealed class Mock
 					: global::IPointerUsage
 				{
-					public RockIPointerUsage(global::IPointerUsageCreateExpectations @expectations)
+					public Mock(global::IPointerUsageCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -240,12 +240,12 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IPointerUsageMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
+					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -255,7 +255,7 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IPointerUsageCreateExpectations.IPointerUsageMethodExpectations Methods { get; }
+				internal global::IPointerUsageCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IPointerUsageCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -265,7 +265,7 @@ public static class PointerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIPointerUsage(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -306,7 +306,7 @@ public static class PointerGeneratorTests
 			internal sealed class IPointerUsageCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIPointerUsage
+				internal static class Projections
 				{
 					internal unsafe delegate void**** Callback_151894571580036554918620607107927567135334329577();
 					internal unsafe class HandlerForvoidPointerPointerPointerPointer<TCallback>
@@ -333,7 +333,7 @@ public static class PointerGeneratorTests
 				}
 				
 				internal sealed class Handler0
-					: global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.HandlerForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577>
+					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577>
 				{ }
 				
 				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
@@ -353,10 +353,10 @@ public static class PointerGeneratorTests
 					}
 				}
 				
-				private sealed class RockIPointerUsage
+				private sealed class Mock
 					: global::IPointerUsage
 				{
-					public RockIPointerUsage(global::IPointerUsageCreateExpectations @expectations)
+					public Mock(global::IPointerUsageCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -379,12 +379,12 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IPointerUsageMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IPointerUsageMethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
+					internal MethodExpectations(global::IPointerUsageCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.AdornmentsForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.ProjectionsForIPointerUsage.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
+					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
 					{
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -394,7 +394,7 @@ public static class PointerGeneratorTests
 					private global::IPointerUsageCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IPointerUsageCreateExpectations.IPointerUsageMethodExpectations Methods { get; }
+				internal global::IPointerUsageCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IPointerUsageCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -404,7 +404,7 @@ public static class PointerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIPointerUsage(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -445,7 +445,7 @@ public static class PointerGeneratorTests
 			internal sealed class ISurfaceCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForISurface
+				internal static class Projections
 				{
 					internal unsafe delegate void Callback_455733297849133658792680279988631751332086808415<T>(T* @allocator) where T : unmanaged;
 					internal unsafe delegate bool ArgumentEvaluationForTPointer<T>(T* @value) where T : unmanaged;
@@ -453,7 +453,7 @@ public static class PointerGeneratorTests
 					internal unsafe sealed class ArgumentForTPointer<T>
 						: global::Rocks.Argument where T : unmanaged
 					{
-						private readonly global::ISurfaceCreateExpectations.ProjectionsForISurface.ArgumentEvaluationForTPointer<T>? evaluation;
+						private readonly global::ISurfaceCreateExpectations.Projections.ArgumentEvaluationForTPointer<T>? evaluation;
 						private readonly T* value;
 						private readonly global::Rocks.ValidationState validation;
 						
@@ -465,7 +465,7 @@ public static class PointerGeneratorTests
 							this.validation = global::Rocks.ValidationState.Value;
 						}
 						
-						internal ArgumentForTPointer(global::ISurfaceCreateExpectations.ProjectionsForISurface.ArgumentEvaluationForTPointer<T> @evaluation)
+						internal ArgumentForTPointer(global::ISurfaceCreateExpectations.Projections.ArgumentEvaluationForTPointer<T> @evaluation)
 						{
 							this.evaluation = @evaluation;
 							this.validation = global::Rocks.ValidationState.Evaluation;
@@ -488,10 +488,10 @@ public static class PointerGeneratorTests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0<T>
-					: global::Rocks.Handler<global::ISurfaceCreateExpectations.ProjectionsForISurface.Callback_455733297849133658792680279988631751332086808415<T>>
+					: global::Rocks.Handler<global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>>
 					where T : unmanaged
 				{
-					public global::ISurfaceCreateExpectations.ProjectionsForISurface.ArgumentForTPointer<T> @allocator { get; set; }
+					public global::ISurfaceCreateExpectations.Projections.ArgumentForTPointer<T> @allocator { get; set; }
 				}
 				
 				#pragma warning restore CS8618
@@ -513,10 +513,10 @@ public static class PointerGeneratorTests
 					}
 				}
 				
-				private sealed class RockISurface
+				private sealed class Mock
 					: global::ISurface
 				{
-					public RockISurface(global::ISurfaceCreateExpectations @expectations)
+					public Mock(global::ISurfaceCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -557,12 +557,12 @@ public static class PointerGeneratorTests
 					private global::ISurfaceCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ISurfaceMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ISurfaceMethodExpectations(global::ISurfaceCreateExpectations expectations) =>
+					internal MethodExpectations(global::ISurfaceCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.ProjectionsForISurface.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ISurfaceCreateExpectations.ProjectionsForISurface.ArgumentForTPointer<T> @allocator) where T : unmanaged
+					internal global::Rocks.Adornments<global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ISurfaceCreateExpectations.Projections.ArgumentForTPointer<T> @allocator) where T : unmanaged
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
 						
@@ -578,7 +578,7 @@ public static class PointerGeneratorTests
 					private global::ISurfaceCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ISurfaceCreateExpectations.ISurfaceMethodExpectations Methods { get; }
+				internal global::ISurfaceCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ISurfaceCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -588,7 +588,7 @@ public static class PointerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockISurface(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -637,7 +637,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate void Callback_675345066879799784342630291957923402524406707040(int* @value);
 						internal unsafe delegate bool ArgumentEvaluationForintPointer(int* @value);
@@ -645,7 +645,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentForintPointer
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
 							private readonly int* value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -657,7 +657,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
+							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -680,9 +680,9 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -704,10 +704,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -744,12 +744,12 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHavePointersMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value)
+						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -765,7 +765,7 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersMethodExpectations Methods { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -775,7 +775,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -825,7 +825,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate int* Callback_286972840454368885027555790883633245835670430575();
 						internal unsafe class HandlerForintPointer<TCallback>
@@ -852,7 +852,7 @@ public static class PointerGeneratorTests
 					}
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>
 					{ }
 					
 					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
@@ -872,10 +872,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -898,12 +898,12 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHavePointersMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
+						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
 						{
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -913,7 +913,7 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersMethodExpectations Methods { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -923,7 +923,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -973,7 +973,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate void Callback_190405175200901836134072682481961192767771721226(delegate*<int, void> @value);
 						internal unsafe delegate bool ArgumentEvaluationFordelegatePointerOfint__void(delegate*<int, void> @value);
@@ -981,7 +981,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 							private readonly delegate*<int, void> value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -993,7 +993,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -1016,9 +1016,9 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_190405175200901836134072682481961192767771721226>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1040,10 +1040,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1080,12 +1080,12 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHavePointersMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_190405175200901836134072682481961192767771721226> FunctionPointerParameter(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value)
+						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> FunctionPointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -1101,7 +1101,7 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersMethodExpectations Methods { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1111,7 +1111,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1161,7 +1161,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate delegate*<int, void> Callback_21763219907570820974231853792762578898451171267();
 						internal unsafe class HandlerFordelegatePointerOfint__void<TCallback>
@@ -1188,7 +1188,7 @@ public static class PointerGeneratorTests
 					}
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_21763219907570820974231853792762578898451171267>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>
 					{ }
 					
 					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
@@ -1208,10 +1208,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1234,12 +1234,12 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHavePointersMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHavePointersMethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_21763219907570820974231853792762578898451171267> FunctionPointerReturn()
+						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> FunctionPointerReturn()
 						{
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -1249,7 +1249,7 @@ public static class PointerGeneratorTests
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersMethodExpectations Methods { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1259,7 +1259,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1309,7 +1309,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate int* Callback_286972840454368885027555790883633245835670430575();
 						internal unsafe delegate void Callback_675345066879799784342630291957923402524406707040(int* @value);
@@ -1318,7 +1318,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentForintPointer
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
 							private readonly int* value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -1330,7 +1330,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
+							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -1374,13 +1374,13 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>
 					{ }
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1404,10 +1404,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1460,14 +1460,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class IHavePointersPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal IHavePointersPropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_286972840454368885027555790883633245835670430575> Data()
+							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> Data()
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
@@ -1476,12 +1476,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersPropertySetterExpectations
+						internal sealed class PropertySetterExpectations
 						{
-							internal IHavePointersPropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
@@ -1494,14 +1494,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersPropertyExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations.IHavePointersPropertyGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations.IHavePointersPropertySetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations Properties { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Properties) = (new(this));
@@ -1511,7 +1511,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1561,7 +1561,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate delegate*<int, void> Callback_21763219907570820974231853792762578898451171267();
 						internal unsafe delegate void Callback_190405175200901836134072682481961192767771721226(delegate*<int, void> @value);
@@ -1570,7 +1570,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 							private readonly delegate*<int, void> value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -1582,7 +1582,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -1626,13 +1626,13 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_21763219907570820974231853792762578898451171267>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>
 					{ }
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_190405175200901836134072682481961192767771721226>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -1656,10 +1656,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1712,14 +1712,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class IHavePointersPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal IHavePointersPropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_21763219907570820974231853792762578898451171267> Data()
+							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> Data()
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
@@ -1728,12 +1728,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersPropertySetterExpectations
+						internal sealed class PropertySetterExpectations
 						{
-							internal IHavePointersPropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal PropertySetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_190405175200901836134072682481961192767771721226> Data(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 							{
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
@@ -1746,14 +1746,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersPropertyExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations.IHavePointersPropertyGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations.IHavePointersPropertySetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersPropertyExpectations Properties { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Properties) = (new(this));
@@ -1763,7 +1763,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1813,7 +1813,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate string Callback_651512256251275256331491675489899036574746642609(int* @index);
 						internal unsafe delegate void Callback_212973048794667040959187979763248770796810688032(int* @index, string @value);
@@ -1822,7 +1822,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentForintPointer
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
 							private readonly int* value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -1834,7 +1834,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
+							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -1857,15 +1857,15 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_651512256251275256331491675489899036574746642609, string>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @index { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index { get; set; }
 					}
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_212973048794667040959187979763248770796810688032>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @index { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index { get; set; }
 						public global::Rocks.Argument<string> @value { get; set; }
 					}
 					
@@ -1890,10 +1890,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1946,14 +1946,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersIndexerExpectations
+					internal sealed class IndexerExpectations
 					{
-						internal sealed class IHavePointersIndexerGetterExpectations
+						internal sealed class IndexerGetterExpectations
 						{
-							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -1968,12 +1968,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersIndexerSetterExpectations
+						internal sealed class IndexerSetterExpectations
 						{
-							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -1990,14 +1990,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersIndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal IndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerSetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations Indexers { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
@@ -2007,7 +2007,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -2057,7 +2057,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate int* Callback_233526433170798729291170303027806441120958052344(string @index);
 						internal unsafe delegate void Callback_358052978580071937655814761903436805080473631030(string @index, int* @value);
@@ -2066,7 +2066,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentForintPointer
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer? evaluation;
 							private readonly int* value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -2078,7 +2078,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationForintPointer @evaluation)
+							internal ArgumentForintPointer(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationForintPointer @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -2122,16 +2122,16 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
 					}
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_358052978580071937655814761903436805080473631030>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -2155,10 +2155,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -2211,14 +2211,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersIndexerExpectations
+					internal sealed class IndexerExpectations
 					{
-						internal sealed class IHavePointersIndexerGetterExpectations
+						internal sealed class IndexerGetterExpectations
 						{
-							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -2233,12 +2233,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersIndexerSetterExpectations
+						internal sealed class IndexerSetterExpectations
 						{
-							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -2255,14 +2255,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersIndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal IndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerSetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations Indexers { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
@@ -2272,7 +2272,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -2322,7 +2322,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate string Callback_569015130962673970970166158518857080183518071990(delegate*<int, void> @index);
 						internal unsafe delegate void Callback_685325684978960348804638980049239306739591139789(delegate*<int, void> @index, string @value);
@@ -2331,7 +2331,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 							private readonly delegate*<int, void> value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -2343,7 +2343,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -2366,15 +2366,15 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_569015130962673970970166158518857080183518071990, string>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @index { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index { get; set; }
 					}
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_685325684978960348804638980049239306739591139789>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789>
 					{
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @index { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index { get; set; }
 						public global::Rocks.Argument<string> @value { get; set; }
 					}
 					
@@ -2399,10 +2399,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -2455,14 +2455,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersIndexerExpectations
+					internal sealed class IndexerExpectations
 					{
-						internal sealed class IHavePointersIndexerGetterExpectations
+						internal sealed class IndexerGetterExpectations
 						{
-							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_569015130962673970970166158518857080183518071990, string> This(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -2477,12 +2477,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersIndexerSetterExpectations
+						internal sealed class IndexerSetterExpectations
 						{
-							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_685325684978960348804638980049239306739591139789> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -2499,14 +2499,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersIndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal IndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerSetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations Indexers { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
@@ -2516,7 +2516,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -2566,7 +2566,7 @@ public static class PointerGeneratorTests
 				internal sealed class IHavePointersCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHavePointers
+					internal static class Projections
 					{
 						internal unsafe delegate delegate*<int, void> Callback_349909950755307474321032969938976654826966807638(string @index);
 						internal unsafe delegate void Callback_189832623536291723139685821763903856879932142527(string @index, delegate*<int, void> @value);
@@ -2575,7 +2575,7 @@ public static class PointerGeneratorTests
 						internal unsafe sealed class ArgumentFordelegatePointerOfint__void
 							: global::Rocks.Argument
 						{
-							private readonly global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
+							private readonly global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void? evaluation;
 							private readonly delegate*<int, void> value;
 							private readonly global::Rocks.ValidationState validation;
 							
@@ -2587,7 +2587,7 @@ public static class PointerGeneratorTests
 								this.validation = global::Rocks.ValidationState.Value;
 							}
 							
-							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
+							internal ArgumentFordelegatePointerOfint__void(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentEvaluationFordelegatePointerOfint__void @evaluation)
 							{
 								this.evaluation = @evaluation;
 								this.validation = global::Rocks.ValidationState.Evaluation;
@@ -2631,16 +2631,16 @@ public static class PointerGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_349909950755307474321032969938976654826966807638>
+						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
 					}
 					
 					internal sealed class Handler1
-						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_189832623536291723139685821763903856879932142527>
+						: global::Rocks.Handler<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527>
 					{
 						public global::Rocks.Argument<string> @index { get; set; }
-						public global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value { get; set; }
+						public global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value { get; set; }
 					}
 					
 					#pragma warning restore CS8618
@@ -2664,10 +2664,10 @@ public static class PointerGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHavePointers
+					private sealed class Mock
 						: global::MockTests.IHavePointers
 					{
-						public RockIHavePointers(global::MockTests.IHavePointersCreateExpectations @expectations)
+						public Mock(global::MockTests.IHavePointersCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -2720,14 +2720,14 @@ public static class PointerGeneratorTests
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 					}
-					internal sealed class IHavePointersIndexerExpectations
+					internal sealed class IndexerExpectations
 					{
-						internal sealed class IHavePointersIndexerGetterExpectations
+						internal sealed class IndexerGetterExpectations
 						{
-							internal IHavePointersIndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerGetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_349909950755307474321032969938976654826966807638> This(global::Rocks.Argument<string> @index)
+							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638> This(global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
@@ -2742,12 +2742,12 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IHavePointersIndexerSetterExpectations
+						internal sealed class IndexerSetterExpectations
 						{
-							internal IHavePointersIndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+							internal IndexerSetterExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
-							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.Callback_189832623536291723139685821763903856879932142527> This(global::MockTests.IHavePointersCreateExpectations.ProjectionsForIHavePointers.ArgumentFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
+							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
 							{
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -2764,14 +2764,14 @@ public static class PointerGeneratorTests
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
 						
-						internal IHavePointersIndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
+						internal IndexerExpectations(global::MockTests.IHavePointersCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerGetterExpectations Getters { get; }
-						internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations.IHavePointersIndexerSetterExpectations Setters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+						internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IHavePointersCreateExpectations.IHavePointersIndexerExpectations Indexers { get; }
+					internal global::MockTests.IHavePointersCreateExpectations.IndexerExpectations Indexers { get; }
 					
 					internal IHavePointersCreateExpectations() =>
 						(this.Indexers) = (new(this));
@@ -2781,7 +2781,7 @@ public static class PointerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHavePointers(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

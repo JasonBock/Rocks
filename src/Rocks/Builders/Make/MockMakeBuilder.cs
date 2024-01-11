@@ -11,7 +11,7 @@ internal static class MockMakeBuilder
 	{
 		var typeToMock = mockType.Type;
 		var kind = typeToMock.IsRecord ? "record" : "class";
-		writer.WriteLine($"private sealed {kind} Rock{typeToMock.FlattenedName}");
+		writer.WriteLine($"private sealed {kind} Mock");
 		writer.Indent++;
 		writer.WriteLine($": {typeToMock.FullyQualifiedName}");
 		writer.Indent--;

@@ -12,15 +12,14 @@ internal static class MethodExpectationsBuilder
 		if (type.Methods.Length > 0)
 		{
 			writer.WriteLine();
-			var typeToMock = type.Type.FlattenedName;
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}MethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal {{typeToMock}}MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal MethodExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -38,7 +37,7 @@ internal static class MethodExpectationsBuilder
 				writer.Indent--;
 				writer.WriteLine("}");
 
-				yield return new($"{expectationsFullyQualifiedName}.{typeToMock}MethodExpectations", "Methods");
+				yield return new($"{expectationsFullyQualifiedName}.MethodExpectations", "Methods");
 			}
 
 			if (type.Methods.Any(_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes))
@@ -51,9 +50,9 @@ internal static class MethodExpectationsBuilder
 
 					writer.WriteLines(
 						$$"""
-						internal sealed class {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}
+						internal sealed class ExplicitMethodExpectationsFor{{containingTypeName}}
 						{
-							internal {{typeToMock}}ExplicitMethodExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+							internal ExplicitMethodExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 								this.Expectations = expectations;
 						
 						""");
@@ -70,7 +69,7 @@ internal static class MethodExpectationsBuilder
 					writer.Indent--;
 					writer.WriteLine("}");
 
-					yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitMethodExpectationsFor{containingTypeName}", $"ExplicitMethodsFor{containingTypeName}");
+					yield return new($"{expectationsFullyQualifiedName}.ExplicitMethodExpectationsFor{containingTypeName}", $"ExplicitMethodsFor{containingTypeName}");
 				}
 			}
 		}

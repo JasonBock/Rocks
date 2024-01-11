@@ -79,10 +79,10 @@ public static class MethodGeneratorTests
 						}
 					}
 					
-					private sealed class RockIMapper
+					private sealed class Mock
 						: global::MockTests.IMapper
 					{
-						public RockIMapper(global::MockTests.IMapperCreateExpectations @expectations)
+						public Mock(global::MockTests.IMapperCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -144,9 +144,9 @@ public static class MethodGeneratorTests
 						private global::MockTests.IMapperCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IMapperMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IMapperMethodExpectations(global::MockTests.IMapperCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IMapperCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IMapperCreateExpectations.Handler0<TDestination>, global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, global::Rocks.Argument<object?> @parameters, global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]> @membersToExpand)
@@ -188,7 +188,7 @@ public static class MethodGeneratorTests
 						private global::MockTests.IMapperCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IMapperCreateExpectations.IMapperMethodExpectations Methods { get; }
+					internal global::MockTests.IMapperCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IMapperCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -198,7 +198,7 @@ public static class MethodGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIMapper(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -274,10 +274,10 @@ public static class MethodGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveOptionalArguments
+					private sealed class Mock
 						: global::MockTests.IHaveOptionalArguments
 					{
-						public RockIHaveOptionalArguments(global::MockTests.IHaveOptionalArgumentsCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveOptionalArgumentsCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -316,9 +316,9 @@ public static class MethodGeneratorTests
 						private global::MockTests.IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveOptionalArgumentsMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveOptionalArgumentsMethodExpectations(global::MockTests.IHaveOptionalArgumentsCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveOptionalArgumentsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>> Foo(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b, global::Rocks.Argument<double> @c)
@@ -343,7 +343,7 @@ public static class MethodGeneratorTests
 						private global::MockTests.IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveOptionalArgumentsCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveOptionalArgumentsCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -353,7 +353,7 @@ public static class MethodGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveOptionalArguments(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -430,10 +430,10 @@ public static class MethodGeneratorTests
 						}
 					}
 					
-					private sealed class RockIProjection
+					private sealed class Mock
 						: global::MockTests.IProjection
 					{
-						public RockIProjection(global::MockTests.IProjectionCreateExpectations @expectations)
+						public Mock(global::MockTests.IProjectionCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -472,9 +472,9 @@ public static class MethodGeneratorTests
 						private global::MockTests.IProjectionCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IProjectionMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IProjectionMethodExpectations(global::MockTests.IProjectionCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IProjectionCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IProjectionCreateExpectations.Handler0, global::System.Action<string, int, global::System.Guid[]>> Project(global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid[]> @values)
@@ -499,7 +499,7 @@ public static class MethodGeneratorTests
 						private global::MockTests.IProjectionCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IProjectionCreateExpectations.IProjectionMethodExpectations Methods { get; }
+					internal global::MockTests.IProjectionCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IProjectionCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -509,7 +509,7 @@ public static class MethodGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIProjection(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -560,7 +560,7 @@ public static class MethodGeneratorTests
 				internal sealed class IHaveTooMuchCreateExpectations
 					: global::Rocks.Expectations
 				{
-					internal static class ProjectionsForIHaveTooMuch
+					internal static class Projections
 					{
 						internal delegate int Callback_383140697323744298072430331353344056628280456971(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19);
 					}
@@ -568,7 +568,7 @@ public static class MethodGeneratorTests
 					#pragma warning disable CS8618
 					
 					internal sealed class Handler0
-						: global::Rocks.Handler<global::MockTests.IHaveTooMuchCreateExpectations.ProjectionsForIHaveTooMuch.Callback_383140697323744298072430331353344056628280456971, int>
+						: global::Rocks.Handler<global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int>
 					{
 						public global::Rocks.Argument<int> @i0 { get; set; }
 						public global::Rocks.Argument<int> @i1 { get; set; }
@@ -611,10 +611,10 @@ public static class MethodGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveTooMuch
+					private sealed class Mock
 						: global::MockTests.IHaveTooMuch
 					{
-						public RockIHaveTooMuch(global::MockTests.IHaveTooMuchCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveTooMuchCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -663,12 +663,12 @@ public static class MethodGeneratorTests
 						private global::MockTests.IHaveTooMuchCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveTooMuchMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveTooMuchMethodExpectations(global::MockTests.IHaveTooMuchCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveTooMuchCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
-						internal global::Rocks.Adornments<global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.IHaveTooMuchCreateExpectations.ProjectionsForIHaveTooMuch.Callback_383140697323744298072430331353344056628280456971, int> AddProperty(global::Rocks.Argument<int> @i0, global::Rocks.Argument<int> @i1, global::Rocks.Argument<int> @i2, global::Rocks.Argument<int> @i3, global::Rocks.Argument<int> @i4, global::Rocks.Argument<int> @i5, global::Rocks.Argument<int> @i6, global::Rocks.Argument<int> @i7, global::Rocks.Argument<int> @i8, global::Rocks.Argument<int> @i9, global::Rocks.Argument<int> @i10, global::Rocks.Argument<int> @i11, global::Rocks.Argument<int> @i12, global::Rocks.Argument<int> @i13, global::Rocks.Argument<int> @i14, global::Rocks.Argument<int> @i15, global::Rocks.Argument<int> @i16, global::Rocks.Argument<int> @i17, global::Rocks.Argument<int> @i18, global::Rocks.Argument<int> @i19)
+						internal global::Rocks.Adornments<global::MockTests.IHaveTooMuchCreateExpectations.Handler0, global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int> AddProperty(global::Rocks.Argument<int> @i0, global::Rocks.Argument<int> @i1, global::Rocks.Argument<int> @i2, global::Rocks.Argument<int> @i3, global::Rocks.Argument<int> @i4, global::Rocks.Argument<int> @i5, global::Rocks.Argument<int> @i6, global::Rocks.Argument<int> @i7, global::Rocks.Argument<int> @i8, global::Rocks.Argument<int> @i9, global::Rocks.Argument<int> @i10, global::Rocks.Argument<int> @i11, global::Rocks.Argument<int> @i12, global::Rocks.Argument<int> @i13, global::Rocks.Argument<int> @i14, global::Rocks.Argument<int> @i15, global::Rocks.Argument<int> @i16, global::Rocks.Argument<int> @i17, global::Rocks.Argument<int> @i18, global::Rocks.Argument<int> @i19)
 						{
 							global::System.ArgumentNullException.ThrowIfNull(@i0);
 							global::System.ArgumentNullException.ThrowIfNull(@i1);
@@ -722,7 +722,7 @@ public static class MethodGeneratorTests
 						private global::MockTests.IHaveTooMuchCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveTooMuchCreateExpectations.IHaveTooMuchMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveTooMuchCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveTooMuchCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -732,7 +732,7 @@ public static class MethodGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveTooMuch(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

@@ -35,8 +35,6 @@ internal static class MockConstructorBuilder
 					return $"{direction}{(_.IsParams ? "params " : string.Empty)}{_.Type.FullyQualifiedName}{requiresNullable} @{_.Name}";
 				})));
 
-		var mockTypeName = $"Rock{type.Type.FlattenedName}";
-
 		if (hasRequiredProperties)
 		{
 			writer.WriteLine("[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]");
@@ -59,7 +57,7 @@ internal static class MockConstructorBuilder
 
 			var isUnsafe = parameters.Any(_ => _.Type.IsPointer) ? "unsafe " : string.Empty;
 
-			writer.WriteLine($"public {isUnsafe}{mockTypeName}({instanceParameters})");
+			writer.WriteLine($"public {isUnsafe}Mock({instanceParameters})");
 			writer.Indent++;
 			writer.WriteLine($": base({passedParameter})");
 			writer.Indent--;
@@ -71,7 +69,7 @@ internal static class MockConstructorBuilder
 		}
 		else
 		{
-			writer.WriteLine($"public {mockTypeName}({instanceParameters})");
+			writer.WriteLine($"public Mock({instanceParameters})");
 			writer.WriteLine("{");
 			writer.Indent++;
 			MockConstructorBuilder.BuildFieldSetters(writer, namingContext, shims, type.ConstructorProperties, hasRequiredProperties);

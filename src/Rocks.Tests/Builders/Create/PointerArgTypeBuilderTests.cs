@@ -68,7 +68,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentForOuter_Inner_TargetPointer")]
+		"global::Mock.IMockCreateExpectations.Projections.ArgumentForOuter_Inner_TargetPointer")]
 	[TestCase(
 		"""
 		namespace Mock 
@@ -89,7 +89,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentForOuter_Inner_TargetOfstringPointer")]
+		"global::Mock.IMockCreateExpectations.Projections.ArgumentForOuter_Inner_TargetOfstringPointer")]
 	public static void GetProjectedFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, _) = PointerArgTypeBuilderTests.GetTypeSymbols(code);
@@ -149,7 +149,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForintPointer")]
+		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForintPointer")]
 	[TestCase(
 		"""
 		using System;
@@ -162,7 +162,7 @@ public static class PointerArgTypeBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.ArgumentEvaluationForSpanOfint")]
+		"global::Mock.IMockCreateExpectations.Projections.ArgumentEvaluationForSpanOfint")]
 	public static void GetProjectedEvaluationDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation, model) = PointerArgTypeBuilderTests.GetTypeSymbols(code);

@@ -62,10 +62,10 @@ public static class ObsoleteGeneratorTests
 					}
 					
 					[type: global::System.ObsoleteAttribute("This relay is obsolete and will be removed in future versions. The reason is that it causes recursion overflow for \"many\" requests if you forget to add IEnumerable<T> customization.\nPlease use the following code snippet instead:\nfixture.Customizations.Add(  new FilteringSpecimenBuilder(    new FixedBuilder(      SEQUENCE_TO_RETURN),    new EqualRequestSpecification(      new MultipleRequest(        new SeededRequest(          typeof(T),          default(T))))));\n\nIf you need that often, please create an extension method inside your project.")]
-					private sealed class RockIContainer
+					private sealed class Mock
 						: global::MockTests.IContainer
 					{
-						public RockIContainer(global::MockTests.IContainerCreateExpectations @expectations)
+						public Mock(global::MockTests.IContainerCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -88,9 +88,9 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IContainerCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IContainerMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IContainerMethodExpectations(global::MockTests.IContainerCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IContainerCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action> Contain()
@@ -103,7 +103,7 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IContainerCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IContainerCreateExpectations.IContainerMethodExpectations Methods { get; }
+					internal global::MockTests.IContainerCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IContainerCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -113,7 +113,7 @@ public static class ObsoleteGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIContainer(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -213,10 +213,10 @@ public static class ObsoleteGeneratorTests
 						}
 					}
 					
-					private sealed class RockContainer
+					private sealed class Mock
 						: global::MockTests.Container
 					{
-						public RockContainer(global::MockTests.ContainerCreateExpectations @expectations, string @value)
+						public Mock(global::MockTests.ContainerCreateExpectations @expectations, string @value)
 							: base(@value)
 						{
 							this.Expectations = @expectations;
@@ -298,9 +298,9 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.ContainerCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ContainerMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ContainerMethodExpectations(global::MockTests.ContainerCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ContainerCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -340,7 +340,7 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.ContainerCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ContainerCreateExpectations.ContainerMethodExpectations Methods { get; }
+					internal global::MockTests.ContainerCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ContainerCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -350,7 +350,7 @@ public static class ObsoleteGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockContainer(this, @value);
+							var @mock = new Mock(this, @value);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -599,10 +599,10 @@ public static class ObsoleteGeneratorTests
 						}
 					}
 					
-					private sealed class RockIPixelShader
+					private sealed class Mock
 						: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
 					{
-						public RockIPixelShader(global::MockTests.IPixelShaderCreateExpectations @expectations)
+						public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -667,9 +667,9 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IPixelShaderMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IPixelShaderMethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
@@ -682,11 +682,11 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IPixelShaderPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class IPixelShaderPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal IPixelShaderPropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
@@ -699,14 +699,14 @@ public static class ObsoleteGeneratorTests
 						}
 						
 						
-						internal IPixelShaderPropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							(this.Getters) = (new(expectations));
 						
-						internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderPropertyExpectations.IPixelShaderPropertyGetterExpectations Getters { get; }
+						internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 					}
 					
-					internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderMethodExpectations Methods { get; }
-					internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderPropertyExpectations Properties { get; }
+					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal IPixelShaderCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
@@ -716,7 +716,7 @@ public static class ObsoleteGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIPixelShader(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -800,10 +800,10 @@ public static class ObsoleteGeneratorTests
 						}
 					}
 					
-					private sealed class RockIPixelShader
+					private sealed class Mock
 						: global::MockTests.IPixelShader, global::Rocks.IRaiseEvents
 					{
-						public RockIPixelShader(global::MockTests.IPixelShaderCreateExpectations @expectations)
+						public Mock(global::MockTests.IPixelShaderCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -868,9 +868,9 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IPixelShaderMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IPixelShaderMethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
@@ -883,11 +883,11 @@ public static class ObsoleteGeneratorTests
 						private global::MockTests.IPixelShaderCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IPixelShaderPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class IPixelShaderPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal IPixelShaderPropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
@@ -900,14 +900,14 @@ public static class ObsoleteGeneratorTests
 						}
 						
 						
-						internal IPixelShaderPropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.IPixelShaderCreateExpectations expectations) =>
 							(this.Getters) = (new(expectations));
 						
-						internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderPropertyExpectations.IPixelShaderPropertyGetterExpectations Getters { get; }
+						internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 					}
 					
-					internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderMethodExpectations Methods { get; }
-					internal global::MockTests.IPixelShaderCreateExpectations.IPixelShaderPropertyExpectations Properties { get; }
+					internal global::MockTests.IPixelShaderCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.IPixelShaderCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal IPixelShaderCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
@@ -917,7 +917,7 @@ public static class ObsoleteGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIPixelShader(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

@@ -9,16 +9,14 @@ internal static class RefLikeArgTypeBuilder
 	// TODO: Not sure this method is needed anymore...
 	internal static string GetProjectedFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.RefLikeArgProjectedName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}";
 	}
 
 	internal static string GetProjectedEvaluationDelegateFullyQualifiedName(TypeReferenceModel type, TypeReferenceModel typeToMock)
 	{
-		var projectionsForName = $"ProjectionsFor{typeToMock.FlattenedName}";
 		var argForType = type.RefLikeArgProjectedEvaluationDelegateName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.{projectionsForName}.{argForType}";
+		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{argForType}";
 	}
 
 	internal static void Build(IndentedTextWriter writer, TypeReferenceModel type, TypeMockModel typeModel)

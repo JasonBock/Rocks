@@ -92,10 +92,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUseSameNames
+				private sealed class Mock
 					: First::IUseSameNames
 				{
-					public RockIUseSameNames(global::IUseSameNamesCreateExpectations @expectations)
+					public Mock(global::IUseSameNamesCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -132,9 +132,9 @@ public static class NamingGeneratorTests
 					private global::IUseSameNamesCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IUseSameNamesMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IUseSameNamesMethodExpectations(global::IUseSameNamesCreateExpectations expectations) =>
+					internal MethodExpectations(global::IUseSameNamesCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IUseSameNamesCreateExpectations.Handler0, global::System.Action<First::SameNamespace.SameType>> Use(global::Rocks.Argument<First::SameNamespace.SameType> @value)
@@ -153,7 +153,7 @@ public static class NamingGeneratorTests
 					private global::IUseSameNamesCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IUseSameNamesCreateExpectations.IUseSameNamesMethodExpectations Methods { get; }
+				internal global::IUseSameNamesCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IUseSameNamesCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -163,7 +163,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUseSameNames(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -243,13 +243,13 @@ public static class NamingGeneratorTests
 			{
 				internal First::IUseSameNames Instance()
 				{
-					return new RockIUseSameNames();
+					return new Mock();
 				}
 				
-				private sealed class RockIUseSameNames
+				private sealed class Mock
 					: First::IUseSameNames
 				{
-					public RockIUseSameNames()
+					public Mock()
 					{
 					}
 					
@@ -299,13 +299,13 @@ public static class NamingGeneratorTests
 			{
 				internal global::DbSet<object> Instance()
 				{
-					return new RockDbSetOfobject();
+					return new Mock();
 				}
 				
-				private sealed class RockDbSetOfobject
+				private sealed class Mock
 					: global::DbSet<object>
 				{
-					public RockDbSetOfobject()
+					public Mock()
 					{
 					}
 					
@@ -406,10 +406,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveDelegate
+				private sealed class Mock
 					: global::IHaveDelegate
 				{
-					public RockIHaveDelegate(global::IHaveDelegateCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
+					public Mock(global::IHaveDelegateCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
 					{
 						this.Expectations = @expectations;
 						if (@constructorProperties is not null)
@@ -494,9 +494,9 @@ public static class NamingGeneratorTests
 					private global::IHaveDelegateCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IHaveDelegateMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IHaveDelegateMethodExpectations(global::IHaveDelegateCreateExpectations expectations) =>
+					internal MethodExpectations(global::IHaveDelegateCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -536,7 +536,7 @@ public static class NamingGeneratorTests
 					private global::IHaveDelegateCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IHaveDelegateCreateExpectations.IHaveDelegateMethodExpectations Methods { get; }
+				internal global::IHaveDelegateCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IHaveDelegateCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -551,7 +551,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveDelegate(this, @constructorProperties);
+						var @mock = new Mock(this, @constructorProperties);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -621,10 +621,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUseKeyword
+				private sealed class Mock
 					: global::IUseKeyword
 				{
-					public RockIUseKeyword(global::IUseKeywordCreateExpectations @expectations)
+					public Mock(global::IUseKeywordCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -663,9 +663,9 @@ public static class NamingGeneratorTests
 					private global::IUseKeywordCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IUseKeywordMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IUseKeywordMethodExpectations(global::IUseKeywordCreateExpectations expectations) =>
+					internal MethodExpectations(global::IUseKeywordCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IUseKeywordCreateExpectations.Handler0, global::System.Action<string, string, string>> Foo(global::Rocks.Argument<string> @namespace, global::Rocks.Argument<string> @event, global::Rocks.Argument<string> @property)
@@ -688,7 +688,7 @@ public static class NamingGeneratorTests
 					private global::IUseKeywordCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IUseKeywordCreateExpectations.IUseKeywordMethodExpectations Methods { get; }
+				internal global::IUseKeywordCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IUseKeywordCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -698,7 +698,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUseKeyword(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -785,10 +785,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockHaveNamingConflicts
+				private sealed class Mock
 					: global::HaveNamingConflicts
 				{
-					public RockHaveNamingConflicts(global::HaveNamingConflictsCreateExpectations @expectations1, string @self, string @expectations)
+					public Mock(global::HaveNamingConflictsCreateExpectations @expectations1, string @self, string @expectations)
 						: base(@self, @expectations)
 					{
 						this.Expectations = @expectations1;
@@ -870,9 +870,9 @@ public static class NamingGeneratorTests
 					private global::HaveNamingConflictsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class HaveNamingConflictsMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal HaveNamingConflictsMethodExpectations(global::HaveNamingConflictsCreateExpectations expectations) =>
+					internal MethodExpectations(global::HaveNamingConflictsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -912,7 +912,7 @@ public static class NamingGeneratorTests
 					private global::HaveNamingConflictsCreateExpectations Expectations { get; }
 				}
 				
-				internal global::HaveNamingConflictsCreateExpectations.HaveNamingConflictsMethodExpectations Methods { get; }
+				internal global::HaveNamingConflictsCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal HaveNamingConflictsCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -922,7 +922,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockHaveNamingConflicts(this, @self, @expectations);
+						var @mock = new Mock(this, @self, @expectations);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -994,10 +994,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveNamingConflicts
+				private sealed class Mock
 					: global::IHaveNamingConflicts
 				{
-					public RockIHaveNamingConflicts(global::IHaveNamingConflictsCreateExpectations @expectations)
+					public Mock(global::IHaveNamingConflictsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1033,11 +1033,11 @@ public static class NamingGeneratorTests
 					
 					private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
 				}
-				internal sealed class IHaveNamingConflictsIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class IHaveNamingConflictsIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal IHaveNamingConflictsIndexerGetterExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveNamingConflictsCreateExpectations.Handler0, global::System.Func<string, string, string, string, string, int>, int> This(global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self)
@@ -1064,13 +1064,13 @@ public static class NamingGeneratorTests
 					}
 					
 					
-					internal IHaveNamingConflictsIndexerExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
+					internal IndexerExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IHaveNamingConflictsCreateExpectations.IHaveNamingConflictsIndexerExpectations.IHaveNamingConflictsIndexerGetterExpectations Getters { get; }
+					internal global::IHaveNamingConflictsCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
 				}
 				
-				internal global::IHaveNamingConflictsCreateExpectations.IHaveNamingConflictsIndexerExpectations Indexers { get; }
+				internal global::IHaveNamingConflictsCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal IHaveNamingConflictsCreateExpectations() =>
 					(this.Indexers) = (new(this));
@@ -1080,7 +1080,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveNamingConflicts(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1152,10 +1152,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveNamingConflicts
+				private sealed class Mock
 					: global::IHaveNamingConflicts
 				{
-					public RockIHaveNamingConflicts(global::IHaveNamingConflictsCreateExpectations @expectations)
+					public Mock(global::IHaveNamingConflictsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1189,9 +1189,9 @@ public static class NamingGeneratorTests
 					private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IHaveNamingConflictsMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IHaveNamingConflictsMethodExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
+					internal MethodExpectations(global::IHaveNamingConflictsCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IHaveNamingConflictsCreateExpectations.Handler0, global::System.Func<string, string, string, string, string, int>, int> Foo(global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self)
@@ -1218,7 +1218,7 @@ public static class NamingGeneratorTests
 					private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IHaveNamingConflictsCreateExpectations.IHaveNamingConflictsMethodExpectations Methods { get; }
+				internal global::IHaveNamingConflictsCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IHaveNamingConflictsCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1228,7 +1228,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveNamingConflicts(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1318,11 +1318,11 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockHasRequiredProperty
+				private sealed class Mock
 					: global::HasRequiredProperty
 				{
 					[global::System.Diagnostics.CodeAnalysis.SetsRequiredMembers]
-					public RockHasRequiredProperty(global::HasRequiredPropertyCreateExpectations @expectations, ConstructorProperties @constructorProperties1, string @constructorProperties)
+					public Mock(global::HasRequiredPropertyCreateExpectations @expectations, ConstructorProperties @constructorProperties1, string @constructorProperties)
 						: base(@constructorProperties)
 					{
 						this.Expectations = @expectations;
@@ -1405,9 +1405,9 @@ public static class NamingGeneratorTests
 					private global::HasRequiredPropertyCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class HasRequiredPropertyMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal HasRequiredPropertyMethodExpectations(global::HasRequiredPropertyCreateExpectations expectations) =>
+					internal MethodExpectations(global::HasRequiredPropertyCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1447,7 +1447,7 @@ public static class NamingGeneratorTests
 					private global::HasRequiredPropertyCreateExpectations Expectations { get; }
 				}
 				
-				internal global::HasRequiredPropertyCreateExpectations.HasRequiredPropertyMethodExpectations Methods { get; }
+				internal global::HasRequiredPropertyCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal HasRequiredPropertyCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1466,7 +1466,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockHasRequiredProperty(this, @constructorProperties1, @constructorProperties);
+						var @mock = new Mock(this, @constructorProperties1, @constructorProperties);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1546,10 +1546,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUsesThing
+				private sealed class Mock
 					: global::IUsesThing
 				{
-					public RockIUsesThing(global::IUsesThingCreateExpectations @expectations)
+					public Mock(global::IUsesThingCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1587,9 +1587,9 @@ public static class NamingGeneratorTests
 					private global::IUsesThingCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IUsesThingMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IUsesThingMethodExpectations(global::IUsesThingCreateExpectations expectations) =>
+					internal MethodExpectations(global::IUsesThingCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IUsesThingCreateExpectations.Handler0, global::System.Action<global::Namespace2.Thing, global::Namespace1.Stuff>> Use(global::Rocks.Argument<global::Namespace2.Thing> @thing, global::Rocks.Argument<global::Namespace1.Stuff> @stuff)
@@ -1610,7 +1610,7 @@ public static class NamingGeneratorTests
 					private global::IUsesThingCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IUsesThingCreateExpectations.IUsesThingMethodExpectations Methods { get; }
+				internal global::IUsesThingCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IUsesThingCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1620,7 +1620,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUsesThing(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1685,10 +1685,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIUseMethodInformation
+				private sealed class Mock
 					: global::IUseMethodInformation
 				{
-					public RockIUseMethodInformation(global::IUseMethodInformationCreateExpectations @expectations)
+					public Mock(global::IUseMethodInformationCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1713,11 +1713,11 @@ public static class NamingGeneratorTests
 					
 					private global::IUseMethodInformationCreateExpectations Expectations { get; }
 				}
-				internal sealed class IUseMethodInformationPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IUseMethodInformationPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IUseMethodInformationPropertyGetterExpectations(global::IUseMethodInformationCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IUseMethodInformationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IUseMethodInformationCreateExpectations.Handler0, global::System.Func<global::MethodInformation[]>, global::MethodInformation[]> Methods()
@@ -1730,13 +1730,13 @@ public static class NamingGeneratorTests
 					}
 					
 					
-					internal IUseMethodInformationPropertyExpectations(global::IUseMethodInformationCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IUseMethodInformationCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IUseMethodInformationCreateExpectations.IUseMethodInformationPropertyExpectations.IUseMethodInformationPropertyGetterExpectations Getters { get; }
+					internal global::IUseMethodInformationCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
 				
-				internal global::IUseMethodInformationCreateExpectations.IUseMethodInformationPropertyExpectations Properties { get; }
+				internal global::IUseMethodInformationCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal IUseMethodInformationCreateExpectations() =>
 					(this.Properties) = (new(this));
@@ -1746,7 +1746,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIUseMethodInformation(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1811,10 +1811,10 @@ public static class NamingGeneratorTests
 					}
 				}
 				
-				private sealed class RockIOperation
+				private sealed class Mock
 					: global::IOperation
 				{
-					public RockIOperation(global::IOperationCreateExpectations @expectations)
+					public Mock(global::IOperationCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -1839,11 +1839,11 @@ public static class NamingGeneratorTests
 					
 					private global::IOperationCreateExpectations Expectations { get; }
 				}
-				internal sealed class IOperationPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IOperationPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IOperationPropertyGetterExpectations(global::IOperationCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IOperationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IOperationCreateExpectations.Handler0, global::System.Func<global::IOperation.OperationList>, global::IOperation.OperationList> Operations()
@@ -1856,13 +1856,13 @@ public static class NamingGeneratorTests
 					}
 					
 					
-					internal IOperationPropertyExpectations(global::IOperationCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IOperationCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IOperationCreateExpectations.IOperationPropertyExpectations.IOperationPropertyGetterExpectations Getters { get; }
+					internal global::IOperationCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
 				
-				internal global::IOperationCreateExpectations.IOperationPropertyExpectations Properties { get; }
+				internal global::IOperationCreateExpectations.PropertyExpectations Properties { get; }
 				
 				internal IOperationCreateExpectations() =>
 					(this.Properties) = (new(this));
@@ -1872,7 +1872,7 @@ public static class NamingGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIOperation(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1952,10 +1952,10 @@ public static class NamingGeneratorTests
 						}
 					}
 					
-					private sealed class RockIUseConstraint
+					private sealed class Mock
 						: global::Namespace2.IUseConstraint
 					{
-						public RockIUseConstraint(global::Namespace2.IUseConstraintCreateExpectations @expectations)
+						public Mock(global::Namespace2.IUseConstraintCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1996,9 +1996,9 @@ public static class NamingGeneratorTests
 						private global::Namespace2.IUseConstraintCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IUseConstraintMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IUseConstraintMethodExpectations(global::Namespace2.IUseConstraintCreateExpectations expectations) =>
+						internal MethodExpectations(global::Namespace2.IUseConstraintCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::Namespace2.IUseConstraintCreateExpectations.Handler0<T>, global::System.Action<T>> Foo<T>(global::Rocks.Argument<T> @value) where T : global::Namespace1.IConstraint
@@ -2017,7 +2017,7 @@ public static class NamingGeneratorTests
 						private global::Namespace2.IUseConstraintCreateExpectations Expectations { get; }
 					}
 					
-					internal global::Namespace2.IUseConstraintCreateExpectations.IUseConstraintMethodExpectations Methods { get; }
+					internal global::Namespace2.IUseConstraintCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IUseConstraintCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -2027,7 +2027,7 @@ public static class NamingGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIUseConstraint(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

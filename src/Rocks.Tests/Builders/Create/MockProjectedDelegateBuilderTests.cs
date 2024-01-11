@@ -69,7 +69,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.Callback_647318856387459030730720199270116526843799107753")]
+		"global::Mock.IMockCreateExpectations.Projections.Callback_647318856387459030730720199270116526843799107753")]
 	[TestCase(
 		"""
 		namespace Mock 
@@ -90,7 +90,7 @@ public static class MockProjectedDelegateBuilderTests
 			} 
 		}
 		""",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.Callback_204004461298901558364159322673297972159356701735")]
+		"global::Mock.IMockCreateExpectations.Projections.Callback_204004461298901558364159322673297972159356701735")]
 	public static void GetProjectedCallbackDelegateFullyQualifiedName(string code, string expectedValue)
 	{
 		var (typeToMock, method, compilation) = MockProjectedDelegateBuilderTests.GetSymbols(code);
@@ -151,7 +151,7 @@ public static class MockProjectedDelegateBuilderTests
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
 				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.ProjectionsForIMock.ReturnValue_3056167563748650"));
+		Assert.That(name, Is.EqualTo("global::Mock.Projections.ReturnValue_3056167563748650"));
 	}
 
 	private static (ITypeSymbol typeToMock, IMethodSymbol method, Compilation compilation) GetSymbols(string source)

@@ -69,10 +69,10 @@ public static class AllowNullGeneratorTests
 						}
 					}
 					
-					private sealed class RockIAllow
+					private sealed class Mock
 						: global::MockTests.IAllow
 					{
-						public RockIAllow(global::MockTests.IAllowCreateExpectations @expectations)
+						public Mock(global::MockTests.IAllowCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -126,11 +126,11 @@ public static class AllowNullGeneratorTests
 						
 						private global::MockTests.IAllowCreateExpectations Expectations { get; }
 					}
-					internal sealed class IAllowPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class IAllowPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal IAllowPropertyGetterExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.IAllowCreateExpectations.Handler0, global::System.Func<string>, string> NewLine()
@@ -142,9 +142,9 @@ public static class AllowNullGeneratorTests
 							private global::MockTests.IAllowCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class IAllowPropertySetterExpectations
+						internal sealed class PropertySetterExpectations
 						{
-							internal IAllowPropertySetterExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
+							internal PropertySetterExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.IAllowCreateExpectations.Handler1, global::System.Action<string>> NewLine(global::Rocks.Argument<string> @value)
@@ -160,14 +160,14 @@ public static class AllowNullGeneratorTests
 							private global::MockTests.IAllowCreateExpectations Expectations { get; }
 						}
 						
-						internal IAllowPropertyExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.IAllowCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.IAllowCreateExpectations.IAllowPropertyExpectations.IAllowPropertyGetterExpectations Getters { get; }
-						internal global::MockTests.IAllowCreateExpectations.IAllowPropertyExpectations.IAllowPropertySetterExpectations Setters { get; }
+						internal global::MockTests.IAllowCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+						internal global::MockTests.IAllowCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.IAllowCreateExpectations.IAllowPropertyExpectations Properties { get; }
+					internal global::MockTests.IAllowCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal IAllowCreateExpectations() =>
 						(this.Properties) = (new(this));
@@ -177,7 +177,7 @@ public static class AllowNullGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIAllow(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -228,13 +228,13 @@ public static class AllowNullGeneratorTests
 				{
 					internal global::MockTests.IAllow Instance()
 					{
-						return new RockIAllow();
+						return new Mock();
 					}
 					
-					private sealed class RockIAllow
+					private sealed class Mock
 						: global::MockTests.IAllow
 					{
-						public RockIAllow()
+						public Mock()
 						{
 						}
 						
@@ -339,10 +339,10 @@ public static class AllowNullGeneratorTests
 						}
 					}
 					
-					private sealed class RockAllow
+					private sealed class Mock
 						: global::MockTests.Allow
 					{
-						public RockAllow(global::MockTests.AllowCreateExpectations @expectations)
+						public Mock(global::MockTests.AllowCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -457,9 +457,9 @@ public static class AllowNullGeneratorTests
 						private global::MockTests.AllowCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class AllowMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal AllowMethodExpectations(global::MockTests.AllowCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.AllowCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.AllowCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -492,11 +492,11 @@ public static class AllowNullGeneratorTests
 						private global::MockTests.AllowCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class AllowPropertyExpectations
+					internal sealed class PropertyExpectations
 					{
-						internal sealed class AllowPropertyGetterExpectations
+						internal sealed class PropertyGetterExpectations
 						{
-							internal AllowPropertyGetterExpectations(global::MockTests.AllowCreateExpectations expectations) =>
+							internal PropertyGetterExpectations(global::MockTests.AllowCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.AllowCreateExpectations.Handler3, global::System.Func<string>, string> NewLine()
@@ -508,9 +508,9 @@ public static class AllowNullGeneratorTests
 							private global::MockTests.AllowCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class AllowPropertySetterExpectations
+						internal sealed class PropertySetterExpectations
 						{
-							internal AllowPropertySetterExpectations(global::MockTests.AllowCreateExpectations expectations) =>
+							internal PropertySetterExpectations(global::MockTests.AllowCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.AllowCreateExpectations.Handler4, global::System.Action<string>> NewLine(global::Rocks.Argument<string> @value)
@@ -526,15 +526,15 @@ public static class AllowNullGeneratorTests
 							private global::MockTests.AllowCreateExpectations Expectations { get; }
 						}
 						
-						internal AllowPropertyExpectations(global::MockTests.AllowCreateExpectations expectations) =>
+						internal PropertyExpectations(global::MockTests.AllowCreateExpectations expectations) =>
 							(this.Getters, this.Setters) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.AllowCreateExpectations.AllowPropertyExpectations.AllowPropertyGetterExpectations Getters { get; }
-						internal global::MockTests.AllowCreateExpectations.AllowPropertyExpectations.AllowPropertySetterExpectations Setters { get; }
+						internal global::MockTests.AllowCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
+						internal global::MockTests.AllowCreateExpectations.PropertyExpectations.PropertySetterExpectations Setters { get; }
 					}
 					
-					internal global::MockTests.AllowCreateExpectations.AllowMethodExpectations Methods { get; }
-					internal global::MockTests.AllowCreateExpectations.AllowPropertyExpectations Properties { get; }
+					internal global::MockTests.AllowCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.AllowCreateExpectations.PropertyExpectations Properties { get; }
 					
 					internal AllowCreateExpectations() =>
 						(this.Methods, this.Properties) = (new(this), new(this));
@@ -544,7 +544,7 @@ public static class AllowNullGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockAllow(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -595,13 +595,13 @@ public static class AllowNullGeneratorTests
 				{
 					internal global::MockTests.Allow Instance()
 					{
-						return new RockAllow();
+						return new Mock();
 					}
 					
-					private sealed class RockAllow
+					private sealed class Mock
 						: global::MockTests.Allow
 					{
-						public RockAllow()
+						public Mock()
 						{
 						}
 						

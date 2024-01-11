@@ -9,7 +9,7 @@ internal static class ShimBuilder
    internal static string GetShimName(TypeReferenceModel shimType) => 
 		$"Shim{shimType.FlattenedName}{shimType.FlattenedName.GetHash()}";
 
-   internal static void Build(IndentedTextWriter writer, TypeMockModel shimType, string mockTypeName)
+   internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
 		var shimName = ShimBuilder.GetShimName(shimType.Type);
 
@@ -18,9 +18,9 @@ internal static class ShimBuilder
 			private sealed class {{shimName}}
 				: {{shimType.Type.FullyQualifiedName}}
 			{
-				private readonly {{mockTypeName}} mock;
+				private readonly Mock mock;
 				
-				public {{shimName}}({{mockTypeName}} @mock) =>
+				public {{shimName}}(Mock @mock) =>
 					this.mock = @mock;
 			""");
 

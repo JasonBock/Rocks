@@ -67,10 +67,10 @@ public static class RockAttributeGeneratorTests
 						}
 					}
 					
-					private sealed class RockIContainNullableReferences
+					private sealed class Mock
 						: global::MockTests.IContainNullableReferences
 					{
-						public RockIContainNullableReferences(global::MockTests.IContainNullableReferencesCreateExpectations @expectations)
+						public Mock(global::MockTests.IContainNullableReferencesCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -101,9 +101,9 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.IContainNullableReferencesCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IContainNullableReferencesMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IContainNullableReferencesMethodExpectations(global::MockTests.IContainNullableReferencesCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IContainNullableReferencesCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IContainNullableReferencesCreateExpectations.Handler0, global::System.Func<string?, string, string?>, string?> DoSomething(global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
@@ -124,7 +124,7 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.IContainNullableReferencesCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IContainNullableReferencesCreateExpectations.IContainNullableReferencesMethodExpectations Methods { get; }
+					internal global::MockTests.IContainNullableReferencesCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IContainNullableReferencesCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -134,7 +134,7 @@ public static class RockAttributeGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIContainNullableReferences(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -203,10 +203,10 @@ public static class RockAttributeGeneratorTests
 						}
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest(global::MockTests.ITestCreateExpectations @expectations)
+						public Mock(global::MockTests.ITestCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -229,9 +229,9 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.ITestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ITestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ITestMethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
@@ -244,7 +244,7 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.ITestCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ITestCreateExpectations.ITestMethodExpectations Methods { get; }
+					internal global::MockTests.ITestCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ITestCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -254,7 +254,7 @@ public static class RockAttributeGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockITest(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -318,10 +318,10 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 				
-				private sealed class RockITest
+				private sealed class Mock
 					: global::ITest
 				{
-					public RockITest(global::ITestCreateExpectations @expectations)
+					public Mock(global::ITestCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -344,9 +344,9 @@ public static class RockAttributeGeneratorTests
 					private global::ITestCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ITestMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ITestMethodExpectations(global::ITestCreateExpectations expectations) =>
+					internal MethodExpectations(global::ITestCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ITestCreateExpectations.Handler0, global::System.Action> Foo()
@@ -359,7 +359,7 @@ public static class RockAttributeGeneratorTests
 					private global::ITestCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ITestCreateExpectations.ITestMethodExpectations Methods { get; }
+				internal global::ITestCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ITestCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -369,7 +369,7 @@ public static class RockAttributeGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockITest(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -526,10 +526,10 @@ public static class RockAttributeGeneratorTests
 						}
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest(global::MockTests.ITestCreateExpectations @expectations)
+						public Mock(global::MockTests.ITestCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -552,9 +552,9 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.ITestCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class ITestMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal ITestMethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.ITestCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
@@ -567,7 +567,7 @@ public static class RockAttributeGeneratorTests
 						private global::MockTests.ITestCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.ITestCreateExpectations.ITestMethodExpectations Methods { get; }
+					internal global::MockTests.ITestCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal ITestCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -577,7 +577,7 @@ public static class RockAttributeGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockITest(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -629,13 +629,13 @@ public static class RockAttributeGeneratorTests
 				{
 					internal global::MockTests.ITest Instance()
 					{
-						return new RockITest();
+						return new Mock();
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest()
+						public Mock()
 						{
 						}
 						
@@ -690,13 +690,13 @@ public static class RockAttributeGeneratorTests
 				{
 					internal global::MockTests.ITest Instance()
 					{
-						return new RockITest();
+						return new Mock();
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest()
+						public Mock()
 						{
 						}
 						
@@ -816,13 +816,13 @@ public static class RockAttributeGeneratorTests
 				{
 					internal global::MockTests.ITest Instance()
 					{
-						return new RockITest();
+						return new Mock();
 					}
 					
-					private sealed class RockITest
+					private sealed class Mock
 						: global::MockTests.ITest
 					{
-						public RockITest()
+						public Mock()
 						{
 						}
 						

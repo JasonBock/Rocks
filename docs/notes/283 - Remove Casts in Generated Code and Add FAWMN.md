@@ -248,6 +248,15 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
     * DONE - Note that Expectations is now in just the Rocks anmespace
 * DONE - I feel like I updated the code that is in `INamespaceSymbolExtensionsTests.GetNamespaceSymbol`. I wonder if I can cache things like `references` so I don't keep doing that lookup.
 * DONE (just leave it, it's fine) Can WriteLines() be updated with a Write() + WriteLine()?
+* DONE - Remove the `using`s and see if that breaks anything.
+* DONE - Well. I should move the projected types into the gen'd expectations type. However, this will break stuff, because when they're referenced, they need to include the mock type's namespace (if it exists) + the expectations type name. But the projection namespace will need to be a class.
+* Naming. I have the name of the type to mock all over the place within the gen'd Expectations class. I'm thinking I could make the names shorter just to make it arguably easier to read.
+    * Projections - just name it `Projections`. Projected types within this would still have the same names
+    * Rock{MockTypeName} - Could just name it `Mock`, may be easier to read
+    * Expectations - Don't need the name of the mock type, so `IHavePointersMethodExpectations` would be `MethodExpectations`
+
+I should also do Shims as they don't need the type name, just `{Shim}{hash_code}`
+
 * I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 
 So, how do I add the extension methods for events?
@@ -267,6 +276,7 @@ For each event
 
  Once I do this, change all the integration tests that call `AddRaiseEvent` to use these extension methods. It may be better to change one integration test to ensure it's working correctly after a test with events passes. Then I can update all the broken tests and refactor all the integration tests.
 
+* The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
 * BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
 * Update documentation
 * Check all TODOs

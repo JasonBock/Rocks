@@ -23,8 +23,7 @@ internal static class MockProjectedTypesBuilder
 
 		if (!string.IsNullOrWhiteSpace(projectedCode))
 		{
-			var projectionsNamespace = $"ProjectionsFor{type.Type.FlattenedName}";
-			writer.WriteLine($"internal static class {projectionsNamespace}");
+			writer.WriteLine($"internal static class Projections");
 			writer.WriteLine("{");
 			writer.Indent++;
 

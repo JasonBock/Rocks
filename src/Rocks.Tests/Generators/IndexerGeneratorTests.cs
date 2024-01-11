@@ -105,10 +105,10 @@ public static class IndexerGeneratorTests
 					}
 				}
 				
-				private sealed class RockAbstractClassIndexerGetterSetter
+				private sealed class Mock
 					: global::AbstractClassIndexerGetterSetter
 				{
-					public RockAbstractClassIndexerGetterSetter(global::AbstractClassIndexerGetterSetterCreateExpectations @expectations)
+					public Mock(global::AbstractClassIndexerGetterSetterCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -267,9 +267,9 @@ public static class IndexerGeneratorTests
 					private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class AbstractClassIndexerGetterSetterMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal AbstractClassIndexerGetterSetterMethodExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+					internal MethodExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -302,11 +302,11 @@ public static class IndexerGeneratorTests
 					private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class AbstractClassIndexerGetterSetterIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class AbstractClassIndexerGetterSetterIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal AbstractClassIndexerGetterSetterIndexerGetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
@@ -338,9 +338,9 @@ public static class IndexerGeneratorTests
 						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class AbstractClassIndexerGetterSetterIndexerSetterExpectations
+					internal sealed class IndexerSetterExpectations
 					{
-						internal AbstractClassIndexerGetterSetterIndexerSetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+						internal IndexerSetterExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
@@ -376,15 +376,15 @@ public static class IndexerGeneratorTests
 						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 					}
 					
-					internal AbstractClassIndexerGetterSetterIndexerExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
+					internal IndexerExpectations(global::AbstractClassIndexerGetterSetterCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations.AbstractClassIndexerGetterSetterIndexerGetterExpectations Getters { get; }
-					internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations.AbstractClassIndexerGetterSetterIndexerSetterExpectations Setters { get; }
+					internal global::AbstractClassIndexerGetterSetterCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+					internal global::AbstractClassIndexerGetterSetterCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 				}
 				
-				internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterMethodExpectations Methods { get; }
-				internal global::AbstractClassIndexerGetterSetterCreateExpectations.AbstractClassIndexerGetterSetterIndexerExpectations Indexers { get; }
+				internal global::AbstractClassIndexerGetterSetterCreateExpectations.MethodExpectations Methods { get; }
+				internal global::AbstractClassIndexerGetterSetterCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal AbstractClassIndexerGetterSetterCreateExpectations() =>
 					(this.Methods, this.Indexers) = (new(this), new(this));
@@ -394,7 +394,7 @@ public static class IndexerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockAbstractClassIndexerGetterSetter(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -474,10 +474,10 @@ public static class IndexerGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveOptionalArguments
+				private sealed class Mock
 					: global::IHaveOptionalArguments
 				{
-					public RockIHaveOptionalArguments(global::IHaveOptionalArgumentsCreateExpectations @expectations)
+					public Mock(global::IHaveOptionalArgumentsCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -532,11 +532,11 @@ public static class IndexerGeneratorTests
 					
 					private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 				}
-				internal sealed class IHaveOptionalArgumentsIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class IHaveOptionalArgumentsIndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal IHaveOptionalArgumentsIndexerGetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+						internal IndexerGetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
@@ -558,9 +558,9 @@ public static class IndexerGeneratorTests
 						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveOptionalArgumentsIndexerSetterExpectations
+					internal sealed class IndexerSetterExpectations
 					{
-						internal IHaveOptionalArgumentsIndexerSetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+						internal IndexerSetterExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
@@ -584,14 +584,14 @@ public static class IndexerGeneratorTests
 						private global::IHaveOptionalArgumentsCreateExpectations Expectations { get; }
 					}
 					
-					internal IHaveOptionalArgumentsIndexerExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
+					internal IndexerExpectations(global::IHaveOptionalArgumentsCreateExpectations expectations) =>
 						(this.Getters, this.Setters) = (new(expectations), new(expectations));
 					
-					internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations.IHaveOptionalArgumentsIndexerGetterExpectations Getters { get; }
-					internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations.IHaveOptionalArgumentsIndexerSetterExpectations Setters { get; }
+					internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+					internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations.IndexerSetterExpectations Setters { get; }
 				}
 				
-				internal global::IHaveOptionalArgumentsCreateExpectations.IHaveOptionalArgumentsIndexerExpectations Indexers { get; }
+				internal global::IHaveOptionalArgumentsCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal IHaveOptionalArgumentsCreateExpectations() =>
 					(this.Indexers) = (new(this));
@@ -601,7 +601,7 @@ public static class IndexerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveOptionalArguments(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -694,10 +694,10 @@ public static class IndexerGeneratorTests
 					}
 				}
 				
-				private sealed class RockIHaveIndexersWithInit
+				private sealed class Mock
 					: global::IHaveIndexersWithInit
 				{
-					public RockIHaveIndexersWithInit(global::IHaveIndexersWithInitCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
+					public Mock(global::IHaveIndexersWithInitCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
 					{
 						this.Expectations = @expectations;
 						if (@constructorProperties is not null)
@@ -795,11 +795,11 @@ public static class IndexerGeneratorTests
 					
 					private global::IHaveIndexersWithInitCreateExpectations Expectations { get; }
 				}
-				internal sealed class IHaveIndexersWithInitIndexerExpectations
+				internal sealed class IndexerExpectations
 				{
-					internal sealed class IHaveIndexersWithInitIndexerInitializerExpectations
+					internal sealed class IndexerInitializerExpectations
 					{
-						internal IHaveIndexersWithInitIndexerInitializerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
+						internal IndexerInitializerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler0, global::System.Action<uint, double>> This(global::Rocks.Argument<double> @value, global::Rocks.Argument<uint> @a)
@@ -853,13 +853,13 @@ public static class IndexerGeneratorTests
 						private global::IHaveIndexersWithInitCreateExpectations Expectations { get; }
 					}
 					
-					internal IHaveIndexersWithInitIndexerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
+					internal IndexerExpectations(global::IHaveIndexersWithInitCreateExpectations expectations) =>
 						(this.Initializers) = (new(expectations));
 					
-					internal global::IHaveIndexersWithInitCreateExpectations.IHaveIndexersWithInitIndexerExpectations.IHaveIndexersWithInitIndexerInitializerExpectations Initializers { get; }
+					internal global::IHaveIndexersWithInitCreateExpectations.IndexerExpectations.IndexerInitializerExpectations Initializers { get; }
 				}
 				
-				internal global::IHaveIndexersWithInitCreateExpectations.IHaveIndexersWithInitIndexerExpectations Indexers { get; }
+				internal global::IHaveIndexersWithInitCreateExpectations.IndexerExpectations Indexers { get; }
 				
 				internal IHaveIndexersWithInitCreateExpectations() =>
 					(this.Indexers) = (new(this));
@@ -917,7 +917,7 @@ public static class IndexerGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIHaveIndexersWithInit(this, @constructorProperties);
+						var @mock = new Mock(this, @constructorProperties);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1011,13 +1011,13 @@ public static class IndexerGeneratorTests
 				
 				internal global::IHaveIndexersWithInit Instance(global::IHaveIndexersWithInitMakeExpectations.ConstructorProperties? @constructorProperties)
 				{
-					return new RockIHaveIndexersWithInit(@constructorProperties);
+					return new Mock(@constructorProperties);
 				}
 				
-				private sealed class RockIHaveIndexersWithInit
+				private sealed class Mock
 					: global::IHaveIndexersWithInit
 				{
-					public RockIHaveIndexersWithInit(ConstructorProperties? @constructorProperties)
+					public Mock(ConstructorProperties? @constructorProperties)
 					{
 						if (@constructorProperties is not null)
 						{
@@ -1143,10 +1143,10 @@ public static class IndexerGeneratorTests
 						}
 					}
 					
-					private sealed class RockTarget
+					private sealed class Mock
 						: global::MockTests.Target
 					{
-						public RockTarget(global::MockTests.TargetCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
+						public Mock(global::MockTests.TargetCreateExpectations @expectations, ConstructorProperties? @constructorProperties)
 						{
 							this.Expectations = @expectations;
 							if (@constructorProperties is not null)
@@ -1265,9 +1265,9 @@ public static class IndexerGeneratorTests
 						private global::MockTests.TargetCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class TargetMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal TargetMethodExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.TargetCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1300,11 +1300,11 @@ public static class IndexerGeneratorTests
 						private global::MockTests.TargetCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class TargetIndexerExpectations
+					internal sealed class IndexerExpectations
 					{
-						internal sealed class TargetIndexerGetterExpectations
+						internal sealed class IndexerGetterExpectations
 						{
-							internal TargetIndexerGetterExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+							internal IndexerGetterExpectations(global::MockTests.TargetCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
@@ -1322,9 +1322,9 @@ public static class IndexerGeneratorTests
 							private global::MockTests.TargetCreateExpectations Expectations { get; }
 						}
 						
-						internal sealed class TargetIndexerInitializerExpectations
+						internal sealed class IndexerInitializerExpectations
 						{
-							internal TargetIndexerInitializerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+							internal IndexerInitializerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
 								this.Expectations = expectations;
 							
 							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
@@ -1344,15 +1344,15 @@ public static class IndexerGeneratorTests
 							private global::MockTests.TargetCreateExpectations Expectations { get; }
 						}
 						
-						internal TargetIndexerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
+						internal IndexerExpectations(global::MockTests.TargetCreateExpectations expectations) =>
 							(this.Getters, this.Initializers) = (new(expectations), new(expectations));
 						
-						internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations.TargetIndexerGetterExpectations Getters { get; }
-						internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations.TargetIndexerInitializerExpectations Initializers { get; }
+						internal global::MockTests.TargetCreateExpectations.IndexerExpectations.IndexerGetterExpectations Getters { get; }
+						internal global::MockTests.TargetCreateExpectations.IndexerExpectations.IndexerInitializerExpectations Initializers { get; }
 					}
 					
-					internal global::MockTests.TargetCreateExpectations.TargetMethodExpectations Methods { get; }
-					internal global::MockTests.TargetCreateExpectations.TargetIndexerExpectations Indexers { get; }
+					internal global::MockTests.TargetCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.TargetCreateExpectations.IndexerExpectations Indexers { get; }
 					
 					internal TargetCreateExpectations() =>
 						(this.Methods, this.Indexers) = (new(this), new(this));
@@ -1384,7 +1384,7 @@ public static class IndexerGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockTarget(this, @constructorProperties);
+							var @mock = new Mock(this, @constructorProperties);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

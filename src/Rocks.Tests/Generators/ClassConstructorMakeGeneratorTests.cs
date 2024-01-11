@@ -37,13 +37,13 @@ public static class ClassConstructorMakeGeneratorTests
 				{
 					internal global::MockTests.BaseCtor Instance(int @a, ref string @b, out string @c, params string[] @d)
 					{
-						return new RockBaseCtor(@a, ref @b, out @c, @d);
+						return new Mock(@a, ref @b, out @c, @d);
 					}
 					
-					private sealed class RockBaseCtor
+					private sealed class Mock
 						: global::MockTests.BaseCtor
 					{
-						public RockBaseCtor(int @a, ref string @b, out string @c, params string[] @d)
+						public Mock(int @a, ref string @b, out string @c, params string[] @d)
 							: base(@a, ref @b, out @c, @d)
 						{
 						}

@@ -94,10 +94,10 @@ public static class CastingGeneratorTests
 						}
 					}
 					
-					private sealed class RockIHaveOpenGenericsOfGuid
+					private sealed class Mock
 						: global::MockTests.IHaveOpenGenerics<global::System.Guid>
 					{
-						public RockIHaveOpenGenericsOfGuid(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations @expectations)
+						public Mock(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -219,9 +219,9 @@ public static class CastingGeneratorTests
 						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IHaveOpenGenericsOfGuidMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IHaveOpenGenericsOfGuidMethodExpectations(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
@@ -291,7 +291,7 @@ public static class CastingGeneratorTests
 						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.IHaveOpenGenericsOfGuidMethodExpectations Methods { get; }
+					internal global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IHaveOpenGenericsOfGuidCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -301,7 +301,7 @@ public static class CastingGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIHaveOpenGenericsOfGuid(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

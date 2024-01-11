@@ -55,10 +55,10 @@ public static class ParameterModifierTests
 					}
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier(global::IParameterModifierCreateExpectations @expectations)
+					public Mock(global::IParameterModifierCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -95,9 +95,9 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IParameterModifierMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IParameterModifierMethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
+					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
@@ -116,7 +116,7 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IParameterModifierCreateExpectations.IParameterModifierMethodExpectations Methods { get; }
+				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -126,7 +126,7 @@ public static class ParameterModifierTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIParameterModifier(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -168,13 +168,13 @@ public static class ParameterModifierTests
 			{
 				internal global::IParameterModifier Instance()
 				{
-					return new RockIParameterModifier();
+					return new Mock();
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier()
+					public Mock()
 					{
 					}
 					
@@ -214,7 +214,7 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIParameterModifier
+				internal static class Projections
 				{
 					internal delegate void Callback_193235261019447779478409340058228437220444154875(out string @value);
 				}
@@ -222,7 +222,7 @@ public static class ParameterModifierTests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_193235261019447779478409340058228437220444154875>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875>
 				{
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
@@ -246,10 +246,10 @@ public static class ParameterModifierTests
 					}
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier(global::IParameterModifierCreateExpectations @expectations)
+					public Mock(global::IParameterModifierCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -287,12 +287,12 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IParameterModifierMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IParameterModifierMethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
+					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_193235261019447779478409340058228437220444154875> Modify(global::Rocks.Argument<string> @value)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875> Modify(global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
@@ -308,7 +308,7 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IParameterModifierCreateExpectations.IParameterModifierMethodExpectations Methods { get; }
+				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -318,7 +318,7 @@ public static class ParameterModifierTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIParameterModifier(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -360,13 +360,13 @@ public static class ParameterModifierTests
 			{
 				internal global::IParameterModifier Instance()
 				{
-					return new RockIParameterModifier();
+					return new Mock();
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier()
+					public Mock()
 					{
 					}
 					
@@ -407,7 +407,7 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIParameterModifier
+				internal static class Projections
 				{
 					internal delegate void Callback_117490457623372471697910661720505969856490442481(ref string @value);
 				}
@@ -415,7 +415,7 @@ public static class ParameterModifierTests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_117490457623372471697910661720505969856490442481>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481>
 				{
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
@@ -439,10 +439,10 @@ public static class ParameterModifierTests
 					}
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier(global::IParameterModifierCreateExpectations @expectations)
+					public Mock(global::IParameterModifierCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -479,12 +479,12 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IParameterModifierMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IParameterModifierMethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
+					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_117490457623372471697910661720505969856490442481> Modify(global::Rocks.Argument<string> @value)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481> Modify(global::Rocks.Argument<string> @value)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
@@ -500,7 +500,7 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IParameterModifierCreateExpectations.IParameterModifierMethodExpectations Methods { get; }
+				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -510,7 +510,7 @@ public static class ParameterModifierTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIParameterModifier(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -552,13 +552,13 @@ public static class ParameterModifierTests
 			{
 				internal global::IParameterModifier Instance()
 				{
-					return new RockIParameterModifier();
+					return new Mock();
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier()
+					public Mock()
 					{
 					}
 					
@@ -625,10 +625,10 @@ public static class ParameterModifierTests
 					}
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier(global::IParameterModifierCreateExpectations @expectations)
+					public Mock(global::IParameterModifierCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -665,9 +665,9 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IParameterModifierMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IParameterModifierMethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
+					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
@@ -686,7 +686,7 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IParameterModifierCreateExpectations.IParameterModifierMethodExpectations Methods { get; }
+				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -696,7 +696,7 @@ public static class ParameterModifierTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIParameterModifier(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -738,13 +738,13 @@ public static class ParameterModifierTests
 			{
 				internal global::IParameterModifier Instance()
 				{
-					return new RockIParameterModifier();
+					return new Mock();
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier()
+					public Mock()
 					{
 					}
 					
@@ -787,7 +787,7 @@ public static class ParameterModifierTests
 			internal sealed class IParameterModifierCreateExpectations
 				: global::Rocks.Expectations
 			{
-				internal static class ProjectionsForIParameterModifier
+				internal static class Projections
 				{
 					internal delegate void Callback_640457111802933967433135011802939136029252304196(ref int @a);
 					internal delegate void Callback_595359563624402850359397691594068887527805892984<T1, T2>(T1 @a, ref T2 @b);
@@ -798,26 +798,26 @@ public static class ParameterModifierTests
 				#pragma warning disable CS8618
 				
 				internal sealed class Handler0
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_640457111802933967433135011802939136029252304196>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196>
 				{
 					public global::Rocks.Argument<int> @a { get; set; }
 				}
 				
 				internal sealed class Handler1<T1, T2>
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_595359563624402850359397691594068887527805892984<T1, T2>>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>>
 				{
 					public global::Rocks.Argument<T1> @a { get; set; }
 					public global::Rocks.Argument<T2> @b { get; set; }
 				}
 				
 				internal sealed class Handler2
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_360038979746784102455204459622175388488035293924>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924>
 				{
 					public global::Rocks.Argument<int> @a { get; set; }
 				}
 				
 				internal sealed class Handler3<T1, T2>
-					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_376795512182245354180779374814988822523603172187<T1, T2>>
+					: global::Rocks.Handler<global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>>
 				{
 					public global::Rocks.Argument<T1> @a { get; set; }
 					public global::Rocks.Argument<T2> @b { get; set; }
@@ -848,10 +848,10 @@ public static class ParameterModifierTests
 					}
 				}
 				
-				private sealed class RockIParameterModifier
+				private sealed class Mock
 					: global::IParameterModifier
 				{
-					public RockIParameterModifier(global::IParameterModifierCreateExpectations @expectations)
+					public Mock(global::IParameterModifierCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -985,12 +985,12 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IParameterModifierMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IParameterModifierMethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
+					internal MethodExpectations(global::IParameterModifierCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_640457111802933967433135011802939136029252304196> RefArgument(global::Rocks.Argument<int> @a)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196> RefArgument(global::Rocks.Argument<int> @a)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
@@ -1003,7 +1003,7 @@ public static class ParameterModifierTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_595359563624402850359397691594068887527805892984<T1, T2>> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
@@ -1018,7 +1018,7 @@ public static class ParameterModifierTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_360038979746784102455204459622175388488035293924> OutArgument(global::Rocks.Argument<int> @a)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924> OutArgument(global::Rocks.Argument<int> @a)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
@@ -1031,7 +1031,7 @@ public static class ParameterModifierTests
 						return new(handler);
 					}
 					
-					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.ProjectionsForIParameterModifier.Callback_376795512182245354180779374814988822523603172187<T1, T2>> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
+					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
@@ -1049,7 +1049,7 @@ public static class ParameterModifierTests
 					private global::IParameterModifierCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IParameterModifierCreateExpectations.IParameterModifierMethodExpectations Methods { get; }
+				internal global::IParameterModifierCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IParameterModifierCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1059,7 +1059,7 @@ public static class ParameterModifierTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIParameterModifier(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}

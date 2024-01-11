@@ -35,9 +35,8 @@ internal static class PropertyExpectationsBuilder
 			.Where(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 			.GroupBy(_ => _.ContainingType))
 		{
-			var typeToMock = mockType.Type.FlattenedName;
 			var containingTypeName = typeGroup.Key.FlattenedName;
-			var explicitTypeName = $"{typeToMock}ExplicitIndexerExpectationsFor{containingTypeName}";
+			var explicitTypeName = $"ExplicitIndexerExpectationsFor{containingTypeName}";
 
 			writer.WriteLines(
 				$$"""
@@ -56,9 +55,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitIndexerGetterExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitIndexerGetterExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitIndexerGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitIndexerGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -75,7 +74,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitIndexerGetterExpectationsFor{containingTypeName}", $"Getters"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitIndexerGetterExpectationsFor{containingTypeName}", $"Getters"));
 			}
 
 			var typeGroupSetters = typeGroup.Where(
@@ -86,9 +85,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitIndexerSetterExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitIndexerSetterExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitIndexerSetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitIndexerSetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -105,7 +104,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitIndexerSetterExpectationsFor{containingTypeName}", $"Setters"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitIndexerSetterExpectationsFor{containingTypeName}", $"Setters"));
 			}
 
 			var typeGroupInitializers = typeGroup.Where(
@@ -116,9 +115,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitIndexerInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -135,13 +134,13 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitIndexerInitializersExpectationsFor{containingTypeName}", $"Initializers"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitIndexerInitializersExpectationsFor{containingTypeName}", $"Initializers"));
 			}
 
 			writer.WriteLine();
 
 			// Generate the constructor and properties.
-			writer.WriteLine($"internal {typeToMock}ExplicitIndexerExpectationsFor{containingTypeName}({expectationsFullyQualifiedName} expectations) =>");
+			writer.WriteLine($"internal ExplicitIndexerExpectationsFor{containingTypeName}({expectationsFullyQualifiedName} expectations) =>");
 			writer.Indent++;
 			var thisExpectations = $"({string.Join(", ", propertyProperties.Select(_ => $"this.{_.PropertyName}"))})";
 			var newExpectations = $"({string.Join(", ", propertyProperties.Select(_ => "new(expectations)"))})";
@@ -157,7 +156,7 @@ internal static class PropertyExpectationsBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitIndexerExpectationsFor{containingTypeName}", $"ExplicitIndexersFor{containingTypeName}");
+			yield return new($"{expectationsFullyQualifiedName}.ExplicitIndexerExpectationsFor{containingTypeName}", $"ExplicitIndexersFor{containingTypeName}");
 		}
 	}
 
@@ -165,9 +164,7 @@ internal static class PropertyExpectationsBuilder
 	{
 		if (mockType.Properties.Any(_ => _.IsIndexer))
 		{
-			var typeToMock = mockType.Type.FlattenedName;
-
-			writer.WriteLine($"internal sealed class {typeToMock}IndexerExpectations");
+			writer.WriteLine($"internal sealed class IndexerExpectations");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -179,9 +176,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}IndexerGetterExpectations
+					internal sealed class IndexerGetterExpectations
 					{
-						internal {{typeToMock}}IndexerGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal IndexerGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -200,7 +197,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerGetterExpectations", "Getters"));
+					$"{expectationsFullyQualifiedName}.IndexerExpectations.IndexerGetterExpectations", "Getters"));
 			}
 
 			if (propertyProperties.Count > 0)
@@ -214,9 +211,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}IndexerSetterExpectations
+					internal sealed class IndexerSetterExpectations
 					{
-						internal {{typeToMock}}IndexerSetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal IndexerSetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -235,7 +232,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerSetterExpectations", "Setters"));
+					$"{expectationsFullyQualifiedName}.IndexerExpectations.IndexerSetterExpectations", "Setters"));
 			}
 
 			if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
@@ -244,9 +241,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}IndexerInitializerExpectations
+					internal sealed class IndexerInitializerExpectations
 					{
-						internal {{typeToMock}}IndexerInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal IndexerInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -265,13 +262,13 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations.{typeToMock}IndexerInitializerExpectations", "Initializers"));
+					$"{expectationsFullyQualifiedName}.IndexerExpectations.IndexerInitializerExpectations", "Initializers"));
 			}
 
 			writer.WriteLine();
 
 			// Generate the constructor and properties.
-			writer.WriteLine($"internal {typeToMock}IndexerExpectations({expectationsFullyQualifiedName} expectations) =>");
+			writer.WriteLine($"internal IndexerExpectations({expectationsFullyQualifiedName} expectations) =>");
 			writer.Indent++;
 			var thisExpectations = $"({string.Join(", ", propertyProperties.Select(_ => $"this.{_.PropertyName}"))})";
 			var newExpectations = $"({string.Join(", ", propertyProperties.Select(_ => "new(expectations)"))})";
@@ -287,7 +284,7 @@ internal static class PropertyExpectationsBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}IndexerExpectations", "Indexers");
+			yield return new($"{expectationsFullyQualifiedName}.IndexerExpectations", "Indexers");
 		}
 	}
 
@@ -297,9 +294,8 @@ internal static class PropertyExpectationsBuilder
 			.Where(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.Yes)
 			.GroupBy(_ => _.ContainingType))
 		{
-			var typeToMock = mockType.Type.FlattenedName;
 			var containingTypeName = typeGroup.Key.FlattenedName;
-			var explicitTypeName = $"{typeToMock}ExplicitPropertyExpectationsFor{containingTypeName}";
+			var explicitTypeName = $"ExplicitPropertyExpectationsFor{containingTypeName}";
 
 			writer.WriteLines(
 				$$"""
@@ -318,9 +314,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitPropertyGetterExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitPropertyGetterExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitPropertyGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitPropertyGetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -337,7 +333,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitPropertyGetterExpectationsFor{containingTypeName}", $"Getters"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitPropertyGetterExpectationsFor{containingTypeName}", $"Getters"));
 			}
 
 			var typeGroupSetters = typeGroup.Where(
@@ -348,9 +344,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitPropertySetterExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitPropertySetterExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitPropertySetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitPropertySetterExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -367,7 +363,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitPropertySetterExpectationsFor{containingTypeName}", $"Setters"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitPropertySetterExpectationsFor{containingTypeName}", $"Setters"));
 			}
 
 			var typeGroupInitializers = typeGroup.Where(
@@ -378,9 +374,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}
+					internal sealed class ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}
 					{
-						internal {{typeToMock}}ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
+						internal ExplicitPropertyInitializersExpectationsFor{{containingTypeName}}({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -397,13 +393,13 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{explicitTypeName}.{typeToMock}ExplicitPropertyInitializersExpectationsFor{containingTypeName}", $"Initializers"));
+					$"{expectationsFullyQualifiedName}.{explicitTypeName}.ExplicitPropertyInitializersExpectationsFor{containingTypeName}", $"Initializers"));
 			}
 
 			writer.WriteLine();
 
 			// Generate the constructor and properties.
-			writer.WriteLine($"internal {typeToMock}ExplicitPropertyExpectationsFor{containingTypeName}({expectationsFullyQualifiedName} expectations) =>");
+			writer.WriteLine($"internal ExplicitPropertyExpectationsFor{containingTypeName}({expectationsFullyQualifiedName} expectations) =>");
 			writer.Indent++;
 			var thisExpectations = $"({string.Join(", ", propertyProperties.Select(_ => $"this.{_.PropertyName}"))})";
 			var newExpectations = $"({string.Join(", ", propertyProperties.Select(_ => "new(expectations)"))})";
@@ -419,7 +415,7 @@ internal static class PropertyExpectationsBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}ExplicitPropertyExpectationsFor{containingTypeName}", $"ExplicitPropertiesFor{containingTypeName}");
+			yield return new($"{expectationsFullyQualifiedName}.ExplicitPropertyExpectationsFor{containingTypeName}", $"ExplicitPropertiesFor{containingTypeName}");
 		}
 	}
 
@@ -427,9 +423,7 @@ internal static class PropertyExpectationsBuilder
 	{
 		if (mockType.Properties.Any(_ => !_.IsIndexer))
 		{
-			var typeToMock = mockType.Type.FlattenedName;
-
-			writer.WriteLine($"internal sealed class {typeToMock}PropertyExpectations");
+			writer.WriteLine($"internal sealed class PropertyExpectations");
 			writer.WriteLine("{");
 			writer.Indent++;
 
@@ -441,9 +435,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}PropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal {{typeToMock}}PropertyGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal PropertyGetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -462,7 +456,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}PropertyExpectations.{typeToMock}PropertyGetterExpectations", "Getters"));
+					$"{expectationsFullyQualifiedName}.PropertyExpectations.PropertyGetterExpectations", "Getters"));
 			}
 
 			if (propertyProperties.Count > 0)
@@ -476,9 +470,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}PropertySetterExpectations
+					internal sealed class PropertySetterExpectations
 					{
-						internal {{typeToMock}}PropertySetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal PropertySetterExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -497,7 +491,7 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}PropertyExpectations.{typeToMock}PropertySetterExpectations", "Setters"));
+					$"{expectationsFullyQualifiedName}.PropertyExpectations.PropertySetterExpectations", "Setters"));
 			}
 
 			if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No &&
@@ -506,9 +500,9 @@ internal static class PropertyExpectationsBuilder
 			{
 				writer.WriteLines(
 					$$"""
-					internal sealed class {{typeToMock}}PropertyInitializerExpectations
+					internal sealed class PropertyInitializerExpectations
 					{
-						internal {{typeToMock}}PropertyInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
+						internal PropertyInitializerExpectations({{expectationsFullyQualifiedName}} expectations) =>
 							this.Expectations = expectations;
 						
 					""");
@@ -527,13 +521,13 @@ internal static class PropertyExpectationsBuilder
 				writer.WriteLine("}");
 
 				propertyProperties.Add(new(
-					$"{expectationsFullyQualifiedName}.{typeToMock}PropertyExpectations.{typeToMock}PropertyInitializerExpectations", "Initializers"));
+					$"{expectationsFullyQualifiedName}.PropertyExpectations.PropertyInitializerExpectations", "Initializers"));
 			}
 
 			writer.WriteLine();
 
 			// Generate the constructor and properties.
-			writer.WriteLine($"internal {typeToMock}PropertyExpectations({expectationsFullyQualifiedName} expectations) =>");
+			writer.WriteLine($"internal PropertyExpectations({expectationsFullyQualifiedName} expectations) =>");
 			writer.Indent++;
 			var thisExpectations = $"({string.Join(", ", propertyProperties.Select(_ => $"this.{_.PropertyName}"))})";
 			var newExpectations = $"({string.Join(", ", propertyProperties.Select(_ => "new(expectations)"))})";
@@ -549,7 +543,7 @@ internal static class PropertyExpectationsBuilder
 			writer.Indent--;
 			writer.WriteLine("}");
 
-			yield return new($"{expectationsFullyQualifiedName}.{typeToMock}PropertyExpectations", "Properties");
+			yield return new($"{expectationsFullyQualifiedName}.PropertyExpectations", "Properties");
 		}
 	}
 }

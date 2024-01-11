@@ -58,10 +58,10 @@ public static class GenericsGeneratorTests
 					}
 				}
 				
-				private sealed class RockIServiceOfint_string
+				private sealed class Mock
 					: global::IService<int, string>
 				{
-					public RockIServiceOfint_string(global::IServiceOfint_stringCreateExpectations @expectations)
+					public Mock(global::IServiceOfint_stringCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -91,9 +91,9 @@ public static class GenericsGeneratorTests
 					private global::IServiceOfint_stringCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IServiceOfint_stringMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IServiceOfint_stringMethodExpectations(global::IServiceOfint_stringCreateExpectations expectations) =>
+					internal MethodExpectations(global::IServiceOfint_stringCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IServiceOfint_stringCreateExpectations.Handler0, global::System.Func<int, string>, string> Service(global::Rocks.Argument<int> @data)
@@ -112,7 +112,7 @@ public static class GenericsGeneratorTests
 					private global::IServiceOfint_stringCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IServiceOfint_stringCreateExpectations.IServiceOfint_stringMethodExpectations Methods { get; }
+				internal global::IServiceOfint_stringCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IServiceOfint_stringCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -122,7 +122,7 @@ public static class GenericsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIServiceOfint_string(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -219,10 +219,10 @@ public static class GenericsGeneratorTests
 					}
 				}
 				
-				private sealed class RockMOfobject
+				private sealed class Mock
 					: global::M<object>
 				{
-					public RockMOfobject(global::MOfobjectCreateExpectations @expectations)
+					public Mock(global::MOfobjectCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -315,9 +315,9 @@ public static class GenericsGeneratorTests
 					private global::MOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class MOfobjectMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal MOfobjectMethodExpectations(global::MOfobjectCreateExpectations expectations) =>
+					internal MethodExpectations(global::MOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::MOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -363,7 +363,7 @@ public static class GenericsGeneratorTests
 					private global::MOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal global::MOfobjectCreateExpectations.MOfobjectMethodExpectations Methods { get; }
+				internal global::MOfobjectCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal MOfobjectCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -373,7 +373,7 @@ public static class GenericsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockMOfobject(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -476,10 +476,10 @@ public static class GenericsGeneratorTests
 					}
 				}
 				
-				private sealed class RockGenericContainer
+				private sealed class Mock
 					: global::GenericContainer
 				{
-					public RockGenericContainer(global::GenericContainerCreateExpectations @expectations)
+					public Mock(global::GenericContainerCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -598,9 +598,9 @@ public static class GenericsGeneratorTests
 					private global::GenericContainerCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class GenericContainerMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal GenericContainerMethodExpectations(global::GenericContainerCreateExpectations expectations) =>
+					internal MethodExpectations(global::GenericContainerCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::GenericContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -647,7 +647,7 @@ public static class GenericsGeneratorTests
 					private global::GenericContainerCreateExpectations Expectations { get; }
 				}
 				
-				internal global::GenericContainerCreateExpectations.GenericContainerMethodExpectations Methods { get; }
+				internal global::GenericContainerCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal GenericContainerCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -657,7 +657,7 @@ public static class GenericsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockGenericContainer(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -730,10 +730,10 @@ public static class GenericsGeneratorTests
 					}
 				}
 				
-				private sealed class RockCriterionOfobject
+				private sealed class Mock
 					: global::Criterion<object>
 				{
-					public RockCriterionOfobject(global::CriterionOfobjectCreateExpectations @expectations)
+					public Mock(global::CriterionOfobjectCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -775,9 +775,9 @@ public static class GenericsGeneratorTests
 					private global::CriterionOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class CriterionOfobjectMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal CriterionOfobjectMethodExpectations(global::CriterionOfobjectCreateExpectations expectations) =>
+					internal MethodExpectations(global::CriterionOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal new global::Rocks.Adornments<global::CriterionOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
@@ -797,7 +797,7 @@ public static class GenericsGeneratorTests
 					private global::CriterionOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal global::CriterionOfobjectCreateExpectations.CriterionOfobjectMethodExpectations Methods { get; }
+				internal global::CriterionOfobjectCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal CriterionOfobjectCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -807,7 +807,7 @@ public static class GenericsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockCriterionOfobject(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -900,10 +900,10 @@ public static class GenericsGeneratorTests
 					}
 				}
 				
-				private sealed class RockGeometryValueComparerOfobject
+				private sealed class Mock
 					: global::GeometryValueComparer<object>
 				{
-					public RockGeometryValueComparerOfobject(global::GeometryValueComparerOfobjectCreateExpectations @expectations)
+					public Mock(global::GeometryValueComparerOfobjectCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -969,9 +969,9 @@ public static class GenericsGeneratorTests
 					private global::GeometryValueComparerOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class GeometryValueComparerOfobjectMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal GeometryValueComparerOfobjectMethodExpectations(global::GeometryValueComparerOfobjectCreateExpectations expectations) =>
+					internal MethodExpectations(global::GeometryValueComparerOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::GeometryValueComparerOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -1004,7 +1004,7 @@ public static class GenericsGeneratorTests
 					private global::GeometryValueComparerOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal global::GeometryValueComparerOfobjectCreateExpectations.GeometryValueComparerOfobjectMethodExpectations Methods { get; }
+				internal global::GeometryValueComparerOfobjectCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal GeometryValueComparerOfobjectCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -1014,7 +1014,7 @@ public static class GenericsGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockGeometryValueComparerOfobject(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -1095,10 +1095,10 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					private sealed class RockIRequestClientOfobject
+					private sealed class Mock
 						: global::MockTests.IRequestClient<object>
 					{
-						public RockIRequestClientOfobject(global::MockTests.IRequestClientOfobjectCreateExpectations @expectations)
+						public Mock(global::MockTests.IRequestClientOfobjectCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1128,9 +1128,9 @@ public static class GenericsGeneratorTests
 						private global::MockTests.IRequestClientOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IRequestClientOfobjectMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IRequestClientOfobjectMethodExpectations(global::MockTests.IRequestClientOfobjectCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IRequestClientOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IRequestClientOfobjectCreateExpectations.Handler0, global::System.Func<object, global::MockTests.RequestHandle<object>>, global::MockTests.RequestHandle<object>> Create(global::Rocks.Argument<object> @message)
@@ -1149,7 +1149,7 @@ public static class GenericsGeneratorTests
 						private global::MockTests.IRequestClientOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IRequestClientOfobjectCreateExpectations.IRequestClientOfobjectMethodExpectations Methods { get; }
+					internal global::MockTests.IRequestClientOfobjectCreateExpectations.MethodExpectations Methods { get; }
 					
 					internal IRequestClientOfobjectCreateExpectations() =>
 						(this.Methods) = (new(this));
@@ -1159,7 +1159,7 @@ public static class GenericsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIRequestClientOfobject(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}
@@ -1247,10 +1247,10 @@ public static class GenericsGeneratorTests
 						}
 					}
 					
-					private sealed class RockIRequestOfobject
+					private sealed class Mock
 						: global::MockTests.IRequest<object>
 					{
-						public RockIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations @expectations)
+						public Mock(global::MockTests.IRequestOfobjectCreateExpectations @expectations)
 						{
 							this.Expectations = @expectations;
 						}
@@ -1304,9 +1304,9 @@ public static class GenericsGeneratorTests
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal sealed class IRequestOfobjectMethodExpectations
+					internal sealed class MethodExpectations
 					{
-						internal IRequestOfobjectMethodExpectations(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
+						internal MethodExpectations(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler0, global::System.Func<global::System.Guid, object, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>> Send(global::Rocks.Argument<global::System.Guid> @requestId, global::Rocks.Argument<object> @values)
@@ -1326,9 +1326,9 @@ public static class GenericsGeneratorTests
 						
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
-					internal sealed class IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject
+					internal sealed class ExplicitMethodExpectationsForIRequestOfobject
 					{
-						internal IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
+						internal ExplicitMethodExpectationsForIRequestOfobject(global::MockTests.IRequestOfobjectCreateExpectations expectations) =>
 							this.Expectations = expectations;
 					
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler1, global::System.Func<global::System.Guid, object, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task> Send(global::Rocks.Argument<global::System.Guid> @requestId, global::Rocks.Argument<object> @message)
@@ -1349,8 +1349,8 @@ public static class GenericsGeneratorTests
 						private global::MockTests.IRequestOfobjectCreateExpectations Expectations { get; }
 					}
 					
-					internal global::MockTests.IRequestOfobjectCreateExpectations.IRequestOfobjectMethodExpectations Methods { get; }
-					internal global::MockTests.IRequestOfobjectCreateExpectations.IRequestOfobjectExplicitMethodExpectationsForIRequestOfobject ExplicitMethodsForIRequestOfobject { get; }
+					internal global::MockTests.IRequestOfobjectCreateExpectations.MethodExpectations Methods { get; }
+					internal global::MockTests.IRequestOfobjectCreateExpectations.ExplicitMethodExpectationsForIRequestOfobject ExplicitMethodsForIRequestOfobject { get; }
 					
 					internal IRequestOfobjectCreateExpectations() =>
 						(this.Methods, this.ExplicitMethodsForIRequestOfobject) = (new(this), new(this));
@@ -1360,7 +1360,7 @@ public static class GenericsGeneratorTests
 						if (!this.WasInstanceInvoked)
 						{
 							this.WasInstanceInvoked = true;
-							var @mock = new RockIRequestOfobject(this);
+							var @mock = new Mock(this);
 							this.MockType = @mock.GetType();
 							return @mock;
 						}

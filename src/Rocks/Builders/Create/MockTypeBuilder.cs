@@ -11,14 +11,13 @@ internal static class MockTypeBuilder
 	internal static void Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
 	{
 		var kind = type.Type.IsRecord ? "record" : "class";
-		var mockTypeName = $"Rock{type.Type.FlattenedName}";
 
 		if (type.Type.AttributesDescription.Length > 0)
 		{
 			writer.WriteLine(type.Type.AttributesDescription);
 		}
 
-		writer.WriteLine($"private sealed {kind} {mockTypeName}");
+		writer.WriteLine($"private sealed {kind} Mock");
 		writer.Indent++;
 
 		var canRaiseEvents = type.Events.Length > 0;
@@ -90,7 +89,7 @@ internal static class MockTypeBuilder
 			writer.WriteLine();
 		}
 
-		MockTypeBuilder.BuildShimTypes(writer, type, mockTypeName);
+		MockTypeBuilder.BuildShimTypes(writer, type);
 
 		writer.WriteLine($"private {expectationsFullyQualifiedName} Expectations {{ get; }}");
 
@@ -98,12 +97,12 @@ internal static class MockTypeBuilder
 		writer.WriteLine("}");
 	}
 
-	private static void BuildShimTypes(IndentedTextWriter writer, TypeMockModel type, string mockTypeName)
+	private static void BuildShimTypes(IndentedTextWriter writer, TypeMockModel type)
 	{
 		foreach (var shimType in type.Shims)
 		{
 			writer.WriteLine();
-			ShimBuilder.Build(writer, shimType, mockTypeName);
+			ShimBuilder.Build(writer, shimType);
 		}
 	}
 

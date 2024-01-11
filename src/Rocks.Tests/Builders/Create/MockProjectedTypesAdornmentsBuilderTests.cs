@@ -30,16 +30,16 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.AdornmentsForTarget")]
+		"global::Mock.IMockCreateExpectations.Projections.AdornmentsForTarget")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.AdornmentsForTarget")]
+		"global::Mock.IMockCreateExpectations.Projections.AdornmentsForTarget")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.AdornmentsForTargetOfstring")]
+		"global::Mock.IMockCreateExpectations.Projections.AdornmentsForTargetOfstring")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.AdornmentsForTargetOfstring")]
+		"global::Mock.IMockCreateExpectations.Projections.AdornmentsForTargetOfstring")]
 	public static void GetProjectedAdornmentFullyQualifiedNameName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);
@@ -62,10 +62,10 @@ internal static class MockProjectedTypesAdornmentsBuilderTests
 
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target { } public static class Test { public static void Foo(Target t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.HandlerForTarget")]
+		"global::Mock.IMockCreateExpectations.Projections.HandlerForTarget")]
 	[TestCase(
 		"namespace Mock { public interface IMock { } } namespace Outer { namespace Inner { public class Target<T> { } public static class Test { public static void Foo(Target<string> t) { } } } }",
-		"global::Mock.IMockCreateExpectations.ProjectionsForIMock.HandlerForTargetOfstring")]
+		"global::Mock.IMockCreateExpectations.Projections.HandlerForTargetOfstring")]
 	public static void GetProjectedHandlerInformationFullyQualifiedNameName(string code, string expectedValue)
 	{
 		var (typeToMock, type, compilation) = MockProjectedTypesAdornmentsBuilderTests.GetTypeSymbols(code);

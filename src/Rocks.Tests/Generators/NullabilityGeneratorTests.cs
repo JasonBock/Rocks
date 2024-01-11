@@ -87,10 +87,10 @@ public static class NullabilityGeneratorTests
 					}
 				}
 				
-				private sealed class RockConnectionBuilderOfobject
+				private sealed class Mock
 					: global::ConnectionBuilder<object>
 				{
-					public RockConnectionBuilderOfobject(global::ConnectionBuilderOfobjectCreateExpectations @expectations)
+					public Mock(global::ConnectionBuilderOfobjectCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -185,9 +185,9 @@ public static class NullabilityGeneratorTests
 					private global::ConnectionBuilderOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class ConnectionBuilderOfobjectMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal ConnectionBuilderOfobjectMethodExpectations(global::ConnectionBuilderOfobjectCreateExpectations expectations) =>
+					internal MethodExpectations(global::ConnectionBuilderOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -239,7 +239,7 @@ public static class NullabilityGeneratorTests
 					private global::ConnectionBuilderOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal global::ConnectionBuilderOfobjectCreateExpectations.ConnectionBuilderOfobjectMethodExpectations Methods { get; }
+				internal global::ConnectionBuilderOfobjectCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal ConnectionBuilderOfobjectCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -249,7 +249,7 @@ public static class NullabilityGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockConnectionBuilderOfobject(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -356,10 +356,10 @@ public static class NullabilityGeneratorTests
 					}
 				}
 				
-				private sealed class RockSubTracer
+				private sealed class Mock
 					: global::SubTracer
 				{
-					public RockSubTracer(global::SubTracerCreateExpectations @expectations)
+					public Mock(global::SubTracerCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -459,9 +459,9 @@ public static class NullabilityGeneratorTests
 					private global::SubTracerCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class SubTracerMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal SubTracerMethodExpectations(global::SubTracerCreateExpectations expectations) =>
+					internal MethodExpectations(global::SubTracerCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -517,7 +517,7 @@ public static class NullabilityGeneratorTests
 					private global::SubTracerCreateExpectations Expectations { get; }
 				}
 				
-				internal global::SubTracerCreateExpectations.SubTracerMethodExpectations Methods { get; }
+				internal global::SubTracerCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal SubTracerCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -527,7 +527,7 @@ public static class NullabilityGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockSubTracer(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -635,11 +635,11 @@ public static class NullabilityGeneratorTests
 					}
 				}
 				
-				private sealed class RockIConventionSkipNavigation
+				private sealed class Mock
 					: global::IConventionSkipNavigation
 				{
 					private readonly global::IConventionSkipNavigation shimForIConventionSkipNavigation;
-					public RockIConventionSkipNavigation(global::IConventionSkipNavigationCreateExpectations @expectations)
+					public Mock(global::IConventionSkipNavigationCreateExpectations @expectations)
 					{
 						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(this));
 					}
@@ -702,9 +702,9 @@ public static class NullabilityGeneratorTests
 					private sealed class ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515
 						: global::IConventionSkipNavigation
 					{
-						private readonly RockIConventionSkipNavigation mock;
+						private readonly Mock mock;
 						
-						public ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(RockIConventionSkipNavigation @mock) =>
+						public ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(Mock @mock) =>
 							this.mock = @mock;
 						
 						global::IReadOnlySkipNavigation global::IReadOnlySkipNavigation.Inverse
@@ -719,11 +719,11 @@ public static class NullabilityGeneratorTests
 					}
 					private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
 				}
-				internal sealed class IConventionSkipNavigationPropertyExpectations
+				internal sealed class PropertyExpectations
 				{
-					internal sealed class IConventionSkipNavigationPropertyGetterExpectations
+					internal sealed class PropertyGetterExpectations
 					{
-						internal IConventionSkipNavigationPropertyGetterExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						internal PropertyGetterExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?> Inverse()
@@ -736,16 +736,16 @@ public static class NullabilityGeneratorTests
 					}
 					
 					
-					internal IConventionSkipNavigationPropertyExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
+					internal PropertyExpectations(global::IConventionSkipNavigationCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationPropertyExpectations.IConventionSkipNavigationPropertyGetterExpectations Getters { get; }
+					internal global::IConventionSkipNavigationCreateExpectations.PropertyExpectations.PropertyGetterExpectations Getters { get; }
 				}
-				internal sealed class IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation
+				internal sealed class ExplicitPropertyExpectationsForIReadOnlySkipNavigation
 				{
-					internal sealed class IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation
+					internal sealed class ExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation
 					{
-						internal IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation> Inverse()
@@ -757,16 +757,16 @@ public static class NullabilityGeneratorTests
 						private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
 					}
 					
-					internal IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIReadOnlySkipNavigation(global::IConventionSkipNavigationCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation.IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation Getters { get; }
+					internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlySkipNavigation.ExplicitPropertyGetterExpectationsForIReadOnlySkipNavigation Getters { get; }
 				}
-				internal sealed class IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase
+				internal sealed class ExplicitPropertyExpectationsForIReadOnlyNavigationBase
 				{
-					internal sealed class IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase
+					internal sealed class ExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase
 					{
-						internal IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
+						internal ExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
 							this.Expectations = expectations;
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?> Inverse()
@@ -778,15 +778,15 @@ public static class NullabilityGeneratorTests
 						private global::IConventionSkipNavigationCreateExpectations Expectations { get; }
 					}
 					
-					internal IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
+					internal ExplicitPropertyExpectationsForIReadOnlyNavigationBase(global::IConventionSkipNavigationCreateExpectations expectations) =>
 						(this.Getters) = (new(expectations));
 					
-					internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase.IConventionSkipNavigationExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase Getters { get; }
+					internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyNavigationBase.ExplicitPropertyGetterExpectationsForIReadOnlyNavigationBase Getters { get; }
 				}
 				
-				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationPropertyExpectations Properties { get; }
-				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlySkipNavigation ExplicitPropertiesForIReadOnlySkipNavigation { get; }
-				internal global::IConventionSkipNavigationCreateExpectations.IConventionSkipNavigationExplicitPropertyExpectationsForIReadOnlyNavigationBase ExplicitPropertiesForIReadOnlyNavigationBase { get; }
+				internal global::IConventionSkipNavigationCreateExpectations.PropertyExpectations Properties { get; }
+				internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlySkipNavigation ExplicitPropertiesForIReadOnlySkipNavigation { get; }
+				internal global::IConventionSkipNavigationCreateExpectations.ExplicitPropertyExpectationsForIReadOnlyNavigationBase ExplicitPropertiesForIReadOnlyNavigationBase { get; }
 				
 				internal IConventionSkipNavigationCreateExpectations() =>
 					(this.Properties, this.ExplicitPropertiesForIReadOnlySkipNavigation, this.ExplicitPropertiesForIReadOnlyNavigationBase) = (new(this), new(this), new(this));
@@ -796,7 +796,7 @@ public static class NullabilityGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIConventionSkipNavigation(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -859,10 +859,10 @@ public static class NullabilityGeneratorTests
 					}
 				}
 				
-				private sealed class RockIDestinationOfobject
+				private sealed class Mock
 					: global::IDestination<object>
 				{
-					public RockIDestinationOfobject(global::IDestinationOfobjectCreateExpectations @expectations)
+					public Mock(global::IDestinationOfobjectCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -893,9 +893,9 @@ public static class NullabilityGeneratorTests
 					private global::IDestinationOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class IDestinationOfobjectMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal IDestinationOfobjectMethodExpectations(global::IDestinationOfobjectCreateExpectations expectations) =>
+					internal MethodExpectations(global::IDestinationOfobjectCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::IDestinationOfobjectCreateExpectations.Handler0<T>, global::System.Action> As<T>() where T : notnull
@@ -908,7 +908,7 @@ public static class NullabilityGeneratorTests
 					private global::IDestinationOfobjectCreateExpectations Expectations { get; }
 				}
 				
-				internal global::IDestinationOfobjectCreateExpectations.IDestinationOfobjectMethodExpectations Methods { get; }
+				internal global::IDestinationOfobjectCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal IDestinationOfobjectCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -918,7 +918,7 @@ public static class NullabilityGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockIDestinationOfobject(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}

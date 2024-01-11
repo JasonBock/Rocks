@@ -84,10 +84,10 @@ public static class AsyncIteratorGeneratorTests
 					}
 				}
 				
-				private sealed class RockAsyncEnumeration
+				private sealed class Mock
 					: global::AsyncEnumeration
 				{
-					public RockAsyncEnumeration(global::AsyncEnumerationCreateExpectations @expectations)
+					public Mock(global::AsyncEnumerationCreateExpectations @expectations)
 					{
 						this.Expectations = @expectations;
 					}
@@ -177,9 +177,9 @@ public static class AsyncIteratorGeneratorTests
 					private global::AsyncEnumerationCreateExpectations Expectations { get; }
 				}
 				
-				internal sealed class AsyncEnumerationMethodExpectations
+				internal sealed class MethodExpectations
 				{
-					internal AsyncEnumerationMethodExpectations(global::AsyncEnumerationCreateExpectations expectations) =>
+					internal MethodExpectations(global::AsyncEnumerationCreateExpectations expectations) =>
 						this.Expectations = expectations;
 					
 					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
@@ -227,7 +227,7 @@ public static class AsyncIteratorGeneratorTests
 					private global::AsyncEnumerationCreateExpectations Expectations { get; }
 				}
 				
-				internal global::AsyncEnumerationCreateExpectations.AsyncEnumerationMethodExpectations Methods { get; }
+				internal global::AsyncEnumerationCreateExpectations.MethodExpectations Methods { get; }
 				
 				internal AsyncEnumerationCreateExpectations() =>
 					(this.Methods) = (new(this));
@@ -237,7 +237,7 @@ public static class AsyncIteratorGeneratorTests
 					if (!this.WasInstanceInvoked)
 					{
 						this.WasInstanceInvoked = true;
-						var @mock = new RockAsyncEnumeration(this);
+						var @mock = new Mock(this);
 						this.MockType = @mock.GetType();
 						return @mock;
 					}
@@ -288,13 +288,13 @@ public static class AsyncIteratorGeneratorTests
 			{
 				internal global::AsyncEnumeration Instance()
 				{
-					return new RockAsyncEnumeration();
+					return new Mock();
 				}
 				
-				private sealed class RockAsyncEnumeration
+				private sealed class Mock
 					: global::AsyncEnumeration
 				{
-					public RockAsyncEnumeration()
+					public Mock()
 					{
 					}
 					
