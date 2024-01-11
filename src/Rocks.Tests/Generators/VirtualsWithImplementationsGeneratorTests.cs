@@ -558,7 +558,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
 						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
-							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
+							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
@@ -577,12 +577,12 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						
 						
-						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
+						private sealed class ShimIHaveImplementation
 							: global::MockTests.IHaveImplementation
 						{
 							private readonly Mock mock;
 							
-							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(Mock @mock) =>
+							public ShimIHaveImplementation(Mock @mock) =>
 								this.mock = @mock;
 						}
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }
@@ -688,7 +688,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 						private readonly global::MockTests.IHaveImplementation shimForIHaveImplementation;
 						public Mock(global::MockTests.IHaveImplementationCreateExpectations @expectations)
 						{
-							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation43912089203065484038465384033944109657192660075(this));
+							(this.Expectations, this.shimForIHaveImplementation) = (@expectations, new ShimIHaveImplementation(this));
 						}
 						
 						[global::Rocks.MemberIdentifier(0, "int Foo()")]
@@ -709,12 +709,12 @@ public static class VirtualsWithImplementationsGeneratorTests
 						}
 						
 						
-						private sealed class ShimIHaveImplementation43912089203065484038465384033944109657192660075
+						private sealed class ShimIHaveImplementation
 							: global::MockTests.IHaveImplementation
 						{
 							private readonly Mock mock;
 							
-							public ShimIHaveImplementation43912089203065484038465384033944109657192660075(Mock @mock) =>
+							public ShimIHaveImplementation(Mock @mock) =>
 								this.mock = @mock;
 						}
 						private global::MockTests.IHaveImplementationCreateExpectations Expectations { get; }

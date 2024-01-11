@@ -98,7 +98,7 @@ public static class ShimBuilderGeneratorTests
 					private readonly global::IReadOnlyKey shimForIReadOnlyKey;
 					public Mock(global::IRuntimeKeyCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey55018818661256234156060084750235742359064106137(this), new ShimIReadOnlyKey550014593303283198411825442751878980310579223223(this));
+						(this.Expectations, this.shimForIKey, this.shimForIReadOnlyKey) = (@expectations, new ShimIKey(this), new ShimIReadOnlyKey(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "global::System.Type GetKeyType()")]
@@ -171,12 +171,12 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					
-					private sealed class ShimIKey55018818661256234156060084750235742359064106137
+					private sealed class ShimIKey
 						: global::IKey
 					{
 						private readonly Mock mock;
 						
-						public ShimIKey55018818661256234156060084750235742359064106137(Mock @mock) =>
+						public ShimIKey(Mock @mock) =>
 							this.mock = @mock;
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IProperty> Properties
@@ -190,12 +190,12 @@ public static class ShimBuilderGeneratorTests
 						}
 					}
 					
-					private sealed class ShimIReadOnlyKey550014593303283198411825442751878980310579223223
+					private sealed class ShimIReadOnlyKey
 						: global::IReadOnlyKey
 					{
 						private readonly Mock mock;
 						
-						public ShimIReadOnlyKey550014593303283198411825442751878980310579223223(Mock @mock) =>
+						public ShimIReadOnlyKey(Mock @mock) =>
 							this.mock = @mock;
 						
 						public global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty> Properties
@@ -401,7 +401,7 @@ public static class ShimBuilderGeneratorTests
 					private readonly global::IHaveDims shimForIHaveDims;
 					public Mock(global::IHaveDimsCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims531557381186657891604647139828315705947108387206(this));
+						(this.Expectations, this.shimForIHaveDims) = (@expectations, new ShimIHaveDims(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "int IAmADim()")]
@@ -526,12 +526,12 @@ public static class ShimBuilderGeneratorTests
 					}
 					
 					
-					private sealed class ShimIHaveDims531557381186657891604647139828315705947108387206
+					private sealed class ShimIHaveDims
 						: global::IHaveDims
 					{
 						private readonly Mock mock;
 						
-						public ShimIHaveDims531557381186657891604647139828315705947108387206(Mock @mock) =>
+						public ShimIHaveDims(Mock @mock) =>
 							this.mock = @mock;
 						
 						public int IAmNotADim() =>

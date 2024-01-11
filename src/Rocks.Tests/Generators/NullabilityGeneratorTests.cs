@@ -641,7 +641,7 @@ public static class NullabilityGeneratorTests
 					private readonly global::IConventionSkipNavigation shimForIConventionSkipNavigation;
 					public Mock(global::IConventionSkipNavigationCreateExpectations @expectations)
 					{
-						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(this));
+						(this.Expectations, this.shimForIConventionSkipNavigation) = (@expectations, new ShimIConventionSkipNavigation(this));
 					}
 					
 					[global::Rocks.MemberIdentifier(0, "get_Inverse()")]
@@ -699,12 +699,12 @@ public static class NullabilityGeneratorTests
 					}
 					
 					
-					private sealed class ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515
+					private sealed class ShimIConventionSkipNavigation
 						: global::IConventionSkipNavigation
 					{
 						private readonly Mock mock;
 						
-						public ShimIConventionSkipNavigation396255620100734449241449954173443346123272207515(Mock @mock) =>
+						public ShimIConventionSkipNavigation(Mock @mock) =>
 							this.mock = @mock;
 						
 						global::IReadOnlySkipNavigation global::IReadOnlySkipNavigation.Inverse

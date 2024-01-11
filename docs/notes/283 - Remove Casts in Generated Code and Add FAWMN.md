@@ -251,11 +251,10 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
 * DONE - Remove the `using`s and see if that breaks anything.
 * DONE - Well. I should move the projected types into the gen'd expectations type. However, this will break stuff, because when they're referenced, they need to include the mock type's namespace (if it exists) + the expectations type name. But the projection namespace will need to be a class.
 * Naming. I have the name of the type to mock all over the place within the gen'd Expectations class. I'm thinking I could make the names shorter just to make it arguably easier to read.
-    * Projections - just name it `Projections`. Projected types within this would still have the same names
-    * Rock{MockTypeName} - Could just name it `Mock`, may be easier to read
-    * Expectations - Don't need the name of the mock type, so `IHavePointersMethodExpectations` would be `MethodExpectations`
-
-I should also do Shims as they don't need the type name, just `{Shim}{hash_code}`
+    * DONE - Projections - just name it `Projections`. Projected types within this would still have the same names
+    * DONE - Rock{MockTypeName} - Could just name it `Mock`, may be easier to read
+    * DONE - Expectations - Don't need the name of the mock type, so `IHavePointersMethodExpectations` would be `MethodExpectations`
+    * I should also do Shims as they don't need a hash code, just `{Shim}{typeFlattenedName}`
 
 * I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 

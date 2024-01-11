@@ -7,7 +7,7 @@ namespace Rocks.Builders.Shim;
 internal static class ShimBuilder
 {
    internal static string GetShimName(TypeReferenceModel shimType) => 
-		$"Shim{shimType.FlattenedName}{shimType.FlattenedName.GetHash()}";
+		$"Shim{shimType.FlattenedName}";
 
    internal static void Build(IndentedTextWriter writer, TypeMockModel shimType)
 	{
