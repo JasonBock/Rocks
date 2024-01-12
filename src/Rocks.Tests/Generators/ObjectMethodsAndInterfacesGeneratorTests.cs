@@ -169,6 +169,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -229,6 +230,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -446,6 +448,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -512,6 +515,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -729,6 +733,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -795,6 +800,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

@@ -51,7 +51,7 @@ public static class ClassPropertyTests
 	public static void CreateGetWithRaiseEvent()
 	{
 		var expectations = new ClassPropertyCreateExpectations();
-		expectations.Properties.Getters.GetData().AddRaiseEvent(new(nameof(ClassProperty.MyEvent), EventArgs.Empty));
+		expectations.Properties.Getters.GetData().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance(null);
@@ -102,7 +102,7 @@ public static class ClassPropertyTests
 			wasCallbackInvoked = true;
 			return 3;
 		})
-		.AddRaiseEvent(new(nameof(ClassProperty.MyEvent), EventArgs.Empty));
+		.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance(null);
@@ -147,7 +147,7 @@ public static class ClassPropertyTests
 	{
 		var expectations = new ClassPropertyCreateExpectations();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
-			.AddRaiseEvent(new(nameof(ClassProperty.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance(null);
@@ -183,7 +183,7 @@ public static class ClassPropertyTests
 		var wasCallbackInvoked = false;
 		var expectations = new ClassPropertyCreateExpectations();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
-			.AddRaiseEvent(new(nameof(ClassProperty.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;

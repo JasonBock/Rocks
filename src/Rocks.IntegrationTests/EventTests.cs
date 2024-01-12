@@ -22,7 +22,7 @@ public static class EventTests
 		NotEventArgs? mockEventArgs = null;
 
 		var expectations = new IUseNotEventArgsCreateExpectations();
-		expectations.Methods.A().AddRaiseEvent(new(nameof(IUseNotEventArgs.NotEvent), eventArgs));
+		expectations.Methods.A().RaiseNotEvent(eventArgs);
 
 		var mock = expectations.Instance();
 		mock.NotEvent += (sender, args) => mockEventArgs = args;

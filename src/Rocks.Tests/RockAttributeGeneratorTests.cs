@@ -145,6 +145,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -265,6 +266,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -379,6 +381,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -588,6 +591,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
@@ -646,6 +650,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -731,6 +736,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -832,6 +838,7 @@ public static class RockAttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)

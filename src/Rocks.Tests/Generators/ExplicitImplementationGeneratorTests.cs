@@ -171,7 +171,14 @@ public static class ExplicitImplementationGeneratorTests
 						}
 					}
 				}
+				
+				internal static class IHtmlMediaElementAdornmentsEventExtensions
+				{
+					internal static global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> RaiseCanPlay(this global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> self, global::EventStuff.Event args) => 
+						(global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action>)self.AddRaiseEvent(new("CanPlay", args));
+				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -265,6 +272,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -557,6 +565,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -723,6 +732,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -874,6 +884,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -928,6 +939,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -997,6 +1009,7 @@ public static class ExplicitImplementationGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

@@ -25,7 +25,7 @@ public static class ClassGenericEventsTests
 	{
 		var returnValue = new List<string>();
 		var expectations = new ClassGenericEventsOfClassEventArgsCreateExpectations();
-		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new ClassEventArgs()));
+		expectations.Methods.Foo().RaiseMyEvent(new ClassEventArgs());
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

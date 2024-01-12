@@ -297,6 +297,7 @@ public static class RecordCreateGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

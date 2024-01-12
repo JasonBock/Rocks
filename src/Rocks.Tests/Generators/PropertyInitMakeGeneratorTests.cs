@@ -88,6 +88,7 @@ public static class PropertyInitMakeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -174,6 +175,7 @@ public static class PropertyInitMakeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

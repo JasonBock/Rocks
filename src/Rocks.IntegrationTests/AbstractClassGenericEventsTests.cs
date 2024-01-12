@@ -23,7 +23,7 @@ public static class AbstractClassGenericEventsTests
 	{
 		var returnValue = new List<string>();
 		var expectations = new AbstractClassGenericEventsOfAbstractClassEventArgsCreateExpectations();
-		expectations.Methods.Foo().AddRaiseEvent(new("MyEvent", new AbstractClassEventArgs()));
+		expectations.Methods.Foo().RaiseMyEvent(new AbstractClassEventArgs());
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();

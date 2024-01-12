@@ -259,6 +259,7 @@ public static class NullabilityGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -537,6 +538,7 @@ public static class NullabilityGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		// The two diagnostic IDs are actually warnings, so they
@@ -806,6 +808,7 @@ public static class NullabilityGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -928,6 +931,7 @@ public static class NullabilityGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

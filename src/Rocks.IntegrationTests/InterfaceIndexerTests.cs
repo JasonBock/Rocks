@@ -130,7 +130,7 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterGetterRaiseEvent()
 	{
 		var expectations = new IInterfaceIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3).AddRaiseEvent(new(nameof(IInterfaceIndexerGetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -177,7 +177,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		var expectations = new IInterfaceIndexerGetterCreateExpectations();
 		expectations.Indexers.Getters.This(3)
-			.AddRaiseEvent(new(nameof(IInterfaceIndexerGetter.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ =>
 			{
 				wasCallbackInvoked = true;
@@ -250,7 +250,7 @@ public static class InterfaceIndexerTests
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
 		var expectations = new IInterfaceIndexerSetterCreateExpectations();
-		expectations.Indexers.Setters.This(4, 3).AddRaiseEvent(new(nameof(IInterfaceIndexerSetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -285,7 +285,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		var expectations = new IInterfaceIndexerSetterCreateExpectations();
 		expectations.Indexers.Setters.This(4, 3)
-			.AddRaiseEvent(new(nameof(IInterfaceIndexerSetter.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;
@@ -377,7 +377,8 @@ public static class InterfaceIndexerTests
 	public static void CreateWithMultipleParametersGetterRaiseEvent()
 	{
 		var expectations = new IInterfaceIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3, "b").AddRaiseEvent(new(nameof(IInterfaceIndexerGetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Getters.This(3, "b")
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -424,7 +425,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		var expectations = new IInterfaceIndexerGetterCreateExpectations();
 		expectations.Indexers.Getters.This(3, "b")
-			.AddRaiseEvent(new(nameof(IInterfaceIndexerGetter.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b) =>
 			{
 				wasCallbackInvoked = true;
@@ -490,7 +491,7 @@ public static class InterfaceIndexerTests
 	{
 		var expectations = new IInterfaceIndexerSetterCreateExpectations();
 		expectations.Indexers.Setters.This(4, 3, "b")
-			.AddRaiseEvent(new(nameof(IInterfaceIndexerSetter.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -525,7 +526,7 @@ public static class InterfaceIndexerTests
 		var wasCallbackInvoked = false;
 		var expectations = new IInterfaceIndexerSetterCreateExpectations();
 		expectations.Indexers.Setters.This(4, 3, "b")
-			.AddRaiseEvent(new(nameof(IInterfaceIndexerSetter.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;

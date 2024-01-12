@@ -132,6 +132,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -356,6 +357,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -877,6 +879,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1011,6 +1014,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 		
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1239,6 +1243,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		// The diagnostic is coming from the method definition in code,
@@ -1369,6 +1374,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1524,6 +1530,7 @@ public static class AttributeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

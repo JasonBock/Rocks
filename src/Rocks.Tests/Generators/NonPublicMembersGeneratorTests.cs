@@ -328,6 +328,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -390,6 +391,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -796,6 +798,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -869,6 +872,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1261,6 +1265,23 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
+			internal static class HasInternalVirtualAdornmentsEventExtensions
+			{
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler0, global::System.Func<string?>, string?> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler0, global::System.Func<string?>, string?> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler0, global::System.Func<string?>, string?>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler1, global::System.Func<object?, bool>, bool> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler1, global::System.Func<object?, bool>, bool> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler1, global::System.Func<object?, bool>, bool>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler3, global::System.Action> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler3, global::System.Action> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler3, global::System.Action>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler4, global::System.Func<string>, string> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler4, global::System.Func<string>, string> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler4, global::System.Func<string>, string>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+				internal static global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler5, global::System.Func<string, string>, string> RaisePublicVirtualEvent(this global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler5, global::System.Func<string, string>, string> self, global::System.EventArgs args) => 
+					(global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler5, global::System.Func<string, string>, string>)self.AddRaiseEvent(new("PublicVirtualEvent", args));
+			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1363,6 +1384,7 @@ public static class NonPublicMembersGeneratorTests
 					#pragma warning restore CS0067
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1723,7 +1745,24 @@ public static class NonPublicMembersGeneratorTests
 						}
 					}
 				}
+				
+				internal static class TestAdornmentsEventExtensions
+				{
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>>)self.AddRaiseEvent(new("ProtectedEvent", args));
+				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -2081,7 +2120,24 @@ public static class NonPublicMembersGeneratorTests
 						}
 					}
 				}
+				
+				internal static class TestAdornmentsEventExtensions
+				{
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler2, global::System.Func<string?>, string?>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler3, global::System.Action>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler4, global::System.Func<string>, string>)self.AddRaiseEvent(new("ProtectedEvent", args));
+					internal static global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>> RaiseProtectedEvent(this global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>> self, global::System.EventArgs args) => 
+						(global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler5, global::System.Action<string>>)self.AddRaiseEvent(new("ProtectedEvent", args));
+				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -2159,6 +2215,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -2236,6 +2293,7 @@ public static class NonPublicMembersGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

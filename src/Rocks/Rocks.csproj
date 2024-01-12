@@ -9,6 +9,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<IncludeSymbols>true</IncludeSymbols>
+		<NoWarn>RS1036</NoWarn>
 		<PackageIcon>Icon.png</PackageIcon>
 		<PackageId>Rocks</PackageId>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>

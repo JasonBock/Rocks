@@ -66,6 +66,7 @@ public static class ClassConstructorMakeGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

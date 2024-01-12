@@ -173,6 +173,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		references.AddRange([firstSourceReference, secondSourceReference]);
@@ -258,6 +259,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		references.AddRange([firstSourceReference, secondSourceReference]);
@@ -327,6 +329,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -561,6 +564,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -708,6 +712,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -932,6 +937,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1090,6 +1096,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1238,6 +1245,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1476,6 +1484,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1630,6 +1639,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1756,6 +1766,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1882,6 +1893,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -2038,6 +2050,7 @@ public static class NamingGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

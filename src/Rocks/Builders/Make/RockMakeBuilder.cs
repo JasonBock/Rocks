@@ -53,7 +53,7 @@ internal sealed class RockMakeBuilder
 		if (mockNamespace.Length > 0)
 		{
 			indentWriter.Indent--;
-			indentWriter.Write("}");
+			indentWriter.WriteLine("}");
 		}
 
 		var text = SourceText.From(writer.ToString(), Encoding.UTF8);

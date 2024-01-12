@@ -107,7 +107,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterGetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3).AddRaiseEvent(new(nameof(AbstractClassIndexerGetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -153,7 +153,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3).AddRaiseEvent(new(nameof(AbstractClassIndexerGetter.MyEvent), EventArgs.Empty))
+		expectations.Indexers.Getters.This(3).RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ =>
 			{
 				wasCallbackInvoked = true;
@@ -218,7 +218,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithOneParameterSetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
-		expectations.Indexers.Setters.This(4, 3).AddRaiseEvent(new(nameof(AbstractClassIndexerSetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -252,7 +252,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
-		expectations.Indexers.Setters.This(4, 3).AddRaiseEvent(new(nameof(AbstractClassIndexerSetter.MyEvent), EventArgs.Empty))
+		expectations.Indexers.Setters.This(4, 3).RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;
@@ -344,7 +344,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersGetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3, "b").AddRaiseEvent(new(nameof(AbstractClassIndexerGetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Getters.This(3, "b").RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -390,7 +390,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = new AbstractClassIndexerGetterCreateExpectations();
-		expectations.Indexers.Getters.This(3, "b").AddRaiseEvent(new(nameof(AbstractClassIndexerGetter.MyEvent), EventArgs.Empty))
+		expectations.Indexers.Getters.This(3, "b").RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b) =>
 			{
 				wasCallbackInvoked = true;
@@ -455,7 +455,7 @@ public static class AbstractClassIndexerTests
 	public static void CreateWithMultipleParametersSetterRaiseEvent()
 	{
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
-		expectations.Indexers.Setters.This(4, 3, "b").AddRaiseEvent(new(nameof(AbstractClassIndexerSetter.MyEvent), EventArgs.Empty));
+		expectations.Indexers.Setters.This(4, 3, "b").RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -489,7 +489,7 @@ public static class AbstractClassIndexerTests
 	{
 		var wasCallbackInvoked = false;
 		var expectations = new AbstractClassIndexerSetterCreateExpectations();
-		expectations.Indexers.Setters.This(4, 3, "b").AddRaiseEvent(new(nameof(AbstractClassIndexerSetter.MyEvent), EventArgs.Empty))
+		expectations.Indexers.Setters.This(4, 3, "b").RaiseMyEvent(EventArgs.Empty)
 			.Callback((a, b, value) => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;

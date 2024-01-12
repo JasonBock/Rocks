@@ -21,6 +21,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					public virtual void CallMe(params string[] values) { }
 				}
 			}
+			
 			""";
 
 		var generatedCode =
@@ -248,6 +249,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -494,6 +496,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -624,6 +627,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -756,6 +760,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -985,6 +990,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -1216,6 +1222,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

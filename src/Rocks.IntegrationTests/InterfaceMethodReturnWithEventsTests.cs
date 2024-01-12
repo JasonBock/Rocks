@@ -15,7 +15,8 @@ public static class InterfaceMethodReturnWithEventsTests
 	public static void CreateRaiseEvent()
 	{
 		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
-		expectations.Methods.NoParameters().AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
+		expectations.Methods.NoParameters()
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -43,7 +44,7 @@ public static class InterfaceMethodReturnWithEventsTests
 				wasCallbackInvoked = true;
 				return 3;
 			})
-			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -67,7 +68,7 @@ public static class InterfaceMethodReturnWithEventsTests
 		var expectations = new IInterfaceMethodReturnWithEventsCreateExpectations();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
-			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();
@@ -98,7 +99,7 @@ public static class InterfaceMethodReturnWithEventsTests
 				callbackInvokedCount++;
 				return 3;
 			})
-			.AddRaiseEvent(new(nameof(IInterfaceMethodReturnWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();

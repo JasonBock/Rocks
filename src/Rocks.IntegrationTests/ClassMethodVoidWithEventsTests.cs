@@ -20,7 +20,7 @@ public static class ClassMethodVoidWithEventsTests
 	public static void CreateEvent()
 	{
 		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
-		expectations.Methods.NoParameters().AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
+		expectations.Methods.NoParameters().RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -40,7 +40,7 @@ public static class ClassMethodVoidWithEventsTests
 		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
 		expectations.Methods.NoParameters()
 			.Callback(() => wasCallbackInvoked = true)
-			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -63,7 +63,7 @@ public static class ClassMethodVoidWithEventsTests
 		var expectations = new ClassMethodVoidWithEventsCreateExpectations();
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
-			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();
@@ -85,7 +85,7 @@ public static class ClassMethodVoidWithEventsTests
 		expectations.Methods.NoParameters()
 			.ExpectedCallCount(2)
 			.Callback(() => callbackInvokedCount++)
-			.AddRaiseEvent(new(nameof(ClassMethodVoidWithEvents.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var eventRaisedCount = 0;
 		var mock = expectations.Instance();

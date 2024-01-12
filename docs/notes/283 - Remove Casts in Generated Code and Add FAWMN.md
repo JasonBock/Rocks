@@ -250,12 +250,11 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
 * DONE (just leave it, it's fine) Can WriteLines() be updated with a Write() + WriteLine()?
 * DONE - Remove the `using`s and see if that breaks anything.
 * DONE - Well. I should move the projected types into the gen'd expectations type. However, this will break stuff, because when they're referenced, they need to include the mock type's namespace (if it exists) + the expectations type name. But the projection namespace will need to be a class.
-* Naming. I have the name of the type to mock all over the place within the gen'd Expectations class. I'm thinking I could make the names shorter just to make it arguably easier to read.
+* DONE - Naming. I have the name of the type to mock all over the place within the gen'd Expectations class. I'm thinking I could make the names shorter just to make it arguably easier to read.
     * DONE - Projections - just name it `Projections`. Projected types within this would still have the same names
     * DONE - Rock{MockTypeName} - Could just name it `Mock`, may be easier to read
     * DONE - Expectations - Don't need the name of the mock type, so `IHavePointersMethodExpectations` would be `MethodExpectations`
-    * I should also do Shims as they don't need a hash code, just `{Shim}{typeFlattenedName}`
-
+    * DONE - I should also do Shims as they don't need a hash code, just `{Shim}{typeFlattenedName}`
 * I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 
 So, how do I add the extension methods for events?
@@ -275,7 +274,19 @@ For each event
 
  Once I do this, change all the integration tests that call `AddRaiseEvent` to use these extension methods. It may be better to change one integration test to ensure it's working correctly after a test with events passes. Then I can update all the broken tests and refactor all the integration tests.
 
+ Oops:
+ * I can't put the extension class within another; it'll have to be at the same level that the main expectation class is at.
+ * I need to capture every adornment FQN, **not** the expectations. I mean, I need those for other things, but not for events.
+
+So, got things working with some casts and whatnot.
+
+* Fix all the tests
+* Update integration tests to use the event extension methods (look for `AddRaiseEvent`)
+
 * The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
+
+Along with this, it's possible a collision could occur with shims if 2 interfaces with the same name (different namespaces) needed shims. But, again, both are extremely rare to happen, so it's low on the list.
+
 * BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
 * Update documentation
 * Check all TODOs

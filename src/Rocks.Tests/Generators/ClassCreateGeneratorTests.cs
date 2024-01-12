@@ -228,6 +228,7 @@ public static class ClassCreateGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -296,6 +297,7 @@ public static class ClassCreateGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
@@ -528,6 +530,7 @@ public static class ClassCreateGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		var generatedMakeCode =
@@ -570,6 +573,7 @@ public static class ClassCreateGeneratorTests
 					}
 				}
 			}
+			
 			""";
 
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,

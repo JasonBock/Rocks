@@ -48,7 +48,7 @@ public static class InterfacePropertyTests
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
 		expectations.Properties.Getters.GetData()
-			.AddRaiseEvent(new(nameof(IInterfaceProperty.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -99,7 +99,7 @@ public static class InterfacePropertyTests
 			wasCallbackInvoked = true;
 			return 3;
 		})
-		.AddRaiseEvent(new(nameof(IInterfaceProperty.MyEvent), EventArgs.Empty));
+		.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -144,7 +144,7 @@ public static class InterfacePropertyTests
 	{
 		var expectations = new IInterfacePropertyCreateExpectations();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
-			.AddRaiseEvent(new(nameof(IInterfaceProperty.MyEvent), EventArgs.Empty));
+			.RaiseMyEvent(EventArgs.Empty);
 
 		var wasEventRaised = false;
 		var mock = expectations.Instance();
@@ -180,7 +180,7 @@ public static class InterfacePropertyTests
 		var wasCallbackInvoked = false;
 		var expectations = new IInterfacePropertyCreateExpectations();
 		expectations.Properties.Setters.SetData(Arg.Any<int>())
-			.AddRaiseEvent(new(nameof(IInterfaceProperty.MyEvent), EventArgs.Empty))
+			.RaiseMyEvent(EventArgs.Empty)
 			.Callback(_ => wasCallbackInvoked = true);
 
 		var wasEventRaised = false;

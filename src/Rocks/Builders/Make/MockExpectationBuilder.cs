@@ -20,14 +20,6 @@ internal static class MockExpectationBuilder
 		MockMakeBuilder.Build(writer, mockType);
 
 		writer.Indent--;
-
-		if (mockType.Type.Namespace.Length > 0)
-		{
-			writer.WriteLine("}");
-		}
-		else
-		{
-			writer.Write("}");
-		}
+		writer.WriteLine("}");
 	}
 }

@@ -7,7 +7,8 @@ namespace Rocks.Builders.Create;
 
 internal static class MethodExpectationsBuilder
 {
-	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName)
+	internal static IEnumerable<ExpectationMapping> Build(IndentedTextWriter writer, TypeMockModel type, string expectationsFullyQualifiedName,
+		Action<string> adornmentsFQNsPipeline)
 	{
 		if (type.Methods.Length > 0)
 		{
@@ -25,11 +26,12 @@ internal static class MethodExpectationsBuilder
 					""");
 
 				writer.Indent++;
+				var methodAdornmentsFQNNames = new List<string>();
 
 				foreach (var method in type.Methods.Where(
 					_ => _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 				{
-					MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName);
+					MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 					writer.WriteLine();
 				}
 
@@ -61,7 +63,7 @@ internal static class MethodExpectationsBuilder
 
 					foreach (var method in typeGroup)
 					{
-						MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName);
+						MethodExpectationsMethodBuilder.Build(writer, method, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 						writer.WriteLine();
 					}
 

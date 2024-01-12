@@ -8,7 +8,8 @@ namespace Rocks.Builders.Create;
 
 internal static class PropertyExpectationsPropertyBuilder
 {
-	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
+	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
+		Action<string> adornmentsFQNsPipeline)
 	{
 		var propertyGetMethod = property.GetMethod!;
 		var callbackDelegateTypeName = propertyGetMethod.RequiresProjectedDelegate ?
@@ -34,6 +35,8 @@ internal static class PropertyExpectationsPropertyBuilder
 			adornmentsType = $"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 		}
 
+		adornmentsFQNsPipeline(adornmentsType);
+
 		writer.WriteLines(
 			$$"""
 			internal {{adornmentsType}} {{property.Name}}()
@@ -45,7 +48,8 @@ internal static class PropertyExpectationsPropertyBuilder
 			""");
 	}
 
-	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName)
+	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName, 
+		Action<string> adornmentsFQNsPipeline)
 	{
 		var propertyParameterType = property.SetMethod!.Parameters[0].Type;
 		var propertyParameterValue =
@@ -58,6 +62,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(property.SetMethod!, property.MockType) :
 			DelegateBuilder.Build(property.SetMethod!.Parameters);
 		var adornmentsType = $"global::Rocks.Adornments<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
+		adornmentsFQNsPipeline(adornmentsType);
 
 		writer.WriteLines(
 			$$"""
@@ -74,13 +79,14 @@ internal static class PropertyExpectationsPropertyBuilder
 			""");
 	}
 
-	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName)
+	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
+		Action<string> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 
 		if (accessor == PropertyAccessor.Get && property.GetCanBeSeenByContainingAssembly)
 		{
-			PropertyExpectationsPropertyBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
+			PropertyExpectationsPropertyBuilder.BuildGetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 		else if ((accessor == PropertyAccessor.Set && property.SetCanBeSeenByContainingAssembly) ||
 			(accessor == PropertyAccessor.Init && property.InitCanBeSeenByContainingAssembly))
@@ -91,7 +97,7 @@ internal static class PropertyExpectationsPropertyBuilder
 				memberIdentifier++;
 			}
 
-			PropertyExpectationsPropertyBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName);
+			PropertyExpectationsPropertyBuilder.BuildSetter(writer, property, memberIdentifier, expectationsFullyQualifiedName, adornmentsFQNsPipeline);
 		}
 	}
 }
