@@ -22,6 +22,7 @@
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="ClangSharp" Version="17.0.1" />
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
+    <PackageVersion Include="Coravel" Version="5.0.2" />
     <PackageVersion Include="Csla" Version="7.0.3" />
     <PackageVersion Include="CsvHelper" Version="30.0.1" />
     <PackageVersion Include="Cursively" Version="1.2.0" />

@@ -29,6 +29,7 @@
 		<PackageReference Include="Castle.Core" />
 		<PackageReference Include="ClangSharp" />
 		<PackageReference Include="Confluent.Kafka" />
+		<PackageReference Include="Coravel" />
 		<PackageReference Include="Csla" />
 		<PackageReference Include="CsvHelper" />
 		<PackageReference Include="Cursively" />

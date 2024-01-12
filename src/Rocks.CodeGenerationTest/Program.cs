@@ -72,7 +72,7 @@ static void TestWithTypes()
 		new (typeof(System.Text.Json.JsonDocument), []),
 		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
 
-		//// NuGet references
+		// NuGet references
 		new (typeof(AngleSharp.BrowsingContext), []),
 		new (typeof(Ardalis.GuardClauses.Guard), []),
 		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
@@ -93,6 +93,7 @@ static void TestWithTypes()
 		new (typeof(Castle.DynamicProxy.ProxyGenerationOptions), []),
 		new (typeof(ClangSharp.AbstractConditionalOperator), []),
 		new (typeof(Confluent.Kafka.Acks), []),
+		new (typeof(Coravel.CacheServiceRegistration), []),
 		new (typeof(Csla.DataPortal<>), []),
 		new (typeof(CsvHelper.ArrayHelper), []),
 		new (typeof(Cursively.CsvAsyncInput), []),
