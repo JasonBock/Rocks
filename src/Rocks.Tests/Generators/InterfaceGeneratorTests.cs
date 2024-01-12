@@ -250,11 +250,11 @@ public static class InterfaceGeneratorTests
 			internal static class ISealedAdornmentsEventExtensions
 			{
 				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action>)self.AddRaiseEvent(new("NonSealedEvent", args));
+					self.AddRaiseEvent(new("NonSealedEvent", args));
 				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string>)self.AddRaiseEvent(new("NonSealedEvent", args));
+					self.AddRaiseEvent(new("NonSealedEvent", args));
 				internal static global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> RaiseNonSealedEvent(this global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>>)self.AddRaiseEvent(new("NonSealedEvent", args));
+					self.AddRaiseEvent(new("NonSealedEvent", args));
 			}
 			
 			""";

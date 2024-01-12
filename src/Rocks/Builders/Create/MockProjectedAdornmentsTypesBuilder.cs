@@ -72,12 +72,30 @@ internal static partial class MockProjectedAdornmentsTypesBuilder
 			}
 
 			internal unsafe sealed class {{adornmentName}}<TCallback>
-				: global::Rocks.Adornments<{{handlerName}}<TCallback>, TCallback>
 				where TCallback : global::System.Delegate
 			{
-				internal {{adornmentName}}({{handlerName}}<TCallback> handler) 
-					: base(handler) 
-				{ }
+				private readonly {{handlerName}}<TCallback> handler;
+			
+				internal {{adornmentName}}({{handlerName}}<TCallback> handler) =>
+					this.handler = handler;
+				
+				internal {{adornmentName}}<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+				{
+					this.handler.AddRaiseEvent(raiseEvent);
+					return this;
+				}
+
+				internal {{adornmentName}}<TCallback> ExpectedCallCount(uint expectedCallCount)
+				{
+					this.handler.ExpectedCallCount = expectedCallCount;
+					return this;
+				}
+
+				internal {{adornmentName}}<TCallback> Callback(TCallback callback)
+				{
+					this.handler.Callback = callback;
+					return this;
+				}
 
 				internal {{adornmentName}}<TCallback> ReturnValue({{returnType}} returnValue)
 				{

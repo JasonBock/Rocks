@@ -248,13 +248,13 @@ public static class EventGeneratorTests
 			internal static class AbstractClassMethodReturnWithEventsAdornmentsEventExtensions
 			{
 				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool>)self.AddRaiseEvent(new("MyEvent", args));
+					self.AddRaiseEvent(new("MyEvent", args));
 				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int>)self.AddRaiseEvent(new("MyEvent", args));
+					self.AddRaiseEvent(new("MyEvent", args));
 				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?>)self.AddRaiseEvent(new("MyEvent", args));
+					self.AddRaiseEvent(new("MyEvent", args));
 				internal static global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> RaiseMyEvent(this global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int>)self.AddRaiseEvent(new("MyEvent", args));
+					self.AddRaiseEvent(new("MyEvent", args));
 			}
 			
 			""";
@@ -454,9 +454,9 @@ public static class EventGeneratorTests
 			internal static class IExplicitInterfaceImplementationAdornmentsEventExtensions
 			{
 				internal static global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> RaiseC(this global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action>)self.AddRaiseEvent(new("C", args));
+					self.AddRaiseEvent(new("C", args));
 				internal static global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> RaiseC(this global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> self, global::System.EventArgs args) => 
-					(global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action>)self.AddRaiseEvent(new("C", args));
+					self.AddRaiseEvent(new("C", args));
 			}
 			
 			""";
@@ -605,7 +605,7 @@ public static class EventGeneratorTests
 				internal static class IHaveEventsAdornmentsEventExtensions
 				{
 					internal static global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> RaiseServerMaintenanceEvent(this global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> self, global::MockTests.ServerMaintenanceEvent args) => 
-						(global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>)self.AddRaiseEvent(new("ServerMaintenanceEvent", args));
+						self.AddRaiseEvent(new("ServerMaintenanceEvent", args));
 				}
 			}
 			
@@ -753,7 +753,7 @@ public static class EventGeneratorTests
 				internal static class IHaveEventsAdornmentsEventExtensions
 				{
 					internal static global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> RaiseC(this global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> self, global::System.EventArgs args) => 
-						(global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action>)self.AddRaiseEvent(new("C", args));
+						self.AddRaiseEvent(new("C", args));
 				}
 			}
 

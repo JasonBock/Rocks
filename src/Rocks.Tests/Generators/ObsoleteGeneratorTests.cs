@@ -732,9 +732,9 @@ public static class ObsoleteGeneratorTests
 				internal static class IPixelShaderAdornmentsEventExtensions
 				{
 					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						(global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>)self.AddRaiseEvent(new("ShadingOccurred", args));
+						self.AddRaiseEvent(new("ShadingOccurred", args));
 					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						(global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>)self.AddRaiseEvent(new("ShadingOccurred", args));
+						self.AddRaiseEvent(new("ShadingOccurred", args));
 				}
 			}
 			
@@ -942,9 +942,9 @@ public static class ObsoleteGeneratorTests
 				internal static class IPixelShaderAdornmentsEventExtensions
 				{
 					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						(global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint>)self.AddRaiseEvent(new("ShadingOccurred", args));
+						self.AddRaiseEvent(new("ShadingOccurred", args));
 					internal static global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> RaiseShadingOccurred(this global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> self, global::System.EventArgs args) => 
-						(global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint>)self.AddRaiseEvent(new("ShadingOccurred", args));
+						self.AddRaiseEvent(new("ShadingOccurred", args));
 				}
 			}
 			

@@ -39,12 +39,30 @@ public static class PointerGeneratorTests
 					}
 					
 					internal unsafe sealed class AdornmentsForvoidPointerPointer<TCallback>
-						: global::Rocks.Adornments<HandlerForvoidPointerPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForvoidPointerPointer(HandlerForvoidPointerPointer<TCallback> handler) 
-							: base(handler) 
-						{ }
+						private readonly HandlerForvoidPointerPointer<TCallback> handler;
+					
+						internal AdornmentsForvoidPointerPointer(HandlerForvoidPointerPointer<TCallback> handler) =>
+							this.handler = handler;
+						
+						internal AdornmentsForvoidPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+						{
+							this.handler.AddRaiseEvent(raiseEvent);
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+						{
+							this.handler.ExpectedCallCount = expectedCallCount;
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointer<TCallback> Callback(TCallback callback)
+						{
+							this.handler.Callback = callback;
+							return this;
+						}
 					
 						internal AdornmentsForvoidPointerPointer<TCallback> ReturnValue(void** returnValue)
 						{
@@ -179,12 +197,30 @@ public static class PointerGeneratorTests
 					}
 					
 					internal unsafe sealed class AdornmentsForvoidPointerPointerPointer<TCallback>
-						: global::Rocks.Adornments<HandlerForvoidPointerPointerPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForvoidPointerPointerPointer(HandlerForvoidPointerPointerPointer<TCallback> handler) 
-							: base(handler) 
-						{ }
+						private readonly HandlerForvoidPointerPointerPointer<TCallback> handler;
+					
+						internal AdornmentsForvoidPointerPointerPointer(HandlerForvoidPointerPointerPointer<TCallback> handler) =>
+							this.handler = handler;
+						
+						internal AdornmentsForvoidPointerPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+						{
+							this.handler.AddRaiseEvent(raiseEvent);
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+						{
+							this.handler.ExpectedCallCount = expectedCallCount;
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointerPointer<TCallback> Callback(TCallback callback)
+						{
+							this.handler.Callback = callback;
+							return this;
+						}
 					
 						internal AdornmentsForvoidPointerPointerPointer<TCallback> ReturnValue(void*** returnValue)
 						{
@@ -319,12 +355,30 @@ public static class PointerGeneratorTests
 					}
 					
 					internal unsafe sealed class AdornmentsForvoidPointerPointerPointerPointer<TCallback>
-						: global::Rocks.Adornments<HandlerForvoidPointerPointerPointerPointer<TCallback>, TCallback>
 						where TCallback : global::System.Delegate
 					{
-						internal AdornmentsForvoidPointerPointerPointerPointer(HandlerForvoidPointerPointerPointerPointer<TCallback> handler) 
-							: base(handler) 
-						{ }
+						private readonly HandlerForvoidPointerPointerPointerPointer<TCallback> handler;
+					
+						internal AdornmentsForvoidPointerPointerPointerPointer(HandlerForvoidPointerPointerPointerPointer<TCallback> handler) =>
+							this.handler = handler;
+						
+						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+						{
+							this.handler.AddRaiseEvent(raiseEvent);
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+						{
+							this.handler.ExpectedCallCount = expectedCallCount;
+							return this;
+						}
+					
+						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> Callback(TCallback callback)
+						{
+							this.handler.Callback = callback;
+							return this;
+						}
 					
 						internal AdornmentsForvoidPointerPointerPointerPointer<TCallback> ReturnValue(void**** returnValue)
 						{
@@ -841,12 +895,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsForintPointer<TCallback>
-							: global::Rocks.Adornments<HandlerForintPointer<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerForintPointer<TCallback> handler;
+						
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 							{
@@ -1179,12 +1251,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
-							: global::Rocks.Adornments<HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
+						
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{
@@ -1364,12 +1454,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsForintPointer<TCallback>
-							: global::Rocks.Adornments<HandlerForintPointer<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerForintPointer<TCallback> handler;
+						
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 							{
@@ -1617,12 +1725,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
-							: global::Rocks.Adornments<HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
+						
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{
@@ -2115,12 +2241,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsForintPointer<TCallback>
-							: global::Rocks.Adornments<HandlerForintPointer<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerForintPointer<TCallback> handler;
+						
+							internal AdornmentsForintPointer(HandlerForintPointer<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsForintPointer<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsForintPointer<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsForintPointer<TCallback> ReturnValue(int* returnValue)
 							{
@@ -2627,12 +2771,30 @@ public static class PointerGeneratorTests
 						}
 						
 						internal unsafe sealed class AdornmentsFordelegatePointerOfint__void<TCallback>
-							: global::Rocks.Adornments<HandlerFordelegatePointerOfint__void<TCallback>, TCallback>
 							where TCallback : global::System.Delegate
 						{
-							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) 
-								: base(handler) 
-							{ }
+							private readonly HandlerFordelegatePointerOfint__void<TCallback> handler;
+						
+							internal AdornmentsFordelegatePointerOfint__void(HandlerFordelegatePointerOfint__void<TCallback> handler) =>
+								this.handler = handler;
+							
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> AddRaiseEvent(global::Rocks.RaiseEventInformation raiseEvent)
+							{
+								this.handler.AddRaiseEvent(raiseEvent);
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> ExpectedCallCount(uint expectedCallCount)
+							{
+								this.handler.ExpectedCallCount = expectedCallCount;
+								return this;
+							}
+						
+							internal AdornmentsFordelegatePointerOfint__void<TCallback> Callback(TCallback callback)
+							{
+								this.handler.Callback = callback;
+								return this;
+							}
 						
 							internal AdornmentsFordelegatePointerOfint__void<TCallback> ReturnValue(delegate*<int, void> returnValue)
 							{

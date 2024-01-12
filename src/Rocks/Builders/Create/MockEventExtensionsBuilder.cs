@@ -24,7 +24,7 @@ internal static class MockEventExtensionsBuilder
 				writer.WriteLines(
 					$$"""
 					internal static {{adornment}} Raise{{name}}(this {{adornment}} self, {{argsType}} args) => 
-						({{adornment}})self.AddRaiseEvent(new("{{name}}", args));
+						self.AddRaiseEvent(new("{{name}}", args));
 					""");
 			}
 		}

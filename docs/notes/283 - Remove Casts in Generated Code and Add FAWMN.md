@@ -280,8 +280,9 @@ For each event
 
 So, got things working with some casts and whatnot.
 
-* Fix all the tests
-* Update integration tests to use the event extension methods (look for `AddRaiseEvent`)
+* DONE - Fix all the tests
+* DONE - Update integration tests to use the event extension methods (look for `AddRaiseEvent`)
+* I need to update adornments so one doesn't derive from another. Also check that with projected adornments.
 
 * The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
 
