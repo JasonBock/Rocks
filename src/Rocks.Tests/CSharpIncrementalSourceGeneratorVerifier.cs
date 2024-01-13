@@ -41,8 +41,7 @@ namespace Rocks.Tests
 			protected override ParseOptions CreateParseOptions()
 			{
 				var parseOptions = (CSharpParseOptions)base.CreateParseOptions();
-				// TODO: Does this need to be preview anymore?
-				return parseOptions.WithLanguageVersion(LanguageVersion.Preview);
+				return parseOptions.WithLanguageVersion(LanguageVersion.CSharp12);
 			}
 		}
 

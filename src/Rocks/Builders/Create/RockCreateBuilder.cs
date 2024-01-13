@@ -21,7 +21,7 @@ internal sealed class RockCreateBuilder
 
 		var mockNamespace = this.MockType.Type.Namespace;
 
-		if (mockNamespace.Length > 0)
+		if (mockNamespace is not null)
 		{
 			indentWriter.WriteLine($"namespace {mockNamespace}");
 			indentWriter.WriteLine("{");
@@ -30,7 +30,7 @@ internal sealed class RockCreateBuilder
 
 		var wereTypesProjected = MockBuilder.Build(indentWriter, this.MockType);
 
-		if (mockNamespace.Length > 0)
+		if (mockNamespace is not null)
 		{
 			indentWriter.Indent--;
 			indentWriter.WriteLine("}");

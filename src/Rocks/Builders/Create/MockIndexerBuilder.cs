@@ -63,7 +63,7 @@ internal static class MockIndexerBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		MockMethodValueBuilder.BuildMethodHandler(
-			writer, method, indexer.MockType, namingContext,
+			writer, method, namingContext,
 			raiseEvents, shouldThrowDoesNotReturnException, indexer.MemberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -171,7 +171,7 @@ internal static class MockIndexerBuilder
 
 		writer.WriteLine("{");
 		writer.Indent++;
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, indexer.MockType, namingContext, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
 
 		if (shouldThrowDoesNotReturnException)
 		{

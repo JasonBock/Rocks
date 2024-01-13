@@ -60,14 +60,11 @@ public static class RefStructTests
 	public static void MakeInAndOut()
 	{
 		var mock = new IHaveInAndOutSpanMakeExpectations().Instance();
-
-#pragma warning disable NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 		Assert.Multiple(() =>
 		{
 			Assert.That(mock.Foo(default) == default, Is.True);
 			Assert.That(mock.Values == default, Is.True);
 		});
-#pragma warning restore NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 	}
 
 	[Test]
@@ -99,13 +96,11 @@ public static class RefStructTests
 	public static void MakeWithReturnValues()
 	{
 		var mock = new IReturnSpanMakeExpectations().Instance();
-#pragma warning disable NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 		Assert.Multiple(() =>
 		{
 			Assert.That(mock.GetRandomData() == default, Is.True);
 			Assert.That(mock.Values == default, Is.True);
 		});
-#pragma warning restore NUnit2010 // Use EqualConstraint for better assertion messages in case of failure
 	}
 
 	[Test]

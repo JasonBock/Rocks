@@ -218,8 +218,8 @@ public static class ClassIndexerTests
 		expectations.Indexers.Getters.This(3).ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
+		_ = mock[3];
 		var value = mock[3];
-		value = mock[3];
 
 		expectations.Verify();
 
@@ -494,8 +494,8 @@ public static class ClassIndexerTests
 		expectations.Indexers.Getters.This(3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
+		_ = mock[3, "b"];
 		var value = mock[3, "b"];
-		value = mock[3, "b"];
 
 		expectations.Verify();
 

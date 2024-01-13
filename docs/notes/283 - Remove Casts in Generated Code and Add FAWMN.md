@@ -255,7 +255,7 @@ I'm really starting to get annoyed adding all the events in. I think I should ge
     * DONE - Rock{MockTypeName} - Could just name it `Mock`, may be easier to read
     * DONE - Expectations - Don't need the name of the mock type, so `IHavePointersMethodExpectations` would be `MethodExpectations`
     * DONE - I should also do Shims as they don't need a hash code, just `{Shim}{typeFlattenedName}`
-* I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
+* DONE - I don't like that `AddRaiseEvent` requires a string now. Maybe I could gen all the event names, like `EventNames`, and then that class would have constants that would be available.
 
 So, how do I add the extension methods for events?
 
@@ -282,13 +282,21 @@ So, got things working with some casts and whatnot.
 
 * DONE - Fix all the tests
 * DONE - Update integration tests to use the event extension methods (look for `AddRaiseEvent`)
-* I need to update adornments so one doesn't derive from another. Also check that with projected adornments.
+* DONE - I need to update adornments so one doesn't derive from another. Also check that with projected adornments.
 
-* The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
+* DONE - Check all TODOs
+* DONE - Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?
+* DONE (removing) BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
+* Update documentation
+
+# Future Work
+
+## Type Name Collisions
+
+The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
 
 Along with this, it's possible a collision could occur with shims if 2 interfaces with the same name (different namespaces) needed shims. But, again, both are extremely rare to happen, so it's low on the list.
 
-* BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
-* Update documentation
-* Check all TODOs
-* Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?
+## Revisit `IDisposable` On Expectations
+
+Removing `RockRepository` means that I should probably revisit this. There was a reason I didn't do this before, but maybe now is the time to look at this idea again.

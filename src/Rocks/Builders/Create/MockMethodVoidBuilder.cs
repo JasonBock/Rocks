@@ -104,14 +104,14 @@ internal static class MockMethodVoidBuilder
 		if (method.Parameters.Length > 0)
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, method.MockType, namingContext,
+				writer, method, namingContext,
 				methodSignature, raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
 			MockMethodVoidBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, method.MockType, namingContext,
+				writer, method, namingContext,
 				methodSignature, raiseEvents, shouldThrowDoesNotReturnException,
 				expectationsFullyQualifiedName);
 		}
@@ -170,7 +170,7 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer,
-		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
+		MethodModel method, VariableNamingContext namingContext,
 		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
 		var foreachHandlerName = method.IsGenericMethod ?
@@ -187,7 +187,7 @@ internal static class MockMethodVoidBuilder
 			writer.Indent++;
 		}
 
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
 
 		if (method.IsGenericMethod)
 		{
@@ -209,7 +209,7 @@ internal static class MockMethodVoidBuilder
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer, MethodModel method,
-		TypeReferenceModel typeToMock, VariableNamingContext namingContext,
+		VariableNamingContext namingContext,
 		string methodSignature, bool raiseEvents, bool shouldThrowDoesNotReturnException, string expectationsFullyQualifiedName)
 	{
 		writer.WriteLine($"var @{namingContext["foundMatch"]} = false;");
@@ -266,7 +266,7 @@ internal static class MockMethodVoidBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		writer.WriteLine($"@{namingContext["foundMatch"]} = true;");
-		MockMethodVoidBuilder.BuildMethodHandler(writer, method, typeToMock, namingContext, raiseEvents);
+		MockMethodVoidBuilder.BuildMethodHandler(writer, method, namingContext, raiseEvents);
 		writer.WriteLine("break;");
 		writer.Indent--;
 		writer.WriteLine("}");
@@ -298,7 +298,7 @@ internal static class MockMethodVoidBuilder
 		}
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method, TypeReferenceModel typeToMock,
+	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method,
 		VariableNamingContext namingContext, bool raiseEvents)
 	{
 		writer.WriteLine($"@{namingContext["handler"]}.CallCount++;");

@@ -9,7 +9,7 @@ internal static class MockBuilder
 {
 	internal static bool Build(IndentedTextWriter writer, TypeMockModel mockType)
 	{
-		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
+		var expectationsFullyQualifiedName = mockType.Type.Namespace is null ?
 			$"global::{mockType.Type.FlattenedName}CreateExpectations" :
 			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}CreateExpectations";
 

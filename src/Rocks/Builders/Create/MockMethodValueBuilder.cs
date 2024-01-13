@@ -114,14 +114,14 @@ internal static class MockMethodValueBuilder
 		if (method.Parameters.Length > 0 || method.IsGenericMethod)
 		{
 			MockMethodValueBuilder.BuildMethodValidationHandlerWithParameters(
-				writer, method, method.MockType, namingContext,
+				writer, method, namingContext,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
 				expectationsFullyQualifiedName);
 		}
 		else
 		{
 			MockMethodValueBuilder.BuildMethodValidationHandlerNoParameters(
-				writer, method, method.MockType, namingContext, methodSignature,
+				writer, method, namingContext, methodSignature,
 				raiseEvents, shouldThrowDoesNotReturnException, method.MemberIdentifier,
 				expectationsFullyQualifiedName);
 		}
@@ -187,7 +187,7 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine();
 	}
 
-	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method, TypeReferenceModel typeToMock,
+	internal static void BuildMethodHandler(IndentedTextWriter writer, MethodModel method, 
 		VariableNamingContext namingContext, bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIndentifier)
 	{
 		writer.WriteLine($"@{namingContext["handler"]}.CallCount++;");
@@ -198,9 +198,6 @@ internal static class MockMethodValueBuilder
 		var returnValueCall = method.ReturnType.IsRefLikeType ?
 			".ReturnValue!()" : ".ReturnValue";
 
-		// TODO: I took a lot out here because sometimes I apparently pass in 
-		// a delegate for the return value for certain return types. But...
-		// I'm thinking I don't need to do that anymore? We'll see.
 		if (method.ReturnsByRef || method.ReturnsByRefReadOnly)
 		{
 			writer.WriteLines(
@@ -252,7 +249,7 @@ internal static class MockMethodValueBuilder
 	}
 
 	private static void BuildMethodValidationHandlerWithParameters(IndentedTextWriter writer,
-		MethodModel method, TypeReferenceModel typeToMock, VariableNamingContext namingContext,
+		MethodModel method, VariableNamingContext namingContext,
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier,
 		string expectationsFullyQualifiedName)
 	{
@@ -303,7 +300,7 @@ internal static class MockMethodValueBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 		MockMethodValueBuilder.BuildMethodHandler(
-			writer, method, typeToMock, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
+			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 		writer.Indent--;
 		writer.WriteLine("}");
 
@@ -318,7 +315,7 @@ internal static class MockMethodValueBuilder
 	}
 
 	private static void BuildMethodValidationHandlerNoParameters(IndentedTextWriter writer, MethodModel method,
-		TypeReferenceModel typeToMock, VariableNamingContext namingContext, string methodSignature, 
+		VariableNamingContext namingContext, string methodSignature, 
 		bool raiseEvents, bool shouldThrowDoesNotReturnException, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var foreachHandlerName = method.IsGenericMethod ?
@@ -336,7 +333,7 @@ internal static class MockMethodValueBuilder
 		}
 
 		MockMethodValueBuilder.BuildMethodHandler(
-			writer, method, typeToMock, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
+			writer, method, namingContext, raiseEvents, shouldThrowDoesNotReturnException, memberIdentifier);
 
 		if (method.IsGenericMethod)
 		{

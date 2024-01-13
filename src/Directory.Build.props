@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<AnalysisMode>all</AnalysisMode>
 		<Authors>Jason Bock</Authors>
-		<Copyright>Copyright © 2023</Copyright>
+		<Copyright>Copyright © 2024</Copyright>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<LangVersion>latest</LangVersion>
 		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>

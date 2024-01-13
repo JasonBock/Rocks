@@ -15,11 +15,12 @@ internal sealed record TypeReferenceModel
 		this.NullableAnnotation = type.NullableAnnotation;
 
 		this.AttributesDescription = type.GetAttributes().GetDescription(compilation, AttributeTargets.Class);
-		this.Namespace = type.ContainingNamespace is not null ?
-			!type.ContainingNamespace.IsGlobalNamespace ?
-				type.ContainingNamespace.ToDisplayString() :
-				string.Empty :
-			string.Empty;
+		this.Namespace = 
+			type.ContainingNamespace is not null ?
+				!type.ContainingNamespace.IsGlobalNamespace ?
+					type.ContainingNamespace.ToDisplayString() :
+					null :
+				null;
 
 		this.Kind = type.Kind;
 		this.TypeKind = type.TypeKind;
@@ -71,8 +72,7 @@ internal sealed record TypeReferenceModel
 	internal bool IsReferenceType { get; }
 	internal bool IsRefLikeType { get; }
 	internal SymbolKind Kind { get; }
-	// TODO: Why is Namespace not "string?".
-	internal string Namespace { get; }
+	internal string? Namespace { get; }
 	internal string NoGenericsName { get; }
 	internal NullableAnnotation NullableAnnotation { get; }
 	internal string? PointerArgParameterType { get; }

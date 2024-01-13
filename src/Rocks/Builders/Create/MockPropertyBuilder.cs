@@ -5,8 +5,6 @@ using System.CodeDom.Compiler;
 
 namespace Rocks.Builders.Create;
 
-// TODO: We should be using VariableNamingContext
-// for things like methodHandlers, methodHandler, etc.
 internal static class MockPropertyBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer,

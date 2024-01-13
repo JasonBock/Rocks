@@ -101,6 +101,7 @@ public static class MockProjectedDelegateBuilderTests
 		Assert.That(name, Is.EqualTo(expectedValue));
 	}
 
+	[Test]
 	public static void GetProjectedReturnValueDelegateName()
 	{
 		var code =
@@ -121,9 +122,10 @@ public static class MockProjectedDelegateBuilderTests
 		var (method, compilation) = MockProjectedDelegateBuilderTests.GetMethodSymbol(code);
 		var model = new MethodModel(method, new TypeReferenceModel(method.ContainingType, compilation), compilation,
 			RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1);
-		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("ReturnValue_597877384104637463797567380593086296660561401666"));
+		Assert.That(model.ProjectedReturnValueDelegateName, Is.EqualTo("ReturnValue_305616756374865012389506681414051734154688895315"));
 	}
 
+	[Test]
 	public static void GetProjectedReturnValueDelegateFullyQualifiedName()
 	{
 		var code =
@@ -151,7 +153,7 @@ public static class MockProjectedDelegateBuilderTests
 			new MethodModel(method, new TypeReferenceModel(typeToMock, compilation), compilation,
 				RequiresExplicitInterfaceImplementation.No, RequiresOverride.No, RequiresHiding.No, 1),
 			new TypeReferenceModel(typeToMock, compilation));
-		Assert.That(name, Is.EqualTo("global::Mock.Projections.ReturnValue_3056167563748650"));
+		Assert.That(name, Is.EqualTo("global::Mock.IMockCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315"));
 	}
 
 	private static (ITypeSymbol typeToMock, IMethodSymbol method, Compilation compilation) GetSymbols(string source)

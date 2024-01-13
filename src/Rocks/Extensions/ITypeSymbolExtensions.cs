@@ -54,9 +54,8 @@ internal static class ITypeSymbolExtensions
 	internal static bool CanBeSeenByContainingAssembly(this ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol)
 	{
 		static bool AreTypeParametersVisible(ITypeSymbol self, IAssemblySymbol containingAssemblyOfInvocationSymbol) =>
-			self is INamedTypeSymbol namedSelf ?
-				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol)) :
-				true;
+			self is not INamedTypeSymbol namedSelf || 
+				namedSelf.TypeArguments.All(_ => _.CanBeSeenByContainingAssembly(containingAssemblyOfInvocationSymbol));
 
 		if (self.TypeKind == TypeKind.TypeParameter ||
 			self.TypeKind == TypeKind.Dynamic)
@@ -145,7 +144,6 @@ internal static class ITypeSymbolExtensions
 	// In fact, I think GetReferenceableName() is going to do most of the work,
 	// and this can probably just be "GetFlattenedName()", which is needed
 	// in project type name creation.
-	// If/when I do "Rocks Engine v3", I'll address this.
 	internal static string GetName(this ITypeSymbol self, TypeNameOption options = TypeNameOption.IncludeGenerics)
 	{
 		static string GetFlattenedName(INamedTypeSymbol flattenedName, TypeNameOption flattenedOptions)

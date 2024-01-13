@@ -420,8 +420,8 @@ public static class AbstractClassIndexerTests
 		expectations.Indexers.Getters.This(3, "b").ExpectedCallCount(2);
 
 		var mock = expectations.Instance();
+		_ = mock[3, "b"];
 		var value = mock[3, "b"];
-		value = mock[3, "b"];
 
 		expectations.Verify();
 

@@ -75,8 +75,11 @@ public static class GenericTests
 		expectations.Methods.Run<Guid>().ReturnValue(guidReturn);
 
 		var mock = expectations.Instance();
-		Assert.That(mock.Run<int>(), Is.EqualTo(4));
-		Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
+		Assert.Multiple(() =>
+		{
+			Assert.That(mock.Run<int>(), Is.EqualTo(4));
+			Assert.That(mock.Run<Guid>(), Is.EqualTo(guidReturn));
+		});
 
 		expectations.Verify();
 	}

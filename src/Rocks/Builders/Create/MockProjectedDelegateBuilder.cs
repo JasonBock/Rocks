@@ -12,16 +12,15 @@ internal static class MockProjectedDelegateBuilder
 		var typeArguments = method.TypeArguments.Length > 0 ?
 			$"<{string.Join(", ", method.TypeArguments)}>" : string.Empty;
 
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}{typeArguments}";
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}{typeArguments}";
 	}
 
 	internal static string GetProjectedReturnValueDelegateFullyQualifiedName(MethodModel method, TypeReferenceModel typeToMock)
 	{
 		var delegateName = method.ProjectedReturnValueDelegateName;
-		return $"global::{(typeToMock.Namespace.Length == 0 ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}";
+		return $"global::{(typeToMock.Namespace is null ? "" : $"{typeToMock.Namespace}.")}{typeToMock.FlattenedName}CreateExpectations.Projections.{delegateName}";
 	}
 
-	// TODO: this could go on the MethodModel itself.
 	internal static string GetProjectedDelegate(MethodModel method)
 	{
 		var returnType = method.ReturnType.FullyQualifiedName;
@@ -41,7 +40,6 @@ internal static class MockProjectedDelegateBuilder
 		return $"internal {isUnsafe}delegate {returnType} {method.ProjectedCallbackDelegateName}{typeArguments}({methodParameters}){methodConstraints};";
 	}
 
-	// TODO: this could go on the MethodModel itself.
 	internal static string GetProjectedReturnValueDelegate(MethodModel method) =>
 		$"internal {(method.IsUnsafe ? "unsafe " : string.Empty)}delegate {method.ReturnType.FullyQualifiedName} {method.ProjectedReturnValueDelegateName}();";
 

@@ -11,7 +11,7 @@ internal static class MockExpectationBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		var expectationsFullyQualifiedName = mockType.Type.Namespace == string.Empty ?
+		var expectationsFullyQualifiedName = mockType.Type.Namespace is null ?
 			$"global::{mockType.Type.FlattenedName}MakeExpectations" :
 			$"global::{mockType.Type.Namespace}.{mockType.Type.FlattenedName}MakeExpectations";
 
