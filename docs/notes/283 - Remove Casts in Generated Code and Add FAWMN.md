@@ -287,16 +287,22 @@ So, got things working with some casts and whatnot.
 * DONE - Check all TODOs
 * DONE - Inform Steve (BenchmarkMockNet) that the new version will be breaking, how should it be handled?
 * DONE (removing) BIG OOOOF. I forgot about `RockRepository`. I have no idea how this will work. Maybe I just remove this, and make expectations disposable.
-* Update documentation
+* DONE - Update documentation
 
 # Future Work
 
-## Type Name Collisions
+## DONE - Type Name Collisions
 
 The **only** name collision that we could run into now is if someone has "{Namespace}.{MockType}CreateExpectations" in their code, because I assume that's OK to create it (or the "make" version as well). The chances of this are extremely small, and...arguably, the user could create an alias to their code. However, if they're mocking something that is in the project that they make the mock, that won't help, because an alias can't be made. Again, the odds of this happening are really, **really** small, but...I wonder if I can look in the assembly symbol, or see if I can find a `ITypeSymbol` of my proposed name before I make it, and then do something similar with what I do in `VariableNamingContext` - keep adding 1 until I find one that works.
 
 Along with this, it's possible a collision could occur with shims if 2 interfaces with the same name (different namespaces) needed shims. But, again, both are extremely rare to happen, so it's low on the list.
 
-## Revisit `IDisposable` On Expectations
+## DONE - Revisit `IDisposable` On Expectations
 
 Removing `RockRepository` means that I should probably revisit this. There was a reason I didn't do this before, but maybe now is the time to look at this idea again.
+
+## DONE - Move Diagnostics To Analyzers
+
+The problem is that diagnostic information needs to "come along for the ride" with the models so they can get reported. As such, this can make models effectively impossible to be equatable. Sure, if one wants to create a mock that has no issues (like a typical interface), then it's cool. But that's not a realistic expectations.
+
+Therefore, I need to move the diagnostics into analyzers and report them that way. I'd also have to remove them from Rocks, and do something like return `null` if any issues are found, because I still need to do that in the SG, but they can't be part of the model.
