@@ -62,11 +62,11 @@ public static class RecordCreateGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler2> @handlers2 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler3> @handlers3 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler4> @handlers4 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler5> @handlers5 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler6> @handlers6 = new();
+					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler2>? @handlers2;
+					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler3>? @handlers3;
+					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler4>? @handlers4;
+					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler5>? @handlers5;
+					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler6>? @handlers6;
 					
 					public override void Verify()
 					{
@@ -74,11 +74,11 @@ public static class RecordCreateGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers2));
-							failures.AddRange(this.Verify(handlers3));
-							failures.AddRange(this.Verify(handlers4));
-							failures.AddRange(this.Verify(handlers5));
-							failures.AddRange(this.Verify(handlers6));
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+							if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+							if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
 					
 							if (failures.Count > 0)
 							{
@@ -103,7 +103,7 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "void Foo()")]
 						public override void Foo()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -118,7 +118,7 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "string ToString()")]
 						public override string ToString()
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
@@ -135,7 +135,7 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(4, "bool PrintMembers(global::System.Text.StringBuilder @builder)")]
 						protected override bool PrintMembers(global::System.Text.StringBuilder @builder)
 						{
-							if (this.Expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
@@ -159,7 +159,7 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(5, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers5[0];
 								@handler.CallCount++;
@@ -178,7 +178,7 @@ public static class RecordCreateGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers6.Count > 0)
+								if (this.Expectations.handlers6?.Count > 0)
 								{
 									var @handler = this.Expectations.handlers6[0];
 									@handler.CallCount++;
@@ -203,6 +203,7 @@ public static class RecordCreateGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler2, global::System.Action> Foo()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -210,6 +211,7 @@ public static class RecordCreateGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler3, global::System.Func<string>, string> ToString()
 						{
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
@@ -224,12 +226,14 @@ public static class RecordCreateGeneratorTests
 								@builder = @builder,
 							};
 							
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
@@ -247,6 +251,7 @@ public static class RecordCreateGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler6, global::System.Func<global::System.Type>, global::System.Type> EqualityContract()
 							{
+								if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 								var handler = new global::MockTests.RecordTestCreateExpectations.Handler6();
 								this.Expectations.handlers6.Add(handler);
 								return new(handler);

@@ -22,14 +22,14 @@ internal static class MockExpectationsVerifyBuilder
 
 		foreach (var method in mockType.Methods)
 		{
-			writer.WriteLine($"failures.AddRange(this.Verify(handlers{method.MemberIdentifier}));");
+			writer.WriteLine($"if (this.handlers{method.MemberIdentifier}?.Count > 0) {{ failures.AddRange(this.Verify(this.handlers{method.MemberIdentifier})); }}");
 		}
 
 		foreach (var property in mockType.Properties)
 		{
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
-				writer.WriteLine($"failures.AddRange(this.Verify(handlers{property.MemberIdentifier}));");
+				writer.WriteLine($"if (this.handlers{property.MemberIdentifier}?.Count > 0) {{ failures.AddRange(this.Verify(this.handlers{property.MemberIdentifier})); }}");
 			}
 			else
 			{
@@ -37,13 +37,13 @@ internal static class MockExpectationsVerifyBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"failures.AddRange(this.Verify(handlers{memberIdentifier}));");
+					writer.WriteLine($"if (this.handlers{memberIdentifier}?.Count > 0) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier})); }}");
 					memberIdentifier++;
 				}
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"failures.AddRange(this.Verify(handlers{memberIdentifier}));");
+					writer.WriteLine($"if (this.handlers{memberIdentifier}?.Count > 0) {{ failures.AddRange(this.Verify(this.handlers{memberIdentifier})); }}");
 				}
 			}
 		}

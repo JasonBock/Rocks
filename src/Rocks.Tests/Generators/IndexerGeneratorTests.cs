@@ -76,13 +76,13 @@ public static class IndexerGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4> @handlers4 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6> @handlers6 = new();
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6>? @handlers6;
 				
 				public override void Verify()
 				{
@@ -90,13 +90,13 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers6));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
 				
 						if (failures.Count > 0)
 						{
@@ -116,7 +116,7 @@ public static class IndexerGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -140,7 +140,7 @@ public static class IndexerGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -157,7 +157,7 @@ public static class IndexerGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -177,7 +177,7 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers3)
 								{
@@ -197,7 +197,7 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
@@ -222,7 +222,7 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
@@ -243,7 +243,7 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers6)
 								{
@@ -281,12 +281,14 @@ public static class IndexerGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -294,6 +296,7 @@ public static class IndexerGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -318,6 +321,7 @@ public static class IndexerGeneratorTests
 								@a = @a,
 							};
 							
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -332,6 +336,7 @@ public static class IndexerGeneratorTests
 								@b = @b,
 							};
 							
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}
@@ -354,6 +359,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
 						}
@@ -370,6 +376,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 							this.Expectations.handlers6.Add(handler);
 							return new(handler);
 						}
@@ -456,8 +463,8 @@ public static class IndexerGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveOptionalArgumentsCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -465,8 +472,8 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -489,7 +496,7 @@ public static class IndexerGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -510,7 +517,7 @@ public static class IndexerGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -551,6 +558,7 @@ public static class IndexerGeneratorTests
 								@b = @b.Transform("b"),
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -577,6 +585,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -675,9 +684,9 @@ public static class IndexerGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler2> @handlers2 = new();
+				private global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IHaveIndexersWithInitCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -685,9 +694,9 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -724,7 +733,7 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -748,7 +757,7 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -773,7 +782,7 @@ public static class IndexerGeneratorTests
 					{
 						init
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers2)
 								{
@@ -815,6 +824,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -831,6 +841,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -849,6 +860,7 @@ public static class IndexerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
 						}
@@ -1122,11 +1134,11 @@ public static class IndexerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler2> @handlers2 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler3> @handlers3 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler4> @handlers4 = new();
+					private global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler2>? @handlers2;
+					private global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler3>? @handlers3;
+					private global::System.Collections.Generic.List<global::MockTests.TargetCreateExpectations.Handler4>? @handlers4;
 					
 					public override void Verify()
 					{
@@ -1134,11 +1146,11 @@ public static class IndexerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
-							failures.AddRange(this.Verify(handlers3));
-							failures.AddRange(this.Verify(handlers4));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1165,7 +1177,7 @@ public static class IndexerGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1189,7 +1201,7 @@ public static class IndexerGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -1206,7 +1218,7 @@ public static class IndexerGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -1226,7 +1238,7 @@ public static class IndexerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers3.Count > 0)
+								if (this.Expectations.handlers3?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers3)
 									{
@@ -1246,7 +1258,7 @@ public static class IndexerGeneratorTests
 							}
 							init
 							{
-								if (this.Expectations.handlers4.Count > 0)
+								if (this.Expectations.handlers4?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers4)
 									{
@@ -1283,12 +1295,14 @@ public static class IndexerGeneratorTests
 								@obj = @obj,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.TargetCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -1296,6 +1310,7 @@ public static class IndexerGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.TargetCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -1320,6 +1335,7 @@ public static class IndexerGeneratorTests
 									@a = @a,
 								};
 								
+								if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 								this.Expectations.handlers3.Add(handler);
 								return new(handler);
 							}
@@ -1342,6 +1358,7 @@ public static class IndexerGeneratorTests
 									@value = @value,
 								};
 								
+								if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 								this.Expectations.handlers4.Add(handler);
 								return new(handler);
 							}

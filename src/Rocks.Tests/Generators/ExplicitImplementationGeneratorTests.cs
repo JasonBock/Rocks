@@ -62,7 +62,7 @@ public static class ExplicitImplementationGeneratorTests
 						: global::Rocks.Handler<global::System.Action>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -70,7 +70,7 @@ public static class ExplicitImplementationGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -90,7 +90,7 @@ public static class ExplicitImplementationGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -143,6 +143,7 @@ public static class ExplicitImplementationGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHtmlMediaElementCreateExpectations.Handler0, global::System.Action> Foo()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHtmlMediaElementCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -341,10 +342,10 @@ public static class ExplicitImplementationGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::ILeftRightCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -352,10 +353,10 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -378,7 +379,7 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -391,7 +392,7 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers1)
@@ -423,7 +424,7 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -436,7 +437,7 @@ public static class ExplicitImplementationGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers3)
@@ -474,6 +475,7 @@ public static class ExplicitImplementationGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler0, global::System.Func<global::Values.Information>, global::Values.Information> Value()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::ILeftRightCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -492,6 +494,7 @@ public static class ExplicitImplementationGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -513,6 +516,7 @@ public static class ExplicitImplementationGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ILeftRightCreateExpectations.Handler2, global::System.Func<global::Values.Information>, global::Values.Information> Value()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::ILeftRightCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -531,6 +535,7 @@ public static class ExplicitImplementationGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -622,8 +627,8 @@ public static class ExplicitImplementationGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::IIterator>, global::IIterator>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IIterableOfstringCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -631,8 +636,8 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -652,7 +657,7 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "global::IIterator<string> GetIterator()")]
 					public global::IIterator<string> GetIterator()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -667,7 +672,7 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "global::IIterator global::IIterable.GetIterator()")]
 					global::IIterator global::IIterable.GetIterator()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -689,6 +694,7 @@ public static class ExplicitImplementationGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler0, global::System.Func<global::IIterator<string>>, global::IIterator<string>> GetIterator()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IIterableOfstringCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -703,6 +709,7 @@ public static class ExplicitImplementationGeneratorTests
 				
 					internal global::Rocks.Adornments<global::IIterableOfstringCreateExpectations.Handler1, global::System.Func<global::IIterator>, global::IIterator> GetIterator()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IIterableOfstringCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -774,8 +781,8 @@ public static class ExplicitImplementationGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISetupListCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -783,8 +790,8 @@ public static class ExplicitImplementationGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -804,7 +811,7 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()")]
 					public global::System.Collections.Generic.IEnumerator<global::ISetup> GetEnumerator()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -819,7 +826,7 @@ public static class ExplicitImplementationGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()")]
 					global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -841,6 +848,7 @@ public static class ExplicitImplementationGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler0, global::System.Func<global::System.Collections.Generic.IEnumerator<global::ISetup>>, global::System.Collections.Generic.IEnumerator<global::ISetup>> GetEnumerator()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ISetupListCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -855,6 +863,7 @@ public static class ExplicitImplementationGeneratorTests
 				
 					internal global::Rocks.Adornments<global::ISetupListCreateExpectations.Handler1, global::System.Func<global::System.Collections.IEnumerator>, global::System.Collections.IEnumerator> GetEnumerator()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ISetupListCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);

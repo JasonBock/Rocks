@@ -38,7 +38,7 @@ public static class ParameterModifierTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -46,7 +46,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -66,7 +66,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(0, "void Modify(in string @value)")]
 					public void Modify(in string @value)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -109,6 +109,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -231,7 +232,7 @@ public static class ParameterModifierTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -239,7 +240,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -260,7 +261,7 @@ public static class ParameterModifierTests
 					public void Modify(out string @value)
 					{
 						value = default!;
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -303,6 +304,7 @@ public static class ParameterModifierTests
 							@value = global::Rocks.Arg.Any<string>(),
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -426,7 +428,7 @@ public static class ParameterModifierTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -434,7 +436,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -454,7 +456,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(0, "void Modify(ref string @value)")]
 					public void Modify(ref string @value)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -497,6 +499,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -614,7 +617,7 @@ public static class ParameterModifierTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -622,7 +625,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -642,7 +645,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(0, "void Modify(ref readonly string @value)")]
 					public void Modify(ref readonly string @value)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -685,6 +688,7 @@ public static class ParameterModifierTests
 							@value = @value,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -833,10 +837,10 @@ public static class ParameterModifierTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers1;
+				private global::System.Collections.Generic.List<global::IParameterModifierCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -844,10 +848,10 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -867,7 +871,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(0, "void RefArgument(ref int @a)")]
 					public void RefArgument(ref int @a)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -896,7 +900,7 @@ public static class ParameterModifierTests
 					[global::Rocks.MemberIdentifier(1, "void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)")]
 					public void RefArgumentsWithGenerics<T1, T2>(T1 @a, ref T2 @b)
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -930,7 +934,7 @@ public static class ParameterModifierTests
 					public void OutArgument(out int @a)
 					{
 						a = default!;
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -960,7 +964,7 @@ public static class ParameterModifierTests
 					public void OutArgumentsWithGenerics<T1, T2>(T1 @a, out T2 @b)
 					{
 						b = default!;
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -1007,6 +1011,7 @@ public static class ParameterModifierTests
 							@a = @a,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -1022,6 +1027,7 @@ public static class ParameterModifierTests
 							@b = @b,
 						};
 						
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
 					}
@@ -1035,6 +1041,7 @@ public static class ParameterModifierTests
 							@a = global::Rocks.Arg.Any<int>(),
 						};
 						
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
 					}
@@ -1050,6 +1057,7 @@ public static class ParameterModifierTests
 							@b = global::Rocks.Arg.Any<T2>(),
 						};
 						
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}

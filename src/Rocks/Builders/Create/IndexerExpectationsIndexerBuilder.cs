@@ -128,6 +128,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
+					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
 					return new(handler);
 					""");
@@ -264,6 +265,7 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
+					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
 					return new(handler);
 					""");

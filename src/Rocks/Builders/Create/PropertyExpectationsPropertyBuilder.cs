@@ -41,6 +41,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			$$"""
 			internal {{adornmentsType}} {{property.Name}}()
 			{
+				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
 				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
 				return new(handler);
@@ -73,6 +74,7 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
+				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
 				return new(handler);
 			}

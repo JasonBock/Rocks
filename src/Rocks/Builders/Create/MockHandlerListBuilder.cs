@@ -41,8 +41,8 @@ internal static class MockHandlerListBuilder
 			// If the method has open generics, we have to use the base Handler type -
 			// we'll cast it later within the method implementation.
 			var handlers = method.TypeArguments.Length == 0 ?
-				$"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}> @handlers{method.MemberIdentifier} = new();" :
-				$"private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers{method.MemberIdentifier} = new();";
+				$"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}>? @handlers{method.MemberIdentifier};" :
+				$"private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers{method.MemberIdentifier};";
 			writer.WriteLine(handlers);
 		}
 
@@ -50,7 +50,7 @@ internal static class MockHandlerListBuilder
 		{
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
-				writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}> @handlers{property.MemberIdentifier} = new();");
+				writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}>? @handlers{property.MemberIdentifier};");
 			}
 			else
 			{
@@ -58,13 +58,13 @@ internal static class MockHandlerListBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}> @handlers{memberIdentifier} = new();");
+					writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};");
 					memberIdentifier++;
 				}
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					writer.WriteLine($"private readonly global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}> @handlers{memberIdentifier} = new();");
+					writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};");
 				}
 			}
 		}

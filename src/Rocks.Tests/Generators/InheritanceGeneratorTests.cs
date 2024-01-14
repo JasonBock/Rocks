@@ -77,11 +77,11 @@ public static class InheritanceGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2> @handlers2 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4> @handlers4 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5> @handlers5 = new();
+					private global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2>? @handlers2;
+					private global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4>? @handlers4;
+					private global::System.Collections.Generic.List<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5>? @handlers5;
 					
 					public override void Verify()
 					{
@@ -89,11 +89,11 @@ public static class InheritanceGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
-							failures.AddRange(this.Verify(handlers4));
-							failures.AddRange(this.Verify(handlers5));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+							if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
 					
 							if (failures.Count > 0)
 							{
@@ -113,7 +113,7 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -137,7 +137,7 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -154,7 +154,7 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -171,7 +171,7 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(4, "object Evaluate(global::MockTests.ScriptScopeContext @scope)")]
 						public override object Evaluate(global::MockTests.ScriptScopeContext @scope)
 						{
-							if (this.Expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
@@ -195,7 +195,7 @@ public static class InheritanceGeneratorTests
 						[global::Rocks.MemberIdentifier(5, "object Evaluate(object @target)")]
 						public override object Evaluate(object @target)
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
@@ -231,12 +231,14 @@ public static class InheritanceGeneratorTests
 								@obj = @obj,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -244,6 +246,7 @@ public static class InheritanceGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -258,6 +261,7 @@ public static class InheritanceGeneratorTests
 								@scope = @scope,
 							};
 							
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
 						}
@@ -271,6 +275,7 @@ public static class InheritanceGeneratorTests
 								@target = @target,
 							};
 							
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}

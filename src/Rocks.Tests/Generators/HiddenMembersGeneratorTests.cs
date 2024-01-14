@@ -67,10 +67,10 @@ public static class HiddenMembersGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler2> @handlers2 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler3> @handlers3 = new();
+					private global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler2>? @handlers2;
+					private global::System.Collections.Generic.List<global::MockTests.NewCopyCreateExpectations.Handler3>? @handlers3;
 					
 					public override void Verify()
 					{
@@ -78,10 +78,10 @@ public static class HiddenMembersGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
-							failures.AddRange(this.Verify(handlers3));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -101,7 +101,7 @@ public static class HiddenMembersGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -125,7 +125,7 @@ public static class HiddenMembersGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -142,7 +142,7 @@ public static class HiddenMembersGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -159,7 +159,7 @@ public static class HiddenMembersGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "void Ok()")]
 						public override void Ok()
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
@@ -188,12 +188,14 @@ public static class HiddenMembersGeneratorTests
 								@obj = @obj,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.NewCopyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -201,6 +203,7 @@ public static class HiddenMembersGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.NewCopyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -208,6 +211,7 @@ public static class HiddenMembersGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.NewCopyCreateExpectations.Handler3, global::System.Action> Ok()
 						{
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.NewCopyCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
@@ -239,7 +243,7 @@ public static class HiddenMembersGeneratorTests
 			}
 			
 			""";
-
+			
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.NewCopy_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
@@ -325,13 +329,13 @@ public static class HiddenMembersGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler4> @handlers4 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler8> @handlers8 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler9> @handlers9 = new();
-				private readonly global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler10> @handlers10 = new();
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler8>? @handlers8;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler9>? @handlers9;
+				private global::System.Collections.Generic.List<global::SubClassCreateExpectations.Handler10>? @handlers10;
 				
 				public override void Verify()
 				{
@@ -339,13 +343,13 @@ public static class HiddenMembersGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers4));
-						failures.AddRange(this.Verify(handlers8));
-						failures.AddRange(this.Verify(handlers9));
-						failures.AddRange(this.Verify(handlers10));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers8?.Count > 0) { failures.AddRange(this.Verify(this.handlers8)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -365,7 +369,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -389,7 +393,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -406,7 +410,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -423,7 +427,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "int Foo()")]
 					public override int Foo()
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers4[0];
 							@handler.CallCount++;
@@ -443,7 +447,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers8.Count > 0)
+							if (this.Expectations.handlers8?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers8[0];
 								@handler.CallCount++;
@@ -458,7 +462,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers9.Count > 0)
+							if (this.Expectations.handlers9?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers9)
@@ -490,7 +494,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers10.Count > 0)
+							if (this.Expectations.handlers10?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers10)
 								{
@@ -530,12 +534,14 @@ public static class HiddenMembersGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::SubClassCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::SubClassCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -543,6 +549,7 @@ public static class HiddenMembersGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::SubClassCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::SubClassCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -550,6 +557,7 @@ public static class HiddenMembersGeneratorTests
 					
 					internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler4, global::System.Func<int>, int> Foo()
 					{
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						var handler = new global::SubClassCreateExpectations.Handler4();
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
@@ -567,6 +575,7 @@ public static class HiddenMembersGeneratorTests
 						
 						internal global::Rocks.Adornments<global::SubClassCreateExpectations.Handler8, global::System.Func<int>, int> Data()
 						{
+							if (this.Expectations.handlers8 is null ) { this.Expectations.handlers8 = new(); }
 							var handler = new global::SubClassCreateExpectations.Handler8();
 							this.Expectations.handlers8.Add(handler);
 							return new(handler);
@@ -586,6 +595,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
 							this.Expectations.handlers9.Add(handler);
 							return new(handler);
 						}
@@ -616,6 +626,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
+							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
 							this.Expectations.handlers10.Add(handler);
 							return new(handler);
 						}
@@ -745,14 +756,14 @@ public static class HiddenMembersGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler4> @handlers4 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler6> @handlers6 = new();
-				private readonly global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler7> @handlers7 = new();
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler6>? @handlers6;
+				private global::System.Collections.Generic.List<global::ISubCreateExpectations.Handler7>? @handlers7;
 				
 				public override void Verify()
 				{
@@ -760,14 +771,14 @@ public static class HiddenMembersGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers6));
-						failures.AddRange(this.Verify(handlers7));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
 				
 						if (failures.Count > 0)
 						{
@@ -787,7 +798,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "int Foo()")]
 					public int Foo()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -802,7 +813,7 @@ public static class HiddenMembersGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "void global::IBase.Foo()")]
 					void global::IBase.Foo()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -820,7 +831,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -833,7 +844,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers3)
@@ -865,7 +876,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers5[0];
 								@handler.CallCount++;
@@ -878,7 +889,7 @@ public static class HiddenMembersGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers6)
@@ -910,7 +921,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
@@ -935,7 +946,7 @@ public static class HiddenMembersGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
@@ -966,6 +977,7 @@ public static class HiddenMembersGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler0, global::System.Func<int>, int> Foo()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ISubCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -980,6 +992,7 @@ public static class HiddenMembersGeneratorTests
 				
 					internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler1, global::System.Action> Foo()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ISubCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -997,6 +1010,7 @@ public static class HiddenMembersGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler2, global::System.Func<int>, int> Data()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::ISubCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -1016,6 +1030,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -1046,6 +1061,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
 						}
@@ -1067,6 +1083,7 @@ public static class HiddenMembersGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ISubCreateExpectations.Handler5, global::System.Func<string>, string> Data()
 						{
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::ISubCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
@@ -1085,6 +1102,7 @@ public static class HiddenMembersGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 							this.Expectations.handlers6.Add(handler);
 							return new(handler);
 						}
@@ -1115,6 +1133,7 @@ public static class HiddenMembersGeneratorTests
 								@b = @b,
 							};
 							
+							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 							this.Expectations.handlers7.Add(handler);
 							return new(handler);
 						}
@@ -1154,7 +1173,7 @@ public static class HiddenMembersGeneratorTests
 			}
 			
 			""";
-
+			
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "ISub_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);

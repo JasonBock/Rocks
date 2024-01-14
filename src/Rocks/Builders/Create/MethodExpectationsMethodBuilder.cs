@@ -108,6 +108,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.Indent++;
 				writer.WriteLines(
 					$$"""
+					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
 					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
@@ -158,6 +159,7 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
+					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
 					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
 					return new(handler);
 					""");

@@ -41,7 +41,7 @@ public static class GenericsGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IServiceOfint_stringCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IServiceOfint_stringCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -49,7 +49,7 @@ public static class GenericsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -69,7 +69,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "string Service(int @data)")]
 					public string Service(int @data)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -105,6 +105,7 @@ public static class GenericsGeneratorTests
 							@data = @data,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -197,10 +198,10 @@ public static class GenericsGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers4 = new();
+				private global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::MOfobjectCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers4;
 				
 				public override void Verify()
 				{
@@ -208,10 +209,10 @@ public static class GenericsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers4));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -231,7 +232,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -255,7 +256,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -272,7 +273,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -289,7 +290,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "global::Proxy<S> Bind<S>(global::System.Func<S> @f)")]
 					public override global::Proxy<S> Bind<S>(global::System.Func<S> @f)
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							foreach (var @genericHandler in this.Expectations.handlers4)
 							{
@@ -330,12 +331,14 @@ public static class GenericsGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::MOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::MOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -343,6 +346,7 @@ public static class GenericsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::MOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -357,6 +361,7 @@ public static class GenericsGeneratorTests
 							@f = @f,
 						};
 						
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
 					}
@@ -453,11 +458,11 @@ public static class GenericsGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers4 = new();
+				private global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::GenericContainerCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers3;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers4;
 				
 				public override void Verify()
 				{
@@ -465,11 +470,11 @@ public static class GenericsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -489,7 +494,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -513,7 +518,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -530,7 +535,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -548,7 +553,7 @@ public static class GenericsGeneratorTests
 					public override global::ReferencedContainer<T> SetThings<T>()
 						where T : class
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							foreach (var @genericHandler in this.Expectations.handlers3)
 							{
@@ -574,7 +579,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "TReturn Run<TReturn>()")]
 					public override TReturn Run<TReturn>()
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							foreach (var @genericHandler in this.Expectations.handlers4)
 							{
@@ -614,12 +619,14 @@ public static class GenericsGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::GenericContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::GenericContainerCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -627,6 +634,7 @@ public static class GenericsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::GenericContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::GenericContainerCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -634,6 +642,7 @@ public static class GenericsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::GenericContainerCreateExpectations.Handler3<T>, global::System.Func<global::ReferencedContainer<T>>, global::ReferencedContainer<T>> SetThings<T>() where T : class
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::GenericContainerCreateExpectations.Handler3<T>();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -641,6 +650,7 @@ public static class GenericsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::GenericContainerCreateExpectations.Handler4<TReturn>, global::System.Func<TReturn>, TReturn> Run<TReturn>() where TReturn : new()
 					{
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						var handler = new global::GenericContainerCreateExpectations.Handler4<TReturn>();
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
@@ -714,8 +724,8 @@ public static class GenericsGeneratorTests
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::CriterionOfobjectCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::CriterionOfobjectCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::CriterionOfobjectCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::CriterionOfobjectCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -723,8 +733,8 @@ public static class GenericsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -744,7 +754,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -761,7 +771,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -785,6 +795,7 @@ public static class GenericsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::CriterionOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::CriterionOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -792,6 +803,7 @@ public static class GenericsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::CriterionOfobjectCreateExpectations.Handler3, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::CriterionOfobjectCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -883,9 +895,9 @@ public static class GenericsGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler2> @handlers2 = new();
+				private global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::GeometryValueComparerOfobjectCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -893,9 +905,9 @@ public static class GenericsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -915,7 +927,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -939,7 +951,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -956,7 +968,7 @@ public static class GenericsGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -987,12 +999,14 @@ public static class GenericsGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::GeometryValueComparerOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::GeometryValueComparerOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -1000,6 +1014,7 @@ public static class GenericsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::GeometryValueComparerOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::GeometryValueComparerOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -1083,7 +1098,7 @@ public static class GenericsGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IRequestClientOfobjectCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IRequestClientOfobjectCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1091,7 +1106,7 @@ public static class GenericsGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1111,7 +1126,7 @@ public static class GenericsGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "global::MockTests.RequestHandle<object> Create(object @message)")]
 						public global::MockTests.RequestHandle<object> Create(object @message)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1147,6 +1162,7 @@ public static class GenericsGeneratorTests
 								@message = @message,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -1234,8 +1250,8 @@ public static class GenericsGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -1243,8 +1259,8 @@ public static class GenericsGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1264,7 +1280,7 @@ public static class GenericsGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)")]
 						public global::System.Threading.Tasks.Task<object> Send(global::System.Guid @requestId, object @values)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1287,7 +1303,7 @@ public static class GenericsGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)")]
 						global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(global::System.Guid @requestId, object @message)
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -1326,6 +1342,7 @@ public static class GenericsGeneratorTests
 								@values = @values,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -1348,6 +1365,7 @@ public static class GenericsGeneratorTests
 								@message = @message,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}

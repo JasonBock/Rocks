@@ -71,7 +71,7 @@ public static class RefStructGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -79,7 +79,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -100,7 +100,7 @@ public static class RefStructGeneratorTests
 					public void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)
 						where TSourcePixel : unmanaged
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -146,6 +146,7 @@ public static class RefStructGeneratorTests
 							@sourcePixels = @sourcePixels,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -245,7 +246,7 @@ public static class RefStructGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -253,7 +254,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -273,7 +274,7 @@ public static class RefStructGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void RefStructParameter(global::System.Span<int> @values)")]
 					public void RefStructParameter(global::System.Span<int> @values)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -316,6 +317,7 @@ public static class RefStructGeneratorTests
 							@values = @values,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -386,7 +388,7 @@ public static class RefStructGeneratorTests
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -394,7 +396,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -414,7 +416,7 @@ public static class RefStructGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "global::System.Span<int> RefStructReturn()")]
 					public global::System.Span<int> RefStructReturn()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -436,6 +438,7 @@ public static class RefStructGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> RefStructReturn()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -542,8 +545,8 @@ public static class RefStructGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -551,8 +554,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -575,7 +578,7 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -588,7 +591,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers1)
@@ -626,6 +629,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> Data()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -645,6 +649,7 @@ public static class RefStructGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -758,8 +763,8 @@ public static class RefStructGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -767,8 +772,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -791,7 +796,7 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -811,7 +816,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -849,6 +854,7 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -871,6 +877,7 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -985,8 +992,8 @@ public static class RefStructGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -994,8 +1001,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1018,7 +1025,7 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1038,7 +1045,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -1076,6 +1083,7 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -1098,6 +1106,7 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}

@@ -48,8 +48,8 @@ public static class PropertyGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1> @handlers1 = new();
+				private global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -57,8 +57,8 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -80,7 +80,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers0)
@@ -111,7 +111,7 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -140,6 +140,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -160,6 +161,7 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1, global::System.Func<bool>, bool> Exclude()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -267,12 +269,12 @@ public static class PropertyGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler7> @handlers7 = new();
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertiesCreateExpectations.Handler7>? @handlers7;
 				
 				public override void Verify()
 				{
@@ -280,12 +282,12 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers7));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
 				
 						if (failures.Count > 0)
 						{
@@ -305,7 +307,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -329,7 +331,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -346,7 +348,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -365,7 +367,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers3)
@@ -396,7 +398,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers5)
@@ -427,7 +429,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers7)
@@ -471,12 +473,14 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -484,6 +488,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -506,6 +511,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -516,6 +522,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}
@@ -526,6 +533,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 							this.Expectations.handlers7.Add(handler);
 							return new(handler);
 						}
@@ -618,10 +626,10 @@ public static class PropertyGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::PrivatePublicPropertyCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -629,10 +637,10 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -652,7 +660,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -676,7 +684,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -693,7 +701,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -712,7 +720,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers3)
@@ -756,12 +764,14 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -769,6 +779,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -791,6 +802,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -919,15 +931,15 @@ public static class PropertyGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler6> @handlers6 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler7> @handlers7 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler9> @handlers9 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler10> @handlers10 = new();
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler6>? @handlers6;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler7>? @handlers7;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler9>? @handlers9;
+				private global::System.Collections.Generic.List<global::MixedIndexersCreateExpectations.Handler10>? @handlers10;
 				
 				public override void Verify()
 				{
@@ -935,15 +947,15 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers6));
-						failures.AddRange(this.Verify(handlers7));
-						failures.AddRange(this.Verify(handlers9));
-						failures.AddRange(this.Verify(handlers10));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -963,7 +975,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -987,7 +999,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -1004,7 +1016,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -1023,7 +1035,7 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers3)
 								{
@@ -1050,7 +1062,7 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
@@ -1072,7 +1084,7 @@ public static class PropertyGeneratorTests
 						}
 						protected set
 						{
-							if (this.Expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers6)
 								{
@@ -1098,7 +1110,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
@@ -1125,7 +1137,7 @@ public static class PropertyGeneratorTests
 					{
 						protected get
 						{
-							if (this.Expectations.handlers9.Count > 0)
+							if (this.Expectations.handlers9?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers9)
 								{
@@ -1147,7 +1159,7 @@ public static class PropertyGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers10.Count > 0)
+							if (this.Expectations.handlers10?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers10)
 								{
@@ -1186,12 +1198,14 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::MixedIndexersCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -1199,6 +1213,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::MixedIndexersCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -1223,6 +1238,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -1235,6 +1251,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}
@@ -1247,6 +1264,7 @@ public static class PropertyGeneratorTests
 								@index = @index,
 							};
 							
+							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
 							this.Expectations.handlers9.Add(handler);
 							return new(handler);
 						}
@@ -1269,6 +1287,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 							this.Expectations.handlers6.Add(handler);
 							return new(handler);
 						}
@@ -1283,6 +1302,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 							this.Expectations.handlers7.Add(handler);
 							return new(handler);
 						}
@@ -1297,6 +1317,7 @@ public static class PropertyGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
 							this.Expectations.handlers10.Add(handler);
 							return new(handler);
 						}
@@ -1417,15 +1438,15 @@ public static class PropertyGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler6> @handlers6 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler7> @handlers7 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler9> @handlers9 = new();
-				private readonly global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler10> @handlers10 = new();
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler6>? @handlers6;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler7>? @handlers7;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler9>? @handlers9;
+				private global::System.Collections.Generic.List<global::MixedPropertiesCreateExpectations.Handler10>? @handlers10;
 				
 				public override void Verify()
 				{
@@ -1433,15 +1454,15 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers6));
-						failures.AddRange(this.Verify(handlers7));
-						failures.AddRange(this.Verify(handlers9));
-						failures.AddRange(this.Verify(handlers10));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1461,7 +1482,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -1485,7 +1506,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -1502,7 +1523,7 @@ public static class PropertyGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -1521,7 +1542,7 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
@@ -1541,7 +1562,7 @@ public static class PropertyGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers5[0];
 								@handler.CallCount++;
@@ -1556,7 +1577,7 @@ public static class PropertyGeneratorTests
 						}
 						protected set
 						{
-							if (this.Expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers6)
@@ -1587,7 +1608,7 @@ public static class PropertyGeneratorTests
 					{
 						set
 						{
-							if (this.Expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers7)
@@ -1619,7 +1640,7 @@ public static class PropertyGeneratorTests
 					{
 						protected get
 						{
-							if (this.Expectations.handlers9.Count > 0)
+							if (this.Expectations.handlers9?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers9[0];
 								@handler.CallCount++;
@@ -1634,7 +1655,7 @@ public static class PropertyGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers10.Count > 0)
+							if (this.Expectations.handlers10?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers10)
@@ -1678,12 +1699,14 @@ public static class PropertyGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::MixedPropertiesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -1691,6 +1714,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::MixedPropertiesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -1708,18 +1732,21 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler3, global::System.Func<string?>, string?> PublicGetPrivateSet()
 						{
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler5, global::System.Func<string?>, string?> PublicGetProtectedSet()
 						{
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler9, global::System.Func<string?>, string?> ProtectedGetPublicSet()
 						{
+							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler9();
 							this.Expectations.handlers9.Add(handler);
 							return new(handler);
@@ -1739,6 +1766,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 							this.Expectations.handlers6.Add(handler);
 							return new(handler);
 						}
@@ -1749,6 +1777,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 							this.Expectations.handlers7.Add(handler);
 							return new(handler);
 						}
@@ -1759,6 +1788,7 @@ public static class PropertyGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
 							this.Expectations.handlers10.Add(handler);
 							return new(handler);
 						}

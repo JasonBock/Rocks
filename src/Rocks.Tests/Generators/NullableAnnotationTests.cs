@@ -41,7 +41,7 @@ public static class NullableAnnotationTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ITypeOfNullableOfintCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::ITypeOfNullableOfintCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -49,7 +49,7 @@ public static class NullableAnnotationTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -69,7 +69,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(0, "void Foo(int? @value)")]
 					public void Foo(int? @value)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -112,6 +112,7 @@ public static class NullableAnnotationTests
 							@value = @value,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -189,9 +190,9 @@ public static class NullableAnnotationTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2> @handlers2 = new();
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -199,9 +200,9 @@ public static class NullableAnnotationTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -222,7 +223,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -246,7 +247,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -263,7 +264,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -294,12 +295,14 @@ public static class NullableAnnotationTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -307,6 +310,7 @@ public static class NullableAnnotationTests
 					
 					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -456,11 +460,11 @@ public static class NullableAnnotationTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler4> @handlers4 = new();
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::NeedNullableCreateExpectations.Handler4>? @handlers4;
 				
 				public override void Verify()
 				{
@@ -468,11 +472,11 @@ public static class NullableAnnotationTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -492,7 +496,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -516,7 +520,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -533,7 +537,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -550,7 +554,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(3, "int IntReturn(object? @initializationData)")]
 					public override int IntReturn(object? @initializationData = null)
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
@@ -574,7 +578,7 @@ public static class NullableAnnotationTests
 					[global::Rocks.MemberIdentifier(4, "void VoidReturn(object? @initializationData)")]
 					public override void VoidReturn(object? @initializationData = null)
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -617,12 +621,14 @@ public static class NullableAnnotationTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::NeedNullableCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -630,6 +636,7 @@ public static class NullableAnnotationTests
 					
 					internal new global::Rocks.Adornments<global::NeedNullableCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::NeedNullableCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -644,6 +651,7 @@ public static class NullableAnnotationTests
 							@initializationData = @initializationData.Transform(null),
 						};
 						
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}
@@ -659,6 +667,7 @@ public static class NullableAnnotationTests
 							@initializationData = @initializationData.Transform(null),
 						};
 						
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
 					}

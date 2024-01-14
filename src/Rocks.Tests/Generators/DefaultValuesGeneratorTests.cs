@@ -57,8 +57,8 @@ public static class DefaultValuesGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IRequestOfobjectCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -66,8 +66,8 @@ public static class DefaultValuesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -87,7 +87,7 @@ public static class DefaultValuesGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "global::System.Threading.Tasks.Task<object> Send(object @values, global::MockTests.SomeStruct @someStruct)")]
 						public global::System.Threading.Tasks.Task<object> Send(object @values, global::MockTests.SomeStruct @someStruct = default)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -110,7 +110,7 @@ public static class DefaultValuesGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(object @message, global::MockTests.SomeStruct @someStruct)")]
 						global::System.Threading.Tasks.Task global::MockTests.IRequest<object>.Send(object @message, global::MockTests.SomeStruct @someStruct)
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -149,6 +149,7 @@ public static class DefaultValuesGeneratorTests
 								@someStruct = @someStruct.Transform(default),
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -173,6 +174,7 @@ public static class DefaultValuesGeneratorTests
 								@someStruct = @someStruct,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
@@ -247,7 +249,7 @@ public static class DefaultValuesGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -255,7 +257,7 @@ public static class DefaultValuesGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -275,7 +277,7 @@ public static class DefaultValuesGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void Setup<T>(T @initialValue)")]
 					public void Setup<T>(T @initialValue = default!)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -321,6 +323,7 @@ public static class DefaultValuesGeneratorTests
 							@initialValue = @initialValue.Transform(default!),
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -442,7 +445,7 @@ public static class DefaultValuesGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IUseInfinityCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUseInfinityCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -450,7 +453,7 @@ public static class DefaultValuesGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -470,7 +473,7 @@ public static class DefaultValuesGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void Use(double @value)")]
 					public void Use(double @value = double.PositiveInfinity)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -513,6 +516,7 @@ public static class DefaultValuesGeneratorTests
 							@value = @value.Transform(double.PositiveInfinity),
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}

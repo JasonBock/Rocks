@@ -76,7 +76,7 @@ public static class PointerGeneratorTests
 					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -84,7 +84,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -104,7 +104,7 @@ public static class PointerGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void** AsVtblPtr()")]
 					public unsafe void** AsVtblPtr()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -126,6 +126,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -234,7 +235,7 @@ public static class PointerGeneratorTests
 					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -242,7 +243,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -262,7 +263,7 @@ public static class PointerGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void*** AsVtblPtr()")]
 					public unsafe void*** AsVtblPtr()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -284,6 +285,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -392,7 +394,7 @@ public static class PointerGeneratorTests
 					: global::IPointerUsageCreateExpectations.Projections.HandlerForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IPointerUsageCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -400,7 +402,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -420,7 +422,7 @@ public static class PointerGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void**** AsVtblPtr()")]
 					public unsafe void**** AsVtblPtr()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -442,6 +444,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -553,7 +556,7 @@ public static class PointerGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -561,7 +564,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -582,7 +585,7 @@ public static class PointerGeneratorTests
 					public unsafe void Create<T>(T* @allocator)
 						where T : unmanaged
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -628,6 +631,7 @@ public static class PointerGeneratorTests
 							@allocator = @allocator,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -745,7 +749,7 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -753,7 +757,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -773,7 +777,7 @@ public static class PointerGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void PointerParameter(int* @value)")]
 						public unsafe void PointerParameter(int* @value)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @foundMatch = false;
 								
@@ -816,6 +820,7 @@ public static class PointerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -932,7 +937,7 @@ public static class PointerGeneratorTests
 						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -940,7 +945,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -960,7 +965,7 @@ public static class PointerGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "int* PointerReturn()")]
 						public unsafe int* PointerReturn()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -982,6 +987,7 @@ public static class PointerGeneratorTests
 						
 						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1101,7 +1107,7 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1109,7 +1115,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1129,7 +1135,7 @@ public static class PointerGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void FunctionPointerParameter(delegate*<int, void> @value)")]
 						public unsafe void FunctionPointerParameter(delegate*<int, void> @value)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @foundMatch = false;
 								
@@ -1172,6 +1178,7 @@ public static class PointerGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -1288,7 +1295,7 @@ public static class PointerGeneratorTests
 						: global::MockTests.IHavePointersCreateExpectations.Projections.HandlerFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1296,7 +1303,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1316,7 +1323,7 @@ public static class PointerGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "delegate*<int, void> FunctionPointerReturn()")]
 						public unsafe delegate*<int, void> FunctionPointerReturn()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -1338,6 +1345,7 @@ public static class PointerGeneratorTests
 						
 						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> FunctionPointerReturn()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1501,8 +1509,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -1510,8 +1518,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1534,7 +1542,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									var @handler = this.Expectations.handlers0[0];
 									@handler.CallCount++;
@@ -1547,7 +1555,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									var @foundMatch = false;
 									foreach (var @handler in this.Expectations.handlers1)
@@ -1585,6 +1593,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> Data()
 							{
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
@@ -1604,6 +1613,7 @@ public static class PointerGeneratorTests
 									value = @value,
 								};
 							
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}
@@ -1772,8 +1782,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -1781,8 +1791,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1805,7 +1815,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									var @handler = this.Expectations.handlers0[0];
 									@handler.CallCount++;
@@ -1818,7 +1828,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									var @foundMatch = false;
 									foreach (var @handler in this.Expectations.handlers1)
@@ -1856,6 +1866,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> Data()
 							{
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
@@ -1875,6 +1886,7 @@ public static class PointerGeneratorTests
 									value = @value,
 								};
 							
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}
@@ -2007,8 +2019,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -2016,8 +2028,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2040,7 +2052,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers0)
 									{
@@ -2060,7 +2072,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers1)
 									{
@@ -2098,6 +2110,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
 							}
@@ -2120,6 +2133,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}
@@ -2291,8 +2305,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -2300,8 +2314,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2324,7 +2338,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers0)
 									{
@@ -2344,7 +2358,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers1)
 									{
@@ -2382,6 +2396,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
 							}
@@ -2404,6 +2419,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}
@@ -2537,8 +2553,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -2546,8 +2562,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2570,7 +2586,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers0)
 									{
@@ -2590,7 +2606,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers1)
 									{
@@ -2628,6 +2644,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
 							}
@@ -2650,6 +2667,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}
@@ -2821,8 +2839,8 @@ public static class PointerGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IHavePointersCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -2830,8 +2848,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2854,7 +2872,7 @@ public static class PointerGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers0.Count > 0)
+								if (this.Expectations.handlers0?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers0)
 									{
@@ -2874,7 +2892,7 @@ public static class PointerGeneratorTests
 							}
 							set
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									foreach (var @handler in this.Expectations.handlers1)
 									{
@@ -2912,6 +2930,7 @@ public static class PointerGeneratorTests
 									@index = @index,
 								};
 								
+								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								this.Expectations.handlers0.Add(handler);
 								return new(handler);
 							}
@@ -2934,6 +2953,7 @@ public static class PointerGeneratorTests
 									@value = @value,
 								};
 								
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
 							}

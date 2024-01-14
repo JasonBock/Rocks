@@ -49,8 +49,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.StaticToStringCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.StaticToStringCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.StaticToStringCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.StaticToStringCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -58,8 +58,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -79,7 +79,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -103,7 +103,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -134,12 +134,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								@obj = @obj,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.StaticToStringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.StaticToStringCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -292,9 +294,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2> @handlers2 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2>? @handlers2;
 					
 					public override void Verify()
 					{
@@ -302,9 +304,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 					
 							if (failures.Count > 0)
 							{
@@ -324,7 +326,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool global::MockTests.IMatchObject<object>.Equals(object? @other)")]
 						bool global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -346,7 +348,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)")]
 						bool global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -369,7 +371,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "object global::MockTests.IMatchObject<object>.MemberwiseClone()")]
 						object global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -398,6 +400,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								@other = @other,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -413,12 +416,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								@objB = @objB,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<object>, object> MemberwiseClone()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -577,9 +582,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2> @handlers2 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2>? @handlers2;
 					
 					public override void Verify()
 					{
@@ -587,9 +592,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 					
 							if (failures.Count > 0)
 							{
@@ -609,7 +614,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "string global::MockTests.IMatchObject<object>.Equals(object? @other)")]
 						string global::MockTests.IMatchObject<object>.Equals(object? @other)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -631,7 +636,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)")]
 						int global::MockTests.IMatchObject<object>.ReferenceEquals(object? @objA, object? @objB)
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -654,7 +659,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "bool global::MockTests.IMatchObject<object>.MemberwiseClone()")]
 						bool global::MockTests.IMatchObject<object>.MemberwiseClone()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -683,6 +688,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								@other = @other,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -698,12 +704,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 								@objB = @objB,
 							};
 							
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<bool>, bool> MemberwiseClone()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);

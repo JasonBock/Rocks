@@ -61,10 +61,10 @@ public static class AsyncIteratorGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::AsyncEnumerationCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -72,10 +72,10 @@ public static class AsyncIteratorGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -95,7 +95,7 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -119,7 +119,7 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -136,7 +136,7 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -153,7 +153,7 @@ public static class AsyncIteratorGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken)")]
 					public override global::System.Collections.Generic.IAsyncEnumerable<string> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default)
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
@@ -191,12 +191,14 @@ public static class AsyncIteratorGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -204,6 +206,7 @@ public static class AsyncIteratorGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::AsyncEnumerationCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -218,6 +221,7 @@ public static class AsyncIteratorGeneratorTests
 							@cancellationToken = @cancellationToken.Transform(default),
 						};
 						
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}

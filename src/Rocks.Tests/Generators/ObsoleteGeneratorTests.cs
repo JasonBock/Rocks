@@ -44,7 +44,7 @@ public static class ObsoleteGeneratorTests
 						: global::Rocks.Handler<global::System.Action>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IContainerCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IContainerCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -52,7 +52,7 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -73,7 +73,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Contain()")]
 						public void Contain()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -95,6 +95,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action> Contain()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IContainerCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -191,10 +192,10 @@ public static class ObsoleteGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler1> @handlers1 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler2> @handlers2 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler3> @handlers3 = new();
+					private global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler1>? @handlers1;
+					private global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler2>? @handlers2;
+					private global::System.Collections.Generic.List<global::MockTests.ContainerCreateExpectations.Handler3>? @handlers3;
 					
 					public override void Verify()
 					{
@@ -202,10 +203,10 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
-							failures.AddRange(this.Verify(handlers2));
-							failures.AddRange(this.Verify(handlers3));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -226,7 +227,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 						public override bool Equals(object? @obj)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -250,7 +251,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -267,7 +268,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 						public override string? ToString()
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -284,7 +285,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "void Contain()")]
 						public override void Contain()
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
@@ -313,12 +314,14 @@ public static class ObsoleteGeneratorTests
 								@obj = @obj,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -326,6 +329,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -333,6 +337,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action> Contain()
 						{
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
@@ -582,8 +587,8 @@ public static class ObsoleteGeneratorTests
 						: global::Rocks.Handler<global::System.Func<uint>, uint>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -591,8 +596,8 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -613,7 +618,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "uint GetPixelOptions()")]
 						public uint GetPixelOptions()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -632,7 +637,7 @@ public static class ObsoleteGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									var @handler = this.Expectations.handlers1[0];
 									@handler.CallCount++;
@@ -676,6 +681,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -693,6 +699,7 @@ public static class ObsoleteGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
 							{
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);
@@ -792,8 +799,8 @@ public static class ObsoleteGeneratorTests
 						: global::Rocks.Handler<global::System.Func<uint>, uint>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler0> @handlers0 = new();
-					private readonly global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler1> @handlers1 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler0>? @handlers0;
+					private global::System.Collections.Generic.List<global::MockTests.IPixelShaderCreateExpectations.Handler1>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -801,8 +808,8 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
-							failures.AddRange(this.Verify(handlers1));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -823,7 +830,7 @@ public static class ObsoleteGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "uint GetPixelOptions()")]
 						public uint GetPixelOptions()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -842,7 +849,7 @@ public static class ObsoleteGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers1.Count > 0)
+								if (this.Expectations.handlers1?.Count > 0)
 								{
 									var @handler = this.Expectations.handlers1[0];
 									@handler.CallCount++;
@@ -886,6 +893,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -903,6 +911,7 @@ public static class ObsoleteGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
 							{
+								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
 								this.Expectations.handlers1.Add(handler);
 								return new(handler);

@@ -75,7 +75,7 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IUseSameNamesCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUseSameNamesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -83,7 +83,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -103,7 +103,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void Use(First::SameNamespace.SameType @value)")]
 					public void Use(First::SameNamespace.SameType @value)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -146,6 +146,7 @@ public static class NamingGeneratorTests
 							@value = @value,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -386,10 +387,10 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::IHaveDelegateCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -397,10 +398,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -424,7 +425,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -448,7 +449,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -465,7 +466,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -482,7 +483,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "void Foo()")]
 					public override void Foo()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -511,12 +512,14 @@ public static class NamingGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -524,6 +527,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -531,6 +535,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -608,7 +613,7 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IUseKeywordCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUseKeywordCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -616,7 +621,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -636,7 +641,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void Foo(string @namespace, string @event, string @property)")]
 					public void Foo(string @namespace, string @event, string @property)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -685,6 +690,7 @@ public static class NamingGeneratorTests
 							@property = @property,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -714,7 +720,7 @@ public static class NamingGeneratorTests
 			}
 			
 			""";
-
+			
 		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IUseKeyword_Rock_Create.g.cs", generatedCode) },
 			[]).ConfigureAwait(false);
@@ -767,10 +773,10 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::HaveNamingConflictsCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -778,10 +784,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -802,7 +808,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -826,7 +832,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -843,7 +849,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -860,7 +866,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "void Foo()")]
 					public override void Foo()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -889,12 +895,14 @@ public static class NamingGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -902,6 +910,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -909,6 +918,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -983,7 +993,7 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveNamingConflictsCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IHaveNamingConflictsCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -991,7 +1001,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1013,7 +1023,7 @@ public static class NamingGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1063,6 +1073,7 @@ public static class NamingGeneratorTests
 								@self = @self,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}
@@ -1142,7 +1153,7 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveNamingConflictsCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IHaveNamingConflictsCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -1150,7 +1161,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1170,7 +1181,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "int Foo(string @methodHandlers, string @methodHandler, string @result, string @result2, string @self)")]
 					public int Foo(string @methodHandlers, string @methodHandler, string @result, string @result2, string @self)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -1218,6 +1229,7 @@ public static class NamingGeneratorTests
 							@self = @self,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -1303,10 +1315,10 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::HasRequiredPropertyCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -1314,10 +1326,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1340,7 +1352,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -1364,7 +1376,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -1381,7 +1393,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -1398,7 +1410,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "void Foo()")]
 					public override void Foo()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -1427,12 +1439,14 @@ public static class NamingGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -1440,6 +1454,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -1447,6 +1462,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -1538,7 +1554,7 @@ public static class NamingGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IUsesThingCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUsesThingCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -1546,7 +1562,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1566,7 +1582,7 @@ public static class NamingGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void Use(global::Namespace2.Thing @thing, global::Namespace1.Stuff @stuff)")]
 					public void Use(global::Namespace2.Thing @thing, global::Namespace1.Stuff @stuff)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -1612,6 +1628,7 @@ public static class NamingGeneratorTests
 							@stuff = @stuff,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -1678,7 +1695,7 @@ public static class NamingGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::MethodInformation[]>, global::MethodInformation[]>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IUseMethodInformationCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUseMethodInformationCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -1686,7 +1703,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1708,7 +1725,7 @@ public static class NamingGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -1732,6 +1749,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IUseMethodInformationCreateExpectations.Handler0, global::System.Func<global::MethodInformation[]>, global::MethodInformation[]> Methods()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IUseMethodInformationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1805,7 +1823,7 @@ public static class NamingGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::IOperation.OperationList>, global::IOperation.OperationList>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IOperationCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IOperationCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -1813,7 +1831,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1835,7 +1853,7 @@ public static class NamingGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -1859,6 +1877,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IOperationCreateExpectations.Handler0, global::System.Func<global::IOperation.OperationList>, global::IOperation.OperationList> Operations()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IOperationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1947,7 +1966,7 @@ public static class NamingGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1955,7 +1974,7 @@ public static class NamingGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1976,7 +1995,7 @@ public static class NamingGeneratorTests
 						public void Foo<T>(T @value)
 							where T : global::Namespace1.IConstraint
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @foundMatch = false;
 								
@@ -2022,6 +2041,7 @@ public static class NamingGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}

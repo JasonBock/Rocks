@@ -54,9 +54,9 @@ public static class InterfaceGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler2> @handlers2 = new();
+				private global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ISealedCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -64,9 +64,9 @@ public static class InterfaceGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -86,7 +86,7 @@ public static class InterfaceGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void NonSealedMethod()")]
 					public void NonSealedMethod()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -105,7 +105,7 @@ public static class InterfaceGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -119,7 +119,7 @@ public static class InterfaceGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers2)
@@ -176,6 +176,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> NonSealedMethod()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ISealedCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -193,6 +194,7 @@ public static class InterfaceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> NonSealedData()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::ISealedCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -212,6 +214,7 @@ public static class InterfaceGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
 						}
@@ -300,7 +303,7 @@ public static class InterfaceGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IRequestCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IRequestCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -308,7 +311,7 @@ public static class InterfaceGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -328,7 +331,7 @@ public static class InterfaceGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void AddInvokeMethodOptions(int @options)")]
 					public void AddInvokeMethodOptions(int @options)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -371,6 +374,7 @@ public static class InterfaceGeneratorTests
 							@options = @options,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
@@ -446,7 +450,7 @@ public static class InterfaceGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.ITargetCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -454,7 +458,7 @@ public static class InterfaceGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -474,7 +478,7 @@ public static class InterfaceGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "string Retrieve(int @value)")]
 						public string Retrieve(int @value)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -510,6 +514,7 @@ public static class InterfaceGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}

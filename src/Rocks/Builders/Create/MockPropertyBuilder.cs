@@ -22,7 +22,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"if (this.Expectations.handlers{memberIdentifier}.Count > 0)");
+		writer.WriteLine($"if (this.Expectations.handlers{memberIdentifier}?.Count > 0)");
 		writer.WriteLine("{");
 		writer.Indent++;
 
@@ -110,7 +110,7 @@ internal static class MockPropertyBuilder
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.Expectations.handlers{{memberIdentifier}}.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}}?.Count > 0)
 				{
 					var @foundMatch = false;
 					foreach (var @handler in this.Expectations.handlers{{memberIdentifier}})

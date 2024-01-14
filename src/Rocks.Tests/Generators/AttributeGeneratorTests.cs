@@ -43,7 +43,7 @@ public static class AttributeGeneratorTests
 					: global::Rocks.Handler<global::System.Func<int>, int>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IItemsCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IItemsCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -51,7 +51,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -74,7 +74,7 @@ public static class AttributeGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -98,6 +98,7 @@ public static class AttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IItemsCreateExpectations.Handler0, global::System.Func<int>, int> Length()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IItemsCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -188,10 +189,10 @@ public static class AttributeGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::ConventionDispatcherCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -199,10 +200,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -222,7 +223,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -246,7 +247,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -263,7 +264,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -280,7 +281,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "void AssertNoScope()")]
 					public override void AssertNoScope()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -309,12 +310,14 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -322,6 +325,7 @@ public static class AttributeGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::ConventionDispatcherCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -329,6 +333,7 @@ public static class AttributeGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ConventionDispatcherCreateExpectations.Handler3, global::System.Action> AssertNoScope()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::ConventionDispatcherCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -454,15 +459,15 @@ public static class AttributeGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler4> @handlers4 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler5> @handlers5 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler6> @handlers6 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler7> @handlers7 = new();
-				private readonly global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler8> @handlers8 = new();
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler5>? @handlers5;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler6>? @handlers6;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler7>? @handlers7;
+				private global::System.Collections.Generic.List<global::NotNullIfNotCasesCreateExpectations.Handler8>? @handlers8;
 				
 				public override void Verify()
 				{
@@ -470,15 +475,15 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
-						failures.AddRange(this.Verify(handlers5));
-						failures.AddRange(this.Verify(handlers6));
-						failures.AddRange(this.Verify(handlers7));
-						failures.AddRange(this.Verify(handlers8));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
+						if (this.handlers8?.Count > 0) { failures.AddRange(this.Verify(this.handlers8)); }
 				
 						if (failures.Count > 0)
 						{
@@ -498,7 +503,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -522,7 +527,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -539,7 +544,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -557,7 +562,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "object? VisitMethod(object? @node)")]
 					public override object? VisitMethod(object? @node)
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers3)
 							{
@@ -581,7 +586,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "object? VisitParameter(object? @node)")]
 					public override object? VisitParameter([global::System.Diagnostics.CodeAnalysis.NotNullIfNotNullAttribute("node")] object? @node)
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers4)
 							{
@@ -609,7 +614,7 @@ public static class AttributeGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers5[0];
 								@handler.CallCount++;
@@ -624,7 +629,7 @@ public static class AttributeGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers6.Count > 0)
+							if (this.Expectations.handlers6?.Count > 0)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers6)
@@ -658,7 +663,7 @@ public static class AttributeGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers7.Count > 0)
+							if (this.Expectations.handlers7?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers7)
 								{
@@ -680,7 +685,7 @@ public static class AttributeGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers8.Count > 0)
+							if (this.Expectations.handlers8?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers8)
 								{
@@ -719,12 +724,14 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -732,6 +739,7 @@ public static class AttributeGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -746,6 +754,7 @@ public static class AttributeGeneratorTests
 							@node = @node,
 						};
 						
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}
@@ -759,6 +768,7 @@ public static class AttributeGeneratorTests
 							@node = @node,
 						};
 						
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
 					}
@@ -775,6 +785,7 @@ public static class AttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler5, global::System.Func<string?>, string?> VisitProperty()
 						{
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
@@ -794,6 +805,7 @@ public static class AttributeGeneratorTests
 								value = @value,
 							};
 						
+							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 							this.Expectations.handlers6.Add(handler);
 							return new(handler);
 						}
@@ -822,6 +834,7 @@ public static class AttributeGeneratorTests
 								@node = @node,
 							};
 							
+							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 							this.Expectations.handlers7.Add(handler);
 							return new(handler);
 						}
@@ -844,6 +857,7 @@ public static class AttributeGeneratorTests
 								@value = @value,
 							};
 							
+							if (this.Expectations.handlers8 is null ) { this.Expectations.handlers8 = new(); }
 							this.Expectations.handlers8.Add(handler);
 							return new(handler);
 						}
@@ -926,7 +940,7 @@ public static class AttributeGeneratorTests
 					: global::Rocks.Handler<global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IUseTuplesCreateExpectations.Handler0> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::IUseTuplesCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -934,7 +948,7 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -956,7 +970,7 @@ public static class AttributeGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -980,6 +994,7 @@ public static class AttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IUseTuplesCreateExpectations.Handler0, global::System.Func<(nint Display, nuint Window)?>, (nint Display, nuint Window)?> X11()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IUseTuplesCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1072,10 +1087,10 @@ public static class AttributeGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::HaveDynamicCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -1083,10 +1098,10 @@ public static class AttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1106,7 +1121,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -1130,7 +1145,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -1147,7 +1162,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -1164,7 +1179,7 @@ public static class AttributeGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "dynamic CreateDynamicRecord()")]
 					protected override dynamic CreateDynamicRecord()
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers3[0];
 							@handler.CallCount++;
@@ -1195,12 +1210,14 @@ public static class AttributeGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::HaveDynamicCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -1208,6 +1225,7 @@ public static class AttributeGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HaveDynamicCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::HaveDynamicCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -1215,6 +1233,7 @@ public static class AttributeGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HaveDynamicCreateExpectations.Handler3, global::System.Func<dynamic>, dynamic> CreateDynamicRecord()
 					{
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::HaveDynamicCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
@@ -1294,7 +1313,7 @@ public static class AttributeGeneratorTests
 						: global::Rocks.Handler<global::System.Action>
 					{ }
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1302,7 +1321,7 @@ public static class AttributeGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1323,7 +1342,7 @@ public static class AttributeGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Foo()")]
 						public void Foo()
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -1345,6 +1364,7 @@ public static class AttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0, global::System.Action> Foo()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHaveGenericAttributeCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -1431,7 +1451,7 @@ public static class AttributeGeneratorTests
 					
 					#pragma warning restore CS8618
 					
-					private readonly global::System.Collections.Generic.List<global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0> @handlers0 = new();
+					private global::System.Collections.Generic.List<global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -1439,7 +1459,7 @@ public static class AttributeGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							failures.AddRange(this.Verify(handlers0));
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1459,7 +1479,7 @@ public static class AttributeGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Foo(string @data)")]
 						public void Foo([global::MockTests.ParameterOneAttribute, global::MockTests.ParameterTwoAttribute] string @data)
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @foundMatch = false;
 								
@@ -1502,6 +1522,7 @@ public static class AttributeGeneratorTests
 								@data = @data,
 							};
 							
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
 						}

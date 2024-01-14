@@ -68,10 +68,10 @@ public static class ShimBuilderGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler3> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::IRuntimeKeyCreateExpectations.Handler3>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -79,10 +79,10 @@ public static class ShimBuilderGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -104,7 +104,7 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "global::System.Type GetKeyType()")]
 					public global::System.Type GetKeyType()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -121,7 +121,7 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "bool IsPrimaryKey()")]
 					public bool IsPrimaryKey()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -140,7 +140,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -157,7 +157,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers3[0];
 								@handler.CallCount++;
@@ -213,6 +213,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler0, global::System.Func<global::System.Type>, global::System.Type> GetKeyType()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IRuntimeKeyCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -220,6 +221,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler1, global::System.Func<bool>, bool> IsPrimaryKey()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IRuntimeKeyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -237,6 +239,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler2, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IRuntimeKeyCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -259,6 +262,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler3, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties()
 						{
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::IRuntimeKeyCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
@@ -369,12 +373,12 @@ public static class ShimBuilderGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler3> @handlers3 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler4> @handlers4 = new();
-				private readonly global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler5> @handlers5 = new();
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler3>? @handlers3;
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler4>? @handlers4;
+				private global::System.Collections.Generic.List<global::IHaveDimsCreateExpectations.Handler5>? @handlers5;
 				
 				public override void Verify()
 				{
@@ -382,12 +386,12 @@ public static class ShimBuilderGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
-						failures.AddRange(this.Verify(handlers4));
-						failures.AddRange(this.Verify(handlers5));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
 				
 						if (failures.Count > 0)
 						{
@@ -408,7 +412,7 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "int IAmADim()")]
 					public int IAmADim()
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers0[0];
 							@handler.CallCount++;
@@ -425,7 +429,7 @@ public static class ShimBuilderGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int IAmNotADim()")]
 					public int IAmNotADim()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -442,7 +446,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -461,7 +465,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers4.Count > 0)
+							if (this.Expectations.handlers4?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers4[0];
 								@handler.CallCount++;
@@ -479,7 +483,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers3.Count > 0)
+							if (this.Expectations.handlers3?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers3)
 								{
@@ -506,7 +510,7 @@ public static class ShimBuilderGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers5.Count > 0)
+							if (this.Expectations.handlers5?.Count > 0)
 							{
 								foreach (var @handler in this.Expectations.handlers5)
 								{
@@ -558,6 +562,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler0, global::System.Func<int>, int> IAmADim()
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IHaveDimsCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
@@ -565,6 +570,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler1, global::System.Func<int>, int> IAmNotADim()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IHaveDimsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -582,12 +588,14 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler2, global::System.Func<int>, int> AmADim()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IHaveDimsCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler4, global::System.Func<int>, int> NotDim()
 						{
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							var handler = new global::IHaveDimsCreateExpectations.Handler4();
 							this.Expectations.handlers4.Add(handler);
 							return new(handler);
@@ -619,6 +627,7 @@ public static class ShimBuilderGeneratorTests
 								@dimValue = @dimValue,
 							};
 							
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							this.Expectations.handlers3.Add(handler);
 							return new(handler);
 						}
@@ -631,6 +640,7 @@ public static class ShimBuilderGeneratorTests
 								@notDimKey = @notDimKey,
 							};
 							
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							this.Expectations.handlers5.Add(handler);
 							return new(handler);
 						}

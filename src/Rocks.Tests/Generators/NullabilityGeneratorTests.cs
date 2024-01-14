@@ -64,10 +64,10 @@ public static class NullabilityGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers3 = new();
+				private global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::ConnectionBuilderOfobjectCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers3;
 				
 				public override void Verify()
 				{
@@ -75,10 +75,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers3));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -98,7 +98,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -122,7 +122,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -139,7 +139,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -156,7 +156,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(3, "global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, TArgumentType @defaultValue)")]
 					public override global::ConnectionBuilder<object> Argument<TArgumentGraphType, TArgumentType>(string @name, string? @description, [global::System.Diagnostics.CodeAnalysis.AllowNullAttribute] TArgumentType @defaultValue = default!)
 					{
-						if (this.Expectations.handlers3.Count > 0)
+						if (this.Expectations.handlers3?.Count > 0)
 						{
 							foreach (var @genericHandler in this.Expectations.handlers3)
 							{
@@ -199,12 +199,14 @@ public static class NullabilityGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -212,6 +214,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -230,6 +233,7 @@ public static class NullabilityGeneratorTests
 							@defaultValue = @defaultValue.Transform(default!),
 						};
 						
+						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						this.Expectations.handlers3.Add(handler);
 						return new(handler);
 					}
@@ -334,10 +338,10 @@ public static class NullabilityGeneratorTests
 				
 				#pragma warning restore CS8618
 				
-				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler2> @handlers2 = new();
-				private readonly global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler4> @handlers4 = new();
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler2>? @handlers2;
+				private global::System.Collections.Generic.List<global::SubTracerCreateExpectations.Handler4>? @handlers4;
 				
 				public override void Verify()
 				{
@@ -345,10 +349,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
-						failures.AddRange(this.Verify(handlers4));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -368,7 +372,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "bool Equals(object? @obj)")]
 					public override bool Equals(object? @obj)
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							foreach (var @handler in this.Expectations.handlers0)
 							{
@@ -392,7 +396,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(1, "int GetHashCode()")]
 					public override int GetHashCode()
 					{
-						if (this.Expectations.handlers1.Count > 0)
+						if (this.Expectations.handlers1?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers1[0];
 							@handler.CallCount++;
@@ -409,7 +413,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(2, "string? ToString()")]
 					public override string? ToString()
 					{
-						if (this.Expectations.handlers2.Count > 0)
+						if (this.Expectations.handlers2?.Count > 0)
 						{
 							var @handler = this.Expectations.handlers2[0];
 							@handler.CallCount++;
@@ -426,7 +430,7 @@ public static class NullabilityGeneratorTests
 					[global::Rocks.MemberIdentifier(4, "void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)")]
 					public override void TraceEvent(string @eventCache, string @source, string @eventType, int @id, string @format, params object[] @args)
 					{
-						if (this.Expectations.handlers4.Count > 0)
+						if (this.Expectations.handlers4?.Count > 0)
 						{
 							var @foundMatch = false;
 							
@@ -474,12 +478,14 @@ public static class NullabilityGeneratorTests
 							@obj = @obj,
 						};
 						
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::SubTracerCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
 						return new(handler);
@@ -487,6 +493,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::SubTracerCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
 						return new(handler);
@@ -511,6 +518,7 @@ public static class NullabilityGeneratorTests
 							@args = @args,
 						};
 						
+						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						this.Expectations.handlers4.Add(handler);
 						return new(handler);
 					}
@@ -616,9 +624,9 @@ public static class NullabilityGeneratorTests
 					: global::Rocks.Handler<global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?>
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler0> @handlers0 = new();
-				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler1> @handlers1 = new();
-				private readonly global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler2> @handlers2 = new();
+				private global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler0>? @handlers0;
+				private global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler1>? @handlers1;
+				private global::System.Collections.Generic.List<global::IConventionSkipNavigationCreateExpectations.Handler2>? @handlers2;
 				
 				public override void Verify()
 				{
@@ -626,9 +634,9 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
-						failures.AddRange(this.Verify(handlers1));
-						failures.AddRange(this.Verify(handlers2));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -651,7 +659,7 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0.Count > 0)
+							if (this.Expectations.handlers0?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers0[0];
 								@handler.CallCount++;
@@ -670,7 +678,7 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers1.Count > 0)
+							if (this.Expectations.handlers1?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers1[0];
 								@handler.CallCount++;
@@ -687,7 +695,7 @@ public static class NullabilityGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers2.Count > 0)
+							if (this.Expectations.handlers2?.Count > 0)
 							{
 								var @handler = this.Expectations.handlers2[0];
 								@handler.CallCount++;
@@ -730,6 +738,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?> Inverse()
 						{
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
 							return new(handler);
@@ -752,6 +761,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation> Inverse()
 						{
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
 							return new(handler);
@@ -773,6 +783,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?> Inverse()
 						{
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
 							return new(handler);
@@ -845,7 +856,7 @@ public static class NullabilityGeneratorTests
 					where T : notnull
 				{ }
 				
-				private readonly global::System.Collections.Generic.List<global::Rocks.Handler> @handlers0 = new();
+				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -853,7 +864,7 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						failures.AddRange(this.Verify(handlers0));
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -874,7 +885,7 @@ public static class NullabilityGeneratorTests
 					public void As<T>()
 						where T : notnull
 					{
-						if (this.Expectations.handlers0.Count > 0)
+						if (this.Expectations.handlers0?.Count > 0)
 						{
 							var @genericHandler = this.Expectations.handlers0[0];
 							if (@genericHandler is global::IDestinationOfobjectCreateExpectations.Handler0<T> @handler)
@@ -903,6 +914,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IDestinationOfobjectCreateExpectations.Handler0<T>, global::System.Action> As<T>() where T : notnull
 					{
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IDestinationOfobjectCreateExpectations.Handler0<T>();
 						this.Expectations.handlers0.Add(handler);
 						return new(handler);
