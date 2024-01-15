@@ -41,6 +41,7 @@ internal static class PropertyExpectationsPropertyBuilder
 			$$"""
 			internal {{adornmentsType}} {{property.Name}}()
 			{
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
 				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
@@ -69,6 +70,9 @@ internal static class PropertyExpectationsPropertyBuilder
 			$$"""
 			internal {{adornmentsType}} {{property.Name}}({{propertyParameterValue}} @value)
 			{
+				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+				global::System.ArgumentNullException.ThrowIfNull(@value);
+
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 				{
 					value = @value,

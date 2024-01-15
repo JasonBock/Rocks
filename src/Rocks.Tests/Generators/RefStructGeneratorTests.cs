@@ -79,7 +79,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -139,6 +139,7 @@ public static class RefStructGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>, global::IUseSpanWithOpenGenericCreateExpectations.Projections.Callback_153914150755899821317490808130987399395242585077<TSourcePixel>> From<TSourcePixel>(global::IUseSpanWithOpenGenericCreateExpectations.Projections.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels) where TSourcePixel : unmanaged
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
 						
 						var handler = new global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>
@@ -254,7 +255,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -310,6 +311,7 @@ public static class RefStructGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_635596489375752168847058244661265726662174292173> RefStructParameter(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @values)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@values);
 						
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0
@@ -396,7 +398,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -438,6 +440,7 @@ public static class RefStructGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> RefStructReturn()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -554,8 +557,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -629,6 +632,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> Data()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -644,6 +648,9 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_502728827610007854864150410092882302521581523006> Data(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::IHaveRefStructCreateExpectations.Handler1
 							{
 								value = @value,
@@ -772,8 +779,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -847,6 +854,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_397920719143678821085077375314001651657630906476, string> This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0
@@ -868,6 +876,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_258506241168749478916356012154666174557408504246> This(global::Rocks.Argument<string> @value, global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -1001,8 +1010,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1076,6 +1085,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_46972665627653922407782770464330805999184773834, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> This(global::Rocks.Argument<string> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0
@@ -1097,6 +1107,7 @@ public static class RefStructGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler1, global::IHaveRefStructCreateExpectations.Projections.Callback_68834310437553200452622631376483572509682404478> This(global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value, global::Rocks.Argument<string> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							

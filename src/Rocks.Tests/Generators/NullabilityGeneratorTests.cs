@@ -75,10 +75,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -192,6 +192,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler0
@@ -206,6 +207,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -214,6 +216,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -222,6 +225,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, global::Rocks.Argument<TArgumentType> @defaultValue) where TArgumentGraphType : global::IGraphType
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@name);
 						global::System.ArgumentNullException.ThrowIfNull(@description);
 						global::System.ArgumentNullException.ThrowIfNull(@defaultValue);
@@ -349,10 +353,10 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
 				
 						if (failures.Count > 0)
 						{
@@ -471,6 +475,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::SubTracerCreateExpectations.Handler0
@@ -485,6 +490,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::SubTracerCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -493,6 +499,7 @@ public static class NullabilityGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::SubTracerCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -501,6 +508,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler4, global::System.Action<string, string, string, int, string, object[]>> TraceEvent(global::Rocks.Argument<string> @eventCache, global::Rocks.Argument<string> @source, global::Rocks.Argument<string> @eventType, global::Rocks.Argument<int> @id, global::Rocks.Argument<string> @format, global::Rocks.Argument<object[]> @args)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@eventCache);
 						global::System.ArgumentNullException.ThrowIfNull(@source);
 						global::System.ArgumentNullException.ThrowIfNull(@eventType);
@@ -634,9 +642,9 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -738,6 +746,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler0, global::System.Func<global::IConventionSkipNavigation?>, global::IConventionSkipNavigation?> Inverse()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -761,6 +770,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler1, global::System.Func<global::IReadOnlySkipNavigation>, global::IReadOnlySkipNavigation> Inverse()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -783,6 +793,7 @@ public static class NullabilityGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IConventionSkipNavigationCreateExpectations.Handler2, global::System.Func<global::IReadOnlyNavigationBase?>, global::IReadOnlyNavigationBase?> Inverse()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IConventionSkipNavigationCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -864,7 +875,7 @@ public static class NullabilityGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -914,6 +925,7 @@ public static class NullabilityGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IDestinationOfobjectCreateExpectations.Handler0<T>, global::System.Action> As<T>() where T : notnull
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IDestinationOfobjectCreateExpectations.Handler0<T>();
 						this.Expectations.handlers0.Add(handler);

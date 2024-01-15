@@ -66,8 +66,8 @@ public static class DefaultValuesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -140,6 +140,7 @@ public static class DefaultValuesGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler0, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>> Send(global::Rocks.Argument<object> @values, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@values);
 							global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 							
@@ -165,6 +166,7 @@ public static class DefaultValuesGeneratorTests
 					
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler1, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task> Send(global::Rocks.Argument<object> @message, global::Rocks.Argument<global::MockTests.SomeStruct> @someStruct)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@message);
 							global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 							
@@ -257,7 +259,7 @@ public static class DefaultValuesGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -316,6 +318,7 @@ public static class DefaultValuesGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IGenericDefaultCreateExpectations.Handler0<T>, global::System.Action<T>> Setup<T>(global::Rocks.Argument<T> @initialValue)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@initialValue);
 						
 						var handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
@@ -453,7 +456,7 @@ public static class DefaultValuesGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -509,6 +512,7 @@ public static class DefaultValuesGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUseInfinityCreateExpectations.Handler0, global::System.Action<double>> Use(global::Rocks.Argument<double> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IUseInfinityCreateExpectations.Handler0

@@ -90,13 +90,13 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
 				
 						if (failures.Count > 0)
 						{
@@ -274,6 +274,7 @@ public static class IndexerGeneratorTests
 					
 					internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0
@@ -288,6 +289,7 @@ public static class IndexerGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -296,6 +298,7 @@ public static class IndexerGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -314,6 +317,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							
 							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3
@@ -327,6 +331,7 @@ public static class IndexerGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
@@ -350,6 +355,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -365,6 +371,7 @@ public static class IndexerGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -472,8 +479,8 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -549,6 +556,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
@@ -574,6 +582,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -694,9 +703,9 @@ public static class IndexerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -815,6 +824,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler0, global::System.Action<uint, double>> This(global::Rocks.Argument<double> @value, global::Rocks.Argument<uint> @a)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -830,6 +840,7 @@ public static class IndexerGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler1, global::System.Action<int, string, string>> This(global::Rocks.Argument<string> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
@@ -847,6 +858,7 @@ public static class IndexerGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler2, global::System.Action<string, int, global::System.Guid, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@c);
@@ -1146,11 +1158,11 @@ public static class IndexerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1288,6 +1300,7 @@ public static class IndexerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
 							var handler = new global::MockTests.TargetCreateExpectations.Handler0
@@ -1302,6 +1315,7 @@ public static class IndexerGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.TargetCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -1310,6 +1324,7 @@ public static class IndexerGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.TargetCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -1328,6 +1343,7 @@ public static class IndexerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler3, global::System.Func<int, int>, int> This(global::Rocks.Argument<int> @a)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@a);
 								
 								var handler = new global::MockTests.TargetCreateExpectations.Handler3
@@ -1349,6 +1365,7 @@ public static class IndexerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler4, global::System.Action<int, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@a);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								

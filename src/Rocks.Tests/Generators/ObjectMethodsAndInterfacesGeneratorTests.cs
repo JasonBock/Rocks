@@ -58,8 +58,8 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -127,6 +127,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.StaticToStringCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
 							var handler = new global::MockTests.StaticToStringCreateExpectations.Handler0
@@ -141,6 +142,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.StaticToStringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.StaticToStringCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -304,9 +306,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
 					
 							if (failures.Count > 0)
 							{
@@ -393,6 +395,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @other)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@other);
 							
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
@@ -407,6 +410,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1, global::System.Func<object?, object?, bool>, bool> ReferenceEquals(global::Rocks.Argument<object?> @objA, global::Rocks.Argument<object?> @objB)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@objA);
 							global::System.ArgumentNullException.ThrowIfNull(@objB);
 							
@@ -423,6 +427,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<object>, object> MemberwiseClone()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -592,9 +597,9 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
 					
 							if (failures.Count > 0)
 							{
@@ -681,6 +686,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 					
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0, global::System.Func<object?, string>, string> Equals(global::Rocks.Argument<object?> @other)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@other);
 							
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
@@ -695,6 +701,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1, global::System.Func<object?, object?, int>, int> ReferenceEquals(global::Rocks.Argument<object?> @objA, global::Rocks.Argument<object?> @objB)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@objA);
 							global::System.ArgumentNullException.ThrowIfNull(@objB);
 							
@@ -711,6 +718,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<bool>, bool> MemberwiseClone()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);

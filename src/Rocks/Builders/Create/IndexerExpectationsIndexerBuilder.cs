@@ -85,16 +85,18 @@ internal static class IndexerExpectationsIndexerBuilder
 				var parameterValues = string.Join(", ", propertyGetMethod.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ?
 						$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
-				writer.WriteLine($"internal {adornmentsType} This({instanceParameters}) =>");
-				writer.Indent++;
-				writer.WriteLine($"this.This({parameterValues});");
-				writer.Indent--;
+				writer.WriteLines(
+					$$"""
+					internal {{adornmentsType}} This({{instanceParameters}}) =>
+						this.This({{parameterValues}});
+					""");
 			}
 			else
 			{
 				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in propertyGetMethod.Parameters)
 				{
@@ -222,16 +224,18 @@ internal static class IndexerExpectationsIndexerBuilder
 					string.Join(", ", propertySetMethod.Parameters.Take(propertySetMethod.Parameters.Length - 1).Select(
 						p => p.HasExplicitDefaultValue || p.IsParams ?
 							$"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}")));
-				writer.WriteLine($"internal {adornmentsType} This({instanceParameters}) =>");
-				writer.Indent++;
-				writer.WriteLine($"this.This({parameterValues});");
-				writer.Indent--;
+				writer.WriteLines(
+					$$"""
+					internal {{adornmentsType}} This({{instanceParameters}}) =>
+						this.This({{parameterValues}});
+					""");
 			}
 			else
 			{
 				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in propertySetMethod.Parameters)
 				{

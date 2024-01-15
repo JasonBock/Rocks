@@ -18,7 +18,7 @@ public sealed class MemberIdentifierAttribute
 	/// </summary>
 	/// <param name="value">The identifier.</param>
 	/// <param name="description">The description.</param>
-	public MemberIdentifierAttribute(int value, string description) =>
+	public MemberIdentifierAttribute(uint value, string description) =>
 		(this.Value, this.Description) = (value, description);
 
 	/// <summary>
@@ -28,5 +28,5 @@ public sealed class MemberIdentifierAttribute
 	/// <summary>
 	/// Gets the identifier.
 	/// </summary>
-	public int Value { get; }
+	public uint Value { get; }
 }

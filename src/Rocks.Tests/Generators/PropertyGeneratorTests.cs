@@ -57,8 +57,8 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -135,6 +135,9 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0, global::System.Action<bool>> Exclude(global::Rocks.Argument<bool> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler0
 							{
 								value = @value,
@@ -161,6 +164,7 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1, global::System.Func<bool>, bool> Exclude()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::IMessagePublishTopologyConfiguratorCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -282,12 +286,12 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7, 7)); }
 				
 						if (failures.Count > 0)
 						{
@@ -466,6 +470,7 @@ public static class PropertyGeneratorTests
 					
 					internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler0
@@ -480,6 +485,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -488,6 +494,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -506,6 +513,9 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet1(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler3
 							{
 								value = @value,
@@ -517,6 +527,9 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler5, global::System.Action<string?>> PrivateGetPublicSet2(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler5
 							{
 								value = @value,
@@ -528,6 +541,9 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler7, global::System.Action<string?>> PrivateGetPublicSet3(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler7
 							{
 								value = @value,
@@ -637,10 +653,10 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -757,6 +773,7 @@ public static class PropertyGeneratorTests
 					
 					internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler0
@@ -771,6 +788,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -779,6 +797,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -797,6 +816,9 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler3, global::System.Action<string?>> PrivateGetPublicSet(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::PrivatePublicPropertyCreateExpectations.Handler3
 							{
 								value = @value,
@@ -947,15 +969,15 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
-						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
-						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
-						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7, 7)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9, 9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10, 10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1191,6 +1213,7 @@ public static class PropertyGeneratorTests
 					
 					internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::MixedIndexersCreateExpectations.Handler0
@@ -1205,6 +1228,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::MixedIndexersCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -1213,6 +1237,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::MixedIndexersCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1231,6 +1256,7 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler3, global::System.Func<int, string?>, string?> This(global::Rocks.Argument<int> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
 							var handler = new global::MixedIndexersCreateExpectations.Handler3
@@ -1244,6 +1270,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler5, global::System.Func<long, string?>, string?> This(global::Rocks.Argument<long> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
 							var handler = new global::MixedIndexersCreateExpectations.Handler5
@@ -1257,6 +1284,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler9, global::System.Func<string, string?>, string?> This(global::Rocks.Argument<string> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
 							var handler = new global::MixedIndexersCreateExpectations.Handler9
@@ -1278,6 +1306,7 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler6, global::System.Action<long, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<long> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -1293,6 +1322,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler7, global::System.Action<global::System.Guid, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<global::System.Guid> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -1308,6 +1338,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler10, global::System.Action<string, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<string> @index)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
@@ -1454,15 +1485,15 @@ public static class PropertyGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
-						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
-						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
-						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7, 7)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9, 9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10, 10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1692,6 +1723,7 @@ public static class PropertyGeneratorTests
 					
 					internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::MixedPropertiesCreateExpectations.Handler0
@@ -1706,6 +1738,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::MixedPropertiesCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -1714,6 +1747,7 @@ public static class PropertyGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::MixedPropertiesCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1732,6 +1766,7 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler3, global::System.Func<string?>, string?> PublicGetPrivateSet()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
@@ -1739,6 +1774,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler5, global::System.Func<string?>, string?> PublicGetProtectedSet()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler5();
 							this.Expectations.handlers5.Add(handler);
@@ -1746,6 +1782,7 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler9, global::System.Func<string?>, string?> ProtectedGetPublicSet()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
 							var handler = new global::MixedPropertiesCreateExpectations.Handler9();
 							this.Expectations.handlers9.Add(handler);
@@ -1761,6 +1798,9 @@ public static class PropertyGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler6, global::System.Action<string?>> PublicGetProtectedSet(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::MixedPropertiesCreateExpectations.Handler6
 							{
 								value = @value,
@@ -1772,6 +1812,9 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler7, global::System.Action<string?>> PrivateGetPublicSet(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::MixedPropertiesCreateExpectations.Handler7
 							{
 								value = @value,
@@ -1783,6 +1826,9 @@ public static class PropertyGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler10, global::System.Action<string?>> ProtectedGetPublicSet(global::Rocks.Argument<string?> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::MixedPropertiesCreateExpectations.Handler10
 							{
 								value = @value,

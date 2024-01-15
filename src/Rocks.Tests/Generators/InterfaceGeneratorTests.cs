@@ -64,9 +64,9 @@ public static class InterfaceGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
 				
 						if (failures.Count > 0)
 						{
@@ -176,6 +176,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler0, global::System.Action> NonSealedMethod()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ISealedCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -194,6 +195,7 @@ public static class InterfaceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler1, global::System.Func<string>, string> NonSealedData()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::ISealedCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -209,6 +211,9 @@ public static class InterfaceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::ISealedCreateExpectations.Handler2, global::System.Action<string>> NonSealedData(global::Rocks.Argument<string> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+							global::System.ArgumentNullException.ThrowIfNull(@value);
+						
 							var handler = new global::ISealedCreateExpectations.Handler2
 							{
 								value = @value,
@@ -311,7 +316,7 @@ public static class InterfaceGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -367,6 +372,7 @@ public static class InterfaceGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IRequestCreateExpectations.Handler0, global::System.Action<int>> AddInvokeMethodOptions(global::Rocks.Argument<int> @options)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@options);
 						
 						var handler = new global::IRequestCreateExpectations.Handler0
@@ -458,7 +464,7 @@ public static class InterfaceGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -507,6 +513,7 @@ public static class InterfaceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ITargetCreateExpectations.Handler0, global::System.Func<int, string>, string> Retrieve(global::Rocks.Argument<int> @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 							var handler = new global::MockTests.ITargetCreateExpectations.Handler0

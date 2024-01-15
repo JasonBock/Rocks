@@ -7,7 +7,7 @@ public static class MemberIdentifierAttributeTests
 	[Test]
 	public static void Create()
 	{
-		var value = 3;
+		var value = 3u;
 		var description = "a";
 
 		var attribute = new MemberIdentifierAttribute(value, description);

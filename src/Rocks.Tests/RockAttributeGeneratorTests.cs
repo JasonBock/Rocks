@@ -58,7 +58,7 @@ public static class RockAttributeGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -108,6 +108,7 @@ public static class RockAttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IContainNullableReferencesCreateExpectations.Handler0, global::System.Func<string?, string, string?>, string?> DoSomething(global::Rocks.Argument<string?> @a, global::Rocks.Argument<string> @b)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
@@ -196,7 +197,7 @@ public static class RockAttributeGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -238,6 +239,7 @@ public static class RockAttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.ITestCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -313,7 +315,7 @@ public static class RockAttributeGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -355,6 +357,7 @@ public static class RockAttributeGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITestCreateExpectations.Handler0, global::System.Action> Foo()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ITestCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -523,7 +526,7 @@ public static class RockAttributeGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -565,6 +568,7 @@ public static class RockAttributeGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ITestCreateExpectations.Handler0, global::System.Action> Foo()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.ITestCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);

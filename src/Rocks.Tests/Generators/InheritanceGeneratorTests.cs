@@ -89,11 +89,11 @@ public static class InheritanceGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
-							if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+							if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
 					
 							if (failures.Count > 0)
 							{
@@ -224,6 +224,7 @@ public static class InheritanceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler0
@@ -238,6 +239,7 @@ public static class InheritanceGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -246,6 +248,7 @@ public static class InheritanceGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -254,6 +257,7 @@ public static class InheritanceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler4, global::System.Func<global::MockTests.ScriptScopeContext, object>, object> Evaluate(global::Rocks.Argument<global::MockTests.ScriptScopeContext> @scope)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@scope);
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler4
@@ -268,6 +272,7 @@ public static class InheritanceGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object> Evaluate(global::Rocks.Argument<object> @target)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@target);
 							
 							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler5

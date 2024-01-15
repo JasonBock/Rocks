@@ -82,10 +82,10 @@ public static class CastingGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -226,6 +226,7 @@ public static class CastingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>, global::System.Action<T, string, global::System.Guid>> HasGenerics<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
@@ -244,6 +245,7 @@ public static class CastingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
@@ -262,6 +264,7 @@ public static class CastingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2, global::System.Action<int, string>> NoGenerics(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							
@@ -278,6 +281,7 @@ public static class CastingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3, global::System.Func<int, string, int>, int> NoGenericsWithReturn(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							

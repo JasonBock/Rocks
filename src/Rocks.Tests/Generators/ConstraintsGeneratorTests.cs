@@ -66,10 +66,10 @@ public static class ConstraintsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -182,6 +182,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::BaseStuffCreateExpectations.Handler0
@@ -196,6 +197,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::BaseStuffCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -204,6 +206,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::BaseStuffCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -212,6 +215,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler3<T>, global::System.Func<object[], T?>, T?> GetService<T>(global::Rocks.Argument<object[]> @args) where T : class
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@args);
 						
 						var handler = new global::BaseStuffCreateExpectations.Handler3<T>
@@ -310,7 +314,7 @@ public static class ConstraintsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -371,6 +375,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::INeedDelegateCreateExpectations.Handler0<T>, global::INeedDelegateCreateExpectations.Projections.Callback_592396125302095547400633258221535774913220381582<T>> Foo<T>(global::Rocks.Argument<int> @a, global::Rocks.Argument<global::Frame<T>> @frame) where T : unmanaged, global::IDot<T>
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@frame);
 						
@@ -512,14 +517,14 @@ public static class ConstraintsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
-						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7, 7)); }
 				
 						if (failures.Count > 0)
 						{
@@ -732,6 +737,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler0<T>, global::System.Action> HasUnmanaged<T>() where T : unmanaged
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler0<T>();
 						this.Expectations.handlers0.Add(handler);
@@ -740,6 +746,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler1<T>, global::System.Action> HasNotNull<T>() where T : notnull
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler1<T>();
 						this.Expectations.handlers1.Add(handler);
@@ -748,6 +755,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler2<T>, global::System.Action> HasClass<T>() where T : class
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler2<T>();
 						this.Expectations.handlers2.Add(handler);
@@ -756,6 +764,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler3<T>, global::System.Action> HasStruct<T>() where T : struct
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler3<T>();
 						this.Expectations.handlers3.Add(handler);
@@ -764,6 +773,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler4<T>, global::System.Action> HasClassTypeConstraint<T>() where T : global::ClassConstraint
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler4<T>();
 						this.Expectations.handlers4.Add(handler);
@@ -772,6 +782,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler5<T>, global::System.Action> HasInterfaceTypeConstraint<T>() where T : global::InterfaceConstraint
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler5<T>();
 						this.Expectations.handlers5.Add(handler);
@@ -780,6 +791,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler6<T>, global::System.Action> HasConstructorConstraint<T>() where T : new()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler6<T>();
 						this.Expectations.handlers6.Add(handler);
@@ -788,6 +800,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ITypeConstraintsCreateExpectations.Handler7<TData>, global::System.Func<TData?, TData?>, TData?> HasNullableValue<TData>(global::Rocks.Argument<TData?> @data)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
 						
 						var handler = new global::ITypeConstraintsCreateExpectations.Handler7<TData>
@@ -1033,17 +1046,17 @@ public static class ConstraintsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
-						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6)); }
-						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7)); }
-						if (this.handlers8?.Count > 0) { failures.AddRange(this.Verify(this.handlers8)); }
-						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9)); }
-						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+						if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
+						if (this.handlers7?.Count > 0) { failures.AddRange(this.Verify(this.handlers7, 7)); }
+						if (this.handlers8?.Count > 0) { failures.AddRange(this.Verify(this.handlers8, 8)); }
+						if (this.handlers9?.Count > 0) { failures.AddRange(this.Verify(this.handlers9, 9)); }
+						if (this.handlers10?.Count > 0) { failures.AddRange(this.Verify(this.handlers10, 10)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1313,6 +1326,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::TypeConstraintsCreateExpectations.Handler0
@@ -1327,6 +1341,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -1335,6 +1350,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1343,6 +1359,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler3<T>, global::System.Action> HasUnmanaged<T>() where T : unmanaged
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler3<T>();
 						this.Expectations.handlers3.Add(handler);
@@ -1351,6 +1368,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler4<T>, global::System.Action> HasNotNull<T>() where T : notnull
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler4<T>();
 						this.Expectations.handlers4.Add(handler);
@@ -1359,6 +1377,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler5<T>, global::System.Action> HasClass<T>() where T : class
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler5<T>();
 						this.Expectations.handlers5.Add(handler);
@@ -1367,6 +1386,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler6<T>, global::System.Action> HasStruct<T>() where T : struct
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler6<T>();
 						this.Expectations.handlers6.Add(handler);
@@ -1375,6 +1395,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler7<T>, global::System.Action> HasClassTypeConstraint<T>() where T : global::ClassConstraint
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler7<T>();
 						this.Expectations.handlers7.Add(handler);
@@ -1383,6 +1404,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler8<T>, global::System.Action> HasInterfaceTypeConstraint<T>() where T : global::InterfaceConstraint
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers8 is null ) { this.Expectations.handlers8 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler8<T>();
 						this.Expectations.handlers8.Add(handler);
@@ -1391,6 +1413,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler9<T>, global::System.Action> HasConstructorConstraint<T>() where T : new()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
 						var handler = new global::TypeConstraintsCreateExpectations.Handler9<T>();
 						this.Expectations.handlers9.Add(handler);
@@ -1399,6 +1422,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler10<TData>, global::System.Func<TData?, TData?>, TData?> HasNullableValue<TData>(global::Rocks.Argument<TData?> @data)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
 						
 						var handler = new global::TypeConstraintsCreateExpectations.Handler10<TData>
@@ -1590,7 +1614,7 @@ public static class ConstraintsGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1650,6 +1674,7 @@ public static class ConstraintsGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUnmanagedValueCreateExpectations.Handler0<TValue>, global::System.Action<global::Value<TValue>>> Use<TValue>(global::Rocks.Argument<global::Value<TValue>> @value) where TValue : unmanaged, global::IValue<TValue>
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IUnmanagedValueCreateExpectations.Handler0<TValue>
@@ -1760,10 +1785,10 @@ public static class ConstraintsGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1873,6 +1898,7 @@ public static class ConstraintsGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler0
@@ -1887,6 +1913,7 @@ public static class ConstraintsGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -1895,6 +1922,7 @@ public static class ConstraintsGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -1903,6 +1931,7 @@ public static class ConstraintsGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler3<TTarget>, global::System.Func<global::MockTests.Thing<TTarget>>, global::MockTests.Thing<TTarget>> As<TTarget>() where TTarget : class
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler3<TTarget>();
 							this.Expectations.handlers3.Add(handler);

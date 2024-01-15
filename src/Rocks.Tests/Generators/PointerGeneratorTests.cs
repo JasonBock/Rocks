@@ -84,7 +84,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -126,6 +126,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_311684193689074896480440330448335592561750954598> AsVtblPtr()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -243,7 +244,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -285,6 +286,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_454293505151760244294537034129468955159423240205> AsVtblPtr()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -402,7 +404,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -444,6 +446,7 @@ public static class PointerGeneratorTests
 					
 					internal global::IPointerUsageCreateExpectations.Projections.AdornmentsForvoidPointerPointerPointerPointer<global::IPointerUsageCreateExpectations.Projections.Callback_151894571580036554918620607107927567135334329577> AsVtblPtr()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IPointerUsageCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -564,7 +567,7 @@ public static class PointerGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -624,6 +627,7 @@ public static class PointerGeneratorTests
 					
 					internal global::Rocks.Adornments<global::ISurfaceCreateExpectations.Handler0<T>, global::ISurfaceCreateExpectations.Projections.Callback_455733297849133658792680279988631751332086808415<T>> Create<T>(global::ISurfaceCreateExpectations.Projections.ArgumentForTPointer<T> @allocator) where T : unmanaged
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
 						
 						var handler = new global::ISurfaceCreateExpectations.Handler0<T>
@@ -757,7 +761,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -813,6 +817,7 @@ public static class PointerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> PointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -945,7 +950,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -987,6 +992,7 @@ public static class PointerGeneratorTests
 						
 						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> PointerReturn()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -1115,7 +1121,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1171,6 +1177,7 @@ public static class PointerGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> FunctionPointerParameter(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -1303,7 +1310,7 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1345,6 +1352,7 @@ public static class PointerGeneratorTests
 						
 						internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> FunctionPointerReturn()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -1518,8 +1526,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1593,6 +1601,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_286972840454368885027555790883633245835670430575> Data()
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
@@ -1608,6 +1617,9 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_675345066879799784342630291957923402524406707040> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+							
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									value = @value,
@@ -1791,8 +1803,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -1866,6 +1878,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_21763219907570820974231853792762578898451171267> Data()
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0();
 								this.Expectations.handlers0.Add(handler);
@@ -1881,6 +1894,9 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_190405175200901836134072682481961192767771721226> Data(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+								global::System.ArgumentNullException.ThrowIfNull(@value);
+							
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									value = @value,
@@ -2028,8 +2044,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2103,6 +2119,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_651512256251275256331491675489899036574746642609, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -2124,6 +2141,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_212973048794667040959187979763248770796810688032> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
@@ -2314,8 +2332,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2389,6 +2407,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsForintPointer<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_233526433170798729291170303027806441120958052344> This(global::Rocks.Argument<string> @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -2410,6 +2429,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_358052978580071937655814761903436805080473631030> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentForintPointer @value, global::Rocks.Argument<string> @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
@@ -2562,8 +2582,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2637,6 +2657,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler0, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_569015130962673970970166158518857080183518071990, string> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -2658,6 +2679,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_685325684978960348804638980049239306739591139789> This(global::Rocks.Argument<string> @value, global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
@@ -2848,8 +2870,8 @@ public static class PointerGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2923,6 +2945,7 @@ public static class PointerGeneratorTests
 							
 							internal global::MockTests.IHavePointersCreateExpectations.Projections.AdornmentsFordelegatePointerOfint__void<global::MockTests.IHavePointersCreateExpectations.Projections.Callback_349909950755307474321032969938976654826966807638> This(global::Rocks.Argument<string> @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
 								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
@@ -2944,6 +2967,7 @@ public static class PointerGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IHavePointersCreateExpectations.Handler1, global::MockTests.IHavePointersCreateExpectations.Projections.Callback_189832623536291723139685821763903856879932142527> This(global::MockTests.IHavePointersCreateExpectations.Projections.ArgumentFordelegatePointerOfint__void @value, global::Rocks.Argument<string> @index)
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								

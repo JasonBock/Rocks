@@ -145,10 +145,10 @@ public static class ConstructorGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -256,6 +256,7 @@ public static class ConstructorGeneratorTests
 					
 					internal global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler0
@@ -270,6 +271,7 @@ public static class ConstructorGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -278,6 +280,7 @@ public static class ConstructorGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -286,6 +289,7 @@ public static class ConstructorGeneratorTests
 					
 					internal global::Rocks.Adornments<global::AnyOfOfstring_intCreateExpectations.Handler3, global::System.Func<object>, object> GetValue()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::AnyOfOfstring_intCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);

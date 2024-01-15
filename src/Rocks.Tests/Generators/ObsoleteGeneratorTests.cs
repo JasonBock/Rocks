@@ -52,7 +52,7 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -95,6 +95,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IContainerCreateExpectations.Handler0, global::System.Action> Contain()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IContainerCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -203,10 +204,10 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -307,6 +308,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler0
@@ -321,6 +323,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler1();
 							this.Expectations.handlers1.Add(handler);
@@ -329,6 +332,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -337,6 +341,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler3, global::System.Action> Contain()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.ContainerCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
@@ -596,8 +601,8 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -681,6 +686,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -699,6 +705,7 @@ public static class ObsoleteGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
 								this.Expectations.handlers1.Add(handler);
@@ -808,8 +815,8 @@ public static class ObsoleteGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -893,6 +900,7 @@ public static class ObsoleteGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler0, global::System.Func<uint>, uint> GetPixelOptions()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -911,6 +919,7 @@ public static class ObsoleteGeneratorTests
 							
 							internal global::Rocks.Adornments<global::MockTests.IPixelShaderCreateExpectations.Handler1, global::System.Func<uint>, uint> Values()
 							{
+								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 								var handler = new global::MockTests.IPixelShaderCreateExpectations.Handler1();
 								this.Expectations.handlers1.Add(handler);

@@ -46,7 +46,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -102,6 +102,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -240,7 +241,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -297,6 +298,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_193235261019447779478409340058228437220444154875> Modify(global::Rocks.Argument<string> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -436,7 +438,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -492,6 +494,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_117490457623372471697910661720505969856490442481> Modify(global::Rocks.Argument<string> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -625,7 +628,7 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -681,6 +684,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::System.Action<string>> Modify(global::Rocks.Argument<string> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -848,10 +852,10 @@ public static class ParameterModifierTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1004,6 +1008,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler0, global::IParameterModifierCreateExpectations.Projections.Callback_640457111802933967433135011802939136029252304196> RefArgument(global::Rocks.Argument<int> @a)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler0
@@ -1018,6 +1023,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						
@@ -1034,6 +1040,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924> OutArgument(global::Rocks.Argument<int> @a)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
 						var handler = new global::IParameterModifierCreateExpectations.Handler2
@@ -1048,6 +1055,7 @@ public static class ParameterModifierTests
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						

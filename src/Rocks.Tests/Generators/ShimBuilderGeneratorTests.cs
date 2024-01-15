@@ -79,10 +79,10 @@ public static class ShimBuilderGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -213,6 +213,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler0, global::System.Func<global::System.Type>, global::System.Type> GetKeyType()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IRuntimeKeyCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -221,6 +222,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler1, global::System.Func<bool>, bool> IsPrimaryKey()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IRuntimeKeyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -239,6 +241,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler2, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IProperty>> Properties()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IRuntimeKeyCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -262,6 +265,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IRuntimeKeyCreateExpectations.Handler3, global::System.Func<global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>>, global::System.Collections.Generic.IReadOnlyList<global::IReadOnlyProperty>> Properties()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::IRuntimeKeyCreateExpectations.Handler3();
 							this.Expectations.handlers3.Add(handler);
@@ -386,12 +390,12 @@ public static class ShimBuilderGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
-						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4)); }
-						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+						if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+						if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
 				
 						if (failures.Count > 0)
 						{
@@ -562,6 +566,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler0, global::System.Func<int>, int> IAmADim()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IHaveDimsCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -570,6 +575,7 @@ public static class ShimBuilderGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler1, global::System.Func<int>, int> IAmNotADim()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IHaveDimsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -588,6 +594,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler2, global::System.Func<int>, int> AmADim()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::IHaveDimsCreateExpectations.Handler2();
 							this.Expectations.handlers2.Add(handler);
@@ -595,6 +602,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler4, global::System.Func<int>, int> NotDim()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
 							var handler = new global::IHaveDimsCreateExpectations.Handler4();
 							this.Expectations.handlers4.Add(handler);
@@ -618,6 +626,7 @@ public static class ShimBuilderGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler3, global::System.Func<string, int, int>, int> This(global::Rocks.Argument<string> @dimKey, global::Rocks.Argument<int> @dimValue)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@dimKey);
 							global::System.ArgumentNullException.ThrowIfNull(@dimValue);
 							
@@ -633,6 +642,7 @@ public static class ShimBuilderGeneratorTests
 						}
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler5, global::System.Func<string, int>, int> This(global::Rocks.Argument<string> @notDimKey)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@notDimKey);
 							
 							var handler = new global::IHaveDimsCreateExpectations.Handler5

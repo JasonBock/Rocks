@@ -63,10 +63,10 @@ public static class EventGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -189,6 +189,7 @@ public static class EventGeneratorTests
 					
 					internal global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler0
@@ -203,6 +204,7 @@ public static class EventGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -211,6 +213,7 @@ public static class EventGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -219,6 +222,7 @@ public static class EventGeneratorTests
 					
 					internal global::Rocks.Adornments<global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3, global::System.Func<int>, int> NoParameters()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::AbstractClassMethodReturnWithEventsCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
@@ -321,8 +325,8 @@ public static class EventGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -411,6 +415,7 @@ public static class EventGeneratorTests
 				
 					internal global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler0, global::System.Action> A()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler0();
 						this.Expectations.handlers0.Add(handler);
@@ -426,6 +431,7 @@ public static class EventGeneratorTests
 				
 					internal global::Rocks.Adornments<global::IExplicitInterfaceImplementationCreateExpectations.Handler1, global::System.Action> A()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IExplicitInterfaceImplementationCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -517,7 +523,7 @@ public static class EventGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -579,6 +585,7 @@ public static class EventGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -666,7 +673,7 @@ public static class EventGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -728,6 +735,7 @@ public static class EventGeneratorTests
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveEventsCreateExpectations.Handler0, global::System.Action> A()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::MockTests.IHaveEventsCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);

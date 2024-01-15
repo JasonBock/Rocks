@@ -96,32 +96,32 @@ internal static class MethodExpectationsMethodBuilder
 				var parameterValues = string.Join(", ", method.Parameters.Select(
 					p => p.HasExplicitDefaultValue || p.IsParams ? $"global::Rocks.Arg.Is(@{p.Name})" : $"@{p.Name}"));
 
-				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints} =>");
-				writer.Indent++;
-				writer.WriteLine($"this.{method.Name}({parameterValues});");
-				writer.Indent--;
+				writer.WriteLines(
+					$$"""
+					internal {{hiding}}{{adornmentsType}} {{method.Name}}({{instanceParameters}}){{extensionConstraints}} =>
+						this.{{method.Name}}({{parameterValues}});
+					""");
 			}
 			else if (method.Parameters.Length == 0)
 			{
-				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
-				writer.WriteLine("{");
-				writer.Indent++;
 				writer.WriteLines(
 					$$"""
-					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
-					return new(handler);
+					internal {{hiding}}{{adornmentsType}} {{method.Name}}({{instanceParameters}}){{extensionConstraints}}
+					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
+						if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
+						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
+						this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
+						return new(handler);
+					}
 					""");
-
-				writer.Indent--;
-				writer.WriteLine("}");
 			}
 			else
 			{
 				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
+				writer.WriteLine("global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);");
 
 				foreach (var parameter in method.Parameters)
 				{

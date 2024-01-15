@@ -83,7 +83,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -139,6 +139,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUseSameNamesCreateExpectations.Handler0, global::System.Action<First::SameNamespace.SameType>> Use(global::Rocks.Argument<First::SameNamespace.SameType> @value)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
 						var handler = new global::IUseSameNamesCreateExpectations.Handler0
@@ -398,10 +399,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -505,6 +506,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::IHaveDelegateCreateExpectations.Handler0
@@ -519,6 +521,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -527,6 +530,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -535,6 +539,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::IHaveDelegateCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
@@ -621,7 +626,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -679,6 +684,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUseKeywordCreateExpectations.Handler0, global::System.Action<string, string, string>> Foo(global::Rocks.Argument<string> @namespace, global::Rocks.Argument<string> @event, global::Rocks.Argument<string> @property)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@namespace);
 						global::System.ArgumentNullException.ThrowIfNull(@event);
 						global::System.ArgumentNullException.ThrowIfNull(@property);
@@ -784,10 +790,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -888,6 +894,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler0
@@ -902,6 +909,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -910,6 +918,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -918,6 +927,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::HaveNamingConflictsCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
@@ -1001,7 +1011,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1058,6 +1068,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IHaveNamingConflictsCreateExpectations.Handler0, global::System.Func<string, string, string, string, string, int>, int> This(global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self)
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@methodHandlers);
 							global::System.ArgumentNullException.ThrowIfNull(@methodHandler);
 							global::System.ArgumentNullException.ThrowIfNull(@result);
@@ -1161,7 +1172,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1214,6 +1225,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IHaveNamingConflictsCreateExpectations.Handler0, global::System.Func<string, string, string, string, string, int>, int> Foo(global::Rocks.Argument<string> @methodHandlers, global::Rocks.Argument<string> @methodHandler, global::Rocks.Argument<string> @result, global::Rocks.Argument<string> @result2, global::Rocks.Argument<string> @self)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@methodHandlers);
 						global::System.ArgumentNullException.ThrowIfNull(@methodHandler);
 						global::System.ArgumentNullException.ThrowIfNull(@result);
@@ -1326,10 +1338,10 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1)); }
-						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2)); }
-						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+						if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1432,6 +1444,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler0, global::System.Func<object?, bool>, bool> Equals(global::Rocks.Argument<object?> @obj)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler0
@@ -1446,6 +1459,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler1();
 						this.Expectations.handlers1.Add(handler);
@@ -1454,6 +1468,7 @@ public static class NamingGeneratorTests
 					
 					internal new global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler2, global::System.Func<string?>, string?> ToString()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler2();
 						this.Expectations.handlers2.Add(handler);
@@ -1462,6 +1477,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler3, global::System.Action> Foo()
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 						var handler = new global::HasRequiredPropertyCreateExpectations.Handler3();
 						this.Expectations.handlers3.Add(handler);
@@ -1562,7 +1578,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1619,6 +1635,7 @@ public static class NamingGeneratorTests
 					
 					internal global::Rocks.Adornments<global::IUsesThingCreateExpectations.Handler0, global::System.Action<global::Namespace2.Thing, global::Namespace1.Stuff>> Use(global::Rocks.Argument<global::Namespace2.Thing> @thing, global::Rocks.Argument<global::Namespace1.Stuff> @stuff)
 					{
+						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@thing);
 						global::System.ArgumentNullException.ThrowIfNull(@stuff);
 						
@@ -1703,7 +1720,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1749,6 +1766,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IUseMethodInformationCreateExpectations.Handler0, global::System.Func<global::MethodInformation[]>, global::MethodInformation[]> Methods()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IUseMethodInformationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -1831,7 +1849,7 @@ public static class NamingGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1877,6 +1895,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::IOperationCreateExpectations.Handler0, global::System.Func<global::IOperation.OperationList>, global::IOperation.OperationList> Operations()
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IOperationCreateExpectations.Handler0();
 							this.Expectations.handlers0.Add(handler);
@@ -1974,7 +1993,7 @@ public static class NamingGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0)); }
+							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -2034,6 +2053,7 @@ public static class NamingGeneratorTests
 						
 						internal global::Rocks.Adornments<global::Namespace2.IUseConstraintCreateExpectations.Handler0<T>, global::System.Action<T>> Foo<T>(global::Rocks.Argument<T> @value) where T : global::Namespace1.IConstraint
 						{
+							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
 							var handler = new global::Namespace2.IUseConstraintCreateExpectations.Handler0<T>
