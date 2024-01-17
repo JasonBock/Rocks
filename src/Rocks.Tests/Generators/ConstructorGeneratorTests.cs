@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Testing;
 using NUnit.Framework;
+using Rocks.Descriptors;
 using Rocks.Diagnostics;
 
 namespace Rocks.Tests.Generators;
@@ -25,9 +26,9 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { DiagnosticResult.CompilerError(TypeHasNoAccessibleConstructorsDiagnostic.Id).WithSpan(3, 12, 3, 37) }).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -51,9 +52,9 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { DiagnosticResult.CompilerError(TypeHasNoAccessibleConstructorsDiagnostic.Id).WithSpan(4, 12, 4, 37) }).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -77,9 +78,9 @@ public static class ConstructorGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { DiagnosticResult.CompilerError(DuplicateConstructorsDiagnostic.Id).WithSpan(3, 12, 3, 45) }).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -336,8 +337,8 @@ public static class ConstructorGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "AnyOfstring, int_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }

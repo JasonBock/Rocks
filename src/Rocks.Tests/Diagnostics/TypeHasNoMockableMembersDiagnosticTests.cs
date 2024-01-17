@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Descriptors;
 using Rocks.Diagnostics;
 using System.Globalization;
 
@@ -27,8 +28,8 @@ public static class TypeHasNoMockableMembersDiagnosticTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X has no members that can be overriden"));
-			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Title));
-			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDiagnostic.Id));
+			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(TypeHasNoMockableMembersDescriptor.Title));
+			Assert.That(descriptor.Id, Is.EqualTo(TypeHasNoMockableMembersDescriptor.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		});
 	}

@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Descriptors;
 using Rocks.Diagnostics;
 using System.Globalization;
 
@@ -27,8 +28,8 @@ public static class CannotMockObsoleteTypeDiagnosticTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is obsolete and cannot be mocked"));
-			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Title));
-			Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDiagnostic.Id));
+			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockObsoleteTypeDescriptor.Title));
+			Assert.That(descriptor.Id, Is.EqualTo(CannotMockObsoleteTypeDescriptor.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		});
 	}

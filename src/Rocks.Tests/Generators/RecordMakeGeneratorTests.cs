@@ -80,8 +80,8 @@ public static class RecordMakeGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }

@@ -122,18 +122,16 @@ internal sealed record MockModel
 
 		var isMockable = !diagnostics.Any(_ => _.Severity == DiagnosticSeverity.Error);
 
-		return new(!isMockable ? null : new TypeMockModel(node, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims),
-			typeToMock.GetFullyQualifiedName(compilation),
-			diagnostics.ToImmutable(), buildType);
+		return new(
+			!isMockable ? null : 
+				new MockModelInformation(new TypeMockModel(node, typeToMock, compilation, model, constructors, methods, properties, events, shims, shouldResolveShims), buildType),
+			diagnostics.ToImmutable());
 	}
 
-	private MockModel(TypeMockModel? type, string typeFullyQualifiedName,
-		EquatableArray<Diagnostic> diagnostics, BuildType buildType) =>
-		(this.Type, this.FullyQualifiedName, this.Diagnostics, this.BuildType) =
-			(type, typeFullyQualifiedName, diagnostics, buildType);
+	private MockModel(MockModelInformation? information, EquatableArray<Diagnostic> diagnostics) =>
+		(this.Information, this.Diagnostics) =
+			(information, diagnostics);
 
-	internal BuildType BuildType { get; }
+	internal MockModelInformation? Information { get; }
 	internal EquatableArray<Diagnostic> Diagnostics { get; }
-	internal string FullyQualifiedName { get; }
-	internal TypeMockModel? Type { get; }
 }

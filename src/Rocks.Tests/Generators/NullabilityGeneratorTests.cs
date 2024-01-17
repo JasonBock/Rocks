@@ -270,9 +270,9 @@ public static class NullabilityGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "ConnectionBuilderobject_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -561,7 +561,7 @@ public static class NullabilityGeneratorTests
 		// can be ignored/suppressed. They show up because the override
 		// continues the problem that the subtype introduces when it changes
 		// the nullability annotations.
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "SubTracer_Rock_Create.g.cs", generatedCode) },
 			new[]
 			{
@@ -571,7 +571,7 @@ public static class NullabilityGeneratorTests
 					.WithSpan(18, 23, 18, 33).WithArguments("eventCache"),
 				new DiagnosticResult("CS8765", DiagnosticSeverity.Error)
 					.WithSpan(18, 23, 18, 33).WithArguments("format"),
-			}).ConfigureAwait(false);
+			});
 	}
 
 	[Test]
@@ -833,9 +833,9 @@ public static class NullabilityGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -958,8 +958,8 @@ public static class NullabilityGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }

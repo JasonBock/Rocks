@@ -141,9 +141,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -189,9 +189,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -337,9 +337,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -386,9 +386,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -533,9 +533,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -581,9 +581,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -723,9 +723,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -771,9 +771,9 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -1096,8 +1096,8 @@ public static class ParameterModifierTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "IParameterModifier_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }

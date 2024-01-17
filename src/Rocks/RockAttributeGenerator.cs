@@ -13,58 +13,42 @@ internal sealed class RockAttributeGenerator
 {
 	public void Initialize(IncrementalGeneratorInitializationContext context)
 	{
-		var mockCreateTypes = context.SyntaxProvider
-			.ForAttributeWithMetadataName("Rocks.RockCreateAttribute`1", (_, _) => true,
-				(context, token) =>
-				{
-					var models = new List<MockModel>(context.Attributes.Length);
-
-					for (var i = 0; i < context.Attributes.Length; i++)
+		static IncrementalValuesProvider<MockModelInformation> GetInformation(
+			IncrementalGeneratorInitializationContext context, string attributeName, BuildType buildType) => 
+			context.SyntaxProvider
+				.ForAttributeWithMetadataName(attributeName, (_, _) => true,
+					(context, token) =>
 					{
-						// Need to grab the type attribute value.
-						// Note that I'm assuming there will be at least one generic parameter.
-						// If someone creates an attribute to mess with this...
-						// well, I guess I could an add a diagnostic that informs users
-						// that the attribute was invalid.
-						var attributeClass = context.Attributes[i];
-						var typeToMock = attributeClass.AttributeClass!.TypeArguments[0];
+						var models = new List<MockModelInformation>(context.Attributes.Length);
 
-						if (!typeToMock.ContainsDiagnostics())
+						for (var i = 0; i < context.Attributes.Length; i++)
 						{
-							models.Add(MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-								typeToMock, context.SemanticModel, BuildType.Create, true));
+							// Need to grab the type attribute value.
+							// Note that I'm assuming there will be at least one generic parameter.
+							// If someone creates an attribute to mess with this...
+							// well, I guess I could an add a diagnostic that informs users
+							// that the attribute was invalid.
+							var attributeClass = context.Attributes[i];
+							var typeToMock = attributeClass.AttributeClass!.TypeArguments[0];
+
+							if (!typeToMock.ContainsDiagnostics())
+							{
+								var model = MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
+								  typeToMock, context.SemanticModel, buildType, true);
+
+								if (model.Information is not null)
+								{
+									models.Add(model.Information);
+								}
+							}
 						}
-					}
 
-					return models;
-				})
-			.SelectMany((names, _) => names);
-		var mockMakeTypes = context.SyntaxProvider
-			.ForAttributeWithMetadataName("Rocks.RockMakeAttribute`1", (_, _) => true,
-				(context, token) =>
-				{
-					var models = new List<MockModel>(context.Attributes.Length);
+						return models;
+					})
+				.SelectMany((names, _) => names);
 
-					for (var i = 0; i < context.Attributes.Length; i++)
-					{
-						// Need to grab the type attribute value.
-						// Note that I'm assuming there will be at least one generic parameter.
-						// If someone creates an attribute to mess with this...
-						// well, I guess I could an add a diagnostic that informs users
-						// that the attribute was invalid.
-						var attributeClass = context.Attributes[i];
-						var typeToMock = attributeClass.AttributeClass!.TypeArguments[0];
-
-						if (!typeToMock.ContainsDiagnostics())
-						{
-							models.Add(MockModel.Create(attributeClass.ApplicationSyntaxReference!.GetSyntax(token),
-								typeToMock, context.SemanticModel, BuildType.Make, true));
-						}
-					}
-
-					return models;
-				})
-			.SelectMany((names, _) => names);
+		var mockCreateTypes = GetInformation(context, "Rocks.RockCreateAttribute`1", BuildType.Create);
+		var mockMakeTypes = GetInformation(context, "Rocks.RockMakeAttribute`1", BuildType.Make);  
 
 		context.RegisterSourceOutput(mockCreateTypes.Collect(),
 			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
@@ -72,27 +56,19 @@ internal sealed class RockAttributeGenerator
 			(context, source) => RockAttributeGenerator.CreateOutput(source, context));
 	}
 
-	private static void CreateOutput(ImmutableArray<MockModel> mocks, SourceProductionContext context)
+	private static void CreateOutput(ImmutableArray<MockModelInformation> mocks, SourceProductionContext context)
 	{
 		foreach (var mock in mocks.Distinct())
 		{
-			foreach (var diagnostic in mock.Diagnostics)
+			if (mock.BuildType == BuildType.Create)
 			{
-				context.ReportDiagnostic(diagnostic);
+				var builder = new RockCreateBuilder(mock.Type);
+				context.AddSource(builder.Name, builder.Text);
 			}
-
-			if (mock.Type is not null)
+			else if (mock.BuildType == BuildType.Make)
 			{
-				if (mock.BuildType == BuildType.Create)
-				{
-					var builder = new RockCreateBuilder(mock.Type);
-					context.AddSource(builder.Name, builder.Text);
-				}
-				else if (mock.BuildType == BuildType.Make)
-				{
-					var builder = new RockMakeBuilder(mock.Type);
-					context.AddSource(builder.Name, builder.Text);
-				}
+				var builder = new RockMakeBuilder(mock.Type);
+				context.AddSource(builder.Name, builder.Text);
 			}
 		}
 	}

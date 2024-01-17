@@ -2,12 +2,14 @@
 	<PropertyGroup>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AssemblyName>Rocks.Tests</AssemblyName>
+		<NoWarn>CA2007,CA1861</NoWarn>
 		<RootNamespace>Rocks.Tests</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Rocks\Rocks.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.NUnit" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.SourceGenerators.Testing.NUnit">
 			<NoWarn>NU1608</NoWarn>
 		</PackageReference>

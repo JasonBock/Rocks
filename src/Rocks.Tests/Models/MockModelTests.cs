@@ -2,9 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
-using Rocks.Diagnostics;
 using Rocks.Models;
-using System.Globalization;
 
 namespace Rocks.Tests.Models;
 
@@ -19,36 +17,30 @@ public static class MockModelTests
 	public static void CreateWhenMemberUsesObsoleteType(string code, string memberName)
 	{
 		var model = MockModelTests.GetModel(code, "UsesObsolete", BuildType.Create);
-
-		Assert.Multiple(() =>
-		{
-			var diagnostic = model!.Diagnostics.First(_ => _.Id == MemberUsesObsoleteTypeDiagnostic.Id);
-			Assert.That(diagnostic.GetMessage(CultureInfo.InvariantCulture), Does.Contain(memberName));
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
-	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Create, true, true)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Create, true, true)]
-	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Create, true, true)]
-	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Create, true, true)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Create, true, true)]
-	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Create, true, true)]
-	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Make, true, true)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Make, true, true)]
-	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Make, true, true)]
-	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Make, true, true)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Make, true, true)]
-	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Make, true, true)]
-	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Create, false, false)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Create, false, false)]
-	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Create, false, false)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Create, false, false)]
-	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Make, false, false)]
-	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Make, false, false)]
-	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Make, false, false)]
-	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Make, false, false)]
-	public static void CreateWhenTargetHasInternalAbstractMembers(string code, int buildType, bool hasDiagnostic, bool isMockNull)
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Create, true)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Create, true)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Create, true)]
+	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Create, true)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Create, true)]
+	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Create, true)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal abstract void Work(); }", (int)BuildType.Make, true)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work(); }", (int)BuildType.Make, true)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal abstract string Work { get; } }", (int)BuildType.Make, true)]
+	[TestCase("public interface InternalTargets { string VisibleWork { get; } internal string Work { get; } }", (int)BuildType.Make, true)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal abstract event EventHandler Work; }", (int)BuildType.Make, true)]
+	[TestCase("using System; public interface InternalTargets { event EventHandler VisibleWork; internal event EventHandler Work; }", (int)BuildType.Make, true)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Create, false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Create, false)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Create, false)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Create, false)]
+	[TestCase("public abstract class InternalTargets { public abstract void VisibleWork(); internal virtual void Work() { } }", (int)BuildType.Make, false)]
+	[TestCase("public interface InternalTargets { void VisibleWork(); internal void Work() { } }", (int)BuildType.Make, false)]
+	[TestCase("public abstract class InternalTargets { public abstract string VisibleWork { get; } internal virtual string Work { get; } }", (int)BuildType.Make, false)]
+	[TestCase("using System; public abstract class InternalTargets { public abstract event EventHandler VisibleWork; internal virtual event EventHandler Work; }", (int)BuildType.Make, false)]
+	public static void CreateWhenTargetHasInternalAbstractMembers(string code, int buildType, bool isMockNull)
 	{
 		const string targetTypeName = "InternalTargets";
 		var (invocation, internalSymbol, internalModel) = MockModelTests.GetType(code, targetTypeName);
@@ -72,11 +64,7 @@ public static class MockModelTests
 
 		var model = MockModel.Create(invocation, parameterSymbol!.Type, compilationModel, (BuildType)buildType, true);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == TypeHasInaccessibleAbstractMembersDiagnostic.Id), Is.EqualTo(hasDiagnostic));
-			Assert.That(model.Type is null, Is.EqualTo(isMockNull));
-		});
+		Assert.That(model.Information is null, Is.EqualTo(isMockNull));
 	}
 
 	[Test]
@@ -92,11 +80,7 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == InterfaceHasStaticAbstractMembersDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -106,11 +90,7 @@ public static class MockModelTests
 		var code = $"public enum {targetTypeName} {{ }}";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -121,11 +101,7 @@ public static class MockModelTests
 		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(Enumerable.Any(model!.Diagnostics, _ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -136,11 +112,7 @@ public static class MockModelTests
 		var (invocation, type, semanticModel) = MockModelTests.GetType(code, targetTypeName);
 		var model = MockModel.Create(invocation, type.BaseType!, semanticModel, BuildType.Create, true);
 
-		Assert.Multiple((TestDelegate)(() =>
-		{
-			Assert.That(Enumerable.Any(model!.Diagnostics, _ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		}));
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -150,11 +122,7 @@ public static class MockModelTests
 		var code = $"public struct {targetTypeName} {{ }}";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -164,11 +132,7 @@ public static class MockModelTests
 		var code = $"public sealed class {targetTypeName} {{ }}";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -185,11 +149,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -206,11 +166,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.False);
-			Assert.That(model.Type, Is.Not.Null);
-		});
+		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
@@ -230,11 +186,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create, ReportDiagnostic.Default);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockObsoleteTypeDiagnostic.Id), Is.False);
-			Assert.That(model.Type, Is.Not.Null);
-		});
+		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
@@ -253,11 +205,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotSpecifyTypeWithOpenGenericParametersDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -267,11 +215,7 @@ public static class MockModelTests
 		var code = $"public delegate void {targetTypeName}();";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSealedTypeDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -288,11 +232,7 @@ public static class MockModelTests
 
 		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -309,11 +249,7 @@ public static class MockModelTests
 
 		var model = MockModel.Create(invocation, type!, semanticModel, BuildType.Create, true);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == CannotMockSpecialTypesDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -332,11 +268,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -355,11 +287,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Make);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics, Is.Empty);
-			Assert.That(model.Type, Is.Not.Null);
-		});
+		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
@@ -370,11 +298,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == TypeHasNoMockableMembersDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -385,11 +309,7 @@ public static class MockModelTests
 
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Make);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics, Is.Empty);
-			Assert.That(model.Type, Is.Not.Null);
-		});
+		Assert.That(model.Information, Is.Not.Null);
 	}
 
 	[Test]
@@ -405,11 +325,7 @@ public static class MockModelTests
 			""";
 		var model = MockModelTests.GetModel(code, targetTypeName, BuildType.Create);
 
-		Assert.Multiple(() =>
-		{
-			Assert.That(model!.Diagnostics.Any(_ => _.Id == TypeHasNoAccessibleConstructorsDiagnostic.Id), Is.True);
-			Assert.That(model.Type, Is.Null);
-		});
+		Assert.That(model.Information, Is.Null);
 	}
 
 	[Test]
@@ -430,10 +346,10 @@ public static class MockModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(0));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
 		});
 	}
 
@@ -455,10 +371,10 @@ public static class MockModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model!.Diagnostics, Is.Empty);
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(0));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
 		});
 	}
 
@@ -481,10 +397,10 @@ public static class MockModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(1));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
 		});
 	}
 
@@ -512,10 +428,10 @@ public static class MockModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(2));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(0));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(2));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
 		});
 	}
 
@@ -539,23 +455,23 @@ public static class MockModelTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(4));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(4));
 
-			var fooMethod = model.Type.Methods.Single(_ => _.Name == fooMethodName);
+			var fooMethod = model.Information.Type.Methods.Single(_ => _.Name == fooMethodName);
 			Assert.That(fooMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var getHashCodeMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(0));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
 		});
 	}
 
@@ -576,21 +492,20 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(3));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			Assert.That(model.Type.Properties, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Events, Has.Length.EqualTo(0));
+			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(0));
 		});
 	}
 
@@ -612,21 +527,20 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Is.Empty);
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(1));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(3));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			Assert.That(model.Type.Properties, Is.Empty);
-			Assert.That(model.Type.Events, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Properties, Is.Empty);
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
 		});
 	}
 
@@ -651,21 +565,20 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Is.Empty);
-			Assert.That(model.Type!.Constructors, Has.Length.EqualTo(2));
-			Assert.That(model.Type.Methods, Has.Length.EqualTo(3));
+			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(2));
+			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(3));
 
-			var getHashCodeMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
+			var getHashCodeMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.GetHashCode));
 			Assert.That(getHashCodeMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var equalsMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
+			var equalsMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.Equals));
 			Assert.That(equalsMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			var toStringMethod = model.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
+			var toStringMethod = model.Information.Type.Methods.Single(_ => _.Name == nameof(object.ToString));
 			Assert.That(toStringMethod.RequiresOverride, Is.EqualTo(RequiresOverride.Yes));
 
-			Assert.That(model.Type.Properties, Is.Empty);
-			Assert.That(model.Type.Events, Has.Length.EqualTo(1));
+			Assert.That(model.Information.Type.Properties, Is.Empty);
+			Assert.That(model.Information.Type.Events, Has.Length.EqualTo(1));
 		});
 	}
 
@@ -695,7 +608,7 @@ public static class MockModelTests
 		return (invocation, (model.GetDeclaredSymbol(typeSyntax)! as ITypeSymbol)!, model);
 	}
 
-	private static MockModel? GetModel(string source, string targetTypeName,
+	private static MockModel GetModel(string source, string targetTypeName,
 		BuildType buildType, ReportDiagnostic generalDiagnosticOption = ReportDiagnostic.Error)
 	{
 		var (invocation, typeSymbol, model) = MockModelTests.GetType(source, targetTypeName, generalDiagnosticOption);

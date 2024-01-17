@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
+using Rocks.Descriptors;
 using Rocks.Diagnostics;
 using System.Globalization;
 
@@ -27,8 +28,8 @@ public static class CannotMockSealedTypeDiagnosticTests
 		Assert.Multiple(() =>
 		{
 			Assert.That(descriptor.GetMessage(CultureInfo.InvariantCulture), Is.EqualTo("The type X is sealed and cannot be mocked"));
-			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSealedTypeDiagnostic.Title));
-			Assert.That(descriptor.Id, Is.EqualTo(CannotMockSealedTypeDiagnostic.Id));
+			Assert.That(descriptor.Descriptor.Title.ToString(CultureInfo.CurrentCulture), Is.EqualTo(CannotMockSealedTypeDescriptor.Title));
+			Assert.That(descriptor.Id, Is.EqualTo(CannotMockSealedTypeDescriptor.Id));
 			Assert.That(descriptor.Severity, Is.EqualTo(DiagnosticSeverity.Error));
 		});
 	}

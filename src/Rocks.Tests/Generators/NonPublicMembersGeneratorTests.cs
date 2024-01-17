@@ -6,6 +6,7 @@ using Mono.Cecil.Cil;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Rocks.Diagnostics;
+using Rocks.Descriptors;
 
 namespace Rocks.Tests.Generators;
 
@@ -29,11 +30,9 @@ public static class NonPublicMembersGeneratorTests
 			}
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 38);
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { diagnostic }).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -343,9 +342,9 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -406,9 +405,9 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -464,12 +463,10 @@ public static class NonPublicMembersGeneratorTests
 			[assembly: RockCreate<InternalAbstractInvalidMember>]
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 53);
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { diagnostic },
-			additionalReferences: [reference]).ConfigureAwait(false);
+			[],
+			additionalReferences: [reference]);
 	}
 
 	[Test]
@@ -499,12 +496,10 @@ public static class NonPublicMembersGeneratorTests
 			[assembly: RockCreate<InternalAbstractMember>]
 			""";
 
-		var diagnostic = new DiagnosticResult(TypeHasInaccessibleAbstractMembersDiagnostic.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 46);
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { diagnostic },
-			additionalReferences: sourceReferences).ConfigureAwait(false);
+			[],
+			additionalReferences: sourceReferences);
 	}
 
 	[Test]
@@ -825,10 +820,10 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
 			[],
-			additionalReferences: sourceReferences).ConfigureAwait(false);
+			additionalReferences: sourceReferences);
 	}
 
 	[Test]
@@ -899,10 +894,10 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
 			[],
-			additionalReferences: sourceReferences).ConfigureAwait(false);
+			additionalReferences: sourceReferences);
 	}
 
 	[Test]
@@ -1320,10 +1315,10 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode) },
 			[],
-			additionalReferences: sourceReferences).ConfigureAwait(false);
+			additionalReferences: sourceReferences);
 	}
 
 	[Test]
@@ -1423,10 +1418,10 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode) },
 			[],
-			additionalReferences: sourceReferences).ConfigureAwait(false);
+			additionalReferences: sourceReferences);
 	}
 
 	[Test]
@@ -1815,9 +1810,9 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -2204,9 +2199,9 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -2282,9 +2277,9 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -2360,8 +2355,8 @@ public static class NonPublicMembersGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }

@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
 using Rocks.Diagnostics;
+using Rocks.Descriptors;
 
 namespace Rocks.Tests.Generators;
 
@@ -129,9 +130,9 @@ public static class ObsoleteGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IContainer_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -375,9 +376,9 @@ public static class ObsoleteGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.Container_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -402,17 +403,15 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
 			new[]
 			{
-				new DiagnosticResult("ROCK2", DiagnosticSeverity.Error)
-					.WithSpan(4, 12, 4, 45),
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
 					.WithSpan(4, 23, 4, 44)
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]);
 	}
 
 	[Test]
@@ -446,15 +445,11 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[]
-			{
-				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
-					.WithSpan(7, 12, 7, 49)
-			},
+			[],
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]);
 	}
 
 	[Test]
@@ -488,15 +483,11 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[]
-			{
-				new DiagnosticResult("ROCK9", DiagnosticSeverity.Error)
-					.WithSpan(7, 12, 7, 49)
-			},
+			[],
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]);
 	}
 
 	[Test]
@@ -530,19 +521,17 @@ public static class ObsoleteGeneratorTests
 			}
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] 
+			new[]
 			{
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
 					.WithSpan(21, 30, 21, 46).WithArguments("MockTests.IServerComponent", "Do not use this"),
-				new DiagnosticResult(MemberUsesObsoleteTypeDiagnostic.Id, DiagnosticSeverity.Error)
-					.WithSpan(7, 12, 7, 44),
 				new DiagnosticResult("CS0619", DiagnosticSeverity.Error)
 					.WithSpan(22, 21, 22, 37).WithArguments("MockTests.IServerComponent", "Do not use this"),
 			},
 			generalDiagnosticOption: ReportDiagnostic.Error,
-			disabledDiagnostics: ["CS1591"]).ConfigureAwait(false);
+			disabledDiagnostics: ["CS1591"]);
 	}
 
 	[Test]
@@ -754,9 +743,9 @@ public static class ObsoleteGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 
 	[Test]
@@ -968,8 +957,8 @@ public static class ObsoleteGeneratorTests
 			
 			""";
 
-		await TestAssistants.RunAsync<RockAttributeGenerator>(code,
+		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode) },
-			[]).ConfigureAwait(false);
+			[]);
 	}
 }
