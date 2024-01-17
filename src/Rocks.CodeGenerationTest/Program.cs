@@ -2,6 +2,7 @@
 //#define INCLUDE_FAILING
 
 using Microsoft.CodeAnalysis;
+using Pulumi;
 using Rocks;
 using Rocks.CodeGenerationTest;
 using Rocks.CodeGenerationTest.Extensions;
@@ -52,12 +53,16 @@ static void TestWithCode()
 		[]);
 }
 
-static void TestWithType() =>
-	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(OsSettings)],
+static void TestWithType()
+{
+	var (issues, _) = TestGenerator.Generate(new RockAttributeGenerator(),
+		[typeof(IParsable<>)],
 		[],
 		[],
-		[], BuildType.Create));
+		[], BuildType.Create);
+
+	PrintIssues(issues);
+}
 
 static void TestWithTypes()
 {
@@ -66,99 +71,99 @@ static void TestWithTypes()
 #if INCLUDE_PASSING
 		// .NET types
 		new (typeof(object), []),
-		new (typeof(System.Collections.Generic.Dictionary<,>), []),
-		new (typeof(System.Net.Http.HttpMessageHandler), []),
-		new (typeof(System.Collections.Immutable.ImmutableArray), []),
-		new (typeof(System.Text.Json.JsonDocument), []),
-		new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
+		//new (typeof(System.Collections.Generic.Dictionary<,>), []),
+		//new (typeof(System.Net.Http.HttpMessageHandler), []),
+		//new (typeof(System.Collections.Immutable.ImmutableArray), []),
+		//new (typeof(System.Text.Json.JsonDocument), []),
+		//new (typeof(System.Threading.Channels.BoundedChannelFullMode), []),
 
 		// NuGet references
-		new (typeof(AngleSharp.BrowsingContext), []),
-		new (typeof(Ardalis.GuardClauses.Guard), []),
-		new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
-		new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
-		new (typeof(Autofac.ContainerBuilder), []),
-		new (typeof(AutoFixture.AutoPropertiesTarget), []),
-		new (typeof(AutoMapper.AutoMapAttribute), []),
-		new (typeof(Avalonia.AppBuilder), []),
-		new (typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper), []),
-		new (typeof(Azure.Core.AccessToken), []),
-		new (typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions), []),
-		new (typeof(Azure.Storage.Blobs.BlobClient), []),
-		new (typeof(Azure.Storage.Queues.QueueClient), []),
-		new (typeof(BenchmarkDotNet.Analysers.AnalyserBase), []),
-		new (typeof(Blazored.LocalStorage.ChangedEventArgs), []),
-		new (typeof(Blazored.Video.BlazoredVideo), []),
-		new (typeof(Bogus.Binder), []),
-		new (typeof(Castle.DynamicProxy.ProxyGenerationOptions), []),
-		new (typeof(ClangSharp.AbstractConditionalOperator), []),
-		new (typeof(Confluent.Kafka.Acks), []),
-		new (typeof(Coravel.CacheServiceRegistration), []),
-		new (typeof(Csla.DataPortal<>), []),
-		new (typeof(CsvHelper.ArrayHelper), []),
-		new (typeof(Cursively.CsvAsyncInput), []),
-		new (typeof(Dapper.DbString), []),
-		new (typeof(DiffEngine.BuildServerDetector), []),
-		new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
-		new (typeof(Elasticsearch.Net.ApiCallDetails), []),
-		new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
-		new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),
-		new (typeof(FluentValidation.ApplyConditionTo), []),
-		new (typeof(Flurl.GeneratedExtensions), []),
-		new (typeof(Google.Apis.ETagAction), []),
-		new (typeof(GraphQL.AllowAnonymousAttribute), []),
-		new (typeof(Grpc.Core.AuthContext), []),
-		new (typeof(HandlebarsDotNet.Arguments), []),
-		new (typeof(HarmonyLib.AccessTools), []),
-		new (typeof(Humanizer.ByteSizeExtensions), []),
-		new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
-		new (typeof(IdentityModel.Base64Url), []),
-		new (typeof(LanguageExt.FuncExtensions), []),
-		new (typeof(LLVMSharp.AddrSpaceCastInst), []),
-		new (typeof(MassTransit.AbstractUriException), []),
-		new (typeof(MathNet.Numerics.AppSwitches), []),
-		new (typeof(MediatR.ISender), []),
-		new (typeof(MessagePack.FormatterNotRegisteredException), []),
-		new (typeof(Microsoft.CodeAnalysis.SyntaxTree), []),
-		new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource), []),
-		new (typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope), []),
-		new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
-		new (typeof(Microsoft.Extensions.ServiceDiscovery.ServiceEndPointResolver), []),
-		new (typeof(Microsoft.OpenApi.Any.AnyType), []),
-		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
-		new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
-		new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
-		new (typeof(Ninject.ActivationException), []),
-		new (typeof(NodaTime.AmbiguousTimeException), []),
-		new (typeof(NuGet.Common.ActivityCorrelationId), []),
-		new (typeof(Orleans.Grain), []),
-		new (typeof(Proto.ActorContextDecorator), []),
-		new (typeof(Pulumi.Alias), []),
-		new (typeof(Quartz.AdoProviderExtensions), []),
-		new (typeof(RabbitMQ.Client.AmqpTcpEndpoint), []),
-		new (typeof(RecordParser.Builders.Reader.FixedLengthReaderBuilder<>), []),
-		new (typeof(Refit.AliasAsAttribute), []),
-		new (typeof(RestSharp.BodyParameter), []),
-		new (typeof(Serilog.Core.IDestructuringPolicy), []),
-		new (typeof(ServiceStack.ActionExecExtensions), []),
-		new (typeof(Sigil.CatchBlock), []),
-		new (typeof(Silk.NET.Core.Attributes.CountAttribute), []),
-		new (typeof(SimpleInjector.ActivationException), []),
-		new (typeof(SixLabors.ImageSharp.GraphicsOptions), []),
-		new (typeof(SkiaSharp.GRBackend), []),
-		new (typeof(StackExchange.Redis.Aggregate), []),
-		new (typeof(Stripe.Account), []),
-		new (typeof(Sylvan.Data.Csv.AmbiguousColumnException), []),
-		new (typeof(System.IO.Abstractions.DirectoryAclExtensions), []),
-		new (typeof(System.Reactive.ExperimentalAttribute), []),
-		new (typeof(System.Reflection.Metadata.ArrayShape), []),
-		new (typeof(System.Text.Json.JsonCommentHandling), []),
-		new (typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation), []),
-		new (typeof(TerraFX.Interop.INativeGuid), []),
-		new (typeof(Topshelf.Credentials), []),
-		new (typeof(Twilio.Base.Page<>), []),
-		new (typeof(VerifyTests.AsStringResult), []),
-		new (typeof(Wasmtime.ActionResult), []),
+		//new (typeof(AngleSharp.BrowsingContext), []),
+		//new (typeof(Ardalis.GuardClauses.Guard), []),
+		//new (typeof(Aspire.Hosting.ContainerResourceBuilderExtensions), []),
+		//new (typeof(Aspose.Email.AlternateView), ["AsposeEmailAlias"]),
+		//new (typeof(Autofac.ContainerBuilder), []),
+		//new (typeof(AutoFixture.AutoPropertiesTarget), []),
+		//new (typeof(AutoMapper.AutoMapAttribute), []),
+		//new (typeof(Avalonia.AppBuilder), []),
+		//new (typeof(AWSSDK.Runtime.Internal.Util.ChecksumCRTWrapper), []),
+		//new (typeof(Azure.Core.AccessToken), []),
+		//new (typeof(Azure.Messaging.ServiceBus.CreateMessageBatchOptions), []),
+		//new (typeof(Azure.Storage.Blobs.BlobClient), []),
+		//new (typeof(Azure.Storage.Queues.QueueClient), []),
+		//new (typeof(BenchmarkDotNet.Analysers.AnalyserBase), []),
+		//new (typeof(Blazored.LocalStorage.ChangedEventArgs), []),
+		//new (typeof(Blazored.Video.BlazoredVideo), []),
+		//new (typeof(Bogus.Binder), []),
+		//new (typeof(Castle.DynamicProxy.ProxyGenerationOptions), []),
+		//new (typeof(ClangSharp.AbstractConditionalOperator), []),
+		//new (typeof(Confluent.Kafka.Acks), []),
+		//new (typeof(Coravel.CacheServiceRegistration), []),
+		//new (typeof(Csla.DataPortal<>), []),
+		//new (typeof(CsvHelper.ArrayHelper), []),
+		//new (typeof(Cursively.CsvAsyncInput), []),
+		//new (typeof(Dapper.DbString), []),
+		//new (typeof(DiffEngine.BuildServerDetector), []),
+		//new (typeof(DnsClient.DnsDatagramReader), ["DnsClientAlias"]),
+		//new (typeof(Elasticsearch.Net.ApiCallDetails), []),
+		//new (typeof(EntityFramework.Exceptions.Common.CannotInsertNullException), []),
+		//new (typeof(FluentAssertions.AggregateExceptionExtractor),  []),
+		//new (typeof(FluentValidation.ApplyConditionTo), []),
+		//new (typeof(Flurl.GeneratedExtensions), []),
+		//new (typeof(Google.Apis.ETagAction), []),
+		//new (typeof(GraphQL.AllowAnonymousAttribute), []),
+		//new (typeof(Grpc.Core.AuthContext), []),
+		//new (typeof(HandlebarsDotNet.Arguments), []),
+		//new (typeof(HarmonyLib.AccessTools), []),
+		//new (typeof(Humanizer.ByteSizeExtensions), []),
+		//new (typeof(ICSharpCode.SharpZipLib.SharpZipBaseException), []),
+		//new (typeof(IdentityModel.Base64Url), []),
+		//new (typeof(LanguageExt.FuncExtensions), []),
+		//new (typeof(LLVMSharp.AddrSpaceCastInst), []),
+		//new (typeof(MassTransit.AbstractUriException), []),
+		//new (typeof(MathNet.Numerics.AppSwitches), []),
+		//new (typeof(MediatR.ISender), []),
+		//new (typeof(MessagePack.FormatterNotRegisteredException), []),
+		//new (typeof(Microsoft.CodeAnalysis.SyntaxTree), []),
+		//new (typeof(Microsoft.EntityFrameworkCore.Infrastructure.EntityFrameworkEventSource), []),
+		//new (typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope), []),
+		//new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
+		//new (typeof(Microsoft.Extensions.ServiceDiscovery.ServiceEndPointResolver), []),
+		//new (typeof(Microsoft.OpenApi.Any.AnyType), []),
+		//new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
+		//new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
+		//new (typeof(nietras.SeparatedValues.SepReaderExtensions), []),
+		//new (typeof(Ninject.ActivationException), []),
+		//new (typeof(NodaTime.AmbiguousTimeException), []),
+		//new (typeof(NuGet.Common.ActivityCorrelationId), []),
+		//new (typeof(Orleans.Grain), []),
+		//new (typeof(Proto.ActorContextDecorator), []),
+		//new (typeof(Pulumi.Alias), []),
+		//new (typeof(Quartz.AdoProviderExtensions), []),
+		//new (typeof(RabbitMQ.Client.AmqpTcpEndpoint), []),
+		//new (typeof(RecordParser.Builders.Reader.FixedLengthReaderBuilder<>), []),
+		//new (typeof(Refit.AliasAsAttribute), []),
+		//new (typeof(RestSharp.BodyParameter), []),
+		//new (typeof(Serilog.Core.IDestructuringPolicy), []),
+		//new (typeof(ServiceStack.ActionExecExtensions), []),
+		//new (typeof(Sigil.CatchBlock), []),
+		//new (typeof(Silk.NET.Core.Attributes.CountAttribute), []),
+		//new (typeof(SimpleInjector.ActivationException), []),
+		//new (typeof(SixLabors.ImageSharp.GraphicsOptions), []),
+		//new (typeof(SkiaSharp.GRBackend), []),
+		//new (typeof(StackExchange.Redis.Aggregate), []),
+		//new (typeof(Stripe.Account), []),
+		//new (typeof(Sylvan.Data.Csv.AmbiguousColumnException), []),
+		//new (typeof(System.IO.Abstractions.DirectoryAclExtensions), []),
+		//new (typeof(System.Reactive.ExperimentalAttribute), []),
+		//new (typeof(System.Reflection.Metadata.ArrayShape), []),
+		//new (typeof(System.Text.Json.JsonCommentHandling), []),
+		//new (typeof(TerraFX.Interop.DirectX.D3D12MA_Allocation), []),
+		//new (typeof(TerraFX.Interop.INativeGuid), []),
+		//new (typeof(Topshelf.Credentials), []),
+		//new (typeof(Twilio.Base.Page<>), []),
+		//new (typeof(VerifyTests.AsStringResult), []),
+		//new (typeof(Wasmtime.ActionResult), []),
 #endif
 #if INCLUDE_FAILING
 #endif
@@ -191,31 +196,22 @@ static void TestWithTypes()
 		{
 			Console.WriteLine($"Getting target types for {targetMapping.type.Assembly.GetName().Name}");
 			var targetAssemblySet = new HashSet<Assembly> { targetMapping.type.Assembly };
-			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, []);
+
+			var discoveredTypes = TestGenerator.GetTargets(targetAssemblySet, [], typesToLoadAssembliesFrom,
+				genericTypeMappings, targetMapping.aliases);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Create}");
-			var createIssues = TestGenerator.Generate(
+			var (createIssues, createMockCount) = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Create);
-			issues.AddRange(createIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
+			issues.AddRange(createIssues);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
-			var makeIssues = TestGenerator.Generate(
+			var (makeIssues, _) = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
-			issues.AddRange(makeIssues.Where(_ => !_.Id.StartsWith("ROCK", StringComparison.CurrentCulture)));
+			issues.AddRange(makeIssues);
 
-			// We want to get a unique set of issues that occur when we generate mocks.
-			// I only get the unique create errors (which **should** be the same
-			// as the make issue count) - looks something like this:
-			//
-			// "Rock.Create<AngleSharp.Io.VirtualResponse>()"
-			//
-			// We subtract that count value from the discovered type count.
-			var typeIssues = new HashSet<string>(
-				createIssues.Select(_ => _.Location.SourceTree!.GetText().GetSubText(_.Location.SourceSpan).ToString()));
-
-			var discoveredTypeCount = discoveredTypes.Length - typeIssues.Count;
-			totalDiscoveredTypeCount += discoveredTypeCount;
-			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {discoveredTypeCount}");
+			totalDiscoveredTypeCount += createMockCount;
+			Console.WriteLine($"Type count found for {targetMapping.type.Assembly.GetName().Name} - {createMockCount}");
 			Console.WriteLine();
 		}
 	}
