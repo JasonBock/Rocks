@@ -4,7 +4,7 @@
 * Remember to restart and do a spot-check in IntegrationTests with doing a mock on a sealed type, the analyzer should find that. Maybe put a `pragma` around the error so that we have an integration test in place, but not necessary.
 
 Tests to update/rewrite
-* Add tests for the descriptors
+* DONE - Add tests for the descriptors
 * DONE - Use MockModelTests (older) to see what the tests should be for the analyzer.
 * DONE - Look at the (older) versions of these tests to rewriter
     * DONE - RockAttributeGeneratorTests
@@ -25,20 +25,20 @@ Tests to update/rewrite
         * DONE - GenerateWhenAPropertyAndItsTypeAreObsoleteAsync
         * DONE - GenerateWhenATargetTypeIsObsoleteAsync
 
-`new[] { diagnostic }` can be changed to `[diagnostic]`
+DONE - `new[] { diagnostic }` can be changed to `[diagnostic]`
 
 There is a point to be made that if there's a compiler error, like `RockCreate<ThisIsAnEnum>`, which, given the constraint on `T`, you can't provide an enum. But...I may end up doing `RockCreate(typeof(SomeType))` to support open generics, so in that case, there's no way to put a constraint the parameter.
 
 There are a number of issues showing up now that I fixed code gen. Yay.
 
-* For the event extensions, if the handler type has any generics, the generated event extension method needs to declare them, along with (probably) any constraints that exist.
+* REPORTED - For the event extensions, if the handler type has any generics, the generated event extension method needs to declare them, along with (probably) any constraints that exist.
     * `Blazored.LocalStorage.ILocalStorageService`
     * `Castle.Components.DictionaryAdapter.Xml.IXmlIterator`
     * `Castle.Components.DictionaryAdapter.IDictionaryAdapter`
     * and many others
-* In the member expectations handlers (for methods and indexers), a parameter can be named `handler`, which will collide with our `handler` variable. Need to use `VariableNamingContext` here.
+* REPORTED - In the member expectations handlers (for methods and indexers), a parameter can be named `handler`, which will collide with our `handler` variable. Need to use `VariableNamingContext` here.
     * `AngleSharp.Dom.IWindowTimers`
 * Odd, in some cases, generating the expectations creates code in a constructor like this: `() = ();`. Not sure what's going on there.
     * `Microsoft.EntityFrameworkCore.Metadata.IMutableTrigger`
-* Looks like some code is getting the `CS1702` warning, can probably just suppress that.
-* `Refit.IApiResponse` is giving an error during a make build type. Looks like a property is marked with `[MemberNotNullWhen(false, nameof(Error))]`, which...I can't get my code gen tool to actually gen the mock code :(. So I'm not sure what's wrong. Well, it's because the property is returning `default!`, which is `false`, which causes the `CS8775` warning. Frankly, the easiest way to fix this is to put a `#pragma warning disable CS8775` around the member "return". There is also a `MemberNotNull` attribute, so I may want to "fix" that one as well. Whee. I think if I had `PragmaDisable(string[])` and `PragmaRestore(string[])` around the entire make creation with a known list of code, that'll do the trick.
+* FIXED - Looks like some code is getting the `CS1702` warning, can probably just suppress that.
+* REPORTED - `Refit.IApiResponse` is giving an error during a make build type. Looks like a property is marked with `[MemberNotNullWhen(false, nameof(Error))]`, which...I can't get my code gen tool to actually gen the mock code :(. So I'm not sure what's wrong. Well, it's because the property is returning `default!`, which is `false`, which causes the `CS8775` warning. Frankly, the easiest way to fix this is to put a `#pragma warning disable CS8775` around the member "return". There is also a `MemberNotNull` attribute, so I may want to "fix" that one as well. Whee. I think if I had `PragmaDisable(string[])` and `PragmaRestore(string[])` around the entire make creation with a known list of code, that'll do the trick.
