@@ -2,10 +2,8 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Rocks.CodeGenerationTest.Extensions;
-using Rocks.Extensions;
 using Rocks.Models;
 using System.CodeDom.Compiler;
-using System.Collections.Concurrent;
 using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Globalization;
@@ -138,10 +136,10 @@ internal static class TestGenerator
             }
         }
 
-        return validTypes.ToArray();
+        return [.. validTypes];
     }
 
-    internal static (ImmutableArray<Issue> issues, int mockCount) Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
+    internal static ImmutableArray<Issue> Generate(IIncrementalGenerator generator, Type[] targetTypes, Type[] typesToLoadAssembliesFrom,
         Dictionary<Type, Dictionary<string, string>>? genericTypeMappings, string[] aliases, BuildType buildType)
     {
         var isCreate = buildType == BuildType.Create;

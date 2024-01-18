@@ -1,8 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis;
 using NUnit.Framework;
-using Rocks.Diagnostics;
-using Rocks.Descriptors;
 
 namespace Rocks.Tests.Generators;
 
