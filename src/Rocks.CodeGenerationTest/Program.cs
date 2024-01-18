@@ -52,16 +52,12 @@ static void TestWithCode()
 		[]);
 }
 
-static void TestWithType()
-{
-	var (issues, _) = TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(IParsable<>)],
+static void TestWithType() =>
+	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
+		[typeof(Refit.IApiResponse)],
 		[],
 		[],
-		[], BuildType.Create);
-
-	PrintIssues(issues);
-}
+		[], BuildType.Make));
 
 static void TestWithTypes()
 {
@@ -205,7 +201,7 @@ static void TestWithTypes()
 			issues.AddRange(createIssues);
 
 			Console.WriteLine($"Testing {targetMapping.type.Assembly.GetName().Name} - {BuildType.Make}");
-			var makeIssues  = TestGenerator.Generate(
+			var makeIssues = TestGenerator.Generate(
 				new RockAttributeGenerator(), discoveredTypes, typesToLoadAssembliesFrom, genericTypeMappings, targetMapping.aliases, BuildType.Make);
 			issues.AddRange(makeIssues);
 

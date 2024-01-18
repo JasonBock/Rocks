@@ -477,7 +477,7 @@ public static class RockAttributeGeneratorTests
 			.WithSpan(10, 13, 10, 13);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { diagnostic });
+			[diagnostic]);
 	}
 
 	[Test]
@@ -601,7 +601,7 @@ public static class RockAttributeGeneratorTests
 			.WithSpan(11, 3, 11, 3);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
-			new[] { diagnostic });
+			[diagnostic]);
 	}
 
 	[Test]
@@ -790,7 +790,7 @@ public static class RockAttributeGeneratorTests
 			.WithSpan(10, 13, 10, 13);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			Enumerable.Empty<(Type, string, string)>(),
-			new[] { diagnostic });
+			[diagnostic]);
 	}
 
 	[Test]
@@ -846,6 +846,6 @@ public static class RockAttributeGeneratorTests
 			.WithSpan(11, 3, 11, 3);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
 			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
-			new[] { diagnostic });
+			[diagnostic]);
 	}
 }

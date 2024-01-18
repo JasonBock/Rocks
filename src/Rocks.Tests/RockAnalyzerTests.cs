@@ -35,19 +35,25 @@ public static class RockAnalyzerTests
 	}
 
 	[Test]
-	public static async Task AnalyzeWhenMockIsCreatedWithInvalidTargetAsync()
+	public static async Task AnalyzeWhenTypeIsErrorAsync()
 	{
 		var code =
 			"""
+			using System;
 			using Rocks;
 
-			[assembly: RockCreate<Data>]
+			[assembly: RockCreate<IBase<,>>]
 
-			public sealed class Data { }
+			public interface IBase<T1, T2> 
+			{
+				void Foo(T1 a, T2 b);
+				void MockThis();
+			}
 			""";
 
-		var diagnostic = new DiagnosticResult(CannotMockSealedTypeDescriptor.Id, DiagnosticSeverity.Error)
-			.WithSpan(3, 12, 3, 28);
-		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic]);
+		var diagnostic = new DiagnosticResult(TypeErrorDescriptor.Id, DiagnosticSeverity.Error)
+			.WithSpan(4, 12, 4, 32).WithArguments("IBase<T1, T2>");
+		var compilerDiagnostic = DiagnosticResult.CompilerError("CS7003").WithSpan(4, 23, 4, 31);
+		await TestAssistants.RunAnalyzerAsync<RockAnalyzer>(code, [diagnostic, compilerDiagnostic]);
 	}
 }

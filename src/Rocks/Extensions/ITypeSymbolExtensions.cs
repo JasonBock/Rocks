@@ -5,6 +5,10 @@ namespace Rocks.Extensions;
 
 internal static class ITypeSymbolExtensions
 {
+	internal static bool HasErrors(this ITypeSymbol self) =>
+		self.TypeKind == TypeKind.Error ||
+			(self is INamedTypeSymbol namedSelf && namedSelf.TypeArguments.Any(_ => _.HasErrors()));
+
 	internal static (int count, ITypeSymbol pointerType) GetPointerInformation(this ITypeSymbol self)
 	{
 		var count = 0;

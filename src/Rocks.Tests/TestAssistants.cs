@@ -9,8 +9,9 @@ internal static class TestAssistants
 {
 	internal static async Task RunAnalyzerAsync<TAnalyzer>(string code,
 		IEnumerable<DiagnosticResult> expectedDiagnostics,
-		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary)
-		where TAnalyzer: DiagnosticAnalyzer, new()
+		OutputKind outputKind = OutputKind.DynamicallyLinkedLibrary,
+		IEnumerable<MetadataReference>? additionalReferences = null)
+		where TAnalyzer : DiagnosticAnalyzer, new()
 	{
 		var test = new AnalyzerTest<TAnalyzer>()
 		{
@@ -23,6 +24,12 @@ internal static class TestAssistants
 		};
 
 		test.TestState.AdditionalReferences.Add(typeof(TAnalyzer).Assembly);
+
+		if (additionalReferences is not null)
+		{
+			test.TestState.AdditionalReferences.AddRange(additionalReferences);
+		}
+
 		test.TestState.ExpectedDiagnostics.AddRange(expectedDiagnostics);
 		await test.RunAsync();
 	}
@@ -58,7 +65,7 @@ internal static class TestAssistants
 
 		test.TestState.AdditionalReferences.Add(typeof(TGenerator).Assembly);
 
-		if(additionalReferences is not null)
+		if (additionalReferences is not null)
 		{
 			test.TestState.AdditionalReferences.AddRange(additionalReferences);
 		}

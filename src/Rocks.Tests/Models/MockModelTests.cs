@@ -345,7 +345,7 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
@@ -396,7 +396,7 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(0));
@@ -427,7 +427,7 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(0));
 			Assert.That(model.Information.Type.Properties, Has.Length.EqualTo(2));
@@ -454,7 +454,7 @@ public static class MockModelTests
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(model!.Diagnostics, Has.Length.EqualTo(0));
+			Assert.That(model!.Diagnostics, Is.Empty);
 			Assert.That(model!.Information!.Type.Constructors, Has.Length.EqualTo(1));
 			Assert.That(model.Information.Type.Methods, Has.Length.EqualTo(4));
 
