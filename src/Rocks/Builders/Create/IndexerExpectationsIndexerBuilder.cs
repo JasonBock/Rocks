@@ -93,6 +93,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			}
 			else
 			{
+				var handlerContext = new VariableNamingContext(property.Parameters);
 				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -106,7 +107,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 					{
 					""");
 				writer.Indent++;
@@ -131,8 +132,8 @@ internal static class IndexerExpectationsIndexerBuilder
 					};
 
 					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
-					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
-					return new(handler);
+					this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}});
 					""");
 
 				writer.Indent--;
@@ -232,6 +233,7 @@ internal static class IndexerExpectationsIndexerBuilder
 			}
 			else
 			{
+				var handlerContext = new VariableNamingContext(property.Parameters);
 				writer.WriteLine($"internal {adornmentsType} This({instanceParameters})");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -245,7 +247,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
+					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}
 					{
 					""");
 				writer.Indent++;
@@ -270,8 +272,8 @@ internal static class IndexerExpectationsIndexerBuilder
 					};
 
 					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
-					this.Expectations.handlers{{memberIdentifier}}.Add(handler);
-					return new(handler);
+					this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}});
 					""");
 
 				writer.Indent--;

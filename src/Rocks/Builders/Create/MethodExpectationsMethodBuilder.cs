@@ -119,6 +119,7 @@ internal static class MethodExpectationsMethodBuilder
 			}
 			else
 			{
+				var handlerContext = new VariableNamingContext(method);
 				writer.WriteLine($"internal {hiding}{adornmentsType} {method.Name}({instanceParameters}){extensionConstraints}");
 				writer.WriteLine("{");
 				writer.Indent++;
@@ -132,7 +133,7 @@ internal static class MethodExpectationsMethodBuilder
 				writer.WriteLine();
 				writer.WriteLines(
 					$$"""
-					var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}
+					var @{{handlerContext["handler"]}} = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}
 					{
 					""");
 				writer.Indent++;
@@ -161,8 +162,8 @@ internal static class MethodExpectationsMethodBuilder
 					};
 
 					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
-					this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
-					return new(handler);
+					this.Expectations.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					return new(@{{handlerContext["handler"]}});
 					""");
 
 				writer.Indent--;
