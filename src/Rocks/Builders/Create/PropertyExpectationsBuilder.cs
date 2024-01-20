@@ -165,7 +165,7 @@ internal static class PropertyExpectationsBuilder
 	private static IEnumerable<ExpectationMapping> BuildIndexers(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
 		Action<string> adornmentsFQNsPipeline)
 	{
-		if (mockType.Properties.Any(_ => _.IsIndexer))
+		if (mockType.Properties.Any(_ => _.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
 			writer.WriteLine($"internal sealed class IndexerExpectations");
 			writer.WriteLine("{");
@@ -426,7 +426,7 @@ internal static class PropertyExpectationsBuilder
 	private static IEnumerable<ExpectationMapping> BuildProperties(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName, 
 		Action<string> adornmentsFQNsPipeline)
 	{
-		if (mockType.Properties.Any(_ => !_.IsIndexer))
+		if (mockType.Properties.Any(_ => !_.IsIndexer && _.RequiresExplicitInterfaceImplementation == RequiresExplicitInterfaceImplementation.No))
 		{
 			writer.WriteLine($"internal sealed class PropertyExpectations");
 			writer.WriteLine("{");

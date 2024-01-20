@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Mock types with explicit and non-explicit properties/indexers now generate correct code (issue [#299](https://github.com/JasonBock/Rocks/issues/299))
 - Ignored a warning when a make was generated and `[MemberNotNullWhen]` existed (issue [#297](https://github.com/JasonBock/Rocks/issues/297))
 
 ## [8.0.0-alpha.2] - 2024-01-14
