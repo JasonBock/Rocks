@@ -14,8 +14,8 @@ var stopwatch = Stopwatch.StartNew();
 
 //TestTypeValidity();
 //TestWithCode();
-//TestWithType();
-TestWithTypes();
+TestWithType();
+//TestWithTypes();
 
 stopwatch.Stop();
 
@@ -54,10 +54,10 @@ static void TestWithCode()
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(Refit.IApiResponse)],
+		[typeof(Microsoft.EntityFrameworkCore.Metadata.IMutableTrigger)],
 		[],
 		[],
-		[], BuildType.Make));
+		[], BuildType.Create));
 
 static void TestWithTypes()
 {
