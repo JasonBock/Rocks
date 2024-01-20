@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved diagnostic reporting to an analyzer (issue [#289](https://github.com/JasonBock/Rocks/issues/289))
 - Prevented expectations from being set after a mock was created (issue [#294](https://github.com/JasonBock/Rocks/issues/294))
 
+### Fixed
+
+- Ignored a warning when a make was generated and `[MemberNotNullWhen]` existed (issue [#297](https://github.com/JasonBock/Rocks/issues/297))
+
 ## [8.0.0-alpha.2] - 2024-01-14
 
 ### Changed
