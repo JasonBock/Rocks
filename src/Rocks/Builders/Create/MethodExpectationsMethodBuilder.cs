@@ -8,10 +8,10 @@ namespace Rocks.Builders.Create;
 internal static class MethodExpectationsMethodBuilder
 {
 	internal static void Build(IndentedTextWriter writer, MethodModel method, string expectationsFullyQualifiedName,
-		Action<string> adornmentsFQNsPipeline)
+		Action<string, string, string> adornmentsFQNsPipeline)
 	{
 		static void BuildImplementation(IndentedTextWriter writer, MethodModel method, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
 		{
 			var namingContext = new VariableNamingContext(method);
 			var needsGenerationWithDefaults = false;
@@ -85,11 +85,12 @@ internal static class MethodExpectationsMethodBuilder
 					$"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			adornmentsFQNsPipeline(adornmentsType);
 			var constraints = method.Constraints;
 			var extensionConstraints = constraints.Length > 0 ?
 				$" {string.Join(" ", constraints)}" : "";
 			var hiding = method.RequiresHiding == RequiresHiding.Yes ? "new " : string.Empty;
+
+			adornmentsFQNsPipeline(adornmentsType, typeArguments, extensionConstraints);
 
 			if (isGeneratedWithDefaults)
 			{

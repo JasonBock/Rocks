@@ -32,12 +32,12 @@ internal static class MockBuilder
 		MockTypeBuilder.Build(writer, mockType, expectationsFullyQualifiedName);
 
 		var expectationMappings = new List<ExpectationMapping>();
-		var adornmentsFQNs = new HashSet<string>();
-		var adornmentsFQNsPipeline = (string adornmentsFQN) =>
+		var adornmentsFQNs = new HashSet<(string adornmentFQN, string typeArguments, string constraints)>();
+		var adornmentsFQNsPipeline = (string adornmentFQN, string typeArguments, string constraints) =>
 			{
 				if (mockType.Events.Length > 0)
 				{
-					adornmentsFQNs.Add(adornmentsFQN);
+					adornmentsFQNs.Add((adornmentFQN, typeArguments, constraints));
 				}
 			};
 

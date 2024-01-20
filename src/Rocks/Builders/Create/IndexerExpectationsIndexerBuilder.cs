@@ -8,10 +8,10 @@ namespace Rocks.Builders.Create;
 internal static class IndexerExpectationsIndexerBuilder
 {
 	private static void BuildGetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, string expectationsFullyQualifiedName,
-		Action<string> adornmentsFQNsPipeline)
+		Action<string, string, string> adornmentsFQNsPipeline)
 	{
 		static void BuildGetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
 		{
 			var propertyGetMethod = property.GetMethod!;
 			var namingContext = new VariableNamingContext(propertyGetMethod);
@@ -40,7 +40,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				adornmentsType = $"global::Rocks.Adornments<{handlerTypeName}, {callbackDelegateTypeName}, {returnType}>";
 			}
 
-			adornmentsFQNsPipeline(adornmentsType);
+			adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
 
 			var instanceParameters = string.Join(", ", propertyGetMethod.Parameters.Select(_ =>
 				{
@@ -149,10 +149,10 @@ internal static class IndexerExpectationsIndexerBuilder
 	}
 
 	private static void BuildSetter(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, 
-		string expectationsFullyQualifiedName, Action<string> adornmentsFQNsPipeline)
+		string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
 	{
 		static void BuildSetterImplementation(IndentedTextWriter writer, PropertyModel property, uint memberIdentifier, bool isGeneratedWithDefaults, 
-			string expectationsFullyQualifiedName, Action<string> adornmentsFQNsPipeline)
+			string expectationsFullyQualifiedName, Action<string, string, string> adornmentsFQNsPipeline)
 		{
 			var propertySetMethod = property.SetMethod!;
 			var namingContext = new VariableNamingContext(propertySetMethod);
@@ -173,7 +173,7 @@ internal static class IndexerExpectationsIndexerBuilder
 				MockProjectedDelegateBuilder.GetProjectedCallbackDelegateFullyQualifiedName(propertySetMethod, property.MockType) :
 				DelegateBuilder.Build(propertySetMethod.Parameters);
 			var adornmentsType = $"global::Rocks.Adornments<{expectationsFullyQualifiedName}.Handler{memberIdentifier}, {callbackDelegateTypeName}>";
-			adornmentsFQNsPipeline(adornmentsType);
+			adornmentsFQNsPipeline(adornmentsType, string.Empty, string.Empty);
 
 			// We need to put the value parameter immediately after "self"
 			// and then skip the value parameter by taking only the non-value parameters.
@@ -288,7 +288,7 @@ internal static class IndexerExpectationsIndexerBuilder
 	}
 
 	internal static void Build(IndentedTextWriter writer, PropertyModel property, PropertyAccessor accessor, string expectationsFullyQualifiedName,
-		Action<string> adornmentsFQNsPipeline)
+		Action<string, string, string> adornmentsFQNsPipeline)
 	{
 		var memberIdentifier = property.MemberIdentifier;
 
