@@ -1,6 +1,7 @@
 ﻿#define INCLUDE_PASSING
 //#define INCLUDE_FAILING
 
+using Aspose.Email.Clients.Imap.Models;
 using Microsoft.CodeAnalysis;
 using Rocks;
 using Rocks.CodeGenerationTest;
@@ -54,10 +55,10 @@ static void TestWithCode()
 
 static void TestWithType() =>
 	PrintIssues(TestGenerator.Generate(new RockAttributeGenerator(),
-		[typeof(Microsoft.EntityFrameworkCore.Metadata.IMutableTrigger)],
+		[typeof(ImapMessageSet<>)],
 		[],
-		[],
-		[], BuildType.Create));
+		AsposeMappings.GetMappedTypes(),
+		["AsposeEmailAlias"], BuildType.Create));
 
 static void TestWithTypes()
 {

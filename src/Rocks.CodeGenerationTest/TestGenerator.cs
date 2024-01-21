@@ -150,21 +150,21 @@ internal static class TestGenerator
 
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = AppDomain.CurrentDomain.GetAssemblies()
-			 .Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
-			 .Select(_ => MetadataReference.CreateFromFile(_.Location))
-			 .Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
-			 .Concat(new[]
-			 {
-					 MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
-					 MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
-			 });
+			.Where(_ => !_.IsDynamic && !string.IsNullOrWhiteSpace(_.Location))
+			.Select(_ => MetadataReference.CreateFromFile(_.Location))
+			.Concat(assemblies.Select(_ => MetadataReference.CreateFromFile(_.Location).WithAliases(aliases)))
+			.Concat(new[]
+			{
+				MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location),
+				MetadataReference.CreateFromFile(typeof(InvalidEnumArgumentException).Assembly.Location),
+			});
 
 		foreach (var typeToLoadAssembliesFrom in typesToLoadAssembliesFrom)
 		{
 			references = references.Concat(new[]
 			{
-					 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
-				});
+				 MetadataReference.CreateFromFile(typeToLoadAssembliesFrom.Assembly.Location)
+			});
 		}
 
 		var compilation = CSharpCompilation.Create("generator", new[] { syntaxTree },
@@ -293,7 +293,7 @@ internal static class TestGenerator
 		}
 
 		indentWriter.Write(
-			 """
+			"""
 			using Rocks;
 			using System;
 
