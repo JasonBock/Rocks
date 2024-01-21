@@ -690,7 +690,7 @@ public static class IndexerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "AbstractClassIndexerGetterSetter_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -902,7 +902,7 @@ public static class IndexerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1225,7 +1225,7 @@ public static class IndexerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1352,7 +1352,7 @@ public static class IndexerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveIndexersWithInit_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1708,7 +1708,7 @@ public static class IndexerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Target_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

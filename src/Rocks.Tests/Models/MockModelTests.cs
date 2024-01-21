@@ -587,7 +587,7 @@ public static class MockModelTests
 	{
 		var syntaxTree = CSharpSyntaxTree.ParseText(source);
 		var references = Shared.References.Value
-			.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location) });
+			.Concat([MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)]);
 		var compilation = CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 			references, new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: generalDiagnosticOption));
 		var model = compilation.GetSemanticModel(syntaxTree, true);

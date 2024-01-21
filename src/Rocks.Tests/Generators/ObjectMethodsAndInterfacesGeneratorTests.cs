@@ -177,7 +177,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -241,7 +241,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.StaticToString_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -465,7 +465,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -535,7 +535,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -759,7 +759,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -829,7 +829,7 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IMatchObjectobject_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

@@ -271,7 +271,7 @@ public static class NullabilityGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ConnectionBuilderobject_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ConnectionBuilderobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -562,7 +562,7 @@ public static class NullabilityGeneratorTests
 		// continues the problem that the subtype introduces when it changes
 		// the nullability annotations.
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "SubTracer_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "SubTracer_Rock_Create.g.cs", generatedCode)],
 			new[]
 			{
 				new DiagnosticResult("CS8610", DiagnosticSeverity.Error)
@@ -834,7 +834,7 @@ public static class NullabilityGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IConventionSkipNavigation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -959,7 +959,7 @@ public static class NullabilityGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IDestinationobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

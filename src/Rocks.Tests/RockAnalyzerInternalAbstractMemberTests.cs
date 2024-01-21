@@ -135,7 +135,7 @@ public static class RockAnalyzerInternalAbstractMemberTests
    {
 		var syntaxTree = CSharpSyntaxTree.ParseText(code);
 		var references = Shared.References.Value
-			.Concat(new[] { MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location) });
+			.Concat([MetadataReference.CreateFromFile(typeof(RockAttributeGenerator).Assembly.Location)]);
 		return CSharpCompilation.Create("generator", new SyntaxTree[] { syntaxTree },
 			references, new CSharpCompilationOptions(
 				OutputKind.DynamicallyLinkedLibrary, generalDiagnosticOption: ReportDiagnostic.Error));

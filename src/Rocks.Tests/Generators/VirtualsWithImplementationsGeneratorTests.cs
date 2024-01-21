@@ -261,7 +261,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.VoidMethodWithParams_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.VoidMethodWithParams_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -516,7 +516,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ValueMethodWithParams_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ValueMethodWithParams_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -649,7 +649,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -784,7 +784,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1022,7 +1022,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1262,7 +1262,7 @@ public static class VirtualsWithImplementationsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.HaveImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

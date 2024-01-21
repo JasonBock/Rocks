@@ -340,7 +340,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -406,7 +406,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -821,7 +821,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -898,7 +898,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "VisibilityIssues_Rock_Make.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1319,7 +1319,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1425,7 +1425,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "HasInternalVirtual_Rock_Make.g.cs", generatedCode)],
 			[],
 			additionalReferences: sourceReferences);
 	}
@@ -1817,7 +1817,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2206,7 +2206,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2287,7 +2287,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2368,7 +2368,7 @@ public static class NonPublicMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Test_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

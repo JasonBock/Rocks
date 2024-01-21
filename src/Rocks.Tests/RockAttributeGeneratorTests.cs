@@ -150,7 +150,7 @@ public static class RockAttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IContainNullableReferences_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IContainNullableReferences_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -273,7 +273,7 @@ public static class RockAttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -390,7 +390,7 @@ public static class RockAttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ITest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ITest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -600,7 +600,7 @@ public static class RockAttributeGeneratorTests
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
 			.WithSpan(11, 3, 11, 3);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Create.g.cs", generatedCode)],
 			[diagnostic]);
 	}
 
@@ -660,7 +660,7 @@ public static class RockAttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -749,7 +749,7 @@ public static class RockAttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -854,7 +854,7 @@ public static class RockAttributeGeneratorTests
 		var diagnostic = new DiagnosticResult("CS1513", DiagnosticSeverity.Error)
 			.WithSpan(11, 3, 11, 3);
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITest_Rock_Make.g.cs", generatedCode)],
 			[diagnostic]);
 	}
 }

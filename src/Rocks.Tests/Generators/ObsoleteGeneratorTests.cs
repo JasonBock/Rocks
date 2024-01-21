@@ -129,7 +129,7 @@ public static class ObsoleteGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IContainer_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IContainer_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -375,7 +375,7 @@ public static class ObsoleteGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Container_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Container_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -742,7 +742,7 @@ public static class ObsoleteGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -956,7 +956,7 @@ public static class ObsoleteGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IPixelShader_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

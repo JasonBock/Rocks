@@ -268,7 +268,7 @@ public static class EventGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "AbstractClassMethodReturnWithEvents_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "AbstractClassMethodReturnWithEvents_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -474,7 +474,7 @@ public static class EventGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IExplicitInterfaceImplementation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IExplicitInterfaceImplementation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -626,7 +626,7 @@ public static class EventGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -776,7 +776,7 @@ public static class EventGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveEvents_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

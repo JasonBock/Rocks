@@ -249,7 +249,7 @@ public static class HiddenMembersGeneratorTests
 			""";
 			
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.NewCopy_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.NewCopy_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -679,7 +679,7 @@ public static class HiddenMembersGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "SubClass_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "SubClass_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1200,7 +1200,7 @@ public static class HiddenMembersGeneratorTests
 			""";
 			
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ISub_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ISub_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

@@ -217,7 +217,7 @@ public static class MethodGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IMapper_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IMapper_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -375,7 +375,7 @@ public static class MethodGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveOptionalArguments_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveOptionalArguments_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -534,7 +534,7 @@ public static class MethodGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IProjection_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IProjection_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -760,7 +760,7 @@ public static class MethodGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveTooMuch_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveTooMuch_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

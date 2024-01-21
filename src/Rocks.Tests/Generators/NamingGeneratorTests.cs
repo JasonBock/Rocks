@@ -389,7 +389,7 @@ public static class NamingGeneratorTests
 		references.AddRange([firstSourceReference, secondSourceReference]);
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "FirstIUseSameNames_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "FirstIUseSameNames_Rock_Create.g.cs", generatedCode)],
 			[],
 			additionalReferences: references);
 	}
@@ -478,7 +478,7 @@ public static class NamingGeneratorTests
 		references.AddRange([firstSourceReference, secondSourceReference]);
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "FirstIUseSameNames_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "FirstIUseSameNames_Rock_Make.g.cs", generatedCode)],
 			[],
 			additionalReferences: references);
 	}
@@ -549,7 +549,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "DbSetobject_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "DbSetobject_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -792,7 +792,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveDelegate_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveDelegate_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -942,7 +942,7 @@ public static class NamingGeneratorTests
 			""";
 			
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUseKeyword_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUseKeyword_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1175,7 +1175,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "HaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "HaveNamingConflicts_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1336,7 +1336,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1487,7 +1487,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IHaveNamingConflicts_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1734,7 +1734,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "HasRequiredProperty_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "HasRequiredProperty_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1891,7 +1891,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUsesThing_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUsesThing_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2020,7 +2020,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUseMethodInformation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUseMethodInformation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2149,7 +2149,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IOperation_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IOperation_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2308,7 +2308,7 @@ public static class NamingGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "Namespace2.IUseConstraint_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "Namespace2.IUseConstraint_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

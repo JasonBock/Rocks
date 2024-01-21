@@ -130,6 +130,10 @@ internal static class ITypeSymbolExtensions
 		// If there is one, then replace "global::" with "{alias}::",
 		// but only the FIRST "global::"
 
+		// TODO: self could be a closed generic where the
+		// type arguments need aliases. I should add a test for that to see
+		// what ToDisplayString() would do in that case.
+
 		if (symbolName.StartsWith(GlobalPrefix))
 		{
 			var aliases = compilation.GetMetadataReference(self.ContainingAssembly)?.Properties.Aliases ?? ImmutableArray<string>.Empty;

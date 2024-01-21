@@ -255,7 +255,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "BaseStuff_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "BaseStuff_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -417,7 +417,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "INeedDelegate_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "INeedDelegate_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -840,7 +840,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -932,7 +932,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ITypeConstraints_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1465,7 +1465,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "TypeConstraints_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "TypeConstraints_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1566,7 +1566,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "TypeConstraints_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "TypeConstraints_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1720,7 +1720,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUnmanagedValue_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUnmanagedValue_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1972,7 +1972,7 @@ public static class ConstraintsGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Thingstring_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Thingstring_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

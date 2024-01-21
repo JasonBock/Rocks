@@ -204,7 +204,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IMessagePublishTopologyConfigurator_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -587,7 +587,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "PrivatePublicProperties_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "PrivatePublicProperties_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -862,7 +862,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "PrivatePublicProperty_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "PrivatePublicProperty_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1387,7 +1387,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MixedIndexers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MixedIndexers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1873,7 +1873,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MixedProperties_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1957,7 +1957,7 @@ public static class PropertyGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MixedProperties_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

@@ -198,7 +198,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IAllow_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IAllow_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -261,7 +261,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IAllow_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IAllow_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -582,7 +582,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Allow_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Allow_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -657,7 +657,7 @@ public static class AllowNullGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.Allow_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.Allow_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

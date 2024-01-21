@@ -199,7 +199,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IItems_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IItems_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -432,7 +432,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ConventionDispatcher_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ConventionDispatcher_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -974,7 +974,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "NotNullIfNotCases_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "NotNullIfNotCases_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1111,9 +1111,9 @@ public static class AttributeGeneratorTests
 			""";
 		
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUseTuples_Rock_Create.g.cs", generatedCode)],
 			[],
-			additionalReferences: Shared.References.Value.Concat(new[] { tupleReference as MetadataReference }));
+			additionalReferences: Shared.References.Value.Concat([tupleReference as MetadataReference]));
 	}
 
 	[Test]
@@ -1351,8 +1351,8 @@ public static class AttributeGeneratorTests
 		// which we have to have to ensure the generator doesn't emit [Dynamic],
 		// so it's expected to get CS1970.
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "HaveDynamic_Rock_Create.g.cs", generatedCode) },
-			new[] { DiagnosticResult.CompilerError("CS1970").WithSpan(9, 11, 9, 18) });
+			[(typeof(RockAttributeGenerator), "HaveDynamic_Rock_Create.g.cs", generatedCode)],
+			[DiagnosticResult.CompilerError("CS1970").WithSpan(9, 11, 9, 18)]);
 	}
 
 	[Test]
@@ -1481,7 +1481,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveGenericAttribute_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1639,7 +1639,7 @@ public static class AttributeGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHaveMultipleAttributes_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

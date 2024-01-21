@@ -329,7 +329,7 @@ public interface IA
 
 			var externalSyntaxTree = CSharpSyntaxTree.ParseText(externalCode);
 			var externalCompilation = CSharpCompilation.Create("external", new SyntaxTree[] { externalSyntaxTree },
-				Shared.References.Value.Concat(new[] { internalCompilation.ToMetadataReference() as MetadataReference }),
+				Shared.References.Value.Concat([internalCompilation.ToMetadataReference() as MetadataReference]),
 				new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));
 
 			var externalModel = externalCompilation.GetSemanticModel(externalSyntaxTree, true);

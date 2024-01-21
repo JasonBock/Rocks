@@ -240,7 +240,7 @@ public static class ClassCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -312,7 +312,7 @@ public static class ClassCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ClassTest_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 

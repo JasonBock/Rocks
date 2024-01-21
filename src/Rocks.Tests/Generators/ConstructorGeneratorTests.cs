@@ -335,7 +335,7 @@ public static class ConstructorGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "AnyOfstring, int_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "AnyOfstring, int_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

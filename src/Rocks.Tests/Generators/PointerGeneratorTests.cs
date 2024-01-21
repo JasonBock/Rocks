@@ -160,7 +160,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -320,7 +320,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -480,7 +480,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IPointerUsage_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -667,7 +667,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ISurface_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ISurface_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -858,7 +858,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1027,7 +1027,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1218,7 +1218,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1387,7 +1387,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1664,7 +1664,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -1941,7 +1941,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2190,7 +2190,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2478,7 +2478,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -2728,7 +2728,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -3016,7 +3016,7 @@ public static class PointerGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IHavePointers_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

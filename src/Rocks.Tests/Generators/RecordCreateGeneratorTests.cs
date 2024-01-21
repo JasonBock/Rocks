@@ -311,7 +311,7 @@ public static class RecordCreateGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.RecordTest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

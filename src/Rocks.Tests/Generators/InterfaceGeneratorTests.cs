@@ -268,7 +268,7 @@ public static class InterfaceGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "ISealed_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "ISealed_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -412,7 +412,7 @@ public static class InterfaceGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IRequest_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IRequest_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -554,7 +554,7 @@ public static class InterfaceGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.ITarget_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }

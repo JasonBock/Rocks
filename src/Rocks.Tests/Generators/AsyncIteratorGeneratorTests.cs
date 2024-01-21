@@ -259,7 +259,7 @@ public static class AsyncIteratorGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -332,7 +332,7 @@ public static class AsyncIteratorGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "AsyncEnumeration_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

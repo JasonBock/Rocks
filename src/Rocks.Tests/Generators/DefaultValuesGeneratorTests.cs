@@ -212,7 +212,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.IRequestobject_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -360,7 +360,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IGenericDefault_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IGenericDefault_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -412,7 +412,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IGenericDefault_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -557,7 +557,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUseInfinity_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUseInfinity_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 
@@ -609,7 +609,7 @@ public static class DefaultValuesGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "IUseInfinity_Rock_Make.g.cs", generatedCode)],
 			[]);
 	}
 }

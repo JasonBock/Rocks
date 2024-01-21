@@ -313,7 +313,7 @@ public static class InheritanceGeneratorTests
 			""";
 
 		await TestAssistants.RunGeneratorAsync<RockAttributeGenerator>(code,
-			new[] { (typeof(RockAttributeGenerator), "MockTests.JsBinaryOperator_Rock_Create.g.cs", generatedCode) },
+			[(typeof(RockAttributeGenerator), "MockTests.JsBinaryOperator_Rock_Create.g.cs", generatedCode)],
 			[]);
 	}
 }
