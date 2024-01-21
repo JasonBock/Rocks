@@ -237,14 +237,14 @@ public static class NonPublicMembersGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::VisibilityIssuesCreateExpectations.Handler0
+						var @handler = new global::VisibilityIssuesCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::VisibilityIssuesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -727,14 +727,14 @@ public static class NonPublicMembersGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::VisibilityIssuesCreateExpectations.Handler1
+						var @handler = new global::VisibilityIssuesCreateExpectations.Handler1
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-						this.Expectations.handlers1.Add(handler);
-						return new(handler);
+						this.Expectations.handlers1.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::VisibilityIssuesCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
@@ -1191,14 +1191,14 @@ public static class NonPublicMembersGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::HasInternalVirtualCreateExpectations.Handler1
+						var @handler = new global::HasInternalVirtualCreateExpectations.Handler1
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-						this.Expectations.handlers1.Add(handler);
-						return new(handler);
+						this.Expectations.handlers1.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HasInternalVirtualCreateExpectations.Handler2, global::System.Func<int>, int> GetHashCode()
@@ -1258,14 +1258,14 @@ public static class NonPublicMembersGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@key);
 							
-							var handler = new global::HasInternalVirtualCreateExpectations.Handler5
+							var @handler = new global::HasInternalVirtualCreateExpectations.Handler5
 							{
 								@key = @key,
 							};
 							
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
-							this.Expectations.handlers5.Add(handler);
-							return new(handler);
+							this.Expectations.handlers5.Add(@handler);
+							return new(@handler);
 						}
 						private global::HasInternalVirtualCreateExpectations Expectations { get; }
 					}
@@ -1688,14 +1688,14 @@ public static class NonPublicMembersGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.TestCreateExpectations.Handler0
+							var @handler = new global::MockTests.TestCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -2077,14 +2077,14 @@ public static class NonPublicMembersGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.TestCreateExpectations.Handler0
+							var @handler = new global::MockTests.TestCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.TestCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()

@@ -310,14 +310,14 @@ public static class ObsoleteGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.ContainerCreateExpectations.Handler0
+							var @handler = new global::MockTests.ContainerCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.ContainerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()

@@ -144,15 +144,15 @@ public static class DefaultValuesGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@values);
 							global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 							
-							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler0
+							var @handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler0
 							{
 								@values = @values,
 								@someStruct = @someStruct.Transform(default),
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler0, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task<object>>, global::System.Threading.Tasks.Task<object>> Send(global::Rocks.Argument<object> @values, global::MockTests.SomeStruct @someStruct = default) =>
 							this.Send(@values, global::Rocks.Arg.Is(@someStruct));
@@ -170,15 +170,15 @@ public static class DefaultValuesGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@message);
 							global::System.ArgumentNullException.ThrowIfNull(@someStruct);
 							
-							var handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler1
+							var @handler = new global::MockTests.IRequestOfobjectCreateExpectations.Handler1
 							{
 								@message = @message,
 								@someStruct = @someStruct,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IRequestOfobjectCreateExpectations.Handler1, global::System.Func<object, global::MockTests.SomeStruct, global::System.Threading.Tasks.Task>, global::System.Threading.Tasks.Task> Send(global::Rocks.Argument<object> @message, global::MockTests.SomeStruct @someStruct = default) =>
 							this.Send(@message, global::Rocks.Arg.Is(@someStruct));
@@ -321,14 +321,14 @@ public static class DefaultValuesGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@initialValue);
 						
-						var handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
+						var @handler = new global::IGenericDefaultCreateExpectations.Handler0<T>
 						{
 							@initialValue = @initialValue.Transform(default!),
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					internal global::Rocks.Adornments<global::IGenericDefaultCreateExpectations.Handler0<T>, global::System.Action<T>> Setup<T>(T @initialValue = default!) =>
 						this.Setup<T>(global::Rocks.Arg.Is(@initialValue));
@@ -518,14 +518,14 @@ public static class DefaultValuesGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IUseInfinityCreateExpectations.Handler0
+						var @handler = new global::IUseInfinityCreateExpectations.Handler0
 						{
 							@value = @value.Transform(double.PositiveInfinity),
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					internal global::Rocks.Adornments<global::IUseInfinityCreateExpectations.Handler0, global::System.Action<double>> Use(double @value = double.PositiveInfinity) =>
 						this.Use(global::Rocks.Arg.Is(@value));

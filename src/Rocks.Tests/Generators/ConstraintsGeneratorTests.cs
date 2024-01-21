@@ -185,14 +185,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::BaseStuffCreateExpectations.Handler0
+						var @handler = new global::BaseStuffCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::BaseStuffCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -218,14 +218,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@args);
 						
-						var handler = new global::BaseStuffCreateExpectations.Handler3<T>
+						var @handler = new global::BaseStuffCreateExpectations.Handler3<T>
 						{
 							@args = @args,
 						};
 						
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-						this.Expectations.handlers3.Add(handler);
-						return new(handler);
+						this.Expectations.handlers3.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::BaseStuffCreateExpectations Expectations { get; }
@@ -379,15 +379,15 @@ public static class ConstraintsGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@frame);
 						
-						var handler = new global::INeedDelegateCreateExpectations.Handler0<T>
+						var @handler = new global::INeedDelegateCreateExpectations.Handler0<T>
 						{
 							@a = @a,
 							@frame = @frame,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::INeedDelegateCreateExpectations Expectations { get; }
@@ -803,14 +803,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
 						
-						var handler = new global::ITypeConstraintsCreateExpectations.Handler7<TData>
+						var @handler = new global::ITypeConstraintsCreateExpectations.Handler7<TData>
 						{
 							@data = @data,
 						};
 						
 						if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
-						this.Expectations.handlers7.Add(handler);
-						return new(handler);
+						this.Expectations.handlers7.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::ITypeConstraintsCreateExpectations Expectations { get; }
@@ -1332,14 +1332,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::TypeConstraintsCreateExpectations.Handler0
+						var @handler = new global::TypeConstraintsCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::TypeConstraintsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1428,14 +1428,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@data);
 						
-						var handler = new global::TypeConstraintsCreateExpectations.Handler10<TData>
+						var @handler = new global::TypeConstraintsCreateExpectations.Handler10<TData>
 						{
 							@data = @data,
 						};
 						
 						if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
-						this.Expectations.handlers10.Add(handler);
-						return new(handler);
+						this.Expectations.handlers10.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::TypeConstraintsCreateExpectations Expectations { get; }
@@ -1683,14 +1683,14 @@ public static class ConstraintsGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IUnmanagedValueCreateExpectations.Handler0<TValue>
+						var @handler = new global::IUnmanagedValueCreateExpectations.Handler0<TValue>
 						{
 							@value = @value,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IUnmanagedValueCreateExpectations Expectations { get; }
@@ -1907,14 +1907,14 @@ public static class ConstraintsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.ThingOfstringCreateExpectations.Handler0
+							var @handler = new global::MockTests.ThingOfstringCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.ThingOfstringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()

@@ -195,14 +195,14 @@ public static class NullabilityGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler0
+						var @handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -230,7 +230,7 @@ public static class NullabilityGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@description);
 						global::System.ArgumentNullException.ThrowIfNull(@defaultValue);
 						
-						var handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>
+						var @handler = new global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>
 						{
 							@name = @name,
 							@description = @description,
@@ -238,8 +238,8 @@ public static class NullabilityGeneratorTests
 						};
 						
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-						this.Expectations.handlers3.Add(handler);
-						return new(handler);
+						this.Expectations.handlers3.Add(@handler);
+						return new(@handler);
 					}
 					internal global::Rocks.Adornments<global::ConnectionBuilderOfobjectCreateExpectations.Handler3<TArgumentGraphType, TArgumentType>, global::System.Func<string, string?, TArgumentType, global::ConnectionBuilder<object>>, global::ConnectionBuilder<object>> Argument<TArgumentGraphType, TArgumentType>(global::Rocks.Argument<string> @name, global::Rocks.Argument<string?> @description, TArgumentType @defaultValue = default!) where TArgumentGraphType : global::IGraphType =>
 						this.Argument<TArgumentGraphType, TArgumentType>(@name, @description, global::Rocks.Arg.Is(@defaultValue));
@@ -478,14 +478,14 @@ public static class NullabilityGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::SubTracerCreateExpectations.Handler0
+						var @handler = new global::SubTracerCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::SubTracerCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -516,7 +516,7 @@ public static class NullabilityGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@format);
 						global::System.ArgumentNullException.ThrowIfNull(@args);
 						
-						var handler = new global::SubTracerCreateExpectations.Handler4
+						var @handler = new global::SubTracerCreateExpectations.Handler4
 						{
 							@eventCache = @eventCache,
 							@source = @source,
@@ -527,8 +527,8 @@ public static class NullabilityGeneratorTests
 						};
 						
 						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-						this.Expectations.handlers4.Add(handler);
-						return new(handler);
+						this.Expectations.handlers4.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::SubTracerCreateExpectations Expectations { get; }

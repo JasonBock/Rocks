@@ -156,7 +156,7 @@ public static class MethodGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@parameters);
 							global::System.ArgumentNullException.ThrowIfNull(@membersToExpand);
 							
-							var handler = new global::MockTests.IMapperCreateExpectations.Handler0<TDestination>
+							var @handler = new global::MockTests.IMapperCreateExpectations.Handler0<TDestination>
 							{
 								@source = @source,
 								@parameters = @parameters.Transform(null),
@@ -164,8 +164,8 @@ public static class MethodGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IMapperCreateExpectations.Handler0<TDestination>, global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand) =>
 							this.ProjectTo<TDestination>(@source, global::Rocks.Arg.Is(@parameters), global::Rocks.Arg.Is(@membersToExpand));
@@ -177,7 +177,7 @@ public static class MethodGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@parameters);
 							global::System.ArgumentNullException.ThrowIfNull(@membersToExpand);
 							
-							var handler = new global::MockTests.IMapperCreateExpectations.Handler1<TDestination>
+							var @handler = new global::MockTests.IMapperCreateExpectations.Handler1<TDestination>
 							{
 								@source = @source,
 								@parameters = @parameters,
@@ -185,8 +185,8 @@ public static class MethodGeneratorTests
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IMapperCreateExpectations Expectations { get; }
@@ -333,7 +333,7 @@ public static class MethodGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@c);
 							
-							var handler = new global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0
+							var @handler = new global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0
 							{
 								@a = @a,
 								@b = @b.Transform("b"),
@@ -341,8 +341,8 @@ public static class MethodGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>> Foo(global::Rocks.Argument<int> @a, string @b = "b", double @c = 3.2) =>
 							this.Foo(@a, global::Rocks.Arg.Is(@b), global::Rocks.Arg.Is(@c));
@@ -492,7 +492,7 @@ public static class MethodGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@values);
 							
-							var handler = new global::MockTests.IProjectionCreateExpectations.Handler0
+							var @handler = new global::MockTests.IProjectionCreateExpectations.Handler0
 							{
 								@a = @a,
 								@b = @b.Transform(22),
@@ -500,8 +500,8 @@ public static class MethodGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IProjectionCreateExpectations.Handler0, global::System.Action<string, int, global::System.Guid[]>> Project(global::Rocks.Argument<string> @a, int @b = 22, params global::System.Guid[] @values) =>
 							this.Project(@a, global::Rocks.Arg.Is(@b), global::Rocks.Arg.Is(@values));
@@ -703,7 +703,7 @@ public static class MethodGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@i18);
 							global::System.ArgumentNullException.ThrowIfNull(@i19);
 							
-							var handler = new global::MockTests.IHaveTooMuchCreateExpectations.Handler0
+							var @handler = new global::MockTests.IHaveTooMuchCreateExpectations.Handler0
 							{
 								@i0 = @i0,
 								@i1 = @i1,
@@ -728,8 +728,8 @@ public static class MethodGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IHaveTooMuchCreateExpectations Expectations { get; }

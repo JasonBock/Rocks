@@ -187,14 +187,14 @@ public static class AsyncIteratorGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::AsyncEnumerationCreateExpectations.Handler0
+						var @handler = new global::AsyncEnumerationCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -220,14 +220,14 @@ public static class AsyncIteratorGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@cancellationToken);
 						
-						var handler = new global::AsyncEnumerationCreateExpectations.Handler3
+						var @handler = new global::AsyncEnumerationCreateExpectations.Handler3
 						{
 							@cancellationToken = @cancellationToken.Transform(default),
 						};
 						
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-						this.Expectations.handlers3.Add(handler);
-						return new(handler);
+						this.Expectations.handlers3.Add(@handler);
+						return new(@handler);
 					}
 					internal global::Rocks.Adornments<global::AsyncEnumerationCreateExpectations.Handler3, global::System.Func<global::System.Threading.CancellationToken, global::System.Collections.Generic.IAsyncEnumerable<string>>, global::System.Collections.Generic.IAsyncEnumerable<string>> GetRecordsAsync(global::System.Threading.CancellationToken @cancellationToken = default) =>
 						this.GetRecordsAsync(global::Rocks.Arg.Is(@cancellationToken));

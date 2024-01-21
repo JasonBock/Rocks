@@ -105,14 +105,14 @@ public static class MultipleModelGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MockTests.ITargetCreateExpectations.Handler0
+							var @handler = new global::MockTests.ITargetCreateExpectations.Handler0
 							{
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.ITargetCreateExpectations Expectations { get; }

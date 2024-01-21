@@ -190,14 +190,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.VoidMethodWithParamsCreateExpectations.Handler0
+							var @handler = new global::MockTests.VoidMethodWithParamsCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.VoidMethodWithParamsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -223,14 +223,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@values);
 							
-							var handler = new global::MockTests.VoidMethodWithParamsCreateExpectations.Handler3
+							var @handler = new global::MockTests.VoidMethodWithParamsCreateExpectations.Handler3
 							{
 								@values = @values,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.VoidMethodWithParamsCreateExpectations Expectations { get; }
@@ -445,14 +445,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.ValueMethodWithParamsCreateExpectations.Handler0
+							var @handler = new global::MockTests.ValueMethodWithParamsCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.ValueMethodWithParamsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -478,14 +478,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@values);
 							
-							var handler = new global::MockTests.ValueMethodWithParamsCreateExpectations.Handler3
+							var @handler = new global::MockTests.ValueMethodWithParamsCreateExpectations.Handler3
 							{
 								@values = @values,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.ValueMethodWithParamsCreateExpectations Expectations { get; }
@@ -957,14 +957,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.HaveImplementationCreateExpectations.Handler0
+							var @handler = new global::MockTests.HaveImplementationCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.HaveImplementationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1197,14 +1197,14 @@ public static class VirtualsWithImplementationsGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.HaveImplementationCreateExpectations.Handler0
+							var @handler = new global::MockTests.HaveImplementationCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.HaveImplementationCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()

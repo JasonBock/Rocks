@@ -111,15 +111,15 @@ public static class RockAttributeGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::MockTests.IContainNullableReferencesCreateExpectations.Handler0
+							var @handler = new global::MockTests.IContainNullableReferencesCreateExpectations.Handler0
 							{
 								@a = @a,
 								@b = @b,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IContainNullableReferencesCreateExpectations Expectations { get; }

@@ -630,29 +630,29 @@ public static class ShimBuilderGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@dimKey);
 							global::System.ArgumentNullException.ThrowIfNull(@dimValue);
 							
-							var handler = new global::IHaveDimsCreateExpectations.Handler3
+							var @handler = new global::IHaveDimsCreateExpectations.Handler3
 							{
 								@dimKey = @dimKey,
 								@dimValue = @dimValue,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveDimsCreateExpectations.Handler5, global::System.Func<string, int>, int> This(global::Rocks.Argument<string> @notDimKey)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@notDimKey);
 							
-							var handler = new global::IHaveDimsCreateExpectations.Handler5
+							var @handler = new global::IHaveDimsCreateExpectations.Handler5
 							{
 								@notDimKey = @notDimKey,
 							};
 							
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
-							this.Expectations.handlers5.Add(handler);
-							return new(handler);
+							this.Expectations.handlers5.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveDimsCreateExpectations Expectations { get; }
 					}

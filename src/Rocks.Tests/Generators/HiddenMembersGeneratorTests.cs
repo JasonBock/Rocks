@@ -184,14 +184,14 @@ public static class HiddenMembersGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.NewCopyCreateExpectations.Handler0
+							var @handler = new global::MockTests.NewCopyCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.NewCopyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -534,14 +534,14 @@ public static class HiddenMembersGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::SubClassCreateExpectations.Handler0
+						var @handler = new global::SubClassCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::SubClassCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -633,15 +633,15 @@ public static class HiddenMembersGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::SubClassCreateExpectations.Handler10
+							var @handler = new global::SubClassCreateExpectations.Handler10
 							{
 								@a = @a,
 								@b = @b,
 							};
 							
 							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
-							this.Expectations.handlers10.Add(handler);
-							return new(handler);
+							this.Expectations.handlers10.Add(@handler);
+							return new(@handler);
 						}
 						private global::SubClassCreateExpectations Expectations { get; }
 					}
@@ -1075,15 +1075,15 @@ public static class HiddenMembersGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::ISubCreateExpectations.Handler4
+							var @handler = new global::ISubCreateExpectations.Handler4
 							{
 								@a = @a,
 								@b = @b,
 							};
 							
 							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-							this.Expectations.handlers4.Add(handler);
-							return new(handler);
+							this.Expectations.handlers4.Add(@handler);
+							return new(@handler);
 						}
 						private global::ISubCreateExpectations Expectations { get; }
 					}
@@ -1152,15 +1152,15 @@ public static class HiddenMembersGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::ISubCreateExpectations.Handler7
+							var @handler = new global::ISubCreateExpectations.Handler7
 							{
 								@a = @a,
 								@b = @b,
 							};
 							
 							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
-							this.Expectations.handlers7.Add(handler);
-							return new(handler);
+							this.Expectations.handlers7.Add(@handler);
+							return new(@handler);
 						}
 						private global::ISubCreateExpectations Expectations { get; }
 					}

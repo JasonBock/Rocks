@@ -224,14 +224,14 @@ public static class RecordCreateGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@builder);
 							
-							var handler = new global::MockTests.RecordTestCreateExpectations.Handler4
+							var @handler = new global::MockTests.RecordTestCreateExpectations.Handler4
 							{
 								@builder = @builder,
 							};
 							
 							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-							this.Expectations.handlers4.Add(handler);
-							return new(handler);
+							this.Expectations.handlers4.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int> GetHashCode()

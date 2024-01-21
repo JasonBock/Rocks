@@ -350,14 +350,14 @@ public static class NamingGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IUseSameNamesCreateExpectations.Handler0
+						var @handler = new global::IUseSameNamesCreateExpectations.Handler0
 						{
 							@value = @value,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IUseSameNamesCreateExpectations Expectations { get; }
@@ -723,14 +723,14 @@ public static class NamingGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::IHaveDelegateCreateExpectations.Handler0
+						var @handler = new global::IHaveDelegateCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::IHaveDelegateCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -903,7 +903,7 @@ public static class NamingGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@event);
 						global::System.ArgumentNullException.ThrowIfNull(@property);
 						
-						var handler = new global::IUseKeywordCreateExpectations.Handler0
+						var @handler = new global::IUseKeywordCreateExpectations.Handler0
 						{
 							@namespace = @namespace,
 							@event = @event,
@@ -911,8 +911,8 @@ public static class NamingGeneratorTests
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IUseKeywordCreateExpectations Expectations { get; }
@@ -1111,14 +1111,14 @@ public static class NamingGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::HaveNamingConflictsCreateExpectations.Handler0
+						var @handler = new global::HaveNamingConflictsCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HaveNamingConflictsCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1289,7 +1289,7 @@ public static class NamingGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@result2);
 							global::System.ArgumentNullException.ThrowIfNull(@self);
 							
-							var handler = new global::IHaveNamingConflictsCreateExpectations.Handler0
+							var @handler = new global::IHaveNamingConflictsCreateExpectations.Handler0
 							{
 								@methodHandlers = @methodHandlers,
 								@methodHandler = @methodHandler,
@@ -1299,8 +1299,8 @@ public static class NamingGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
 					}
@@ -1446,7 +1446,7 @@ public static class NamingGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@result2);
 						global::System.ArgumentNullException.ThrowIfNull(@self);
 						
-						var handler = new global::IHaveNamingConflictsCreateExpectations.Handler0
+						var @handler = new global::IHaveNamingConflictsCreateExpectations.Handler0
 						{
 							@methodHandlers = @methodHandlers,
 							@methodHandler = @methodHandler,
@@ -1456,8 +1456,8 @@ public static class NamingGeneratorTests
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IHaveNamingConflictsCreateExpectations Expectations { get; }
@@ -1661,14 +1661,14 @@ public static class NamingGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::HasRequiredPropertyCreateExpectations.Handler0
+						var @handler = new global::HasRequiredPropertyCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HasRequiredPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1853,15 +1853,15 @@ public static class NamingGeneratorTests
 						global::System.ArgumentNullException.ThrowIfNull(@thing);
 						global::System.ArgumentNullException.ThrowIfNull(@stuff);
 						
-						var handler = new global::IUsesThingCreateExpectations.Handler0
+						var @handler = new global::IUsesThingCreateExpectations.Handler0
 						{
 							@thing = @thing,
 							@stuff = @stuff,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IUsesThingCreateExpectations Expectations { get; }
@@ -2270,14 +2270,14 @@ public static class NamingGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::Namespace2.IUseConstraintCreateExpectations.Handler0<T>
+							var @handler = new global::Namespace2.IUseConstraintCreateExpectations.Handler0<T>
 							{
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::Namespace2.IUseConstraintCreateExpectations Expectations { get; }

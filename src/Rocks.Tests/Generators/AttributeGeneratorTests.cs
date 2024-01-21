@@ -368,14 +368,14 @@ public static class AttributeGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::ConventionDispatcherCreateExpectations.Handler0
+						var @handler = new global::ConventionDispatcherCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::ConventionDispatcherCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -786,14 +786,14 @@ public static class AttributeGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler0
+						var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -819,14 +819,14 @@ public static class AttributeGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@node);
 						
-						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler3
+						var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler3
 						{
 							@node = @node,
 						};
 						
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-						this.Expectations.handlers3.Add(handler);
-						return new(handler);
+						this.Expectations.handlers3.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal global::Rocks.Adornments<global::NotNullIfNotCasesCreateExpectations.Handler4, global::System.Func<object?, object?>, object?> VisitParameter(global::Rocks.Argument<object?> @node)
@@ -834,14 +834,14 @@ public static class AttributeGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@node);
 						
-						var handler = new global::NotNullIfNotCasesCreateExpectations.Handler4
+						var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler4
 						{
 							@node = @node,
 						};
 						
 						if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-						this.Expectations.handlers4.Add(handler);
-						return new(handler);
+						this.Expectations.handlers4.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
@@ -905,14 +905,14 @@ public static class AttributeGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@node);
 							
-							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler7
+							var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler7
 							{
 								@node = @node,
 							};
 							
 							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
-							this.Expectations.handlers7.Add(handler);
-							return new(handler);
+							this.Expectations.handlers7.Add(@handler);
+							return new(@handler);
 						}
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
@@ -928,15 +928,15 @@ public static class AttributeGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@node);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::NotNullIfNotCasesCreateExpectations.Handler8
+							var @handler = new global::NotNullIfNotCasesCreateExpectations.Handler8
 							{
 								@node = @node,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers8 is null ) { this.Expectations.handlers8 = new(); }
-							this.Expectations.handlers8.Add(handler);
-							return new(handler);
+							this.Expectations.handlers8.Add(@handler);
+							return new(@handler);
 						}
 						private global::NotNullIfNotCasesCreateExpectations Expectations { get; }
 					}
@@ -1284,14 +1284,14 @@ public static class AttributeGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::HaveDynamicCreateExpectations.Handler0
+						var @handler = new global::HaveDynamicCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::HaveDynamicCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1601,14 +1601,14 @@ public static class AttributeGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							
-							var handler = new global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0
+							var @handler = new global::MockTests.IHaveMultipleAttributesCreateExpectations.Handler0
 							{
 								@data = @data,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IHaveMultipleAttributesCreateExpectations Expectations { get; }

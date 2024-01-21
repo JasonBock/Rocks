@@ -231,7 +231,7 @@ public static class CastingGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>
+							var @handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler0<T>
 							{
 								@value = @value,
 								@data = @data,
@@ -239,8 +239,8 @@ public static class CastingGeneratorTests
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>, global::System.Func<T, string, global::System.Guid, T>, T> HasGenericsWithReturn<T>(global::Rocks.Argument<T> @value, global::Rocks.Argument<string> @data, global::Rocks.Argument<global::System.Guid> @information)
@@ -250,7 +250,7 @@ public static class CastingGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							global::System.ArgumentNullException.ThrowIfNull(@information);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>
+							var @handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler1<T>
 							{
 								@value = @value,
 								@data = @data,
@@ -258,8 +258,8 @@ public static class CastingGeneratorTests
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2, global::System.Action<int, string>> NoGenerics(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
@@ -268,15 +268,15 @@ public static class CastingGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2
+							var @handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2
 							{
 								@value = @value,
 								@data = @data,
 							};
 							
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
-							this.Expectations.handlers2.Add(handler);
-							return new(handler);
+							this.Expectations.handlers2.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3, global::System.Func<int, string, int>, int> NoGenericsWithReturn(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @data)
@@ -285,15 +285,15 @@ public static class CastingGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							global::System.ArgumentNullException.ThrowIfNull(@data);
 							
-							var handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3
+							var @handler = new global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3
 							{
 								@value = @value,
 								@data = @data,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations Expectations { get; }

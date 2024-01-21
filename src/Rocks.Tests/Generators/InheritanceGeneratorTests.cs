@@ -227,14 +227,14 @@ public static class InheritanceGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler0
+							var @handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -260,14 +260,14 @@ public static class InheritanceGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@scope);
 							
-							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler4
+							var @handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler4
 							{
 								@scope = @scope,
 							};
 							
 							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-							this.Expectations.handlers4.Add(handler);
-							return new(handler);
+							this.Expectations.handlers4.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.JsBinaryOperatorCreateExpectations.Handler5, global::System.Func<object, object>, object> Evaluate(global::Rocks.Argument<object> @target)
@@ -275,14 +275,14 @@ public static class InheritanceGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@target);
 							
-							var handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler5
+							var @handler = new global::MockTests.JsBinaryOperatorCreateExpectations.Handler5
 							{
 								@target = @target,
 							};
 							
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
-							this.Expectations.handlers5.Add(handler);
-							return new(handler);
+							this.Expectations.handlers5.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.JsBinaryOperatorCreateExpectations Expectations { get; }

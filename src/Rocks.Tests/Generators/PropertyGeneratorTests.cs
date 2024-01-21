@@ -473,14 +473,14 @@ public static class PropertyGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::PrivatePublicPropertiesCreateExpectations.Handler0
+						var @handler = new global::PrivatePublicPropertiesCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -776,14 +776,14 @@ public static class PropertyGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::PrivatePublicPropertyCreateExpectations.Handler0
+						var @handler = new global::PrivatePublicPropertyCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::PrivatePublicPropertyCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1216,14 +1216,14 @@ public static class PropertyGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::MixedIndexersCreateExpectations.Handler0
+						var @handler = new global::MixedIndexersCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1259,42 +1259,42 @@ public static class PropertyGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler3
+							var @handler = new global::MixedIndexersCreateExpectations.Handler3
 							{
 								@index = @index,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler5, global::System.Func<long, string?>, string?> This(global::Rocks.Argument<long> @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler5
+							var @handler = new global::MixedIndexersCreateExpectations.Handler5
 							{
 								@index = @index,
 							};
 							
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
-							this.Expectations.handlers5.Add(handler);
-							return new(handler);
+							this.Expectations.handlers5.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler9, global::System.Func<string, string?>, string?> This(global::Rocks.Argument<string> @index)
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler9
+							var @handler = new global::MixedIndexersCreateExpectations.Handler9
 							{
 								@index = @index,
 							};
 							
 							if (this.Expectations.handlers9 is null ) { this.Expectations.handlers9 = new(); }
-							this.Expectations.handlers9.Add(handler);
-							return new(handler);
+							this.Expectations.handlers9.Add(@handler);
+							return new(@handler);
 						}
 						private global::MixedIndexersCreateExpectations Expectations { get; }
 					}
@@ -1310,15 +1310,15 @@ public static class PropertyGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler6
+							var @handler = new global::MixedIndexersCreateExpectations.Handler6
 							{
 								@index = @index,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
-							this.Expectations.handlers6.Add(handler);
-							return new(handler);
+							this.Expectations.handlers6.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler7, global::System.Action<global::System.Guid, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<global::System.Guid> @index)
 						{
@@ -1326,15 +1326,15 @@ public static class PropertyGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler7
+							var @handler = new global::MixedIndexersCreateExpectations.Handler7
 							{
 								@index = @index,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers7 is null ) { this.Expectations.handlers7 = new(); }
-							this.Expectations.handlers7.Add(handler);
-							return new(handler);
+							this.Expectations.handlers7.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MixedIndexersCreateExpectations.Handler10, global::System.Action<string, string?>> This(global::Rocks.Argument<string?> @value, global::Rocks.Argument<string> @index)
 						{
@@ -1342,15 +1342,15 @@ public static class PropertyGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MixedIndexersCreateExpectations.Handler10
+							var @handler = new global::MixedIndexersCreateExpectations.Handler10
 							{
 								@index = @index,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers10 is null ) { this.Expectations.handlers10 = new(); }
-							this.Expectations.handlers10.Add(handler);
-							return new(handler);
+							this.Expectations.handlers10.Add(@handler);
+							return new(@handler);
 						}
 						private global::MixedIndexersCreateExpectations Expectations { get; }
 					}
@@ -1726,14 +1726,14 @@ public static class PropertyGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::MixedPropertiesCreateExpectations.Handler0
+						var @handler = new global::MixedPropertiesCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::MixedPropertiesCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()

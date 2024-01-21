@@ -195,14 +195,14 @@ public static class IndexerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@name);
 							
-							var handler = new global::ISubIndexCreateExpectations.Handler1
+							var @handler = new global::ISubIndexCreateExpectations.Handler1
 							{
 								@name = @name,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						private global::ISubIndexCreateExpectations Expectations { get; }
 					}
@@ -224,14 +224,14 @@ public static class IndexerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@name);
 							
-							var handler = new global::ISubIndexCreateExpectations.Handler2
+							var @handler = new global::ISubIndexCreateExpectations.Handler2
 							{
 								@name = @name,
 							};
 							
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
-							this.Expectations.handlers2.Add(handler);
-							return new(handler);
+							this.Expectations.handlers2.Add(@handler);
+							return new(@handler);
 						}
 						private global::ISubIndexCreateExpectations Expectations { get; }
 					}
@@ -545,14 +545,14 @@ public static class IndexerGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@obj);
 						
-						var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0
+						var @handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler0
 						{
 							@obj = @obj,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal new global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -588,14 +588,14 @@ public static class IndexerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							
-							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3
+							var @handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler3
 							{
 								@a = @a,
 							};
 							
 							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(handler);
-							return new(handler);
+							this.Expectations.handlers3.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
@@ -603,15 +603,15 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5
+							var @handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler5
 							{
 								@a = @a,
 								@b = @b,
 							};
 							
 							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
-							this.Expectations.handlers5.Add(handler);
-							return new(handler);
+							this.Expectations.handlers5.Add(@handler);
+							return new(@handler);
 						}
 						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 					}
@@ -627,15 +627,15 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4
+							var @handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler4
 							{
 								@a = @a,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-							this.Expectations.handlers4.Add(handler);
-							return new(handler);
+							this.Expectations.handlers4.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
@@ -644,7 +644,7 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6
+							var @handler = new global::AbstractClassIndexerGetterSetterCreateExpectations.Handler6
 							{
 								@a = @a,
 								@b = @b,
@@ -652,8 +652,8 @@ public static class IndexerGeneratorTests
 							};
 							
 							if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
-							this.Expectations.handlers6.Add(handler);
-							return new(handler);
+							this.Expectations.handlers6.Add(@handler);
+							return new(@handler);
 						}
 						private global::AbstractClassIndexerGetterSetterCreateExpectations Expectations { get; }
 					}
@@ -828,15 +828,15 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							
-							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
+							var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler0
 							{
 								@a = @a,
 								@b = @b.Transform("b"),
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Func<int, string, int>, int> This(global::Rocks.Argument<int> @a, string @b = "b") =>
 							this.This(@a, global::Rocks.Arg.Is(@b));
@@ -855,7 +855,7 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
+							var @handler = new global::IHaveOptionalArgumentsCreateExpectations.Handler1
 							{
 								@a = @a,
 								@b = @b.Transform("b"),
@@ -863,8 +863,8 @@ public static class IndexerGeneratorTests
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveOptionalArgumentsCreateExpectations.Handler1, global::System.Action<int, string, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<int> @a, string @b = "b") =>
 							this.This(@value, @a, global::Rocks.Arg.Is(@b));
@@ -1096,15 +1096,15 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@a);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler0
+							var @handler = new global::IHaveIndexersWithInitCreateExpectations.Handler0
 							{
 								@a = @a,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler1, global::System.Action<int, string, string>> This(global::Rocks.Argument<string> @value, global::Rocks.Argument<int> @a, global::Rocks.Argument<string> @b)
 						{
@@ -1113,7 +1113,7 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@b);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler1
+							var @handler = new global::IHaveIndexersWithInitCreateExpectations.Handler1
 							{
 								@a = @a,
 								@b = @b,
@@ -1121,8 +1121,8 @@ public static class IndexerGeneratorTests
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::IHaveIndexersWithInitCreateExpectations.Handler2, global::System.Action<string, int, global::System.Guid, int>> This(global::Rocks.Argument<int> @value, global::Rocks.Argument<string> @a, global::Rocks.Argument<int> @b, global::Rocks.Argument<global::System.Guid> @c)
 						{
@@ -1132,7 +1132,7 @@ public static class IndexerGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@c);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveIndexersWithInitCreateExpectations.Handler2
+							var @handler = new global::IHaveIndexersWithInitCreateExpectations.Handler2
 							{
 								@a = @a,
 								@b = @b,
@@ -1141,8 +1141,8 @@ public static class IndexerGeneratorTests
 							};
 							
 							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
-							this.Expectations.handlers2.Add(handler);
-							return new(handler);
+							this.Expectations.handlers2.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveIndexersWithInitCreateExpectations Expectations { get; }
 					}
@@ -1574,14 +1574,14 @@ public static class IndexerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.TargetCreateExpectations.Handler0
+							var @handler = new global::MockTests.TargetCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.TargetCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -1617,14 +1617,14 @@ public static class IndexerGeneratorTests
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@a);
 								
-								var handler = new global::MockTests.TargetCreateExpectations.Handler3
+								var @handler = new global::MockTests.TargetCreateExpectations.Handler3
 								{
 									@a = @a,
 								};
 								
 								if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-								this.Expectations.handlers3.Add(handler);
-								return new(handler);
+								this.Expectations.handlers3.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.TargetCreateExpectations Expectations { get; }
 						}
@@ -1640,15 +1640,15 @@ public static class IndexerGeneratorTests
 								global::System.ArgumentNullException.ThrowIfNull(@a);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
-								var handler = new global::MockTests.TargetCreateExpectations.Handler4
+								var @handler = new global::MockTests.TargetCreateExpectations.Handler4
 								{
 									@a = @a,
 									@value = @value,
 								};
 								
 								if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-								this.Expectations.handlers4.Add(handler);
-								return new(handler);
+								this.Expectations.handlers4.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.TargetCreateExpectations Expectations { get; }
 						}

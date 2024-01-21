@@ -630,14 +630,14 @@ public static class PointerGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@allocator);
 						
-						var handler = new global::ISurfaceCreateExpectations.Handler0<T>
+						var @handler = new global::ISurfaceCreateExpectations.Handler0<T>
 						{
 							@allocator = @allocator,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::ISurfaceCreateExpectations Expectations { get; }
@@ -820,14 +820,14 @@ public static class PointerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+							var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 							{
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
@@ -1180,14 +1180,14 @@ public static class PointerGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+							var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 							{
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
@@ -2122,14 +2122,14 @@ public static class PointerGeneratorTests
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 								{
 									@index = @index,
 								};
 								
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-								this.Expectations.handlers0.Add(handler);
-								return new(handler);
+								this.Expectations.handlers0.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2145,15 +2145,15 @@ public static class PointerGeneratorTests
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									@index = @index,
 									@value = @value,
 								};
 								
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-								this.Expectations.handlers1.Add(handler);
-								return new(handler);
+								this.Expectations.handlers1.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2410,14 +2410,14 @@ public static class PointerGeneratorTests
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 								{
 									@index = @index,
 								};
 								
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-								this.Expectations.handlers0.Add(handler);
-								return new(handler);
+								this.Expectations.handlers0.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2433,15 +2433,15 @@ public static class PointerGeneratorTests
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									@index = @index,
 									@value = @value,
 								};
 								
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-								this.Expectations.handlers1.Add(handler);
-								return new(handler);
+								this.Expectations.handlers1.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2660,14 +2660,14 @@ public static class PointerGeneratorTests
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 								{
 									@index = @index,
 								};
 								
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-								this.Expectations.handlers0.Add(handler);
-								return new(handler);
+								this.Expectations.handlers0.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2683,15 +2683,15 @@ public static class PointerGeneratorTests
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									@index = @index,
 									@value = @value,
 								};
 								
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-								this.Expectations.handlers1.Add(handler);
-								return new(handler);
+								this.Expectations.handlers1.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2948,14 +2948,14 @@ public static class PointerGeneratorTests
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler0
 								{
 									@index = @index,
 								};
 								
 								if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-								this.Expectations.handlers0.Add(handler);
-								return new(handler);
+								this.Expectations.handlers0.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}
@@ -2971,15 +2971,15 @@ public static class PointerGeneratorTests
 								global::System.ArgumentNullException.ThrowIfNull(@index);
 								global::System.ArgumentNullException.ThrowIfNull(@value);
 								
-								var handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
+								var @handler = new global::MockTests.IHavePointersCreateExpectations.Handler1
 								{
 									@index = @index,
 									@value = @value,
 								};
 								
 								if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-								this.Expectations.handlers1.Add(handler);
-								return new(handler);
+								this.Expectations.handlers1.Add(@handler);
+								return new(@handler);
 							}
 							private global::MockTests.IHavePointersCreateExpectations Expectations { get; }
 						}

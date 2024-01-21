@@ -105,14 +105,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler0
+						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
 							@value = @value,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IParameterModifierCreateExpectations Expectations { get; }
@@ -304,14 +304,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler0
+						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
 							@value = global::Rocks.Arg.Any<string>(),
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IParameterModifierCreateExpectations Expectations { get; }
@@ -503,14 +503,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler0
+						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
 							@value = @value,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IParameterModifierCreateExpectations Expectations { get; }
@@ -696,14 +696,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@value);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler0
+						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
 							@value = @value,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IParameterModifierCreateExpectations Expectations { get; }
@@ -1023,14 +1023,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler0
+						var @handler = new global::IParameterModifierCreateExpectations.Handler0
 						{
 							@a = @a,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler1<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_595359563624402850359397691594068887527805892984<T1, T2>> RefArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
@@ -1039,15 +1039,15 @@ public static class ParameterModifierTests
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler1<T1, T2>
+						var @handler = new global::IParameterModifierCreateExpectations.Handler1<T1, T2>
 						{
 							@a = @a,
 							@b = @b,
 						};
 						
 						if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-						this.Expectations.handlers1.Add(handler);
-						return new(handler);
+						this.Expectations.handlers1.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler2, global::IParameterModifierCreateExpectations.Projections.Callback_360038979746784102455204459622175388488035293924> OutArgument(global::Rocks.Argument<int> @a)
@@ -1055,14 +1055,14 @@ public static class ParameterModifierTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler2
+						var @handler = new global::IParameterModifierCreateExpectations.Handler2
 						{
 							@a = global::Rocks.Arg.Any<int>(),
 						};
 						
 						if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
-						this.Expectations.handlers2.Add(handler);
-						return new(handler);
+						this.Expectations.handlers2.Add(@handler);
+						return new(@handler);
 					}
 					
 					internal global::Rocks.Adornments<global::IParameterModifierCreateExpectations.Handler3<T1, T2>, global::IParameterModifierCreateExpectations.Projections.Callback_376795512182245354180779374814988822523603172187<T1, T2>> OutArgumentsWithGenerics<T1, T2>(global::Rocks.Argument<T1> @a, global::Rocks.Argument<T2> @b)
@@ -1071,15 +1071,15 @@ public static class ParameterModifierTests
 						global::System.ArgumentNullException.ThrowIfNull(@a);
 						global::System.ArgumentNullException.ThrowIfNull(@b);
 						
-						var handler = new global::IParameterModifierCreateExpectations.Handler3<T1, T2>
+						var @handler = new global::IParameterModifierCreateExpectations.Handler3<T1, T2>
 						{
 							@a = @a,
 							@b = global::Rocks.Arg.Any<T2>(),
 						};
 						
 						if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-						this.Expectations.handlers3.Add(handler);
-						return new(handler);
+						this.Expectations.handlers3.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IParameterModifierCreateExpectations Expectations { get; }

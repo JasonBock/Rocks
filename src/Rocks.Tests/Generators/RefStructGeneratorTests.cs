@@ -142,14 +142,14 @@ public static class RefStructGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@sourcePixels);
 						
-						var handler = new global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>
+						var @handler = new global::IUseSpanWithOpenGenericCreateExpectations.Handler0<TSourcePixel>
 						{
 							@sourcePixels = @sourcePixels,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IUseSpanWithOpenGenericCreateExpectations Expectations { get; }
@@ -314,14 +314,14 @@ public static class RefStructGeneratorTests
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 						global::System.ArgumentNullException.ThrowIfNull(@values);
 						
-						var handler = new global::IHaveRefStructCreateExpectations.Handler0
+						var @handler = new global::IHaveRefStructCreateExpectations.Handler0
 						{
 							@values = @values,
 						};
 						
 						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(handler);
-						return new(handler);
+						this.Expectations.handlers0.Add(@handler);
+						return new(@handler);
 					}
 					
 					private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -857,14 +857,14 @@ public static class RefStructGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
-							var handler = new global::IHaveRefStructCreateExpectations.Handler0
+							var @handler = new global::IHaveRefStructCreateExpectations.Handler0
 							{
 								@index = @index,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
 					}
@@ -880,15 +880,15 @@ public static class RefStructGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveRefStructCreateExpectations.Handler1
+							var @handler = new global::IHaveRefStructCreateExpectations.Handler1
 							{
 								@index = @index,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
 					}
@@ -1088,14 +1088,14 @@ public static class RefStructGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							
-							var handler = new global::IHaveRefStructCreateExpectations.Handler0
+							var @handler = new global::IHaveRefStructCreateExpectations.Handler0
 							{
 								@index = @index,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
 					}
@@ -1111,15 +1111,15 @@ public static class RefStructGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@index);
 							global::System.ArgumentNullException.ThrowIfNull(@value);
 							
-							var handler = new global::IHaveRefStructCreateExpectations.Handler1
+							var @handler = new global::IHaveRefStructCreateExpectations.Handler1
 							{
 								@index = @index,
 								@value = @value,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
 					}

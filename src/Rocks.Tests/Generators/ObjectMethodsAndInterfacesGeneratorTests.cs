@@ -130,14 +130,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@obj);
 							
-							var handler = new global::MockTests.StaticToStringCreateExpectations.Handler0
+							var @handler = new global::MockTests.StaticToStringCreateExpectations.Handler0
 							{
 								@obj = @obj,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.StaticToStringCreateExpectations.Handler1, global::System.Func<int>, int> GetHashCode()
@@ -401,14 +401,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@other);
 							
-							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
+							var @handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
 							{
 								@other = @other,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1, global::System.Func<object?, object?, bool>, bool> ReferenceEquals(global::Rocks.Argument<object?> @objA, global::Rocks.Argument<object?> @objB)
@@ -417,15 +417,15 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@objA);
 							global::System.ArgumentNullException.ThrowIfNull(@objB);
 							
-							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1
+							var @handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1
 							{
 								@objA = @objA,
 								@objB = @objB,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<object>, object> MemberwiseClone()
@@ -695,14 +695,14 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
 							global::System.ArgumentNullException.ThrowIfNull(@other);
 							
-							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
+							var @handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler0
 							{
 								@other = @other,
 							};
 							
 							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(handler);
-							return new(handler);
+							this.Expectations.handlers0.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1, global::System.Func<object?, object?, int>, int> ReferenceEquals(global::Rocks.Argument<object?> @objA, global::Rocks.Argument<object?> @objB)
@@ -711,15 +711,15 @@ public static class ObjectMethodsAndInterfacesGeneratorTests
 							global::System.ArgumentNullException.ThrowIfNull(@objA);
 							global::System.ArgumentNullException.ThrowIfNull(@objB);
 							
-							var handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1
+							var @handler = new global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler1
 							{
 								@objA = @objA,
 								@objB = @objB,
 							};
 							
 							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
-							return new(handler);
+							this.Expectations.handlers1.Add(@handler);
+							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.IMatchObjectOfobjectCreateExpectations.Handler2, global::System.Func<bool>, bool> MemberwiseClone()
