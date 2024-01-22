@@ -11,8 +11,8 @@ public class AnyOf<T1, T2>
 }
 
 // This will not generate ROCK12
-var validExpectations = Rock.Create<AnyOf<string, int>>();
+[assembly: RockCreate<AnyOf<string, int>>]
 
 // This will generate ROCK12
-var invalidExpectations = Rock.Create<AnyOf<string, string>>();
+[assembly: RockCreate<AnyOf<string, string>>]
 ```

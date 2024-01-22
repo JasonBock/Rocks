@@ -8,5 +8,5 @@ public interface IHaveStaticAbstractMembers
 }
 
 // This will generate ROCK7
-var expectations = Rock.Create<IHaveStaticAbstractMembers>();
+[assembly: RockCreate<IHaveStaticAbstractMembers>]
 ```

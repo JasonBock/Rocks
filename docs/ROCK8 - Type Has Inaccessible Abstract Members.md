@@ -9,5 +9,5 @@ public abstract class InternalTargets
 }
 
 // This will generate ROCK8
-var expectations = Rock.Create<InternalTargets>();
+[assembly: RockCreate<InternalTargets>]
 ```

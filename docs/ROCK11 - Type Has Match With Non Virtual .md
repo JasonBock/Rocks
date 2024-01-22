@@ -27,5 +27,5 @@ public abstract class TypeConverter<TType> : ITypeConverter<TypeNode>
 }
 
 // This will generate ROCK11
-var expectations = Rock.Create<TypeConverter<TypeNode>>();
+[assembly: RockCreate<TypeConverter<TypeNode>>]
 ```

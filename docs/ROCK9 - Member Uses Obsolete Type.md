@@ -10,5 +10,5 @@ public interface IUseObsolete
 } 
 
 // This will generate ROCK9
-var expectations = Rock.Create<IUseObsolete>();
+[assembly: RockCreate<IUseObsolete>]
 ```

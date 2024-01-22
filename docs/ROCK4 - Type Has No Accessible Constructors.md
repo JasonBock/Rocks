@@ -10,5 +10,5 @@ public class TypeToMock
 }
 
 // This will generate ROCK4
-var expectations = Rock.Create<TypeToMock>();
+[assembly: RockCreate<TypeToMock>]
 ```

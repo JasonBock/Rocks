@@ -7,8 +7,8 @@ public interface IBase<T1, T2>
 }
 
 // This will generate ROCK13
-var validExpectations = Rock.Create<IBase<,>>();
+[assembly: RockCreate<IBase<,>>]
 
 // This will not generate ROCK13
-var invalidExpectations = Rock.Create<IBase<int, int>>();
+[assembly: RockCreate<IBase<int, int>>]
 ```

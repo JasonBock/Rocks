@@ -5,5 +5,5 @@ If the given type is marked as being obsolete, a mock cannot be created.
 public sealed class TypeToMock { }
 
 // This will generate ROCK2
-var expectations = Rock.Create<TypeToMock>();
+[assembly: RockCreate<TypeToMock>]
 ```
