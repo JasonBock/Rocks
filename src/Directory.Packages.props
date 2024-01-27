@@ -1,41 +1,41 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AngleSharp" Version="1.0.7" />
-    <PackageVersion Include="Ardalis.GuardClauses" Version="4.3.0" />
+    <PackageVersion Include="AngleSharp" Version="1.1.0" />
+    <PackageVersion Include="Ardalis.GuardClauses" Version="4.4.0" />
     <PackageVersion Include="Aspire.Hosting" Version="8.0.0-preview.1.23557.2" />
     <PackageVersion Include="Aspose.Email" Version="23.12.0" />
-    <PackageVersion Include="Autofac" Version="7.1.0" />
+    <PackageVersion Include="Autofac" Version="8.0.0" />
     <PackageVersion Include="AutoFixture" Version="4.18.1" />
     <PackageVersion Include="AutoMapper" Version="12.0.1" />
-    <PackageVersion Include="Avalonia" Version="11.0.6" />
-    <PackageVersion Include="AWSSDK.Core" Version="3.7.301.4" />
+    <PackageVersion Include="Avalonia" Version="11.0.7" />
+    <PackageVersion Include="AWSSDK.Core" Version="3.7.302.1" />
     <PackageVersion Include="Azure.Core" Version="1.37.0" />
     <PackageVersion Include="Azure.Core.Amqp" Version="1.3.0" />
-    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.17.1" />
+    <PackageVersion Include="Azure.Messaging.ServiceBus" Version="7.17.2" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageVersion Include="Azure.Storage.Queues" Version="12.17.1" />
     <PackageVersion Include="Ben.Demystifier" Version="0.4.1" />
     <PackageVersion Include="BenchmarkDotNet" Version="0.13.12" />
     <PackageVersion Include="Blazored.LocalStorage" Version="4.4.0" />
     <PackageVersion Include="Blazored.Video" Version="1.0.1" />
-    <PackageVersion Include="Bogus" Version="35.3.0" />
+    <PackageVersion Include="Bogus" Version="35.4.0" />
     <PackageVersion Include="Castle.Core" Version="5.1.1" />
     <PackageVersion Include="ClangSharp" Version="17.0.1" />
     <PackageVersion Include="Confluent.Kafka" Version="2.3.0" />
     <PackageVersion Include="Coravel" Version="5.0.2" />
     <PackageVersion Include="Csla" Version="7.0.3" />
-    <PackageVersion Include="CsvHelper" Version="30.0.1" />
+    <PackageVersion Include="CsvHelper" Version="30.1.0" />
     <PackageVersion Include="Cursively" Version="1.2.0" />
     <PackageVersion Include="Dapper" Version="2.1.28" />
-    <PackageVersion Include="DiffEngine" Version="15.1.1" />
+    <PackageVersion Include="DiffEngine" Version="15.2.0" />
     <PackageVersion Include="DnsClient" Version="1.7.0" />
     <PackageVersion Include="Elasticsearch.Net" Version="7.17.5" />
-    <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="8.0.0" />
+    <PackageVersion Include="EntityFrameworkCore.Exceptions.Common" Version="8.0.0.2" />
     <PackageVersion Include="FluentAssertions" Version="7.0.0-alpha.3" />
     <PackageVersion Include="FluentValidation" Version="11.9.0" />
     <PackageVersion Include="Flurl" Version="4.0.0" />
     <PackageVersion Include="Fody" Version="6.8.0" />
-    <PackageVersion Include="Google.Apis" Version="1.65.0" />
+    <PackageVersion Include="Google.Apis" Version="1.66.0" />
     <PackageVersion Include="Google.Protobuf" Version="3.23.4" />
     <PackageVersion Include="GraphQL" Version="7.7.2" />
     <PackageVersion Include="Grpc.Core.Api" Version="2.60.0" />
@@ -62,7 +62,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.0-preview.1.23557.2" />
-    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.11" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.12" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
@@ -70,6 +70,7 @@
     <PackageVersion Include="Mono.Cecil" Version="0.11.5" />
     <PackageVersion Include="Moq" Version="4.18.4" />
     <PackageVersion Include="NetArchTest.Rules" Version="1.3.2" />
+    <PackageVersion Include="NetFabric.Numerics.Tensors" Version="2.0.0" />
     <PackageVersion Include="Ninject" Version="4.0.0-beta.1" />
     <PackageVersion Include="NodaTime" Version="3.1.10" />
     <PackageVersion Include="Npgsql" Version="7.0.4" />
@@ -81,7 +82,7 @@
     <PackageVersion Include="NUnit.Analyzers" Version="3.9.0" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageVersion Include="Polly" Version="8.2.0" />
-    <PackageVersion Include="Proto.Actor" Version="1.5.1-alpha.0.5" />
+    <PackageVersion Include="Proto.Actor" Version="1.6.0" />
     <PackageVersion Include="Pulumi" Version="3.59.0" />
     <PackageVersion Include="Quartz" Version="3.8.0" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.0.0-alpha.1" />
@@ -98,21 +99,22 @@
     <PackageVersion Include="SimpleInjector" Version="5.4.4" />
     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.2" />
     <PackageVersion Include="SkiaSharp" Version="2.88.7" />
-    <PackageVersion Include="StackExchange.Redis" Version="2.7.10" />
-    <PackageVersion Include="Stripe.net" Version="43.9.0" />
+    <PackageVersion Include="StackExchange.Redis" Version="2.7.17" />
+    <PackageVersion Include="Stripe.net" Version="43.12.0" />
     <PackageVersion Include="Sylvan.Data.Csv" Version="1.3.5" />
     <PackageVersion Include="System.Interactive.Async" Version="6.0.1" />
-    <PackageVersion Include="System.IO.Abstractions" Version="20.0.4" />
+    <PackageVersion Include="System.IO.Abstractions" Version="20.0.15" />
     <PackageVersion Include="System.Memory.Data" Version="8.0.0" />
+    <PackageVersion Include="System.Numerics.Tensors" Version="8.0.0" />
     <PackageVersion Include="System.Reactive" Version="6.0.1-preview.1" />
     <PackageVersion Include="System.Reflection.Metadata" Version="8.0.0" />
     <PackageVersion Include="System.Text.Json" Version="8.0.1" />
     <PackageVersion Include="System.Threading.Channels" Version="8.0.0" />
     <PackageVersion Include="TerraFX.Interop.D3D12MemoryAllocator" Version="2.0.1.5" />
-    <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.22621.5" />
+    <PackageVersion Include="TerraFX.Interop.Windows" Version="10.0.22621.6" />
     <PackageVersion Include="Topshelf" Version="4.3.1-develop.253" />
     <PackageVersion Include="Twilio" Version="7.0.0-rc.1" />
-    <PackageVersion Include="Verify" Version="22.11.5" />
-    <PackageVersion Include="Wasmtime" Version="16.0.0" />
+    <PackageVersion Include="Verify" Version="23.0.1" />
+    <PackageVersion Include="Wasmtime" Version="17.0.0" />
   </ItemGroup>
 </Project>

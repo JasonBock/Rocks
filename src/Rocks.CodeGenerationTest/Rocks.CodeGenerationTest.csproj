@@ -69,6 +69,7 @@
 		<PackageReference Include="Microsoft.Orleans.Core" />
 		<PackageReference Include="Microsoft.Quantum.Standard" />
 		<PackageReference Include="Mono.Cecil" />
+		<PackageReference Include="NetFabric.Numerics.Tensors" />
 		<PackageReference Include="Ninject" />
 		<PackageReference Include="NodaTime" />
 		<PackageReference Include="NuGet.Common" />
@@ -92,6 +93,7 @@
 		<PackageReference Include="Stripe.net" />
 		<PackageReference Include="Sylvan.Data.Csv" />
 		<PackageReference Include="System.IO.Abstractions" />
+		<PackageReference Include="System.Numerics.Tensors" />
 		<PackageReference Include="System.Reactive" />
 		<PackageReference Include="System.Reflection.Metadata" />
 		<PackageReference Include="System.Text.Json" />
