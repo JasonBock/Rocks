@@ -58,6 +58,11 @@ public abstract class Handler<TCallback>
 	/// Gets or sets the callback.
 	/// </summary>
 	public TCallback? Callback { get; set; }
+
+	/// <summary>
+	/// Gets or sets the next handler to visit.
+	/// </summary>
+	public Handler<TCallback>? Next { get; set; }
 }
 
 /// <summary>
@@ -65,9 +70,19 @@ public abstract class Handler<TCallback>
 /// with a callback and a return value.
 /// </summary>
 public abstract class Handler<TCallback, TReturnValue>
-	: Handler<TCallback>
+	: Handler
 	where TCallback : Delegate
 {
+	/// <summary>
+	/// Gets or sets the callback.
+	/// </summary>
+	public TCallback? Callback { get; set; }
+
+	/// <summary>
+	/// Gets or sets the next handler to visit.
+	/// </summary>
+	public Handler<TCallback, TReturnValue>? Next { get; set; }
+
 	/// <summary>
 	/// Gets or sets the return value.
 	/// </summary>
