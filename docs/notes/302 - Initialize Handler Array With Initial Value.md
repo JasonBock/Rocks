@@ -72,7 +72,7 @@ Wait, I just literally copy/pasted what `List<T>` does (more or less), and...yay
 | EnumerateList     | Syste(...)rInt] [ 5] |  6.452 ns | 0.1807 ns | 0.3437 ns |  6.333 ns |         - |
 | EnumerateList     | Syste(...)rInt] [10] | 11.568 ns | 0.2921 ns | 0.8429 ns | 11.540 ns |         - |
 
-I honestly don't know why handling the enumeration the way `List<T>` does makes things better, but, it does. I'll figure out the "why" later. Maybe :).
+I honestly don't know why handling the enumeration the way `List<T>` does makes things better, but, it does. I'll figure out the "why" later. Maybe :). Ok, I think the addition of the `GetEnumerator()` method that returns the struct directly, I think that's the key.
 
 * Create other handler and add XML comments
 * Write unit tests
