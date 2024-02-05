@@ -42,9 +42,9 @@ internal static class PropertyExpectationsPropertyBuilder
 			internal {{adornmentsType}} {{property.Name}}()
 			{
 				global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
 				var handler = new {{expectationsFullyQualifiedName}}.Handler{{memberIdentifier}}();
-				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(handler); }
+				else { this.Expectations.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");
@@ -78,8 +78,8 @@ internal static class PropertyExpectationsPropertyBuilder
 					value = @value,
 				};
 
-				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
-				this.Expectations.handlers{{memberIdentifier}}.Add(handler);
+				if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(handler); }
+				else { this.Expectations.handlers{{memberIdentifier}}.Add(handler); }
 				return new(handler);
 			}
 			""");

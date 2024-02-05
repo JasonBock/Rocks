@@ -17,7 +17,6 @@ internal static class MockHandlerListBuilder
 			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
 			writer.WriteLine("#pragma warning disable CS8618");
-			writer.WriteLine();
 		}
 
 		BuildMethodHandlerTypes(writer, mockType);
@@ -28,45 +27,6 @@ internal static class MockHandlerListBuilder
 			// CS8618 - Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 			// We know we're going to set this and we have control over that, so we emit the pragma to shut the compiler up.
 			writer.WriteLine("#pragma warning restore CS8618");
-			writer.WriteLine();
-		}
-
-		BuildHandlerListFields(writer, mockType, expectationsFullyQualifiedName);
-	}
-
-	private static void BuildHandlerListFields(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
-	{
-		foreach (var method in mockType.Methods)
-		{
-			// If the method has open generics, we have to use the base Handler type -
-			// we'll cast it later within the method implementation.
-			var handlers = method.TypeArguments.Length == 0 ?
-				$"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{method.MemberIdentifier}>? @handlers{method.MemberIdentifier};" :
-				$"private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers{method.MemberIdentifier};";
-			writer.WriteLine(handlers);
-		}
-
-		foreach (var property in mockType.Properties)
-		{
-			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
-			{
-				writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{property.MemberIdentifier}>? @handlers{property.MemberIdentifier};");
-			}
-			else
-			{
-				var memberIdentifier = property.MemberIdentifier;
-
-				if (property.GetCanBeSeenByContainingAssembly)
-				{
-					writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};");
-					memberIdentifier++;
-				}
-
-				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
-				{
-					writer.WriteLine($"private global::System.Collections.Generic.List<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};");
-				}
-			}
 		}
 	}
 
@@ -143,6 +103,16 @@ internal static class MockHandlerListBuilder
 			writer.WriteLine("{ }");
 		}
 
+		writer.WriteLine();
+
+		// Add the Handlers<> type.
+		// If the method has open generics, we have to use the base Handler type -
+		// we'll cast it later within the method implementation.
+		var handlersBaseType = $"global::Rocks.Handlers<{handlerBaseType}>";
+		var handlers = method.TypeArguments.Length == 0 ?
+			$"private {handlersBaseType}? @handlers{method.MemberIdentifier};" :
+			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{method.MemberIdentifier};";
+		writer.WriteLine(handlers);
 		writer.WriteLine();
 	}
 

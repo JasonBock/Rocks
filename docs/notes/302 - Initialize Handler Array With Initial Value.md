@@ -74,10 +74,61 @@ Wait, I just literally copy/pasted what `List<T>` does (more or less), and...yay
 
 I honestly don't know why handling the enumeration the way `List<T>` does makes things better, but, it does. I'll figure out the "why" later. Maybe :). Ok, I think the addition of the `GetEnumerator()` method that returns the struct directly, I think that's the key.
 
-* Create other handler and add XML comments
-* Write unit tests
-* Update generated code to use Handlers<>
-* Run all tests
-* For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
-* Celebrate
+* DONE - Implement `IEnumerable<>` on both `Handlers<>` explicitly
+* Update generated code to use `Handlers<>`
+    * DONE - Replace creating the list to a `Handlers<>`
+    * DONE - Update generated `Verify()` to do a `null` check
+    * DONE - Create two `Verify()` methods on `Expectations`
+    * DONE - In handled members in the mock, change the check for `?.Count > 0` to `is not null`
+    * DONE - When adding an expectation, change that to do a `if-else`, using the new `Handlers<>`
 
+Fixes:
+* When the `Handlers<>` type is generated, they all need a `THandler` constrained to the right `Handler` type. 
+* Could co/contravariance help with having one `Verify()` defined? Maybe not.
+
+I think I overthought it:
+
+| Method                   | count | Mean      | Error    | StdDev   | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|------------------------- |------ |----------:|---------:|---------:|------:|--------:|-------:|----------:|------------:|
+| AddDefault               | 1     |  40.33 ns | 0.797 ns | 0.886 ns |  1.00 |    0.00 | 0.0688 |     288 B |        1.00 |
+| AddHandlers              | 1     |  32.67 ns | 0.674 ns | 0.662 ns |  0.81 |    0.02 | 0.0631 |     264 B |        0.92 |
+| AddOneCapacity           | 1     |  33.62 ns | 0.526 ns | 0.492 ns |  0.83 |    0.02 | 0.0631 |     264 B |        0.92 |
+| AddTwoCapacity           | 1     |  32.28 ns | 0.589 ns | 0.551 ns |  0.80 |    0.02 | 0.0650 |     272 B |        0.94 |
+| AddWithOneInitialization | 1     |  55.92 ns | 0.811 ns | 0.677 ns |  1.38 |    0.04 | 0.0765 |     320 B |        1.11 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 2     |  63.45 ns | 1.166 ns | 1.091 ns |  1.00 |    0.00 | 0.1166 |     488 B |        1.00 |
+| AddHandlers              | 2     |  60.00 ns | 1.060 ns | 0.885 ns |  0.94 |    0.02 | 0.1185 |     496 B |        1.02 |
+| AddOneCapacity           | 2     |  78.53 ns | 1.566 ns | 2.484 ns |  1.26 |    0.04 | 0.1204 |     504 B |        1.03 |
+| AddTwoCapacity           | 2     |  54.41 ns | 0.887 ns | 0.830 ns |  0.86 |    0.02 | 0.1128 |     472 B |        0.97 |
+| AddWithOneInitialization | 2     |  98.04 ns | 1.681 ns | 1.490 ns |  1.55 |    0.04 | 0.1339 |     560 B |        1.15 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 5     | 162.44 ns | 3.074 ns | 2.567 ns |  1.00 |    0.00 | 0.2811 |    1176 B |        1.00 |
+| AddHandlers              | 5     | 143.64 ns | 2.836 ns | 2.785 ns |  0.89 |    0.02 | 0.2849 |    1192 B |        1.01 |
+| AddOneCapacity           | 5     | 187.47 ns | 1.945 ns | 1.819 ns |  1.16 |    0.02 | 0.2983 |    1248 B |        1.06 |
+| AddTwoCapacity           | 5     | 170.56 ns | 2.465 ns | 2.059 ns |  1.05 |    0.02 | 0.2906 |    1216 B |        1.03 |
+| AddWithOneInitialization | 5     | 215.84 ns | 2.891 ns | 2.563 ns |  1.33 |    0.02 | 0.3116 |    1304 B |        1.11 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 10    | 316.95 ns | 4.586 ns | 7.004 ns |  1.00 |    0.00 | 0.5565 |    2328 B |        1.00 |
+| AddHandlers              | 10    | 291.17 ns | 5.073 ns | 4.745 ns |  0.91 |    0.03 | 0.5622 |    2352 B |        1.01 |
+| AddOneCapacity           | 10    | 335.64 ns | 5.682 ns | 5.315 ns |  1.05 |    0.03 | 0.5736 |    2400 B |        1.03 |
+| AddTwoCapacity           | 10    | 324.92 ns | 5.796 ns | 4.840 ns |  1.01 |    0.03 | 0.5660 |    2368 B |        1.02 |
+| AddWithOneInitialization | 10    | 369.46 ns | 7.415 ns | 8.242 ns |  1.16 |    0.03 | 0.5870 |    2456 B |        1.05 |
+
+| Method            | handlers             | Mean      | Error     | StdDev    | Allocated |
+|------------------ |--------------------- |----------:|----------:|----------:|----------:|
+| EnumerateHandlers | Rocks(...)rInt] [46] | 1.3925 ns | 0.0366 ns | 0.0306 ns |         - |
+| EnumerateHandlers | Rocks(...)rInt] [46] | 1.2055 ns | 0.0459 ns | 0.0430 ns |         - |
+| EnumerateHandlers | Rocks(...)rInt] [46] | 3.3687 ns | 0.0680 ns | 0.0568 ns |         - |
+| EnumerateHandlers | Rocks(...)rInt] [46] | 3.8827 ns | 0.1066 ns | 0.1047 ns |         - |
+| EnumerateList     | Syste(...)rInt] [63] | 0.6215 ns | 0.0104 ns | 0.0092 ns |         - |
+| EnumerateList     | Syste(...)rInt] [63] | 1.8759 ns | 0.0377 ns | 0.0352 ns |         - |
+| EnumerateList     | Syste(...)rInt] [63] | 4.3624 ns | 0.0530 ns | 0.0496 ns |         - |
+| EnumerateList     | Syste(...)rInt] [63] | 4.4588 ns | 0.1020 ns | 0.1048 ns |         - |
+
+* Run all integration and code generation tests
+* Fix all unit tests
+* For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
+* Delete perf projects other than Rocks.Performance
+* Add XML comments for `Handlers<>`
+* Write unit tests for `Handlers<>`
+* Celebrate

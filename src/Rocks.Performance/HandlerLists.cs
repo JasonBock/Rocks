@@ -38,7 +38,7 @@ public class HandlerLists
 	[ArgumentsSource(nameof(Sizes))]
 	public int AddHandlers(int count)
 	{
-		Handlers<Func<int, int>, int>? handlers = null;
+		Handlers<HandlerInt>? handlers = null;
 
 		for (var i = 0; i < count; i++)
 		{

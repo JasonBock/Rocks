@@ -12,7 +12,7 @@ public abstract class Handler
 	/// <summary>
 	/// Creates a new <see cref="Handler"/> instance.
 	/// </summary>
-	public Handler() => this.ExpectedCallCount = 1;
+	protected Handler() => this.ExpectedCallCount = 1;
 
 	/// <summary>
 	/// Adds an expectation to raise an event.
@@ -54,15 +54,19 @@ public abstract class Handler<TCallback>
 	: Handler
 	where TCallback : Delegate
 {
+	[NonSerialized]
+	private readonly List<RaiseEventInformation> raiseEvents = [];
+
+	/// <summary>
+	/// Creates a new <see cref="Handler"/> instance.
+	/// </summary>
+	protected Handler() 
+		: base() { }
+
 	/// <summary>
 	/// Gets or sets the callback.
 	/// </summary>
 	public TCallback? Callback { get; set; }
-
-	/// <summary>
-	/// Gets or sets the next handler to visit.
-	/// </summary>
-	public Handler<TCallback>? Next { get; set; }
 }
 
 /// <summary>
@@ -70,18 +74,17 @@ public abstract class Handler<TCallback>
 /// with a callback and a return value.
 /// </summary>
 public abstract class Handler<TCallback, TReturnValue>
-	: Handler
+	: Handler<TCallback>
 	where TCallback : Delegate
 {
-	/// <summary>
-	/// Gets or sets the callback.
-	/// </summary>
-	public TCallback? Callback { get; set; }
+	[NonSerialized]
+	private readonly List<RaiseEventInformation> raiseEvents = [];
 
 	/// <summary>
-	/// Gets or sets the next handler to visit.
+	/// Creates a new <see cref="Handler"/> instance.
 	/// </summary>
-	public Handler<TCallback, TReturnValue>? Next { get; set; }
+	protected Handler() 
+		: base() { }
 
 	/// <summary>
 	/// Gets or sets the return value.

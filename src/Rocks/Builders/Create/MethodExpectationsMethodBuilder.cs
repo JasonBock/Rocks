@@ -110,9 +110,9 @@ internal static class MethodExpectationsMethodBuilder
 					internal {{hiding}}{{adornmentsType}} {{method.Name}}({{instanceParameters}}){{extensionConstraints}}
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
 						var handler = new {{expectationsFullyQualifiedName}}.Handler{{method.MemberIdentifier}}{{typeArguments}}();
-						this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler);
+						if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(handler); }
+						else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(handler); }
 						return new(handler);
 					}
 					""");
@@ -161,8 +161,8 @@ internal static class MethodExpectationsMethodBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(); }
-					this.Expectations.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					if (this.Expectations.handlers{{method.MemberIdentifier}} is null ) { this.Expectations.handlers{{method.MemberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					else { this.Expectations.handlers{{method.MemberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 

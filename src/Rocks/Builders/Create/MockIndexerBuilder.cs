@@ -24,7 +24,7 @@ internal static class MockIndexerBuilder
 			$$"""
 			{{visibility}}get
 			{
-				if (this.Expectations.handlers{{memberIdentifier}}?.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}} is not null)
 				{
 					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
 					{
@@ -133,7 +133,7 @@ internal static class MockIndexerBuilder
 			$$"""
 			{{visibility}}{{accessor}}
 			{
-				if (this.Expectations.handlers{{memberIdentifier}}?.Count > 0)
+				if (this.Expectations.handlers{{memberIdentifier}} is not null)
 				{
 					foreach (var @{{namingContext["handler"]}} in this.Expectations.handlers{{memberIdentifier}})
 					{

@@ -97,7 +97,7 @@ internal static class MockMethodVoidBuilder
 
 		var namingContext = new VariableNamingContext(method);
 
-		writer.WriteLine($"if (this.Expectations.handlers{method.MemberIdentifier}?.Count > 0)");
+		writer.WriteLine($"if (this.Expectations.handlers{method.MemberIdentifier} is not null)");
 		writer.WriteLine("{");
 		writer.Indent++;
 

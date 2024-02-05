@@ -131,8 +131,8 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
-					this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(handler); }
+					else { this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 
@@ -271,8 +271,8 @@ internal static class IndexerExpectationsIndexerBuilder
 					$$"""
 					};
 
-					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(); }
-					this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}});
+					if (this.Expectations.handlers{{memberIdentifier}} is null ) { this.Expectations.handlers{{memberIdentifier}} = new(@{{handlerContext["handler"]}}); }
+					else { this.Expectations.handlers{{memberIdentifier}}.Add(@{{handlerContext["handler"]}}); }
 					return new(@{{handlerContext["handler"]}});
 					""");
 

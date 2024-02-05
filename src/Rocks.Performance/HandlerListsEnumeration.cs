@@ -6,7 +6,7 @@ namespace Rocks.Performance;
 
 To test:
 
-var handlers = new Handlers<Func<int, int>, int>(new HandlerInt { input = 0 });
+var handlers = new Handlers<HandlerInt>(new HandlerInt { input = 0 });
 handlers.Add(new HandlerInt { input = 1 });
 
 foreach (var handler in handlers)
@@ -37,7 +37,7 @@ public class HandlerListsEnumeration
 
 	[Benchmark]
 	[ArgumentsSource(nameof(HandlerData))]
-	public int EnumerateHandlers(Handlers<Func<int, int>, int> handlers)
+	public int EnumerateHandlers(Handlers<HandlerInt> handlers)
 	{
 		var i = 0;
 
@@ -71,11 +71,11 @@ public class HandlerListsEnumeration
 		yield return Generate(10);
 	}
 
-	public static IEnumerable<Handlers<Func<int, int>, int>> HandlerData()
+	public static IEnumerable<Handlers<HandlerInt>> HandlerData()
 	{
-		static Handlers<Func<int, int>, int> Generate(int size)
+		static Handlers<HandlerInt> Generate(int size)
 		{
-			var handlers = new Handlers<Func<int, int>, int>(new HandlerInt { input = 0 });
+			var handlers = new Handlers<HandlerInt>(new HandlerInt { input = 0 });
 
 			for (var i = 1; i < size; i++)
 			{

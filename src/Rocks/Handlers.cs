@@ -2,26 +2,52 @@
 
 namespace Rocks;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-public sealed class Handlers<TCallback, TReturnValue>
-	: IEnumerable<Handler<TCallback, TReturnValue>>
-	where TCallback : Delegate
+/// <summary>
+/// Defines a type to collect all the handlers for a member.
+/// </summary>
+/// <remarks>
+/// This type is designed to be used by Rocks exclusively and is not intended
+/// to be used directly.
+/// </remarks>
+public sealed class Handlers<THandler>
+	: IEnumerable<THandler>
+	where THandler : Handler
 {
-	public struct HandlerEnumerator
-		: IEnumerator<Handler<TCallback, TReturnValue>>
+	internal sealed class HandlerNode
 	{
-		private Handler<TCallback, TReturnValue>? value;
+		public HandlerNode(THandler handler) => this.Value = handler;
+		public THandler Value { get; }
+		public HandlerNode? Next { get; set; }
+	}
+
+	/// <summary>
+	/// 
+	/// </summary>
+	public struct HandlerEnumerator
+		: IEnumerator<THandler>
+	{
+		private HandlerNode? value;
 		private bool first = true;
 
-		internal HandlerEnumerator(Handler<TCallback, TReturnValue> value) =>
+		internal HandlerEnumerator(HandlerNode value) =>
 			 this.value = value;
 
-		public readonly Handler<TCallback, TReturnValue> Current => this.value!;
+		/// <summary>
+		/// 
+		/// </summary>
+		public readonly THandler Current => this.value!.Value;
 
 		readonly object IEnumerator.Current => this.value!;
 
-		public void Dispose() => this.value = null;
+		/// <summary>
+		/// 
+		/// </summary>
+		public void Dispose() => this.value = default;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public bool MoveNext()
 		{
 			if (this.first)
@@ -34,30 +60,40 @@ public sealed class Handlers<TCallback, TReturnValue>
 			return this.value is not null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Reset() => this.value = null;
 	}
 
-	public Handlers(Handler<TCallback, TReturnValue> handler)
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="handler"></param>
+   public Handlers(THandler handler) => 
+		this.First = this.Last = new(handler);
+
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="handler"></param>
+   public void Add(THandler handler)
 	{
-		this.First = handler;
-		this.Last = handler;
+		var node = new HandlerNode(handler);
+		this.Last.Next = node;
+		this.Last = node;
 	}
 
-	public void Add(Handler<TCallback, TReturnValue> handler)
-	{
-		this.Last.Next = handler;
-		this.Last = handler;
-	}
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	public HandlerEnumerator GetEnumerator() => new(this.First);
 
-	public HandlerEnumerator GetEnumerator() =>
-		 new HandlerEnumerator(this.First);
+	IEnumerator<THandler> IEnumerable<THandler>.GetEnumerator() => this.GetEnumerator();
 
-	IEnumerator<Handler<TCallback, TReturnValue>> IEnumerable<Handler<TCallback, TReturnValue>>.GetEnumerator() =>
-		 this.GetEnumerator();
+	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<THandler>)this).GetEnumerator();
 
-	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<Handler<TCallback, TReturnValue>>)this).GetEnumerator();
-
-	private Handler<TCallback, TReturnValue> First { get; }
-	private Handler<TCallback, TReturnValue> Last { get; set; }
+	private HandlerNode First { get; }
+	private HandlerNode Last { get; set; }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

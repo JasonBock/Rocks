@@ -454,9 +454,10 @@ public static class InterfaceGeneratorTests
 						public global::Rocks.Argument<int> @value { get; set; }
 					}
 					
+					private global::Rocks.Handlers<global::Rocks.Handler<global::System.Func<int, string>, string>>? @handlers0;
+					
 					#pragma warning restore CS8618
 					
-					private global::System.Collections.Generic.List<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -464,7 +465,7 @@ public static class InterfaceGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -484,7 +485,7 @@ public static class InterfaceGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "string Retrieve(int @value)")]
 						public string Retrieve(int @value)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -521,8 +522,8 @@ public static class InterfaceGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						
