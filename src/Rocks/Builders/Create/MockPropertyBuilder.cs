@@ -26,7 +26,7 @@ internal static class MockPropertyBuilder
 		writer.WriteLine("{");
 		writer.Indent++;
 
-		writer.WriteLine($"var @handler = this.Expectations.handlers{memberIdentifier}[0];");
+		writer.WriteLine($"var @handler = this.Expectations.handlers{memberIdentifier}.GetFirst();");
 		writer.WriteLine("@handler.CallCount++;");
 
 		var returnValueCall = property.Type.IsRefLikeType ?

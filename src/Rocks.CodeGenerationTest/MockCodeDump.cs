@@ -14,7 +14,7 @@ namespace MockTests
 			public global::Rocks.Argument<int> @value { get; set; }
 		}
 
-		private global::Rocks.Handlers<Handler0>? @handlers0;
+		private global::Rocks.Handlers<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
 
 #pragma warning restore CS8618
 

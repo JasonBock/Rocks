@@ -78,7 +78,6 @@ I honestly don't know why handling the enumeration the way `List<T>` does makes 
 * Update generated code to use `Handlers<>`
     * DONE - Replace creating the list to a `Handlers<>`
     * DONE - Update generated `Verify()` to do a `null` check
-    * DONE - Create two `Verify()` methods on `Expectations`
     * DONE - In handled members in the mock, change the check for `?.Count > 0` to `is not null`
     * DONE - When adding an expectation, change that to do a `if-else`, using the new `Handlers<>`
 
@@ -125,7 +124,57 @@ I think I overthought it:
 | EnumerateList     | Syste(...)rInt] [63] | 4.3624 ns | 0.0530 ns | 0.0496 ns |         - |
 | EnumerateList     | Syste(...)rInt] [63] | 4.4588 ns | 0.1020 ns | 0.1048 ns |         - |
 
+Before I keep going...maybe I should try a `LinkedList<>`, just to see how it performs:
+
+| Method                   | count | Mean      | Error    | StdDev   | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|------------------------- |------ |----------:|---------:|---------:|------:|--------:|-------:|----------:|------------:|
+| AddDefault               | 1     |  40.75 ns | 0.832 ns | 0.959 ns |  1.00 |    0.00 | 0.0688 |     288 B |        1.00 |
+| AddLinkedList            | 1     |  34.97 ns | 0.413 ns | 0.323 ns |  0.87 |    0.02 | 0.0688 |     288 B |        1.00 |
+| AddHandlers              | 1     |  32.34 ns | 0.662 ns | 0.812 ns |  0.80 |    0.02 | 0.0631 |     264 B |        0.92 |
+| AddOneCapacity           | 1     |  31.84 ns | 0.652 ns | 0.697 ns |  0.78 |    0.02 | 0.0631 |     264 B |        0.92 |
+| AddTwoCapacity           | 1     |  32.08 ns | 0.657 ns | 0.674 ns |  0.79 |    0.03 | 0.0650 |     272 B |        0.94 |
+| AddWithOneInitialization | 1     |  56.08 ns | 1.154 ns | 1.579 ns |  1.38 |    0.05 | 0.0764 |     320 B |        1.11 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 2     |  63.14 ns | 1.263 ns | 1.297 ns |  1.00 |    0.00 | 0.1166 |     488 B |        1.00 |
+| AddLinkedList            | 2     |  68.01 ns | 1.383 ns | 1.748 ns |  1.08 |    0.04 | 0.1281 |     536 B |        1.10 |
+| AddHandlers              | 2     |  60.41 ns | 1.245 ns | 1.662 ns |  0.95 |    0.02 | 0.1185 |     496 B |        1.02 |
+| AddOneCapacity           | 2     |  75.77 ns | 1.361 ns | 1.336 ns |  1.20 |    0.02 | 0.1204 |     504 B |        1.03 |
+| AddTwoCapacity           | 2     |  54.06 ns | 0.404 ns | 0.315 ns |  0.85 |    0.02 | 0.1128 |     472 B |        0.97 |
+| AddWithOneInitialization | 2     | 102.93 ns | 1.087 ns | 1.017 ns |  1.63 |    0.05 | 0.1339 |     560 B |        1.15 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 5     | 162.84 ns | 3.264 ns | 4.008 ns |  1.00 |    0.00 | 0.2811 |    1176 B |        1.00 |
+| AddLinkedList            | 5     | 165.34 ns | 2.446 ns | 2.043 ns |  1.01 |    0.03 | 0.3059 |    1280 B |        1.09 |
+| AddHandlers              | 5     | 142.51 ns | 2.306 ns | 2.157 ns |  0.87 |    0.02 | 0.2849 |    1192 B |        1.01 |
+| AddOneCapacity           | 5     | 188.56 ns | 3.480 ns | 3.085 ns |  1.15 |    0.04 | 0.2983 |    1248 B |        1.06 |
+| AddTwoCapacity           | 5     | 171.24 ns | 2.155 ns | 1.799 ns |  1.04 |    0.03 | 0.2906 |    1216 B |        1.03 |
+| AddWithOneInitialization | 5     | 216.67 ns | 2.194 ns | 1.945 ns |  1.32 |    0.04 | 0.3116 |    1304 B |        1.11 |
+|                          |       |           |          |          |       |         |        |           |             |
+| AddDefault               | 10    | 316.24 ns | 6.358 ns | 6.803 ns |  1.00 |    0.00 | 0.5565 |    2328 B |        1.00 |
+| AddLinkedList            | 10    | 331.92 ns | 6.376 ns | 5.652 ns |  1.05 |    0.03 | 0.6022 |    2520 B |        1.08 |
+| AddHandlers              | 10    | 289.58 ns | 5.180 ns | 4.845 ns |  0.91 |    0.02 | 0.5622 |    2352 B |        1.01 |
+| AddOneCapacity           | 10    | 348.55 ns | 5.663 ns | 5.020 ns |  1.10 |    0.03 | 0.5736 |    2400 B |        1.03 |
+| AddTwoCapacity           | 10    | 321.30 ns | 3.219 ns | 2.688 ns |  1.01 |    0.03 | 0.5660 |    2368 B |        1.02 |
+| AddWithOneInitialization | 10    | 365.51 ns | 4.204 ns | 3.727 ns |  1.15 |    0.03 | 0.5870 |    2456 B |        1.05 |
+
+| Method              | handlers             | Mean      | Error     | StdDev    | Ratio | RatioSD | Allocated | Alloc Ratio |
+|-------------------- |--------------------- |----------:|----------:|----------:|------:|--------:|----------:|------------:|
+| EnumerateHandlers   | Rocks(...)rInt] [46] | 1.0575 ns | 0.0285 ns | 0.0253 ns |     ? |       ? |         - |           ? |
+| EnumerateHandlers   | Rocks(...)rInt] [46] | 1.2259 ns | 0.0531 ns | 0.0521 ns |     ? |       ? |         - |           ? |
+| EnumerateHandlers   | Rocks(...)rInt] [46] | 3.4842 ns | 0.0965 ns | 0.0902 ns |     ? |       ? |         - |           ? |
+| EnumerateHandlers   | Rocks(...)rInt] [46] | 3.8933 ns | 0.0760 ns | 0.0711 ns |     ? |       ? |         - |           ? |
+|                     |                      |           |           |           |       |         |           |             |
+| EnumerateLinkedList | Syste(...)rInt] [69] | 1.0713 ns | 0.0323 ns | 0.0302 ns |     ? |       ? |         - |           ? |
+| EnumerateLinkedList | Syste(...)rInt] [69] | 2.6119 ns | 0.0244 ns | 0.0216 ns |     ? |       ? |         - |           ? |
+| EnumerateLinkedList | Syste(...)rInt] [69] | 3.8765 ns | 0.0789 ns | 0.0699 ns |     ? |       ? |         - |           ? |
+| EnumerateLinkedList | Syste(...)rInt] [69] | 4.4030 ns | 0.0735 ns | 0.0652 ns |     ? |       ? |         - |           ? |
+|                     |                      |           |           |           |       |         |           |             |
+| EnumerateList       | Syste(...)rInt] [63] | 0.9396 ns | 0.0401 ns | 0.0313 ns |  1.00 |    0.00 |         - |          NA |
+| EnumerateList       | Syste(...)rInt] [63] | 1.9398 ns | 0.0551 ns | 0.0589 ns |  2.08 |    0.08 |         - |          NA |
+| EnumerateList       | Syste(...)rInt] [63] | 4.5234 ns | 0.1128 ns | 0.1000 ns |  4.82 |    0.22 |         - |          NA |
+| EnumerateList       | Syste(...)rInt] [63] | 4.5265 ns | 0.1204 ns | 0.1182 ns |  4.84 |    0.23 |         - |          NA |
+
 * Run all integration and code generation tests
+* Add one more change when handler is created to do the "new hotness"
 * Fix all unit tests
 * For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
 * Delete perf projects other than Rocks.Performance

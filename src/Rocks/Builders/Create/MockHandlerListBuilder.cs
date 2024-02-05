@@ -19,8 +19,8 @@ internal static class MockHandlerListBuilder
 			writer.WriteLine("#pragma warning disable CS8618");
 		}
 
-		BuildMethodHandlerTypes(writer, mockType);
-		BuildPropertyHandlerTypes(writer, mockType);
+		BuildMethodHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
+		BuildPropertyHandlerTypes(writer, mockType, expectationsFullyQualifiedName);
 
 		if (hasParameters)
 		{
@@ -30,7 +30,7 @@ internal static class MockHandlerListBuilder
 		}
 	}
 
-	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier)
+	private static void BuildHandler(IndentedTextWriter writer, MethodModel method, uint memberIdentifier, string expectationsFullyQualifiedName)
 	{
 		var callbackDelegateTypeName =
 			method.RequiresProjectedDelegate ?
@@ -108,30 +108,29 @@ internal static class MockHandlerListBuilder
 		// Add the Handlers<> type.
 		// If the method has open generics, we have to use the base Handler type -
 		// we'll cast it later within the method implementation.
-		var handlersBaseType = $"global::Rocks.Handlers<{handlerBaseType}>";
 		var handlers = method.TypeArguments.Length == 0 ?
-			$"private {handlersBaseType}? @handlers{method.MemberIdentifier};" :
-			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{method.MemberIdentifier};";
+			$"private global::Rocks.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
+			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{memberIdentifier};";
 		writer.WriteLine(handlers);
 		writer.WriteLine();
 	}
 
-	private static void BuildMethodHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType)
+	private static void BuildMethodHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		foreach (var method in mockType.Methods)
 		{
-			MockHandlerListBuilder.BuildHandler(writer, method, method.MemberIdentifier);
+			MockHandlerListBuilder.BuildHandler(writer, method, method.MemberIdentifier, expectationsFullyQualifiedName);
 		}
 	}
 
-	private static void BuildPropertyHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType)
+	private static void BuildPropertyHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)
 	{
 		foreach (var property in mockType.Properties)
 		{
 			if (property.Accessors == PropertyAccessor.Get || property.Accessors == PropertyAccessor.Set || property.Accessors == PropertyAccessor.Init)
 			{
 				var method = property.Accessors == PropertyAccessor.Get ? property.GetMethod! : property.SetMethod!;
-				MockHandlerListBuilder.BuildHandler(writer, method, property.MemberIdentifier);
+				MockHandlerListBuilder.BuildHandler(writer, method, property.MemberIdentifier, expectationsFullyQualifiedName);
 			}
 			else
 			{
@@ -139,13 +138,13 @@ internal static class MockHandlerListBuilder
 
 				if (property.GetCanBeSeenByContainingAssembly)
 				{
-					MockHandlerListBuilder.BuildHandler(writer, property.GetMethod!, memberIdentifier);
+					MockHandlerListBuilder.BuildHandler(writer, property.GetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 					memberIdentifier++;
 				}
 
 				if (property.SetCanBeSeenByContainingAssembly || property.InitCanBeSeenByContainingAssembly)
 				{
-					MockHandlerListBuilder.BuildHandler(writer, property.SetMethod!, memberIdentifier);
+					MockHandlerListBuilder.BuildHandler(writer, property.SetMethod!, memberIdentifier, expectationsFullyQualifiedName);
 				}
 			}
 		}

@@ -447,17 +447,15 @@ public static class InterfaceGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0
 						: global::Rocks.Handler<global::System.Func<int, string>, string>
 					{
 						public global::Rocks.Argument<int> @value { get; set; }
 					}
 					
-					private global::Rocks.Handlers<global::Rocks.Handler<global::System.Func<int, string>, string>>? @handlers0;
+					private global::Rocks.Handlers<global::MockTests.ITargetCreateExpectations.Handler0>? @handlers0;
 					
 					#pragma warning restore CS8618
-					
 					
 					public override void Verify()
 					{

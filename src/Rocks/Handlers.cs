@@ -88,6 +88,12 @@ public sealed class Handlers<THandler>
 	/// 
 	/// </summary>
 	/// <returns></returns>
+	public THandler GetFirst() => this.First.Value;
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
 	public HandlerEnumerator GetEnumerator() => new(this.First);
 
 	IEnumerator<THandler> IEnumerable<THandler>.GetEnumerator() => this.GetEnumerator();
