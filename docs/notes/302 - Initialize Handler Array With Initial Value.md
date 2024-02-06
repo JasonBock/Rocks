@@ -178,5 +178,5 @@ Before I keep going...maybe I should try a `LinkedList<>`, just to see how it pe
 * DONE - For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
 * DONE - Delete perf projects other than Rocks.Performance
 * DONE - Add XML comments for `Handlers<>`
-* Write unit tests for `Handlers<>`
-* Celebrate
+* DONE - Write unit tests for `Handlers<>`
+* DONE - Celebrate
