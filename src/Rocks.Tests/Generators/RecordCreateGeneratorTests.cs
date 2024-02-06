@@ -37,36 +37,29 @@ public static class RecordCreateGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler2
 						: global::Rocks.Handler<global::System.Action>
 					{ }
-					
+					private global::Rocks.Handlers<global::MockTests.RecordTestCreateExpectations.Handler2>? @handlers2;
 					internal sealed class Handler3
 						: global::Rocks.Handler<global::System.Func<string>, string>
 					{ }
-					
+					private global::Rocks.Handlers<global::MockTests.RecordTestCreateExpectations.Handler3>? @handlers3;
 					internal sealed class Handler4
 						: global::Rocks.Handler<global::System.Func<global::System.Text.StringBuilder, bool>, bool>
 					{
 						public global::Rocks.Argument<global::System.Text.StringBuilder> @builder { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.RecordTestCreateExpectations.Handler4>? @handlers4;
 					internal sealed class Handler5
 						: global::Rocks.Handler<global::System.Func<int>, int>
 					{ }
-					
+					private global::Rocks.Handlers<global::MockTests.RecordTestCreateExpectations.Handler5>? @handlers5;
 					internal sealed class Handler6
 						: global::Rocks.Handler<global::System.Func<global::System.Type>, global::System.Type>
 					{ }
-					
+					private global::Rocks.Handlers<global::MockTests.RecordTestCreateExpectations.Handler6>? @handlers6;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler2>? @handlers2;
-					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler3>? @handlers3;
-					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler4>? @handlers4;
-					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler5>? @handlers5;
-					private global::System.Collections.Generic.List<global::MockTests.RecordTestCreateExpectations.Handler6>? @handlers6;
 					
 					public override void Verify()
 					{
@@ -74,11 +67,11 @@ public static class RecordCreateGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
-							if (this.handlers4?.Count > 0) { failures.AddRange(this.Verify(this.handlers4, 4)); }
-							if (this.handlers5?.Count > 0) { failures.AddRange(this.Verify(this.handlers5, 5)); }
-							if (this.handlers6?.Count > 0) { failures.AddRange(this.Verify(this.handlers6, 6)); }
+							if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+							if (this.handlers4 is not null) { failures.AddRange(this.Verify(this.handlers4, 4)); }
+							if (this.handlers5 is not null) { failures.AddRange(this.Verify(this.handlers5, 5)); }
+							if (this.handlers6 is not null) { failures.AddRange(this.Verify(this.handlers6, 6)); }
 					
 							if (failures.Count > 0)
 							{
@@ -103,9 +96,9 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "void Foo()")]
 						public override void Foo()
 						{
-							if (this.Expectations.handlers2?.Count > 0)
+							if (this.Expectations.handlers2 is not null)
 							{
-								var @handler = this.Expectations.handlers2[0];
+								var @handler = this.Expectations.handlers2.First;
 								@handler.CallCount++;
 								@handler.Callback?.Invoke();
 							}
@@ -118,9 +111,9 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "string ToString()")]
 						public override string ToString()
 						{
-							if (this.Expectations.handlers3?.Count > 0)
+							if (this.Expectations.handlers3 is not null)
 							{
-								var @handler = this.Expectations.handlers3[0];
+								var @handler = this.Expectations.handlers3.First;
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
@@ -135,7 +128,7 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(4, "bool PrintMembers(global::System.Text.StringBuilder @builder)")]
 						protected override bool PrintMembers(global::System.Text.StringBuilder @builder)
 						{
-							if (this.Expectations.handlers4?.Count > 0)
+							if (this.Expectations.handlers4 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers4)
 								{
@@ -159,9 +152,9 @@ public static class RecordCreateGeneratorTests
 						[global::Rocks.MemberIdentifier(5, "int GetHashCode()")]
 						public override int GetHashCode()
 						{
-							if (this.Expectations.handlers5?.Count > 0)
+							if (this.Expectations.handlers5 is not null)
 							{
-								var @handler = this.Expectations.handlers5[0];
+								var @handler = this.Expectations.handlers5.First;
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue;
@@ -178,9 +171,9 @@ public static class RecordCreateGeneratorTests
 						{
 							get
 							{
-								if (this.Expectations.handlers6?.Count > 0)
+								if (this.Expectations.handlers6 is not null)
 								{
-									var @handler = this.Expectations.handlers6[0];
+									var @handler = this.Expectations.handlers6.First;
 									@handler.CallCount++;
 									var @result = @handler.Callback is not null ?
 										@handler.Callback() : @handler.ReturnValue;
@@ -204,18 +197,18 @@ public static class RecordCreateGeneratorTests
 						internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler2, global::System.Action> Foo()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler2();
-							this.Expectations.handlers2.Add(handler);
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(handler); }
+							else { this.Expectations.handlers2.Add(handler); }
 							return new(handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler3, global::System.Func<string>, string> ToString()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler3();
-							this.Expectations.handlers3.Add(handler);
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(handler); }
+							else { this.Expectations.handlers3.Add(handler); }
 							return new(handler);
 						}
 						
@@ -229,17 +222,17 @@ public static class RecordCreateGeneratorTests
 								@builder = @builder,
 							};
 							
-							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(); }
-							this.Expectations.handlers4.Add(@handler);
+							if (this.Expectations.handlers4 is null ) { this.Expectations.handlers4 = new(@handler); }
+							else { this.Expectations.handlers4.Add(@handler); }
 							return new(@handler);
 						}
 						
 						internal new global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler5, global::System.Func<int>, int> GetHashCode()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(); }
 							var handler = new global::MockTests.RecordTestCreateExpectations.Handler5();
-							this.Expectations.handlers5.Add(handler);
+							if (this.Expectations.handlers5 is null ) { this.Expectations.handlers5 = new(handler); }
+							else { this.Expectations.handlers5.Add(handler); }
 							return new(handler);
 						}
 						
@@ -256,9 +249,9 @@ public static class RecordCreateGeneratorTests
 							internal global::Rocks.Adornments<global::MockTests.RecordTestCreateExpectations.Handler6, global::System.Func<global::System.Type>, global::System.Type> EqualityContract()
 							{
 								global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-								if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(); }
 								var handler = new global::MockTests.RecordTestCreateExpectations.Handler6();
-								this.Expectations.handlers6.Add(handler);
+								if (this.Expectations.handlers6 is null ) { this.Expectations.handlers6 = new(handler); }
+								else { this.Expectations.handlers6.Add(handler); }
 								return new(handler);
 							}
 							private global::MockTests.RecordTestCreateExpectations Expectations { get; }

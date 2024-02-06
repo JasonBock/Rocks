@@ -103,8 +103,6 @@ internal static class MockHandlerListBuilder
 			writer.WriteLine("{ }");
 		}
 
-		writer.WriteLine();
-
 		// Add the Handlers<> type.
 		// If the method has open generics, we have to use the base Handler type -
 		// we'll cast it later within the method implementation.
@@ -112,7 +110,6 @@ internal static class MockHandlerListBuilder
 			$"private global::Rocks.Handlers<{expectationsFullyQualifiedName}.Handler{memberIdentifier}>? @handlers{memberIdentifier};" :
 			$"private global::Rocks.Handlers<global::Rocks.Handler>? @handlers{memberIdentifier};";
 		writer.WriteLine(handlers);
-		writer.WriteLine();
 	}
 
 	private static void BuildMethodHandlerTypes(IndentedTextWriter writer, TypeMockModel mockType, string expectationsFullyQualifiedName)

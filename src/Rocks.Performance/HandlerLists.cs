@@ -64,9 +64,7 @@ public class HandlerLists
 			// TODO: the new hotness:
 			// this.handlerListDefault ??= [];
 
-#pragma warning disable CA2000 // Dispose objects before losing scope
 			if (handlers is null) { handlers = new(handler); }
-#pragma warning restore CA2000 // Dispose objects before losing scope
 			else { handlers.Add(@handler); }
 		}
 

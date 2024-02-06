@@ -61,17 +61,14 @@ public static class RefStructGeneratorTests
 				}
 				
 				#pragma warning disable CS8618
-				
 				internal sealed class Handler0<TSourcePixel>
 					: global::Rocks.Handler<global::IUseSpanWithOpenGenericCreateExpectations.Projections.Callback_153914150755899821317490808130987399395242585077<TSourcePixel>>
 					where TSourcePixel : unmanaged
 				{
 					public global::IUseSpanWithOpenGenericCreateExpectations.Projections.ArgumentForReadOnlySpan<TSourcePixel> @sourcePixels { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
 				#pragma warning restore CS8618
-				
-				private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -79,7 +76,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -100,7 +97,7 @@ public static class RefStructGeneratorTests
 					public void From<TSourcePixel>(global::System.ReadOnlySpan<TSourcePixel> @sourcePixels)
 						where TSourcePixel : unmanaged
 					{
-						if (this.Expectations.handlers0?.Count > 0)
+						if (this.Expectations.handlers0 is not null)
 						{
 							var @foundMatch = false;
 							
@@ -147,8 +144,8 @@ public static class RefStructGeneratorTests
 							@sourcePixels = @sourcePixels,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(@handler);
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
 					
@@ -238,16 +235,13 @@ public static class RefStructGeneratorTests
 				}
 				
 				#pragma warning disable CS8618
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_635596489375752168847058244661265726662174292173>
 				{
 					public global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @values { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				#pragma warning restore CS8618
-				
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -255,7 +249,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -275,7 +269,7 @@ public static class RefStructGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "void RefStructParameter(global::System.Span<int> @values)")]
 					public void RefStructParameter(global::System.Span<int> @values)
 					{
-						if (this.Expectations.handlers0?.Count > 0)
+						if (this.Expectations.handlers0 is not null)
 						{
 							var @foundMatch = false;
 							
@@ -319,8 +313,8 @@ public static class RefStructGeneratorTests
 							@values = @values,
 						};
 						
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-						this.Expectations.handlers0.Add(@handler);
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+						else { this.Expectations.handlers0.Add(@handler); }
 						return new(@handler);
 					}
 					
@@ -389,8 +383,7 @@ public static class RefStructGeneratorTests
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>
 				{ }
-				
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				
 				public override void Verify()
 				{
@@ -398,7 +391,7 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 				
 						if (failures.Count > 0)
 						{
@@ -418,9 +411,9 @@ public static class RefStructGeneratorTests
 					[global::Rocks.MemberIdentifier(0, "global::System.Span<int> RefStructReturn()")]
 					public global::System.Span<int> RefStructReturn()
 					{
-						if (this.Expectations.handlers0?.Count > 0)
+						if (this.Expectations.handlers0 is not null)
 						{
-							var @handler = this.Expectations.handlers0[0];
+							var @handler = this.Expectations.handlers0.First;
 							@handler.CallCount++;
 							var @result = @handler.Callback is not null ?
 								@handler.Callback() : @handler.ReturnValue!();
@@ -441,9 +434,9 @@ public static class RefStructGeneratorTests
 					internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> RefStructReturn()
 					{
 						global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 						var handler = new global::IHaveRefStructCreateExpectations.Handler0();
-						this.Expectations.handlers0.Add(handler);
+						if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+						else { this.Expectations.handlers0.Add(handler); }
 						return new(handler);
 					}
 					
@@ -535,21 +528,17 @@ public static class RefStructGeneratorTests
 				}
 				
 				#pragma warning disable CS8618
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>
 				{ }
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_502728827610007854864150410092882302521581523006>
 				{
 					public global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				#pragma warning restore CS8618
-				
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -557,8 +546,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -581,9 +570,9 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
-								var @handler = this.Expectations.handlers0[0];
+								var @handler = this.Expectations.handlers0.First;
 								@handler.CallCount++;
 								var @result = @handler.Callback is not null ?
 									@handler.Callback() : @handler.ReturnValue!();
@@ -594,7 +583,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1?.Count > 0)
+							if (this.Expectations.handlers1 is not null)
 							{
 								var @foundMatch = false;
 								foreach (var @handler in this.Expectations.handlers1)
@@ -633,9 +622,9 @@ public static class RefStructGeneratorTests
 						internal global::Rocks.Adornments<global::IHaveRefStructCreateExpectations.Handler0, global::IHaveRefStructCreateExpectations.Projections.Callback_305616756374865012389506681414051734154688895315, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315> Data()
 						{
 							global::Rocks.Exceptions.ExpectationException.ThrowIf(this.Expectations.WasInstanceInvoked);
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
 							var handler = new global::IHaveRefStructCreateExpectations.Handler0();
-							this.Expectations.handlers0.Add(handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(handler); }
+							else { this.Expectations.handlers0.Add(handler); }
 							return new(handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -656,8 +645,8 @@ public static class RefStructGeneratorTests
 								value = @value,
 							};
 						
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(handler);
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(handler); }
+							else { this.Expectations.handlers1.Add(handler); }
 							return new(handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -754,24 +743,20 @@ public static class RefStructGeneratorTests
 				}
 				
 				#pragma warning disable CS8618
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_397920719143678821085077375314001651657630906476, string>
 				{
 					public global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_258506241168749478916356012154666174557408504246>
 				{
 					public global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @index { get; set; }
 					public global::Rocks.Argument<string> @value { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				#pragma warning restore CS8618
-				
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -779,8 +764,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -803,7 +788,7 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -823,7 +808,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1?.Count > 0)
+							if (this.Expectations.handlers1 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -862,8 +847,8 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -886,8 +871,8 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(@handler);
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -985,24 +970,20 @@ public static class RefStructGeneratorTests
 				}
 				
 				#pragma warning disable CS8618
-				
 				internal sealed class Handler0
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_46972665627653922407782770464330805999184773834, global::IHaveRefStructCreateExpectations.Projections.ReturnValue_305616756374865012389506681414051734154688895315>
 				{
 					public global::Rocks.Argument<string> @index { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
 				internal sealed class Handler1
 					: global::Rocks.Handler<global::IHaveRefStructCreateExpectations.Projections.Callback_68834310437553200452622631376483572509682404478>
 				{
 					public global::Rocks.Argument<string> @index { get; set; }
 					public global::IHaveRefStructCreateExpectations.Projections.ArgumentForSpanOfint @value { get; set; }
 				}
-				
+				private global::Rocks.Handlers<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				#pragma warning restore CS8618
-				
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler0>? @handlers0;
-				private global::System.Collections.Generic.List<global::IHaveRefStructCreateExpectations.Handler1>? @handlers1;
 				
 				public override void Verify()
 				{
@@ -1010,8 +991,8 @@ public static class RefStructGeneratorTests
 					{
 						var failures = new global::System.Collections.Generic.List<string>();
 				
-						if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-						if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+						if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+						if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 				
 						if (failures.Count > 0)
 						{
@@ -1034,7 +1015,7 @@ public static class RefStructGeneratorTests
 					{
 						get
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -1054,7 +1035,7 @@ public static class RefStructGeneratorTests
 						}
 						set
 						{
-							if (this.Expectations.handlers1?.Count > 0)
+							if (this.Expectations.handlers1 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers1)
 								{
@@ -1093,8 +1074,8 @@ public static class RefStructGeneratorTests
 								@index = @index,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }
@@ -1117,8 +1098,8 @@ public static class RefStructGeneratorTests
 								@value = @value,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(@handler);
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
 						private global::IHaveRefStructCreateExpectations Expectations { get; }

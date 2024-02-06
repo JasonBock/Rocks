@@ -66,40 +66,39 @@ public sealed class Handlers<THandler>
 		public void Reset() => this.value = null;
 	}
 
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <param name="handler"></param>
-   public Handlers(THandler handler) => 
-		this.First = this.Last = new(handler);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="handler"></param>
+	public Handlers(THandler handler) =>
+		this.FirstNode = this.LastNode = new(handler);
 
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <param name="handler"></param>
-   public void Add(THandler handler)
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="handler"></param>
+	public void Add(THandler handler)
 	{
 		var node = new HandlerNode(handler);
-		this.Last.Next = node;
-		this.Last = node;
+		this.LastNode.Next = node;
+		this.LastNode = node;
 	}
 
 	/// <summary>
 	/// 
 	/// </summary>
 	/// <returns></returns>
-	public THandler GetFirst() => this.First.Value;
-
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <returns></returns>
-	public HandlerEnumerator GetEnumerator() => new(this.First);
+	public HandlerEnumerator GetEnumerator() => new(this.FirstNode);
 
 	IEnumerator<THandler> IEnumerable<THandler>.GetEnumerator() => this.GetEnumerator();
 
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<THandler>)this).GetEnumerator();
 
-	private HandlerNode First { get; }
-	private HandlerNode Last { get; set; }
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	public THandler First => this.FirstNode.Value;
+	private HandlerNode FirstNode { get; }
+	private HandlerNode LastNode { get; set; }
 }

@@ -38,7 +38,6 @@ public static class CastingGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0<T>
 						: global::Rocks.Handler<global::System.Action<T, string, global::System.Guid>>
 					{
@@ -46,7 +45,7 @@ public static class CastingGeneratorTests
 						public global::Rocks.Argument<string> @data { get; set; }
 						public global::Rocks.Argument<global::System.Guid> @information { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
 					internal sealed class Handler1<T>
 						: global::Rocks.Handler<global::System.Func<T, string, global::System.Guid, T>, T>
 					{
@@ -54,27 +53,22 @@ public static class CastingGeneratorTests
 						public global::Rocks.Argument<string> @data { get; set; }
 						public global::Rocks.Argument<global::System.Guid> @information { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
 					internal sealed class Handler2
 						: global::Rocks.Handler<global::System.Action<int, string>>
 					{
 						public global::Rocks.Argument<int> @value { get; set; }
 						public global::Rocks.Argument<string> @data { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2>? @handlers2;
 					internal sealed class Handler3
 						: global::Rocks.Handler<global::System.Func<int, string, int>, int>
 					{
 						public global::Rocks.Argument<int> @value { get; set; }
 						public global::Rocks.Argument<string> @data { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3>? @handlers3;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
-					private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers1;
-					private global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler2>? @handlers2;
-					private global::System.Collections.Generic.List<global::MockTests.IHaveOpenGenericsOfGuidCreateExpectations.Handler3>? @handlers3;
 					
 					public override void Verify()
 					{
@@ -82,10 +76,10 @@ public static class CastingGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
-							if (this.handlers2?.Count > 0) { failures.AddRange(this.Verify(this.handlers2, 2)); }
-							if (this.handlers3?.Count > 0) { failures.AddRange(this.Verify(this.handlers3, 3)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers2 is not null) { failures.AddRange(this.Verify(this.handlers2, 2)); }
+							if (this.handlers3 is not null) { failures.AddRange(this.Verify(this.handlers3, 3)); }
 					
 							if (failures.Count > 0)
 							{
@@ -105,7 +99,7 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void HasGenerics<T>(T @value, string @data, global::System.Guid @information)")]
 						public void HasGenerics<T>(T @value, string @data, global::System.Guid @information)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								var @foundMatch = false;
 								
@@ -139,7 +133,7 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)")]
 						public T HasGenericsWithReturn<T>(T @value, string @data, global::System.Guid @information)
 						{
-							if (this.Expectations.handlers1?.Count > 0)
+							if (this.Expectations.handlers1 is not null)
 							{
 								foreach (var @genericHandler in this.Expectations.handlers1)
 								{
@@ -166,7 +160,7 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(2, "void NoGenerics(int @value, string @data)")]
 						public void NoGenerics(int @value, string @data)
 						{
-							if (this.Expectations.handlers2?.Count > 0)
+							if (this.Expectations.handlers2 is not null)
 							{
 								var @foundMatch = false;
 								
@@ -196,7 +190,7 @@ public static class CastingGeneratorTests
 						[global::Rocks.MemberIdentifier(3, "int NoGenericsWithReturn(int @value, string @data)")]
 						public int NoGenericsWithReturn(int @value, string @data)
 						{
-							if (this.Expectations.handlers3?.Count > 0)
+							if (this.Expectations.handlers3 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers3)
 								{
@@ -238,8 +232,8 @@ public static class CastingGeneratorTests
 								@information = @information,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						
@@ -257,8 +251,8 @@ public static class CastingGeneratorTests
 								@information = @information,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(@handler);
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
 						
@@ -274,8 +268,8 @@ public static class CastingGeneratorTests
 								@data = @data,
 							};
 							
-							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(); }
-							this.Expectations.handlers2.Add(@handler);
+							if (this.Expectations.handlers2 is null ) { this.Expectations.handlers2 = new(@handler); }
+							else { this.Expectations.handlers2.Add(@handler); }
 							return new(@handler);
 						}
 						
@@ -291,8 +285,8 @@ public static class CastingGeneratorTests
 								@data = @data,
 							};
 							
-							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(); }
-							this.Expectations.handlers3.Add(@handler);
+							if (this.Expectations.handlers3 is null ) { this.Expectations.handlers3 = new(@handler); }
+							else { this.Expectations.handlers3.Add(@handler); }
 							return new(@handler);
 						}
 						

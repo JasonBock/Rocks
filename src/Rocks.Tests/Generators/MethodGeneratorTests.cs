@@ -41,7 +41,6 @@ public static class MethodGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0<TDestination>
 						: global::Rocks.Handler<global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>
 					{
@@ -49,7 +48,7 @@ public static class MethodGeneratorTests
 						public global::Rocks.Argument<object?> @parameters { get; set; }
 						public global::Rocks.Argument<global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[]> @membersToExpand { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::Rocks.Handler>? @handlers0;
 					internal sealed class Handler1<TDestination>
 						: global::Rocks.Handler<global::System.Func<global::System.Linq.IQueryable, global::System.Collections.Generic.IDictionary<string, object>, string[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>>
 					{
@@ -57,11 +56,8 @@ public static class MethodGeneratorTests
 						public global::Rocks.Argument<global::System.Collections.Generic.IDictionary<string, object>> @parameters { get; set; }
 						public global::Rocks.Argument<string[]> @membersToExpand { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::Rocks.Handler>? @handlers1;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers0;
-					private global::System.Collections.Generic.List<global::Rocks.Handler>? @handlers1;
 					
 					public override void Verify()
 					{
@@ -69,8 +65,8 @@ public static class MethodGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
-							if (this.handlers1?.Count > 0) { failures.AddRange(this.Verify(this.handlers1, 1)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers1 is not null) { failures.AddRange(this.Verify(this.handlers1, 1)); }
 					
 							if (failures.Count > 0)
 							{
@@ -90,7 +86,7 @@ public static class MethodGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, object? @parameters, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand)")]
 						public global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								foreach (var @genericHandler in this.Expectations.handlers0)
 								{
@@ -117,7 +113,7 @@ public static class MethodGeneratorTests
 						[global::Rocks.MemberIdentifier(1, "global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, global::System.Collections.Generic.IDictionary<string, object> @parameters, params string[] @membersToExpand)")]
 						public global::System.Linq.IQueryable<TDestination> ProjectTo<TDestination>(global::System.Linq.IQueryable @source, global::System.Collections.Generic.IDictionary<string, object> @parameters, params string[] @membersToExpand)
 						{
-							if (this.Expectations.handlers1?.Count > 0)
+							if (this.Expectations.handlers1 is not null)
 							{
 								foreach (var @genericHandler in this.Expectations.handlers1)
 								{
@@ -163,8 +159,8 @@ public static class MethodGeneratorTests
 								@membersToExpand = @membersToExpand,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IMapperCreateExpectations.Handler0<TDestination>, global::System.Func<global::System.Linq.IQueryable, object?, global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[], global::System.Linq.IQueryable<TDestination>>, global::System.Linq.IQueryable<TDestination>> ProjectTo<TDestination>(global::Rocks.Argument<global::System.Linq.IQueryable> @source, object? @parameters = null, params global::System.Linq.Expressions.Expression<global::System.Func<TDestination, object>>[] @membersToExpand) =>
@@ -184,8 +180,8 @@ public static class MethodGeneratorTests
 								@membersToExpand = @membersToExpand,
 							};
 							
-							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(); }
-							this.Expectations.handlers1.Add(@handler);
+							if (this.Expectations.handlers1 is null ) { this.Expectations.handlers1 = new(@handler); }
+							else { this.Expectations.handlers1.Add(@handler); }
 							return new(@handler);
 						}
 						
@@ -251,7 +247,6 @@ public static class MethodGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0
 						: global::Rocks.Handler<global::System.Action<int, string, double>>
 					{
@@ -259,10 +254,8 @@ public static class MethodGeneratorTests
 						public global::Rocks.Argument<string> @b { get; set; }
 						public global::Rocks.Argument<double> @c { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0>? @handlers0;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -270,7 +263,7 @@ public static class MethodGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -290,7 +283,7 @@ public static class MethodGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Foo(int @a, string @b, double @c)")]
 						public void Foo(int @a, string @b = "b", double @c = 3.2)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								var @foundMatch = false;
 								
@@ -340,8 +333,8 @@ public static class MethodGeneratorTests
 								@c = @c.Transform(3.2),
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IHaveOptionalArgumentsCreateExpectations.Handler0, global::System.Action<int, string, double>> Foo(global::Rocks.Argument<int> @a, string @b = "b", double @c = 3.2) =>
@@ -410,7 +403,6 @@ public static class MethodGeneratorTests
 					: global::Rocks.Expectations
 				{
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0
 						: global::Rocks.Handler<global::System.Action<string, int, global::System.Guid[]>>
 					{
@@ -418,10 +410,8 @@ public static class MethodGeneratorTests
 						public global::Rocks.Argument<int> @b { get; set; }
 						public global::Rocks.Argument<global::System.Guid[]> @values { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.IProjectionCreateExpectations.Handler0>? @handlers0;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::MockTests.IProjectionCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -429,7 +419,7 @@ public static class MethodGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -449,7 +439,7 @@ public static class MethodGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "void Project(string @a, int @b, params global::System.Guid[] @values)")]
 						public void Project(string @a, int @b = 22, params global::System.Guid[] @values)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								var @foundMatch = false;
 								
@@ -499,8 +489,8 @@ public static class MethodGeneratorTests
 								@values = @values,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						internal global::Rocks.Adornments<global::MockTests.IProjectionCreateExpectations.Handler0, global::System.Action<string, int, global::System.Guid[]>> Project(global::Rocks.Argument<string> @a, int @b = 22, params global::System.Guid[] @values) =>
@@ -577,7 +567,6 @@ public static class MethodGeneratorTests
 					}
 					
 					#pragma warning disable CS8618
-					
 					internal sealed class Handler0
 						: global::Rocks.Handler<global::MockTests.IHaveTooMuchCreateExpectations.Projections.Callback_383140697323744298072430331353344056628280456971, int>
 					{
@@ -602,10 +591,8 @@ public static class MethodGeneratorTests
 						public global::Rocks.Argument<int> @i18 { get; set; }
 						public global::Rocks.Argument<int> @i19 { get; set; }
 					}
-					
+					private global::Rocks.Handlers<global::MockTests.IHaveTooMuchCreateExpectations.Handler0>? @handlers0;
 					#pragma warning restore CS8618
-					
-					private global::System.Collections.Generic.List<global::MockTests.IHaveTooMuchCreateExpectations.Handler0>? @handlers0;
 					
 					public override void Verify()
 					{
@@ -613,7 +600,7 @@ public static class MethodGeneratorTests
 						{
 							var failures = new global::System.Collections.Generic.List<string>();
 					
-							if (this.handlers0?.Count > 0) { failures.AddRange(this.Verify(this.handlers0, 0)); }
+							if (this.handlers0 is not null) { failures.AddRange(this.Verify(this.handlers0, 0)); }
 					
 							if (failures.Count > 0)
 							{
@@ -633,7 +620,7 @@ public static class MethodGeneratorTests
 						[global::Rocks.MemberIdentifier(0, "int AddProperty(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19)")]
 						public int AddProperty(int @i0, int @i1, int @i2, int @i3, int @i4, int @i5, int @i6, int @i7, int @i8, int @i9, int @i10, int @i11, int @i12, int @i13, int @i14, int @i15, int @i16, int @i17, int @i18, int @i19)
 						{
-							if (this.Expectations.handlers0?.Count > 0)
+							if (this.Expectations.handlers0 is not null)
 							{
 								foreach (var @handler in this.Expectations.handlers0)
 								{
@@ -727,8 +714,8 @@ public static class MethodGeneratorTests
 								@i19 = @i19,
 							};
 							
-							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(); }
-							this.Expectations.handlers0.Add(@handler);
+							if (this.Expectations.handlers0 is null ) { this.Expectations.handlers0 = new(@handler); }
+							else { this.Expectations.handlers0.Add(@handler); }
 							return new(@handler);
 						}
 						

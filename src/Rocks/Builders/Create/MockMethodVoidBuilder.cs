@@ -176,7 +176,7 @@ internal static class MockMethodVoidBuilder
 		var foreachHandlerName = method.IsGenericMethod ?
 			namingContext["genericHandler"] : namingContext["handler"];
 
-		writer.WriteLine($"var @{foreachHandlerName} = this.Expectations.handlers{method.MemberIdentifier}.GetFirst();");
+		writer.WriteLine($"var @{foreachHandlerName} = this.Expectations.handlers{method.MemberIdentifier}.First;");
 
 		if (method.IsGenericMethod)
 		{
