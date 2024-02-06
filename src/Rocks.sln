@@ -24,12 +24,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.CodeGenerationTest", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance", "Rocks.Performance\Rocks.Performance.csproj", "{EC06CA6C-F12A-46DE-967C-BB923A7B2337}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Tests", "Rocks.Performance.Tests\Rocks.Performance.Tests.csproj", "{E68CF8E2-B77D-4513-951D-54F78D05B941}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Integration", "Rocks.Performance.Integration\Rocks.Performance.Integration.csproj", "{DB039189-8455-4009-8A98-32BE26948AA2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocks.Performance.Integration.Tests", "Rocks.Performance.Integration.Tests\Rocks.Performance.Integration.Tests.csproj", "{70FED59E-8FED-4021-9745-B6A38FB10349}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,18 +50,6 @@ Global
 		{EC06CA6C-F12A-46DE-967C-BB923A7B2337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC06CA6C-F12A-46DE-967C-BB923A7B2337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC06CA6C-F12A-46DE-967C-BB923A7B2337}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E68CF8E2-B77D-4513-951D-54F78D05B941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E68CF8E2-B77D-4513-951D-54F78D05B941}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E68CF8E2-B77D-4513-951D-54F78D05B941}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E68CF8E2-B77D-4513-951D-54F78D05B941}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB039189-8455-4009-8A98-32BE26948AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB039189-8455-4009-8A98-32BE26948AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB039189-8455-4009-8A98-32BE26948AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB039189-8455-4009-8A98-32BE26948AA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70FED59E-8FED-4021-9745-B6A38FB10349}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{70FED59E-8FED-4021-9745-B6A38FB10349}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70FED59E-8FED-4021-9745-B6A38FB10349}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70FED59E-8FED-4021-9745-B6A38FB10349}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

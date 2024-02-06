@@ -173,11 +173,10 @@ Before I keep going...maybe I should try a `LinkedList<>`, just to see how it pe
 | EnumerateList       | Syste(...)rInt] [63] | 4.5234 ns | 0.1128 ns | 0.1000 ns |  4.82 |    0.22 |         - |          NA |
 | EnumerateList       | Syste(...)rInt] [63] | 4.5265 ns | 0.1204 ns | 0.1182 ns |  4.84 |    0.23 |         - |          NA |
 
-* Run all integration and code generation tests
-* Add one more change when handler is created to do the "new hotness"
-* Fix all unit tests
-* For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
-* Delete perf projects other than Rocks.Performance
-* Add XML comments for `Handlers<>`
+* DONE - Run all integration and code generation tests
+* DONE - Fix all unit tests
+* DONE - For any types like Handler, Handlers, etc. that are public but not intended to be used by external code, add that to comments.
+* DONE - Delete perf projects other than Rocks.Performance
+* DONE - Add XML comments for `Handlers<>`
 * Write unit tests for `Handlers<>`
 * Celebrate

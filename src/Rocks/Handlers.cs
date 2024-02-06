@@ -5,10 +5,6 @@ namespace Rocks;
 /// <summary>
 /// Defines a type to collect all the handlers for a member.
 /// </summary>
-/// <remarks>
-/// This type is designed to be used by Rocks exclusively and is not intended
-/// to be used directly.
-/// </remarks>
 public sealed class Handlers<THandler>
 	: IEnumerable<THandler>
 	where THandler : Handler
@@ -21,7 +17,7 @@ public sealed class Handlers<THandler>
 	}
 
 	/// <summary>
-	/// 
+	/// A custom enumerator for <see cref="Handlers{THandler}"/>
 	/// </summary>
 	public struct HandlerEnumerator
 		: IEnumerator<THandler>
@@ -33,21 +29,25 @@ public sealed class Handlers<THandler>
 			 this.value = value;
 
 		/// <summary>
-		/// 
+		/// Gets the current <typeparamref name="THandler"/>.
 		/// </summary>
 		public readonly THandler Current => this.value!.Value;
 
 		readonly object IEnumerator.Current => this.value!;
 
 		/// <summary>
-		/// 
+		/// Disposes the enumerator.
 		/// </summary>
 		public void Dispose() => this.value = default;
 
 		/// <summary>
-		/// 
+		/// Moves to the next <typeparamref name="THandler"/> value
+		/// in the enumeration.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>
+		/// Returns <see langword="true"/> if another handler exists in the current enumeration,
+		/// otherwise, <see langword="false"/>.
+		/// </returns>
 		public bool MoveNext()
 		{
 			if (this.first)
@@ -61,22 +61,22 @@ public sealed class Handlers<THandler>
 		}
 
 		/// <summary>
-		/// 
+		/// Resets the enumeration.
 		/// </summary>
 		public void Reset() => this.value = null;
 	}
 
 	/// <summary>
-	/// 
+	/// Creates a new <see cref="Handlers{THandler}"/> instance.
 	/// </summary>
-	/// <param name="handler"></param>
+	/// <param name="handler">The first handler to reference.</param>
 	public Handlers(THandler handler) =>
 		this.FirstNode = this.LastNode = new(handler);
 
 	/// <summary>
-	/// 
+	/// Adds a new <typeparamref name="THandler"/> instance.
 	/// </summary>
-	/// <param name="handler"></param>
+	/// <param name="handler">A handler instance.</param>
 	public void Add(THandler handler)
 	{
 		var node = new HandlerNode(handler);
@@ -85,9 +85,9 @@ public sealed class Handlers<THandler>
 	}
 
 	/// <summary>
-	/// 
+	/// Gets an enumerator.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>A new <see cref="HandlerEnumerator"/> instance.</returns>
 	public HandlerEnumerator GetEnumerator() => new(this.FirstNode);
 
 	IEnumerator<THandler> IEnumerable<THandler>.GetEnumerator() => this.GetEnumerator();
@@ -95,9 +95,9 @@ public sealed class Handlers<THandler>
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<THandler>)this).GetEnumerator();
 
 	/// <summary>
-	/// 
+	/// Gets the first <typeparamref name="THandler"/> instance.
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>The first <typeparamref name="THandler"/> instance.</returns>
 	public THandler First => this.FirstNode.Value;
 	private HandlerNode FirstNode { get; }
 	private HandlerNode LastNode { get; set; }
