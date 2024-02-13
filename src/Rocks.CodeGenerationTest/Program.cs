@@ -125,6 +125,7 @@ static void TestWithTypes()
 		new (typeof(Microsoft.Extensions.DependencyInjection.AsyncServiceScope), []),
 		new (typeof(Microsoft.Extensions.Logging.LogDefineOptions), []),
 		new (typeof(Microsoft.Extensions.ServiceDiscovery.ServiceEndPointResolver), []),
+		new (typeof(Microsoft.Kiota.Abstractions.ApiClientBuilder), []),
 		new (typeof(Microsoft.OpenApi.Any.AnyType), []),
 		new (typeof(Microsoft.Quantum.AmplitudeAmplification.AmpAmpByOracle), []),
 		new (typeof(Mono.Cecil.FixedSysStringMarshalInfo), []),
@@ -162,6 +163,7 @@ static void TestWithTypes()
 		new (typeof(Twilio.Base.Page<>), []),
 		new (typeof(VerifyTests.AsStringResult), []),
 		new (typeof(Wasmtime.ActionResult), []),
+		new (typeof(Wisp.IByteReader), []),
 #endif
 #if INCLUDE_FAILING
 #endif

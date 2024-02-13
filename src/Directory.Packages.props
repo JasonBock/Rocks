@@ -62,6 +62,7 @@
     <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Resilience" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="8.0.0-preview.1.23557.2" />
+    <PackageVersion Include="Microsoft.Kiota.Abstractions" Version="1.7.9" />
     <PackageVersion Include="Microsoft.OpenApi" Version="1.6.12" />
     <PackageVersion Include="Microsoft.Orleans.Core" Version="8.0.0" />
     <PackageVersion Include="Microsoft.Quantum.Standard" Version="0.28.302812" />
@@ -116,5 +117,6 @@
     <PackageVersion Include="Twilio" Version="7.0.0-rc.1" />
     <PackageVersion Include="Verify" Version="23.0.1" />
     <PackageVersion Include="Wasmtime" Version="17.0.0" />
+    <PackageVersion Include="Wisp" Version="0.2.0" />
   </ItemGroup>
 </Project>

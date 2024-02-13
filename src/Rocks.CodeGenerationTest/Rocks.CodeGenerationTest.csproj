@@ -65,6 +65,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Microsoft.Extensions.Logging" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" />
+		<PackageReference Include="Microsoft.Kiota.Abstractions" />
 		<PackageReference Include="Microsoft.OpenApi" />
 		<PackageReference Include="Microsoft.Orleans.Core" />
 		<PackageReference Include="Microsoft.Quantum.Standard" />
@@ -104,5 +105,6 @@
 		<PackageReference Include="Twilio" />
 		<PackageReference Include="Verify" />
 		<PackageReference Include="Wasmtime" />
+		<PackageReference Include="Wisp" />
 	</ItemGroup>
 </Project>
